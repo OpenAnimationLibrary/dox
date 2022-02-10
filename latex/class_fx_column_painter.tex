@@ -1,0 +1,366 @@
+\hypertarget{class_fx_column_painter}{}\doxysection{Fx\+Column\+Painter Class Reference}
+\label{class_fx_column_painter}\index{FxColumnPainter@{FxColumnPainter}}
+Inheritance diagram for Fx\+Column\+Painter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_fx_column_painter}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_fx_column_painter_a102680212addfa7e9852db363c5eaa10}{on\+Icon\+Generated}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_fx_column_painter_a5b6fafabce2d3fd3a9f89e42d693275d}{Fx\+Column\+Painter}} (\mbox{\hyperlink{class_fx_schematic_column_node}{Fx\+Schematic\+Column\+Node}} $\ast$parent, double width, double height, const QString \&name)
+\item 
+QRectF \mbox{\hyperlink{class_fx_column_painter_a22d88a8306626de6083db71ebf60982b}{bounding\+Rect}} () const override
+\item 
+void \mbox{\hyperlink{class_fx_column_painter_a8bb71b6ea1f6830fcdd1591b6590ffa7}{paint}} (QPainter $\ast$painter, const QStyle\+Option\+Graphics\+Item $\ast$option, QWidget $\ast$widget=0) override
+\item 
+void \mbox{\hyperlink{class_fx_column_painter_a901a83c425065cef39155701b7e7e552}{set\+Name}} (const QString \&name)
+\item 
+void \mbox{\hyperlink{class_fx_column_painter_ad7f1b2d9fff27e493659f0cb834f11b4}{set\+Is\+Reference}} (bool ref=true)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_fx_column_painter_aa620fb6887d04a2099f481d8c04626d6}{context\+Menu\+Event}} (QGraphics\+Scene\+Context\+Menu\+Event $\ast$cme) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_fx_column_painter_a5b6fafabce2d3fd3a9f89e42d693275d}\label{class_fx_column_painter_a5b6fafabce2d3fd3a9f89e42d693275d}} 
+\index{FxColumnPainter@{FxColumnPainter}!FxColumnPainter@{FxColumnPainter}}
+\index{FxColumnPainter@{FxColumnPainter}!FxColumnPainter@{FxColumnPainter}}
+\doxysubsubsection{\texorpdfstring{FxColumnPainter()}{FxColumnPainter()}}
+{\footnotesize\ttfamily Fx\+Column\+Painter\+::\+Fx\+Column\+Painter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_schematic_column_node}{Fx\+Schematic\+Column\+Node}} $\ast$}]{parent,  }\item[{double}]{width,  }\item[{double}]{height,  }\item[{const QString \&}]{name }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00126     : QGraphicsItem(parent)}
+\DoxyCodeLine{00127     , m\_parent(parent)}
+\DoxyCodeLine{00128     , m\_name(name)}
+\DoxyCodeLine{00129     , m\_width(width)}
+\DoxyCodeLine{00130     , m\_height(height) \{}
+\DoxyCodeLine{00131   setFlag(QGraphicsItem::ItemIsMovable, \textcolor{keyword}{false});}
+\DoxyCodeLine{00132   setFlag(QGraphicsItem::ItemIsSelectable, \textcolor{keyword}{false});}
+\DoxyCodeLine{00133   setFlag(QGraphicsItem::ItemIsFocusable, \textcolor{keyword}{false});}
+\DoxyCodeLine{00134   connect(IconGenerator::instance(), SIGNAL(iconGenerated()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00135           SLOT(onIconGenerated()));}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137   \mbox{\hyperlink{class_t_level_column_fx}{TLevelColumnFx}} *lcfx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_level_column_fx}{TLevelColumnFx}} *\textcolor{keyword}{>}(parent-\/>getFx());}
+\DoxyCodeLine{00138   \textcolor{keywordflow}{if} (lcfx) \{}
+\DoxyCodeLine{00139     \textcolor{keywordtype}{int} index = lcfx-\/>getColumnIndex();}
+\DoxyCodeLine{00140 }
+\DoxyCodeLine{00141     \mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *fxScene = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{00142     \textcolor{keywordflow}{if} (!fxScene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00143 }
+\DoxyCodeLine{00144     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = fxScene-\/>getXsheet();}
+\DoxyCodeLine{00145     \textcolor{keywordtype}{int} r0, r1;}
+\DoxyCodeLine{00146     xsh-\/>\mbox{\hyperlink{class_t_xsheet_a26850469fb0f2886b717479050c32be2}{getCellRange}}(index, r0, r1);}
+\DoxyCodeLine{00147     \textcolor{keywordflow}{if} (r0 > r1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00148     \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} firstCell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r0, index);}
+\DoxyCodeLine{00149     m\_type             = firstCell.m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a1a147f1e970a62120c0bbaf0020a8932}{getType}}();}
+\DoxyCodeLine{00150   \}}
+\DoxyCodeLine{00151 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_column_painter_aced4f634adaef6c91fd927390033a56e}\label{class_fx_column_painter_aced4f634adaef6c91fd927390033a56e}} 
+\index{FxColumnPainter@{FxColumnPainter}!````~FxColumnPainter@{$\sim$FxColumnPainter}}
+\index{````~FxColumnPainter@{$\sim$FxColumnPainter}!FxColumnPainter@{FxColumnPainter}}
+\doxysubsubsection{\texorpdfstring{$\sim$FxColumnPainter()}{~FxColumnPainter()}}
+{\footnotesize\ttfamily Fx\+Column\+Painter\+::$\sim$\+Fx\+Column\+Painter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00155 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_fx_column_painter_a22d88a8306626de6083db71ebf60982b}\label{class_fx_column_painter_a22d88a8306626de6083db71ebf60982b}} 
+\index{FxColumnPainter@{FxColumnPainter}!boundingRect@{boundingRect}}
+\index{boundingRect@{boundingRect}!FxColumnPainter@{FxColumnPainter}}
+\doxysubsubsection{\texorpdfstring{boundingRect()}{boundingRect()}}
+{\footnotesize\ttfamily QRectF Fx\+Column\+Painter\+::bounding\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00159                                            \{}
+\DoxyCodeLine{00160   \textcolor{keywordflow}{if} (m\_parent-\/>isOpened() \&\& m\_parent-\/>isNormalIconView())}
+\DoxyCodeLine{00161     \textcolor{keywordflow}{return} QRectF(-\/5, -\/54, m\_width + 10, m\_height + 59);}
+\DoxyCodeLine{00162   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00163     \textcolor{keywordflow}{return} QRectF(-\/5, -\/5, m\_width + 10, m\_height + 10);}
+\DoxyCodeLine{00164 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_column_painter_aa620fb6887d04a2099f481d8c04626d6}\label{class_fx_column_painter_aa620fb6887d04a2099f481d8c04626d6}} 
+\index{FxColumnPainter@{FxColumnPainter}!contextMenuEvent@{contextMenuEvent}}
+\index{contextMenuEvent@{contextMenuEvent}!FxColumnPainter@{FxColumnPainter}}
+\doxysubsubsection{\texorpdfstring{contextMenuEvent()}{contextMenuEvent()}}
+{\footnotesize\ttfamily void Fx\+Column\+Painter\+::context\+Menu\+Event (\begin{DoxyParamCaption}\item[{QGraphics\+Scene\+Context\+Menu\+Event $\ast$}]{cme }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00240                                                                           \{}
+\DoxyCodeLine{00241   \mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *fxScene = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{00242   QMenu menu(fxScene-\/>views()[0]);}
+\DoxyCodeLine{00243 }
+\DoxyCodeLine{00244   QAction *\mbox{\hyperlink{namespace_t_rop_a229eb7fd85c23c325ea4ba55478d5712}{copy}} = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Copy"{}});}
+\DoxyCodeLine{00245   QAction *cut  = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Cut"{}});}
+\DoxyCodeLine{00246 }
+\DoxyCodeLine{00247   \textcolor{keywordtype}{bool} enebleInsertAction =}
+\DoxyCodeLine{00248       !m\_parent-\/>getFx()-\/>getAttributes()-\/>isGrouped() ||}
+\DoxyCodeLine{00249       m\_parent-\/>getFx()-\/>getAttributes()-\/>isGroupEditing();}
+\DoxyCodeLine{00250   \textcolor{keywordflow}{if} (enebleInsertAction) \{}
+\DoxyCodeLine{00251     \textcolor{comment}{// repeat the latest action}}
+\DoxyCodeLine{00252     \textcolor{keywordflow}{if} (cme-\/>modifiers() \& Qt::ControlModifier) \{}
+\DoxyCodeLine{00253       menu.addAction(fxScene-\/>getAgainAction(AddFxContextMenu::Add |}
+\DoxyCodeLine{00254                                              AddFxContextMenu::Insert));}
+\DoxyCodeLine{00255       \textcolor{keywordflow}{if} (!menu.actions().isEmpty()) \{}
+\DoxyCodeLine{00256         menu.exec(cme-\/>screenPos());}
+\DoxyCodeLine{00257         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00258       \}}
+\DoxyCodeLine{00259     \}}
+\DoxyCodeLine{00260   \}}
+\DoxyCodeLine{00261 }
+\DoxyCodeLine{00262   QMenu *insertMenu = fxScene-\/>getInsertFxMenu();}
+\DoxyCodeLine{00263   fxScene-\/>initCursorScenePos();}
+\DoxyCodeLine{00264   QMenu *addMenu = fxScene-\/>getAddFxMenu();}
+\DoxyCodeLine{00265 }
+\DoxyCodeLine{00266   QAction *disconnectFromXSheet =}
+\DoxyCodeLine{00267       \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Disconnect from Xsheet"{}}), \&menu);}
+\DoxyCodeLine{00268   connect(disconnectFromXSheet, SIGNAL(triggered()), fxScene,}
+\DoxyCodeLine{00269           SLOT(onDisconnectFromXSheet()));}
+\DoxyCodeLine{00270 }
+\DoxyCodeLine{00271   QAction *connectToXSheet = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Connect to Xsheet"{}}), \&menu);}
+\DoxyCodeLine{00272   connect(connectToXSheet, SIGNAL(triggered()), fxScene,}
+\DoxyCodeLine{00273           SLOT(onConnectToXSheet()));}
+\DoxyCodeLine{00274 }
+\DoxyCodeLine{00275   QAction *addOutputFx =}
+\DoxyCodeLine{00276       CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_NewOutputFx"{}});}
+\DoxyCodeLine{00277 }
+\DoxyCodeLine{00278   QAction *addPaste = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Paste Add"{}}), \&menu);}
+\DoxyCodeLine{00279   connect(addPaste, SIGNAL(triggered()), fxScene, SLOT(onAddPaste()));}
+\DoxyCodeLine{00280 }
+\DoxyCodeLine{00281   QAction *preview = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Preview"{}}), \&menu);}
+\DoxyCodeLine{00282   connect(preview, SIGNAL(triggered()), fxScene, SLOT(onPreview()));}
+\DoxyCodeLine{00283 }
+\DoxyCodeLine{00284   \textcolor{keywordtype}{bool} cacheEnabled =}
+\DoxyCodeLine{00285       TPassiveCacheManager::instance()-\/>cacheEnabled(m\_parent-\/>getFx());}
+\DoxyCodeLine{00286 }
+\DoxyCodeLine{00287   QAction *cacheFx =}
+\DoxyCodeLine{00288       \textcolor{keyword}{new} QAction(cacheEnabled ? tr(\textcolor{stringliteral}{"{}\&Uncache Fx"{}}) : tr(\textcolor{stringliteral}{"{}\&Cache FX"{}}), \&menu);}
+\DoxyCodeLine{00289   \textcolor{keywordflow}{if} (cacheEnabled)}
+\DoxyCodeLine{00290     connect(cacheFx, SIGNAL(triggered()), fxScene, SLOT(onUncacheFx()));}
+\DoxyCodeLine{00291   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00292     connect(cacheFx, SIGNAL(triggered()), fxScene, SLOT(onCacheFx()));}
+\DoxyCodeLine{00293 }
+\DoxyCodeLine{00294   QAction *collapse = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Collapse"{}});}
+\DoxyCodeLine{00295 }
+\DoxyCodeLine{00296   QAction *openSubxsh = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_OpenChild"{}});}
+\DoxyCodeLine{00297 }
+\DoxyCodeLine{00298   QAction *explodeChild =}
+\DoxyCodeLine{00299       CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_ExplodeChild"{}});}
+\DoxyCodeLine{00300 }
+\DoxyCodeLine{00301   QAction *group = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Group"{}});}
+\DoxyCodeLine{00302 }
+\DoxyCodeLine{00303   menu.addMenu(insertMenu);}
+\DoxyCodeLine{00304   menu.addMenu(addMenu);}
+\DoxyCodeLine{00305   menu.addSeparator();}
+\DoxyCodeLine{00306   \textcolor{keywordflow}{if} (!m\_parent-\/>getFx()-\/>getAttributes()-\/>isGrouped()) \{}
+\DoxyCodeLine{00307     menu.addAction(copy);}
+\DoxyCodeLine{00308     menu.addAction(cut);}
+\DoxyCodeLine{00309     menu.addAction(addPaste);}
+\DoxyCodeLine{00310   \}}
+\DoxyCodeLine{00311   menu.addSeparator();}
+\DoxyCodeLine{00312   \textcolor{keywordflow}{if} (fxScene-\/>getXsheet()-\/>\mbox{\hyperlink{class_t_xsheet_adc7c74cce346abf3699bb250eb17a9c2}{getFxDag}}()-\/>getTerminalFxs()-\/>containsFx(}
+\DoxyCodeLine{00313           m\_parent-\/>getFx()))}
+\DoxyCodeLine{00314     menu.addAction(disconnectFromXSheet);}
+\DoxyCodeLine{00315   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00316     menu.addAction(connectToXSheet);}
+\DoxyCodeLine{00317   \textcolor{keywordflow}{if} (!m\_parent-\/>getFx()-\/>getAttributes()-\/>isGrouped())}
+\DoxyCodeLine{00318     menu.addAction(addOutputFx);}
+\DoxyCodeLine{00319   menu.addAction(preview);}
+\DoxyCodeLine{00320   menu.addAction(cacheFx);}
+\DoxyCodeLine{00321   menu.addSeparator();}
+\DoxyCodeLine{00322   \textcolor{keywordflow}{if} (enebleInsertAction) \{}
+\DoxyCodeLine{00323     menu.addAction(collapse);}
+\DoxyCodeLine{00324   \}}
+\DoxyCodeLine{00325 }
+\DoxyCodeLine{00326   \mbox{\hyperlink{class_t_frame_handle}{TFrameHandle}} *frameHandle = fxScene-\/>getFrameHandle();}
+\DoxyCodeLine{00327   \textcolor{keywordflow}{if} (frameHandle-\/>getFrameType() == TFrameHandle::SceneFrame) \{}
+\DoxyCodeLine{00328     \mbox{\hyperlink{class_t_level_column_fx}{TLevelColumnFx}} *colFx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_level_column_fx}{TLevelColumnFx}} *\textcolor{keyword}{>}(m\_parent-\/>getFx());}
+\DoxyCodeLine{00329     assert(colFx);}
+\DoxyCodeLine{00330     \textcolor{keywordtype}{int} col       = colFx-\/>getColumnIndex();}
+\DoxyCodeLine{00331     \textcolor{keywordtype}{int} fr        = frameHandle-\/>getFrame();}
+\DoxyCodeLine{00332     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh  = fxScene-\/>getXsheet();}
+\DoxyCodeLine{00333     \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(fr, col);}
+\DoxyCodeLine{00334     \textcolor{keywordflow}{if} (\textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_xsh_child_level}{TXshChildLevel}} *\textcolor{keyword}{>}(cell.m\_level.getPointer())) \{}
+\DoxyCodeLine{00335       menu.addAction(openSubxsh);}
+\DoxyCodeLine{00336       menu.addAction(explodeChild);}
+\DoxyCodeLine{00337     \}}
+\DoxyCodeLine{00338   \}}
+\DoxyCodeLine{00339   menu.addSeparator();}
+\DoxyCodeLine{00340   menu.addAction(group);}
+\DoxyCodeLine{00341 }
+\DoxyCodeLine{00342   \textcolor{keywordflow}{if} (m\_type == OVL\_XSHLEVEL || m\_type == TZP\_XSHLEVEL ||}
+\DoxyCodeLine{00343       m\_type == PLI\_XSHLEVEL) \{}
+\DoxyCodeLine{00344     QAction *viewFileCommand =}
+\DoxyCodeLine{00345         CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_ViewFile"{}});}
+\DoxyCodeLine{00346     menu.addSeparator();}
+\DoxyCodeLine{00347     menu.addAction(viewFileCommand);}
+\DoxyCodeLine{00348     QAction *levelSettings =}
+\DoxyCodeLine{00349         CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_LevelSettings"{}});}
+\DoxyCodeLine{00350     menu.addAction(levelSettings);}
+\DoxyCodeLine{00351   \}}
+\DoxyCodeLine{00352 }
+\DoxyCodeLine{00353   menu.exec(cme-\/>screenPos());}
+\DoxyCodeLine{00354 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_column_painter_a102680212addfa7e9852db363c5eaa10}\label{class_fx_column_painter_a102680212addfa7e9852db363c5eaa10}} 
+\index{FxColumnPainter@{FxColumnPainter}!onIconGenerated@{onIconGenerated}}
+\index{onIconGenerated@{onIconGenerated}!FxColumnPainter@{FxColumnPainter}}
+\doxysubsubsection{\texorpdfstring{onIconGenerated}{onIconGenerated}}
+{\footnotesize\ttfamily void Fx\+Column\+Painter\+::on\+Icon\+Generated (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00358                                       \{}
+\DoxyCodeLine{00359   \textcolor{keywordflow}{if} (m\_type != OVL\_XSHLEVEL) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00360 }
+\DoxyCodeLine{00361   \mbox{\hyperlink{class_t_level_column_fx}{TLevelColumnFx}} *lcfx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_level_column_fx}{TLevelColumnFx}} *\textcolor{keyword}{>}(m\_parent-\/>getFx());}
+\DoxyCodeLine{00362   \textcolor{keywordflow}{if} (lcfx) \{}
+\DoxyCodeLine{00363     \textcolor{keywordtype}{int} index = lcfx-\/>getColumnIndex();}
+\DoxyCodeLine{00364 }
+\DoxyCodeLine{00365     \mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *fxScene = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{00366     \textcolor{keywordflow}{if} (!fxScene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00367 }
+\DoxyCodeLine{00368     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = fxScene-\/>getXsheet();}
+\DoxyCodeLine{00369     \textcolor{keywordtype}{int} r0, r1;}
+\DoxyCodeLine{00370     xsh-\/>\mbox{\hyperlink{class_t_xsheet_a26850469fb0f2886b717479050c32be2}{getCellRange}}(index, r0, r1);}
+\DoxyCodeLine{00371     \textcolor{keywordflow}{if} (r0 > r1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00372     \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} firstCell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r0, index);}
+\DoxyCodeLine{00373     \textcolor{keywordtype}{int} type           = firstCell.m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a1a147f1e970a62120c0bbaf0020a8932}{getType}}();}
+\DoxyCodeLine{00374     \textcolor{keywordflow}{if} (m\_type != type) \{}
+\DoxyCodeLine{00375       m\_type = type;}
+\DoxyCodeLine{00376       update();}
+\DoxyCodeLine{00377     \}}
+\DoxyCodeLine{00378   \}}
+\DoxyCodeLine{00379 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_column_painter_a8bb71b6ea1f6830fcdd1591b6590ffa7}\label{class_fx_column_painter_a8bb71b6ea1f6830fcdd1591b6590ffa7}} 
+\index{FxColumnPainter@{FxColumnPainter}!paint@{paint}}
+\index{paint@{paint}!FxColumnPainter@{FxColumnPainter}}
+\doxysubsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Fx\+Column\+Painter\+::paint (\begin{DoxyParamCaption}\item[{QPainter $\ast$}]{painter,  }\item[{const QStyle\+Option\+Graphics\+Item $\ast$}]{option,  }\item[{QWidget $\ast$}]{widget = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00170                                              \{}
+\DoxyCodeLine{00171   \mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *sceneFx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{00172   \textcolor{keywordflow}{if} (!sceneFx) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00173   \textcolor{keywordtype}{int} levelType;}
+\DoxyCodeLine{00174   QString levelName;}
+\DoxyCodeLine{00175   m\_parent-\/>getLevelTypeAndName(levelType, levelName);}
+\DoxyCodeLine{00176 }
+\DoxyCodeLine{00177   QColor nodeColor;}
+\DoxyCodeLine{00178   \mbox{\hyperlink{class_schematic_viewer}{SchematicViewer}} *viewer = sceneFx-\/>getSchematicViewer();}
+\DoxyCodeLine{00179   viewer-\/>getNodeColor(levelType, nodeColor);}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181   \textcolor{keywordflow}{if} (m\_isReference) \{}
+\DoxyCodeLine{00182     painter-\/>setBrush(viewer-\/>getReferenceColumnColor());}
+\DoxyCodeLine{00183     painter-\/>setPen(nodeColor);}
+\DoxyCodeLine{00184   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00185     painter-\/>setBrush(nodeColor);}
+\DoxyCodeLine{00186     painter-\/>setPen(Qt::NoPen);}
+\DoxyCodeLine{00187   \}}
+\DoxyCodeLine{00188   painter-\/>drawRect(0, 0, m\_width, m\_height);}
+\DoxyCodeLine{00189 }
+\DoxyCodeLine{00190   \textcolor{keywordflow}{if} (m\_parent-\/>isOpened() \&\& m\_parent-\/>isNormalIconView()) \{}
+\DoxyCodeLine{00191     \textcolor{comment}{// Draw the pixmap}}
+\DoxyCodeLine{00192     painter-\/>setBrush(Qt::NoBrush);}
+\DoxyCodeLine{00193     painter-\/>setPen(QColor(0, 0, 0, 255));}
+\DoxyCodeLine{00194     QPixmap pixmap = scalePixmapKeepingAspectRatio(}
+\DoxyCodeLine{00195         m\_parent-\/>getPixmap(), QSize(m\_width, 49), Qt::transparent);}
+\DoxyCodeLine{00196     \textcolor{keywordflow}{if} (!pixmap.isNull()) \{}
+\DoxyCodeLine{00197       painter-\/>drawPixmap(QPointF(0, -\/pixmap.height()), pixmap);}
+\DoxyCodeLine{00198     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00199       painter-\/>setBrush(QColor(255, 255, 255, 255));}
+\DoxyCodeLine{00200       painter-\/>drawRect(0, -\/pixmap.height(), m\_width, pixmap.height());}
+\DoxyCodeLine{00201     \}}
+\DoxyCodeLine{00202   \}}
+\DoxyCodeLine{00203 }
+\DoxyCodeLine{00204   painter-\/>setPen(viewer-\/>getTextColor());}
+\DoxyCodeLine{00205   painter-\/>setBrush(Qt::NoBrush);}
+\DoxyCodeLine{00206 }
+\DoxyCodeLine{00207   QRectF columnNameRect;}
+\DoxyCodeLine{00208   QRectF levelNameRect;}
+\DoxyCodeLine{00209   \textcolor{keywordflow}{if} (m\_parent-\/>isNormalIconView()) \{}
+\DoxyCodeLine{00210     columnNameRect = QRect(18, 2, 54, 14);}
+\DoxyCodeLine{00211     levelNameRect  = QRectF(18, 16, 54, 14);}
+\DoxyCodeLine{00212   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00213     columnNameRect = QRect(4, 2, 78, 22);}
+\DoxyCodeLine{00214     levelNameRect  = QRectF(4, 26, 78, 22);}
+\DoxyCodeLine{00215 }
+\DoxyCodeLine{00216     QFont fnt = painter-\/>font();}
+\DoxyCodeLine{00217     fnt.setPixelSize(fnt.pixelSize() * 2);}
+\DoxyCodeLine{00218     painter-\/>setFont(fnt);}
+\DoxyCodeLine{00219   \}}
+\DoxyCodeLine{00220 }
+\DoxyCodeLine{00221   \textcolor{comment}{// column name}}
+\DoxyCodeLine{00222   \textcolor{keywordflow}{if} (!m\_parent-\/>isNameEditing()) \{}
+\DoxyCodeLine{00223     \textcolor{comment}{// if this is a current object}}
+\DoxyCodeLine{00224     \textcolor{keywordflow}{if} (sceneFx-\/>getCurrentFx() == m\_parent-\/>getFx())}
+\DoxyCodeLine{00225       painter-\/>setPen(viewer-\/>getSelectedNodeTextColor());}
+\DoxyCodeLine{00226     QString elidedName =}
+\DoxyCodeLine{00227         elideText(m\_name, painter-\/>font(), columnNameRect.width());}
+\DoxyCodeLine{00228     painter-\/>drawText(columnNameRect, Qt::AlignLeft | Qt::AlignVCenter,}
+\DoxyCodeLine{00229                       elidedName);}
+\DoxyCodeLine{00230   \}}
+\DoxyCodeLine{00231 }
+\DoxyCodeLine{00232   \textcolor{comment}{// level name}}
+\DoxyCodeLine{00233   QString elidedName =}
+\DoxyCodeLine{00234       elideText(levelName, painter-\/>font(), levelNameRect.width());}
+\DoxyCodeLine{00235   painter-\/>drawText(levelNameRect, Qt::AlignLeft | Qt::AlignVCenter,}
+\DoxyCodeLine{00236                     elidedName);}
+\DoxyCodeLine{00237 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_column_painter_ad7f1b2d9fff27e493659f0cb834f11b4}\label{class_fx_column_painter_ad7f1b2d9fff27e493659f0cb834f11b4}} 
+\index{FxColumnPainter@{FxColumnPainter}!setIsReference@{setIsReference}}
+\index{setIsReference@{setIsReference}!FxColumnPainter@{FxColumnPainter}}
+\doxysubsubsection{\texorpdfstring{setIsReference()}{setIsReference()}}
+{\footnotesize\ttfamily void Fx\+Column\+Painter\+::set\+Is\+Reference (\begin{DoxyParamCaption}\item[{bool}]{ref = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059 \{ m\_isReference = ref; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_column_painter_a901a83c425065cef39155701b7e7e552}\label{class_fx_column_painter_a901a83c425065cef39155701b7e7e552}} 
+\index{FxColumnPainter@{FxColumnPainter}!setName@{setName}}
+\index{setName@{setName}!FxColumnPainter@{FxColumnPainter}}
+\doxysubsubsection{\texorpdfstring{setName()}{setName()}}
+{\footnotesize\ttfamily void Fx\+Column\+Painter\+::set\+Name (\begin{DoxyParamCaption}\item[{const QString \&}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00058 \{ m\_name = name; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/fxschematicnode.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/fxschematicnode.\+cpp\end{DoxyCompactItemize}

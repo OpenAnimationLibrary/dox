@@ -1,0 +1,171 @@
+\hypertarget{class_task}{}\doxysection{Task Class Reference}
+\label{class_task}\index{Task@{Task}}
+Inheritance diagram for Task\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_task}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_task_af8a0ec7d716e8a328ceda0466b644697}{Task}} (const QString \&id, const QString \&cmdline, \mbox{\hyperlink{class_t_user_log}{TUser\+Log}} $\ast$log, \mbox{\hyperlink{class_farm_server}{Farm\+Server}} $\ast$server, const \mbox{\hyperlink{class_farm_controller_proxy_p}{Farm\+Controller\+ProxyP}} \&controller)
+\item 
+void \mbox{\hyperlink{class_task_aa2b4b735177b3ad885a9f6b590300b3f}{run}} () override
+\begin{DoxyCompactList}\small\item\em The central code of the task that is executed by a worker thread. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_task_af8a0ec7d716e8a328ceda0466b644697}\label{class_task_af8a0ec7d716e8a328ceda0466b644697}} 
+\index{Task@{Task}!Task@{Task}}
+\index{Task@{Task}!Task@{Task}}
+\doxysubsubsection{\texorpdfstring{Task()}{Task()}}
+{\footnotesize\ttfamily Task\+::\+Task (\begin{DoxyParamCaption}\item[{const QString \&}]{id,  }\item[{const QString \&}]{cmdline,  }\item[{\mbox{\hyperlink{class_t_user_log}{TUser\+Log}} $\ast$}]{log,  }\item[{\mbox{\hyperlink{class_farm_server}{Farm\+Server}} $\ast$}]{server,  }\item[{const \mbox{\hyperlink{class_farm_controller_proxy_p}{Farm\+Controller\+ProxyP}} \&}]{controller }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00352       : m\_id(\textcolor{keywordtype}{id})}
+\DoxyCodeLine{00353       , m\_cmdline(cmdline)}
+\DoxyCodeLine{00354       , m\_log(log)}
+\DoxyCodeLine{00355       , m\_server(server)}
+\DoxyCodeLine{00356       , m\_controller(controller) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_task_aa2b4b735177b3ad885a9f6b590300b3f}\label{class_task_aa2b4b735177b3ad885a9f6b590300b3f}} 
+\index{Task@{Task}!run@{run}}
+\index{run@{run}!Task@{Task}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Task\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The central code of the task that is executed by a worker thread. 
+
+
+
+Implements \mbox{\hyperlink{class_t_thread_1_1_runnable_ad3b8ee5e7b375bd169f7382fa26b00ef}{TThread\+::\+Runnable}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00390                \{}
+\DoxyCodeLine{00391   QString cmdline;}
+\DoxyCodeLine{00392 }
+\DoxyCodeLine{00393   \textcolor{comment}{// ===========}}
+\DoxyCodeLine{00394   \textcolor{comment}{// remap commandLine to local executable}}
+\DoxyCodeLine{00395 }
+\DoxyCodeLine{00396   QStringList l   = m\_cmdline.split(\textcolor{stringliteral}{"{} "{}});}
+\DoxyCodeLine{00397   QString appName = l.at(0);}
+\DoxyCodeLine{00398   \textcolor{comment}{// m\_log-\/>info(appName);}}
+\DoxyCodeLine{00399   \textcolor{keywordflow}{if} (appName.contains(\textcolor{stringliteral}{"{}tcomposer"{}}) || appName.contains(\textcolor{stringliteral}{"{}tcleanup"{}})) \{}
+\DoxyCodeLine{00400     \textcolor{keywordtype}{bool} m\_isComposerTask = appName.contains(\textcolor{stringliteral}{"{}tcomposer"{}});}
+\DoxyCodeLine{00401     \textcolor{comment}{// m\_log-\/>info(QString::number(m\_isComposerTask));}}
+\DoxyCodeLine{00402     appName = getExeName(m\_isComposerTask);}
+\DoxyCodeLine{00403     \textcolor{comment}{// m\_log-\/>info(appName);}}
+\DoxyCodeLine{00404 }
+\DoxyCodeLine{00405     \textcolor{keywordtype}{int} i   = 0;}
+\DoxyCodeLine{00406     cmdline = appName;}
+\DoxyCodeLine{00407     \textcolor{comment}{// m\_log-\/>info(cmdline);}}
+\DoxyCodeLine{00408     \textcolor{keywordflow}{for} (i = 1; i < l.size(); i++) \{}
+\DoxyCodeLine{00409       cmdline += \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{00410       cmdline += l.at(i);}
+\DoxyCodeLine{00411       \textcolor{comment}{// m\_log-\/>info(cmdline);}}
+\DoxyCodeLine{00412     \}}
+\DoxyCodeLine{00413     \textcolor{comment}{// m\_log-\/>info("{}remap commandLine to local executable"{});}}
+\DoxyCodeLine{00414     \textcolor{comment}{// m\_log-\/>info(appName);}}
+\DoxyCodeLine{00415   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00416     cmdline = m\_cmdline;}
+\DoxyCodeLine{00417   \}}
+\DoxyCodeLine{00418 }
+\DoxyCodeLine{00419   \textcolor{comment}{// ===========}}
+\DoxyCodeLine{00420   QString logMsg(\textcolor{stringliteral}{"{}Starting task at "{}});}
+\DoxyCodeLine{00421   logMsg += QDateTime::currentDateTime().toString();}
+\DoxyCodeLine{00422   logMsg += \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00423   logMsg += \textcolor{stringliteral}{"{}\(\backslash\)"{}"{}} + cmdline + \textcolor{stringliteral}{"{}\(\backslash\)"{}"{}};}
+\DoxyCodeLine{00424   logMsg += \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{00425 }
+\DoxyCodeLine{00426   m\_log-\/>info(logMsg);}
+\DoxyCodeLine{00427 }
+\DoxyCodeLine{00428   \textcolor{comment}{// ===========}}
+\DoxyCodeLine{00429 }
+\DoxyCodeLine{00430 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00431   \textcolor{keywordflow}{if} (m\_cmdline.contains(\textcolor{stringliteral}{"{}runcasm"{}})) service.mountDisks();}
+\DoxyCodeLine{00432 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00433 }
+\DoxyCodeLine{00434   \textcolor{keywordflow}{if} (m\_cmdline.contains(\textcolor{stringliteral}{"{}.bat"{}}))}
+\DoxyCodeLine{00435     cmdline = \textcolor{stringliteral}{"{}cmd /C "{}} + cmdline;}
+\DoxyCodeLine{00436   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00437     cmdline = cmdline;}
+\DoxyCodeLine{00438 \textcolor{preprocessor}{\#ifdef LEVO}}
+\DoxyCodeLine{00439   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00440     \textcolor{comment}{// metto da parte il primo token della command line che e' il nome}}
+\DoxyCodeLine{00441     \textcolor{comment}{// dell'eseguibile}}
+\DoxyCodeLine{00442     \textcolor{comment}{// Attenzione: case sensitive!}}
+\DoxyCodeLine{00443     QStringList l = m\_cmdline.split(\textcolor{stringliteral}{"{} "{}});}
+\DoxyCodeLine{00444     \textcolor{comment}{// assert(!"{}CONTROLLARE QUI"{});}}
+\DoxyCodeLine{00445     QString appName = l.at(1);}
+\DoxyCodeLine{00446     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00447     \textcolor{keywordflow}{for} (i = 2; i < l.size(); i++) cmdline += l.at(i);}
+\DoxyCodeLine{00448 }
+\DoxyCodeLine{00449     \textcolor{comment}{// cerco se il nome dell'applicazione e' tra quelle del file di}}
+\DoxyCodeLine{00450     \textcolor{comment}{// configurazione}}
+\DoxyCodeLine{00451     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \textcolor{keyword}{const} \&appPath : m\_server-\/>m\_appPaths) \{}
+\DoxyCodeLine{00452       \textcolor{keywordflow}{if} (appPath.getName() == appName.toStdString()) \{}
+\DoxyCodeLine{00453         exename = QString::fromStdWString(appPath.getWideString());}
+\DoxyCodeLine{00454         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00455       \}}
+\DoxyCodeLine{00456     \}}
+\DoxyCodeLine{00457   \}}
+\DoxyCodeLine{00458 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// LEVO}}
+\DoxyCodeLine{00459 }
+\DoxyCodeLine{00460   \textcolor{comment}{// cout << exename << endl;}}
+\DoxyCodeLine{00461   \textcolor{comment}{// cout << cmdline << endl;}}
+\DoxyCodeLine{00462 }
+\DoxyCodeLine{00463   QProcess process;}
+\DoxyCodeLine{00464 }
+\DoxyCodeLine{00465   process.start(cmdline);}
+\DoxyCodeLine{00466   process.waitForFinished(-\/1);}
+\DoxyCodeLine{00467 }
+\DoxyCodeLine{00468   \textcolor{keywordtype}{int} exitCode  = process.exitCode();}
+\DoxyCodeLine{00469   \textcolor{keywordtype}{int} errorCode = process.error();}
+\DoxyCodeLine{00470   \textcolor{keywordtype}{bool} ret      = (errorCode != QProcess::UnknownError) || exitCode;}
+\DoxyCodeLine{00471 }
+\DoxyCodeLine{00472   \textcolor{comment}{// int ret=QProcess::execute(/*"{}C:\(\backslash\)\(\backslash\)depot\(\backslash\)\(\backslash\)vincenzo\(\backslash\)\(\backslash\)toonz\(\backslash\)\(\backslash\)main\(\backslash\)\(\backslash\)x86\_debug\(\backslash\)\(\backslash\)"{}}}
+\DoxyCodeLine{00473   \textcolor{comment}{// +*/cmdline);}}
+\DoxyCodeLine{00474 }
+\DoxyCodeLine{00475   \textcolor{keywordflow}{if} (ret != 0) \{}
+\DoxyCodeLine{00476     QString logMsg(\textcolor{stringliteral}{"{}Task aborted "{}});}
+\DoxyCodeLine{00477     logMsg += \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{00478     m\_log-\/>warning(logMsg);}
+\DoxyCodeLine{00479     m\_controller-\/>taskSubmissionError(m\_id, exitCode);}
+\DoxyCodeLine{00480   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00481     logMsg = \textcolor{stringliteral}{"{}Task completed at "{}};}
+\DoxyCodeLine{00482     logMsg += QDateTime::currentDateTime().toString();}
+\DoxyCodeLine{00483     logMsg += \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{00484 }
+\DoxyCodeLine{00485     m\_log-\/>info(logMsg);}
+\DoxyCodeLine{00486     m\_controller-\/>taskCompleted(m\_id, exitCode);}
+\DoxyCodeLine{00487 }
+\DoxyCodeLine{00488     \textcolor{comment}{// CloseHandle(hJob);}}
+\DoxyCodeLine{00489   \}}
+\DoxyCodeLine{00490 }
+\DoxyCodeLine{00491   m\_server-\/>removeTask(m\_id);}
+\DoxyCodeLine{00492 }
+\DoxyCodeLine{00493   \textcolor{comment}{//************* COMMENTATO A CAUSA DI UN PROBLEMA SU XP}}
+\DoxyCodeLine{00494   \textcolor{comment}{// ora i dischi vengono montati al primo task di tipo "{}runcasm"{}}}
+\DoxyCodeLine{00495   \textcolor{comment}{// e smontati allo stop del servizio}}
+\DoxyCodeLine{00496   \textcolor{comment}{// service.unmountDisks();}}
+\DoxyCodeLine{00497 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tfarmserver/tfarmserver.\+cpp\end{DoxyCompactItemize}

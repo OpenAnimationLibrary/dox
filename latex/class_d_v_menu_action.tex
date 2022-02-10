@@ -1,0 +1,127 @@
+\hypertarget{class_d_v_menu_action}{}\doxysection{DVMenu\+Action Class Reference}
+\label{class_d_v_menu_action}\index{DVMenuAction@{DVMenuAction}}
+Inheritance diagram for DVMenu\+Action\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_d_v_menu_action}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_d_v_menu_action_a16c8fcdf938a626ec69ee0b791d57cc0}{on\+Triggered}} (QAction $\ast$action)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_v_menu_action_a71736768847c4c83cec62ed4edaea674}{DVMenu\+Action}} (const QString \&text, QWidget $\ast$parent, QList$<$ QString $>$ actions)
+\item 
+void \mbox{\hyperlink{class_d_v_menu_action_ac19626a0c38aac033ecaaca18c779c4e}{set\+Actions}} (QList$<$ QString $>$ actions)
+\item 
+int \mbox{\hyperlink{class_d_v_menu_action_a4b3ef221119f22479e2de359aca5291e}{get\+Triggered\+Action\+Index}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_v_menu_action_a71736768847c4c83cec62ed4edaea674}\label{class_d_v_menu_action_a71736768847c4c83cec62ed4edaea674}} 
+\index{DVMenuAction@{DVMenuAction}!DVMenuAction@{DVMenuAction}}
+\index{DVMenuAction@{DVMenuAction}!DVMenuAction@{DVMenuAction}}
+\doxysubsubsection{\texorpdfstring{DVMenuAction()}{DVMenuAction()}}
+{\footnotesize\ttfamily DVMenu\+Action\+::\+DVMenu\+Action (\begin{DoxyParamCaption}\item[{const QString \&}]{text,  }\item[{QWidget $\ast$}]{parent,  }\item[{QList$<$ QString $>$}]{actions }\end{DoxyParamCaption})}
+
+It is a menu\textquotesingle{} with action defined in {\bfseries{actions}}. Actions can contain Command\+Id or simple action name. In first case action triggered is connected with action command execute directly. In second case action triggered is connected with menu action command execute; is helpful to use {\bfseries{m\+\_\+triggered\+Action\+Index}} to distingue action. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00487     : QMenu(text, parent), m\_triggeredActionIndex(-\/1) \{}
+\DoxyCodeLine{00488   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00489   \textcolor{keywordflow}{for} (i = 0; i < actions.size(); i++) addAction(actions.at(i));}
+\DoxyCodeLine{00490   connect(\textcolor{keyword}{this}, SIGNAL(triggered(QAction *)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00491           SLOT(onTriggered(QAction *)));}
+\DoxyCodeLine{00492 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_v_menu_action_a4b3ef221119f22479e2de359aca5291e}\label{class_d_v_menu_action_a4b3ef221119f22479e2de359aca5291e}} 
+\index{DVMenuAction@{DVMenuAction}!getTriggeredActionIndex@{getTriggeredActionIndex}}
+\index{getTriggeredActionIndex@{getTriggeredActionIndex}!DVMenuAction@{DVMenuAction}}
+\doxysubsubsection{\texorpdfstring{getTriggeredActionIndex()}{getTriggeredActionIndex()}}
+{\footnotesize\ttfamily int DVMenu\+Action\+::get\+Triggered\+Action\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00274 \{ \textcolor{keywordflow}{return} m\_triggeredActionIndex; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_d_v_menu_action_a16c8fcdf938a626ec69ee0b791d57cc0}\label{class_d_v_menu_action_a16c8fcdf938a626ec69ee0b791d57cc0}} 
+\index{DVMenuAction@{DVMenuAction}!onTriggered@{onTriggered}}
+\index{onTriggered@{onTriggered}!DVMenuAction@{DVMenuAction}}
+\doxysubsubsection{\texorpdfstring{onTriggered}{onTriggered}}
+{\footnotesize\ttfamily void DVMenu\+Action\+::on\+Triggered (\begin{DoxyParamCaption}\item[{QAction $\ast$}]{action }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00534                                               \{}
+\DoxyCodeLine{00535   QVariant data = action-\/>data();}
+\DoxyCodeLine{00536   \textcolor{keywordflow}{if} (data.isValid()) m\_triggeredActionIndex = data.toInt();}
+\DoxyCodeLine{00537   CommandManager::instance()-\/>execute(action, menuAction());}
+\DoxyCodeLine{00538   \textcolor{keywordtype}{int} oldIndex = m\_triggeredActionIndex;}
+\DoxyCodeLine{00539   \textcolor{keywordflow}{if} (m\_triggeredActionIndex != -\/1) m\_triggeredActionIndex = -\/1;}
+\DoxyCodeLine{00540   QString str = data.toString();}
+\DoxyCodeLine{00541   QAction *tableAction =}
+\DoxyCodeLine{00542       CommandManager::instance()-\/>getAction(str.toStdString().c\_str());}
+\DoxyCodeLine{00543   \textcolor{keywordflow}{if} (tableAction || oldIndex == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00544   QList<QAction *> acts = actions();}
+\DoxyCodeLine{00545   removeAction(action);}
+\DoxyCodeLine{00546   insertAction(acts[0], action);}
+\DoxyCodeLine{00547 }
+\DoxyCodeLine{00548   acts = actions();}
+\DoxyCodeLine{00549   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00550   \textcolor{keywordflow}{for} (i = 0; i <= oldIndex; i++) \{}
+\DoxyCodeLine{00551     QAction *a     = acts.at(i);}
+\DoxyCodeLine{00552     QString newTxt = changeStringNumber(a-\/>text(), i);}
+\DoxyCodeLine{00553     a-\/>setText(newTxt);}
+\DoxyCodeLine{00554     a-\/>setData(QVariant(i));}
+\DoxyCodeLine{00555   \}}
+\DoxyCodeLine{00556   m\_triggeredActionIndex = -\/1;}
+\DoxyCodeLine{00557 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_d_v_menu_action_ac19626a0c38aac033ecaaca18c779c4e}\label{class_d_v_menu_action_ac19626a0c38aac033ecaaca18c779c4e}} 
+\index{DVMenuAction@{DVMenuAction}!setActions@{setActions}}
+\index{setActions@{setActions}!DVMenuAction@{DVMenuAction}}
+\doxysubsubsection{\texorpdfstring{setActions()}{setActions()}}
+{\footnotesize\ttfamily void DVMenu\+Action\+::set\+Actions (\begin{DoxyParamCaption}\item[{QList$<$ QString $>$}]{actions }\end{DoxyParamCaption})}
+
+Set a new list of action to menu\textquotesingle{}. NB. If action list is composed by action menaged and action to create pay attention to inserted order. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00499                                                     \{}
+\DoxyCodeLine{00500   \textcolor{keywordflow}{if} (m\_triggeredActionIndex != -\/1)  \textcolor{comment}{// Sta facendo l'onTriggered}}
+\DoxyCodeLine{00501     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00502   clear();}
+\DoxyCodeLine{00503   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00504   \textcolor{keywordflow}{for} (i = 0; i < actions.size(); i++) \{}
+\DoxyCodeLine{00505     QString actionId = actions.at(i);}
+\DoxyCodeLine{00506     \textcolor{comment}{// Se l'azione e' definita da un CommandId la aggiungo.}}
+\DoxyCodeLine{00507     QAction *action =}
+\DoxyCodeLine{00508         CommandManager::instance()-\/>getAction(actionId.toStdString().c\_str());}
+\DoxyCodeLine{00509     \textcolor{keywordflow}{if} (action) \{}
+\DoxyCodeLine{00510       addAction(action);}
+\DoxyCodeLine{00511       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00512     \}}
+\DoxyCodeLine{00513     \textcolor{comment}{// Altrimenti creo una nuova azione e la aggiungo.}}
+\DoxyCodeLine{00514     action = addAction(actionId);}
+\DoxyCodeLine{00515     action-\/>setData(QVariant(i));}
+\DoxyCodeLine{00516   \}}
+\DoxyCodeLine{00517 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/menubarcommand.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/menubarcommand.\+cpp\end{DoxyCompactItemize}

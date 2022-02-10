@@ -1,0 +1,885 @@
+\hypertarget{class_png_reader}{}\doxysection{Png\+Reader Class Reference}
+\label{class_png_reader}\index{PngReader@{PngReader}}
+Inheritance diagram for Png\+Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_png_reader}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_png_reader_a8195c833c667d26864ac7a3abdb83262}{read16\+Bit\+Is\+Enabled}} () const override
+\item 
+void \mbox{\hyperlink{class_png_reader_aa900ed492288caeda5ad669083f988d7}{enable16\+Bit\+Read}} (bool enabled) override
+\item 
+void \mbox{\hyperlink{class_png_reader_a16dc53c4765c80d486062eeaf8fd3e66}{read\+Line\+Interlace}} (char $\ast$buffer)
+\item 
+void \mbox{\hyperlink{class_png_reader_af8039a02f91f9ada5a15d17163960d4c}{read\+Line\+Interlace}} (short $\ast$buffer)
+\item 
+void \mbox{\hyperlink{class_png_reader_a8a79770f7472014b55f35a7f9a8ba283}{open}} (FILE $\ast$file) override
+\item 
+void \mbox{\hyperlink{class_png_reader_a62f76dd32570f4ff46ef2dc7ab2bc5ea}{read\+Line}} (char $\ast$buffer, int x0, int x1, int shrink) override
+\item 
+void \mbox{\hyperlink{class_png_reader_a5613ffc0f43085b17bd7a334cfe37e54}{read\+Line}} (short $\ast$buffer, int x0, int x1, int shrink) override
+\item 
+int \mbox{\hyperlink{class_png_reader_a7d93f52c8cdc7e3a28e70fa824b9c8e8}{skip\+Lines}} (int line\+Count) override
+\item 
+Tiio\+::\+Row\+Order \mbox{\hyperlink{class_png_reader_aec19e3ebbd7c1d11f5933da3c485ccd0}{get\+Row\+Order}} () const override
+\item 
+void \mbox{\hyperlink{class_png_reader_afed67b844690bc29beae8604911b809f}{write\+Row}} (char $\ast$buffer)
+\item 
+void \mbox{\hyperlink{class_png_reader_ab545a251355813409a5721b9eb982622}{write\+Row}} (short $\ast$buffer)
+\item 
+void \mbox{\hyperlink{class_png_reader_a63c9458101c062696d6d6697599eba8f}{copy\+Pixel}} (int count, int dstX, int dst\+Dx, int dstY)
+\item 
+void \mbox{\hyperlink{class_png_reader_a5b9f3aeb41c603c29a5b9493a6162538}{read\+Line\+Interlace}} (char $\ast$buffer, int x0, int x1, int shrink)
+\item 
+void \mbox{\hyperlink{class_png_reader_a6573f721dad199206a6bcade1e70fb00}{read\+Line\+Interlace}} (short $\ast$buffer, int x0, int x1, int shrink)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_png_reader_ad47db7150767946c85d583a6bd972033}\label{class_png_reader_ad47db7150767946c85d583a6bd972033}} 
+\index{PngReader@{PngReader}!PngReader@{PngReader}}
+\index{PngReader@{PngReader}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{PngReader()}{PngReader()}}
+{\footnotesize\ttfamily Png\+Reader\+::\+Png\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00088       : m\_chan(0)}
+\DoxyCodeLine{00089       , m\_png\_ptr(0)}
+\DoxyCodeLine{00090       , m\_info\_ptr(0)}
+\DoxyCodeLine{00091       , m\_end\_info\_ptr(0)}
+\DoxyCodeLine{00092       , m\_bit\_depth(0)}
+\DoxyCodeLine{00093       , m\_color\_type(0)}
+\DoxyCodeLine{00094       , m\_interlace\_type(0)}
+\DoxyCodeLine{00095       , m\_compression\_type(0)}
+\DoxyCodeLine{00096       , m\_filter\_type(0)}
+\DoxyCodeLine{00097       , m\_sig\_read(0)}
+\DoxyCodeLine{00098       , m\_y(0)}
+\DoxyCodeLine{00099       , m\_is16bitEnabled(\textcolor{keyword}{true})}
+\DoxyCodeLine{00100       , m\_canDelete(0) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_reader_a38418d1f401c255ced3331b165bc67ce}\label{class_png_reader_a38418d1f401c255ced3331b165bc67ce}} 
+\index{PngReader@{PngReader}!````~PngReader@{$\sim$PngReader}}
+\index{````~PngReader@{$\sim$PngReader}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{$\sim$PngReader()}{~PngReader()}}
+{\footnotesize\ttfamily Png\+Reader\+::$\sim$\+Png\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00102                \{}
+\DoxyCodeLine{00103     \textcolor{keywordflow}{if} (m\_canDelete == 1) \{}
+\DoxyCodeLine{00104       png\_destroy\_read\_struct(\&m\_png\_ptr, \&m\_info\_ptr, \&m\_end\_info\_ptr);}
+\DoxyCodeLine{00105     \}}
+\DoxyCodeLine{00106   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_png_reader_a63c9458101c062696d6d6697599eba8f}\label{class_png_reader_a63c9458101c062696d6d6697599eba8f}} 
+\index{PngReader@{PngReader}!copyPixel@{copyPixel}}
+\index{copyPixel@{copyPixel}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{copyPixel()}{copyPixel()}}
+{\footnotesize\ttfamily void Png\+Reader\+::copy\+Pixel (\begin{DoxyParamCaption}\item[{int}]{count,  }\item[{int}]{dstX,  }\item[{int}]{dst\+Dx,  }\item[{int}]{dstY }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00512                                                            \{}
+\DoxyCodeLine{00513     \textcolor{keywordtype}{int} channels = png\_get\_channels(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00514     \textcolor{keywordtype}{int} rowBytes = png\_get\_rowbytes(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00515     \textcolor{keywordtype}{int} lx       = m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}};}
+\DoxyCodeLine{00516 }
+\DoxyCodeLine{00517     \textcolor{keywordflow}{if} ((channels == 4 || channels == 3) \&\& m\_bit\_depth == 16) \{}
+\DoxyCodeLine{00518       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; i += 2) \{}
+\DoxyCodeLine{00519         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < channels * 2; j++) \{}
+\DoxyCodeLine{00520           (m\_tempBuffer.get() +}
+\DoxyCodeLine{00521            (dstY * rowBytes))[(i * dstDx + dstX) * channels + j] =}
+\DoxyCodeLine{00522               m\_rowBuffer[i * channels + j];}
+\DoxyCodeLine{00523         \}}
+\DoxyCodeLine{00524       \}}
+\DoxyCodeLine{00525     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (channels == 2 \&\& m\_bit\_depth == 16) \{}
+\DoxyCodeLine{00526       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; i += 2) \{}
+\DoxyCodeLine{00527         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < 4 * 2; j++) \{}
+\DoxyCodeLine{00528           (m\_tempBuffer.get() +}
+\DoxyCodeLine{00529            (dstY * rowBytes * 4))[(i * dstDx + dstX) * 4 + j] =}
+\DoxyCodeLine{00530               m\_rowBuffer[i * 4 + j];}
+\DoxyCodeLine{00531         \}}
+\DoxyCodeLine{00532       \}}
+\DoxyCodeLine{00533     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (channels == 1 \&\& m\_bit\_depth == 16) \{}
+\DoxyCodeLine{00534       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; i += 2) \{}
+\DoxyCodeLine{00535         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < 3 * 2; j++) \{}
+\DoxyCodeLine{00536           (m\_tempBuffer.get() +}
+\DoxyCodeLine{00537            (dstY * rowBytes * 4))[(i * dstDx + dstX) * 3 + j] =}
+\DoxyCodeLine{00538               m\_rowBuffer[i * 3 + j];}
+\DoxyCodeLine{00539         \}}
+\DoxyCodeLine{00540       \}}
+\DoxyCodeLine{00541     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (channels == 1 \&\& m\_bit\_depth == 8) \{}
+\DoxyCodeLine{00542       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; i++) \{}
+\DoxyCodeLine{00543         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < 3; j++) \{}
+\DoxyCodeLine{00544           (m\_tempBuffer.get() +}
+\DoxyCodeLine{00545            (dstY * rowBytes * 4))[(i * dstDx + dstX) * 3 + j] =}
+\DoxyCodeLine{00546               m\_rowBuffer[i * 3 + j];}
+\DoxyCodeLine{00547         \}}
+\DoxyCodeLine{00548       \}}
+\DoxyCodeLine{00549     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (channels == 2 \&\& m\_bit\_depth == 8) \{}
+\DoxyCodeLine{00550       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; i++) \{}
+\DoxyCodeLine{00551         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < 4; j++) \{}
+\DoxyCodeLine{00552           (m\_tempBuffer.get() +}
+\DoxyCodeLine{00553            (dstY * rowBytes * 4))[(i * dstDx + dstX) * 4 + j] =}
+\DoxyCodeLine{00554               m\_rowBuffer[i * 4 + j];}
+\DoxyCodeLine{00555         \}}
+\DoxyCodeLine{00556       \}}
+\DoxyCodeLine{00557     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((channels == 1 || channels == 2) \&\& m\_bit\_depth < 8) \{}
+\DoxyCodeLine{00558       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; i++) \{}
+\DoxyCodeLine{00559         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < 3; j++) \{}
+\DoxyCodeLine{00560           (m\_tempBuffer.get() + (dstY * lx * 3))[(i * dstDx + dstX) * 3 + j] =}
+\DoxyCodeLine{00561               m\_rowBuffer[i * 3 + j];}
+\DoxyCodeLine{00562         \}}
+\DoxyCodeLine{00563       \}}
+\DoxyCodeLine{00564     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00565       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; i++) \{}
+\DoxyCodeLine{00566         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < channels; j++) \{}
+\DoxyCodeLine{00567           (m\_tempBuffer.get() +}
+\DoxyCodeLine{00568            (dstY * rowBytes))[(i * dstDx + dstX) * channels + j] =}
+\DoxyCodeLine{00569               m\_rowBuffer[i * channels + j];}
+\DoxyCodeLine{00570         \}}
+\DoxyCodeLine{00571       \}}
+\DoxyCodeLine{00572     \}}
+\DoxyCodeLine{00573   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_reader_aa900ed492288caeda5ad669083f988d7}\label{class_png_reader_aa900ed492288caeda5ad669083f988d7}} 
+\index{PngReader@{PngReader}!enable16BitRead@{enable16BitRead}}
+\index{enable16BitRead@{enable16BitRead}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{enable16BitRead()}{enable16BitRead()}}
+{\footnotesize\ttfamily void Png\+Reader\+::enable16\+Bit\+Read (\begin{DoxyParamCaption}\item[{bool}]{enabled }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00110 \{ m\_is16bitEnabled = enabled; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_reader_aec19e3ebbd7c1d11f5933da3c485ccd0}\label{class_png_reader_aec19e3ebbd7c1d11f5933da3c485ccd0}} 
+\index{PngReader@{PngReader}!getRowOrder@{getRowOrder}}
+\index{getRowOrder@{getRowOrder}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{getRowOrder()}{getRowOrder()}}
+{\footnotesize\ttfamily Tiio\+::\+Row\+Order Png\+Reader\+::get\+Row\+Order (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00348 \{ \textcolor{keywordflow}{return} Tiio::TOP2BOTTOM; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_reader_a8a79770f7472014b55f35a7f9a8ba283}\label{class_png_reader_a8a79770f7472014b55f35a7f9a8ba283}} 
+\index{PngReader@{PngReader}!open@{open}}
+\index{open@{open}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily void Png\+Reader\+::open (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00119                                  \{}
+\DoxyCodeLine{00120     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00121       m\_chan = file;}
+\DoxyCodeLine{00122     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00123       perror(\textcolor{stringliteral}{"{}uffa"{}});}
+\DoxyCodeLine{00124       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00125     \}}
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} signature[8];  \textcolor{comment}{// da 1 a 8 bytes}}
+\DoxyCodeLine{00128     fread(signature, 1, \textcolor{keyword}{sizeof} signature, m\_chan);}
+\DoxyCodeLine{00129     \textcolor{keywordtype}{bool} isPng = !png\_sig\_cmp(signature, 0, \textcolor{keyword}{sizeof} signature);}
+\DoxyCodeLine{00130     \textcolor{keywordflow}{if} (!isPng) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132     m\_png\_ptr = png\_create\_read\_struct(PNG\_LIBPNG\_VER\_STRING, \&m\_canDelete,}
+\DoxyCodeLine{00133                                        tnz\_error\_fun, 0);}
+\DoxyCodeLine{00134     \textcolor{keywordflow}{if} (!m\_png\_ptr) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00135 }
+\DoxyCodeLine{00136 \textcolor{preprocessor}{\#if defined(PNG\_LIBPNG\_VER)}}
+\DoxyCodeLine{00137 \textcolor{preprocessor}{\#if (PNG\_LIBPNG\_VER >= 10527)}}
+\DoxyCodeLine{00138     png\_set\_longjmp\_fn(m\_png\_ptr, tnz\_abort,}
+\DoxyCodeLine{00139                        \textcolor{keyword}{sizeof}(jmp\_buf)); \textcolor{comment}{/* ignore all fatal errors */}}
+\DoxyCodeLine{00140 \textcolor{preprocessor}{\#endif                                   }\textcolor{comment}{// (PNG\_LIBPNG\_VER >= 10527)}}
+\DoxyCodeLine{00141 \textcolor{preprocessor}{\#endif                                   }\textcolor{comment}{// defined(PNG\_LIBPNG\_VER)}}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143     m\_canDelete = 1;}
+\DoxyCodeLine{00144     m\_info\_ptr  = png\_create\_info\_struct(m\_png\_ptr);}
+\DoxyCodeLine{00145     \textcolor{keywordflow}{if} (!m\_info\_ptr) \{}
+\DoxyCodeLine{00146       png\_destroy\_read\_struct(\&m\_png\_ptr, (png\_infopp)0, (png\_infopp)0);}
+\DoxyCodeLine{00147       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00148     \}}
+\DoxyCodeLine{00149     m\_end\_info\_ptr = png\_create\_info\_struct(m\_png\_ptr);}
+\DoxyCodeLine{00150     \textcolor{keywordflow}{if} (!m\_end\_info\_ptr) \{}
+\DoxyCodeLine{00151       png\_destroy\_read\_struct(\&m\_png\_ptr, \&m\_info\_ptr, (png\_infopp)0);}
+\DoxyCodeLine{00152       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00153     \}}
+\DoxyCodeLine{00154 }
+\DoxyCodeLine{00155     png\_init\_io(m\_png\_ptr, m\_chan);}
+\DoxyCodeLine{00156 }
+\DoxyCodeLine{00157     png\_set\_sig\_bytes(m\_png\_ptr, \textcolor{keyword}{sizeof} signature);}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159 \textcolor{preprocessor}{\#if defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MBGR)}}
+\DoxyCodeLine{00160     png\_set\_bgr(m\_png\_ptr);}
+\DoxyCodeLine{00161     png\_set\_swap\_alpha(m\_png\_ptr);}
+\DoxyCodeLine{00162 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_BGRM)}}
+\DoxyCodeLine{00163     png\_set\_bgr(m\_png\_ptr);}
+\DoxyCodeLine{00164 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MRGB)}}
+\DoxyCodeLine{00165     png\_set\_swap\_alpha(m\_png\_ptr);}
+\DoxyCodeLine{00166 \textcolor{preprocessor}{\#elif !defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_RGBM)}}
+\DoxyCodeLine{00167 \textcolor{preprocessor}{\#error "{}unknown channel order"{}}}
+\DoxyCodeLine{00168 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00169 }
+\DoxyCodeLine{00170     png\_read\_info(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00171 }
+\DoxyCodeLine{00172     \textcolor{keywordflow}{if} (png\_get\_valid(m\_png\_ptr, m\_info\_ptr, PNG\_INFO\_pHYs)) \{}
+\DoxyCodeLine{00173       png\_uint\_32 xdpi = png\_get\_x\_pixels\_per\_meter(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00174       png\_uint\_32 ydpi = png\_get\_y\_pixels\_per\_meter(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00175       m\_info.\mbox{\hyperlink{class_t_image_info_ad66e78a66158fddceaa192d0063f68e8}{m\_dpix}}    = tround(xdpi * 0.0254);}
+\DoxyCodeLine{00176       m\_info.\mbox{\hyperlink{class_t_image_info_ad8d3ccb14666297e487e04aa10ab7831}{m\_dpiy}}    = tround(ydpi * 0.0254);}
+\DoxyCodeLine{00177     \}}
+\DoxyCodeLine{00178 }
+\DoxyCodeLine{00179     \textcolor{keywordtype}{int} rowBytes = png\_get\_rowbytes(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181     png\_uint\_32 lx = 0, ly = 0;}
+\DoxyCodeLine{00182     png\_get\_IHDR(m\_png\_ptr, m\_info\_ptr, \&lx, \&ly, \&m\_bit\_depth, \&m\_color\_type,}
+\DoxyCodeLine{00183                  \&m\_interlace\_type, \&m\_compression\_type, \&m\_filter\_type);}
+\DoxyCodeLine{00184     m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} = lx;}
+\DoxyCodeLine{00185     m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}} = ly;}
+\DoxyCodeLine{00186 }
+\DoxyCodeLine{00187     m\_info.\mbox{\hyperlink{class_t_image_info_aa69221d579b49a27bcd54ffaabb2e8be}{m\_bitsPerSample}} = m\_bit\_depth;}
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189     \textcolor{keywordtype}{int} channels            = png\_get\_channels(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00190     m\_info.\mbox{\hyperlink{class_t_image_info_a6b58380f718e21dde1b37577090f5c77}{m\_samplePerPixel}} = channels;}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192     \textcolor{keywordflow}{if} (channels == 1 || channels == 2) \{}
+\DoxyCodeLine{00193       \textcolor{keywordflow}{if} (m\_bit\_depth <}
+\DoxyCodeLine{00194           8)  \textcolor{comment}{// (m\_bit\_depth == 1 || m\_bit\_depth == 2 || m\_bit\_depth == 4)}}
+\DoxyCodeLine{00195         m\_rowBuffer.reset(\textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[lx * 3]);}
+\DoxyCodeLine{00196       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00197         m\_rowBuffer.reset(\textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[rowBytes * 4]);}
+\DoxyCodeLine{00198     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00199       m\_rowBuffer.reset(\textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[rowBytes]);}
+\DoxyCodeLine{00200     \}}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202     \textcolor{keywordflow}{if} (m\_color\_type == PNG\_COLOR\_TYPE\_PALETTE) \{}
+\DoxyCodeLine{00203       m\_info.\mbox{\hyperlink{class_t_image_info_a38cb10577dcf2003ce7026580d2c92ef}{m\_valid}} = \textcolor{keyword}{true};}
+\DoxyCodeLine{00204       png\_set\_palette\_to\_rgb(m\_png\_ptr);}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206       \textcolor{comment}{// treat the image as RGBA from now on}}
+\DoxyCodeLine{00207       m\_info.\mbox{\hyperlink{class_t_image_info_a6b58380f718e21dde1b37577090f5c77}{m\_samplePerPixel}} =}
+\DoxyCodeLine{00208           4;  \textcolor{comment}{// there are 4 channels per pixel (R, G, B, and A)}}
+\DoxyCodeLine{00209 }
+\DoxyCodeLine{00210       \textcolor{comment}{// if there is no alpha channel, then fill it with "{}255"{} (full opacity)}}
+\DoxyCodeLine{00211       png\_set\_filler(m\_png\_ptr, 0xFF, PNG\_FILLER\_AFTER);}
+\DoxyCodeLine{00212     \}}
+\DoxyCodeLine{00213 }
+\DoxyCodeLine{00214     \textcolor{keywordflow}{if} (m\_color\_type == PNG\_COLOR\_TYPE\_GRAY \&\& m\_bit\_depth < 8) \{}
+\DoxyCodeLine{00215       png\_set\_expand\_gray\_1\_2\_4\_to\_8(m\_png\_ptr);}
+\DoxyCodeLine{00216     \}}
+\DoxyCodeLine{00217 }
+\DoxyCodeLine{00218     \textcolor{keywordflow}{if} (png\_get\_valid(m\_png\_ptr, m\_info\_ptr, PNG\_INFO\_tRNS)) \{}
+\DoxyCodeLine{00219       png\_set\_tRNS\_to\_alpha(m\_png\_ptr);}
+\DoxyCodeLine{00220     \}}
+\DoxyCodeLine{00221 }
+\DoxyCodeLine{00222     \textcolor{keywordflow}{if} (m\_bit\_depth == 16 \&\& !m\_is16bitEnabled) \{}
+\DoxyCodeLine{00223       png\_set\_strip\_16(m\_png\_ptr);}
+\DoxyCodeLine{00224     \}}
+\DoxyCodeLine{00225 }
+\DoxyCodeLine{00226 \textcolor{preprocessor}{\#if defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_BGRM)}}
+\DoxyCodeLine{00227     \textcolor{keywordflow}{if} (m\_color\_type == PNG\_COLOR\_TYPE\_RGB ||}
+\DoxyCodeLine{00228         m\_color\_type == PNG\_COLOR\_TYPE\_RGB\_ALPHA) \{}
+\DoxyCodeLine{00229       png\_set\_bgr(m\_png\_ptr);}
+\DoxyCodeLine{00230     \}}
+\DoxyCodeLine{00231 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MBGR)}}
+\DoxyCodeLine{00232     \textcolor{keywordflow}{if} (m\_color\_type == PNG\_COLOR\_TYPE\_RGB\_ALPHA) \{}
+\DoxyCodeLine{00233       png\_set\_swap\_alpha(m\_png\_ptr);}
+\DoxyCodeLine{00234     \}}
+\DoxyCodeLine{00235 \textcolor{preprocessor}{\#elif !defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_RGBM) \&\&                              \(\backslash\)}}
+\DoxyCodeLine{00236 \textcolor{preprocessor}{    !defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MRGB)}}
+\DoxyCodeLine{00237 \textcolor{preprocessor}{\#error "{}unknown channel order"{}}}
+\DoxyCodeLine{00238 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00239 }
+\DoxyCodeLine{00240     \textcolor{keywordflow}{if} (m\_color\_type == PNG\_COLOR\_TYPE\_GRAY ||}
+\DoxyCodeLine{00241         m\_color\_type == PNG\_COLOR\_TYPE\_GRAY\_ALPHA) \{}
+\DoxyCodeLine{00242       png\_set\_gray\_to\_rgb(m\_png\_ptr);}
+\DoxyCodeLine{00243     \}}
+\DoxyCodeLine{00244   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_reader_a8195c833c667d26864ac7a3abdb83262}\label{class_png_reader_a8195c833c667d26864ac7a3abdb83262}} 
+\index{PngReader@{PngReader}!read16BitIsEnabled@{read16BitIsEnabled}}
+\index{read16BitIsEnabled@{read16BitIsEnabled}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{read16BitIsEnabled()}{read16BitIsEnabled()}}
+{\footnotesize\ttfamily bool Png\+Reader\+::read16\+Bit\+Is\+Enabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00108 \{ \textcolor{keywordflow}{return} m\_is16bitEnabled; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_reader_a62f76dd32570f4ff46ef2dc7ab2bc5ea}\label{class_png_reader_a62f76dd32570f4ff46ef2dc7ab2bc5ea}} 
+\index{PngReader@{PngReader}!readLine@{readLine}}
+\index{readLine@{readLine}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{readLine()}{readLine()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Png\+Reader\+::read\+Line (\begin{DoxyParamCaption}\item[{char $\ast$}]{buffer,  }\item[{int}]{x0,  }\item[{int}]{x1,  }\item[{int}]{shrink }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00246                                                                    \{}
+\DoxyCodeLine{00247     \textcolor{keywordtype}{int} ly = m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}};}
+\DoxyCodeLine{00248     \textcolor{keywordflow}{if} (!m\_tempBuffer) \{}
+\DoxyCodeLine{00249       \textcolor{keywordtype}{int} lx       = m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}};}
+\DoxyCodeLine{00250       \textcolor{keywordtype}{int} channels = png\_get\_channels(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00251       \textcolor{keywordtype}{int} rowBytes = png\_get\_rowbytes(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00252       \textcolor{keywordflow}{if} (m\_interlace\_type == 1) \{}
+\DoxyCodeLine{00253         \textcolor{keywordflow}{if} (channels == 1 || channels == 2) \{}
+\DoxyCodeLine{00254           \textcolor{keywordflow}{if} (m\_bit\_depth < 8)}
+\DoxyCodeLine{00255             m\_tempBuffer.reset(\textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[ly * lx * 3]);}
+\DoxyCodeLine{00256           \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00257             m\_tempBuffer.reset(\textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[ly * rowBytes * 4]);}
+\DoxyCodeLine{00258         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00259           m\_tempBuffer.reset(\textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[ly * rowBytes]);}
+\DoxyCodeLine{00260         \}}
+\DoxyCodeLine{00261       \}}
+\DoxyCodeLine{00262     \}}
+\DoxyCodeLine{00263     \textcolor{keywordtype}{int} lx = m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}};}
+\DoxyCodeLine{00264 }
+\DoxyCodeLine{00265     \textcolor{keywordflow}{if} (m\_interlace\_type == 1 \&\& lx > 4) \{}
+\DoxyCodeLine{00266       readLineInterlace(\&buffer[0], x0, x1, shrink);}
+\DoxyCodeLine{00267       m\_y++;}
+\DoxyCodeLine{00268       \textcolor{keywordflow}{if} (m\_tempBuffer \&\& m\_y == ly) \{}
+\DoxyCodeLine{00269         m\_tempBuffer.reset();}
+\DoxyCodeLine{00270       \}}
+\DoxyCodeLine{00271       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00272     \}}
+\DoxyCodeLine{00273 }
+\DoxyCodeLine{00274     \textcolor{keywordtype}{int} y = m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}} -\/ 1 -\/ m\_y;}
+\DoxyCodeLine{00275     \textcolor{keywordflow}{if} (y < 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00276     m\_y++;}
+\DoxyCodeLine{00277 }
+\DoxyCodeLine{00278     png\_bytep row\_pointer = m\_rowBuffer.get();}
+\DoxyCodeLine{00279     png\_read\_row(m\_png\_ptr, row\_pointer, NULL);}
+\DoxyCodeLine{00280 }
+\DoxyCodeLine{00281     writeRow(buffer);}
+\DoxyCodeLine{00282 }
+\DoxyCodeLine{00283     \textcolor{keywordflow}{if} (m\_tempBuffer \&\& m\_y == ly) \{}
+\DoxyCodeLine{00284       m\_tempBuffer.reset();}
+\DoxyCodeLine{00285     \}}
+\DoxyCodeLine{00286   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_reader_a5613ffc0f43085b17bd7a334cfe37e54}\label{class_png_reader_a5613ffc0f43085b17bd7a334cfe37e54}} 
+\index{PngReader@{PngReader}!readLine@{readLine}}
+\index{readLine@{readLine}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{readLine()}{readLine()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Png\+Reader\+::read\+Line (\begin{DoxyParamCaption}\item[{short $\ast$}]{buffer,  }\item[{int}]{x0,  }\item[{int}]{x1,  }\item[{int}]{shrink }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00288                                                                     \{}
+\DoxyCodeLine{00289     \textcolor{keywordtype}{int} ly = m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}};}
+\DoxyCodeLine{00290     \textcolor{keywordflow}{if} (!m\_tempBuffer) \{}
+\DoxyCodeLine{00291       \textcolor{keywordtype}{int} lx       = m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}};}
+\DoxyCodeLine{00292       \textcolor{keywordtype}{int} channels = png\_get\_channels(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00293       \textcolor{keywordtype}{int} rowBytes = png\_get\_rowbytes(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00294       \textcolor{keywordflow}{if} (m\_interlace\_type == 1) \{}
+\DoxyCodeLine{00295         \textcolor{keywordflow}{if} (channels == 1 || channels == 2) \{}
+\DoxyCodeLine{00296           \textcolor{keywordflow}{if} (m\_bit\_depth <}
+\DoxyCodeLine{00297               8)  \textcolor{comment}{// (m\_bit\_depth == 1 || m\_bit\_depth == 2 || m\_bit\_depth == 4)}}
+\DoxyCodeLine{00298             m\_tempBuffer.reset(\textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[ly * lx * 3]);}
+\DoxyCodeLine{00299           \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00300             m\_tempBuffer.reset(\textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[ly * rowBytes * 4]);}
+\DoxyCodeLine{00301         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00302           m\_tempBuffer.reset(\textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[ly * rowBytes]);}
+\DoxyCodeLine{00303         \}}
+\DoxyCodeLine{00304       \}}
+\DoxyCodeLine{00305     \}}
+\DoxyCodeLine{00306 }
+\DoxyCodeLine{00307     \textcolor{keywordflow}{if} (png\_get\_interlace\_type(m\_png\_ptr, m\_info\_ptr) == PNG\_INTERLACE\_ADAM7) \{}
+\DoxyCodeLine{00308       readLineInterlace(\&buffer[0], x0, x1, shrink);}
+\DoxyCodeLine{00309       m\_y++;}
+\DoxyCodeLine{00310       \textcolor{keywordflow}{if} (m\_tempBuffer \&\& m\_y == ly) \{}
+\DoxyCodeLine{00311         m\_tempBuffer.reset();}
+\DoxyCodeLine{00312       \}}
+\DoxyCodeLine{00313       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00314     \}}
+\DoxyCodeLine{00315 }
+\DoxyCodeLine{00316     \textcolor{keywordtype}{int} y = m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}} -\/ 1 -\/ m\_y;}
+\DoxyCodeLine{00317     \textcolor{keywordflow}{if} (y < 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00318     m\_y++;}
+\DoxyCodeLine{00319 }
+\DoxyCodeLine{00320     png\_bytep row\_pointer = m\_rowBuffer.get();}
+\DoxyCodeLine{00321     png\_read\_row(m\_png\_ptr, row\_pointer, NULL);}
+\DoxyCodeLine{00322 }
+\DoxyCodeLine{00323     writeRow(buffer);}
+\DoxyCodeLine{00324 }
+\DoxyCodeLine{00325     \textcolor{keywordflow}{if} (m\_tempBuffer \&\& m\_y == ly) \{}
+\DoxyCodeLine{00326       m\_tempBuffer.reset();}
+\DoxyCodeLine{00327     \}}
+\DoxyCodeLine{00328   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_reader_a16dc53c4765c80d486062eeaf8fd3e66}\label{class_png_reader_a16dc53c4765c80d486062eeaf8fd3e66}} 
+\index{PngReader@{PngReader}!readLineInterlace@{readLineInterlace}}
+\index{readLineInterlace@{readLineInterlace}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{readLineInterlace()}{readLineInterlace()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily void Png\+Reader\+::read\+Line\+Interlace (\begin{DoxyParamCaption}\item[{char $\ast$}]{buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00112                                        \{}
+\DoxyCodeLine{00113     readLineInterlace(buffer, 0, m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} -\/ 1, 1);}
+\DoxyCodeLine{00114   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_reader_a5b9f3aeb41c603c29a5b9493a6162538}\label{class_png_reader_a5b9f3aeb41c603c29a5b9493a6162538}} 
+\index{PngReader@{PngReader}!readLineInterlace@{readLineInterlace}}
+\index{readLineInterlace@{readLineInterlace}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{readLineInterlace()}{readLineInterlace()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily void Png\+Reader\+::read\+Line\+Interlace (\begin{DoxyParamCaption}\item[{char $\ast$}]{buffer,  }\item[{int}]{x0,  }\item[{int}]{x1,  }\item[{int}]{shrink }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00575                                                                    \{}
+\DoxyCodeLine{00576     \textcolor{comment}{// m\_png\_ptr-\/>row\_number è l'indice di riga che scorre quando chiamo la}}
+\DoxyCodeLine{00577     \textcolor{comment}{// png\_read\_row}}
+\DoxyCodeLine{00578     \textcolor{keywordtype}{int} rowNumber = png\_get\_current\_row\_number(m\_png\_ptr);}
+\DoxyCodeLine{00579     \textcolor{comment}{// numRows è il numero di righe processate in ogni passo}}
+\DoxyCodeLine{00580     \textcolor{keywordtype}{int} numRows = (int)png\_get\_image\_height(m\_png\_ptr, m\_info\_ptr) / 8;}
+\DoxyCodeLine{00581 }
+\DoxyCodeLine{00582     \textcolor{keywordtype}{int} passPng = png\_get\_current\_pass\_number(m\_png\_ptr);}
+\DoxyCodeLine{00583 }
+\DoxyCodeLine{00584     \textcolor{keywordtype}{int} passRow = 5 + (m\_y \& 1);  \textcolor{comment}{// passo desiderato per la riga corrente}}
+\DoxyCodeLine{00585 }
+\DoxyCodeLine{00586     \textcolor{keywordtype}{int} channels = png\_get\_channels(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00587 }
+\DoxyCodeLine{00588     \textcolor{keywordtype}{int} rowBytes          = png\_get\_rowbytes(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00589     png\_bytep row\_pointer = m\_rowBuffer.get();}
+\DoxyCodeLine{00590 }
+\DoxyCodeLine{00591     \textcolor{keywordtype}{int} lx = m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}};}
+\DoxyCodeLine{00592 }
+\DoxyCodeLine{00593     \textcolor{keywordflow}{while} (passPng <= passRow \&\&}
+\DoxyCodeLine{00594            rowNumber <=}
+\DoxyCodeLine{00595                numRows)  \textcolor{comment}{// finchè il passo d'interlacciamento è minore o uguale}}
+\DoxyCodeLine{00596     \textcolor{comment}{// <             //del passo desiderato effettua tante volte le lettura}}
+\DoxyCodeLine{00597     \textcolor{comment}{// della riga}}
+\DoxyCodeLine{00598     \textcolor{comment}{// quant'è il passo desiderato per quella riga}}
+\DoxyCodeLine{00599     \{}
+\DoxyCodeLine{00600       rowNumber = png\_get\_current\_row\_number(m\_png\_ptr);}
+\DoxyCodeLine{00601       png\_read\_row(m\_png\_ptr, row\_pointer, NULL);}
+\DoxyCodeLine{00602       numRows = png\_get\_image\_height(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00603       \textcolor{comment}{// devo memorizzare la riga letta nel buffer di appoggio in base al passo}}
+\DoxyCodeLine{00604       \textcolor{comment}{// di riga}}
+\DoxyCodeLine{00605       \textcolor{comment}{// e al blocchetto di appartenenza della riga}}
+\DoxyCodeLine{00606 }
+\DoxyCodeLine{00607       \textcolor{comment}{// copio i pixel che desidero nel buffer temporaneo}}
+\DoxyCodeLine{00608 }
+\DoxyCodeLine{00609       \textcolor{comment}{// il membro di PngReader copyPixel deve tener conto della riga processata}}
+\DoxyCodeLine{00610       \textcolor{comment}{// e del passo che si è effettuato ( e in base a quello so quanti pixel}}
+\DoxyCodeLine{00611       \textcolor{comment}{// copiare!)}}
+\DoxyCodeLine{00612 }
+\DoxyCodeLine{00613       \textcolor{keywordflow}{if} (m\_bit\_depth == 16) \{}
+\DoxyCodeLine{00614         \textcolor{keywordflow}{if} (passPng == 0)}
+\DoxyCodeLine{00615           copyPixel(lx / 4, 0, 8, rowNumber * 8);}
+\DoxyCodeLine{00616         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 1)}
+\DoxyCodeLine{00617           copyPixel(lx / 4, 8, 8, rowNumber * 8);}
+\DoxyCodeLine{00618         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 2)}
+\DoxyCodeLine{00619           copyPixel(lx / 2, 0, 4, rowNumber * 8 + 4);}
+\DoxyCodeLine{00620         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 3)}
+\DoxyCodeLine{00621           copyPixel(lx / 2, 4, 4, rowNumber * 4);}
+\DoxyCodeLine{00622         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 4)}
+\DoxyCodeLine{00623           copyPixel(lx, 0, 2, rowNumber * 4 + 2);}
+\DoxyCodeLine{00624         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 5)}
+\DoxyCodeLine{00625           copyPixel(lx, 2, 2, rowNumber * 2);}
+\DoxyCodeLine{00626         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 6)}
+\DoxyCodeLine{00627           copyPixel(2 * lx, 0, 1, rowNumber * 2 + 1);}
+\DoxyCodeLine{00628       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00629         \textcolor{keywordflow}{if} (passPng == 0)}
+\DoxyCodeLine{00630           copyPixel((lx + 7) / 8, 0, 8, rowNumber * 8);}
+\DoxyCodeLine{00631         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 1)}
+\DoxyCodeLine{00632           copyPixel((lx + 3) / 8, 4, 8, rowNumber * 8);}
+\DoxyCodeLine{00633         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 2)}
+\DoxyCodeLine{00634           copyPixel((lx + 3) / 4, 0, 4, rowNumber * 8 + 4);}
+\DoxyCodeLine{00635         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 3)}
+\DoxyCodeLine{00636           copyPixel((lx + 1) / 4, 2, 4, rowNumber * 4);}
+\DoxyCodeLine{00637         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 4)}
+\DoxyCodeLine{00638           copyPixel((lx + 1) / 2, 0, 2, rowNumber * 4 + 2);}
+\DoxyCodeLine{00639         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 5)}
+\DoxyCodeLine{00640           copyPixel(lx / 2, 1, 2, rowNumber * 2);}
+\DoxyCodeLine{00641         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 6)}
+\DoxyCodeLine{00642           copyPixel(lx, 0, 1, rowNumber * 2 + 1);}
+\DoxyCodeLine{00643       \}}
+\DoxyCodeLine{00644 }
+\DoxyCodeLine{00645       passPng = png\_get\_current\_pass\_number(m\_png\_ptr);}
+\DoxyCodeLine{00646     \}}
+\DoxyCodeLine{00647 }
+\DoxyCodeLine{00648     \textcolor{comment}{// fase di copia}}
+\DoxyCodeLine{00649     \textcolor{keywordflow}{if} (channels == 1 || channels == 2) \{}
+\DoxyCodeLine{00650       \textcolor{keywordflow}{if} (m\_bit\_depth < 8)}
+\DoxyCodeLine{00651         memcpy(m\_rowBuffer.get(), m\_tempBuffer.get() + ((m\_y)*lx * 3), lx * 3);}
+\DoxyCodeLine{00652       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00653         memcpy(m\_rowBuffer.get(), m\_tempBuffer.get() + ((m\_y)*rowBytes * 4),}
+\DoxyCodeLine{00654                rowBytes * 4);}
+\DoxyCodeLine{00655     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00656       memcpy(m\_rowBuffer.get(), m\_tempBuffer.get() + ((m\_y)*rowBytes),}
+\DoxyCodeLine{00657              rowBytes);}
+\DoxyCodeLine{00658     \}}
+\DoxyCodeLine{00659 }
+\DoxyCodeLine{00660     \textcolor{comment}{// fase di copia vecchia}}
+\DoxyCodeLine{00661     \textcolor{comment}{// memcpy(m\_rowBuffer, m\_tempBuffer+((m\_y)*rowBytes), rowBytes);}}
+\DoxyCodeLine{00662 }
+\DoxyCodeLine{00663     \textcolor{comment}{// tutto quello che segue lo metto in una funzione in cui scrivo il buffer}}
+\DoxyCodeLine{00664     \textcolor{comment}{// di restituzione della readLine}}
+\DoxyCodeLine{00665     \textcolor{comment}{//è una funzione comune alle ReadLine}}
+\DoxyCodeLine{00666     writeRow(buffer);}
+\DoxyCodeLine{00667   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_reader_af8039a02f91f9ada5a15d17163960d4c}\label{class_png_reader_af8039a02f91f9ada5a15d17163960d4c}} 
+\index{PngReader@{PngReader}!readLineInterlace@{readLineInterlace}}
+\index{readLineInterlace@{readLineInterlace}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{readLineInterlace()}{readLineInterlace()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily void Png\+Reader\+::read\+Line\+Interlace (\begin{DoxyParamCaption}\item[{short $\ast$}]{buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00115                                         \{}
+\DoxyCodeLine{00116     readLineInterlace(buffer, 0, m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} -\/ 1, 1);}
+\DoxyCodeLine{00117   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_reader_a6573f721dad199206a6bcade1e70fb00}\label{class_png_reader_a6573f721dad199206a6bcade1e70fb00}} 
+\index{PngReader@{PngReader}!readLineInterlace@{readLineInterlace}}
+\index{readLineInterlace@{readLineInterlace}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{readLineInterlace()}{readLineInterlace()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily void Png\+Reader\+::read\+Line\+Interlace (\begin{DoxyParamCaption}\item[{short $\ast$}]{buffer,  }\item[{int}]{x0,  }\item[{int}]{x1,  }\item[{int}]{shrink }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00669                                                                     \{}
+\DoxyCodeLine{00670     \textcolor{comment}{// m\_png\_ptr-\/>row\_number è l'indice di riga che scorre quando chiamo la}}
+\DoxyCodeLine{00671     \textcolor{comment}{// png\_read\_row}}
+\DoxyCodeLine{00672     \textcolor{keywordtype}{int} rowNumber = png\_get\_current\_row\_number(m\_png\_ptr);}
+\DoxyCodeLine{00673     \textcolor{comment}{// numRows è il numero di righe processate in ogni passo}}
+\DoxyCodeLine{00674     \textcolor{keywordtype}{int} numRows = png\_get\_image\_height(m\_png\_ptr, m\_info\_ptr) / 8;}
+\DoxyCodeLine{00675 }
+\DoxyCodeLine{00676     \textcolor{keywordtype}{int} passPng = png\_get\_current\_pass\_number(}
+\DoxyCodeLine{00677         m\_png\_ptr);  \textcolor{comment}{// conosco il passo d'interlacciamento}}
+\DoxyCodeLine{00678 }
+\DoxyCodeLine{00679     \textcolor{keywordtype}{int} passRow = 5 + (m\_y \& 1);  \textcolor{comment}{// passo desiderato per la riga corrente}}
+\DoxyCodeLine{00680 }
+\DoxyCodeLine{00681     \textcolor{keywordtype}{int} channels = png\_get\_channels(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00682     \textcolor{keywordtype}{int} lx       = m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}};}
+\DoxyCodeLine{00683 }
+\DoxyCodeLine{00684     \textcolor{keywordtype}{int} rowBytes          = png\_get\_rowbytes(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00685     png\_bytep row\_pointer = m\_rowBuffer.get();}
+\DoxyCodeLine{00686 }
+\DoxyCodeLine{00687     \textcolor{keywordflow}{while} (passPng <= passRow \&\&}
+\DoxyCodeLine{00688            rowNumber <}
+\DoxyCodeLine{00689                numRows)  \textcolor{comment}{// finchè il passo d'interlacciamento è minore o uguale}}
+\DoxyCodeLine{00690     \textcolor{comment}{// del passo desiderato effettua tante volte le lettura della riga}}
+\DoxyCodeLine{00691     \textcolor{comment}{// quant'è il passo desiderato per quella riga}}
+\DoxyCodeLine{00692     \{}
+\DoxyCodeLine{00693       rowNumber = png\_get\_current\_row\_number(m\_png\_ptr);}
+\DoxyCodeLine{00694       png\_read\_row(m\_png\_ptr, row\_pointer, NULL);}
+\DoxyCodeLine{00695       numRows = png\_get\_image\_height(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00696       \textcolor{keywordtype}{int} lx  = m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}};}
+\DoxyCodeLine{00697 }
+\DoxyCodeLine{00698       \textcolor{comment}{// devo memorizzare la riga letta nel buffer di appoggio in base al passo}}
+\DoxyCodeLine{00699       \textcolor{comment}{// di riga}}
+\DoxyCodeLine{00700       \textcolor{comment}{// e al blocchetto di appartenenza della riga}}
+\DoxyCodeLine{00701 }
+\DoxyCodeLine{00702       \textcolor{comment}{// copio i pixel che desidero nel buffer temporaneo}}
+\DoxyCodeLine{00703 }
+\DoxyCodeLine{00704       \textcolor{comment}{// il membro di PngReader copyPixel deve tener conto della riga processata}}
+\DoxyCodeLine{00705       \textcolor{comment}{// e del passo che si è effettuato ( e in base a quello so quanti pixel}}
+\DoxyCodeLine{00706       \textcolor{comment}{// copiare!)}}
+\DoxyCodeLine{00707 }
+\DoxyCodeLine{00708       \textcolor{keywordtype}{int} channels = png\_get\_channels(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00709 }
+\DoxyCodeLine{00710       \textcolor{keywordflow}{if} (passPng == 0)}
+\DoxyCodeLine{00711         copyPixel(lx / 4, 0, 8, rowNumber * 8);}
+\DoxyCodeLine{00712       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 1)}
+\DoxyCodeLine{00713         copyPixel(lx / 4, 8, 8, rowNumber * 8);}
+\DoxyCodeLine{00714       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 2)}
+\DoxyCodeLine{00715         copyPixel(lx / 2, 0, 4, rowNumber * 8 + 4);}
+\DoxyCodeLine{00716       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 3)}
+\DoxyCodeLine{00717         copyPixel(lx / 2, 4, 4, rowNumber * 4);}
+\DoxyCodeLine{00718       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 4)}
+\DoxyCodeLine{00719         copyPixel(lx, 0, 2, rowNumber * 4 + 2);}
+\DoxyCodeLine{00720       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 5)}
+\DoxyCodeLine{00721         copyPixel(lx, 2, 2, rowNumber * 2);}
+\DoxyCodeLine{00722       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (passPng == 6)}
+\DoxyCodeLine{00723         copyPixel(2 * lx, 0, 1, rowNumber * 2 + 1);}
+\DoxyCodeLine{00724 }
+\DoxyCodeLine{00725       passPng = png\_get\_current\_pass\_number(m\_png\_ptr);}
+\DoxyCodeLine{00726     \}}
+\DoxyCodeLine{00727 }
+\DoxyCodeLine{00728     \textcolor{comment}{// fase di copia}}
+\DoxyCodeLine{00729     \textcolor{keywordflow}{if} (channels == 1 || channels == 2) \{}
+\DoxyCodeLine{00730       memcpy(m\_rowBuffer.get(), m\_tempBuffer.get() + ((m\_y)*rowBytes * 4),}
+\DoxyCodeLine{00731              rowBytes * 4);}
+\DoxyCodeLine{00732     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00733       memcpy(m\_rowBuffer.get(), m\_tempBuffer.get() + ((m\_y)*rowBytes),}
+\DoxyCodeLine{00734              rowBytes);}
+\DoxyCodeLine{00735     \}}
+\DoxyCodeLine{00736 }
+\DoxyCodeLine{00737     \textcolor{comment}{// fase di copia}}
+\DoxyCodeLine{00738     \textcolor{comment}{// memcpy(m\_rowBuffer, m\_tempBuffer+((m\_y)*rowBytes), rowBytes);}}
+\DoxyCodeLine{00739 }
+\DoxyCodeLine{00740     \textcolor{comment}{// tutto quello che segue lo metto in una funzione in cui scrivo il buffer}}
+\DoxyCodeLine{00741     \textcolor{comment}{// di restituzione della readLine}}
+\DoxyCodeLine{00742     \textcolor{comment}{//è una funzione comune alle ReadLine}}
+\DoxyCodeLine{00743     writeRow(buffer);}
+\DoxyCodeLine{00744   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_reader_a7d93f52c8cdc7e3a28e70fa824b9c8e8}\label{class_png_reader_a7d93f52c8cdc7e3a28e70fa824b9c8e8}} 
+\index{PngReader@{PngReader}!skipLines@{skipLines}}
+\index{skipLines@{skipLines}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{skipLines()}{skipLines()}}
+{\footnotesize\ttfamily int Png\+Reader\+::skip\+Lines (\begin{DoxyParamCaption}\item[{int}]{line\+Count }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00330                                         \{}
+\DoxyCodeLine{00331     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < lineCount; i++) \{}
+\DoxyCodeLine{00332       \textcolor{keywordflow}{if} (m\_interlace\_type == 1 \&\&}
+\DoxyCodeLine{00333           m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} > 4)  \textcolor{comment}{// pezza. Studiare il codice}}
+\DoxyCodeLine{00334       \{}
+\DoxyCodeLine{00335         \textcolor{keywordtype}{int} channels     = png\_get\_channels(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00336         \textcolor{keywordtype}{char} *lineBuffer = (\textcolor{keywordtype}{char} *)malloc(4 * m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{00337         readLine(lineBuffer, 0, m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} -\/ 1, 1);}
+\DoxyCodeLine{00338         free(lineBuffer);}
+\DoxyCodeLine{00339       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00340         m\_y++;}
+\DoxyCodeLine{00341         png\_bytep row\_pointer = m\_rowBuffer.get();}
+\DoxyCodeLine{00342         png\_read\_row(m\_png\_ptr, row\_pointer, NULL);}
+\DoxyCodeLine{00343       \}}
+\DoxyCodeLine{00344     \}}
+\DoxyCodeLine{00345     \textcolor{keywordflow}{return} lineCount;}
+\DoxyCodeLine{00346   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_reader_afed67b844690bc29beae8604911b809f}\label{class_png_reader_afed67b844690bc29beae8604911b809f}} 
+\index{PngReader@{PngReader}!writeRow@{writeRow}}
+\index{writeRow@{writeRow}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{writeRow()}{writeRow()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Png\+Reader\+::write\+Row (\begin{DoxyParamCaption}\item[{char $\ast$}]{buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00350                               \{}
+\DoxyCodeLine{00351     \textcolor{keywordflow}{if} (m\_color\_type == PNG\_COLOR\_TYPE\_RGB\_ALPHA ||}
+\DoxyCodeLine{00352         m\_color\_type == PNG\_COLOR\_TYPE\_GRAY\_ALPHA ||}
+\DoxyCodeLine{00353         m\_color\_type == PNG\_COLOR\_TYPE\_PALETTE) \{  \textcolor{comment}{// PNG\_COLOR\_TYPE\_PALETTE is}}
+\DoxyCodeLine{00354                                                    \textcolor{comment}{// expanded to RGBA}}
+\DoxyCodeLine{00355       \textcolor{keywordflow}{if} (m\_bit\_depth == 16) \{}
+\DoxyCodeLine{00356         TPixel32 *pix = (TPixel32 *)buffer;}
+\DoxyCodeLine{00357         \textcolor{keywordtype}{int} i         = -\/2;}
+\DoxyCodeLine{00358         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; j++) \{}
+\DoxyCodeLine{00359 \textcolor{preprocessor}{\#if defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MRGB)}}
+\DoxyCodeLine{00360           pix[j].m = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00361           pix[j].r = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00362           pix[j].g = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00363           pix[j].b = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00364 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_RGBM)}}
+\DoxyCodeLine{00365           pix[j].r = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00366           pix[j].g = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00367           pix[j].b = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00368           pix[j].m = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00369 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_BGRM)}}
+\DoxyCodeLine{00370           pix[j].b = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00371           pix[j].g = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00372           pix[j].r = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00373           pix[j].m = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00374 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MBGR)}}
+\DoxyCodeLine{00375           pix[j].m = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00376           pix[j].b = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00377           pix[j].g = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00378           pix[j].r = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00379 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00380 \textcolor{preprocessor}{\#error "{}unknown channel order"{}}}
+\DoxyCodeLine{00381 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00382 }
+\DoxyCodeLine{00383           \textcolor{comment}{// premultiply here}}
+\DoxyCodeLine{00384           premult(pix[j]);}
+\DoxyCodeLine{00385         \}}
+\DoxyCodeLine{00386       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00387         TPixel32 *pix = (TPixel32 *)buffer;}
+\DoxyCodeLine{00388         \textcolor{keywordtype}{int} i         = 0;}
+\DoxyCodeLine{00389         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; j++) \{}
+\DoxyCodeLine{00390 \textcolor{preprocessor}{\#if defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MRGB)}}
+\DoxyCodeLine{00391           pix[j].m = m\_rowBuffer[i++];}
+\DoxyCodeLine{00392           pix[j].r = m\_rowBuffer[i++];}
+\DoxyCodeLine{00393           pix[j].g = m\_rowBuffer[i++];}
+\DoxyCodeLine{00394           pix[j].b = m\_rowBuffer[i++];}
+\DoxyCodeLine{00395 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_RGBM)}}
+\DoxyCodeLine{00396           pix[j].r = m\_rowBuffer[i++];}
+\DoxyCodeLine{00397           pix[j].g = m\_rowBuffer[i++];}
+\DoxyCodeLine{00398           pix[j].b = m\_rowBuffer[i++];}
+\DoxyCodeLine{00399           pix[j].m = m\_rowBuffer[i++];}
+\DoxyCodeLine{00400 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_BGRM)}}
+\DoxyCodeLine{00401           pix[j].b = m\_rowBuffer[i++];}
+\DoxyCodeLine{00402           pix[j].g = m\_rowBuffer[i++];}
+\DoxyCodeLine{00403           pix[j].r = m\_rowBuffer[i++];}
+\DoxyCodeLine{00404           pix[j].m = m\_rowBuffer[i++];}
+\DoxyCodeLine{00405 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MBGR)}}
+\DoxyCodeLine{00406           pix[j].m = m\_rowBuffer[i++];}
+\DoxyCodeLine{00407           pix[j].b = m\_rowBuffer[i++];}
+\DoxyCodeLine{00408           pix[j].g = m\_rowBuffer[i++];}
+\DoxyCodeLine{00409           pix[j].r = m\_rowBuffer[i++];}
+\DoxyCodeLine{00410 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00411 \textcolor{preprocessor}{\#error "{}unknown channel order"{}}}
+\DoxyCodeLine{00412 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00413           \textcolor{comment}{// premultiply here}}
+\DoxyCodeLine{00414           premult(pix[j]);}
+\DoxyCodeLine{00415         \}}
+\DoxyCodeLine{00416       \}}
+\DoxyCodeLine{00417     \} \textcolor{keywordflow}{else}  \textcolor{comment}{// qui gestisce RGB senza alpha.}}
+\DoxyCodeLine{00418     \{       \textcolor{comment}{// grayscale e' gestito come RGB perche' si usa png\_set\_gray\_to\_rgb}}
+\DoxyCodeLine{00419       \textcolor{keywordflow}{if} (m\_bit\_depth == 16) \{}
+\DoxyCodeLine{00420         TPixel32 *pix = (TPixel32 *)buffer;}
+\DoxyCodeLine{00421         \textcolor{keywordtype}{int} i         = -\/2;}
+\DoxyCodeLine{00422         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; j++) \{}
+\DoxyCodeLine{00423 \textcolor{preprocessor}{\#if defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MRGB) ||                                 \(\backslash\)}}
+\DoxyCodeLine{00424 \textcolor{preprocessor}{    defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_RGBM)}}
+\DoxyCodeLine{00425           pix[j].r = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00426           pix[j].g = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00427           pix[j].b = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00428 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MBGR) ||                               \(\backslash\)}}
+\DoxyCodeLine{00429 \textcolor{preprocessor}{    defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_BGRM)}}
+\DoxyCodeLine{00430           pix[j].b = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00431           pix[j].g = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00432           pix[j].r = m\_rowBuffer[i = i + 2];}
+\DoxyCodeLine{00433 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00434 \textcolor{preprocessor}{\#error "{}unknown channel order"{}}}
+\DoxyCodeLine{00435 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00436           pix[j].m = 255;}
+\DoxyCodeLine{00437         \}}
+\DoxyCodeLine{00438       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00439         TPixel32 *pix = (TPixel32 *)buffer;}
+\DoxyCodeLine{00440         \textcolor{keywordtype}{int} i         = 0;}
+\DoxyCodeLine{00441         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; j++) \{}
+\DoxyCodeLine{00442 \textcolor{preprocessor}{\#if defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MRGB) ||                                 \(\backslash\)}}
+\DoxyCodeLine{00443 \textcolor{preprocessor}{    defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_RGBM)}}
+\DoxyCodeLine{00444           pix[j].r = m\_rowBuffer[i++];}
+\DoxyCodeLine{00445           pix[j].g = m\_rowBuffer[i++];}
+\DoxyCodeLine{00446           pix[j].b = m\_rowBuffer[i++];}
+\DoxyCodeLine{00447 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MBGR) ||                               \(\backslash\)}}
+\DoxyCodeLine{00448 \textcolor{preprocessor}{    defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_BGRM)}}
+\DoxyCodeLine{00449           pix[j].b = m\_rowBuffer[i++];}
+\DoxyCodeLine{00450           pix[j].g = m\_rowBuffer[i++];}
+\DoxyCodeLine{00451           pix[j].r = m\_rowBuffer[i++];}
+\DoxyCodeLine{00452 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00453 \textcolor{preprocessor}{\#error "{}unknown channel order"{}}}
+\DoxyCodeLine{00454 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00455           pix[j].m = 255;}
+\DoxyCodeLine{00456         \}}
+\DoxyCodeLine{00457       \}}
+\DoxyCodeLine{00458     \}}
+\DoxyCodeLine{00459   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_reader_ab545a251355813409a5721b9eb982622}\label{class_png_reader_ab545a251355813409a5721b9eb982622}} 
+\index{PngReader@{PngReader}!writeRow@{writeRow}}
+\index{writeRow@{writeRow}!PngReader@{PngReader}}
+\doxysubsubsection{\texorpdfstring{writeRow()}{writeRow()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Png\+Reader\+::write\+Row (\begin{DoxyParamCaption}\item[{short $\ast$}]{buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00461                                \{}
+\DoxyCodeLine{00462     \textcolor{keywordflow}{if} (m\_color\_type == PNG\_COLOR\_TYPE\_RGB\_ALPHA ||}
+\DoxyCodeLine{00463         m\_color\_type == PNG\_COLOR\_TYPE\_GRAY\_ALPHA ||}
+\DoxyCodeLine{00464         m\_color\_type == PNG\_COLOR\_TYPE\_PALETTE) \{  \textcolor{comment}{// PNG\_COLOR\_TYPE\_PALETTE is}}
+\DoxyCodeLine{00465                                                    \textcolor{comment}{// expanded to RGBA}}
+\DoxyCodeLine{00466       TPixel64 *pix = (TPixel64 *)buffer;}
+\DoxyCodeLine{00467       \textcolor{keywordtype}{int} i         = -\/2;  \textcolor{comment}{// 0;}}
+\DoxyCodeLine{00468       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; j++) \{}
+\DoxyCodeLine{00469 \textcolor{preprocessor}{\#if defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MRGB) ||                                 \(\backslash\)}}
+\DoxyCodeLine{00470 \textcolor{preprocessor}{    defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_RGBM)}}
+\DoxyCodeLine{00471         pix[j].r = mySwap(m\_rowBuffer[i = i + 2]);  \textcolor{comment}{// i++}}
+\DoxyCodeLine{00472         pix[j].g = mySwap(m\_rowBuffer[i = i + 2]);}
+\DoxyCodeLine{00473         pix[j].b = mySwap(m\_rowBuffer[i = i + 2]);}
+\DoxyCodeLine{00474         pix[j].m = mySwap(m\_rowBuffer[i = i + 2]);}
+\DoxyCodeLine{00475 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MBGR) ||                               \(\backslash\)}}
+\DoxyCodeLine{00476 \textcolor{preprocessor}{    defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_BGRM)}}
+\DoxyCodeLine{00477         pix[j].b = mySwap(m\_rowBuffer[i = i + 2]);  \textcolor{comment}{// i++}}
+\DoxyCodeLine{00478         pix[j].g = mySwap(m\_rowBuffer[i = i + 2]);}
+\DoxyCodeLine{00479         pix[j].r = mySwap(m\_rowBuffer[i = i + 2]);}
+\DoxyCodeLine{00480         pix[j].m = mySwap(m\_rowBuffer[i = i + 2]);}
+\DoxyCodeLine{00481 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00482 \textcolor{preprocessor}{\#error "{}unknown channel order"{}}}
+\DoxyCodeLine{00483 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00484         \textcolor{comment}{// pix[j].m = 255;}}
+\DoxyCodeLine{00485 }
+\DoxyCodeLine{00486         \textcolor{comment}{// premultiply here}}
+\DoxyCodeLine{00487         premult(pix[j]);}
+\DoxyCodeLine{00488       \}}
+\DoxyCodeLine{00489     \} \textcolor{keywordflow}{else}  \textcolor{comment}{// qui gestisce RGB senza alpha.}}
+\DoxyCodeLine{00490     \{       \textcolor{comment}{// grayscale e' gestito come RGB perche' si usa png\_set\_gray\_to\_rgb}}
+\DoxyCodeLine{00491       TPixel64 *pix = (TPixel64 *)buffer;}
+\DoxyCodeLine{00492       \textcolor{keywordtype}{int} i         = -\/2;}
+\DoxyCodeLine{00493       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; j++) \{}
+\DoxyCodeLine{00494 \textcolor{preprocessor}{\#if defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MRGB) ||                                 \(\backslash\)}}
+\DoxyCodeLine{00495 \textcolor{preprocessor}{    defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_RGBM)}}
+\DoxyCodeLine{00496         pix[j].r = mySwap(m\_rowBuffer[i = i + 2]);}
+\DoxyCodeLine{00497         pix[j].g = mySwap(m\_rowBuffer[i = i + 2]);}
+\DoxyCodeLine{00498         pix[j].b = mySwap(m\_rowBuffer[i = i + 2]);}
+\DoxyCodeLine{00499 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MBGR) ||                               \(\backslash\)}}
+\DoxyCodeLine{00500 \textcolor{preprocessor}{    defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_BGRM)}}
+\DoxyCodeLine{00501         pix[j].b = mySwap(m\_rowBuffer[i = i + 2]);}
+\DoxyCodeLine{00502         pix[j].g = mySwap(m\_rowBuffer[i = i + 2]);}
+\DoxyCodeLine{00503         pix[j].r = mySwap(m\_rowBuffer[i = i + 2]);}
+\DoxyCodeLine{00504 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00505 \textcolor{preprocessor}{\#error "{}unknown channel order"{}}}
+\DoxyCodeLine{00506 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00507         pix[j].m = mySwap(255);}
+\DoxyCodeLine{00508       \}}
+\DoxyCodeLine{00509     \}}
+\DoxyCodeLine{00510   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/png/tiio\+\_\+png.\+cpp\end{DoxyCompactItemize}

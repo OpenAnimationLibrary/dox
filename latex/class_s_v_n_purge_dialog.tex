@@ -1,0 +1,166 @@
+\hypertarget{class_s_v_n_purge_dialog}{}\doxysection{SVNPurge\+Dialog Class Reference}
+\label{class_s_v_n_purge_dialog}\index{SVNPurgeDialog@{SVNPurgeDialog}}
+Inheritance diagram for SVNPurge\+Dialog\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_s_v_n_purge_dialog}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_s_v_n_purge_dialog_a2feeb7e2ba852bf75559239067916316}\label{class_s_v_n_purge_dialog_a2feeb7e2ba852bf75559239067916316}} 
+void {\bfseries done} (const QString\+List \&)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_v_n_purge_dialog_abb3c7a69de0d54f1fe479e9f5ffe4e16}{SVNPurge\+Dialog}} (QWidget $\ast$parent, const QString \&working\+Dir)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_v_n_purge_dialog_a372d6349a7cacf69f0570245c65016a6}{on\+Purge\+Clicked}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_purge_dialog_a17978663183ceb08407b70b1032cea96}{on\+Status\+Retrieved}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_s_v_n_purge_dialog_ae2d3f24b458c276eeaf9f4d2a2375d06}{on\+Error}} (const QString \&)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_v_n_purge_dialog_abb3c7a69de0d54f1fe479e9f5ffe4e16}\label{class_s_v_n_purge_dialog_abb3c7a69de0d54f1fe479e9f5ffe4e16}} 
+\index{SVNPurgeDialog@{SVNPurgeDialog}!SVNPurgeDialog@{SVNPurgeDialog}}
+\index{SVNPurgeDialog@{SVNPurgeDialog}!SVNPurgeDialog@{SVNPurgeDialog}}
+\doxysubsubsection{\texorpdfstring{SVNPurgeDialog()}{SVNPurgeDialog()}}
+{\footnotesize\ttfamily SVNPurge\+Dialog\+::\+SVNPurge\+Dialog (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{const QString \&}]{working\+Dir }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027     : Dialog(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false})}
+\DoxyCodeLine{00028     , m\_workingDir(workingDir) \{}
+\DoxyCodeLine{00029   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00030   setAttribute(Qt::WA\_DeleteOnClose, \textcolor{keyword}{true});}
+\DoxyCodeLine{00031   setWindowTitle(tr(\textcolor{stringliteral}{"{}Version Control: Purge"{}}));}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033   setMinimumSize(300, 150);}
+\DoxyCodeLine{00034 }
+\DoxyCodeLine{00035   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ae7de609b3b23233656bc68852a2d10cb}{beginVLayout}}();}
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{00037   m\_waitingLabel      = \textcolor{keyword}{new} QLabel;}
+\DoxyCodeLine{00038   QMovie *waitingMove = \textcolor{keyword}{new} QMovie(\textcolor{stringliteral}{"{}:Resources/waiting.gif"{}});}
+\DoxyCodeLine{00039   waitingMove-\/>setParent(\textcolor{keyword}{this});}
+\DoxyCodeLine{00040 }
+\DoxyCodeLine{00041   m\_waitingLabel-\/>setMovie(waitingMove);}
+\DoxyCodeLine{00042   waitingMove-\/>setCacheMode(QMovie::CacheAll);}
+\DoxyCodeLine{00043   waitingMove-\/>start();}
+\DoxyCodeLine{00044 }
+\DoxyCodeLine{00045   m\_textLabel = \textcolor{keyword}{new} QLabel;}
+\DoxyCodeLine{00046   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Note: the file will be updated too."{}}));}
+\DoxyCodeLine{00047 }
+\DoxyCodeLine{00048   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Getting repository status..."{}}));}
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00050   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a578c4c2c44fee6d954896d93eb693aae}{addWidgets}}(m\_waitingLabel, m\_textLabel);}
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{00052   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ab88d88334402845e544da6ca1f207c79}{endVLayout}}();}
+\DoxyCodeLine{00053 }
+\DoxyCodeLine{00054   m\_purgeButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Purge"{}}));}
+\DoxyCodeLine{00055   m\_purgeButton-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00056   connect(m\_purgeButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onPurgeClicked()));}
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00058   m\_cancelButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cancel"{}}));}
+\DoxyCodeLine{00059   connect(m\_cancelButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(reject()));}
+\DoxyCodeLine{00060 }
+\DoxyCodeLine{00061   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(m\_purgeButton, m\_cancelButton);}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063   \textcolor{comment}{// 0. Connect for svn errors (that may occur every time)}}
+\DoxyCodeLine{00064   connect(\&m\_thread, SIGNAL(error(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00065           SLOT(onError(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067   \textcolor{comment}{// 1. Getting status (with show-\/updates enabled...)}}
+\DoxyCodeLine{00068   connect(\&m\_thread, SIGNAL(statusRetrieved(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00069           SLOT(onStatusRetrieved(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00070   m\_thread.getSVNStatus(m\_workingDir);}
+\DoxyCodeLine{00071 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_v_n_purge_dialog_ae2d3f24b458c276eeaf9f4d2a2375d06}\label{class_s_v_n_purge_dialog_ae2d3f24b458c276eeaf9f4d2a2375d06}} 
+\index{SVNPurgeDialog@{SVNPurgeDialog}!onError@{onError}}
+\index{onError@{onError}!SVNPurgeDialog@{SVNPurgeDialog}}
+\doxysubsubsection{\texorpdfstring{onError}{onError}}
+{\footnotesize\ttfamily void SVNPurge\+Dialog\+::on\+Error (\begin{DoxyParamCaption}\item[{const QString \&}]{text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075                                                 \{}
+\DoxyCodeLine{00076   m\_textLabel-\/>setText(text);}
+\DoxyCodeLine{00077   switchToCloseButton();}
+\DoxyCodeLine{00078 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_purge_dialog_a372d6349a7cacf69f0570245c65016a6}\label{class_s_v_n_purge_dialog_a372d6349a7cacf69f0570245c65016a6}} 
+\index{SVNPurgeDialog@{SVNPurgeDialog}!onPurgeClicked@{onPurgeClicked}}
+\index{onPurgeClicked@{onPurgeClicked}!SVNPurgeDialog@{SVNPurgeDialog}}
+\doxysubsubsection{\texorpdfstring{onPurgeClicked}{onPurgeClicked}}
+{\footnotesize\ttfamily void SVNPurge\+Dialog\+::on\+Purge\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00124                                     \{}
+\DoxyCodeLine{00125   m\_waitingLabel-\/>show();}
+\DoxyCodeLine{00126   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Purging files..."{}}));}
+\DoxyCodeLine{00127   m\_cancelButton-\/>hide();}
+\DoxyCodeLine{00128 }
+\DoxyCodeLine{00129   \textcolor{comment}{// Delete files locally}}
+\DoxyCodeLine{00130   \textcolor{keywordtype}{int} fileCount = m\_filesToPurge.size();}
+\DoxyCodeLine{00131   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < fileCount; i++) \{}
+\DoxyCodeLine{00132     \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp((m\_workingDir + \textcolor{stringliteral}{"{}/"{}} + m\_filesToPurge.at(i)).toStdWString());}
+\DoxyCodeLine{00133     TSystem::moveFileOrLevelToRecycleBin(fp);}
+\DoxyCodeLine{00134   \}}
+\DoxyCodeLine{00135 }
+\DoxyCodeLine{00136   updateFileBrowser();}
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00138   emit done(m\_filesToPurge);}
+\DoxyCodeLine{00139   close();}
+\DoxyCodeLine{00140 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_purge_dialog_a17978663183ceb08407b70b1032cea96}\label{class_s_v_n_purge_dialog_a17978663183ceb08407b70b1032cea96}} 
+\index{SVNPurgeDialog@{SVNPurgeDialog}!onStatusRetrieved@{onStatusRetrieved}}
+\index{onStatusRetrieved@{onStatusRetrieved}!SVNPurgeDialog@{SVNPurgeDialog}}
+\doxysubsubsection{\texorpdfstring{onStatusRetrieved}{onStatusRetrieved}}
+{\footnotesize\ttfamily void SVNPurge\+Dialog\+::on\+Status\+Retrieved (\begin{DoxyParamCaption}\item[{const QString \&}]{xml\+Response }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00082                                                                  \{}
+\DoxyCodeLine{00083   \mbox{\hyperlink{class_s_v_n_status_reader}{SVNStatusReader}} sr(xmlResponse);}
+\DoxyCodeLine{00084   m\_status = sr.getStatus();}
+\DoxyCodeLine{00085 }
+\DoxyCodeLine{00086   checkFiles();}
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088   \textcolor{keywordtype}{int} filesToPurgrCount = m\_filesToPurge.size();}
+\DoxyCodeLine{00089   \textcolor{keywordflow}{if} (filesToPurgrCount == 0) \{}
+\DoxyCodeLine{00090     m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}No items to purge."{}}));}
+\DoxyCodeLine{00091     switchToCloseButton();}
+\DoxyCodeLine{00092   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00093     m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}\%1 items to purge."{}}).arg(filesToPurgrCount));}
+\DoxyCodeLine{00094     m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{00095     m\_purgeButton-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00096   \}}
+\DoxyCodeLine{00097 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/svnpurgedialog.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/svnpurgedialog.\+cpp\end{DoxyCompactItemize}

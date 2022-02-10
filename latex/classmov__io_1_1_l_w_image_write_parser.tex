@@ -1,0 +1,77 @@
+\hypertarget{classmov__io_1_1_l_w_image_write_parser}{}\doxysection{mov\+\_\+io\+::LWImage\+Write\+Parser Class Reference}
+\label{classmov__io_1_1_l_w_image_write_parser}\index{mov\_io::LWImageWriteParser@{mov\_io::LWImageWriteParser}}
+Inheritance diagram for mov\+\_\+io\+::LWImage\+Write\+Parser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmov__io_1_1_l_w_image_write_parser}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{classmov__io_1_1_l_w_image_write_parser_a430032bab0e4d1805ef8299c5fa408b7}{header}} () const override
+\item 
+void \mbox{\hyperlink{classmov__io_1_1_l_w_image_write_parser_a8d89cd84d689e73f76fad56830fccf8c}{operator()}} (\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&stream) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmov__io_1_1_l_w_image_write_parser_a430032bab0e4d1805ef8299c5fa408b7}\label{classmov__io_1_1_l_w_image_write_parser_a430032bab0e4d1805ef8299c5fa408b7}} 
+\index{mov\_io::LWImageWriteParser@{mov\_io::LWImageWriteParser}!header@{header}}
+\index{header@{header}!mov\_io::LWImageWriteParser@{mov\_io::LWImageWriteParser}}
+\doxysubsubsection{\texorpdfstring{header()}{header()}}
+{\footnotesize\ttfamily QString mov\+\_\+io\+::\+LWImage\+Write\+Parser\+::header (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00089 \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$LWMovImageWrite"{}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmov__io_1_1_l_w_image_write_parser_a8d89cd84d689e73f76fad56830fccf8c}\label{classmov__io_1_1_l_w_image_write_parser_a8d89cd84d689e73f76fad56830fccf8c}} 
+\index{mov\_io::LWImageWriteParser@{mov\_io::LWImageWriteParser}!operator()@{operator()}}
+\index{operator()@{operator()}!mov\_io::LWImageWriteParser@{mov\_io::LWImageWriteParser}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily void mov\+\_\+io\+::\+LWImage\+Write\+Parser\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00232                                                 \{}
+\DoxyCodeLine{00233   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} id;}
+\DoxyCodeLine{00234   \textcolor{keywordtype}{int} frameIdx, lx, ly;}
+\DoxyCodeLine{00235 }
+\DoxyCodeLine{00236   msg >> \textcolor{keywordtype}{id} >> frameIdx >> lx >> ly;}
+\DoxyCodeLine{00237 }
+\DoxyCodeLine{00238   \textcolor{comment}{// Read the data through a shared memory segment}}
+\DoxyCodeLine{00239   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras(lx, ly);}
+\DoxyCodeLine{00240   \mbox{\hyperlink{classt32bitsrv_1_1_raster_exchanger}{t32bitsrv::RasterExchanger<TPixel32>}} exch(ras);}
+\DoxyCodeLine{00241   \mbox{\hyperlink{namespacetipc_a30132f99c3439636d6c729f4578675b0}{tipc::readShMemBuffer}}(*stream(), msg, \&exch);}
+\DoxyCodeLine{00242 }
+\DoxyCodeLine{00243   \textcolor{comment}{// Save the image}}
+\DoxyCodeLine{00244   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00245     \mbox{\hyperlink{class_t_image_writer_p}{TImageWriterP}} iw(writers.find(\textcolor{keywordtype}{id}).value()-\/>getFrameWriter(frameIdx + 1));}
+\DoxyCodeLine{00246     iw-\/>save(\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}(ras));}
+\DoxyCodeLine{00247 }
+\DoxyCodeLine{00248     msg << QString(\textcolor{stringliteral}{"{}ok"{}});}
+\DoxyCodeLine{00249   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00250     msg << QString(\textcolor{stringliteral}{"{}err"{}});}
+\DoxyCodeLine{00251   \}}
+\DoxyCodeLine{00252 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+h\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+cpp\end{DoxyCompactItemize}

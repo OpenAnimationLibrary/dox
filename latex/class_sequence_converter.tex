@@ -1,0 +1,492 @@
+\hypertarget{class_sequence_converter}{}\doxysection{Sequence\+Converter Class Reference}
+\label{class_sequence_converter}\index{SequenceConverter@{SequenceConverter}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_sequence_converter_1_1_length}{Length}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sequence_converter_abb2012ec8f1a334a835d5420b9c3b87d}{Sequence\+Converter}} (const \mbox{\hyperlink{class_sequence}{Sequence}} $\ast$s, double penalty)
+\item 
+\mbox{\hyperlink{class_sequence_converter_1_1_length}{Length}} \mbox{\hyperlink{class_sequence_converter_a3533ede153098135301d98a89a286a39}{length\+Of}} (unsigned int a, unsigned int b)
+\item 
+void \mbox{\hyperlink{class_sequence_converter_a0a297b9565fd375f3dc53e459f5dd35c}{add\+Middle\+Points}} ()
+\item 
+\mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$ \mbox{\hyperlink{class_sequence_converter_a7947b4886d20cff6f6a385da4cab45e4}{operator()}} (std\+::vector$<$ unsigned int $>$ $\ast$indices)
+\item 
+bool \mbox{\hyperlink{class_sequence_converter_a4baf8d1e55a29dcb3c84022a8f0362cd}{parametrize}} (unsigned int a, unsigned int b)
+\item 
+void \mbox{\hyperlink{class_sequence_converter_a2830ce75dabec0c5943fc7f5b08a747f}{length\+Of\+Triplet}} (unsigned int i, \mbox{\hyperlink{class_sequence_converter_1_1_length}{Length}} \&len)
+\item 
+bool \mbox{\hyperlink{class_sequence_converter_ab24dca004dd508f6eeb3f1a73b549c66}{calculate\+CPs}} (unsigned int i, unsigned int j, \mbox{\hyperlink{class_sequence_converter_1_1_length}{Length}} \&len)
+\item 
+bool \mbox{\hyperlink{class_sequence_converter_ae122a7edc0cdd42bb0fe14470ff5062f}{penalty}} (unsigned int a, unsigned int b, \mbox{\hyperlink{class_sequence_converter_1_1_length}{Length}} \&len)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \mbox{\hyperlink{class_sequence_converter_a324f82f3da1894ef62bd04d9efa493a0}{middle}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_sequence_converter_a1b072706c715e96fe5fff9c2ebdee403}{pars}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_t3_d_point_t}{T3\+DPointD}} $>$ \mbox{\hyperlink{class_sequence_converter_a09a85bc0f7525ba977f92541040de72a}{middle\+Added\+Sequence}}
+\item 
+std\+::vector$<$ unsigned int $>$ $\ast$ \mbox{\hyperlink{class_sequence_converter_a3734330bd4232584eea23f5c054d4824}{input\+Indices}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_sequence_converter_abb2012ec8f1a334a835d5420b9c3b87d}\label{class_sequence_converter_abb2012ec8f1a334a835d5420b9c3b87d}} 
+\index{SequenceConverter@{SequenceConverter}!SequenceConverter@{SequenceConverter}}
+\index{SequenceConverter@{SequenceConverter}!SequenceConverter@{SequenceConverter}}
+\doxysubsubsection{\texorpdfstring{SequenceConverter()}{SequenceConverter()}}
+{\footnotesize\ttfamily Sequence\+Converter\+::\+Sequence\+Converter (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_sequence}{Sequence}} $\ast$}]{s,  }\item[{double}]{penalty }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00234       : m\_s(s), m\_graph(m\_s-\/>m\_graphHolder), m\_penalty(penalty) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_sequence_converter_a0a297b9565fd375f3dc53e459f5dd35c}\label{class_sequence_converter_a0a297b9565fd375f3dc53e459f5dd35c}} 
+\index{SequenceConverter@{SequenceConverter}!addMiddlePoints@{addMiddlePoints}}
+\index{addMiddlePoints@{addMiddlePoints}!SequenceConverter@{SequenceConverter}}
+\doxysubsubsection{\texorpdfstring{addMiddlePoints()}{addMiddlePoints()}}
+{\footnotesize\ttfamily void Sequence\+Converter\+::add\+Middle\+Points (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00261                                                \{}
+\DoxyCodeLine{00262   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i, j, n;}
+\DoxyCodeLine{00263 }
+\DoxyCodeLine{00264   n = inputIndices-\/>size();}
+\DoxyCodeLine{00265   middleAddedSequence.clear();}
+\DoxyCodeLine{00266 }
+\DoxyCodeLine{00267   \textcolor{keywordflow}{if} (n == 2) \{}
+\DoxyCodeLine{00268     middleAddedSequence.resize(3);}
+\DoxyCodeLine{00269     middleAddedSequence[0] = *m\_graph-\/>getNode((*inputIndices)[0]);}
+\DoxyCodeLine{00270     middleAddedSequence[1] = (*m\_graph-\/>getNode((*inputIndices)[0]) +}
+\DoxyCodeLine{00271                               *m\_graph-\/>getNode((*inputIndices)[1])) *}
+\DoxyCodeLine{00272                              0.5;}
+\DoxyCodeLine{00273     middleAddedSequence[2] = *m\_graph-\/>getNode((*inputIndices)[1]);}
+\DoxyCodeLine{00274   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00275     middleAddedSequence.resize(2 * n -\/ 3);}
+\DoxyCodeLine{00276     middleAddedSequence[0] = *m\_graph-\/>getNode((*inputIndices)[0]);}
+\DoxyCodeLine{00277     \textcolor{keywordflow}{for} (i = j = 1; i < n -\/ 2; ++i, j += 2) \{}
+\DoxyCodeLine{00278       middleAddedSequence[j]     = *m\_graph-\/>getNode((*inputIndices)[i]);}
+\DoxyCodeLine{00279       middleAddedSequence[j + 1] = (*m\_graph-\/>getNode((*inputIndices)[i]) +}
+\DoxyCodeLine{00280                                     *m\_graph-\/>getNode((*inputIndices)[i + 1])) *}
+\DoxyCodeLine{00281                                    0.5;}
+\DoxyCodeLine{00282     \}}
+\DoxyCodeLine{00283     middleAddedSequence[j]     = *m\_graph-\/>getNode((*inputIndices)[n -\/ 2]);}
+\DoxyCodeLine{00284     middleAddedSequence[j + 1] = *m\_graph-\/>getNode((*inputIndices)[n -\/ 1]);}
+\DoxyCodeLine{00285   \}}
+\DoxyCodeLine{00286 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_sequence_converter_ab24dca004dd508f6eeb3f1a73b549c66}\label{class_sequence_converter_ab24dca004dd508f6eeb3f1a73b549c66}} 
+\index{SequenceConverter@{SequenceConverter}!calculateCPs@{calculateCPs}}
+\index{calculateCPs@{calculateCPs}!SequenceConverter@{SequenceConverter}}
+\doxysubsubsection{\texorpdfstring{calculateCPs()}{calculateCPs()}}
+{\footnotesize\ttfamily bool Sequence\+Converter\+::calculate\+CPs (\begin{DoxyParamCaption}\item[{unsigned int}]{i,  }\item[{unsigned int}]{j,  }\item[{\mbox{\hyperlink{class_sequence_converter_1_1_length}{Length}} \&}]{len }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00453                                                   \{}
+\DoxyCodeLine{00454   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} curr, old;}
+\DoxyCodeLine{00455 }
+\DoxyCodeLine{00456   \mbox{\hyperlink{class_t_affine}{TAffine}} M;}
+\DoxyCodeLine{00457   \mbox{\hyperlink{class_t_point_t}{TPointD}} l;}
+\DoxyCodeLine{00458   \mbox{\hyperlink{class_t3_d_point_t}{T3DPointD}} a, e, x, y, A, B;}
+\DoxyCodeLine{00459   \mbox{\hyperlink{class_t3_d_point_t}{T3DPointD}} IH, IK, IM, IN\_;  \textcolor{comment}{//"{}IN"{} seems to be reserved word}}
+\DoxyCodeLine{00460   \textcolor{keywordtype}{double} HxL, KyL, MxO, NyO;}
+\DoxyCodeLine{00461   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} k;}
+\DoxyCodeLine{00462 }
+\DoxyCodeLine{00463   a = middleAddedSequence[i];}
+\DoxyCodeLine{00464   e = middleAddedSequence[j];}
+\DoxyCodeLine{00465   x = middleAddedSequence[i + 1] -\/ a;}
+\DoxyCodeLine{00466   y = middleAddedSequence[j -\/ 1] -\/ e;}
+\DoxyCodeLine{00467 }
+\DoxyCodeLine{00468   \textcolor{comment}{// Build TAffine M}}
+\DoxyCodeLine{00469   \textcolor{keywordtype}{double} par = ellProd(x, y) / 5;}
+\DoxyCodeLine{00470   M          = \mbox{\hyperlink{class_t_affine}{TAffine}}(ellProd(x, x) / 3, par, 0, par, ellProd(y, y) / 3, 0);}
+\DoxyCodeLine{00471 }
+\DoxyCodeLine{00472   \textcolor{comment}{// Costruisco il termine noto b:}}
+\DoxyCodeLine{00473   \textcolor{comment}{// Calculate polygonal integrals}}
+\DoxyCodeLine{00474 }
+\DoxyCodeLine{00475   \textcolor{comment}{// Integral from 0.0 to 1.0}}
+\DoxyCodeLine{00476   \textcolor{keywordflow}{for} (k = 0, old = i, curr = i + 1; k < middle; ++k, old = curr, curr += 2) \{}
+\DoxyCodeLine{00477     B = (middleAddedSequence[curr] -\/ middleAddedSequence[old]) *}
+\DoxyCodeLine{00478         (1 / (pars[k + 1] -\/ pars[k]));}
+\DoxyCodeLine{00479     A = middleAddedSequence[old] -\/ pars[k] * B;}
+\DoxyCodeLine{00480     IH += int\_H(A, B, pars[k], pars[k + 1]);}
+\DoxyCodeLine{00481     IK += int\_K(A, B, pars[k], pars[k + 1]);}
+\DoxyCodeLine{00482   \}}
+\DoxyCodeLine{00483 }
+\DoxyCodeLine{00484   \textcolor{keywordflow}{if} (curr == j + 1) curr = j;}
+\DoxyCodeLine{00485   B = (middleAddedSequence[curr] -\/ middleAddedSequence[old]) *}
+\DoxyCodeLine{00486       (1 / (pars[k + 1] -\/ pars[k]));}
+\DoxyCodeLine{00487   A = middleAddedSequence[old] -\/ pars[k] * B;}
+\DoxyCodeLine{00488   IH += int\_H(A, B, pars[k], 1.0);}
+\DoxyCodeLine{00489   IK += int\_K(A, B, pars[k], 1.0);}
+\DoxyCodeLine{00490 }
+\DoxyCodeLine{00491   \textcolor{comment}{// Integral from 1.0 to 2.0}}
+\DoxyCodeLine{00492   \textcolor{keywordflow}{for} (k = pars.size() -\/ 1, old = j, curr = j -\/ 1; k > middle + 1;}
+\DoxyCodeLine{00493        -\/-\/k, old = curr, curr -\/= 2) \{}
+\DoxyCodeLine{00494     B = (middleAddedSequence[curr] -\/ middleAddedSequence[old]) *}
+\DoxyCodeLine{00495         (1 / (pars[k] -\/ pars[k -\/ 1]));}
+\DoxyCodeLine{00496     A = middleAddedSequence[curr] -\/ (2 -\/ pars[k -\/ 1]) * B;}
+\DoxyCodeLine{00497     IM += int\_K(A, B, 2 -\/ pars[k], 2 -\/ pars[k -\/ 1]);}
+\DoxyCodeLine{00498     IN\_ += int\_H(A, B, 2 -\/ pars[k], 2 -\/ pars[k -\/ 1]);}
+\DoxyCodeLine{00499   \}}
+\DoxyCodeLine{00500 }
+\DoxyCodeLine{00501   \textcolor{keywordflow}{if} (old == i + 1) curr = i;}
+\DoxyCodeLine{00502   B = (middleAddedSequence[curr] -\/ middleAddedSequence[old]) *}
+\DoxyCodeLine{00503       (1 / (pars[k] -\/ pars[k -\/ 1]));}
+\DoxyCodeLine{00504   A = middleAddedSequence[curr] -\/ (2 -\/ pars[k -\/ 1]) * B;}
+\DoxyCodeLine{00505   IM += int\_K(A, B, 2 -\/ pars[k], 1.0);}
+\DoxyCodeLine{00506   IN\_ += int\_H(A, B, 2 -\/ pars[k], 1.0);}
+\DoxyCodeLine{00507 }
+\DoxyCodeLine{00508   \textcolor{comment}{// Polygonal-\/free integrals}}
+\DoxyCodeLine{00509   \mbox{\hyperlink{class_t3_d_point_t}{T3DPointD}} f = (a + e) * 0.5;}
+\DoxyCodeLine{00510   HxL         = (ellProd(a, x) * 0.3) + (ellProd(f, x) / 5.0);}
+\DoxyCodeLine{00511   NyO         = (ellProd(e, y) * 0.3) + (ellProd(f, y) / 5.0);}
+\DoxyCodeLine{00512   KyL         = (ellProd(a, y) / 15.0) + (ellProd(f, y) / 10.0);}
+\DoxyCodeLine{00513   MxO         = ((e * x) / 15.0) + (ellProd(f, x) / 10.0);}
+\DoxyCodeLine{00514 }
+\DoxyCodeLine{00515   \textcolor{comment}{// Infine, ho il termine noto}}
+\DoxyCodeLine{00516   l = \mbox{\hyperlink{class_t_point_t}{TPointD}}(ellProd(IH, x) -\/ HxL + ellProd(IM, x) -\/ MxO,}
+\DoxyCodeLine{00517               ellProd(IK, y) -\/ KyL + ellProd(IN\_, y) -\/ NyO);}
+\DoxyCodeLine{00518   M.a13 = -\/l.x;}
+\DoxyCodeLine{00519   M.a23 = -\/l.y;}
+\DoxyCodeLine{00520 }
+\DoxyCodeLine{00521   \textcolor{comment}{// Check validity conditions:}}
+\DoxyCodeLine{00522   \textcolor{comment}{//  a) System is not singular}}
+\DoxyCodeLine{00523   \textcolor{keywordflow}{if} (fabs(M.det()) < 0.01) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00524 }
+\DoxyCodeLine{00525   M = M.\mbox{\hyperlink{class_t_affine_a570529b96b1ec5abc711aaa9aac09ff9}{inv}}();}
+\DoxyCodeLine{00526 }
+\DoxyCodeLine{00527   \textcolor{comment}{//  b) Shift (solution) is positive}}
+\DoxyCodeLine{00528   \textcolor{keywordflow}{if} (M.a13 < 0 || M.a23 < 0) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00529   \mbox{\hyperlink{class_t3_d_point_t}{T3DPointD}} b = a + M.a13 * x;}
+\DoxyCodeLine{00530   \mbox{\hyperlink{class_t3_d_point_t}{T3DPointD}} d = e + M.a23 * y;}
+\DoxyCodeLine{00531 }
+\DoxyCodeLine{00532   \textcolor{comment}{//  c) The height of every CP must be >=0}}
+\DoxyCodeLine{00533   \textcolor{keywordflow}{if} (b.z < 0 || d.z < 0) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00534   len.set\_CPs(a, b, (b + d) * 0.5, d, e);}
+\DoxyCodeLine{00535 }
+\DoxyCodeLine{00536   \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00537 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_sequence_converter_a3533ede153098135301d98a89a286a39}\label{class_sequence_converter_a3533ede153098135301d98a89a286a39}} 
+\index{SequenceConverter@{SequenceConverter}!lengthOf@{lengthOf}}
+\index{lengthOf@{lengthOf}!SequenceConverter@{SequenceConverter}}
+\doxysubsubsection{\texorpdfstring{lengthOf()}{lengthOf()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_sequence_converter_1_1_length}{Sequence\+Converter\+::\+Length}} Sequence\+Converter\+::length\+Of (\begin{DoxyParamCaption}\item[{unsigned int}]{a,  }\item[{unsigned int}]{b }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00353                                                                       \{}
+\DoxyCodeLine{00354   Length l;}
+\DoxyCodeLine{00355 }
+\DoxyCodeLine{00356   \textcolor{comment}{// If we have a triplet, apply a specific procedure}}
+\DoxyCodeLine{00357   \textcolor{keywordflow}{if} (b == a + 2) \{}
+\DoxyCodeLine{00358     lengthOfTriplet(a, l);}
+\DoxyCodeLine{00359     \textcolor{keywordflow}{return} l;}
+\DoxyCodeLine{00360   \}}
+\DoxyCodeLine{00361   \textcolor{comment}{// otherwise}}
+\DoxyCodeLine{00362   \textcolor{keywordflow}{if} (!parametrize(a, b) || !calculateCPs(a, b, l) || !penalty(a, b, l))}
+\DoxyCodeLine{00363     l.infty();}
+\DoxyCodeLine{00364   \textcolor{keywordflow}{return} l;}
+\DoxyCodeLine{00365 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_sequence_converter_a2830ce75dabec0c5943fc7f5b08a747f}\label{class_sequence_converter_a2830ce75dabec0c5943fc7f5b08a747f}} 
+\index{SequenceConverter@{SequenceConverter}!lengthOfTriplet@{lengthOfTriplet}}
+\index{lengthOfTriplet@{lengthOfTriplet}!SequenceConverter@{SequenceConverter}}
+\doxysubsubsection{\texorpdfstring{lengthOfTriplet()}{lengthOfTriplet()}}
+{\footnotesize\ttfamily void Sequence\+Converter\+::length\+Of\+Triplet (\begin{DoxyParamCaption}\item[{unsigned int}]{i,  }\item[{\mbox{\hyperlink{class_sequence_converter_1_1_length}{Length}} \&}]{len }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00369                                                                    \{}
+\DoxyCodeLine{00370   \mbox{\hyperlink{class_t3_d_point_t}{T3DPointD}} A = middleAddedSequence[i];}
+\DoxyCodeLine{00371   \mbox{\hyperlink{class_t3_d_point_t}{T3DPointD}} B = middleAddedSequence[i + 1];}
+\DoxyCodeLine{00372   \mbox{\hyperlink{class_t3_d_point_t}{T3DPointD}} C = middleAddedSequence[i + 2];}
+\DoxyCodeLine{00373 }
+\DoxyCodeLine{00374   \textcolor{comment}{// We assume that this conversion is faithful, avoiding length penalty}}
+\DoxyCodeLine{00375   len.l    = 0;}
+\DoxyCodeLine{00376   \textcolor{keywordtype}{double} d = tdistance(B, C -\/ A, A);}
+\DoxyCodeLine{00377   \textcolor{keywordflow}{if} (d <= 2) \{}
+\DoxyCodeLine{00378     len.n = 1;}
+\DoxyCodeLine{00379     len.set\_CPs(A, B, C);}
+\DoxyCodeLine{00380   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (d <= 6) \{}
+\DoxyCodeLine{00381     len.n       = 2;}
+\DoxyCodeLine{00382     d           = (d -\/ 1) / d;}
+\DoxyCodeLine{00383     \mbox{\hyperlink{class_t3_d_point_t}{T3DPointD}} U = A + d * (B -\/ A), V = C + d * (B -\/ C);}
+\DoxyCodeLine{00384     len.set\_CPs(A, U, (U + V) * 0.5, V, C);}
+\DoxyCodeLine{00385   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00386     len.n = 2;}
+\DoxyCodeLine{00387     len.set\_CPs(A, (A + B) * 0.5, B, (B + C) * 0.5, C);}
+\DoxyCodeLine{00388   \}}
+\DoxyCodeLine{00389 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_sequence_converter_a7947b4886d20cff6f6a385da4cab45e4}\label{class_sequence_converter_a7947b4886d20cff6f6a385da4cab45e4}} 
+\index{SequenceConverter@{SequenceConverter}!operator()@{operator()}}
+\index{operator()@{operator()}!SequenceConverter@{SequenceConverter}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$ Sequence\+Converter\+::operator() (\begin{DoxyParamCaption}\item[{std\+::vector$<$ unsigned int $>$ $\ast$}]{indices }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00290                                                                        \{}
+\DoxyCodeLine{00291   \textcolor{comment}{// Prepare Sequence}}
+\DoxyCodeLine{00292   inputIndices = indices;}
+\DoxyCodeLine{00293   addMiddlePoints();}
+\DoxyCodeLine{00294 }
+\DoxyCodeLine{00295   \textcolor{comment}{// Initialize local variables}}
+\DoxyCodeLine{00296   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} n =}
+\DoxyCodeLine{00297       (middleAddedSequence.size() + 1) / 2;  \textcolor{comment}{// Number of middle points}}
+\DoxyCodeLine{00298   \textcolor{comment}{// unsigned int i, j;}}
+\DoxyCodeLine{00299   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00300   \textcolor{keywordtype}{int} j;}
+\DoxyCodeLine{00301 }
+\DoxyCodeLine{00302   Length L\_att, L\_min, l\_min, l\_ji;}
+\DoxyCodeLine{00303   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} p\_i, a, b;}
+\DoxyCodeLine{00304 }
+\DoxyCodeLine{00305   std::vector<Length> M(n);}
+\DoxyCodeLine{00306   std::vector<Length> K(n);}
+\DoxyCodeLine{00307   std::vector<unsigned int> P(n);}
+\DoxyCodeLine{00308 }
+\DoxyCodeLine{00309   \textcolor{comment}{// Bellman algorithm}}
+\DoxyCodeLine{00310   \textcolor{keywordflow}{for} (i = 2, a = 1; i < middleAddedSequence.size(); i += 2, ++a) \{}
+\DoxyCodeLine{00311     L\_min.infty();}
+\DoxyCodeLine{00312     l\_min.infty();}
+\DoxyCodeLine{00313     p\_i = 0;}
+\DoxyCodeLine{00314     \textcolor{comment}{// for(j=0, b=0; j<i; j+=2, ++b)}}
+\DoxyCodeLine{00315     \textcolor{keywordflow}{for} (j = i -\/ 2, b = j / 2; j >= 0; j -\/= 2, -\/-\/b) \{}
+\DoxyCodeLine{00316       \textcolor{keywordflow}{if} ((L\_att = M[b] + (l\_ji = lengthOf(j, i))) < L\_min) \{}
+\DoxyCodeLine{00317         L\_min = L\_att;}
+\DoxyCodeLine{00318         p\_i   = b;}
+\DoxyCodeLine{00319         l\_min = l\_ji;}
+\DoxyCodeLine{00320       \}}
+\DoxyCodeLine{00321       \textcolor{comment}{// NOTE: The following else may be taken out to perform a deeper}}
+\DoxyCodeLine{00322       \textcolor{comment}{// search for optimal result. However, it prevents quadratic complexities}}
+\DoxyCodeLine{00323       \textcolor{comment}{// on large-\/scale images.}}
+\DoxyCodeLine{00324       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (l\_ji.n == infinity)}
+\DoxyCodeLine{00325         \textcolor{keywordflow}{break};  \textcolor{comment}{// Stops searching for current i}}
+\DoxyCodeLine{00326     \}}
+\DoxyCodeLine{00327     M[a] = L\_min;}
+\DoxyCodeLine{00328     K[a] = l\_min;}
+\DoxyCodeLine{00329     P[a] = p\_i;}
+\DoxyCodeLine{00330   \}}
+\DoxyCodeLine{00331 }
+\DoxyCodeLine{00332   \textcolor{comment}{// Read off the output}}
+\DoxyCodeLine{00333   std::vector<TThickPoint> controlPoints(2 * M[n -\/ 1].n + 1);}
+\DoxyCodeLine{00334 }
+\DoxyCodeLine{00335   \textcolor{keywordflow}{for} (b = n -\/ 1, a = 2 * M[n -\/ 1].n; b > 0; b = P[b]) \{}
+\DoxyCodeLine{00336     \textcolor{keywordflow}{for} (i             = K[b].CPs.size() -\/ 1; i > 0; -\/-\/i, -\/-\/a)}
+\DoxyCodeLine{00337       controlPoints[a] = K[b].CPs[i];}
+\DoxyCodeLine{00338   \}}
+\DoxyCodeLine{00339   controlPoints[0] = middleAddedSequence[0];}
+\DoxyCodeLine{00340 }
+\DoxyCodeLine{00341   \mbox{\hyperlink{class_t_stroke}{TStroke}} *res = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_stroke}{TStroke}}(controlPoints);}
+\DoxyCodeLine{00342 }
+\DoxyCodeLine{00343   \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{00344 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_sequence_converter_a4baf8d1e55a29dcb3c84022a8f0362cd}\label{class_sequence_converter_a4baf8d1e55a29dcb3c84022a8f0362cd}} 
+\index{SequenceConverter@{SequenceConverter}!parametrize@{parametrize}}
+\index{parametrize@{parametrize}!SequenceConverter@{SequenceConverter}}
+\doxysubsubsection{\texorpdfstring{parametrize()}{parametrize()}}
+{\footnotesize\ttfamily bool Sequence\+Converter\+::parametrize (\begin{DoxyParamCaption}\item[{unsigned int}]{a,  }\item[{unsigned int}]{b }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00393                                                                   \{}
+\DoxyCodeLine{00394   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} curr, old;}
+\DoxyCodeLine{00395   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00396   \textcolor{keywordtype}{double} w, t;}
+\DoxyCodeLine{00397   \textcolor{keywordtype}{double} den;}
+\DoxyCodeLine{00398 }
+\DoxyCodeLine{00399   pars.clear();}
+\DoxyCodeLine{00400   pars.push\_back(0);}
+\DoxyCodeLine{00401 }
+\DoxyCodeLine{00402   \textcolor{keywordflow}{for} (old = a, curr = a + 1, den = 0; curr < b; old = curr, curr += 2) \{}
+\DoxyCodeLine{00403     w = norm(middleAddedSequence[curr] -\/ middleAddedSequence[old]);}
+\DoxyCodeLine{00404     den += w;}
+\DoxyCodeLine{00405     pars.push\_back(w);}
+\DoxyCodeLine{00406   \}}
+\DoxyCodeLine{00407   w = norm(middleAddedSequence[b] -\/ middleAddedSequence[old]);}
+\DoxyCodeLine{00408   den += w;}
+\DoxyCodeLine{00409   pars.push\_back(w);}
+\DoxyCodeLine{00410 }
+\DoxyCodeLine{00411   \textcolor{keywordflow}{if} (den < 0.1) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00412 }
+\DoxyCodeLine{00413   \textcolor{keywordflow}{for} (i = 1, t = 0; i < pars.size(); ++i) \{}
+\DoxyCodeLine{00414     t += 2 * pars[i] / den;}
+\DoxyCodeLine{00415     pars[i] = t;}
+\DoxyCodeLine{00416   \}}
+\DoxyCodeLine{00417 }
+\DoxyCodeLine{00418   \textcolor{comment}{// Seek the interval which holds 1 -\/ the middle interval}}
+\DoxyCodeLine{00419   \textcolor{keywordflow}{for} (middle = 0; middle < pars.size() \&\& pars[middle + 1] <= 1; ++middle)}
+\DoxyCodeLine{00420     ;}
+\DoxyCodeLine{00421 }
+\DoxyCodeLine{00422   \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00423 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_sequence_converter_ae122a7edc0cdd42bb0fe14470ff5062f}\label{class_sequence_converter_ae122a7edc0cdd42bb0fe14470ff5062f}} 
+\index{SequenceConverter@{SequenceConverter}!penalty@{penalty}}
+\index{penalty@{penalty}!SequenceConverter@{SequenceConverter}}
+\doxysubsubsection{\texorpdfstring{penalty()}{penalty()}}
+{\footnotesize\ttfamily bool Sequence\+Converter\+::penalty (\begin{DoxyParamCaption}\item[{unsigned int}]{a,  }\item[{unsigned int}]{b,  }\item[{\mbox{\hyperlink{class_sequence_converter_1_1_length}{Length}} \&}]{len }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00581                                                                            \{}
+\DoxyCodeLine{00582   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} curr, old;}
+\DoxyCodeLine{00583 }
+\DoxyCodeLine{00584   \textcolor{keyword}{const} std::vector<T3DPointD> \&CPs = len.CPs;}
+\DoxyCodeLine{00585   \mbox{\hyperlink{class_t3_d_point_t}{T3DPointD}} A, B, P0, P1, P2;}
+\DoxyCodeLine{00586   \textcolor{keywordtype}{double} p, p\_max;}
+\DoxyCodeLine{00587   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} k;}
+\DoxyCodeLine{00588 }
+\DoxyCodeLine{00589   len.n = 2;  \textcolor{comment}{// A couple of arcs}}
+\DoxyCodeLine{00590 }
+\DoxyCodeLine{00591   \textcolor{comment}{// Prepare max penalty p\_max}}
+\DoxyCodeLine{00592   p\_max = 0;}
+\DoxyCodeLine{00593   \textcolor{keywordflow}{for} (curr = a + 1, old = a, k = 0; curr < b; ++k, old = curr, curr += 2) \{}
+\DoxyCodeLine{00594     p\_max += (middleAddedSequence[curr].z + middleAddedSequence[old].z) *}
+\DoxyCodeLine{00595              (pars[k + 1] -\/ pars[k]) / 2;}
+\DoxyCodeLine{00596   \}}
+\DoxyCodeLine{00597   p\_max += (middleAddedSequence[b].z + middleAddedSequence[old].z) *}
+\DoxyCodeLine{00598            (pars[k + 1] -\/ pars[k]) / 2;}
+\DoxyCodeLine{00599 }
+\DoxyCodeLine{00600   \textcolor{comment}{// Confronting 4th power of error with mean polygonal thickness}}
+\DoxyCodeLine{00601   \textcolor{comment}{// -\/ can be changed}}
+\DoxyCodeLine{00602   p\_max = std::min(sqrt(p\_max) * m\_penalty, Quad\_eps\_max);}
+\DoxyCodeLine{00603 }
+\DoxyCodeLine{00604   \textcolor{comment}{// CP only integral}}
+\DoxyCodeLine{00605   p = (ellProd(CPs[0], CPs[0]) + 2 * ellProd(CPs[2], CPs[2]) +}
+\DoxyCodeLine{00606        ellProd(CPs[4], CPs[4]) + ellProd(CPs[0], CPs[1]) +}
+\DoxyCodeLine{00607        ellProd(CPs[1], CPs[2]) + ellProd(CPs[2], CPs[3]) +}
+\DoxyCodeLine{00608        ellProd(CPs[3], CPs[4])) /}
+\DoxyCodeLine{00609           5.0 +}
+\DoxyCodeLine{00610       (2 * (ellProd(CPs[1], CPs[1]) + ellProd(CPs[3], CPs[3])) +}
+\DoxyCodeLine{00611        ellProd(CPs[0], CPs[2]) + ellProd(CPs[2], CPs[4])) /}
+\DoxyCodeLine{00612           15.0;}
+\DoxyCodeLine{00613 }
+\DoxyCodeLine{00614   \textcolor{comment}{// Penalty from 0.0 to 1.0}}
+\DoxyCodeLine{00615   P0 = P1 = P2 = \mbox{\hyperlink{class_t3_d_point_t}{T3DPointD}}();}
+\DoxyCodeLine{00616   \textcolor{keywordflow}{for} (k = 0, old = a, curr = a + 1; k < middle; ++k, old = curr, curr += 2) \{}
+\DoxyCodeLine{00617     B = (middleAddedSequence[curr] -\/ middleAddedSequence[old]) *}
+\DoxyCodeLine{00618         (1 / (pars[k + 1] -\/ pars[k]));}
+\DoxyCodeLine{00619     A = middleAddedSequence[old] -\/ pars[k] * B;}
+\DoxyCodeLine{00620 }
+\DoxyCodeLine{00621     \textcolor{comment}{// Mixed integral}}
+\DoxyCodeLine{00622     P0 += int\_B0a(A, B, pars[k], pars[k + 1]);}
+\DoxyCodeLine{00623     P1 += int\_B1a(A, B, pars[k], pars[k + 1]);}
+\DoxyCodeLine{00624     P2 += int\_B2a(A, B, pars[k], pars[k + 1]);}
+\DoxyCodeLine{00625 }
+\DoxyCodeLine{00626     \textcolor{comment}{// Sequence integral}}
+\DoxyCodeLine{00627     p += int\_a2(A, B, pars[k], pars[k + 1]);}
+\DoxyCodeLine{00628   \}}
+\DoxyCodeLine{00629   \textcolor{keywordflow}{if} (curr == b + 1) curr = b;}
+\DoxyCodeLine{00630   B = (middleAddedSequence[curr] -\/ middleAddedSequence[old]) *}
+\DoxyCodeLine{00631       (1 / (pars[k + 1] -\/ pars[k]));}
+\DoxyCodeLine{00632   A = middleAddedSequence[old] -\/ pars[k] * B;}
+\DoxyCodeLine{00633 }
+\DoxyCodeLine{00634   \textcolor{comment}{// Mixed integral}}
+\DoxyCodeLine{00635   P0 += int\_B0a(A, B, pars[k], 1.0);}
+\DoxyCodeLine{00636   P1 += int\_B1a(A, B, pars[k], 1.0);}
+\DoxyCodeLine{00637   P2 += int\_B2a(A, B, pars[k], 1.0);}
+\DoxyCodeLine{00638 }
+\DoxyCodeLine{00639   \textcolor{comment}{// Sequence integral}}
+\DoxyCodeLine{00640   p += int\_a2(A, B, pars[k], 1.0);}
+\DoxyCodeLine{00641 }
+\DoxyCodeLine{00642   p -\/= 2 * (ellProd(P0, CPs[0]) + ellProd(P1, CPs[1]) + ellProd(P2, CPs[2]));}
+\DoxyCodeLine{00643 }
+\DoxyCodeLine{00644   \textcolor{comment}{// Penalty from 1.0 to 2.0}}
+\DoxyCodeLine{00645   P0 = P1 = P2 = \mbox{\hyperlink{class_t3_d_point_t}{T3DPointD}}();}
+\DoxyCodeLine{00646   \textcolor{keywordflow}{for} (k = pars.size() -\/ 1, old = b, curr = b -\/ 1; k > middle + 1;}
+\DoxyCodeLine{00647        -\/-\/k, old = curr, curr -\/= 2) \{}
+\DoxyCodeLine{00648     B = (middleAddedSequence[curr] -\/ middleAddedSequence[old]) *}
+\DoxyCodeLine{00649         (1 / (pars[k] -\/ pars[k -\/ 1]));}
+\DoxyCodeLine{00650     A = middleAddedSequence[curr] -\/ (2 -\/ pars[k -\/ 1]) * B;}
+\DoxyCodeLine{00651 }
+\DoxyCodeLine{00652     \textcolor{comment}{// Mixed integral}}
+\DoxyCodeLine{00653     P0 += int\_B0a(A, B, 2 -\/ pars[k], 2 -\/ pars[k -\/ 1]);}
+\DoxyCodeLine{00654     P1 += int\_B1a(A, B, 2 -\/ pars[k], 2 -\/ pars[k -\/ 1]);}
+\DoxyCodeLine{00655     P2 += int\_B2a(A, B, 2 -\/ pars[k], 2 -\/ pars[k -\/ 1]);}
+\DoxyCodeLine{00656 }
+\DoxyCodeLine{00657     \textcolor{comment}{// Sequence integral}}
+\DoxyCodeLine{00658     p += int\_a2(A, B, 2 -\/ pars[k], 2 -\/ pars[k -\/ 1]);}
+\DoxyCodeLine{00659   \}}
+\DoxyCodeLine{00660   \textcolor{keywordflow}{if} (old == a + 1) curr = a;}
+\DoxyCodeLine{00661   B = (middleAddedSequence[curr] -\/ middleAddedSequence[old]) *}
+\DoxyCodeLine{00662       (1 / (pars[k] -\/ pars[k -\/ 1]));}
+\DoxyCodeLine{00663   A = middleAddedSequence[curr] -\/ (2 -\/ pars[k -\/ 1]) * B;}
+\DoxyCodeLine{00664 }
+\DoxyCodeLine{00665   \textcolor{comment}{// Mixed integral}}
+\DoxyCodeLine{00666   P0 += int\_B0a(A, B, 2 -\/ pars[k], 1.0);}
+\DoxyCodeLine{00667   P1 += int\_B1a(A, B, 2 -\/ pars[k], 1.0);}
+\DoxyCodeLine{00668   P2 += int\_B2a(A, B, 2 -\/ pars[k], 1.0);}
+\DoxyCodeLine{00669 }
+\DoxyCodeLine{00670   \textcolor{comment}{// Sequence integral}}
+\DoxyCodeLine{00671   p += int\_a2(A, B, 2 -\/ pars[k], 1.0);}
+\DoxyCodeLine{00672 }
+\DoxyCodeLine{00673   p -\/= 2 * (ellProd(P0, CPs[4]) + ellProd(P1, CPs[3]) + ellProd(P2, CPs[2]));}
+\DoxyCodeLine{00674 }
+\DoxyCodeLine{00675   \textcolor{comment}{// OCCHIO! Ho visto ancora qualche p<0! Da rivedere -\/ non dovrebbe...}}
+\DoxyCodeLine{00676   \textcolor{keywordflow}{if} (p > p\_max || p < 0)}
+\DoxyCodeLine{00677     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00678   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00679     len.l = p;}
+\DoxyCodeLine{00680 }
+\DoxyCodeLine{00681   \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00682 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_sequence_converter_a3734330bd4232584eea23f5c054d4824}\label{class_sequence_converter_a3734330bd4232584eea23f5c054d4824}} 
+\index{SequenceConverter@{SequenceConverter}!inputIndices@{inputIndices}}
+\index{inputIndices@{inputIndices}!SequenceConverter@{SequenceConverter}}
+\doxysubsubsection{\texorpdfstring{inputIndices}{inputIndices}}
+{\footnotesize\ttfamily std\+::vector$<$unsigned int$>$$\ast$ Sequence\+Converter\+::input\+Indices}
+
+\mbox{\Hypertarget{class_sequence_converter_a324f82f3da1894ef62bd04d9efa493a0}\label{class_sequence_converter_a324f82f3da1894ef62bd04d9efa493a0}} 
+\index{SequenceConverter@{SequenceConverter}!middle@{middle}}
+\index{middle@{middle}!SequenceConverter@{SequenceConverter}}
+\doxysubsubsection{\texorpdfstring{middle}{middle}}
+{\footnotesize\ttfamily unsigned int Sequence\+Converter\+::middle}
+
+\mbox{\Hypertarget{class_sequence_converter_a09a85bc0f7525ba977f92541040de72a}\label{class_sequence_converter_a09a85bc0f7525ba977f92541040de72a}} 
+\index{SequenceConverter@{SequenceConverter}!middleAddedSequence@{middleAddedSequence}}
+\index{middleAddedSequence@{middleAddedSequence}!SequenceConverter@{SequenceConverter}}
+\doxysubsubsection{\texorpdfstring{middleAddedSequence}{middleAddedSequence}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{class_t3_d_point_t}{T3\+DPointD}}$>$ Sequence\+Converter\+::middle\+Added\+Sequence}
+
+\mbox{\Hypertarget{class_sequence_converter_a1b072706c715e96fe5fff9c2ebdee403}\label{class_sequence_converter_a1b072706c715e96fe5fff9c2ebdee403}} 
+\index{SequenceConverter@{SequenceConverter}!pars@{pars}}
+\index{pars@{pars}!SequenceConverter@{SequenceConverter}}
+\doxysubsubsection{\texorpdfstring{pars}{pars}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ Sequence\+Converter\+::pars}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tcenterlinetostrokes.\+cpp\end{DoxyCompactItemize}

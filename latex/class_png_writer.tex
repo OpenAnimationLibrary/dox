@@ -1,0 +1,352 @@
+\hypertarget{class_png_writer}{}\doxysection{Png\+Writer Class Reference}
+\label{class_png_writer}\index{PngWriter@{PngWriter}}
+Inheritance diagram for Png\+Writer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_png_writer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_png_writer_a9821887743392d7c64ba3e8d7e32f55f}{open}} (FILE $\ast$file, const \mbox{\hyperlink{class_t_image_info}{TImage\+Info}} \&info) override
+\item 
+void \mbox{\hyperlink{class_png_writer_a360603c85632ca7f90f424dd821ce077}{write\+Line}} (char $\ast$buffer) override
+\item 
+void \mbox{\hyperlink{class_png_writer_ac8ae12aacc515526e9d2432a58772b53}{write\+Line}} (short $\ast$buffer) override
+\item 
+Tiio\+::\+Row\+Order \mbox{\hyperlink{class_png_writer_aa5d9eb3a22be99bd423479123259ca75}{get\+Row\+Order}} () const override
+\item 
+void \mbox{\hyperlink{class_png_writer_a65ba77bb32d745e4873b584bf4e8e465}{flush}} () override
+\item 
+bool \mbox{\hyperlink{class_png_writer_a28ac9fc0f4d5967a03d5be1c704c652a}{write64bit\+Supported}} () const override
+\item 
+bool \mbox{\hyperlink{class_png_writer_a9801e6018d74191a88f73842eb23754e}{write\+Alpha\+Supported}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_png_writer_ae857bf265129437733af32a7d91d5a45}\label{class_png_writer_ae857bf265129437733af32a7d91d5a45}} 
+\index{PngWriter@{PngWriter}!PngWriter@{PngWriter}}
+\index{PngWriter@{PngWriter}!PngWriter@{PngWriter}}
+\doxysubsubsection{\texorpdfstring{PngWriter()}{PngWriter()}}
+{\footnotesize\ttfamily Png\+Writer\+::\+Png\+Writer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00789     : m\_png\_ptr(0), m\_info\_ptr(0), m\_matte(\textcolor{keyword}{true}), m\_colormap(0) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_writer_a65bf3ab00773dc85ab82f6ec18b45d9a}\label{class_png_writer_a65bf3ab00773dc85ab82f6ec18b45d9a}} 
+\index{PngWriter@{PngWriter}!````~PngWriter@{$\sim$PngWriter}}
+\index{````~PngWriter@{$\sim$PngWriter}!PngWriter@{PngWriter}}
+\doxysubsubsection{\texorpdfstring{$\sim$PngWriter()}{~PngWriter()}}
+{\footnotesize\ttfamily Png\+Writer\+::$\sim$\+Png\+Writer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00793                       \{}
+\DoxyCodeLine{00794   \textcolor{keywordflow}{if} (m\_png\_ptr) \{}
+\DoxyCodeLine{00795     png\_destroy\_write\_struct(\&m\_png\_ptr, \&m\_info\_ptr);}
+\DoxyCodeLine{00796   \}}
+\DoxyCodeLine{00797   \textcolor{keywordflow}{if} (m\_chan) \{}
+\DoxyCodeLine{00798     fflush(m\_chan);}
+\DoxyCodeLine{00799     m\_chan = 0;}
+\DoxyCodeLine{00800   \}}
+\DoxyCodeLine{00801 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_png_writer_a65ba77bb32d745e4873b584bf4e8e465}\label{class_png_writer_a65ba77bb32d745e4873b584bf4e8e465}} 
+\index{PngWriter@{PngWriter}!flush@{flush}}
+\index{flush@{flush}!PngWriter@{PngWriter}}
+\doxysubsubsection{\texorpdfstring{flush()}{flush()}}
+{\footnotesize\ttfamily void Png\+Writer\+::flush (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00892                       \{}
+\DoxyCodeLine{00893   png\_write\_end(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00894   fflush(m\_chan);}
+\DoxyCodeLine{00895 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_writer_aa5d9eb3a22be99bd423479123259ca75}\label{class_png_writer_aa5d9eb3a22be99bd423479123259ca75}} 
+\index{PngWriter@{PngWriter}!getRowOrder@{getRowOrder}}
+\index{getRowOrder@{getRowOrder}!PngWriter@{PngWriter}}
+\doxysubsubsection{\texorpdfstring{getRowOrder()}{getRowOrder()}}
+{\footnotesize\ttfamily Tiio\+::\+Row\+Order Png\+Writer\+::get\+Row\+Order (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00777 \{ \textcolor{keywordflow}{return} Tiio::TOP2BOTTOM; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_writer_a9821887743392d7c64ba3e8d7e32f55f}\label{class_png_writer_a9821887743392d7c64ba3e8d7e32f55f}} 
+\index{PngWriter@{PngWriter}!open@{open}}
+\index{open@{open}!PngWriter@{PngWriter}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily void Png\+Writer\+::open (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{file,  }\item[{const \mbox{\hyperlink{class_t_image_info}{TImage\+Info}} \&}]{info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00808                                                        \{}
+\DoxyCodeLine{00809   m\_info    = info;}
+\DoxyCodeLine{00810   m\_png\_ptr = png\_create\_write\_struct(PNG\_LIBPNG\_VER\_STRING,}
+\DoxyCodeLine{00811                                       (png\_voidp)0,  \textcolor{comment}{// user\_error\_ptr,}}
+\DoxyCodeLine{00812                                       0,             \textcolor{comment}{// user\_error\_fn,}}
+\DoxyCodeLine{00813                                       0);            \textcolor{comment}{// user\_warning\_fn);}}
+\DoxyCodeLine{00814   \textcolor{keywordflow}{if} (!m\_png\_ptr) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00815   m\_info\_ptr = png\_create\_info\_struct(m\_png\_ptr);}
+\DoxyCodeLine{00816   \textcolor{keywordflow}{if} (!m\_info\_ptr) \{}
+\DoxyCodeLine{00817     png\_destroy\_write\_struct(\&m\_png\_ptr, (png\_infopp)0);}
+\DoxyCodeLine{00818     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00819   \}}
+\DoxyCodeLine{00820 }
+\DoxyCodeLine{00821   m\_chan = file;}
+\DoxyCodeLine{00822   png\_init\_io(m\_png\_ptr, m\_chan);}
+\DoxyCodeLine{00823 }
+\DoxyCodeLine{00824   \textcolor{keywordflow}{if} (!m\_properties) m\_properties = \textcolor{keyword}{new} \mbox{\hyperlink{class_tiio_1_1_png_writer_properties}{Tiio::PngWriterProperties}}();}
+\DoxyCodeLine{00825 }
+\DoxyCodeLine{00826   \mbox{\hyperlink{class_t_bool_property}{TBoolProperty}} *alphaProp =}
+\DoxyCodeLine{00827       (\mbox{\hyperlink{class_t_bool_property}{TBoolProperty}} *)(m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Alpha Channel"{}}));}
+\DoxyCodeLine{00828   \mbox{\hyperlink{class_t_pointer_property}{TPointerProperty}} *colormap =}
+\DoxyCodeLine{00829       (\mbox{\hyperlink{class_t_pointer_property}{TPointerProperty}} *)(m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Colormap"{}}));}
+\DoxyCodeLine{00830   m\_matte = (alphaProp \&\& alphaProp-\/>getValue()) ? \textcolor{keyword}{true} : \textcolor{keyword}{false};}
+\DoxyCodeLine{00831   \textcolor{keywordflow}{if} (colormap) m\_colormap = (vector<TPixel> *)colormap-\/>getValue();}
+\DoxyCodeLine{00832 }
+\DoxyCodeLine{00833   TUINT32 x\_pixels\_per\_meter = tround(m\_info.\mbox{\hyperlink{class_t_image_info_ad66e78a66158fddceaa192d0063f68e8}{m\_dpix}} / 0.0254);}
+\DoxyCodeLine{00834   TUINT32 y\_pixels\_per\_meter = tround(m\_info.\mbox{\hyperlink{class_t_image_info_ad8d3ccb14666297e487e04aa10ab7831}{m\_dpiy}} / 0.0254);}
+\DoxyCodeLine{00835 }
+\DoxyCodeLine{00836   \textcolor{keywordflow}{if} (!m\_colormap)}
+\DoxyCodeLine{00837     png\_set\_IHDR(m\_png\_ptr, m\_info\_ptr, m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}, m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}},}
+\DoxyCodeLine{00838                  info.m\_bitsPerSample,}
+\DoxyCodeLine{00839                  m\_matte ? PNG\_COLOR\_TYPE\_RGB\_ALPHA : PNG\_COLOR\_TYPE\_RGB,}
+\DoxyCodeLine{00840                  PNG\_INTERLACE\_NONE, PNG\_COMPRESSION\_TYPE\_DEFAULT,}
+\DoxyCodeLine{00841                  PNG\_FILTER\_TYPE\_DEFAULT);}
+\DoxyCodeLine{00842   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00843     png\_set\_IHDR(m\_png\_ptr, m\_info\_ptr, m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}, m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}}, 8,}
+\DoxyCodeLine{00844                  PNG\_COLOR\_TYPE\_PALETTE, PNG\_INTERLACE\_NONE,}
+\DoxyCodeLine{00845                  PNG\_COMPRESSION\_TYPE\_DEFAULT, PNG\_FILTER\_TYPE\_DEFAULT);}
+\DoxyCodeLine{00846     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < m\_colormap-\/>size(); i++) \{}
+\DoxyCodeLine{00847       \textcolor{comment}{/*unsigned char red = (i>>5)\&0x7;}}
+\DoxyCodeLine{00848 \textcolor{comment}{      unsigned char green = (i>>2)\&0x7;}}
+\DoxyCodeLine{00849 \textcolor{comment}{      unsigned char blue = i\&0x3;}}
+\DoxyCodeLine{00850 \textcolor{comment}{      palette[i].red = (red>>1) | (red<<2) | (red<<5);}}
+\DoxyCodeLine{00851 \textcolor{comment}{      palette[i].green = (green>>1) | (green<<2) | (green<<5);}}
+\DoxyCodeLine{00852 \textcolor{comment}{      palette[i].blue = blue | (blue<<2) | (blue<<4) | (blue<<6);}}
+\DoxyCodeLine{00853 \textcolor{comment}{      if (red==0 \&\& green==0) alpha[i] = 0; else if (blue==0 \&\& green==0)}}
+\DoxyCodeLine{00854 \textcolor{comment}{      alpha[i] = 128; else alpha[i] = 255;*/}}
+\DoxyCodeLine{00855       palette[i].red   = (*m\_colormap)[i].r;}
+\DoxyCodeLine{00856       palette[i].green = (*m\_colormap)[i].g;}
+\DoxyCodeLine{00857       palette[i].blue  = (*m\_colormap)[i].b;}
+\DoxyCodeLine{00858     \}}
+\DoxyCodeLine{00859 }
+\DoxyCodeLine{00860     png\_set\_PLTE(m\_png\_ptr, m\_info\_ptr, palette, m\_colormap-\/>size());}
+\DoxyCodeLine{00861   \}}
+\DoxyCodeLine{00862 }
+\DoxyCodeLine{00863   \textcolor{comment}{// png\_set\_dither(m\_png\_ptr, palette, 256, 256, 0, 1);}}
+\DoxyCodeLine{00864 }
+\DoxyCodeLine{00865 \textcolor{preprocessor}{\#if defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MBGR)}}
+\DoxyCodeLine{00866   png\_set\_bgr(m\_png\_ptr);}
+\DoxyCodeLine{00867   png\_set\_swap\_alpha(m\_png\_ptr);}
+\DoxyCodeLine{00868 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_BGRM)}}
+\DoxyCodeLine{00869   png\_set\_bgr(m\_png\_ptr);}
+\DoxyCodeLine{00870 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MRGB)}}
+\DoxyCodeLine{00871   png\_set\_swap\_alpha(m\_png\_ptr);}
+\DoxyCodeLine{00872 \textcolor{preprocessor}{\#elif !defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_RGBM)}}
+\DoxyCodeLine{00873 \textcolor{preprocessor}{\#error "{}unknownchannel order"{}}}
+\DoxyCodeLine{00874 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00875 }
+\DoxyCodeLine{00876   png\_set\_pHYs(m\_png\_ptr, m\_info\_ptr, x\_pixels\_per\_meter, y\_pixels\_per\_meter,}
+\DoxyCodeLine{00877                1);}
+\DoxyCodeLine{00878 }
+\DoxyCodeLine{00879   \textcolor{keywordflow}{if} (m\_colormap \&\& m\_matte) \{}
+\DoxyCodeLine{00880     alpha[0] = 0;}
+\DoxyCodeLine{00881     \textcolor{comment}{// png\_set\_tRNS(m\_png\_ptr, m\_info\_ptr, alpha, 1, PNG\_COLOR\_TYPE\_PALETTE);}}
+\DoxyCodeLine{00882     png\_color\_16 bgcolor;}
+\DoxyCodeLine{00883     bgcolor.index = 0;}
+\DoxyCodeLine{00884     png\_set\_tRNS(m\_png\_ptr, m\_info\_ptr, alpha, 1, \&bgcolor);}
+\DoxyCodeLine{00885   \}}
+\DoxyCodeLine{00886 }
+\DoxyCodeLine{00887   png\_write\_info(m\_png\_ptr, m\_info\_ptr);}
+\DoxyCodeLine{00888 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_writer_a28ac9fc0f4d5967a03d5be1c704c652a}\label{class_png_writer_a28ac9fc0f4d5967a03d5be1c704c652a}} 
+\index{PngWriter@{PngWriter}!write64bitSupported@{write64bitSupported}}
+\index{write64bitSupported@{write64bitSupported}!PngWriter@{PngWriter}}
+\doxysubsubsection{\texorpdfstring{write64bitSupported()}{write64bitSupported()}}
+{\footnotesize\ttfamily bool Png\+Writer\+::write64bit\+Supported (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00781 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{true}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_writer_a9801e6018d74191a88f73842eb23754e}\label{class_png_writer_a9801e6018d74191a88f73842eb23754e}} 
+\index{PngWriter@{PngWriter}!writeAlphaSupported@{writeAlphaSupported}}
+\index{writeAlphaSupported@{writeAlphaSupported}!PngWriter@{PngWriter}}
+\doxysubsubsection{\texorpdfstring{writeAlphaSupported()}{writeAlphaSupported()}}
+{\footnotesize\ttfamily bool Png\+Writer\+::write\+Alpha\+Supported (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00783 \{ \textcolor{keywordflow}{return} m\_matte; \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_writer_a360603c85632ca7f90f424dd821ce077}\label{class_png_writer_a360603c85632ca7f90f424dd821ce077}} 
+\index{PngWriter@{PngWriter}!writeLine@{writeLine}}
+\index{writeLine@{writeLine}!PngWriter@{PngWriter}}
+\doxysubsubsection{\texorpdfstring{writeLine()}{writeLine()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Png\+Writer\+::write\+Line (\begin{DoxyParamCaption}\item[{char $\ast$}]{buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00933                                       \{}
+\DoxyCodeLine{00934   \textcolor{comment}{// TBoolProperty* alphaProp =}}
+\DoxyCodeLine{00935   \textcolor{comment}{// (TBoolProperty*)(m\_properties-\/>getProperty("{}Alpha Channel"{}));}}
+\DoxyCodeLine{00936   \textcolor{keywordflow}{if} (m\_matte || m\_colormap) \{}
+\DoxyCodeLine{00937     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *tmp = \textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} + 1) * 4];}
+\DoxyCodeLine{00938     TPixel32 *pix      = (TPixel32 *)buffer;}
+\DoxyCodeLine{00939     \textcolor{keywordtype}{int} k              = 0;}
+\DoxyCodeLine{00940     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; j++, pix++) \{}
+\DoxyCodeLine{00941       \textcolor{comment}{// depremultiply here}}
+\DoxyCodeLine{00942       TPixel32 depremult\_pix(*pix);}
+\DoxyCodeLine{00943       \textcolor{keywordflow}{if} (depremult\_pix.m != 0) depremult(depremult\_pix);}
+\DoxyCodeLine{00944 \textcolor{preprocessor}{\#if defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MRGB)}}
+\DoxyCodeLine{00945       tmp[k++] = depremult\_pix.m;}
+\DoxyCodeLine{00946       tmp[k++] = depremult\_pix.r;}
+\DoxyCodeLine{00947       tmp[k++] = depremult\_pix.g;}
+\DoxyCodeLine{00948       tmp[k++] = depremult\_pix.b;}
+\DoxyCodeLine{00949 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_RGBM)}}
+\DoxyCodeLine{00950       tmp[k++] = depremult\_pix.r;}
+\DoxyCodeLine{00951       tmp[k++] = depremult\_pix.g;}
+\DoxyCodeLine{00952       tmp[k++] = depremult\_pix.b;}
+\DoxyCodeLine{00953       tmp[k++] = depremult\_pix.m;}
+\DoxyCodeLine{00954 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MBGR)}}
+\DoxyCodeLine{00955       tmp[k++] = depremult\_pix.m;}
+\DoxyCodeLine{00956       tmp[k++] = depremult\_pix.b;}
+\DoxyCodeLine{00957       tmp[k++] = depremult\_pix.g;}
+\DoxyCodeLine{00958       tmp[k++] = depremult\_pix.r;}
+\DoxyCodeLine{00959 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_BGRM)}}
+\DoxyCodeLine{00960       tmp[k++] = depremult\_pix.b;}
+\DoxyCodeLine{00961       tmp[k++] = depremult\_pix.g;}
+\DoxyCodeLine{00962       tmp[k++] = depremult\_pix.r;}
+\DoxyCodeLine{00963       tmp[k++] = depremult\_pix.m;}
+\DoxyCodeLine{00964 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00965 \textcolor{preprocessor}{\#error "{}unknown channel order"{}}}
+\DoxyCodeLine{00966 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00967     \}}
+\DoxyCodeLine{00968     png\_write\_row(m\_png\_ptr, tmp);}
+\DoxyCodeLine{00969     \textcolor{keyword}{delete}[] tmp;}
+\DoxyCodeLine{00970   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00971     TPixel32 *pix      = (TPixel32 *)buffer;}
+\DoxyCodeLine{00972     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *tmp = \textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} + 1) * 3];}
+\DoxyCodeLine{00973 }
+\DoxyCodeLine{00974     \textcolor{keywordtype}{int} k = 0;}
+\DoxyCodeLine{00975     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; j++) \{}
+\DoxyCodeLine{00976       \textcolor{comment}{// tmp = (pix-\/>r\&0xe0)|((pix-\/>g\&0xe0)>>3) | ((pix-\/>b\&0xc0)>>6);}}
+\DoxyCodeLine{00977 }
+\DoxyCodeLine{00978 \textcolor{preprocessor}{\#if defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MRGB) ||                                 \(\backslash\)}}
+\DoxyCodeLine{00979 \textcolor{preprocessor}{    defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_RGBM)}}
+\DoxyCodeLine{00980       tmp[k++] = pix-\/>r;}
+\DoxyCodeLine{00981       tmp[k++] = pix-\/>g;}
+\DoxyCodeLine{00982       tmp[k++] = pix-\/>b;}
+\DoxyCodeLine{00983 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MBGR) ||                               \(\backslash\)}}
+\DoxyCodeLine{00984 \textcolor{preprocessor}{    defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_BGRM)}}
+\DoxyCodeLine{00985       tmp[k++] = pix-\/>b;}
+\DoxyCodeLine{00986       tmp[k++] = pix-\/>g;}
+\DoxyCodeLine{00987       tmp[k++] = pix-\/>r;}
+\DoxyCodeLine{00988 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00989 \textcolor{preprocessor}{\#error "{}unknown channel order"{}}}
+\DoxyCodeLine{00990 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00991 }
+\DoxyCodeLine{00992       ++pix;}
+\DoxyCodeLine{00993     \}}
+\DoxyCodeLine{00994     png\_write\_row(m\_png\_ptr, tmp);}
+\DoxyCodeLine{00995     \textcolor{keyword}{delete}[] tmp;}
+\DoxyCodeLine{00996   \}}
+\DoxyCodeLine{00997 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_png_writer_ac8ae12aacc515526e9d2432a58772b53}\label{class_png_writer_ac8ae12aacc515526e9d2432a58772b53}} 
+\index{PngWriter@{PngWriter}!writeLine@{writeLine}}
+\index{writeLine@{writeLine}!PngWriter@{PngWriter}}
+\doxysubsubsection{\texorpdfstring{writeLine()}{writeLine()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Png\+Writer\+::write\+Line (\begin{DoxyParamCaption}\item[{short $\ast$}]{buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00899                                        \{}
+\DoxyCodeLine{00900   \{}
+\DoxyCodeLine{00901     TPixel64 *pix = (TPixel64 *)buffer;}
+\DoxyCodeLine{00902     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *tmp;}
+\DoxyCodeLine{00903     tmp = (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *)malloc((m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} + 1) * 3);}
+\DoxyCodeLine{00904     \textcolor{comment}{// unsigned short tmp[10000];}}
+\DoxyCodeLine{00905     \textcolor{keywordtype}{int} k = 0;}
+\DoxyCodeLine{00906     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; j++, pix++) \{}
+\DoxyCodeLine{00907       \textcolor{comment}{// depremultiply here}}
+\DoxyCodeLine{00908       TPixel64 depremult\_pix(*pix);}
+\DoxyCodeLine{00909       \textcolor{keywordflow}{if} (m\_matte \&\& depremult\_pix.m != 0) depremult(depremult\_pix);}
+\DoxyCodeLine{00910 }
+\DoxyCodeLine{00911 \textcolor{preprocessor}{\#if defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MRGB) ||                                 \(\backslash\)}}
+\DoxyCodeLine{00912 \textcolor{preprocessor}{    defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_RGBM)}}
+\DoxyCodeLine{00913       tmp[k++] = mySwap(pix-\/>r);}
+\DoxyCodeLine{00914       tmp[k++] = mySwap(pix-\/>g);}
+\DoxyCodeLine{00915       tmp[k++] = mySwap(pix-\/>b);}
+\DoxyCodeLine{00916 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MBGR) ||                               \(\backslash\)}}
+\DoxyCodeLine{00917 \textcolor{preprocessor}{    defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_BGRM)}}
+\DoxyCodeLine{00918       tmp[k++] = mySwap(pix-\/>b);}
+\DoxyCodeLine{00919       tmp[k++] = mySwap(pix-\/>g);}
+\DoxyCodeLine{00920       tmp[k++] = mySwap(pix-\/>r);}
+\DoxyCodeLine{00921 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00922 \textcolor{preprocessor}{\#error "{}unknown channel order"{}}}
+\DoxyCodeLine{00923 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00924       \textcolor{keywordflow}{if} (m\_matte)}
+\DoxyCodeLine{00925         tmp[k++] = mySwap(pix-\/>m);  \textcolor{comment}{// ?? does it take care MRGB or MBGR case?}}
+\DoxyCodeLine{00926     \}}
+\DoxyCodeLine{00927     png\_write\_row(m\_png\_ptr, (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *)tmp);}
+\DoxyCodeLine{00928   \}}
+\DoxyCodeLine{00929 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/png/tiio\+\_\+png.\+cpp\end{DoxyCompactItemize}

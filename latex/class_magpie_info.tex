@@ -1,0 +1,116 @@
+\hypertarget{class_magpie_info}{}\doxysection{Magpie\+Info Class Reference}
+\label{class_magpie_info}\index{MagpieInfo@{MagpieInfo}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_magpie_info_a30c77aa4b13b1dcb9e46ec7552d65d6d}{Magpie\+Info}} (\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} path)
+\item 
+int \mbox{\hyperlink{class_magpie_info_a19ed0d06a78ff1e60b4d43ca472ffd4e}{get\+Frame\+Count}} () const
+\item 
+QList$<$ QString $>$ \mbox{\hyperlink{class_magpie_info_a82b44e3f6c6d661f88bd2f022a1990fe}{get\+Comments}} () const
+\item 
+QList$<$ QString $>$ \mbox{\hyperlink{class_magpie_info_a197cdb3be694d9f5f92541dec8fb3e2c}{get\+Actor\+Acts}} () const
+\item 
+QList$<$ QString $>$ \mbox{\hyperlink{class_magpie_info_ad62bc5921b8dddc8a4e8929e60b7bf5a}{get\+Acts\+Identifier}} () const
+\item 
+QString \mbox{\hyperlink{class_magpie_info_a5e67257e5566196b7aaa15b45650293a}{get\+File\+Name}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_magpie_info_a30c77aa4b13b1dcb9e46ec7552d65d6d}\label{class_magpie_info_a30c77aa4b13b1dcb9e46ec7552d65d6d}} 
+\index{MagpieInfo@{MagpieInfo}!MagpieInfo@{MagpieInfo}}
+\index{MagpieInfo@{MagpieInfo}!MagpieInfo@{MagpieInfo}}
+\doxysubsubsection{\texorpdfstring{MagpieInfo()}{MagpieInfo()}}
+{\footnotesize\ttfamily Magpie\+Info\+::\+Magpie\+Info (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_file_path}{TFile\+Path}}}]{path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00025     : m\_fileName(QString::fromStdWString(path.getWideName())) \{}
+\DoxyCodeLine{00026   QFile file(QString::fromStdWString(path.getWideString()));}
+\DoxyCodeLine{00027   \textcolor{keywordflow}{if} (!file.open(QFile::ReadOnly)) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00028   QTextStream textStream(\&file);}
+\DoxyCodeLine{00029   QString line;}
+\DoxyCodeLine{00030   \textcolor{keywordflow}{do} \{}
+\DoxyCodeLine{00031     line = textStream.readLine();}
+\DoxyCodeLine{00032     \textcolor{comment}{// E' la prima riga}}
+\DoxyCodeLine{00033     \textcolor{keywordflow}{if} (line == QString(\textcolor{stringliteral}{"{}Toonz"{}})) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00034     \textcolor{keywordflow}{if} (!line.contains(L\textcolor{charliteral}{'|'})) \{}
+\DoxyCodeLine{00035       \textcolor{keywordflow}{if} (!line.isEmpty()) m\_actsIdentifier.append(line);}
+\DoxyCodeLine{00036       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00037     \}}
+\DoxyCodeLine{00038     QStringList list = line.split(QString(\textcolor{stringliteral}{"{}|"{}}));}
+\DoxyCodeLine{00039     assert(list.size() == 3);}
+\DoxyCodeLine{00040     m\_actorActs.append(list.at(1));}
+\DoxyCodeLine{00041     m\_comments.append(list.at(2));}
+\DoxyCodeLine{00042   \} \textcolor{keywordflow}{while} (!line.isNull());}
+\DoxyCodeLine{00043 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_magpie_info_a197cdb3be694d9f5f92541dec8fb3e2c}\label{class_magpie_info_a197cdb3be694d9f5f92541dec8fb3e2c}} 
+\index{MagpieInfo@{MagpieInfo}!getActorActs@{getActorActs}}
+\index{getActorActs@{getActorActs}!MagpieInfo@{MagpieInfo}}
+\doxysubsubsection{\texorpdfstring{getActorActs()}{getActorActs()}}
+{\footnotesize\ttfamily QList$<$ QString $>$ Magpie\+Info\+::get\+Actor\+Acts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00029 \{ \textcolor{keywordflow}{return} m\_actorActs; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_magpie_info_ad62bc5921b8dddc8a4e8929e60b7bf5a}\label{class_magpie_info_ad62bc5921b8dddc8a4e8929e60b7bf5a}} 
+\index{MagpieInfo@{MagpieInfo}!getActsIdentifier@{getActsIdentifier}}
+\index{getActsIdentifier@{getActsIdentifier}!MagpieInfo@{MagpieInfo}}
+\doxysubsubsection{\texorpdfstring{getActsIdentifier()}{getActsIdentifier()}}
+{\footnotesize\ttfamily QList$<$ QString $>$ Magpie\+Info\+::get\+Acts\+Identifier (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00030 \{ \textcolor{keywordflow}{return} m\_actsIdentifier; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_magpie_info_a82b44e3f6c6d661f88bd2f022a1990fe}\label{class_magpie_info_a82b44e3f6c6d661f88bd2f022a1990fe}} 
+\index{MagpieInfo@{MagpieInfo}!getComments@{getComments}}
+\index{getComments@{getComments}!MagpieInfo@{MagpieInfo}}
+\doxysubsubsection{\texorpdfstring{getComments()}{getComments()}}
+{\footnotesize\ttfamily QList$<$ QString $>$ Magpie\+Info\+::get\+Comments (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028 \{ \textcolor{keywordflow}{return} m\_comments; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_magpie_info_a5e67257e5566196b7aaa15b45650293a}\label{class_magpie_info_a5e67257e5566196b7aaa15b45650293a}} 
+\index{MagpieInfo@{MagpieInfo}!getFileName@{getFileName}}
+\index{getFileName@{getFileName}!MagpieInfo@{MagpieInfo}}
+\doxysubsubsection{\texorpdfstring{getFileName()}{getFileName()}}
+{\footnotesize\ttfamily QString Magpie\+Info\+::get\+File\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031 \{ \textcolor{keywordflow}{return} m\_fileName; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_magpie_info_a19ed0d06a78ff1e60b4d43ca472ffd4e}\label{class_magpie_info_a19ed0d06a78ff1e60b4d43ca472ffd4e}} 
+\index{MagpieInfo@{MagpieInfo}!getFrameCount@{getFrameCount}}
+\index{getFrameCount@{getFrameCount}!MagpieInfo@{MagpieInfo}}
+\doxysubsubsection{\texorpdfstring{getFrameCount()}{getFrameCount()}}
+{\footnotesize\ttfamily int Magpie\+Info\+::get\+Frame\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026 \{ \textcolor{keywordflow}{return} m\_comments.size(); \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/magpiefileimportpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/magpiefileimportpopup.\+cpp\end{DoxyCompactItemize}

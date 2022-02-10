@@ -1,0 +1,339 @@
+\hypertarget{class_tasks_viewer}{}\doxysection{Tasks\+Viewer Class Reference}
+\label{class_tasks_viewer}\index{TasksViewer@{TasksViewer}}
+Inheritance diagram for Tasks\+Viewer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_tasks_viewer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_tasks_viewer_a44c9d79c3855c829890944a8e639c15c}{on\+Timer}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_tasks_viewer_a059cb4866d6833afdf3e874a9e4c613a}{Tasks\+Viewer}} (QWidget $\ast$parent=0, Qt\+::\+WFlags flags=0)
+\item 
+void \mbox{\hyperlink{class_tasks_viewer_ab65c32fc54d02bd55beed266ec1a9c80}{update}} () override
+\item 
+void \mbox{\hyperlink{class_tasks_viewer_afd0bcad3d2fa2fbaa8d5491d3605c911}{set\+Selected}} (\mbox{\hyperlink{class_t_farm_task}{TFarm\+Task}} $\ast$task)
+\item 
+const std\+::vector$<$ QAction $\ast$ $>$ \& \mbox{\hyperlink{class_tasks_viewer_a8b15c75995cff4d9f4515951d5902c6a}{get\+Actions}} () const
+\item 
+void \mbox{\hyperlink{class_tasks_viewer_a91011dbe9107b940b8b13db660e7baff}{start\+Timer}} ()
+\item 
+void \mbox{\hyperlink{class_tasks_viewer_a84c22580e634aa437b5ae92bdc46ee80}{stop\+Timer}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_task_sheet}{Task\+Sheet}} $\ast$ \mbox{\hyperlink{class_tasks_viewer_a6cde50eefcf225c271895e5ac43c91a5}{m\+\_\+task\+Sheet}}
+\item 
+\mbox{\hyperlink{class_task_tree_view}{Task\+Tree\+View}} $\ast$ \mbox{\hyperlink{class_tasks_viewer_af2ca453ef5fe5c36fcef7aa8614242ce}{m\+\_\+tree\+View}}
+\item 
+QTimer $\ast$ \mbox{\hyperlink{class_tasks_viewer_a21b14f3f187fb332252cd79bc561f0ac}{m\+\_\+timer}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QWidget $\ast$ \mbox{\hyperlink{class_tasks_viewer_a463c0de241fe4c27d32e11cff984c523}{create\+Tool\+Bar}} ()
+\item 
+void \mbox{\hyperlink{class_tasks_viewer_a16531a194998260ee0a2db055a7088a6}{add}} (const QString \&icon\+Name, QString text, QTool\+Bar $\ast$tool\+Bar, const char $\ast$slot, QString icon\+Text)
+\item 
+void \mbox{\hyperlink{class_tasks_viewer_a3b20709e838fc4b79324d8e6de3b5a72}{show\+Event}} (QShow\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_tasks_viewer_a5d15e30dde814d2a725e86a805045d19}{hide\+Event}} (QHide\+Event $\ast$) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ QAction $\ast$ $>$ \mbox{\hyperlink{class_tasks_viewer_a387c34e441431d70b0bea8cdd6850d30}{m\+\_\+actions}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Inherits {\bfseries{QSplitter}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_tasks_viewer_a059cb4866d6833afdf3e874a9e4c613a}\label{class_tasks_viewer_a059cb4866d6833afdf3e874a9e4c613a}} 
+\index{TasksViewer@{TasksViewer}!TasksViewer@{TasksViewer}}
+\index{TasksViewer@{TasksViewer}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{TasksViewer()}{TasksViewer()}}
+{\footnotesize\ttfamily Tasks\+Viewer\+::\+Tasks\+Viewer (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0},  }\item[{Qt\+::\+WFlags}]{flags = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00126     : QSplitter(parent) \{}
+\DoxyCodeLine{00127   QFrame *box;}
+\DoxyCodeLine{00128 }
+\DoxyCodeLine{00129   BatchesController::instance()-\/>attach(\textcolor{keyword}{this});}
+\DoxyCodeLine{00130 }
+\DoxyCodeLine{00131   \textcolor{comment}{// style sheet}}
+\DoxyCodeLine{00132   setObjectName(\textcolor{stringliteral}{"{}Tasks"{}});}
+\DoxyCodeLine{00133   setFrameStyle(QFrame::StyledPanel);}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/begin left side (the tree + the toolbar)}}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137   \textcolor{comment}{// If there is another TasksViewer instance already, share the same TasksTree}}
+\DoxyCodeLine{00138   \mbox{\hyperlink{class_task_tree_model}{TaskTreeModel}} *treeModel = BatchesController::instance()-\/>getTasksTree();}
+\DoxyCodeLine{00139   m\_treeView               = \textcolor{keyword}{new} \mbox{\hyperlink{class_task_tree_view}{TaskTreeView}}(\textcolor{keyword}{this}, treeModel);}
+\DoxyCodeLine{00140   BatchesController::instance()-\/>setTasksTree(}
+\DoxyCodeLine{00141       (\mbox{\hyperlink{class_task_tree_model}{TaskTreeModel}} *)m\_treeView-\/>model());}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143   m\_treeView-\/>setSelectionMode(QAbstractItemView::ExtendedSelection);}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145   box                  = \textcolor{keyword}{new} QFrame(\textcolor{keyword}{this});}
+\DoxyCodeLine{00146   QVBoxLayout *vLayout = \textcolor{keyword}{new} QVBoxLayout(box);}
+\DoxyCodeLine{00147   box-\/>setLayout(vLayout);}
+\DoxyCodeLine{00148   vLayout-\/>setMargin(0);}
+\DoxyCodeLine{00149   vLayout-\/>setSpacing(0);}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   vLayout-\/>addWidget(createToolBar());}
+\DoxyCodeLine{00152   vLayout-\/>addWidget(m\_treeView);}
+\DoxyCodeLine{00153 }
+\DoxyCodeLine{00154   addWidget(box);}
+\DoxyCodeLine{00155 }
+\DoxyCodeLine{00156   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/end left side (the tree + the toolbar)}}
+\DoxyCodeLine{00157   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/begin right side (the task sheet)}}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159   m\_taskSheet = \textcolor{keyword}{new} \mbox{\hyperlink{class_task_sheet}{TaskSheet}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00160   addWidget(m\_taskSheet);}
+\DoxyCodeLine{00161 }
+\DoxyCodeLine{00162   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/end right side (the task sheet)}}
+\DoxyCodeLine{00163 }
+\DoxyCodeLine{00164   setStretchFactor(1, 2);}
+\DoxyCodeLine{00165 }
+\DoxyCodeLine{00166   m\_timer  = \textcolor{keyword}{new} QTimer(\textcolor{keyword}{this});}
+\DoxyCodeLine{00167   \textcolor{keywordtype}{bool} ret = connect(m\_timer, SIGNAL(timeout()), \textcolor{keyword}{this}, SLOT(onTimer()));}
+\DoxyCodeLine{00168   assert(ret);}
+\DoxyCodeLine{00169   m\_timer-\/>start(3000);}
+\DoxyCodeLine{00170 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tasks_viewer_aa06fa0ef2f79df68ae2db3d05d4a1f5a}\label{class_tasks_viewer_aa06fa0ef2f79df68ae2db3d05d4a1f5a}} 
+\index{TasksViewer@{TasksViewer}!````~TasksViewer@{$\sim$TasksViewer}}
+\index{````~TasksViewer@{$\sim$TasksViewer}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{$\sim$TasksViewer()}{~TasksViewer()}}
+{\footnotesize\ttfamily Tasks\+Viewer\+::$\sim$\+Tasks\+Viewer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00179 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tasks_viewer_a16531a194998260ee0a2db055a7088a6}\label{class_tasks_viewer_a16531a194998260ee0a2db055a7088a6}} 
+\index{TasksViewer@{TasksViewer}!add@{add}}
+\index{add@{add}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily void Tasks\+Viewer\+::add (\begin{DoxyParamCaption}\item[{const QString \&}]{icon\+Name,  }\item[{QString}]{text,  }\item[{QTool\+Bar $\ast$}]{tool\+Bar,  }\item[{const char $\ast$}]{slot,  }\item[{QString}]{icon\+Text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053                                                           \{}
+\DoxyCodeLine{00054 \textcolor{preprocessor}{\#if QT\_VERSION >= 0x050500}}
+\DoxyCodeLine{00055   QAction *action = \textcolor{keyword}{new} QAction(}
+\DoxyCodeLine{00056       createQIcon(iconName.toLatin1().constData(), \textcolor{keyword}{false}), text, \textcolor{keyword}{this});}
+\DoxyCodeLine{00057 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00058   QAction *action = \textcolor{keyword}{new} QAction(}
+\DoxyCodeLine{00059       createQIcon(iconName.toAscii().constData(), \textcolor{keyword}{false}), text, \textcolor{keyword}{this});}
+\DoxyCodeLine{00060 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00061   action-\/>setIconText(iconText);}
+\DoxyCodeLine{00062   \textcolor{keywordtype}{bool} ret = connect(action, SIGNAL(triggered(\textcolor{keywordtype}{bool})),}
+\DoxyCodeLine{00063                      (\mbox{\hyperlink{class_task_tree_model}{TaskTreeModel}} *)m\_treeView-\/>model(), slot);}
+\DoxyCodeLine{00064   assert(ret);}
+\DoxyCodeLine{00065   toolBar-\/>addAction(action);}
+\DoxyCodeLine{00066   m\_actions.push\_back(action);}
+\DoxyCodeLine{00067 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tasks_viewer_a463c0de241fe4c27d32e11cff984c523}\label{class_tasks_viewer_a463c0de241fe4c27d32e11cff984c523}} 
+\index{TasksViewer@{TasksViewer}!createToolBar@{createToolBar}}
+\index{createToolBar@{createToolBar}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{createToolBar()}{createToolBar()}}
+{\footnotesize\ttfamily QWidget $\ast$ Tasks\+Viewer\+::create\+Tool\+Bar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00079                                     \{}
+\DoxyCodeLine{00080   \textcolor{comment}{// Create toolbar. It is an horizontal layout with three internal toolbar.}}
+\DoxyCodeLine{00081   QWidget *toolBarWidget = \textcolor{keyword}{new} QWidget(\textcolor{keyword}{this});}
+\DoxyCodeLine{00082   QToolBar *cmdToolbar   = \textcolor{keyword}{new} QToolBar(toolBarWidget);}
+\DoxyCodeLine{00083   cmdToolbar-\/>setIconSize(QSize(20, 20));}
+\DoxyCodeLine{00084   cmdToolbar-\/>clear();}
+\DoxyCodeLine{00085   cmdToolbar-\/>setToolButtonStyle(Qt::ToolButtonTextBesideIcon);}
+\DoxyCodeLine{00086   add(\textcolor{stringliteral}{"{}play"{}}, tr(\textcolor{stringliteral}{"{}\&Start"{}}), cmdToolbar, SLOT(start(\textcolor{keywordtype}{bool})), tr(\textcolor{stringliteral}{"{}Start"{}}));}
+\DoxyCodeLine{00087   add(\textcolor{stringliteral}{"{}stop"{}}, tr(\textcolor{stringliteral}{"{}\&Stop"{}}), cmdToolbar, SLOT(stop(\textcolor{keywordtype}{bool})), tr(\textcolor{stringliteral}{"{}Stop"{}}));}
+\DoxyCodeLine{00088   cmdToolbar-\/>addSeparator();}
+\DoxyCodeLine{00089   add(\textcolor{stringliteral}{"{}render\_add"{}}, tr(\textcolor{stringliteral}{"{}\&Add Render Task"{}}), cmdToolbar,}
+\DoxyCodeLine{00090       SLOT(addRenderTask(\textcolor{keywordtype}{bool})), tr(\textcolor{stringliteral}{"{}Add Render"{}}));}
+\DoxyCodeLine{00091   add(\textcolor{stringliteral}{"{}cleanup\_add"{}}, tr(\textcolor{stringliteral}{"{}\&Add Cleanup Task"{}}), cmdToolbar,}
+\DoxyCodeLine{00092       SLOT(addCleanupTask(\textcolor{keywordtype}{bool})), tr(\textcolor{stringliteral}{"{}Add Cleanup"{}}));}
+\DoxyCodeLine{00093 }
+\DoxyCodeLine{00094   QToolBar *saveToolbar = \textcolor{keyword}{new} QToolBar(toolBarWidget);}
+\DoxyCodeLine{00095   saveToolbar-\/>setIconSize(QSize(20, 20));}
+\DoxyCodeLine{00096   saveToolbar-\/>clear();}
+\DoxyCodeLine{00097   saveToolbar-\/>setToolButtonStyle(Qt::ToolButtonTextBesideIcon);}
+\DoxyCodeLine{00098   add(\textcolor{stringliteral}{"{}save"{}}, tr(\textcolor{stringliteral}{"{}\&Save Task List"{}}), saveToolbar, SLOT(save(\textcolor{keywordtype}{bool})), tr(\textcolor{stringliteral}{"{}Save"{}}));}
+\DoxyCodeLine{00099   add(\textcolor{stringliteral}{"{}saveas"{}}, tr(\textcolor{stringliteral}{"{}\&Save Task List As"{}}), saveToolbar, SLOT(saveas(\textcolor{keywordtype}{bool})),}
+\DoxyCodeLine{00100       tr(\textcolor{stringliteral}{"{}Save As"{}}));}
+\DoxyCodeLine{00101   add(\textcolor{stringliteral}{"{}load"{}}, tr(\textcolor{stringliteral}{"{}\&Load Task List"{}}), saveToolbar, SLOT(load(\textcolor{keywordtype}{bool})), tr(\textcolor{stringliteral}{"{}Load"{}}));}
+\DoxyCodeLine{00102   saveToolbar-\/>addSeparator();}
+\DoxyCodeLine{00103   add(\textcolor{stringliteral}{"{}delete"{}}, tr(\textcolor{stringliteral}{"{}\&Remove"{}}), saveToolbar, SLOT(\mbox{\hyperlink{namespace_t_sop_a12e3eb96f32b4d2ebddf0b2c99a43eb4}{remove}}(\textcolor{keywordtype}{bool})), tr(\textcolor{stringliteral}{"{}Remove"{}}));}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105   QVBoxLayout *toolbarLayout = \textcolor{keyword}{new} QVBoxLayout(toolBarWidget);}
+\DoxyCodeLine{00106   toolbarLayout-\/>setMargin(0);}
+\DoxyCodeLine{00107   toolbarLayout-\/>setSpacing(0);}
+\DoxyCodeLine{00108   \{}
+\DoxyCodeLine{00109     toolbarLayout-\/>addWidget(cmdToolbar);}
+\DoxyCodeLine{00110     toolbarLayout-\/>addWidget(saveToolbar);}
+\DoxyCodeLine{00111   \}}
+\DoxyCodeLine{00112   toolBarWidget-\/>setLayout(toolbarLayout);}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114   \textcolor{keywordflow}{return} toolBarWidget;}
+\DoxyCodeLine{00115 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tasks_viewer_a8b15c75995cff4d9f4515951d5902c6a}\label{class_tasks_viewer_a8b15c75995cff4d9f4515951d5902c6a}} 
+\index{TasksViewer@{TasksViewer}!getActions@{getActions}}
+\index{getActions@{getActions}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{getActions()}{getActions()}}
+{\footnotesize\ttfamily const std\+::vector$<$ QAction $\ast$ $>$ \& Tasks\+Viewer\+::get\+Actions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046                                                           \{}
+\DoxyCodeLine{00047   \textcolor{keywordflow}{return} m\_actions;}
+\DoxyCodeLine{00048 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tasks_viewer_a5d15e30dde814d2a725e86a805045d19}\label{class_tasks_viewer_a5d15e30dde814d2a725e86a805045d19}} 
+\index{TasksViewer@{TasksViewer}!hideEvent@{hideEvent}}
+\index{hideEvent@{hideEvent}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{hideEvent()}{hideEvent()}}
+{\footnotesize\ttfamily void Tasks\+Viewer\+::hide\+Event (\begin{DoxyParamCaption}\item[{QHide\+Event $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075 \{ stopTimer(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tasks_viewer_a44c9d79c3855c829890944a8e639c15c}\label{class_tasks_viewer_a44c9d79c3855c829890944a8e639c15c}} 
+\index{TasksViewer@{TasksViewer}!onTimer@{onTimer}}
+\index{onTimer@{onTimer}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{onTimer}{onTimer}}
+{\footnotesize\ttfamily void Tasks\+Viewer\+::on\+Timer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00183                           \{}
+\DoxyCodeLine{00184   \textcolor{keywordflow}{if} (BatchesController::instance()}
+\DoxyCodeLine{00185           -\/>getController())  \textcolor{comment}{// si sta utilizzando la farm}}
+\DoxyCodeLine{00186     BatchesController::instance()-\/>update();}
+\DoxyCodeLine{00187 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tasks_viewer_afd0bcad3d2fa2fbaa8d5491d3605c911}\label{class_tasks_viewer_afd0bcad3d2fa2fbaa8d5491d3605c911}} 
+\index{TasksViewer@{TasksViewer}!setSelected@{setSelected}}
+\index{setSelected@{setSelected}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{setSelected()}{setSelected()}}
+{\footnotesize\ttfamily void Tasks\+Viewer\+::set\+Selected (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_farm_task}{TFarm\+Task}} $\ast$}]{task }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01009 \{ m\_taskSheet-\/>update(task); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tasks_viewer_a3b20709e838fc4b79324d8e6de3b5a72}\label{class_tasks_viewer_a3b20709e838fc4b79324d8e6de3b5a72}} 
+\index{TasksViewer@{TasksViewer}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Tasks\+Viewer\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00071 \{ startTimer(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tasks_viewer_a91011dbe9107b940b8b13db660e7baff}\label{class_tasks_viewer_a91011dbe9107b940b8b13db660e7baff}} 
+\index{TasksViewer@{TasksViewer}!startTimer@{startTimer}}
+\index{startTimer@{startTimer}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{startTimer()}{startTimer()}}
+{\footnotesize\ttfamily void Tasks\+Viewer\+::start\+Timer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00191                              \{}
+\DoxyCodeLine{00192   onTimer();}
+\DoxyCodeLine{00193   \textcolor{keywordflow}{if} (!m\_timer-\/>isActive()) m\_timer-\/>start(3000);}
+\DoxyCodeLine{00194 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tasks_viewer_a84c22580e634aa437b5ae92bdc46ee80}\label{class_tasks_viewer_a84c22580e634aa437b5ae92bdc46ee80}} 
+\index{TasksViewer@{TasksViewer}!stopTimer@{stopTimer}}
+\index{stopTimer@{stopTimer}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{stopTimer()}{stopTimer()}}
+{\footnotesize\ttfamily void Tasks\+Viewer\+::stop\+Timer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00198                             \{}
+\DoxyCodeLine{00199   \textcolor{keywordflow}{if} (m\_timer-\/>isActive()) m\_timer-\/>stop();}
+\DoxyCodeLine{00200 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tasks_viewer_ab65c32fc54d02bd55beed266ec1a9c80}\label{class_tasks_viewer_ab65c32fc54d02bd55beed266ec1a9c80}} 
+\index{TasksViewer@{TasksViewer}!update@{update}}
+\index{update@{update}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Tasks\+Viewer\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_batches_controller_1_1_observer}{Batches\+Controller\+::\+Observer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00174                          \{}
+\DoxyCodeLine{00175   \textcolor{comment}{//    ((TaskTreeModel*)m\_treeView-\/>model())-\/>update();}}
+\DoxyCodeLine{00176   m\_taskSheet-\/>update(m\_taskSheet-\/>getCurrentTask());}
+\DoxyCodeLine{00177 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_tasks_viewer_a387c34e441431d70b0bea8cdd6850d30}\label{class_tasks_viewer_a387c34e441431d70b0bea8cdd6850d30}} 
+\index{TasksViewer@{TasksViewer}!m\_actions@{m\_actions}}
+\index{m\_actions@{m\_actions}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{m\_actions}{m\_actions}}
+{\footnotesize\ttfamily std\+::vector$<$QAction $\ast$$>$ Tasks\+Viewer\+::m\+\_\+actions\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_tasks_viewer_a6cde50eefcf225c271895e5ac43c91a5}\label{class_tasks_viewer_a6cde50eefcf225c271895e5ac43c91a5}} 
+\index{TasksViewer@{TasksViewer}!m\_taskSheet@{m\_taskSheet}}
+\index{m\_taskSheet@{m\_taskSheet}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{m\_taskSheet}{m\_taskSheet}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_task_sheet}{Task\+Sheet}}$\ast$ Tasks\+Viewer\+::m\+\_\+task\+Sheet}
+
+\mbox{\Hypertarget{class_tasks_viewer_a21b14f3f187fb332252cd79bc561f0ac}\label{class_tasks_viewer_a21b14f3f187fb332252cd79bc561f0ac}} 
+\index{TasksViewer@{TasksViewer}!m\_timer@{m\_timer}}
+\index{m\_timer@{m\_timer}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{m\_timer}{m\_timer}}
+{\footnotesize\ttfamily QTimer$\ast$ Tasks\+Viewer\+::m\+\_\+timer}
+
+\mbox{\Hypertarget{class_tasks_viewer_af2ca453ef5fe5c36fcef7aa8614242ce}\label{class_tasks_viewer_af2ca453ef5fe5c36fcef7aa8614242ce}} 
+\index{TasksViewer@{TasksViewer}!m\_treeView@{m\_treeView}}
+\index{m\_treeView@{m\_treeView}!TasksViewer@{TasksViewer}}
+\doxysubsubsection{\texorpdfstring{m\_treeView}{m\_treeView}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_task_tree_view}{Task\+Tree\+View}}$\ast$ Tasks\+Viewer\+::m\+\_\+tree\+View}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/tasksviewer.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/tasksviewer.\+cpp\end{DoxyCompactItemize}

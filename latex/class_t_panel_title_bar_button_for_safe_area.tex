@@ -1,0 +1,156 @@
+\hypertarget{class_t_panel_title_bar_button_for_safe_area}{}\doxysection{TPanel\+Title\+Bar\+Button\+For\+Safe\+Area Class Reference}
+\label{class_t_panel_title_bar_button_for_safe_area}\index{TPanelTitleBarButtonForSafeArea@{TPanelTitleBarButtonForSafeArea}}
+
+
+{\ttfamily \#include $<$pane.\+h$>$}
+
+Inheritance diagram for TPanel\+Title\+Bar\+Button\+For\+Safe\+Area\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_t_panel_title_bar_button_for_safe_area}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_panel_title_bar_button_for_safe_area_a93a073a2312684076766522185e43c19}{TPanel\+Title\+Bar\+Button\+For\+Safe\+Area}} (QWidget $\ast$parent, const QString \&standard\+Pixmap\+Name)
+\item 
+void \mbox{\hyperlink{class_t_panel_title_bar_button_for_safe_area_a7a9742bd7590d330ed754a0a19d4148f}{get\+Safe\+Area\+Name\+List}} (QList$<$ QString $>$ \&name\+List)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_panel_title_bar_button_for_safe_area_ad3d318d7359a1914e7886ab00d889c44}{on\+Set\+Safe\+Area}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_panel_title_bar_button_for_safe_area_a5a814b0ce8a56066c186e5dbaa6198f4}{context\+Menu\+Event}} (QContext\+Menu\+Event $\ast$event) override
+\item 
+void \mbox{\hyperlink{class_t_panel_title_bar_button_for_safe_area_a442dbb04e72bc440755de03d57f09191}{mouse\+Press\+Event}} (QMouse\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+specialized button for sage area which enables to choose safe area size by context menu 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_panel_title_bar_button_for_safe_area_a93a073a2312684076766522185e43c19}\label{class_t_panel_title_bar_button_for_safe_area_a93a073a2312684076766522185e43c19}} 
+\index{TPanelTitleBarButtonForSafeArea@{TPanelTitleBarButtonForSafeArea}!TPanelTitleBarButtonForSafeArea@{TPanelTitleBarButtonForSafeArea}}
+\index{TPanelTitleBarButtonForSafeArea@{TPanelTitleBarButtonForSafeArea}!TPanelTitleBarButtonForSafeArea@{TPanelTitleBarButtonForSafeArea}}
+\doxysubsubsection{\texorpdfstring{TPanelTitleBarButtonForSafeArea()}{TPanelTitleBarButtonForSafeArea()}}
+{\footnotesize\ttfamily TPanel\+Title\+Bar\+Button\+For\+Safe\+Area\+::\+TPanel\+Title\+Bar\+Button\+For\+Safe\+Area (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{const QString \&}]{standard\+Pixmap\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080       : \mbox{\hyperlink{class_t_panel_title_bar_button}{TPanelTitleBarButton}}(parent, standardPixmapName) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_panel_title_bar_button_for_safe_area_a5a814b0ce8a56066c186e5dbaa6198f4}\label{class_t_panel_title_bar_button_for_safe_area_a5a814b0ce8a56066c186e5dbaa6198f4}} 
+\index{TPanelTitleBarButtonForSafeArea@{TPanelTitleBarButtonForSafeArea}!contextMenuEvent@{contextMenuEvent}}
+\index{contextMenuEvent@{contextMenuEvent}!TPanelTitleBarButtonForSafeArea@{TPanelTitleBarButtonForSafeArea}}
+\doxysubsubsection{\texorpdfstring{contextMenuEvent()}{contextMenuEvent()}}
+{\footnotesize\ttfamily void TPanel\+Title\+Bar\+Button\+For\+Safe\+Area\+::context\+Menu\+Event (\begin{DoxyParamCaption}\item[{QContext\+Menu\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00378                                                                            \{}
+\DoxyCodeLine{00379   QMenu menu(\textcolor{keyword}{this});}
+\DoxyCodeLine{00380 }
+\DoxyCodeLine{00381   QList<QString> safeAreaNameList;}
+\DoxyCodeLine{00382   getSafeAreaNameList(safeAreaNameList);}
+\DoxyCodeLine{00383   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < safeAreaNameList.size(); i++) \{}
+\DoxyCodeLine{00384     QAction *action = \textcolor{keyword}{new} QAction(safeAreaNameList.at(i), \textcolor{keyword}{this});}
+\DoxyCodeLine{00385     action-\/>setData(safeAreaNameList.at(i));}
+\DoxyCodeLine{00386     connect(action, SIGNAL(triggered()), \textcolor{keyword}{this}, SLOT(onSetSafeArea()));}
+\DoxyCodeLine{00387     \textcolor{keywordflow}{if} (safeAreaNameList.at(i) == QString::fromStdString(EnvSafeAreaName)) \{}
+\DoxyCodeLine{00388       action-\/>setCheckable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00389       action-\/>setChecked(\textcolor{keyword}{true});}
+\DoxyCodeLine{00390     \}}
+\DoxyCodeLine{00391     menu.addAction(action);}
+\DoxyCodeLine{00392   \}}
+\DoxyCodeLine{00393 }
+\DoxyCodeLine{00394   menu.exec(e-\/>globalPos());}
+\DoxyCodeLine{00395 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_panel_title_bar_button_for_safe_area_a7a9742bd7590d330ed754a0a19d4148f}\label{class_t_panel_title_bar_button_for_safe_area_a7a9742bd7590d330ed754a0a19d4148f}} 
+\index{TPanelTitleBarButtonForSafeArea@{TPanelTitleBarButtonForSafeArea}!getSafeAreaNameList@{getSafeAreaNameList}}
+\index{getSafeAreaNameList@{getSafeAreaNameList}!TPanelTitleBarButtonForSafeArea@{TPanelTitleBarButtonForSafeArea}}
+\doxysubsubsection{\texorpdfstring{getSafeAreaNameList()}{getSafeAreaNameList()}}
+{\footnotesize\ttfamily void TPanel\+Title\+Bar\+Button\+For\+Safe\+Area\+::get\+Safe\+Area\+Name\+List (\begin{DoxyParamCaption}\item[{QList$<$ QString $>$ \&}]{name\+List }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00341                               \{}
+\DoxyCodeLine{00342   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp                = TEnv::getConfigDir();}
+\DoxyCodeLine{00343   QString currentSafeAreaName = QString::fromStdString(EnvSafeAreaName);}
+\DoxyCodeLine{00344 }
+\DoxyCodeLine{00345   std::string safeAreaFileName = \textcolor{stringliteral}{"{}safearea.ini"{}};}
+\DoxyCodeLine{00346 }
+\DoxyCodeLine{00347   \textcolor{keywordflow}{while} (!\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(fp + safeAreaFileName).doesExist() \&\& !fp.isRoot() \&\&}
+\DoxyCodeLine{00348          fp.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() != \mbox{\hyperlink{class_t_file_path}{TFilePath}}())}
+\DoxyCodeLine{00349     fp = fp.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}();}
+\DoxyCodeLine{00350 }
+\DoxyCodeLine{00351   fp = fp + safeAreaFileName;}
+\DoxyCodeLine{00352 }
+\DoxyCodeLine{00353   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(fp).doesExist()) \{}
+\DoxyCodeLine{00354     QSettings settings(toQString(fp), QSettings::IniFormat);}
+\DoxyCodeLine{00355 }
+\DoxyCodeLine{00356     \textcolor{comment}{// find the current safearea name from the list}}
+\DoxyCodeLine{00357     QStringList groups = settings.childGroups();}
+\DoxyCodeLine{00358     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} g = 0; g < groups.size(); g++) \{}
+\DoxyCodeLine{00359       settings.beginGroup(groups.at(g));}
+\DoxyCodeLine{00360       nameList.push\_back(settings.value(\textcolor{stringliteral}{"{}name"{}}, \textcolor{stringliteral}{"{}"{}}).toString());}
+\DoxyCodeLine{00361       settings.endGroup();}
+\DoxyCodeLine{00362     \}}
+\DoxyCodeLine{00363   \}}
+\DoxyCodeLine{00364 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_panel_title_bar_button_for_safe_area_a442dbb04e72bc440755de03d57f09191}\label{class_t_panel_title_bar_button_for_safe_area_a442dbb04e72bc440755de03d57f09191}} 
+\index{TPanelTitleBarButtonForSafeArea@{TPanelTitleBarButtonForSafeArea}!mousePressEvent@{mousePressEvent}}
+\index{mousePressEvent@{mousePressEvent}!TPanelTitleBarButtonForSafeArea@{TPanelTitleBarButtonForSafeArea}}
+\doxysubsubsection{\texorpdfstring{mousePressEvent()}{mousePressEvent()}}
+{\footnotesize\ttfamily void TPanel\+Title\+Bar\+Button\+For\+Safe\+Area\+::mouse\+Press\+Event (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00368                                                                     \{}
+\DoxyCodeLine{00369   \textcolor{keywordflow}{if} (e-\/>button() != Qt::RightButton) \{}
+\DoxyCodeLine{00370     m\_pressed = !m\_pressed;}
+\DoxyCodeLine{00371     emit \mbox{\hyperlink{class_t_panel_title_bar_button_af1bf37883e3ed2a916885c75bb270d22}{toggled}}(m\_pressed);}
+\DoxyCodeLine{00372     update();}
+\DoxyCodeLine{00373   \}}
+\DoxyCodeLine{00374 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_panel_title_bar_button_for_safe_area_ad3d318d7359a1914e7886ab00d889c44}\label{class_t_panel_title_bar_button_for_safe_area_ad3d318d7359a1914e7886ab00d889c44}} 
+\index{TPanelTitleBarButtonForSafeArea@{TPanelTitleBarButtonForSafeArea}!onSetSafeArea@{onSetSafeArea}}
+\index{onSetSafeArea@{onSetSafeArea}!TPanelTitleBarButtonForSafeArea@{TPanelTitleBarButtonForSafeArea}}
+\doxysubsubsection{\texorpdfstring{onSetSafeArea}{onSetSafeArea}}
+{\footnotesize\ttfamily void TPanel\+Title\+Bar\+Button\+For\+Safe\+Area\+::on\+Set\+Safe\+Area (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00399                                                     \{}
+\DoxyCodeLine{00400   QString safeAreaName = qobject\_cast<QAction *>(sender())-\/>data().toString();}
+\DoxyCodeLine{00401   \textcolor{comment}{// change safearea if the different one is selected}}
+\DoxyCodeLine{00402   \textcolor{keywordflow}{if} (QString::fromStdString(EnvSafeAreaName) != safeAreaName) \{}
+\DoxyCodeLine{00403     EnvSafeAreaName = safeAreaName.toStdString();}
+\DoxyCodeLine{00404     \textcolor{comment}{// emit sceneChanged without setting dirty flag}}
+\DoxyCodeLine{00405     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>notifySceneChanged(\textcolor{keyword}{false});}
+\DoxyCodeLine{00406   \}}
+\DoxyCodeLine{00407 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/pane.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/pane.\+cpp\end{DoxyCompactItemize}

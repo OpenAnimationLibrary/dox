@@ -1,0 +1,165 @@
+\hypertarget{class_t_g_l_display_lists_manager}{}\doxysection{TGLDisplay\+Lists\+Manager Class Reference}
+\label{class_t_g_l_display_lists_manager}\index{TGLDisplayListsManager@{TGLDisplayListsManager}}
+
+
+{\ttfamily \#include $<$tgldisplaylistsmanager.\+h$>$}
+
+Inheritance diagram for TGLDisplay\+Lists\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_t_g_l_display_lists_manager}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_t_g_l_display_lists_manager_1_1_observer}{Observer}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_t_g_l_display_lists_manager_ae2b9d27f1f22373a4d14d4ce7fc1b484}{store\+Proxy}} (\mbox{\hyperlink{class_t_g_l_display_lists_proxy}{TGLDisplay\+Lists\+Proxy}} $\ast$proxy)
+\item 
+void \mbox{\hyperlink{class_t_g_l_display_lists_manager_ab755606608fb45cc60b01e14396fd20b}{attach\+Context}} (int dl\+Space\+Id, TGl\+Context context)
+\item 
+void \mbox{\hyperlink{class_t_g_l_display_lists_manager_a9b723e490c97425b39b238a2d7ad5877}{release\+Context}} (TGl\+Context context)
+\item 
+int \mbox{\hyperlink{class_t_g_l_display_lists_manager_a09e08b9e1a1e7faacb2c9fbd256cb7ca}{display\+Lists\+Space\+Id}} (TGl\+Context context)
+\item 
+\mbox{\hyperlink{class_t_g_l_display_lists_proxy}{TGLDisplay\+Lists\+Proxy}} $\ast$ \mbox{\hyperlink{class_t_g_l_display_lists_manager_a8cd00685cbea9a7de2bc8dc77891f35a}{dl\+Proxy}} (int dl\+Space\+Id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_g_l_display_lists_manager}{TGLDisplay\+Lists\+Manager}} $\ast$ \mbox{\hyperlink{class_t_g_l_display_lists_manager_a88e6c10b668e109703aa02b0bc044908}{instance}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_t_g_l_display_lists_manager}{TGLDisplay\+Lists\+Manager}} is a singleton class used to track Open\+GL shared display lists spaces.
+
+Open\+GL contexts can share their display lists space (in particular, this includes texture objects) with other contexts. Typically, sharing specification happens when a new context is created -\/ at that point, the new context is allowed to share the lists space of another known context, pretty much the same way a shared smart pointer does. ~\newline
+~\newline
+ However, Open\+GL provides access to the display lists space {\itshape only} through their attached Open\+GL contexts; meaning that an external object has to know at least one associated context to operate on a display lists space. ~\newline
+~\newline
+ We\textquotesingle{}ll call such an associated context a {\itshape proxy} of the display lists space. It is a dummy Open\+GL context that shares the display lists spaces with those that are attached to it. ~\newline
+~\newline
+ Observe that the use of one such dummy context, rather than one of the originally attached ones, is strictly necessary in a multithreaded environment, since {\itshape  an Open\+GL context can be active in exactly one thread at a given time \texorpdfstring{$<$}{<}\textbackslash{}I\texorpdfstring{$>$}{>} -\/ and any of the attached contexts could always be current in another thread. ~\newline
+~\newline
+ However, the use of a single proxy per display lists space means that multiple threads could try to access it at the same time. Synchronization in this case must be handled by the user by accessing the proxy\textquotesingle{}s built-\/in mutex.}
+
+{\itshape  \begin{DoxyWarning}{Warning}
+\mbox{\hyperlink{class_t_g_l_display_lists_manager}{TGLDisplay\+Lists\+Manager}} relies on the user to attach a context to the {\bfseries{correct}} display lists id. 
+\end{DoxyWarning}
+}
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_g_l_display_lists_manager_ab755606608fb45cc60b01e14396fd20b}\label{class_t_g_l_display_lists_manager_ab755606608fb45cc60b01e14396fd20b}} 
+\index{TGLDisplayListsManager@{TGLDisplayListsManager}!attachContext@{attachContext}}
+\index{attachContext@{attachContext}!TGLDisplayListsManager@{TGLDisplayListsManager}}
+\doxysubsubsection{\texorpdfstring{attachContext()}{attachContext()}}
+{\footnotesize\ttfamily void TGLDisplay\+Lists\+Manager\+::attach\+Context (\begin{DoxyParamCaption}\item[{int}]{dl\+Space\+Id,  }\item[{TGl\+Context}]{context }\end{DoxyParamCaption})}
+
+display lists id. Context attaches should follow. Attaches the specified context 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054                                                                             \{}
+\DoxyCodeLine{00055   m\_proxyIdsByContext.insert(std::make\_pair(context, dlSpaceId));}
+\DoxyCodeLine{00056   ++m\_proxies[dlSpaceId].m\_refCount;}
+\DoxyCodeLine{00057 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_g_l_display_lists_manager_a09e08b9e1a1e7faacb2c9fbd256cb7ca}\label{class_t_g_l_display_lists_manager_a09e08b9e1a1e7faacb2c9fbd256cb7ca}} 
+\index{TGLDisplayListsManager@{TGLDisplayListsManager}!displayListsSpaceId@{displayListsSpaceId}}
+\index{displayListsSpaceId@{displayListsSpaceId}!TGLDisplayListsManager@{TGLDisplayListsManager}}
+\doxysubsubsection{\texorpdfstring{displayListsSpaceId()}{displayListsSpaceId()}}
+{\footnotesize\ttfamily int TGLDisplay\+Lists\+Manager\+::display\+Lists\+Space\+Id (\begin{DoxyParamCaption}\item[{TGl\+Context}]{context }\end{DoxyParamCaption})}
+
+Returns the display lists space id of a known context, 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00084                                                                   \{}
+\DoxyCodeLine{00085   std::map<TGlContext, int>::iterator it = m\_proxyIdsByContext.find(context);}
+\DoxyCodeLine{00086   \textcolor{keywordflow}{return} (it == m\_proxyIdsByContext.end()) ? -\/1 : it-\/>second;}
+\DoxyCodeLine{00087 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l00216}{TTextures\+Storage\+::get\+Texture\+Data()}}, and \mbox{\hyperlink{l00136}{TTextures\+Storage\+::load\+Texture()}}.
+
+\mbox{\Hypertarget{class_t_g_l_display_lists_manager_a8cd00685cbea9a7de2bc8dc77891f35a}\label{class_t_g_l_display_lists_manager_a8cd00685cbea9a7de2bc8dc77891f35a}} 
+\index{TGLDisplayListsManager@{TGLDisplayListsManager}!dlProxy@{dlProxy}}
+\index{dlProxy@{dlProxy}!TGLDisplayListsManager@{TGLDisplayListsManager}}
+\doxysubsubsection{\texorpdfstring{dlProxy()}{dlProxy()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_g_l_display_lists_proxy}{TGLDisplay\+Lists\+Proxy}} $\ast$ TGLDisplay\+Lists\+Manager\+::dl\+Proxy (\begin{DoxyParamCaption}\item[{int}]{dl\+Space\+Id }\end{DoxyParamCaption})}
+
+or -\/1 if it did not attach to any known space. Returns the display lists space proxy associated to 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00091                                                                    \{}
+\DoxyCodeLine{00092   \textcolor{keywordflow}{return} m\_proxies[dlSpaceId].m\_proxy;}
+\DoxyCodeLine{00093 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_g_l_display_lists_manager_a88e6c10b668e109703aa02b0bc044908}\label{class_t_g_l_display_lists_manager_a88e6c10b668e109703aa02b0bc044908}} 
+\index{TGLDisplayListsManager@{TGLDisplayListsManager}!instance@{instance}}
+\index{instance@{instance}!TGLDisplayListsManager@{TGLDisplayListsManager}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_g_l_display_lists_manager}{TGLDisplay\+Lists\+Manager}} $\ast$ TGLDisplay\+Lists\+Manager\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041                                                          \{}
+\DoxyCodeLine{00042   \textcolor{keyword}{static} \mbox{\hyperlink{class_t_g_l_display_lists_manager}{TGLDisplayListsManager}} theInstance;}
+\DoxyCodeLine{00043   \textcolor{keywordflow}{return} \&theInstance;}
+\DoxyCodeLine{00044 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_g_l_display_lists_manager_a9b723e490c97425b39b238a2d7ad5877}\label{class_t_g_l_display_lists_manager_a9b723e490c97425b39b238a2d7ad5877}} 
+\index{TGLDisplayListsManager@{TGLDisplayListsManager}!releaseContext@{releaseContext}}
+\index{releaseContext@{releaseContext}!TGLDisplayListsManager@{TGLDisplayListsManager}}
+\doxysubsubsection{\texorpdfstring{releaseContext()}{releaseContext()}}
+{\footnotesize\ttfamily void TGLDisplay\+Lists\+Manager\+::release\+Context (\begin{DoxyParamCaption}\item[{TGl\+Context}]{context }\end{DoxyParamCaption})}
+
+to a display lists space Releases a context reference to its display lists space 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00061                                                               \{}
+\DoxyCodeLine{00062   std::map<TGlContext, int>::iterator it = m\_proxyIdsByContext.find(context);}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064   assert(it != m\_proxyIdsByContext.end());}
+\DoxyCodeLine{00065   \textcolor{keywordflow}{if} (it == m\_proxyIdsByContext.end()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067   \textcolor{keywordtype}{int} dlSpaceId = it-\/>second;}
+\DoxyCodeLine{00068   \textcolor{keywordflow}{if} (-\/-\/m\_proxies[dlSpaceId].m\_refCount <= 0) \{}
+\DoxyCodeLine{00069     \textcolor{comment}{// Notify observers first}}
+\DoxyCodeLine{00070     observers\_container::const\_iterator ot, oEnd = observers().end();}
+\DoxyCodeLine{00071     \textcolor{keywordflow}{for} (ot = observers().begin(); ot != oEnd; ++ot)}
+\DoxyCodeLine{00072       \textcolor{keyword}{static\_cast<}Observer *\textcolor{keyword}{>}(*ot)-\/>onDisplayListDestroyed(dlSpaceId);}
+\DoxyCodeLine{00073 }
+\DoxyCodeLine{00074     \textcolor{comment}{// Then, destroy stuff}}
+\DoxyCodeLine{00075     \textcolor{keyword}{delete} m\_proxies[dlSpaceId].m\_proxy;}
+\DoxyCodeLine{00076     m\_proxies.erase(dlSpaceId);}
+\DoxyCodeLine{00077   \}}
+\DoxyCodeLine{00078 }
+\DoxyCodeLine{00079   m\_proxyIdsByContext.erase(it);}
+\DoxyCodeLine{00080 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_g_l_display_lists_manager_ae2b9d27f1f22373a4d14d4ce7fc1b484}\label{class_t_g_l_display_lists_manager_ae2b9d27f1f22373a4d14d4ce7fc1b484}} 
+\index{TGLDisplayListsManager@{TGLDisplayListsManager}!storeProxy@{storeProxy}}
+\index{storeProxy@{storeProxy}!TGLDisplayListsManager@{TGLDisplayListsManager}}
+\doxysubsubsection{\texorpdfstring{storeProxy()}{storeProxy()}}
+{\footnotesize\ttfamily int TGLDisplay\+Lists\+Manager\+::store\+Proxy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_g_l_display_lists_proxy}{TGLDisplay\+Lists\+Proxy}} $\ast$}]{proxy }\end{DoxyParamCaption})}
+
+Stores the specified proxy, returning its associated 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00048                                                                   \{}
+\DoxyCodeLine{00049   \textcolor{keywordflow}{return} m\_proxies.push\_back(ProxyReference(proxy));}
+\DoxyCodeLine{00050 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tgldisplaylistsmanager.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tgl/tgldisplaylistsmanager.\+cpp\end{DoxyCompactItemize}

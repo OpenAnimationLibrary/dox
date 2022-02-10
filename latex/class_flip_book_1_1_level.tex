@@ -1,0 +1,168 @@
+\hypertarget{class_flip_book_1_1_level}{}\doxysection{Flip\+Book\+::Level Class Reference}
+\label{class_flip_book_1_1_level}\index{FlipBook::Level@{FlipBook::Level}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_flip_book_1_1_level_ab7093c2c8ed7d5b59aff902ed7002e44}{Level}} (const \mbox{\hyperlink{class_t_level_p}{TLevelP}} \&level, const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&fp, int from\+Index, int to\+Index, int step)
+\item 
+\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \mbox{\hyperlink{class_flip_book_1_1_level_aceeac5ae85433b194b09e7643122d6ff}{flipbook\+Index\+To\+Level\+Frame}} (int index)
+\begin{DoxyCompactList}\small\item\em Returns the level frame number corresponding to passed flipbook index. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_flip_book_1_1_level_a325cea02c19047733ecac462f6f7d9ec}{get\+Indexes\+Count}} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of flipbook indexes available for this level. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_level_p}{TLevelP}} \mbox{\hyperlink{class_flip_book_1_1_level_ab33f1745823b573d7b08444c71bbed33}{m\+\_\+level}}
+\item 
+int \mbox{\hyperlink{class_flip_book_1_1_level_ad8b9190e1df88ac79dc1445e532cd58a}{m\+\_\+from\+Index}}
+\item 
+int \mbox{\hyperlink{class_flip_book_1_1_level_a55adf210313acda585344c4dd0c2873d}{m\+\_\+to\+Index}}
+\item 
+int \mbox{\hyperlink{class_flip_book_1_1_level_a629969d75b9d0a053370c5bbac298c70}{m\+\_\+step}}
+\item 
+bool \mbox{\hyperlink{class_flip_book_1_1_level_a9a972c7823b1bd80b7462fdcd797b8eb}{m\+\_\+incremental\+Indexing}}
+\item 
+bool \mbox{\hyperlink{class_flip_book_1_1_level_a08796a6370e8b2e2fc73ad0440397525}{m\+\_\+random\+Access\+Read}}
+\item 
+bool \mbox{\hyperlink{class_flip_book_1_1_level_a55f5a5c466f56556820344975030b80b}{m\+\_\+premultiply}}
+\item 
+\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \mbox{\hyperlink{class_flip_book_1_1_level_a6b7bb473488e39ece991bc0b9cea5e23}{m\+\_\+fp}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flip_book_1_1_level_ab7093c2c8ed7d5b59aff902ed7002e44}\label{class_flip_book_1_1_level_ab7093c2c8ed7d5b59aff902ed7002e44}} 
+\index{FlipBook::Level@{FlipBook::Level}!Level@{Level}}
+\index{Level@{Level}!FlipBook::Level@{FlipBook::Level}}
+\doxysubsubsection{\texorpdfstring{Level()}{Level()}}
+{\footnotesize\ttfamily Flip\+Book\+::\+Level\+::\+Level (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_level_p}{TLevelP}} \&}]{level,  }\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{fp,  }\item[{int}]{from\+Index,  }\item[{int}]{to\+Index,  }\item[{int}]{step }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00131         : m\_level(level)}
+\DoxyCodeLine{00132         , m\_fp(fp)}
+\DoxyCodeLine{00133         , m\_fromIndex(fromIndex)}
+\DoxyCodeLine{00134         , m\_toIndex(toIndex)}
+\DoxyCodeLine{00135         , m\_step(step)}
+\DoxyCodeLine{00136         , m\_randomAccessRead(\textcolor{keyword}{false})}
+\DoxyCodeLine{00137         , m\_incrementalIndexing(\textcolor{keyword}{false})}
+\DoxyCodeLine{00138         , m\_premultiply(\textcolor{keyword}{false}) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flip_book_1_1_level_aceeac5ae85433b194b09e7643122d6ff}\label{class_flip_book_1_1_level_aceeac5ae85433b194b09e7643122d6ff}} 
+\index{FlipBook::Level@{FlipBook::Level}!flipbookIndexToLevelFrame@{flipbookIndexToLevelFrame}}
+\index{flipbookIndexToLevelFrame@{flipbookIndexToLevelFrame}!FlipBook::Level@{FlipBook::Level}}
+\doxysubsubsection{\texorpdfstring{flipbookIndexToLevelFrame()}{flipbookIndexToLevelFrame()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} Flip\+Book\+::\+Level\+::flipbook\+Index\+To\+Level\+Frame (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+
+Returns the level frame number corresponding to passed flipbook index. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00979                                                            \{}
+\DoxyCodeLine{00980   TLevel::Iterator it;}
+\DoxyCodeLine{00981   \textcolor{keywordtype}{int} levelPos;}
+\DoxyCodeLine{00982   \textcolor{keywordflow}{if} (m\_incrementalIndexing) \{}
+\DoxyCodeLine{00983     levelPos = (index -\/ 1) * m\_step;}
+\DoxyCodeLine{00984     it       = m\_level-\/>getTable()-\/>find(m\_fromIndex);}
+\DoxyCodeLine{00985     advance(it, levelPos);}
+\DoxyCodeLine{00986   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00987     levelPos = m\_fromIndex + (index -\/ 1) * m\_step;}
+\DoxyCodeLine{00988     it       = m\_level-\/>getTable()-\/>find(levelPos);}
+\DoxyCodeLine{00989   \}}
+\DoxyCodeLine{00990   \textcolor{keywordflow}{if} (it == m\_level-\/>end()) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_frame_id}{TFrameId}}();}
+\DoxyCodeLine{00991   \textcolor{keywordflow}{return} it-\/>first;}
+\DoxyCodeLine{00992 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_flip_book_1_1_level_a325cea02c19047733ecac462f6f7d9ec}\label{class_flip_book_1_1_level_a325cea02c19047733ecac462f6f7d9ec}} 
+\index{FlipBook::Level@{FlipBook::Level}!getIndexesCount@{getIndexesCount}}
+\index{getIndexesCount@{getIndexesCount}!FlipBook::Level@{FlipBook::Level}}
+\doxysubsubsection{\texorpdfstring{getIndexesCount()}{getIndexesCount()}}
+{\footnotesize\ttfamily int Flip\+Book\+::\+Level\+::get\+Indexes\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the number of flipbook indexes available for this level. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00997                                    \{}
+\DoxyCodeLine{00998   \textcolor{keywordflow}{return} m\_incrementalIndexing ? (m\_level-\/>getFrameCount() -\/ 1) / m\_step + 1}
+\DoxyCodeLine{00999                                : (m\_toIndex -\/ m\_fromIndex) / m\_step + 1;}
+\DoxyCodeLine{01000 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00158}{TXsh\+Simple\+Level\+::get\+Frame\+Count()}}.
+
+
+
+Referenced by \mbox{\hyperlink{l01024}{Flip\+Book\+::set\+Level()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_flip_book_1_1_level_a6b7bb473488e39ece991bc0b9cea5e23}\label{class_flip_book_1_1_level_a6b7bb473488e39ece991bc0b9cea5e23}} 
+\index{FlipBook::Level@{FlipBook::Level}!m\_fp@{m\_fp}}
+\index{m\_fp@{m\_fp}!FlipBook::Level@{FlipBook::Level}}
+\doxysubsubsection{\texorpdfstring{m\_fp}{m\_fp}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} Flip\+Book\+::\+Level\+::m\+\_\+fp}
+
+\mbox{\Hypertarget{class_flip_book_1_1_level_ad8b9190e1df88ac79dc1445e532cd58a}\label{class_flip_book_1_1_level_ad8b9190e1df88ac79dc1445e532cd58a}} 
+\index{FlipBook::Level@{FlipBook::Level}!m\_fromIndex@{m\_fromIndex}}
+\index{m\_fromIndex@{m\_fromIndex}!FlipBook::Level@{FlipBook::Level}}
+\doxysubsubsection{\texorpdfstring{m\_fromIndex}{m\_fromIndex}}
+{\footnotesize\ttfamily int Flip\+Book\+::\+Level\+::m\+\_\+from\+Index}
+
+\mbox{\Hypertarget{class_flip_book_1_1_level_a9a972c7823b1bd80b7462fdcd797b8eb}\label{class_flip_book_1_1_level_a9a972c7823b1bd80b7462fdcd797b8eb}} 
+\index{FlipBook::Level@{FlipBook::Level}!m\_incrementalIndexing@{m\_incrementalIndexing}}
+\index{m\_incrementalIndexing@{m\_incrementalIndexing}!FlipBook::Level@{FlipBook::Level}}
+\doxysubsubsection{\texorpdfstring{m\_incrementalIndexing}{m\_incrementalIndexing}}
+{\footnotesize\ttfamily bool Flip\+Book\+::\+Level\+::m\+\_\+incremental\+Indexing}
+
+\mbox{\Hypertarget{class_flip_book_1_1_level_ab33f1745823b573d7b08444c71bbed33}\label{class_flip_book_1_1_level_ab33f1745823b573d7b08444c71bbed33}} 
+\index{FlipBook::Level@{FlipBook::Level}!m\_level@{m\_level}}
+\index{m\_level@{m\_level}!FlipBook::Level@{FlipBook::Level}}
+\doxysubsubsection{\texorpdfstring{m\_level}{m\_level}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_level_p}{TLevelP}} Flip\+Book\+::\+Level\+::m\+\_\+level}
+
+\mbox{\Hypertarget{class_flip_book_1_1_level_a55f5a5c466f56556820344975030b80b}\label{class_flip_book_1_1_level_a55f5a5c466f56556820344975030b80b}} 
+\index{FlipBook::Level@{FlipBook::Level}!m\_premultiply@{m\_premultiply}}
+\index{m\_premultiply@{m\_premultiply}!FlipBook::Level@{FlipBook::Level}}
+\doxysubsubsection{\texorpdfstring{m\_premultiply}{m\_premultiply}}
+{\footnotesize\ttfamily bool Flip\+Book\+::\+Level\+::m\+\_\+premultiply}
+
+\mbox{\Hypertarget{class_flip_book_1_1_level_a08796a6370e8b2e2fc73ad0440397525}\label{class_flip_book_1_1_level_a08796a6370e8b2e2fc73ad0440397525}} 
+\index{FlipBook::Level@{FlipBook::Level}!m\_randomAccessRead@{m\_randomAccessRead}}
+\index{m\_randomAccessRead@{m\_randomAccessRead}!FlipBook::Level@{FlipBook::Level}}
+\doxysubsubsection{\texorpdfstring{m\_randomAccessRead}{m\_randomAccessRead}}
+{\footnotesize\ttfamily bool Flip\+Book\+::\+Level\+::m\+\_\+random\+Access\+Read}
+
+\mbox{\Hypertarget{class_flip_book_1_1_level_a629969d75b9d0a053370c5bbac298c70}\label{class_flip_book_1_1_level_a629969d75b9d0a053370c5bbac298c70}} 
+\index{FlipBook::Level@{FlipBook::Level}!m\_step@{m\_step}}
+\index{m\_step@{m\_step}!FlipBook::Level@{FlipBook::Level}}
+\doxysubsubsection{\texorpdfstring{m\_step}{m\_step}}
+{\footnotesize\ttfamily int Flip\+Book\+::\+Level\+::m\+\_\+step}
+
+\mbox{\Hypertarget{class_flip_book_1_1_level_a55adf210313acda585344c4dd0c2873d}\label{class_flip_book_1_1_level_a55adf210313acda585344c4dd0c2873d}} 
+\index{FlipBook::Level@{FlipBook::Level}!m\_toIndex@{m\_toIndex}}
+\index{m\_toIndex@{m\_toIndex}!FlipBook::Level@{FlipBook::Level}}
+\doxysubsubsection{\texorpdfstring{m\_toIndex}{m\_toIndex}}
+{\footnotesize\ttfamily int Flip\+Book\+::\+Level\+::m\+\_\+to\+Index}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/flipbook.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/flipbook.\+cpp\end{DoxyCompactItemize}

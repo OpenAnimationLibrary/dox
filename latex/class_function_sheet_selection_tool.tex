@@ -1,0 +1,131 @@
+\hypertarget{class_function_sheet_selection_tool}{}\doxysection{Function\+Sheet\+Selection\+Tool Class Reference}
+\label{class_function_sheet_selection_tool}\index{FunctionSheetSelectionTool@{FunctionSheetSelectionTool}}
+Inheritance diagram for Function\+Sheet\+Selection\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_function_sheet_selection_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_function_sheet_selection_tool_aaec3d2392b2d715e2d6439d5460d4765}{Function\+Sheet\+Selection\+Tool}} (\mbox{\hyperlink{class_function_sheet}{Function\+Sheet}} $\ast$sheet)
+\item 
+void \mbox{\hyperlink{class_function_sheet_selection_tool_a334220824e80f08454221acb391e5136}{click}} (int row, int col, QMouse\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_function_sheet_selection_tool_a84c8200099d201e0658d617eeb6cbaab}{drag}} (int row, int col, QMouse\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_function_sheet_selection_tool_aff05372befb125dc9ce4c8e52161237d}{release}} (int row, int col, QMouse\+Event $\ast$e) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_function_sheet_selection_tool_aaec3d2392b2d715e2d6439d5460d4765}\label{class_function_sheet_selection_tool_aaec3d2392b2d715e2d6439d5460d4765}} 
+\index{FunctionSheetSelectionTool@{FunctionSheetSelectionTool}!FunctionSheetSelectionTool@{FunctionSheetSelectionTool}}
+\index{FunctionSheetSelectionTool@{FunctionSheetSelectionTool}!FunctionSheetSelectionTool@{FunctionSheetSelectionTool}}
+\doxysubsubsection{\texorpdfstring{FunctionSheetSelectionTool()}{FunctionSheetSelectionTool()}}
+{\footnotesize\ttfamily Function\+Sheet\+Selection\+Tool\+::\+Function\+Sheet\+Selection\+Tool (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_function_sheet}{Function\+Sheet}} $\ast$}]{sheet }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00139       : m\_sheet(sheet), m\_firstRow(-\/1), m\_firstCol(-\/1) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_function_sheet_selection_tool_a334220824e80f08454221acb391e5136}\label{class_function_sheet_selection_tool_a334220824e80f08454221acb391e5136}} 
+\index{FunctionSheetSelectionTool@{FunctionSheetSelectionTool}!click@{click}}
+\index{click@{click}!FunctionSheetSelectionTool@{FunctionSheetSelectionTool}}
+\doxysubsubsection{\texorpdfstring{click()}{click()}}
+{\footnotesize\ttfamily void Function\+Sheet\+Selection\+Tool\+::click (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col,  }\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_spreadsheet_1_1_drag_tool}{Spreadsheet\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00141                                                         \{}
+\DoxyCodeLine{00142     \textcolor{keywordflow}{if} (0 != (e-\/>modifiers() \& Qt::ShiftModifier) \&\&}
+\DoxyCodeLine{00143         !m\_sheet-\/>getSelectedCells().isEmpty()) \{}
+\DoxyCodeLine{00144       QRect selectedCells = m\_sheet-\/>getSelectedCells();}
+\DoxyCodeLine{00145       \textcolor{keywordflow}{if} (col < selectedCells.center().x()) \{}
+\DoxyCodeLine{00146         m\_firstCol = selectedCells.right();}
+\DoxyCodeLine{00147         selectedCells.setLeft(col);}
+\DoxyCodeLine{00148       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00149         m\_firstCol = selectedCells.left();}
+\DoxyCodeLine{00150         selectedCells.setRight(col);}
+\DoxyCodeLine{00151       \}}
+\DoxyCodeLine{00152       \textcolor{keywordflow}{if} (row < selectedCells.center().y()) \{}
+\DoxyCodeLine{00153         m\_firstRow = selectedCells.bottom();}
+\DoxyCodeLine{00154         selectedCells.setTop(row);}
+\DoxyCodeLine{00155       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00156         m\_firstRow = selectedCells.top();}
+\DoxyCodeLine{00157         selectedCells.setBottom(row);}
+\DoxyCodeLine{00158       \}}
+\DoxyCodeLine{00159       m\_sheet-\/>selectCells(selectedCells);}
+\DoxyCodeLine{00160     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00161       \textcolor{comment}{// regular click, no shift}}
+\DoxyCodeLine{00162       m\_firstCol = col;}
+\DoxyCodeLine{00163       m\_firstRow = row;}
+\DoxyCodeLine{00164       QRect selectedCells(col, row, 1, 1);}
+\DoxyCodeLine{00165       m\_sheet-\/>selectCells(selectedCells);}
+\DoxyCodeLine{00166     \}}
+\DoxyCodeLine{00167   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_function_sheet_selection_tool_a84c8200099d201e0658d617eeb6cbaab}\label{class_function_sheet_selection_tool_a84c8200099d201e0658d617eeb6cbaab}} 
+\index{FunctionSheetSelectionTool@{FunctionSheetSelectionTool}!drag@{drag}}
+\index{drag@{drag}!FunctionSheetSelectionTool@{FunctionSheetSelectionTool}}
+\doxysubsubsection{\texorpdfstring{drag()}{drag()}}
+{\footnotesize\ttfamily void Function\+Sheet\+Selection\+Tool\+::drag (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col,  }\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_spreadsheet_1_1_drag_tool}{Spreadsheet\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00169                                                        \{}
+\DoxyCodeLine{00170     \textcolor{keywordflow}{if} (row < 0) row = 0;}
+\DoxyCodeLine{00171     \textcolor{keywordflow}{if} (col < 0) col = 0;}
+\DoxyCodeLine{00172     \textcolor{keywordtype}{int} r0 = std::min(row, m\_firstRow);}
+\DoxyCodeLine{00173     \textcolor{keywordtype}{int} r1 = std::max(row, m\_firstRow);}
+\DoxyCodeLine{00174     \textcolor{keywordtype}{int} c0 = std::min(col, m\_firstCol);}
+\DoxyCodeLine{00175     \textcolor{keywordtype}{int} c1 = std::max(col, m\_firstCol);}
+\DoxyCodeLine{00176     QRect selectedCells(c0, r0, c1 -\/ c0 + 1, r1 -\/ r0 + 1);}
+\DoxyCodeLine{00177     m\_sheet-\/>selectCells(selectedCells);}
+\DoxyCodeLine{00178   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_function_sheet_selection_tool_aff05372befb125dc9ce4c8e52161237d}\label{class_function_sheet_selection_tool_aff05372befb125dc9ce4c8e52161237d}} 
+\index{FunctionSheetSelectionTool@{FunctionSheetSelectionTool}!release@{release}}
+\index{release@{release}!FunctionSheetSelectionTool@{FunctionSheetSelectionTool}}
+\doxysubsubsection{\texorpdfstring{release()}{release()}}
+{\footnotesize\ttfamily void Function\+Sheet\+Selection\+Tool\+::release (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col,  }\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_spreadsheet_1_1_drag_tool}{Spreadsheet\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00180                                                           \{}
+\DoxyCodeLine{00181     \textcolor{keywordflow}{if} (row == m\_firstRow \&\& col == m\_firstCol) \{}
+\DoxyCodeLine{00182       \textcolor{keywordflow}{if} (Preferences::instance()-\/>isMoveCurrentEnabled())}
+\DoxyCodeLine{00183         m\_sheet-\/>setCurrentFrame(row);}
+\DoxyCodeLine{00184       \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *channel = m\_sheet-\/>getChannel(col);}
+\DoxyCodeLine{00185       \textcolor{keywordflow}{if} (channel) channel-\/>setIsCurrent(\textcolor{keyword}{true});}
+\DoxyCodeLine{00186     \}}
+\DoxyCodeLine{00187   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/functionsheet.\+cpp\end{DoxyCompactItemize}

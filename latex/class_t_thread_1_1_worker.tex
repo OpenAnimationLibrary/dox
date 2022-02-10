@@ -1,0 +1,325 @@
+\hypertarget{class_t_thread_1_1_worker}{}\doxysection{TThread\+::Worker Class Reference}
+\label{class_t_thread_1_1_worker}\index{TThread::Worker@{TThread::Worker}}
+Inheritance diagram for TThread\+::Worker\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_t_thread_1_1_worker}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_worker_a6245f07acda12efb8a3e98812317a767}{run}} () override
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_worker_a673d1839ea7b8a4526be9770811a56d4}{take\+Task}} ()
+\item 
+bool \mbox{\hyperlink{class_t_thread_1_1_worker_a1523a62c901394ea35550c17f8d93c61}{can\+Adopt}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} \&task)
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_worker_aafd3d388d5028973ce8d8b6db860b4f6}{adopt\+Task}} (\mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} \&task)
+\item 
+\mbox{\Hypertarget{class_t_thread_1_1_worker_afafe0d5b1f637a46592f31aaa7eb04be}\label{class_t_thread_1_1_worker_afafe0d5b1f637a46592f31aaa7eb04be}} 
+void {\bfseries rest} ()
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_worker_ab5e5e691831ce9b52df79945ae042e30}{update\+Counts\+On\+Take}} ()
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_worker_afe52d6f0c8d51d51691d1565ead7d183}{update\+Counts\+On\+Release}} ()
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_worker_a7abf9610194af7ba6756e70982c793db}{on\+Finish}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} \mbox{\hyperlink{class_t_thread_1_1_worker_a772fa192c2a7719006f3edee79d7daa9}{m\+\_\+task}}
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TSmart\+PointerT}}$<$ \mbox{\hyperlink{class_t_thread_1_1_executor_id}{Executor\+Id}} $>$ \mbox{\hyperlink{class_t_thread_1_1_worker_ab50b1a091509e4b8209a7abe67b5f6f8}{m\+\_\+master}}
+\item 
+bool \mbox{\hyperlink{class_t_thread_1_1_worker_a0a94e8427305eaa26c9e48a2931934f5}{m\+\_\+exit}}
+\item 
+QWait\+Condition \mbox{\hyperlink{class_t_thread_1_1_worker_a6d05adf5034ed9b2b6b37121545c4e01}{m\+\_\+wait\+Condition}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A \mbox{\hyperlink{class_t_thread_1_1_worker}{Worker}} is a specialized QThread that continuously polls \mbox{\hyperlink{class_t_thread_1_1_runnable}{Runnable}} tasks from a global execution queue to make them work. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_worker_a3754817df06ffe220f7f0d903c78ccac}\label{class_t_thread_1_1_worker_a3754817df06ffe220f7f0d903c78ccac}} 
+\index{TThread::Worker@{TThread::Worker}!Worker@{Worker}}
+\index{Worker@{Worker}!TThread::Worker@{TThread::Worker}}
+\doxysubsubsection{\texorpdfstring{Worker()}{Worker()}}
+{\footnotesize\ttfamily Worker\+::\+Worker (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00569 : QThread(), m\_task(0), m\_master(0), m\_exit(\textcolor{keyword}{true}) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_worker_aa8e4543ef1e93fd9d884269ba30c5bfe}\label{class_t_thread_1_1_worker_aa8e4543ef1e93fd9d884269ba30c5bfe}} 
+\index{TThread::Worker@{TThread::Worker}!````~Worker@{$\sim$Worker}}
+\index{````~Worker@{$\sim$Worker}!TThread::Worker@{TThread::Worker}}
+\doxysubsubsection{\texorpdfstring{$\sim$Worker()}{~Worker()}}
+{\footnotesize\ttfamily Worker\+::$\sim$\+Worker (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00573 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_worker_aafd3d388d5028973ce8d8b6db860b4f6}\label{class_t_thread_1_1_worker_aafd3d388d5028973ce8d8b6db860b4f6}} 
+\index{TThread::Worker@{TThread::Worker}!adoptTask@{adoptTask}}
+\index{adoptTask@{adoptTask}!TThread::Worker@{TThread::Worker}}
+\doxysubsubsection{\texorpdfstring{adoptTask()}{adoptTask()}}
+{\footnotesize\ttfamily void Worker\+::adopt\+Task (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} \&}]{task }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00987                                              \{}
+\DoxyCodeLine{00988   m\_task = task;}
+\DoxyCodeLine{00989   updateCountsOnTake();}
+\DoxyCodeLine{00990 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_worker_a1523a62c901394ea35550c17f8d93c61}\label{class_t_thread_1_1_worker_a1523a62c901394ea35550c17f8d93c61}} 
+\index{TThread::Worker@{TThread::Worker}!canAdopt@{canAdopt}}
+\index{canAdopt@{canAdopt}!TThread::Worker@{TThread::Worker}}
+\doxysubsubsection{\texorpdfstring{canAdopt()}{canAdopt()}}
+{\footnotesize\ttfamily bool Worker\+::can\+Adopt (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} \&}]{task }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01059                                                   \{}
+\DoxyCodeLine{01060   \textcolor{keywordflow}{return} task-\/>m\_id-\/>m\_sleepings.size() ==}
+\DoxyCodeLine{01061              0 \&\&  \textcolor{comment}{// Always prefer sleeping dedicateds if present}}
+\DoxyCodeLine{01062          (!m\_master || (m\_master.getPointer() == task-\/>m\_id));  \textcolor{comment}{// If was seized}}
+\DoxyCodeLine{01063                                                                 \textcolor{comment}{// by an}}
+\DoxyCodeLine{01064                                                                 \textcolor{comment}{// Executor,}}
+\DoxyCodeLine{01065                                                                 \textcolor{comment}{// ensure task}}
+\DoxyCodeLine{01066                                                                 \textcolor{comment}{// compatibility}}
+\DoxyCodeLine{01067 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_worker_a7abf9610194af7ba6756e70982c793db}\label{class_t_thread_1_1_worker_a7abf9610194af7ba6756e70982c793db}} 
+\index{TThread::Worker@{TThread::Worker}!onFinish@{onFinish}}
+\index{onFinish@{onFinish}!TThread::Worker@{TThread::Worker}}
+\doxysubsubsection{\texorpdfstring{onFinish()}{onFinish()}}
+{\footnotesize\ttfamily void Worker\+::on\+Finish (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00641                              \{}
+\DoxyCodeLine{00642   \textcolor{keywordflow}{if} (m\_master \&\& m\_master-\/>m\_dedicatedThreads \&\&}
+\DoxyCodeLine{00643       m\_master-\/>m\_persistentThreads) \{}
+\DoxyCodeLine{00644     m\_exit = \textcolor{keyword}{false};}
+\DoxyCodeLine{00645     m\_master-\/>m\_sleepings.push\_back(\textcolor{keyword}{this});}
+\DoxyCodeLine{00646 }
+\DoxyCodeLine{00647     \textcolor{comment}{// Unlock the mutex -\/ since eventually invoked \string~ExecutorId will relock it...}}
+\DoxyCodeLine{00648     globalImp-\/>m\_transitionMutex.unlock();}
+\DoxyCodeLine{00649 }
+\DoxyCodeLine{00650     m\_master =}
+\DoxyCodeLine{00651         0;  \textcolor{comment}{// Master may be destroyed here -\/ and m\_exit= true for all sleepings}}
+\DoxyCodeLine{00652     \textcolor{comment}{// in that case}}
+\DoxyCodeLine{00653 }
+\DoxyCodeLine{00654     globalImp-\/>m\_transitionMutex.lock();}
+\DoxyCodeLine{00655   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00656     m\_exit = \textcolor{keyword}{true};}
+\DoxyCodeLine{00657     globalImp-\/>m\_workers.erase(\textcolor{keyword}{this});}
+\DoxyCodeLine{00658   \}}
+\DoxyCodeLine{00659 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_worker_a6245f07acda12efb8a3e98812317a767}\label{class_t_thread_1_1_worker_a6245f07acda12efb8a3e98812317a767}} 
+\index{TThread::Worker@{TThread::Worker}!run@{run}}
+\index{run@{run}!TThread::Worker@{TThread::Worker}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Worker\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00577                  \{}
+\DoxyCodeLine{00578   \textcolor{comment}{// Ensure atomicity of worker's state transitions}}
+\DoxyCodeLine{00579   QMutexLocker sl(\&globalImp-\/>m\_transitionMutex);}
+\DoxyCodeLine{00580 }
+\DoxyCodeLine{00581   \textcolor{keywordflow}{if} (shutdownVar) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00582 }
+\DoxyCodeLine{00583   \textcolor{keywordflow}{for} (;;) \{}
+\DoxyCodeLine{00584     \textcolor{comment}{// Run the taken task}}
+\DoxyCodeLine{00585     setPriority(m\_task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_a7266725bb29e0ba78a4d3ddb728a5aac}{runningPriority}}());}
+\DoxyCodeLine{00586 }
+\DoxyCodeLine{00587     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00588       Q\_EMIT m\_task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_a4603628ddbc41e9e73e027e8f817bff1}{started}}(m\_task);}
+\DoxyCodeLine{00589       sl.unlock();}
+\DoxyCodeLine{00590 }
+\DoxyCodeLine{00591       m\_task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_ad3b8ee5e7b375bd169f7382fa26b00ef}{run}}();}
+\DoxyCodeLine{00592 }
+\DoxyCodeLine{00593       sl.relock();}
+\DoxyCodeLine{00594       Q\_EMIT m\_task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_a77da4aa600bdb892b55312efcd6e3a21}{finished}}(m\_task);}
+\DoxyCodeLine{00595     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00596       sl.relock();  \textcolor{comment}{// throw must be in the run() block}}
+\DoxyCodeLine{00597       Q\_EMIT m\_task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_a9dd092bdcdc53e1ed45851562417e135}{exception}}(m\_task);}
+\DoxyCodeLine{00598     \}}
+\DoxyCodeLine{00599 }
+\DoxyCodeLine{00600     updateCountsOnRelease();}
+\DoxyCodeLine{00601 }
+\DoxyCodeLine{00602     \textcolor{keywordflow}{if} (shutdownVar) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00603 }
+\DoxyCodeLine{00604     \textcolor{comment}{// Get the next task}}
+\DoxyCodeLine{00605     takeTask();}
+\DoxyCodeLine{00606 }
+\DoxyCodeLine{00607     \textcolor{keywordflow}{if} (!m\_task) \{}
+\DoxyCodeLine{00608       onFinish();}
+\DoxyCodeLine{00609 }
+\DoxyCodeLine{00610       \textcolor{keywordflow}{if} (!m\_exit \&\& !shutdownVar) \{}
+\DoxyCodeLine{00611         \textcolor{comment}{// Put the worker to sleep}}
+\DoxyCodeLine{00612         m\_waitCondition.wait(sl.mutex());}
+\DoxyCodeLine{00613 }
+\DoxyCodeLine{00614         \textcolor{comment}{// Upon thread destruction the wait condition is implicitly woken up.}}
+\DoxyCodeLine{00615         \textcolor{comment}{// If this is the case, m\_task == 0 and we return.}}
+\DoxyCodeLine{00616         \textcolor{keywordflow}{if} (!m\_task || shutdownVar) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00617       \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00618         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00619     \}}
+\DoxyCodeLine{00620   \}}
+\DoxyCodeLine{00621 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_worker_a673d1839ea7b8a4526be9770811a56d4}\label{class_t_thread_1_1_worker_a673d1839ea7b8a4526be9770811a56d4}} 
+\index{TThread::Worker@{TThread::Worker}!takeTask@{takeTask}}
+\index{takeTask@{takeTask}!TThread::Worker@{TThread::Worker}}
+\doxysubsubsection{\texorpdfstring{takeTask()}{takeTask()}}
+{\footnotesize\ttfamily void Worker\+::take\+Task (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01072                              \{}
+\DoxyCodeLine{01073   \mbox{\hyperlink{class_t_smart_pointer_t}{TSmartPointerT<ExecutorId>}} oldId = m\_task-\/>m\_id;}
+\DoxyCodeLine{01074 }
+\DoxyCodeLine{01075   \textcolor{comment}{// When a new task is taken, the old one's Executor may seize the worker}}
+\DoxyCodeLine{01076   m\_master = oldId-\/>m\_dedicatedThreads ? oldId : (\mbox{\hyperlink{class_t_smart_pointer_t}{TSmartPointerT<ExecutorId>}})0;}
+\DoxyCodeLine{01077 }
+\DoxyCodeLine{01078   \textcolor{comment}{// c) No accumulated task can be taken -\/ look for a task in the global tasks}}
+\DoxyCodeLine{01079   \textcolor{comment}{// queue.}}
+\DoxyCodeLine{01080   \textcolor{comment}{//   If the active load admits it, take the earliest task.}}
+\DoxyCodeLine{01081 }
+\DoxyCodeLine{01082   \textcolor{comment}{// Free the old task. NOTE: This instruction MUST be performed OUTSIDE the}}
+\DoxyCodeLine{01083   \textcolor{comment}{// mutex-\/protected environment -\/}}
+\DoxyCodeLine{01084   \textcolor{comment}{// since user code may be executed upon task destruction -\/ including the mutex}}
+\DoxyCodeLine{01085   \textcolor{comment}{// relock!!}}
+\DoxyCodeLine{01086 }
+\DoxyCodeLine{01087   globalImp-\/>m\_transitionMutex.unlock();}
+\DoxyCodeLine{01088 }
+\DoxyCodeLine{01089   m\_task = 0;}
+\DoxyCodeLine{01090   oldId  = \mbox{\hyperlink{class_t_smart_pointer_t}{TSmartPointerT<ExecutorId>}}();}
+\DoxyCodeLine{01091 }
+\DoxyCodeLine{01092   globalImp-\/>m\_transitionMutex.lock();}
+\DoxyCodeLine{01093 }
+\DoxyCodeLine{01094   \textcolor{comment}{// Erase the executor id status pool}}
+\DoxyCodeLine{01095   \mbox{\hyperlink{classtcg_1_1indices__pool}{tcg::indices\_pool<>}} \&executorIdPool  = globalImp-\/>m\_executorIdPool;}
+\DoxyCodeLine{01096   std::vector<UCHAR> \&waitingFlagsPool = globalImp-\/>m\_waitingFlagsPool;}
+\DoxyCodeLine{01097 }
+\DoxyCodeLine{01098   assert(waitingFlagsPool.size() == globalImp-\/>m\_executorIdPool.size());}
+\DoxyCodeLine{01099   memset(\&waitingFlagsPool.front(), 0, waitingFlagsPool.size());}
+\DoxyCodeLine{01100 }
+\DoxyCodeLine{01101   \textcolor{keywordtype}{int} e, executorsCount = executorIdPool.acquiredSize();}
+\DoxyCodeLine{01102 }
+\DoxyCodeLine{01103   \textcolor{keywordtype}{int} i, tasksCount = globalImp-\/>m\_tasks.size();}
+\DoxyCodeLine{01104   QMultiMap<int, RunnableP>::iterator it;}
+\DoxyCodeLine{01105   \textcolor{keywordflow}{for} (i = 0, e = 0, it = globalImp-\/>m\_tasks.end() -\/ 1;}
+\DoxyCodeLine{01106        i < tasksCount \&\& e < executorsCount; ++i, -\/-\/it) \{}
+\DoxyCodeLine{01107     \textcolor{comment}{// std::cout<< "{}global tasks-\/takeTask"{} << std::endl;}}
+\DoxyCodeLine{01108     \textcolor{comment}{// Take the first task}}
+\DoxyCodeLine{01109     \mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} task = it.value();}
+\DoxyCodeLine{01110     task-\/>m\_load   = task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_a9c08dc36ed7b4c9e35809ea696c91e95}{taskLoad}}();}
+\DoxyCodeLine{01111 }
+\DoxyCodeLine{01112     UCHAR \&idWaitingForAnotherTask = waitingFlagsPool[task-\/>m\_id-\/>m\_id];}
+\DoxyCodeLine{01113     \textcolor{keywordflow}{if} (idWaitingForAnotherTask) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01114 }
+\DoxyCodeLine{01115     \textcolor{keywordflow}{if} (!globalImp-\/>isExecutable(task)) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01116 }
+\DoxyCodeLine{01117     \textcolor{comment}{// In case the worker was captured for dedication, check the task}}
+\DoxyCodeLine{01118     \textcolor{comment}{// compatibility.}}
+\DoxyCodeLine{01119     \textcolor{keywordflow}{if} (!canAdopt(task)) \{}
+\DoxyCodeLine{01120       \textcolor{comment}{// some other worker may still take the task...}}
+\DoxyCodeLine{01121       globalImpSlots-\/>emitRefreshAssignments();}
+\DoxyCodeLine{01122       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01123     \}}
+\DoxyCodeLine{01124 }
+\DoxyCodeLine{01125     \textcolor{comment}{// Test its custom conditions}}
+\DoxyCodeLine{01126     \textcolor{keywordflow}{if} (!task-\/>customConditions()) \{}
+\DoxyCodeLine{01127       ++e;}
+\DoxyCodeLine{01128       idWaitingForAnotherTask = 1;}
+\DoxyCodeLine{01129     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01130       adoptTask(task);}
+\DoxyCodeLine{01131       it = globalImp-\/>m\_tasks.erase(it);}
+\DoxyCodeLine{01132 }
+\DoxyCodeLine{01133       globalImpSlots-\/>emitRefreshAssignments();}
+\DoxyCodeLine{01134       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01135     \}}
+\DoxyCodeLine{01136   \}}
+\DoxyCodeLine{01137 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_worker_afe52d6f0c8d51d51691d1565ead7d183}\label{class_t_thread_1_1_worker_afe52d6f0c8d51d51691d1565ead7d183}} 
+\index{TThread::Worker@{TThread::Worker}!updateCountsOnRelease@{updateCountsOnRelease}}
+\index{updateCountsOnRelease@{updateCountsOnRelease}!TThread::Worker@{TThread::Worker}}
+\doxysubsubsection{\texorpdfstring{updateCountsOnRelease()}{updateCountsOnRelease()}}
+{\footnotesize\ttfamily void Worker\+::update\+Counts\+On\+Release (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00633                                           \{}
+\DoxyCodeLine{00634   globalImp-\/>m\_activeLoad -\/= m\_task-\/>m\_load;}
+\DoxyCodeLine{00635   m\_task-\/>m\_id-\/>m\_activeLoad -\/= m\_task-\/>m\_load;}
+\DoxyCodeLine{00636   -\/-\/m\_task-\/>m\_id-\/>m\_activeTasks;}
+\DoxyCodeLine{00637 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_worker_ab5e5e691831ce9b52df79945ae042e30}\label{class_t_thread_1_1_worker_ab5e5e691831ce9b52df79945ae042e30}} 
+\index{TThread::Worker@{TThread::Worker}!updateCountsOnTake@{updateCountsOnTake}}
+\index{updateCountsOnTake@{updateCountsOnTake}!TThread::Worker@{TThread::Worker}}
+\doxysubsubsection{\texorpdfstring{updateCountsOnTake()}{updateCountsOnTake()}}
+{\footnotesize\ttfamily void Worker\+::update\+Counts\+On\+Take (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00625                                        \{}
+\DoxyCodeLine{00626   globalImp-\/>m\_activeLoad += m\_task-\/>m\_load;}
+\DoxyCodeLine{00627   m\_task-\/>m\_id-\/>m\_activeLoad += m\_task-\/>m\_load;}
+\DoxyCodeLine{00628   ++m\_task-\/>m\_id-\/>m\_activeTasks;}
+\DoxyCodeLine{00629 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_worker_a0a94e8427305eaa26c9e48a2931934f5}\label{class_t_thread_1_1_worker_a0a94e8427305eaa26c9e48a2931934f5}} 
+\index{TThread::Worker@{TThread::Worker}!m\_exit@{m\_exit}}
+\index{m\_exit@{m\_exit}!TThread::Worker@{TThread::Worker}}
+\doxysubsubsection{\texorpdfstring{m\_exit}{m\_exit}}
+{\footnotesize\ttfamily bool TThread\+::\+Worker\+::m\+\_\+exit}
+
+\mbox{\Hypertarget{class_t_thread_1_1_worker_ab50b1a091509e4b8209a7abe67b5f6f8}\label{class_t_thread_1_1_worker_ab50b1a091509e4b8209a7abe67b5f6f8}} 
+\index{TThread::Worker@{TThread::Worker}!m\_master@{m\_master}}
+\index{m\_master@{m\_master}!TThread::Worker@{TThread::Worker}}
+\doxysubsubsection{\texorpdfstring{m\_master}{m\_master}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TSmart\+PointerT}}$<$\mbox{\hyperlink{class_t_thread_1_1_executor_id}{Executor\+Id}}$>$ TThread\+::\+Worker\+::m\+\_\+master}
+
+\mbox{\Hypertarget{class_t_thread_1_1_worker_a772fa192c2a7719006f3edee79d7daa9}\label{class_t_thread_1_1_worker_a772fa192c2a7719006f3edee79d7daa9}} 
+\index{TThread::Worker@{TThread::Worker}!m\_task@{m\_task}}
+\index{m\_task@{m\_task}!TThread::Worker@{TThread::Worker}}
+\doxysubsubsection{\texorpdfstring{m\_task}{m\_task}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} TThread\+::\+Worker\+::m\+\_\+task}
+
+\mbox{\Hypertarget{class_t_thread_1_1_worker_a6d05adf5034ed9b2b6b37121545c4e01}\label{class_t_thread_1_1_worker_a6d05adf5034ed9b2b6b37121545c4e01}} 
+\index{TThread::Worker@{TThread::Worker}!m\_waitCondition@{m\_waitCondition}}
+\index{m\_waitCondition@{m\_waitCondition}!TThread::Worker@{TThread::Worker}}
+\doxysubsubsection{\texorpdfstring{m\_waitCondition}{m\_waitCondition}}
+{\footnotesize\ttfamily QWait\+Condition TThread\+::\+Worker\+::m\+\_\+wait\+Condition}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tcore/tthread.\+cpp\end{DoxyCompactItemize}

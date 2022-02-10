@@ -1,0 +1,415 @@
+\hypertarget{class_function_sheet_column_head_viewer}{}\doxysection{Function\+Sheet\+Column\+Head\+Viewer Class Reference}
+\label{class_function_sheet_column_head_viewer}\index{FunctionSheetColumnHeadViewer@{FunctionSheetColumnHeadViewer}}
+Inheritance diagram for Function\+Sheet\+Column\+Head\+Viewer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_function_sheet_column_head_viewer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_function_sheet_column_head_viewer_a826ee65fe88fa0aa5199cc7201106ca8}{Function\+Sheet\+Column\+Head\+Viewer}} (\mbox{\hyperlink{class_function_sheet}{Function\+Sheet}} $\ast$parent)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_function_sheet_column_head_viewer_a633b757468fb9ce985d582bfc2916238}{paint\+Event}} (QPaint\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_function_sheet_column_head_viewer_a45ba8bc0dad2353655fda630c5541b46}{mouse\+Press\+Event}} (QMouse\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_function_sheet_column_head_viewer_ae2aebb12ea53cf6b32955e1444c31917}{mouse\+Move\+Event}} (QMouse\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_function_sheet_column_head_viewer_acdf6bcf18f7beb875b3a2b9df3fe5984}{context\+Menu\+Event}} (QContext\+Menu\+Event $\ast$) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_function_sheet_column_head_viewer_a826ee65fe88fa0aa5199cc7201106ca8}\label{class_function_sheet_column_head_viewer_a826ee65fe88fa0aa5199cc7201106ca8}} 
+\index{FunctionSheetColumnHeadViewer@{FunctionSheetColumnHeadViewer}!FunctionSheetColumnHeadViewer@{FunctionSheetColumnHeadViewer}}
+\index{FunctionSheetColumnHeadViewer@{FunctionSheetColumnHeadViewer}!FunctionSheetColumnHeadViewer@{FunctionSheetColumnHeadViewer}}
+\doxysubsubsection{\texorpdfstring{FunctionSheetColumnHeadViewer()}{FunctionSheetColumnHeadViewer()}}
+{\footnotesize\ttfamily Function\+Sheet\+Column\+Head\+Viewer\+::\+Function\+Sheet\+Column\+Head\+Viewer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_function_sheet}{Function\+Sheet}} $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00288     : \mbox{\hyperlink{class_spreadsheet_1_1_column_panel}{Spreadsheet::ColumnPanel}}(parent), m\_sheet(parent), m\_draggingChannel(0) \{}
+\DoxyCodeLine{00289   setMouseTracking(\textcolor{keyword}{true});  \textcolor{comment}{// for updating the tooltip}}
+\DoxyCodeLine{00290   setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{00291 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_function_sheet_column_head_viewer_acdf6bcf18f7beb875b3a2b9df3fe5984}\label{class_function_sheet_column_head_viewer_acdf6bcf18f7beb875b3a2b9df3fe5984}} 
+\index{FunctionSheetColumnHeadViewer@{FunctionSheetColumnHeadViewer}!contextMenuEvent@{contextMenuEvent}}
+\index{contextMenuEvent@{contextMenuEvent}!FunctionSheetColumnHeadViewer@{FunctionSheetColumnHeadViewer}}
+\doxysubsubsection{\texorpdfstring{contextMenuEvent()}{contextMenuEvent()}}
+{\footnotesize\ttfamily void Function\+Sheet\+Column\+Head\+Viewer\+::context\+Menu\+Event (\begin{DoxyParamCaption}\item[{QContext\+Menu\+Event $\ast$}]{ce }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00552                                                                           \{}
+\DoxyCodeLine{00553   \textcolor{comment}{// First, select column under cursor}}
+\DoxyCodeLine{00554   \textcolor{keyword}{const} QPoint \&pos = ce-\/>pos();}
+\DoxyCodeLine{00555   \textcolor{keywordtype}{int} cursorCol     = getViewer()-\/>\mbox{\hyperlink{class_spreadsheet_viewer_abdf7d777f22954ef57404d3edde69a16}{xyToPosition}}(pos).layer();}
+\DoxyCodeLine{00556 }
+\DoxyCodeLine{00557   \textcolor{keywordflow}{if} (cursorCol < 0 || cursorCol >= m\_sheet-\/>getChannelCount()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00558 }
+\DoxyCodeLine{00559   \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *channel = m\_sheet-\/>getChannel(cursorCol);}
+\DoxyCodeLine{00560   \textcolor{keywordflow}{if} (!channel) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00561 }
+\DoxyCodeLine{00562   \textcolor{comment}{// Ok, now let's summon a context menu with appropriate options}}
+\DoxyCodeLine{00563   \mbox{\hyperlink{class_function_viewer}{FunctionViewer}} *fv = m\_sheet-\/>getViewer();}
+\DoxyCodeLine{00564   \textcolor{keywordflow}{if} (!fv) \{}
+\DoxyCodeLine{00565     assert(fv);}
+\DoxyCodeLine{00566     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00567   \}}
+\DoxyCodeLine{00568 }
+\DoxyCodeLine{00569   \textcolor{keyword}{const} QPoint \&globalPos = mapToGlobal(pos);}
+\DoxyCodeLine{00570 }
+\DoxyCodeLine{00571   \textcolor{keywordflow}{if} (pos.y() >= cChannelNameY)}
+\DoxyCodeLine{00572     fv-\/>openContextMenu(channel, globalPos);}
+\DoxyCodeLine{00573   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00574     \mbox{\hyperlink{class_function_tree_model_1_1_channel_group}{FunctionTreeModel::ChannelGroup}} *group = channel-\/>getChannelGroup();}
+\DoxyCodeLine{00575 }
+\DoxyCodeLine{00576     \textcolor{comment}{// In this case, commands are different from the tree view. Rather than}}
+\DoxyCodeLine{00577     \textcolor{comment}{// showing in the tree,}}
+\DoxyCodeLine{00578     \textcolor{comment}{// channels get ACTIVATED}}
+\DoxyCodeLine{00579     QMenu menu;}
+\DoxyCodeLine{00580 }
+\DoxyCodeLine{00581     QAction showAnimatedOnly(FunctionTreeView::tr(\textcolor{stringliteral}{"{}Show Animated Only"{}}), 0);}
+\DoxyCodeLine{00582     QAction showAll(FunctionTreeView::tr(\textcolor{stringliteral}{"{}Show All"{}}), 0);}
+\DoxyCodeLine{00583     QAction hideSelected(FunctionTreeView::tr(\textcolor{stringliteral}{"{}Hide Selected"{}}), 0);}
+\DoxyCodeLine{00584     menu.addAction(\&showAnimatedOnly);}
+\DoxyCodeLine{00585     menu.addAction(\&showAll);}
+\DoxyCodeLine{00586     menu.addAction(\&hideSelected);}
+\DoxyCodeLine{00587 }
+\DoxyCodeLine{00588     \textcolor{comment}{// execute menu}}
+\DoxyCodeLine{00589     QAction *action = menu.exec(globalPos);}
+\DoxyCodeLine{00590 }
+\DoxyCodeLine{00591     \textcolor{comment}{// Process action}}
+\DoxyCodeLine{00592     \textcolor{keywordflow}{if} (action == \&showAll) \{}
+\DoxyCodeLine{00593       \textcolor{keywordtype}{int} c, cCount = group-\/>getChildCount();}
+\DoxyCodeLine{00594       \textcolor{keywordflow}{for} (c = 0; c != cCount; ++c) \{}
+\DoxyCodeLine{00595         \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *channel =}
+\DoxyCodeLine{00596             \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *\textcolor{keyword}{>}(group-\/>getChild(c));}
+\DoxyCodeLine{00597         \textcolor{keywordflow}{if} (channel \&\& !channel-\/>isHidden()) channel-\/>setIsActive(\textcolor{keyword}{true});}
+\DoxyCodeLine{00598       \}}
+\DoxyCodeLine{00599     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (action == \&showAnimatedOnly) \{}
+\DoxyCodeLine{00600       \textcolor{keywordtype}{int} c, cCount = group-\/>getChildCount();}
+\DoxyCodeLine{00601       \textcolor{keywordflow}{for} (c = 0; c != cCount; ++c) \{}
+\DoxyCodeLine{00602         \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *channel =}
+\DoxyCodeLine{00603             \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *\textcolor{keyword}{>}(group-\/>getChild(c));}
+\DoxyCodeLine{00604         \textcolor{keywordflow}{if} (channel \&\& !channel-\/>isHidden())}
+\DoxyCodeLine{00605           channel-\/>setIsActive(channel-\/>isAnimated());}
+\DoxyCodeLine{00606       \}}
+\DoxyCodeLine{00607     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (action == \&hideSelected) \{}
+\DoxyCodeLine{00608       QRect selectedCells = getViewer()-\/>getSelectedCells();}
+\DoxyCodeLine{00609       \textcolor{comment}{// hide the selected columns from the right to the left}}
+\DoxyCodeLine{00610       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} col = selectedCells.right(); col >= selectedCells.left();}
+\DoxyCodeLine{00611            col-\/-\/) \{}
+\DoxyCodeLine{00612         \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *chan = m\_sheet-\/>getChannel(col);}
+\DoxyCodeLine{00613         \textcolor{keywordflow}{if} (chan) chan-\/>setIsActive(\textcolor{keyword}{false});}
+\DoxyCodeLine{00614       \}}
+\DoxyCodeLine{00615       \textcolor{comment}{// clear cell selection}}
+\DoxyCodeLine{00616       getViewer()-\/>selectCells(QRect());}
+\DoxyCodeLine{00617     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00618       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00619 }
+\DoxyCodeLine{00620     fv-\/>update();}
+\DoxyCodeLine{00621   \}}
+\DoxyCodeLine{00622 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_function_sheet_column_head_viewer_ae2aebb12ea53cf6b32955e1444c31917}\label{class_function_sheet_column_head_viewer_ae2aebb12ea53cf6b32955e1444c31917}} 
+\index{FunctionSheetColumnHeadViewer@{FunctionSheetColumnHeadViewer}!mouseMoveEvent@{mouseMoveEvent}}
+\index{mouseMoveEvent@{mouseMoveEvent}!FunctionSheetColumnHeadViewer@{FunctionSheetColumnHeadViewer}}
+\doxysubsubsection{\texorpdfstring{mouseMoveEvent()}{mouseMoveEvent()}}
+{\footnotesize\ttfamily void Function\+Sheet\+Column\+Head\+Viewer\+::mouse\+Move\+Event (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+update tooltips 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00432                                                                  \{}
+\DoxyCodeLine{00433   \textcolor{keywordflow}{if} ((e-\/>buttons() \& Qt::MidButton) \&\& m\_draggingChannel \&\&}
+\DoxyCodeLine{00434       (e-\/>pos() -\/ m\_dragStartPosition).manhattanLength() >=}
+\DoxyCodeLine{00435           QApplication::startDragDistance()) \{}
+\DoxyCodeLine{00436     QDrag *drag         = \textcolor{keyword}{new} QDrag(\textcolor{keyword}{this});}
+\DoxyCodeLine{00437     QMimeData *mimeData = \textcolor{keyword}{new} QMimeData;}
+\DoxyCodeLine{00438     mimeData-\/>setText(m\_draggingChannel-\/>\mbox{\hyperlink{class_function_tree_model_1_1_channel_a7d4b2a9a71e40bf4377663d95e9eab73}{getExprRefName}}());}
+\DoxyCodeLine{00439     drag-\/>setMimeData(mimeData);}
+\DoxyCodeLine{00440     \textcolor{keyword}{static} \textcolor{keyword}{const} QPixmap cursorPixmap(\textcolor{stringliteral}{"{}:Resources/dragcursor\_exp\_text.png"{}});}
+\DoxyCodeLine{00441     drag-\/>setDragCursor(cursorPixmap, Qt::MoveAction);}
+\DoxyCodeLine{00442     Qt::DropAction dropAction = drag-\/>exec();}
+\DoxyCodeLine{00443     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00444   \}}
+\DoxyCodeLine{00445 }
+\DoxyCodeLine{00446   \textcolor{comment}{// get the column under the cursor}}
+\DoxyCodeLine{00447   \textcolor{keywordtype}{int} col = getViewer()-\/>\mbox{\hyperlink{class_spreadsheet_viewer_abdf7d777f22954ef57404d3edde69a16}{xyToPosition}}(e-\/>pos()).layer();}
+\DoxyCodeLine{00448   \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *channel = m\_sheet-\/>getChannel(col);}
+\DoxyCodeLine{00449   \textcolor{keywordflow}{if} (!channel) \{}
+\DoxyCodeLine{00450     setToolTip(QString(\textcolor{stringliteral}{"{}"{}}));}
+\DoxyCodeLine{00451   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00452     QString tooltip = channel-\/>\mbox{\hyperlink{class_function_tree_model_1_1_channel_a7d4b2a9a71e40bf4377663d95e9eab73}{getExprRefName}}();}
+\DoxyCodeLine{00453     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh    = m\_sheet-\/>getViewer()-\/>getXsheetHandle()-\/>getXsheet();}
+\DoxyCodeLine{00454     \textcolor{keywordflow}{if} (xsh-\/>isReferenceManagementIgnored(channel-\/>getParam()))}
+\DoxyCodeLine{00455       tooltip +=}
+\DoxyCodeLine{00456           \textcolor{stringliteral}{"{}\(\backslash\)n"{}} + tr(\textcolor{stringliteral}{"{}Some key(s) in this parameter loses original reference in "{}}}
+\DoxyCodeLine{00457                     \textcolor{stringliteral}{"{}expression.\(\backslash\)nManually changing any keyframe will clear "{}}}
+\DoxyCodeLine{00458                     \textcolor{stringliteral}{"{}the warning."{}});}
+\DoxyCodeLine{00459 }
+\DoxyCodeLine{00460     setToolTip(tooltip);}
+\DoxyCodeLine{00461   \}}
+\DoxyCodeLine{00462 }
+\DoxyCodeLine{00463   \textcolor{comment}{// modify selected channel by left dragging}}
+\DoxyCodeLine{00464   \textcolor{keywordflow}{if} (m\_clickedColumn >= 0 \&\& channel \&\& e-\/>buttons() \& Qt::LeftButton) \{}
+\DoxyCodeLine{00465     \textcolor{keywordtype}{int} fromC      = std::min(m\_clickedColumn, col);}
+\DoxyCodeLine{00466     \textcolor{keywordtype}{int} toC        = std::max(m\_clickedColumn, col);}
+\DoxyCodeLine{00467     \textcolor{keywordtype}{int} lastKeyPos = 0;}
+\DoxyCodeLine{00468     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = fromC; c <= toC; c++) \{}
+\DoxyCodeLine{00469       \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *tmpChan = m\_sheet-\/>getChannel(c);}
+\DoxyCodeLine{00470       \textcolor{keywordflow}{if} (!tmpChan) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00471       std::set<double> frames;}
+\DoxyCodeLine{00472       tmpChan-\/>getParam()-\/>\mbox{\hyperlink{class_t_double_param_a18e0a8f08eb53c18255c6f398c073c96}{getKeyframes}}(frames);}
+\DoxyCodeLine{00473       \textcolor{keywordflow}{if} (!frames.empty())}
+\DoxyCodeLine{00474         lastKeyPos = std::max(lastKeyPos, (\textcolor{keywordtype}{int})*frames.rbegin());}
+\DoxyCodeLine{00475     \}}
+\DoxyCodeLine{00476     QRect rect(std::min(m\_clickedColumn, col), 0,}
+\DoxyCodeLine{00477                std::abs(col -\/ m\_clickedColumn) + 1, lastKeyPos + 1);}
+\DoxyCodeLine{00478     getViewer()-\/>selectCells(rect);}
+\DoxyCodeLine{00479   \}}
+\DoxyCodeLine{00480 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00682}{Function\+Tree\+Model\+::\+Channel\+::get\+Expr\+Ref\+Name()}}, \mbox{\hyperlink{l00870}{TDouble\+Param\+::get\+Keyframes()}}, and \mbox{\hyperlink{l00783}{Spreadsheet\+Viewer\+::xy\+To\+Position()}}.
+
+\mbox{\Hypertarget{class_function_sheet_column_head_viewer_a45ba8bc0dad2353655fda630c5541b46}\label{class_function_sheet_column_head_viewer_a45ba8bc0dad2353655fda630c5541b46}} 
+\index{FunctionSheetColumnHeadViewer@{FunctionSheetColumnHeadViewer}!mousePressEvent@{mousePressEvent}}
+\index{mousePressEvent@{mousePressEvent}!FunctionSheetColumnHeadViewer@{FunctionSheetColumnHeadViewer}}
+\doxysubsubsection{\texorpdfstring{mousePressEvent()}{mousePressEvent()}}
+{\footnotesize\ttfamily void Function\+Sheet\+Column\+Head\+Viewer\+::mouse\+Press\+Event (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00484                                                                   \{}
+\DoxyCodeLine{00485   QPoint pos                          = e-\/>pos();}
+\DoxyCodeLine{00486   \textcolor{keywordtype}{int} currentC                        = getViewer()-\/>\mbox{\hyperlink{class_spreadsheet_viewer_abdf7d777f22954ef57404d3edde69a16}{xyToPosition}}(pos).layer();}
+\DoxyCodeLine{00487   \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *channel = m\_sheet-\/>getChannel(currentC);}
+\DoxyCodeLine{00488   \textcolor{keywordflow}{if} (!channel) \{}
+\DoxyCodeLine{00489     m\_clickedColumn = -\/1;}
+\DoxyCodeLine{00490     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00491   \}}
+\DoxyCodeLine{00492 }
+\DoxyCodeLine{00493   \textcolor{keywordflow}{if} (e-\/>button() == Qt::MidButton) \{}
+\DoxyCodeLine{00494     m\_draggingChannel   = channel;}
+\DoxyCodeLine{00495     m\_dragStartPosition = e-\/>pos();}
+\DoxyCodeLine{00496     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00497   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00498     channel-\/>setIsCurrent(\textcolor{keyword}{true});}
+\DoxyCodeLine{00499   m\_draggingChannel = 0;}
+\DoxyCodeLine{00500 }
+\DoxyCodeLine{00501   \textcolor{keywordflow}{if} (e-\/>button() == Qt::LeftButton) \{}
+\DoxyCodeLine{00502     \textcolor{keywordtype}{int} lastKeyPos = 0;}
+\DoxyCodeLine{00503     \textcolor{comment}{// if the current selection does not contain the first cell in m\_firstColumn}}
+\DoxyCodeLine{00504     \textcolor{comment}{// then we assume that the selection has been modified and treat shift+click}}
+\DoxyCodeLine{00505     \textcolor{comment}{// as normal click.}}
+\DoxyCodeLine{00506     \textcolor{keywordflow}{if} (getViewer()-\/>getSelectedCells().contains(m\_clickedColumn, 0) \&\&}
+\DoxyCodeLine{00507         (e-\/>modifiers() \& Qt::ShiftModifier)) \{}
+\DoxyCodeLine{00508       \textcolor{keywordtype}{int} fromC = std::min(m\_clickedColumn, currentC);}
+\DoxyCodeLine{00509       \textcolor{keywordtype}{int} toC   = std::max(m\_clickedColumn, currentC);}
+\DoxyCodeLine{00510       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = fromC; c <= toC; c++) \{}
+\DoxyCodeLine{00511         \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *tmpChan = m\_sheet-\/>getChannel(c);}
+\DoxyCodeLine{00512         \textcolor{keywordflow}{if} (!tmpChan) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00513         std::set<double> frames;}
+\DoxyCodeLine{00514         tmpChan-\/>getParam()-\/>\mbox{\hyperlink{class_t_double_param_a18e0a8f08eb53c18255c6f398c073c96}{getKeyframes}}(frames);}
+\DoxyCodeLine{00515         \textcolor{keywordflow}{if} (!frames.empty())}
+\DoxyCodeLine{00516           lastKeyPos = std::max(lastKeyPos, (\textcolor{keywordtype}{int})*frames.rbegin());}
+\DoxyCodeLine{00517       \}}
+\DoxyCodeLine{00518     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00519       \textcolor{comment}{// Open folder}}
+\DoxyCodeLine{00520       \mbox{\hyperlink{class_function_tree_model_1_1_channel_group}{FunctionTreeModel::ChannelGroup}} *channelGroup =}
+\DoxyCodeLine{00521           channel-\/>getChannelGroup();}
+\DoxyCodeLine{00522       \textcolor{keywordflow}{if} (!channelGroup-\/>isOpen())}
+\DoxyCodeLine{00523         channelGroup-\/>getModel()-\/>setExpandedItem(channelGroup-\/>createIndex(),}
+\DoxyCodeLine{00524                                                   \textcolor{keyword}{true});}
+\DoxyCodeLine{00525       \textcolor{comment}{// Select all segment}}
+\DoxyCodeLine{00526       std::set<double> frames;}
+\DoxyCodeLine{00527       channel-\/>getParam()-\/>\mbox{\hyperlink{class_t_double_param_a18e0a8f08eb53c18255c6f398c073c96}{getKeyframes}}(frames);}
+\DoxyCodeLine{00528       \textcolor{keywordflow}{if} (!frames.empty()) lastKeyPos = (int)*frames.rbegin();}
+\DoxyCodeLine{00529       m\_clickedColumn = currentC;}
+\DoxyCodeLine{00530     \}}
+\DoxyCodeLine{00531     QRect rect(std::min(m\_clickedColumn, currentC), 0,}
+\DoxyCodeLine{00532                std::abs(currentC -\/ m\_clickedColumn) + 1, lastKeyPos + 1);}
+\DoxyCodeLine{00533 }
+\DoxyCodeLine{00534     getViewer()-\/>selectCells(rect);}
+\DoxyCodeLine{00535   \}}
+\DoxyCodeLine{00536   \textcolor{comment}{// Switch selection before opening the context menu}}
+\DoxyCodeLine{00537   \textcolor{comment}{// if the clicked column is out of the selection}}
+\DoxyCodeLine{00538   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (e-\/>button() == Qt::RightButton) \{}
+\DoxyCodeLine{00539     QRect selectedCell = getViewer()-\/>getSelectedCells();}
+\DoxyCodeLine{00540     \textcolor{keywordflow}{if} (selectedCell.left() > currentC || selectedCell.right() < currentC) \{}
+\DoxyCodeLine{00541       \textcolor{keywordtype}{int} lastKeyPos = 0;}
+\DoxyCodeLine{00542       std::set<double> frames;}
+\DoxyCodeLine{00543       channel-\/>getParam()-\/>\mbox{\hyperlink{class_t_double_param_a18e0a8f08eb53c18255c6f398c073c96}{getKeyframes}}(frames);}
+\DoxyCodeLine{00544       \textcolor{keywordflow}{if} (!frames.empty()) lastKeyPos = (int)*frames.rbegin();}
+\DoxyCodeLine{00545       getViewer()-\/>selectCells(QRect(currentC, 0, 1, lastKeyPos + 1));}
+\DoxyCodeLine{00546     \}}
+\DoxyCodeLine{00547   \}}
+\DoxyCodeLine{00548 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_function_sheet_column_head_viewer_a633b757468fb9ce985d582bfc2916238}\label{class_function_sheet_column_head_viewer_a633b757468fb9ce985d582bfc2916238}} 
+\index{FunctionSheetColumnHeadViewer@{FunctionSheetColumnHeadViewer}!paintEvent@{paintEvent}}
+\index{paintEvent@{paintEvent}!FunctionSheetColumnHeadViewer@{FunctionSheetColumnHeadViewer}}
+\doxysubsubsection{\texorpdfstring{paintEvent()}{paintEvent()}}
+{\footnotesize\ttfamily void Function\+Sheet\+Column\+Head\+Viewer\+::paint\+Event (\begin{DoxyParamCaption}\item[{QPaint\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00295                                                              \{}
+\DoxyCodeLine{00296   QPainter painter(\textcolor{keyword}{this});}
+\DoxyCodeLine{00297 }
+\DoxyCodeLine{00298   QRect toBeUpdated = e-\/>rect();}
+\DoxyCodeLine{00299   painter.setClipRect(toBeUpdated);}
+\DoxyCodeLine{00300 }
+\DoxyCodeLine{00301   \textcolor{comment}{// visible columns range}}
+\DoxyCodeLine{00302   \mbox{\hyperlink{class_cell_range}{CellRange}} visible = getViewer()-\/>xyRectToRange(toBeUpdated);}
+\DoxyCodeLine{00303   \textcolor{keywordtype}{int} c0            = visible.from().layer();}
+\DoxyCodeLine{00304   \textcolor{keywordtype}{int} c1            = visible.to().layer();}
+\DoxyCodeLine{00305 }
+\DoxyCodeLine{00306   \textcolor{keywordflow}{if} (c0 > c1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00307 }
+\DoxyCodeLine{00308   \textcolor{keywordtype}{int} n = c1 -\/ c0 + 1 + 2;}
+\DoxyCodeLine{00309 }
+\DoxyCodeLine{00310   \mbox{\hyperlink{class_function_tree_model_1_1_channel_group}{FunctionTreeModel::ChannelGroup}} *currentGroup = 0;}
+\DoxyCodeLine{00311 }
+\DoxyCodeLine{00312   \textcolor{comment}{/*-\/-\/-\/ Display range + right and left 1 column range ChannelGroup. If there is}}
+\DoxyCodeLine{00313 \textcolor{comment}{   * none, put 0}}
+\DoxyCodeLine{00314 \textcolor{comment}{   * -\/-\/-\/*/}}
+\DoxyCodeLine{00315   std::vector<FunctionTreeModel::ChannelGroup *> channelGroups(n);}
+\DoxyCodeLine{00316   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; ++i) \{}
+\DoxyCodeLine{00317     channelGroups[i] = 0;}
+\DoxyCodeLine{00318 }
+\DoxyCodeLine{00319     \textcolor{keywordtype}{int} c = c0 -\/ 1 + i;}
+\DoxyCodeLine{00320     \textcolor{keywordflow}{if} (c < 0) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00321 }
+\DoxyCodeLine{00322     \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *channel = m\_sheet-\/>getChannel(c);}
+\DoxyCodeLine{00323     \textcolor{keywordflow}{if} (!channel) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00324 }
+\DoxyCodeLine{00325     channelGroups[i] = channel-\/>getChannelGroup();}
+\DoxyCodeLine{00326     \textcolor{keywordflow}{if} (!currentGroup \&\& channel-\/>isCurrent()) currentGroup = channelGroups[i];}
+\DoxyCodeLine{00327   \}}
+\DoxyCodeLine{00328 }
+\DoxyCodeLine{00329   \textcolor{keywordtype}{int} y0 = 0;}
+\DoxyCodeLine{00330   \textcolor{keywordtype}{int} y1 = 17;  \textcolor{comment}{// needs work}}
+\DoxyCodeLine{00331   \textcolor{keywordtype}{int} y3 = 53;}
+\DoxyCodeLine{00332   \textcolor{keywordflow}{if} (m\_sheet-\/>isSmallHeader()) y3 = 34;}
+\DoxyCodeLine{00333 }
+\DoxyCodeLine{00334   \textcolor{comment}{/*-\/-\/-\/ Fill header with background color -\/-\/-\/*/}}
+\DoxyCodeLine{00335   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = c0; c <= c1; c++) \{}
+\DoxyCodeLine{00336     \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *channel = m\_sheet-\/>getChannel(c);}
+\DoxyCodeLine{00337     \textcolor{keywordflow}{if} (!channel) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00338     \textcolor{keywordtype}{int} x0 = getViewer()-\/>columnToX(c);}
+\DoxyCodeLine{00339     \textcolor{keywordtype}{int} x1 = getViewer()-\/>columnToX(c + 1) -\/ 1;}
+\DoxyCodeLine{00340     \textcolor{comment}{// Column Width}}
+\DoxyCodeLine{00341     \textcolor{keywordtype}{int} width = x1 -\/ x0 + 1;}
+\DoxyCodeLine{00342 }
+\DoxyCodeLine{00343     painter.fillRect(x0, y0, width, y3 -\/ y0, getViewer()-\/>getBGColor());}
+\DoxyCodeLine{00344   \}}
+\DoxyCodeLine{00345 }
+\DoxyCodeLine{00346   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = c0; c <= c1; ++c) \{}
+\DoxyCodeLine{00347     \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *channel = m\_sheet-\/>getChannel(c);}
+\DoxyCodeLine{00348     \textcolor{keywordflow}{if} (!channel) \{}
+\DoxyCodeLine{00349       \textcolor{keywordflow}{if} (c != c0) \{}
+\DoxyCodeLine{00350         \textcolor{comment}{// draw "{}the end"{} border}}
+\DoxyCodeLine{00351         \textcolor{keywordtype}{int} x0 = getViewer()-\/>columnToX(c);}
+\DoxyCodeLine{00352         painter.setPen(getViewer()-\/>getColumnHeaderBorderColor());}
+\DoxyCodeLine{00353         painter.drawLine(x0, y0, x0, y3);}
+\DoxyCodeLine{00354       \}}
+\DoxyCodeLine{00355       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00356     \}}
+\DoxyCodeLine{00357     \textcolor{keywordtype}{int} i = c -\/ c0 + 1;}
+\DoxyCodeLine{00358     \textcolor{comment}{/*-\/-\/-\/-\/ Channel Column of the current Column and the preceding and following}}
+\DoxyCodeLine{00359 \textcolor{comment}{     * Columns -\/-\/-\/*/}}
+\DoxyCodeLine{00360     \mbox{\hyperlink{class_function_tree_model_1_1_channel_group}{FunctionTreeModel::ChannelGroup}} *prevGroup = channelGroups[c -\/ c0],}
+\DoxyCodeLine{00361                                     *group     = channelGroups[c -\/ c0 + 1],}
+\DoxyCodeLine{00362                                     *nextGroup = channelGroups[c -\/ c0 + 2];}
+\DoxyCodeLine{00363 }
+\DoxyCodeLine{00364     \textcolor{comment}{/*-\/-\/-\/-\/ If the group is different from the before and after, flags are set}}
+\DoxyCodeLine{00365 \textcolor{comment}{     * respectively -\/-\/-\/*/}}
+\DoxyCodeLine{00366     \textcolor{keywordtype}{bool} firstGroupColumn = prevGroup != group;}
+\DoxyCodeLine{00367     \textcolor{keywordtype}{bool} lastGroupColumn  = nextGroup != group;}
+\DoxyCodeLine{00368 }
+\DoxyCodeLine{00369     \textcolor{comment}{/*-\/-\/-\/ The left and right coordinates of the current column -\/-\/-\/*/}}
+\DoxyCodeLine{00370     \textcolor{keywordtype}{int} x0 = getViewer()-\/>columnToX(c);}
+\DoxyCodeLine{00371     \textcolor{keywordtype}{int} x1 = getViewer()-\/>columnToX(c + 1) -\/ 1;}
+\DoxyCodeLine{00372     \textcolor{comment}{// Column width}}
+\DoxyCodeLine{00373     \textcolor{keywordtype}{int} width = x1 -\/ x0 + 1;}
+\DoxyCodeLine{00374 }
+\DoxyCodeLine{00375     QRect selectedRect = m\_sheet-\/>getSelectedCells();}
+\DoxyCodeLine{00376     \textcolor{keywordtype}{bool} isSelected =}
+\DoxyCodeLine{00377         (selectedRect.left() <= c \&\& c <= selectedRect.right()) ? \textcolor{keyword}{true} : \textcolor{keyword}{false};}
+\DoxyCodeLine{00378 }
+\DoxyCodeLine{00379     \textcolor{comment}{// paint with light color if selected}}
+\DoxyCodeLine{00380     \textcolor{keywordflow}{if} (isSelected)}
+\DoxyCodeLine{00381       painter.fillRect(x0, y1, width, y3 -\/ y1,}
+\DoxyCodeLine{00382                        getViewer()-\/>getCurrentRowBgColor());}
+\DoxyCodeLine{00383 }
+\DoxyCodeLine{00384     \textcolor{comment}{// draw horizonntal lines}}
+\DoxyCodeLine{00385     painter.setPen(QPen(getViewer()-\/>getColumnHeaderBorderColor(), 3));}
+\DoxyCodeLine{00386     painter.drawLine(x0, y0, x1, y0);}
+\DoxyCodeLine{00387     painter.setPen(getViewer()-\/>getColumnHeaderBorderColor());}
+\DoxyCodeLine{00388     painter.drawLine(x0, y1, x1, y1);}
+\DoxyCodeLine{00389 }
+\DoxyCodeLine{00390     \textcolor{comment}{// draw vertical bar}}
+\DoxyCodeLine{00391     painter.fillRect(x0, y1, 6, y3 -\/ y1,}
+\DoxyCodeLine{00392                      getViewer()-\/>getColumnHeaderBorderColor());}
+\DoxyCodeLine{00393     \textcolor{keywordflow}{if} (firstGroupColumn)}
+\DoxyCodeLine{00394       painter.fillRect(x0, y0, 6, y1 -\/ y0,}
+\DoxyCodeLine{00395                        getViewer()-\/>getColumnHeaderBorderColor());}
+\DoxyCodeLine{00396 }
+\DoxyCodeLine{00397     \textcolor{comment}{// channel name}}
+\DoxyCodeLine{00398     painter.setPen(getViewer()-\/>getTextColor());}
+\DoxyCodeLine{00399     \textcolor{keywordflow}{if} (channel-\/>isCurrent())}
+\DoxyCodeLine{00400       painter.setPen(m\_sheet-\/>getViewer()-\/>getCurrentTextColor());}
+\DoxyCodeLine{00401 }
+\DoxyCodeLine{00402     QString text = channel-\/>getShortName();}
+\DoxyCodeLine{00403     \textcolor{keywordtype}{int} d        = 8;}
+\DoxyCodeLine{00404     \textcolor{keywordtype}{int} flags    = Qt::AlignLeft | Qt::AlignVCenter;}
+\DoxyCodeLine{00405     \textcolor{keywordflow}{if} (!m\_sheet-\/>isSmallHeader()) flags |= Qt::TextWrapAnywhere;}
+\DoxyCodeLine{00406     painter.drawText(x0 + d, y1, width -\/ d, y3 -\/ y1 + 1, flags, text);}
+\DoxyCodeLine{00407 }
+\DoxyCodeLine{00408     \textcolor{comment}{// warning of losing expression reference}}
+\DoxyCodeLine{00409     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = m\_sheet-\/>getViewer()-\/>getXsheetHandle()-\/>getXsheet();}
+\DoxyCodeLine{00410     \textcolor{keywordflow}{if} (xsh-\/>isReferenceManagementIgnored(channel-\/>getParam())) \{}
+\DoxyCodeLine{00411       \textcolor{keyword}{static} QIcon paramIgnoredIcon(\textcolor{stringliteral}{"{}:Resources/paramignored\_on.svg"{}});}
+\DoxyCodeLine{00412       painter.drawPixmap(QPoint(x0 + 30, y1 + 20),}
+\DoxyCodeLine{00413                          paramIgnoredIcon.pixmap(21, 17));}
+\DoxyCodeLine{00414     \}}
+\DoxyCodeLine{00415 }
+\DoxyCodeLine{00416     \textcolor{comment}{// group name}}
+\DoxyCodeLine{00417     \textcolor{keywordflow}{if} (firstGroupColumn) \{}
+\DoxyCodeLine{00418       \textcolor{keywordtype}{int} tmpwidth = (lastGroupColumn) ? width : width * 2;}
+\DoxyCodeLine{00419       painter.setPen(getViewer()-\/>getTextColor());}
+\DoxyCodeLine{00420       \textcolor{keywordflow}{if} (group == currentGroup)}
+\DoxyCodeLine{00421         painter.setPen(m\_sheet-\/>getViewer()-\/>getCurrentTextColor());}
+\DoxyCodeLine{00422       text = group-\/>getShortName();}
+\DoxyCodeLine{00423       painter.drawText(x0 + d, y0, tmpwidth -\/ d, y1 -\/ y0 + 1,}
+\DoxyCodeLine{00424                        Qt::AlignLeft | Qt::AlignVCenter, text);}
+\DoxyCodeLine{00425     \}}
+\DoxyCodeLine{00426   \}}
+\DoxyCodeLine{00427 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/functionsheet.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/functionsheet.\+cpp\end{DoxyCompactItemize}

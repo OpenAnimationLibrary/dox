@@ -1,0 +1,66 @@
+\hypertarget{pool_8h}{}\doxysection{E\+:/opentoonz/toonz/sources/include/tcg/pool.h File Reference}
+\label{pool_8h}\index{E:/opentoonz/toonz/sources/include/tcg/pool.h@{E:/opentoonz/toonz/sources/include/tcg/pool.h}}
+
+
+This file contains an implementation of the {\itshape pool} container concept.  
+
+
+{\ttfamily \#include \char`\"{}assert.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$boost/config.\+hpp$>$}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classtcg_1_1indices__pool}{tcg\+::indices\+\_\+pool$<$ T, Cont $>$}}
+\item 
+class \mbox{\hyperlink{classtcg_1_1pool}{tcg\+::pool$<$ T, Cont $>$}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{pool_8h_a66951076538f110c8429e88b1a88e25c}{TCG\+\_\+\+POOL\+\_\+H}}
+\item 
+\#define \mbox{\hyperlink{pool_8h_a534d09559600ee15b0863389c9e1a482}{TCG\+\_\+\+RVALUES\+\_\+\+SUPPORT}}~1
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file contains an implementation of the {\itshape pool} container concept. 
+
+A pool is a container that supports two fundamental operations, acquire() and release(), whose purpose is that of marking access operations to a resource that {\itshape should not be destroyed} when the access operation ends.
+
+Creation and destruction of resources can be a time-\/consuming task that could be avoided when it is known that resources could be reused -\/ which is the very reason why caching can be a useful approach to some problems.
+
+The classical cache concept is nothing more than that of a standard associative map, tweaked to accommodate specific commodities -\/ such as managing the cache size.
+
+However, sometimes resources could be considered to be effectively identical, to the point that assigning a key is merely a way to keep the objects distinct in the cache. Users are in the condition to require only two functions, one to acquire() a resource, the other to release() it.
+
+The Pool concept we are introducing satisfies the following ruleset\+:
+
+
+\begin{DoxyItemize}
+\item The pool is a dynamical container which allocates resources by invoking the objects\textquotesingle{} default constructor.  
+\item Objects in the pool are {\bfseries{not}} destructed, except when the pool is explicitly {\itshape squeezed} by the user. 
+\item Keys are indices, returned by the pool with an incremental ordering.  
+\item An object which has been acquired cannot be acquired again until it has been released  
+\end{DoxyItemize}
+
+Definition in file \mbox{\hyperlink{}{pool.\+h}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{pool_8h_a66951076538f110c8429e88b1a88e25c}\label{pool_8h_a66951076538f110c8429e88b1a88e25c}} 
+\index{pool.h@{pool.h}!TCG\_POOL\_H@{TCG\_POOL\_H}}
+\index{TCG\_POOL\_H@{TCG\_POOL\_H}!pool.h@{pool.h}}
+\doxysubsubsection{\texorpdfstring{TCG\_POOL\_H}{TCG\_POOL\_H}}
+{\footnotesize\ttfamily \#define TCG\+\_\+\+POOL\+\_\+H}
+
+\mbox{\Hypertarget{pool_8h_a534d09559600ee15b0863389c9e1a482}\label{pool_8h_a534d09559600ee15b0863389c9e1a482}} 
+\index{pool.h@{pool.h}!TCG\_RVALUES\_SUPPORT@{TCG\_RVALUES\_SUPPORT}}
+\index{TCG\_RVALUES\_SUPPORT@{TCG\_RVALUES\_SUPPORT}!pool.h@{pool.h}}
+\doxysubsubsection{\texorpdfstring{TCG\_RVALUES\_SUPPORT}{TCG\_RVALUES\_SUPPORT}}
+{\footnotesize\ttfamily \#define TCG\+\_\+\+RVALUES\+\_\+\+SUPPORT~1}
+

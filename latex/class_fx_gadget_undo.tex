@@ -1,0 +1,175 @@
+\hypertarget{class_fx_gadget_undo}{}\doxysection{Fx\+Gadget\+Undo Class Reference}
+\label{class_fx_gadget_undo}\index{FxGadgetUndo@{FxGadgetUndo}}
+Inheritance diagram for Fx\+Gadget\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_fx_gadget_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_fx_gadget_undo_a97d63c17a2006efa7ace48371da8a64f}{Fx\+Gadget\+Undo}} (const std\+::vector$<$ TDouble\+ParamP $>$ \&params, int frame)
+\item 
+void \mbox{\hyperlink{class_fx_gadget_undo_a60d37e81a2667ab991aaface48c330c3}{on\+Add}} () override
+\item 
+void \mbox{\hyperlink{class_fx_gadget_undo_a93394ef9a3b1bd9fc230adfb2a37c0e5}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_fx_gadget_undo_ad2ab202d22b4651994cf356b6dbd0249}{redo}} () const override
+\item 
+int \mbox{\hyperlink{class_fx_gadget_undo_a74635b5b807498490a2f80b7762a0172}{get\+Size}} () const override
+\item 
+QString \mbox{\hyperlink{class_fx_gadget_undo_a313bca5abbd800a9858fb07b9f51c492}{get\+History\+String}} () override
+\item 
+int \mbox{\hyperlink{class_fx_gadget_undo_afb68d44f15883c8061c070e9e9798e41}{get\+History\+Type}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_fx_gadget_undo_a97d63c17a2006efa7ace48371da8a64f}\label{class_fx_gadget_undo_a97d63c17a2006efa7ace48371da8a64f}} 
+\index{FxGadgetUndo@{FxGadgetUndo}!FxGadgetUndo@{FxGadgetUndo}}
+\index{FxGadgetUndo@{FxGadgetUndo}!FxGadgetUndo@{FxGadgetUndo}}
+\doxysubsubsection{\texorpdfstring{FxGadgetUndo()}{FxGadgetUndo()}}
+{\footnotesize\ttfamily Fx\+Gadget\+Undo\+::\+Fx\+Gadget\+Undo (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ TDouble\+ParamP $>$ \&}]{params,  }\item[{int}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057       : m\_frame(frame) \{}
+\DoxyCodeLine{00058     m\_params.resize(params.size());}
+\DoxyCodeLine{00059     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)params.size(); i++) \{}
+\DoxyCodeLine{00060       m\_params[i].m\_param       = params[i];}
+\DoxyCodeLine{00061       m\_params[i].m\_oldValue    = params[i]-\/>getValue(frame);}
+\DoxyCodeLine{00062       m\_params[i].m\_newValue    = m\_params[i].m\_oldValue;}
+\DoxyCodeLine{00063       m\_params[i].m\_wasKeyframe = m\_params[i].m\_param-\/>isKeyframe(frame);}
+\DoxyCodeLine{00064     \}}
+\DoxyCodeLine{00065   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_fx_gadget_undo_a313bca5abbd800a9858fb07b9f51c492}\label{class_fx_gadget_undo_a313bca5abbd800a9858fb07b9f51c492}} 
+\index{FxGadgetUndo@{FxGadgetUndo}!getHistoryString@{getHistoryString}}
+\index{getHistoryString@{getHistoryString}!FxGadgetUndo@{FxGadgetUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryString()}{getHistoryString()}}
+{\footnotesize\ttfamily QString Fx\+Gadget\+Undo\+::get\+History\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00092                                       \{}
+\DoxyCodeLine{00093     QString str = QObject::tr(\textcolor{stringliteral}{"{}Modify Fx Gadget  "{}});}
+\DoxyCodeLine{00094     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_params.size(); i++) \{}
+\DoxyCodeLine{00095       str += QString::fromStdString(m\_params[i].m\_param-\/>getName());}
+\DoxyCodeLine{00096       \textcolor{keywordflow}{if} (i != (\textcolor{keywordtype}{int})m\_params.size() -\/ 1) str += QString::fromStdString(\textcolor{stringliteral}{"{}, "{}});}
+\DoxyCodeLine{00097     \}}
+\DoxyCodeLine{00098     str += QString(\textcolor{stringliteral}{"{}  Frame : \%1"{}}).arg(QString::number(m\_frame + 1));}
+\DoxyCodeLine{00099 }
+\DoxyCodeLine{00100     \textcolor{keywordflow}{return} str;}
+\DoxyCodeLine{00101   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_gadget_undo_afb68d44f15883c8061c070e9e9798e41}\label{class_fx_gadget_undo_afb68d44f15883c8061c070e9e9798e41}} 
+\index{FxGadgetUndo@{FxGadgetUndo}!getHistoryType@{getHistoryType}}
+\index{getHistoryType@{getHistoryType}!FxGadgetUndo@{FxGadgetUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryType()}{getHistoryType()}}
+{\footnotesize\ttfamily int Fx\+Gadget\+Undo\+::get\+History\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00103 \{ \textcolor{keywordflow}{return} HistoryType::Fx; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_gadget_undo_a74635b5b807498490a2f80b7762a0172}\label{class_fx_gadget_undo_a74635b5b807498490a2f80b7762a0172}} 
+\index{FxGadgetUndo@{FxGadgetUndo}!getSize@{getSize}}
+\index{getSize@{getSize}!FxGadgetUndo@{FxGadgetUndo}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Fx\+Gadget\+Undo\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00088                                \{}
+\DoxyCodeLine{00089     \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(*this) + m\_params.size() * \textcolor{keyword}{sizeof}(ParamData);}
+\DoxyCodeLine{00090   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_gadget_undo_a60d37e81a2667ab991aaface48c330c3}\label{class_fx_gadget_undo_a60d37e81a2667ab991aaface48c330c3}} 
+\index{FxGadgetUndo@{FxGadgetUndo}!onAdd@{onAdd}}
+\index{onAdd@{onAdd}!FxGadgetUndo@{FxGadgetUndo}}
+\doxysubsubsection{\texorpdfstring{onAdd()}{onAdd()}}
+{\footnotesize\ttfamily void Fx\+Gadget\+Undo\+::on\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067                         \{}
+\DoxyCodeLine{00068     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_params.size(); i++) \{}
+\DoxyCodeLine{00069       m\_params[i].m\_newValue = m\_params[i].m\_param-\/>getValue(m\_frame);}
+\DoxyCodeLine{00070     \}}
+\DoxyCodeLine{00071   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_gadget_undo_ad2ab202d22b4651994cf356b6dbd0249}\label{class_fx_gadget_undo_ad2ab202d22b4651994cf356b6dbd0249}} 
+\index{FxGadgetUndo@{FxGadgetUndo}!redo@{redo}}
+\index{redo@{redo}!FxGadgetUndo@{FxGadgetUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Fx\+Gadget\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00082                              \{}
+\DoxyCodeLine{00083     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_params.size(); i++) \{}
+\DoxyCodeLine{00084       m\_params[i].m\_param-\/>setValue(m\_frame, m\_params[i].m\_newValue);}
+\DoxyCodeLine{00085     \}}
+\DoxyCodeLine{00086   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_gadget_undo_a93394ef9a3b1bd9fc230adfb2a37c0e5}\label{class_fx_gadget_undo_a93394ef9a3b1bd9fc230adfb2a37c0e5}} 
+\index{FxGadgetUndo@{FxGadgetUndo}!undo@{undo}}
+\index{undo@{undo}!FxGadgetUndo@{FxGadgetUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Fx\+Gadget\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073                              \{}
+\DoxyCodeLine{00074     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_params.size(); i++) \{}
+\DoxyCodeLine{00075       \textcolor{keywordflow}{if} (!m\_params[i].m\_wasKeyframe)}
+\DoxyCodeLine{00076         m\_params[i].m\_param-\/>deleteKeyframe(m\_frame);}
+\DoxyCodeLine{00077       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00078         m\_params[i].m\_param-\/>setValue(m\_frame, m\_params[i].m\_oldValue);}
+\DoxyCodeLine{00079     \}}
+\DoxyCodeLine{00080   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/edittoolgadgets.\+cpp\end{DoxyCompactItemize}

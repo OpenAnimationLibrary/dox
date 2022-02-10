@@ -1,0 +1,164 @@
+\hypertarget{class_xdts_io_1_1_xdts_time_table_field_item}{}\doxysection{Xdts\+Io\+::Xdts\+Time\+Table\+Field\+Item Class Reference}
+\label{class_xdts_io_1_1_xdts_time_table_field_item}\index{XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_xdts_io_1_1_xdts_time_table_field_item_aaf76519fed86c36c3fa156baf3f5f1c1}{Xdts\+Time\+Table\+Field\+Item}} (Field\+Id field\+Id=CELL)
+\item 
+void \mbox{\hyperlink{class_xdts_io_1_1_xdts_time_table_field_item_a23e4ef23f4de597091e2ea97c42aa09a}{read}} (const QJson\+Object \&json)
+\item 
+void \mbox{\hyperlink{class_xdts_io_1_1_xdts_time_table_field_item_a0c2a0e525cc1c89e25bf508f387e83ef}{write}} (QJson\+Object \&json) const
+\item 
+bool \mbox{\hyperlink{class_xdts_io_1_1_xdts_time_table_field_item_ac80311d0e6c3f02da23448bb623a68b5}{is\+Cell\+Field}} ()
+\item 
+QList$<$ int $>$ \mbox{\hyperlink{class_xdts_io_1_1_xdts_time_table_field_item_a99e0d0fe20dba84b3aa242e9a17f36cd}{get\+Occupied\+Columns}} () const
+\item 
+QVector$<$ \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} $>$ \mbox{\hyperlink{class_xdts_io_1_1_xdts_time_table_field_item_ada0cc5c7dc5bede23b1ea8efd3a0c20d}{get\+Column\+Track}} (int col, QList$<$ int $>$ \&tick1, QList$<$ int $>$ \&tick2) const
+\item 
+void \mbox{\hyperlink{class_xdts_io_1_1_xdts_time_table_field_item_aee543e0ebfb787eeb3c056592ef304a3}{build}} (\mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$, QString\+List \&)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_xdts_io_1_1_xdts_time_table_field_item_aaf76519fed86c36c3fa156baf3f5f1c1}\label{class_xdts_io_1_1_xdts_time_table_field_item_aaf76519fed86c36c3fa156baf3f5f1c1}} 
+\index{XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}!XdtsTimeTableFieldItem@{XdtsTimeTableFieldItem}}
+\index{XdtsTimeTableFieldItem@{XdtsTimeTableFieldItem}!XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}}
+\doxysubsubsection{\texorpdfstring{XdtsTimeTableFieldItem()}{XdtsTimeTableFieldItem()}}
+{\footnotesize\ttfamily Xdts\+Io\+::\+Xdts\+Time\+Table\+Field\+Item\+::\+Xdts\+Time\+Table\+Field\+Item (\begin{DoxyParamCaption}\item[{Field\+Id}]{field\+Id = {\ttfamily CELL} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00154 : m\_fieldId(fieldId) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_xdts_io_1_1_xdts_time_table_field_item_aee543e0ebfb787eeb3c056592ef304a3}\label{class_xdts_io_1_1_xdts_time_table_field_item_aee543e0ebfb787eeb3c056592ef304a3}} 
+\index{XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}!build@{build}}
+\index{build@{build}!XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily void Xdts\+Time\+Table\+Field\+Item\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$}]{xsheet,  }\item[{QString\+List \&}]{column\+Labels }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00317                                                                              \{}
+\DoxyCodeLine{00318   m\_fieldId     = CELL;}
+\DoxyCodeLine{00319   \textcolor{keywordtype}{int} exportCol = 0;}
+\DoxyCodeLine{00320   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} col = 0; col < xsheet-\/>\mbox{\hyperlink{class_t_xsheet_ac00c621f54bf2c4f4a51a8b7d6f27253}{getFirstFreeColumnIndex}}(); col++) \{}
+\DoxyCodeLine{00321     \textcolor{keywordflow}{if} (xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a83aecebd1b7714017a64e2b786e91a4e}{isColumnEmpty}}(col)) \{}
+\DoxyCodeLine{00322       columnLabels.append(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00323       exportCol++;}
+\DoxyCodeLine{00324       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00325     \}}
+\DoxyCodeLine{00326     \mbox{\hyperlink{class_t_xsh_cell_column}{TXshCellColumn}} *column = xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a3e1a216c019a0ebdf73d95acac95d8d0}{getColumn}}(col)-\/>getCellColumn();}
+\DoxyCodeLine{00327     \textcolor{comment}{// skip non-\/cell column}}
+\DoxyCodeLine{00328     \textcolor{keywordflow}{if} (!column) \{}
+\DoxyCodeLine{00329       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00330     \}}
+\DoxyCodeLine{00331     \textcolor{comment}{// skip inactive column}}
+\DoxyCodeLine{00332     \textcolor{keywordflow}{if} (!\_exportAllColumn \&\& !column-\/>isPreviewVisible()) \{}
+\DoxyCodeLine{00333       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00334     \}}
+\DoxyCodeLine{00335     \mbox{\hyperlink{class_xdts_io_1_1_xdts_field_track_item}{XdtsFieldTrackItem}} track(exportCol);}
+\DoxyCodeLine{00336     columnLabels.append(track.build(column));}
+\DoxyCodeLine{00337     \textcolor{keywordflow}{if} (!track.isEmpty()) m\_tracks.append(track);}
+\DoxyCodeLine{00338     exportCol++;}
+\DoxyCodeLine{00339   \}}
+\DoxyCodeLine{00340 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xdts_io_1_1_xdts_time_table_field_item_ada0cc5c7dc5bede23b1ea8efd3a0c20d}\label{class_xdts_io_1_1_xdts_time_table_field_item_ada0cc5c7dc5bede23b1ea8efd3a0c20d}} 
+\index{XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}!getColumnTrack@{getColumnTrack}}
+\index{getColumnTrack@{getColumnTrack}!XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}}
+\doxysubsubsection{\texorpdfstring{getColumnTrack()}{getColumnTrack()}}
+{\footnotesize\ttfamily QVector$<$ \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} $>$ Xdts\+Time\+Table\+Field\+Item\+::get\+Column\+Track (\begin{DoxyParamCaption}\item[{int}]{col,  }\item[{QList$<$ int $>$ \&}]{tick1,  }\item[{QList$<$ int $>$ \&}]{tick2 }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00309                                                          \{}
+\DoxyCodeLine{00310   \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \mbox{\hyperlink{class_xdts_io_1_1_xdts_field_track_item}{XdtsFieldTrackItem}} \&track : m\_tracks) \{}
+\DoxyCodeLine{00311     \textcolor{keywordflow}{if} (track.getTrackNo() != col) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00312     \textcolor{keywordflow}{return} track.getCellFrameIdTrack(tick1, tick2);}
+\DoxyCodeLine{00313   \}}
+\DoxyCodeLine{00314   \textcolor{keywordflow}{return} QVector<TFrameId>();}
+\DoxyCodeLine{00315 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xdts_io_1_1_xdts_time_table_field_item_a99e0d0fe20dba84b3aa242e9a17f36cd}\label{class_xdts_io_1_1_xdts_time_table_field_item_a99e0d0fe20dba84b3aa242e9a17f36cd}} 
+\index{XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}!getOccupiedColumns@{getOccupiedColumns}}
+\index{getOccupiedColumns@{getOccupiedColumns}!XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}}
+\doxysubsubsection{\texorpdfstring{getOccupiedColumns()}{getOccupiedColumns()}}
+{\footnotesize\ttfamily QList$<$ int $>$ Xdts\+Time\+Table\+Field\+Item\+::get\+Occupied\+Columns (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00300                                                             \{}
+\DoxyCodeLine{00301   QList<int> ret;}
+\DoxyCodeLine{00302   \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \mbox{\hyperlink{class_xdts_io_1_1_xdts_field_track_item}{XdtsFieldTrackItem}} \&track : m\_tracks) \{}
+\DoxyCodeLine{00303     \textcolor{keywordflow}{if} (!track.isEmpty()) ret.append(track.getTrackNo());}
+\DoxyCodeLine{00304   \}}
+\DoxyCodeLine{00305   \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{00306 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xdts_io_1_1_xdts_time_table_field_item_ac80311d0e6c3f02da23448bb623a68b5}\label{class_xdts_io_1_1_xdts_time_table_field_item_ac80311d0e6c3f02da23448bb623a68b5}} 
+\index{XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}!isCellField@{isCellField}}
+\index{isCellField@{isCellField}!XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}}
+\doxysubsubsection{\texorpdfstring{isCellField()}{isCellField()}}
+{\footnotesize\ttfamily bool Xdts\+Io\+::\+Xdts\+Time\+Table\+Field\+Item\+::is\+Cell\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00157 \{ \textcolor{keywordflow}{return} m\_fieldId == CELL; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xdts_io_1_1_xdts_time_table_field_item_a23e4ef23f4de597091e2ea97c42aa09a}\label{class_xdts_io_1_1_xdts_time_table_field_item_a23e4ef23f4de597091e2ea97c42aa09a}} 
+\index{XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}!read@{read}}
+\index{read@{read}!XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily void Xdts\+Time\+Table\+Field\+Item\+::read (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{json }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00278                                                          \{}
+\DoxyCodeLine{00279   m\_fieldId             = FieldId(qRound(json[\textcolor{stringliteral}{"{}fieldId"{}}].toDouble()));}
+\DoxyCodeLine{00280   QJsonArray trackArray = json[\textcolor{stringliteral}{"{}tracks"{}}].toArray();}
+\DoxyCodeLine{00281   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} trackIndex = 0; trackIndex < trackArray.size(); ++trackIndex) \{}
+\DoxyCodeLine{00282     QJsonObject trackObject = trackArray[trackIndex].toObject();}
+\DoxyCodeLine{00283     \mbox{\hyperlink{class_xdts_io_1_1_xdts_field_track_item}{XdtsFieldTrackItem}} track;}
+\DoxyCodeLine{00284     track.read(trackObject);}
+\DoxyCodeLine{00285     m\_tracks.append(track);}
+\DoxyCodeLine{00286   \}}
+\DoxyCodeLine{00287 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xdts_io_1_1_xdts_time_table_field_item_a0c2a0e525cc1c89e25bf508f387e83ef}\label{class_xdts_io_1_1_xdts_time_table_field_item_a0c2a0e525cc1c89e25bf508f387e83ef}} 
+\index{XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}!write@{write}}
+\index{write@{write}!XdtsIo::XdtsTimeTableFieldItem@{XdtsIo::XdtsTimeTableFieldItem}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void Xdts\+Time\+Table\+Field\+Item\+::write (\begin{DoxyParamCaption}\item[{QJson\+Object \&}]{json }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00289                                                           \{}
+\DoxyCodeLine{00290   json[\textcolor{stringliteral}{"{}fieldId"{}}] = int(m\_fieldId);}
+\DoxyCodeLine{00291   QJsonArray trackArray;}
+\DoxyCodeLine{00292   \textcolor{keywordflow}{foreach} (\textcolor{keyword}{const} \mbox{\hyperlink{class_xdts_io_1_1_xdts_field_track_item}{XdtsFieldTrackItem}} \&track, m\_tracks) \{}
+\DoxyCodeLine{00293     QJsonObject trackObject;}
+\DoxyCodeLine{00294     track.write(trackObject);}
+\DoxyCodeLine{00295     trackArray.append(trackObject);}
+\DoxyCodeLine{00296   \}}
+\DoxyCodeLine{00297   json[\textcolor{stringliteral}{"{}tracks"{}}] = trackArray;}
+\DoxyCodeLine{00298 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xdtsio.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/xdtsio.\+cpp\end{DoxyCompactItemize}

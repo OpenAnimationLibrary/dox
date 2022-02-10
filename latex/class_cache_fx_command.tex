@@ -1,0 +1,266 @@
+\hypertarget{class_cache_fx_command}{}\doxysection{Cache\+Fx\+Command Class Reference}
+\label{class_cache_fx_command}\index{CacheFxCommand@{CacheFxCommand}}
+Inheritance diagram for Cache\+Fx\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_cache_fx_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_cache_fx_command_a6b665ef42eff343691b1fea2379ebdf3}{on\+Fx\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_cache_fx_command_a7cd017c30db731bef237925534e2352e}{on\+Xsheet\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_cache_fx_command_a388c74389a798f8c046997d3826f0671}{on\+Object\+Changed}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_cache_fx_command_af082726cd78f19ac6c114b86fc909ffd}{on\+New\+Scene}} ()
+\item 
+void \mbox{\hyperlink{class_cache_fx_command_a94189e780cd4a6c159ce82f6ea4e5406}{on\+Scene\+Loaded}} ()
+\item 
+void \mbox{\hyperlink{class_cache_fx_command_a7dab1fa7dfc9e23aedc72b09950fd356}{on\+Level\+Changed}} (const std\+::string \&level\+Name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_cache_fx_command}{Cache\+Fx\+Command}} $\ast$ \mbox{\hyperlink{class_cache_fx_command_a36720e6c068ccfcbbf46ed877079af0e}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_cache_fx_command_ab131208532c875ea2523d4d676e1948c}\label{class_cache_fx_command_ab131208532c875ea2523d4d676e1948c}} 
+\index{CacheFxCommand@{CacheFxCommand}!CacheFxCommand@{CacheFxCommand}}
+\index{CacheFxCommand@{CacheFxCommand}!CacheFxCommand@{CacheFxCommand}}
+\doxysubsubsection{\texorpdfstring{CacheFxCommand()}{CacheFxCommand()}}
+{\footnotesize\ttfamily Cache\+Fx\+Command\+::\+Cache\+Fx\+Command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00084                                \{}
+\DoxyCodeLine{00085   \mbox{\hyperlink{class_t_app}{TApp}} *app = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00086   \textcolor{keywordtype}{bool} ret  = \textcolor{keyword}{true};}
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088   \textcolor{comment}{// Connect the various handles to the associated function in the}}
+\DoxyCodeLine{00089   \textcolor{comment}{// CacheFxCommand singleton.}}
+\DoxyCodeLine{00090   \textcolor{comment}{// Please observe that these connections are performed BEFORE rendering}}
+\DoxyCodeLine{00091   \textcolor{comment}{// classes are instanced -\/}}
+\DoxyCodeLine{00092   \textcolor{comment}{// which is needed to ensure that the proper cache updates have already been}}
+\DoxyCodeLine{00093   \textcolor{comment}{// performed when}}
+\DoxyCodeLine{00094   \textcolor{comment}{// rendering instances receive the update signal.}}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096   \textcolor{comment}{// ret = ret \&\&}}
+\DoxyCodeLine{00097   \textcolor{comment}{// connect(app-\/>getCurrentLevel(),SIGNAL(xshLevelChanged()),this,SLOT(onLevelChanged()));}}
+\DoxyCodeLine{00098   ret = ret \&\& connect(app-\/>\mbox{\hyperlink{class_t_app_a1d1d4b484617e7a938040554beca6282}{getCurrentFx}}(), SIGNAL(fxChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00099                        SLOT(onFxChanged()));}
+\DoxyCodeLine{00100   ret = ret \&\& connect(app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}(), SIGNAL(xsheetChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00101                        SLOT(onXsheetChanged()));}
+\DoxyCodeLine{00102   \textcolor{comment}{// ret = ret \&\&}}
+\DoxyCodeLine{00103   \textcolor{comment}{// connect(app-\/>getCurrentXsheet(),SIGNAL(xsheetSwitched()),this,SLOT(onXsheetChanged()));}}
+\DoxyCodeLine{00104   ret = ret \&\& connect(app-\/>\mbox{\hyperlink{class_t_app_a0d91c122eec2b756b7c4780014e49f9e}{getCurrentObject}}(), SIGNAL(objectChanged(\textcolor{keywordtype}{bool})),}
+\DoxyCodeLine{00105                        \textcolor{keyword}{this}, SLOT(onObjectChanged()));}
+\DoxyCodeLine{00106 }
+\DoxyCodeLine{00107   TCacheResourcePool::instance();  \textcolor{comment}{// The resources pool must be instanced}}
+\DoxyCodeLine{00108                                    \textcolor{comment}{// before the passive delegate}}
+\DoxyCodeLine{00109   TPassiveCacheManager::instance()-\/>setTreeDescriptor(\&buildTreeDescription);}
+\DoxyCodeLine{00110 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cache_fx_command_a5e730cb3a8111eb98f600619de59a304}\label{class_cache_fx_command_a5e730cb3a8111eb98f600619de59a304}} 
+\index{CacheFxCommand@{CacheFxCommand}!````~CacheFxCommand@{$\sim$CacheFxCommand}}
+\index{````~CacheFxCommand@{$\sim$CacheFxCommand}!CacheFxCommand@{CacheFxCommand}}
+\doxysubsubsection{\texorpdfstring{$\sim$CacheFxCommand()}{~CacheFxCommand()}}
+{\footnotesize\ttfamily Cache\+Fx\+Command\+::$\sim$\+Cache\+Fx\+Command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00114 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_cache_fx_command_a36720e6c068ccfcbbf46ed877079af0e}\label{class_cache_fx_command_a36720e6c068ccfcbbf46ed877079af0e}} 
+\index{CacheFxCommand@{CacheFxCommand}!instance@{instance}}
+\index{instance@{instance}!CacheFxCommand@{CacheFxCommand}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_cache_fx_command}{Cache\+Fx\+Command}} $\ast$ Cache\+Fx\+Command\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00118                                          \{}
+\DoxyCodeLine{00119   \textcolor{keyword}{static} \mbox{\hyperlink{class_cache_fx_command}{CacheFxCommand}} theInstance;}
+\DoxyCodeLine{00120   \textcolor{keywordflow}{return} \&theInstance;}
+\DoxyCodeLine{00121 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cache_fx_command_a6b665ef42eff343691b1fea2379ebdf3}\label{class_cache_fx_command_a6b665ef42eff343691b1fea2379ebdf3}} 
+\index{CacheFxCommand@{CacheFxCommand}!onFxChanged@{onFxChanged}}
+\index{onFxChanged@{onFxChanged}!CacheFxCommand@{CacheFxCommand}}
+\doxysubsubsection{\texorpdfstring{onFxChanged}{onFxChanged}}
+{\footnotesize\ttfamily void Cache\+Fx\+Command\+::on\+Fx\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00144                                  \{}
+\DoxyCodeLine{00145   \mbox{\hyperlink{class_t_fx}{TFx}} *fx = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a1d1d4b484617e7a938040554beca6282}{getCurrentFx}}()-\/>getFx();}
+\DoxyCodeLine{00146   \textcolor{keywordflow}{if} (fx) TPassiveCacheManager::instance()-\/>onFxChanged(fx);}
+\DoxyCodeLine{00147 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cache_fx_command_a7dab1fa7dfc9e23aedc72b09950fd356}\label{class_cache_fx_command_a7dab1fa7dfc9e23aedc72b09950fd356}} 
+\index{CacheFxCommand@{CacheFxCommand}!onLevelChanged@{onLevelChanged}}
+\index{onLevelChanged@{onLevelChanged}!CacheFxCommand@{CacheFxCommand}}
+\doxysubsubsection{\texorpdfstring{onLevelChanged()}{onLevelChanged()}}
+{\footnotesize\ttfamily void Cache\+Fx\+Command\+::on\+Level\+Changed (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{level\+Name }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00138                                                               \{}
+\DoxyCodeLine{00139   TPassiveCacheManager::instance()-\/>invalidateLevel(levelName);}
+\DoxyCodeLine{00140 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cache_fx_command_af082726cd78f19ac6c114b86fc909ffd}\label{class_cache_fx_command_af082726cd78f19ac6c114b86fc909ffd}} 
+\index{CacheFxCommand@{CacheFxCommand}!onNewScene@{onNewScene}}
+\index{onNewScene@{onNewScene}!CacheFxCommand@{CacheFxCommand}}
+\doxysubsubsection{\texorpdfstring{onNewScene()}{onNewScene()}}
+{\footnotesize\ttfamily void Cache\+Fx\+Command\+::on\+New\+Scene (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00125                                 \{}
+\DoxyCodeLine{00126   TPassiveCacheManager::instance()-\/>reset();}
+\DoxyCodeLine{00127   TCacheResourcePool::instance()-\/>reset();}
+\DoxyCodeLine{00128 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cache_fx_command_a388c74389a798f8c046997d3826f0671}\label{class_cache_fx_command_a388c74389a798f8c046997d3826f0671}} 
+\index{CacheFxCommand@{CacheFxCommand}!onObjectChanged@{onObjectChanged}}
+\index{onObjectChanged@{onObjectChanged}!CacheFxCommand@{CacheFxCommand}}
+\doxysubsubsection{\texorpdfstring{onObjectChanged}{onObjectChanged}}
+{\footnotesize\ttfamily void Cache\+Fx\+Command\+::on\+Object\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00237 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cache_fx_command_a94189e780cd4a6c159ce82f6ea4e5406}\label{class_cache_fx_command_a94189e780cd4a6c159ce82f6ea4e5406}} 
+\index{CacheFxCommand@{CacheFxCommand}!onSceneLoaded@{onSceneLoaded}}
+\index{onSceneLoaded@{onSceneLoaded}!CacheFxCommand@{CacheFxCommand}}
+\doxysubsubsection{\texorpdfstring{onSceneLoaded()}{onSceneLoaded()}}
+{\footnotesize\ttfamily void Cache\+Fx\+Command\+::on\+Scene\+Loaded (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00132                                    \{}
+\DoxyCodeLine{00133   TPassiveCacheManager::instance()-\/>onSceneLoaded();}
+\DoxyCodeLine{00134 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cache_fx_command_a7cd017c30db731bef237925534e2352e}\label{class_cache_fx_command_a7cd017c30db731bef237925534e2352e}} 
+\index{CacheFxCommand@{CacheFxCommand}!onXsheetChanged@{onXsheetChanged}}
+\index{onXsheetChanged@{onXsheetChanged}!CacheFxCommand@{CacheFxCommand}}
+\doxysubsubsection{\texorpdfstring{onXsheetChanged}{onXsheetChanged}}
+{\footnotesize\ttfamily void Cache\+Fx\+Command\+::on\+Xsheet\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00151                                      \{}
+\DoxyCodeLine{00152   TPassiveCacheManager::instance()-\/>onXsheetChanged();}
+\DoxyCodeLine{00153 }
+\DoxyCodeLine{00154   \textcolor{comment}{// Update the disabled cache fx commands -\/ retrieve the current dag}}
+\DoxyCodeLine{00155   \textcolor{comment}{// and analyze each fx.}}
+\DoxyCodeLine{00156   \textcolor{comment}{/*TXsheet* xsh = TApp::instance()-\/>getCurrentXsheet()-\/>getXsheet();}}
+\DoxyCodeLine{00157 \textcolor{comment}{FxDag* dag = xsh-\/>getFxDag();}}
+\DoxyCodeLine{00158 \textcolor{comment}{}}
+\DoxyCodeLine{00159 \textcolor{comment}{\{}}
+\DoxyCodeLine{00160 \textcolor{comment}{//Disable all internal fxs}}
+\DoxyCodeLine{00161 \textcolor{comment}{std::set<TFx*> internalFxs;}}
+\DoxyCodeLine{00162 \textcolor{comment}{dag-\/>getInternalFxs()-\/>getFxs(internalFxs);}}
+\DoxyCodeLine{00163 \textcolor{comment}{}}
+\DoxyCodeLine{00164 \textcolor{comment}{std::set<TFx*>::iterator it;}}
+\DoxyCodeLine{00165 \textcolor{comment}{for(it = internalFxs.begin(); it != internalFxs.end(); ++it)}}
+\DoxyCodeLine{00166 \textcolor{comment}{\{}}
+\DoxyCodeLine{00167 \textcolor{comment}{TRasterFx* rfx = dynamic\_cast<TRasterFx*>(*it);}}
+\DoxyCodeLine{00168 \textcolor{comment}{rfx-\/>enableCache(false);}}
+\DoxyCodeLine{00169 \textcolor{comment}{\}}}
+\DoxyCodeLine{00170 \textcolor{comment}{\}}}
+\DoxyCodeLine{00171 \textcolor{comment}{}}
+\DoxyCodeLine{00172 \textcolor{comment}{//Disable each column}}
+\DoxyCodeLine{00173 \textcolor{comment}{int i, columnsCount = xsh-\/>getColumnCount();}}
+\DoxyCodeLine{00174 \textcolor{comment}{for(i=0; i<columnsCount; ++i)}}
+\DoxyCodeLine{00175 \textcolor{comment}{\{}}
+\DoxyCodeLine{00176 \textcolor{comment}{TXshColumn* col = xsh-\/>getColumn(i);}}
+\DoxyCodeLine{00177 \textcolor{comment}{assert(col);}}
+\DoxyCodeLine{00178 \textcolor{comment}{TFx* fx = col-\/>getFx();}}
+\DoxyCodeLine{00179 \textcolor{comment}{}}
+\DoxyCodeLine{00180 \textcolor{comment}{TZeraryColumnFx* zcolfx = dynamic\_cast<TZeraryColumnFx*>(fx);}}
+\DoxyCodeLine{00181 \textcolor{comment}{if(zcolfx) fx = zcolfx-\/>getZeraryFx();}}
+\DoxyCodeLine{00182 \textcolor{comment}{}}
+\DoxyCodeLine{00183 \textcolor{comment}{TRasterFx* rfx = dynamic\_cast<TRasterFx*>(fx);}}
+\DoxyCodeLine{00184 \textcolor{comment}{rfx-\/>enableCache(false);}}
+\DoxyCodeLine{00185 \textcolor{comment}{\}}}
+\DoxyCodeLine{00186 \textcolor{comment}{}}
+\DoxyCodeLine{00187 \textcolor{comment}{//Now, we have to enable the user cache for all fxs which have allowed output}}
+\DoxyCodeLine{00188 \textcolor{comment}{connections}}
+\DoxyCodeLine{00189 \textcolor{comment}{//to another user-\/cachable fx (every root node is considered cachable).}}
+\DoxyCodeLine{00190 \textcolor{comment}{}}
+\DoxyCodeLine{00191 \textcolor{comment}{//First off, deal with the XSheet fx}}
+\DoxyCodeLine{00192 \textcolor{comment}{TXsheetFx* xshFx = static\_cast<TXsheetFx*>(dag-\/>getXsheetFx());}}
+\DoxyCodeLine{00193 \textcolor{comment}{}}
+\DoxyCodeLine{00194 \textcolor{comment}{//Trace all maximal ancestors of the fx}}
+\DoxyCodeLine{00195 \textcolor{comment}{std::vector<TFx*> maximalAncestors;}}
+\DoxyCodeLine{00196 \textcolor{comment}{::traceMaximalAncestors(xshFx, maximalAncestors);}}
+\DoxyCodeLine{00197 \textcolor{comment}{}}
+\DoxyCodeLine{00198 \textcolor{comment}{//Then, for each, enable the cache for all allowed children}}
+\DoxyCodeLine{00199 \textcolor{comment}{unsigned int j, size = maximalAncestors.size();}}
+\DoxyCodeLine{00200 \textcolor{comment}{for(j=0; j<size; ++j)}}
+\DoxyCodeLine{00201 \textcolor{comment}{::enableCacheOnAllowedChildren(dynamic\_cast<TRasterFx*>(maximalAncestors[j]));}}
+\DoxyCodeLine{00202 \textcolor{comment}{}}
+\DoxyCodeLine{00203 \textcolor{comment}{//Now, if the XSheetFx is user-\/cache enabled, propagate to terminal fxs (which}}
+\DoxyCodeLine{00204 \textcolor{comment}{were not}}
+\DoxyCodeLine{00205 \textcolor{comment}{//automatic, since connections to them do not exist).}}
+\DoxyCodeLine{00206 \textcolor{comment}{if(xshFx-\/>isCacheEnabled())}}
+\DoxyCodeLine{00207 \textcolor{comment}{\{}}
+\DoxyCodeLine{00208 \textcolor{comment}{std::set<TFx*> terminalFxs;}}
+\DoxyCodeLine{00209 \textcolor{comment}{dag-\/>getTerminalFxs()-\/>getFxs(terminalFxs);}}
+\DoxyCodeLine{00210 \textcolor{comment}{}}
+\DoxyCodeLine{00211 \textcolor{comment}{std::set<TFx*>::iterator it;}}
+\DoxyCodeLine{00212 \textcolor{comment}{for(it = terminalFxs.begin(); it != terminalFxs.end(); ++it)}}
+\DoxyCodeLine{00213 \textcolor{comment}{::enableCacheOnAllowedChildren(dynamic\_cast<TRasterFx*>(*it));}}
+\DoxyCodeLine{00214 \textcolor{comment}{\}}}
+\DoxyCodeLine{00215 \textcolor{comment}{}}
+\DoxyCodeLine{00216 \textcolor{comment}{}}
+\DoxyCodeLine{00217 \textcolor{comment}{//Now, deal with leaves the same way}}
+\DoxyCodeLine{00218 \textcolor{comment}{for(i=0; i<columnsCount; ++i)}}
+\DoxyCodeLine{00219 \textcolor{comment}{\{}}
+\DoxyCodeLine{00220 \textcolor{comment}{TXshColumn* col = xsh-\/>getColumn(i);}}
+\DoxyCodeLine{00221 \textcolor{comment}{assert(col);}}
+\DoxyCodeLine{00222 \textcolor{comment}{TFx* fx = col-\/>getFx();}}
+\DoxyCodeLine{00223 \textcolor{comment}{if(fx)}}
+\DoxyCodeLine{00224 \textcolor{comment}{\{}}
+\DoxyCodeLine{00225 \textcolor{comment}{std::vector<TFx*> maximalAncestors;}}
+\DoxyCodeLine{00226 \textcolor{comment}{::traceMaximalAncestors(fx, maximalAncestors);}}
+\DoxyCodeLine{00227 \textcolor{comment}{}}
+\DoxyCodeLine{00228 \textcolor{comment}{unsigned int j, size = maximalAncestors.size();}}
+\DoxyCodeLine{00229 \textcolor{comment}{for(j=0; j<size; ++j)}}
+\DoxyCodeLine{00230 \textcolor{comment}{  ::enableCacheOnAllowedChildren(dynamic\_cast<TRasterFx*>(maximalAncestors[j]));}}
+\DoxyCodeLine{00231 \textcolor{comment}{\}}}
+\DoxyCodeLine{00232 \textcolor{comment}{\}*/}}
+\DoxyCodeLine{00233 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/cachefxcommand.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/cachefxcommand.\+cpp\end{DoxyCompactItemize}

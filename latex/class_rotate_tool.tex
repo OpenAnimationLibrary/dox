@@ -1,0 +1,272 @@
+\hypertarget{class_rotate_tool}{}\doxysection{Rotate\+Tool Class Reference}
+\label{class_rotate_tool}\index{RotateTool@{RotateTool}}
+Inheritance diagram for Rotate\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_rotate_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296c}{Tool\+Type}} \mbox{\hyperlink{class_rotate_tool_af7c0a91b1566d6d63f4533fe259b2bb7}{get\+Tool\+Type}} () const override
+\item 
+void \mbox{\hyperlink{class_rotate_tool_adb19b97fe1040caabdec28c0a7dbb834}{update\+Matrix}} () override
+\item 
+\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$ \mbox{\hyperlink{class_rotate_tool_a534ef4fd15bbc0e135b5b37866ad9e4f}{get\+Properties}} (int target\+Type) override
+\item 
+void \mbox{\hyperlink{class_rotate_tool_a3cc25a5778ea953891a39906a41b8ed7}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_rotate_tool_a3339130f896535a1224be9aa921c191e}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_rotate_tool_ae1093e75d2775b0150765f576825eb80}{left\+Button\+Up}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_rotate_tool_a456d34a7e390486709ec890671c08e62}{draw}} () override
+\begin{DoxyCompactList}\small\item\em Draws the tool on the viewer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_rotate_tool_ad999c8cf3f5afba31260b6064d03ff34}{get\+Cursor\+Id}} () const override
+\begin{DoxyCompactList}\small\item\em Returns the type of cursor used by the tool. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_rotate_tool_ad1135317bab56f3ea7c9cc65b2aef19f}{update\+Translation}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_rotate_tool_a74997bd990cc5fb6c38a06a11694a743}\label{class_rotate_tool_a74997bd990cc5fb6c38a06a11694a743}} 
+\index{RotateTool@{RotateTool}!RotateTool@{RotateTool}}
+\index{RotateTool@{RotateTool}!RotateTool@{RotateTool}}
+\doxysubsubsection{\texorpdfstring{RotateTool()}{RotateTool()}}
+{\footnotesize\ttfamily Rotate\+Tool\+::\+Rotate\+Tool (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00134     : \mbox{\hyperlink{class_t_tool_a9c63ec35f606e755d0d036bf4fed62ab}{TTool}}(\textcolor{stringliteral}{"{}T\_Rotate"{}})}
+\DoxyCodeLine{00135     , m\_dragging(\textcolor{keyword}{false})}
+\DoxyCodeLine{00136     , m\_cameraCentered(\textcolor{stringliteral}{"{}Rotate On Camera Center"{}}, \textcolor{keyword}{false})}
+\DoxyCodeLine{00137     , m\_angle(0) \{}
+\DoxyCodeLine{00138   bind(TTool::AllTargets);}
+\DoxyCodeLine{00139   m\_prop.\mbox{\hyperlink{class_t_property_group_af135c807390f3d18237f4123e9d81d3d}{bind}}(m\_cameraCentered);}
+\DoxyCodeLine{00140 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_rotate_tool_a456d34a7e390486709ec890671c08e62}\label{class_rotate_tool_a456d34a7e390486709ec890671c08e62}} 
+\index{RotateTool@{RotateTool}!draw@{draw}}
+\index{draw@{draw}!RotateTool@{RotateTool}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Rotate\+Tool\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Draws the tool on the viewer. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_a058bf656d73bf3cd63b9826cbaaf48e0}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00187                       \{}
+\DoxyCodeLine{00188   glColor3f(1, 0, 0);}
+\DoxyCodeLine{00189   \textcolor{keywordtype}{double} u = 50;}
+\DoxyCodeLine{00190   \textcolor{keywordflow}{if} (m\_cameraCentered.getValue())}
+\DoxyCodeLine{00191     m\_center = \mbox{\hyperlink{class_t_point_t}{TPointD}}(0, 0);}
+\DoxyCodeLine{00192   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00193     \mbox{\hyperlink{class_t_affine}{TAffine}} aff                        = \mbox{\hyperlink{class_t_tool_a66f61f998b655c1c917ee63a595657c6}{m\_viewer}}-\/>\mbox{\hyperlink{class_t_tool_1_1_viewer_a97b71c149134c5a3d0ba0d5333b0b3c2}{getViewMatrix}}().\mbox{\hyperlink{class_t_affine_a570529b96b1ec5abc711aaa9aac09ff9}{inv}}();}
+\DoxyCodeLine{00194     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_tool_a66f61f998b655c1c917ee63a595657c6}{m\_viewer}}-\/>getIsFlippedX()) aff = aff * \mbox{\hyperlink{class_t_scale}{TScale}}(-\/1, 1);}
+\DoxyCodeLine{00195     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_tool_a66f61f998b655c1c917ee63a595657c6}{m\_viewer}}-\/>getIsFlippedY()) aff = aff * \mbox{\hyperlink{class_t_scale}{TScale}}(1, -\/1);}
+\DoxyCodeLine{00196     u                                  = u * sqrt(aff.det());}
+\DoxyCodeLine{00197     m\_center                           = aff * \mbox{\hyperlink{class_t_point_t}{TPointD}}(0, 0);}
+\DoxyCodeLine{00198   \}}
+\DoxyCodeLine{00199   tglDrawSegment(\mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/u + m\_center.x, m\_center.y),}
+\DoxyCodeLine{00200                  \mbox{\hyperlink{class_t_point_t}{TPointD}}(u + m\_center.x, m\_center.y));}
+\DoxyCodeLine{00201   tglDrawSegment(\mbox{\hyperlink{class_t_point_t}{TPointD}}(m\_center.x, -\/u + m\_center.y),}
+\DoxyCodeLine{00202                  \mbox{\hyperlink{class_t_point_t}{TPointD}}(m\_center.x, u + m\_center.y));}
+\DoxyCodeLine{00203 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00620}{TTool\+::\+Viewer\+::get\+View\+Matrix()}}, \mbox{\hyperlink{l00055}{TAffine\+::inv()}}, and \mbox{\hyperlink{l00555}{TTool\+::m\+\_\+viewer}}.
+
+\mbox{\Hypertarget{class_rotate_tool_ad999c8cf3f5afba31260b6064d03ff34}\label{class_rotate_tool_ad999c8cf3f5afba31260b6064d03ff34}} 
+\index{RotateTool@{RotateTool}!getCursorId@{getCursorId}}
+\index{getCursorId@{getCursorId}!RotateTool@{RotateTool}}
+\doxysubsubsection{\texorpdfstring{getCursorId()}{getCursorId()}}
+{\footnotesize\ttfamily int Rotate\+Tool\+::get\+Cursor\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns the type of cursor used by the tool. 
+
+\begin{DoxySeeAlso}{See also}
+For a list of cursor ids \mbox{\hyperlink{}{cursor.\+h}} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_a1768a57b8b6d1480618fd923fad15f1d}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00205 \{ \textcolor{keywordflow}{return} ToolCursor::RotateCursor; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_rotate_tool_a534ef4fd15bbc0e135b5b37866ad9e4f}\label{class_rotate_tool_a534ef4fd15bbc0e135b5b37866ad9e4f}} 
+\index{RotateTool@{RotateTool}!getProperties@{getProperties}}
+\index{getProperties@{getProperties}!RotateTool@{RotateTool}}
+\doxysubsubsection{\texorpdfstring{getProperties()}{getProperties()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$ Rotate\+Tool\+::get\+Properties (\begin{DoxyParamCaption}\item[{int}]{target\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031 \{ \textcolor{keywordflow}{return} \&m\_prop; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_rotate_tool_af7c0a91b1566d6d63f4533fe259b2bb7}\label{class_rotate_tool_af7c0a91b1566d6d63f4533fe259b2bb7}} 
+\index{RotateTool@{RotateTool}!getToolType@{getToolType}}
+\index{getToolType@{getToolType}!RotateTool@{RotateTool}}
+\doxysubsubsection{\texorpdfstring{getToolType()}{getToolType()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296c}{Tool\+Type}} Rotate\+Tool\+::get\+Tool\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00029 \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296caa8f6293eab5817f82f74f031c0724f28}{TTool::GenericTool}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_rotate_tool_a3cc25a5778ea953891a39906a41b8ed7}\label{class_rotate_tool_a3cc25a5778ea953891a39906a41b8ed7}} 
+\index{RotateTool@{RotateTool}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!RotateTool@{RotateTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Rotate\+Tool\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00142                                                                         \{}
+\DoxyCodeLine{00143   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_t_tool_a66f61f998b655c1c917ee63a595657c6}{m\_viewer}}) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145   m\_angle       = 0.0;}
+\DoxyCodeLine{00146   m\_dragging    = \textcolor{keyword}{true};}
+\DoxyCodeLine{00147   m\_oldPos      = pos;}
+\DoxyCodeLine{00148   m\_oldMousePos = e.\mbox{\hyperlink{class_t_mouse_event_a05a3f2378eb2179d121e2e46766916de}{m\_pos}};}
+\DoxyCodeLine{00149   \textcolor{comment}{// m\_center = TPointD(0,0);}}
+\DoxyCodeLine{00150   m\_sw.\mbox{\hyperlink{class_t_stop_watch_a81eefb8cd2dc776cc31799973be063a8}{start}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00151   \mbox{\hyperlink{class_t_tool_a3e791336c642542c5648aa8ea86e2348}{invalidate}}();}
+\DoxyCodeLine{00152 }
+\DoxyCodeLine{00153   \textcolor{comment}{// m\_center =}}
+\DoxyCodeLine{00154   \textcolor{comment}{// viewAffine.inv()*TPointD(0,0);//m\_viewer-\/>winToWorld(m\_viewer);}}
+\DoxyCodeLine{00155   \textcolor{comment}{// virtual TPointD winToWorld(const TPoint \&winPos) const = 0;}}
+\DoxyCodeLine{00156 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_rotate_tool_a3339130f896535a1224be9aa921c191e}\label{class_rotate_tool_a3339130f896535a1224be9aa921c191e}} 
+\index{RotateTool@{RotateTool}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!RotateTool@{RotateTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Rotate\+Tool\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00158                                                                         \{}
+\DoxyCodeLine{00159   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_t_tool_a66f61f998b655c1c917ee63a595657c6}{m\_viewer}}) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00160   \textcolor{keywordflow}{if} (m\_sw.\mbox{\hyperlink{class_t_stop_watch_a0c8ade9d86862151c7f151394c04b0f8}{getTotalTime}}() < 50) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00161   m\_sw.stop();}
+\DoxyCodeLine{00162   m\_sw.\mbox{\hyperlink{class_t_stop_watch_a81eefb8cd2dc776cc31799973be063a8}{start}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00163   \mbox{\hyperlink{class_t_point_t}{TPointD}} p = pos;}
+\DoxyCodeLine{00164   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_tool_a66f61f998b655c1c917ee63a595657c6}{m\_viewer}}-\/>is3DView()) \{}
+\DoxyCodeLine{00165     \mbox{\hyperlink{class_t_point_t}{TPointD}} d     = e.\mbox{\hyperlink{class_t_mouse_event_a05a3f2378eb2179d121e2e46766916de}{m\_pos}} -\/ m\_oldMousePos;}
+\DoxyCodeLine{00166     m\_oldMousePos = e.\mbox{\hyperlink{class_t_mouse_event_a05a3f2378eb2179d121e2e46766916de}{m\_pos}};}
+\DoxyCodeLine{00167     \textcolor{keywordtype}{double} factor = 0.5;}
+\DoxyCodeLine{00168     \mbox{\hyperlink{class_t_tool_a66f61f998b655c1c917ee63a595657c6}{m\_viewer}}-\/>rotate3D(factor * d.x, -\/factor * d.y);}
+\DoxyCodeLine{00169   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00170     \mbox{\hyperlink{class_t_point_t}{TPointD}} a = p -\/ m\_center;}
+\DoxyCodeLine{00171     \mbox{\hyperlink{class_t_point_t}{TPointD}} b = m\_oldPos -\/ m\_center;}
+\DoxyCodeLine{00172     \textcolor{keywordflow}{if} (norm2(a) > 0 \&\& norm2(b) > 0) \{}
+\DoxyCodeLine{00173       \textcolor{keywordtype}{double} ang = asin(cross(b, a) / (norm(a) * norm(b))) * M\_180\_PI;}
+\DoxyCodeLine{00174       m\_angle    = m\_angle + ang;}
+\DoxyCodeLine{00175       \mbox{\hyperlink{class_t_tool_a66f61f998b655c1c917ee63a595657c6}{m\_viewer}}-\/>rotate(m\_center, m\_angle);}
+\DoxyCodeLine{00176     \}}
+\DoxyCodeLine{00177   \}}
+\DoxyCodeLine{00178   m\_oldPos = p;}
+\DoxyCodeLine{00179 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_rotate_tool_ae1093e75d2775b0150765f576825eb80}\label{class_rotate_tool_ae1093e75d2775b0150765f576825eb80}} 
+\index{RotateTool@{RotateTool}!leftButtonUp@{leftButtonUp}}
+\index{leftButtonUp@{leftButtonUp}!RotateTool@{RotateTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonUp()}{leftButtonUp()}}
+{\footnotesize\ttfamily void Rotate\+Tool\+::left\+Button\+Up (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00181                                                                       \{}
+\DoxyCodeLine{00182   m\_dragging = \textcolor{keyword}{false};}
+\DoxyCodeLine{00183   \mbox{\hyperlink{class_t_tool_a3e791336c642542c5648aa8ea86e2348}{invalidate}}();}
+\DoxyCodeLine{00184   m\_sw.stop();}
+\DoxyCodeLine{00185 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_rotate_tool_adb19b97fe1040caabdec28c0a7dbb834}\label{class_rotate_tool_adb19b97fe1040caabdec28c0a7dbb834}} 
+\index{RotateTool@{RotateTool}!updateMatrix@{updateMatrix}}
+\index{updateMatrix@{updateMatrix}!RotateTool@{RotateTool}}
+\doxysubsubsection{\texorpdfstring{updateMatrix()}{updateMatrix()}}
+{\footnotesize\ttfamily void Rotate\+Tool\+::update\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Updates the current matrix transformation with the actual column matrix transformation. \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_t_tool_a73c1b7f13eaea33e1d305636f44c4a64}{get\+Current\+Column\+Matrix()}}. 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_a1a5f380464a6b36947212e2f8d5b314c}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00030 \{ \textcolor{keywordflow}{return} setMatrix(\mbox{\hyperlink{class_t_affine}{TAffine}}()); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_rotate_tool_ad1135317bab56f3ea7c9cc65b2aef19f}\label{class_rotate_tool_ad1135317bab56f3ea7c9cc65b2aef19f}} 
+\index{RotateTool@{RotateTool}!updateTranslation@{updateTranslation}}
+\index{updateTranslation@{updateTranslation}!RotateTool@{RotateTool}}
+\doxysubsubsection{\texorpdfstring{updateTranslation()}{updateTranslation()}}
+{\footnotesize\ttfamily void Rotate\+Tool\+::update\+Translation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040                                     \{}
+\DoxyCodeLine{00041     m\_cameraCentered.setQStringName(tr(\textcolor{stringliteral}{"{}Rotate On Camera Center"{}}));}
+\DoxyCodeLine{00042   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/viewtools.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/viewtools.\+cpp\end{DoxyCompactItemize}

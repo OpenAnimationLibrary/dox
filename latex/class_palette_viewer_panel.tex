@@ -1,0 +1,367 @@
+\hypertarget{class_palette_viewer_panel}{}\doxysection{Palette\+Viewer\+Panel Class Reference}
+\label{class_palette_viewer_panel}\index{PaletteViewerPanel@{PaletteViewerPanel}}
+Inheritance diagram for Palette\+Viewer\+Panel\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_palette_viewer_panel}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_palette_viewer_panel_a4dbc56fcc9a3ba2f3f29161b40f54645}{Palette\+Viewer\+Panel}} (QWidget $\ast$parent)
+\item 
+void \mbox{\hyperlink{class_palette_viewer_panel_ae0a13e7cfe12c937ac8ae81f3d9a7f46}{set\+View\+Type}} (int view\+Type) override
+\item 
+int \mbox{\hyperlink{class_palette_viewer_panel_adb10bbd872a4f0d5dbde92f2101d0ae6}{get\+View\+Type}} () override
+\item 
+void \mbox{\hyperlink{class_palette_viewer_panel_a0b1ddd8f2ce5fa39d2d170a1a847a74c}{reset}} () override
+\item 
+bool \mbox{\hyperlink{class_palette_viewer_panel_a5ff3a6870b99f349ee10b5db7b4adf71}{is\+Frozen}} ()
+\item 
+void \mbox{\hyperlink{class_palette_viewer_panel_a675ea9f0cf5808baeeda61b8bb638d46}{set\+Frozen}} (bool frozen)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_palette_viewer_panel_a0cc1548b26b277a1dd15e5f44c28ca29}{on\+Color\+Style\+Switched}} ()
+\item 
+void \mbox{\hyperlink{class_palette_viewer_panel_a4c3393b52eb431054ff8c066aead6d09}{on\+Palette\+Switched}} ()
+\item 
+void \mbox{\hyperlink{class_palette_viewer_panel_ae9258be86de7c3716cb84d3780b759b3}{on\+Freeze\+Button\+Toggled}} (bool is\+Frozen)
+\item 
+void \mbox{\hyperlink{class_palette_viewer_panel_a2dddebe1a3865466dab5316a00fcb7c7}{on\+Scene\+Switched}} ()
+\item 
+void \mbox{\hyperlink{class_palette_viewer_panel_ab5ede9b6072dfd28feb5b2807f08714a}{on\+Preference\+Changed}} (const QString \&pref\+Name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_palette_viewer_panel_a0b79e5b6dee12c53e6dc4877bb25613d}{initialize\+Title\+Bar}} ()
+\item 
+bool \mbox{\hyperlink{class_palette_viewer_panel_aa999a5a09787510bc22c0030e2f4b467}{is\+Activatable\+On\+Enter}} () override
+\item 
+void \mbox{\hyperlink{class_palette_viewer_panel_a8303b75af1817e9403656a52808e1d42}{show\+Event}} (QShow\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_palette_viewer_panel_a5dca3d3ce5a859865a91befe98b52c51}{hide\+Event}} (QHide\+Event $\ast$) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_palette_viewer_panel_a4dbc56fcc9a3ba2f3f29161b40f54645}\label{class_palette_viewer_panel_a4dbc56fcc9a3ba2f3f29161b40f54645}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!PaletteViewerPanel@{PaletteViewerPanel}}
+\index{PaletteViewerPanel@{PaletteViewerPanel}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{PaletteViewerPanel()}{PaletteViewerPanel()}}
+{\footnotesize\ttfamily Palette\+Viewer\+Panel\+::\+Palette\+Viewer\+Panel (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00484     : \mbox{\hyperlink{class_style_shortcut_switchable_panel}{StyleShortcutSwitchablePanel}}(parent), m\_isFrozen(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00485   m\_paletteHandle = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_palette_handle}{TPaletteHandle}}();}
+\DoxyCodeLine{00486   connect(m\_paletteHandle, SIGNAL(colorStyleSwitched()),}
+\DoxyCodeLine{00487           SLOT(onColorStyleSwitched()));}
+\DoxyCodeLine{00488   connect(m\_paletteHandle, SIGNAL(paletteSwitched()),}
+\DoxyCodeLine{00489           SLOT(onPaletteSwitched()));}
+\DoxyCodeLine{00490 }
+\DoxyCodeLine{00491   \mbox{\hyperlink{class_t_app}{TApp}} *app       = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00492   m\_paletteViewer = \textcolor{keyword}{new} \mbox{\hyperlink{class_palette_viewer}{PaletteViewer}}(\textcolor{keyword}{this}, \mbox{\hyperlink{namespace_palette_viewer_g_u_i_a8198a2523c81b8ac94625e531aa0a789ac1c2c42c697a604d2bb4e5d7b4174cc4}{PaletteViewerGUI::LEVEL\_PALETTE}});}
+\DoxyCodeLine{00493   m\_paletteViewer-\/>setPaletteHandle(}
+\DoxyCodeLine{00494       app-\/>getPaletteController()-\/>getCurrentLevelPalette());}
+\DoxyCodeLine{00495   m\_paletteViewer-\/>setFrameHandle(app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}());}
+\DoxyCodeLine{00496   m\_paletteViewer-\/>setXsheetHandle(app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}());}
+\DoxyCodeLine{00497   \textcolor{comment}{// for clearing cache when paste style command called from the StyleSelection}}
+\DoxyCodeLine{00498   m\_paletteViewer-\/>\mbox{\hyperlink{class_palette_viewer_a0387d1debda75a43800f554d95778e26}{setLevelHandle}}(app-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}());}
+\DoxyCodeLine{00499 }
+\DoxyCodeLine{00500   \mbox{\hyperlink{class_t_scene_handle}{TSceneHandle}} *sceneHandle = app-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}();}
+\DoxyCodeLine{00501   connect(sceneHandle, SIGNAL(sceneSwitched()), SLOT(onSceneSwitched()));}
+\DoxyCodeLine{00502 }
+\DoxyCodeLine{00503   \mbox{\hyperlink{class_current_style_change_command}{CurrentStyleChangeCommand}} *currentStyleChangeCommand =}
+\DoxyCodeLine{00504       \textcolor{keyword}{new} \mbox{\hyperlink{class_current_style_change_command}{CurrentStyleChangeCommand}}();}
+\DoxyCodeLine{00505   m\_paletteViewer-\/>setChangeStyleCommand(currentStyleChangeCommand);}
+\DoxyCodeLine{00506 }
+\DoxyCodeLine{00507   setWidget(m\_paletteViewer);}
+\DoxyCodeLine{00508   initializeTitleBar();}
+\DoxyCodeLine{00509 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_palette_viewer_panel_adb10bbd872a4f0d5dbde92f2101d0ae6}\label{class_palette_viewer_panel_adb10bbd872a4f0d5dbde92f2101d0ae6}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!getViewType@{getViewType}}
+\index{getViewType@{getViewType}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{getViewType()}{getViewType()}}
+{\footnotesize\ttfamily int Palette\+Viewer\+Panel\+::get\+View\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_panel}{TPanel}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00519 \{ \textcolor{keywordflow}{return} m\_paletteViewer-\/>getViewMode(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_palette_viewer_panel_a5dca3d3ce5a859865a91befe98b52c51}\label{class_palette_viewer_panel_a5dca3d3ce5a859865a91befe98b52c51}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!hideEvent@{hideEvent}}
+\index{hideEvent@{hideEvent}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{hideEvent()}{hideEvent()}}
+{\footnotesize\ttfamily void Palette\+Viewer\+Panel\+::hide\+Event (\begin{DoxyParamCaption}\item[{QHide\+Event $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00642                                                \{}
+\DoxyCodeLine{00643   \mbox{\hyperlink{class_t_scene_handle}{TSceneHandle}} *sceneHandle = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}();}
+\DoxyCodeLine{00644   \textcolor{keywordflow}{if} (sceneHandle) sceneHandle-\/>disconnect(\textcolor{keyword}{this});}
+\DoxyCodeLine{00645 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_palette_viewer_panel_a0b79e5b6dee12c53e6dc4877bb25613d}\label{class_palette_viewer_panel_a0b79e5b6dee12c53e6dc4877bb25613d}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!initializeTitleBar@{initializeTitleBar}}
+\index{initializeTitleBar@{initializeTitleBar}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{initializeTitleBar()}{initializeTitleBar()}}
+{\footnotesize\ttfamily void Palette\+Viewer\+Panel\+::initialize\+Title\+Bar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00532                                             \{}
+\DoxyCodeLine{00533   m\_freezeButton = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_panel_title_bar_button}{TPanelTitleBarButton}}(}
+\DoxyCodeLine{00534       getTitleBar(), getIconThemePath(\textcolor{stringliteral}{"{}actions/20/pane\_freeze.svg"{}}));}
+\DoxyCodeLine{00535   m\_freezeButton-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Freeze"{}}));}
+\DoxyCodeLine{00536   getTitleBar()-\/>add(QPoint(-\/54, 0), m\_freezeButton);}
+\DoxyCodeLine{00537   m\_freezeButton-\/>setPressed(m\_isFrozen);}
+\DoxyCodeLine{00538   connect(m\_freezeButton, SIGNAL(toggled(\textcolor{keywordtype}{bool})),}
+\DoxyCodeLine{00539           SLOT(onFreezeButtonToggled(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00540 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_palette_viewer_panel_aa999a5a09787510bc22c0030e2f4b467}\label{class_palette_viewer_panel_aa999a5a09787510bc22c0030e2f4b467}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!isActivatableOnEnter@{isActivatableOnEnter}}
+\index{isActivatableOnEnter@{isActivatableOnEnter}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{isActivatableOnEnter()}{isActivatableOnEnter()}}
+{\footnotesize\ttfamily bool Palette\+Viewer\+Panel\+::is\+Activatable\+On\+Enter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_panel}{TPanel}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00062 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{true}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_palette_viewer_panel_a5ff3a6870b99f349ee10b5db7b4adf71}\label{class_palette_viewer_panel_a5ff3a6870b99f349ee10b5db7b4adf71}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!isFrozen@{isFrozen}}
+\index{isFrozen@{isFrozen}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{isFrozen()}{isFrozen()}}
+{\footnotesize\ttfamily bool Palette\+Viewer\+Panel\+::is\+Frozen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057 \{ \textcolor{keywordflow}{return} m\_isFrozen; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_palette_viewer_panel_a0cc1548b26b277a1dd15e5f44c28ca29}\label{class_palette_viewer_panel_a0cc1548b26b277a1dd15e5f44c28ca29}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!onColorStyleSwitched@{onColorStyleSwitched}}
+\index{onColorStyleSwitched@{onColorStyleSwitched}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{onColorStyleSwitched}{onColorStyleSwitched}}
+{\footnotesize\ttfamily void Palette\+Viewer\+Panel\+::on\+Color\+Style\+Switched (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00544                                               \{}
+\DoxyCodeLine{00545   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getPaletteController()-\/>setCurrentPalette(m\_paletteHandle);}
+\DoxyCodeLine{00546 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_palette_viewer_panel_ae9258be86de7c3716cb84d3780b759b3}\label{class_palette_viewer_panel_ae9258be86de7c3716cb84d3780b759b3}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!onFreezeButtonToggled@{onFreezeButtonToggled}}
+\index{onFreezeButtonToggled@{onFreezeButtonToggled}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{onFreezeButtonToggled}{onFreezeButtonToggled}}
+{\footnotesize\ttfamily void Palette\+Viewer\+Panel\+::on\+Freeze\+Button\+Toggled (\begin{DoxyParamCaption}\item[{bool}]{is\+Frozen }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00556                                                           \{}
+\DoxyCodeLine{00557   \textcolor{keywordflow}{if} (isFrozen() == frozen) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00558 }
+\DoxyCodeLine{00559   \mbox{\hyperlink{class_t_app}{TApp}} *app          = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00560   \mbox{\hyperlink{class_t_palette_handle}{TPaletteHandle}} *ph = app-\/>getPaletteController()-\/>getCurrentLevelPalette();}
+\DoxyCodeLine{00561   \textcolor{comment}{// Se sono sulla palette del livello corrente e le palette e' vuota non}}
+\DoxyCodeLine{00562   \textcolor{comment}{// consento di bloccare il pannello.}}
+\DoxyCodeLine{00563   \textcolor{keywordflow}{if} (!isFrozen() \&\& !ph-\/>getPalette()) \{}
+\DoxyCodeLine{00564     m\_freezeButton-\/>setPressed(\textcolor{keyword}{false});}
+\DoxyCodeLine{00565     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00566   \}}
+\DoxyCodeLine{00567 }
+\DoxyCodeLine{00568   setFrozen(frozen);}
+\DoxyCodeLine{00569   m\_paletteViewer-\/>enableSaveAction(!frozen);}
+\DoxyCodeLine{00570 }
+\DoxyCodeLine{00571   \textcolor{comment}{// Cambio il livello corrente}}
+\DoxyCodeLine{00572   \textcolor{keywordflow}{if} (!frozen) \{}
+\DoxyCodeLine{00573     m\_frozenPalette = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00574     std::set<TXshSimpleLevel *> levels;}
+\DoxyCodeLine{00575     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsheet = app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00576     \textcolor{keywordtype}{int} row, column;}
+\DoxyCodeLine{00577     findPaletteLevels(levels, row, column, m\_paletteHandle-\/>getPalette(),}
+\DoxyCodeLine{00578                       xsheet);}
+\DoxyCodeLine{00579     \textcolor{comment}{// Se non trovo livelli riferiti alla palette setto il palette viewer alla}}
+\DoxyCodeLine{00580     \textcolor{comment}{// palette del livello corrente.}}
+\DoxyCodeLine{00581     \textcolor{keywordflow}{if} (levels.empty()) \{}
+\DoxyCodeLine{00582       m\_paletteViewer-\/>setPaletteHandle(ph);}
+\DoxyCodeLine{00583       update();}
+\DoxyCodeLine{00584       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00585     \}}
+\DoxyCodeLine{00586     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *level = *levels.begin();}
+\DoxyCodeLine{00587     \textcolor{comment}{// Se sto editando l'xsheet devo settare come corrente anche la colonna e il}}
+\DoxyCodeLine{00588     \textcolor{comment}{// frame.}}
+\DoxyCodeLine{00589     \textcolor{keywordflow}{if} (app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>isEditingScene()) \{}
+\DoxyCodeLine{00590       \textcolor{keywordtype}{int} currentColumn = app-\/>\mbox{\hyperlink{class_t_app_a1e294e7cff300851d12a8c3d196943f6}{getCurrentColumn}}()-\/>getColumnIndex();}
+\DoxyCodeLine{00591       \textcolor{keywordflow}{if} (currentColumn != column)}
+\DoxyCodeLine{00592         app-\/>\mbox{\hyperlink{class_t_app_a1e294e7cff300851d12a8c3d196943f6}{getCurrentColumn}}()-\/>setColumnIndex(column);}
+\DoxyCodeLine{00593       \textcolor{keywordtype}{int} currentRow = app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>getFrameIndex();}
+\DoxyCodeLine{00594       \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell  = xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(currentRow, column);}
+\DoxyCodeLine{00595       \textcolor{keywordflow}{if} (cell.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}() || cell.\mbox{\hyperlink{class_t_xsh_cell_a8898cc47eba24e59477bfba8e2511f1d}{getSimpleLevel}}() != level)}
+\DoxyCodeLine{00596         app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>setFrameIndex(row);}
+\DoxyCodeLine{00597 }
+\DoxyCodeLine{00598       \mbox{\hyperlink{class_t_cell_selection}{TCellSelection}} *selection = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_cell_selection}{TCellSelection}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{00599           app-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}()-\/>getSelection());}
+\DoxyCodeLine{00600       \textcolor{keywordflow}{if} (selection) selection-\/>selectNone();}
+\DoxyCodeLine{00601     \}}
+\DoxyCodeLine{00602     app-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>setLevel(level);}
+\DoxyCodeLine{00603     m\_paletteViewer-\/>setPaletteHandle(ph);}
+\DoxyCodeLine{00604   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00605     m\_frozenPalette = ph-\/>getPalette();}
+\DoxyCodeLine{00606     m\_paletteHandle-\/>setPalette(ph-\/>getPalette());}
+\DoxyCodeLine{00607     m\_paletteViewer-\/>setPaletteHandle(m\_paletteHandle);}
+\DoxyCodeLine{00608   \}}
+\DoxyCodeLine{00609   update();}
+\DoxyCodeLine{00610 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_palette_viewer_panel_a4c3393b52eb431054ff8c066aead6d09}\label{class_palette_viewer_panel_a4c3393b52eb431054ff8c066aead6d09}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!onPaletteSwitched@{onPaletteSwitched}}
+\index{onPaletteSwitched@{onPaletteSwitched}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{onPaletteSwitched}{onPaletteSwitched}}
+{\footnotesize\ttfamily void Palette\+Viewer\+Panel\+::on\+Palette\+Switched (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00550                                            \{}
+\DoxyCodeLine{00551   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getPaletteController()-\/>setCurrentPalette(m\_paletteHandle);}
+\DoxyCodeLine{00552 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_palette_viewer_panel_ab5ede9b6072dfd28feb5b2807f08714a}\label{class_palette_viewer_panel_ab5ede9b6072dfd28feb5b2807f08714a}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!onPreferenceChanged@{onPreferenceChanged}}
+\index{onPreferenceChanged@{onPreferenceChanged}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{onPreferenceChanged}{onPreferenceChanged}}
+{\footnotesize\ttfamily void Palette\+Viewer\+Panel\+::on\+Preference\+Changed (\begin{DoxyParamCaption}\item[{const QString \&}]{pref\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00649                                                                     \{}
+\DoxyCodeLine{00650   \textcolor{keywordflow}{if} (prefName == \textcolor{stringliteral}{"{}ColorCalibration"{}}) update();}
+\DoxyCodeLine{00651 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_palette_viewer_panel_a2dddebe1a3865466dab5316a00fcb7c7}\label{class_palette_viewer_panel_a2dddebe1a3865466dab5316a00fcb7c7}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!onSceneSwitched@{onSceneSwitched}}
+\index{onSceneSwitched@{onSceneSwitched}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{onSceneSwitched}{onSceneSwitched}}
+{\footnotesize\ttfamily void Palette\+Viewer\+Panel\+::on\+Scene\+Switched (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00614                                          \{}
+\DoxyCodeLine{00615   \textcolor{comment}{// Se e' il paletteHandle del livello corrente l'aggiornamento viene fatto}}
+\DoxyCodeLine{00616   \textcolor{comment}{// grazie all'aggiornamento del livello.}}
+\DoxyCodeLine{00617   \textcolor{keywordflow}{if} (!isFrozen()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00618 }
+\DoxyCodeLine{00619   \textcolor{comment}{// Setto a zero la palette del "{}paletteHandle bloccato"{}.}}
+\DoxyCodeLine{00620   m\_paletteHandle-\/>setPalette(0);}
+\DoxyCodeLine{00621   \textcolor{comment}{// Sblocco il viewer nel caso in cui il e' bloccato.}}
+\DoxyCodeLine{00622   \textcolor{keywordflow}{if} (isFrozen()) \{}
+\DoxyCodeLine{00623     setFrozen(\textcolor{keyword}{false});}
+\DoxyCodeLine{00624     m\_freezeButton-\/>setPressed(\textcolor{keyword}{false});}
+\DoxyCodeLine{00625     m\_paletteViewer-\/>setPaletteHandle(}
+\DoxyCodeLine{00626         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getPaletteController()-\/>getCurrentLevelPalette());}
+\DoxyCodeLine{00627   \}}
+\DoxyCodeLine{00628   m\_paletteViewer-\/>updateView();}
+\DoxyCodeLine{00629 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_palette_viewer_panel_a0b1ddd8f2ce5fa39d2d170a1a847a74c}\label{class_palette_viewer_panel_a0b1ddd8f2ce5fa39d2d170a1a847a74c}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!reset@{reset}}
+\index{reset@{reset}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void Palette\+Viewer\+Panel\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_panel}{TPanel}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00523                                \{}
+\DoxyCodeLine{00524   m\_paletteViewer-\/>setPaletteHandle(}
+\DoxyCodeLine{00525       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getPaletteController()-\/>getCurrentLevelPalette());}
+\DoxyCodeLine{00526   m\_freezeButton-\/>setPressed(\textcolor{keyword}{false});}
+\DoxyCodeLine{00527   setFrozen(\textcolor{keyword}{false});}
+\DoxyCodeLine{00528 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_palette_viewer_panel_a675ea9f0cf5808baeeda61b8bb638d46}\label{class_palette_viewer_panel_a675ea9f0cf5808baeeda61b8bb638d46}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!setFrozen@{setFrozen}}
+\index{setFrozen@{setFrozen}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{setFrozen()}{setFrozen()}}
+{\footnotesize\ttfamily void Palette\+Viewer\+Panel\+::set\+Frozen (\begin{DoxyParamCaption}\item[{bool}]{frozen }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00058 \{ m\_isFrozen = frozen; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_palette_viewer_panel_ae0a13e7cfe12c937ac8ae81f3d9a7f46}\label{class_palette_viewer_panel_ae0a13e7cfe12c937ac8ae81f3d9a7f46}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!setViewType@{setViewType}}
+\index{setViewType@{setViewType}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{setViewType()}{setViewType()}}
+{\footnotesize\ttfamily void Palette\+Viewer\+Panel\+::set\+View\+Type (\begin{DoxyParamCaption}\item[{int}]{view\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_panel}{TPanel}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00513                                                  \{}
+\DoxyCodeLine{00514   m\_paletteViewer-\/>setViewMode(viewType);}
+\DoxyCodeLine{00515 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_palette_viewer_panel_a8303b75af1817e9403656a52808e1d42}\label{class_palette_viewer_panel_a8303b75af1817e9403656a52808e1d42}} 
+\index{PaletteViewerPanel@{PaletteViewerPanel}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!PaletteViewerPanel@{PaletteViewerPanel}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Palette\+Viewer\+Panel\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00633                                                \{}
+\DoxyCodeLine{00634   \mbox{\hyperlink{class_t_scene_handle}{TSceneHandle}} *sceneHandle = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}();}
+\DoxyCodeLine{00635   \textcolor{keywordtype}{bool} ret = connect(sceneHandle, SIGNAL(preferenceChanged(\textcolor{keyword}{const} QString \&)),}
+\DoxyCodeLine{00636                      \textcolor{keyword}{this}, SLOT(onPreferenceChanged(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00637   assert(ret);}
+\DoxyCodeLine{00638 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/tpanels.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/tpanels.\+cpp\end{DoxyCompactItemize}

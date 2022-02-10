@@ -1,0 +1,213 @@
+\hypertarget{class_index_table}{}\doxysection{Index\+Table Class Reference}
+\label{class_index_table}\index{IndexTable@{IndexTable}}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::list$<$ \mbox{\hyperlink{class_contour_node}{Contour\+Node}} $\ast$ $>$ \mbox{\hyperlink{class_index_table_a1dedf3727f227b57f24097af805bf5b3}{Index\+Column}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Index\+Column $\ast$ \mbox{\hyperlink{class_index_table_a3e63e89751b592b75ab184663b18f703}{operator\mbox{[}$\,$\mbox{]}}} (int i)
+\item 
+Index\+Column \& \mbox{\hyperlink{class_index_table_a2ddea74e56aab6fa8f7c64fe385aa942}{column\+Of\+Id}} (int id)
+\item 
+void \mbox{\hyperlink{class_index_table_ab404a41973d00a8f1ac88000b02118bb}{build}} (Contour\+Family \&family)
+\item 
+void \mbox{\hyperlink{class_index_table_a60fffafae1d6688d842ccd5133c2a3f5}{clear}} ()
+\item 
+Index\+Column\+::iterator \mbox{\hyperlink{class_index_table_a570f90101aa621065b0c540a51ee24a1}{find}} (\mbox{\hyperlink{class_contour_node}{Contour\+Node}} $\ast$index)
+\item 
+void \mbox{\hyperlink{class_index_table_a2ace10699abb84ad822977bb6e73b593}{merge}} (Index\+Column\+::iterator index1, Index\+Column\+::iterator index2)
+\item 
+void \mbox{\hyperlink{class_index_table_acdc1238d69aa74c140ac402af716282c}{remove}} (Index\+Column\+::iterator index)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ Index\+Column $>$ \mbox{\hyperlink{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}{m\+\_\+columns}}
+\begin{DoxyCompactList}\small\item\em Contours set by \textquotesingle{}column identifier\textquotesingle{}. \end{DoxyCompactList}\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{class_index_table_ae787501a8b7b54425762e7e6aefdd74a}{m\+\_\+identifiers}}
+\begin{DoxyCompactList}\small\item\em Column identifiers by original contour index. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{class_index_table_a1dedf3727f227b57f24097af805bf5b3}\label{class_index_table_a1dedf3727f227b57f24097af805bf5b3}} 
+\index{IndexTable@{IndexTable}!IndexColumn@{IndexColumn}}
+\index{IndexColumn@{IndexColumn}!IndexTable@{IndexTable}}
+\doxysubsubsection{\texorpdfstring{IndexColumn}{IndexColumn}}
+{\footnotesize\ttfamily typedef std\+::list$<$\mbox{\hyperlink{class_contour_node}{Contour\+Node}} $\ast$$>$ Index\+Table\+::\+Index\+Column}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_index_table_a460235b5ab1a625d440b45d08bc8c65e}\label{class_index_table_a460235b5ab1a625d440b45d08bc8c65e}} 
+\index{IndexTable@{IndexTable}!IndexTable@{IndexTable}}
+\index{IndexTable@{IndexTable}!IndexTable@{IndexTable}}
+\doxysubsubsection{\texorpdfstring{IndexTable()}{IndexTable()}}
+{\footnotesize\ttfamily Index\+Table\+::\+Index\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00121 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_index_table_ab404a41973d00a8f1ac88000b02118bb}\label{class_index_table_ab404a41973d00a8f1ac88000b02118bb}} 
+\index{IndexTable@{IndexTable}!build@{build}}
+\index{build@{build}!IndexTable@{IndexTable}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily void Index\+Table\+::build (\begin{DoxyParamCaption}\item[{Contour\+Family \&}]{family }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00218                                             \{}
+\DoxyCodeLine{00219   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00220 }
+\DoxyCodeLine{00221   \mbox{\hyperlink{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}{m\_columns}}.resize(family.size());}
+\DoxyCodeLine{00222   \mbox{\hyperlink{class_index_table_ae787501a8b7b54425762e7e6aefdd74a}{m\_identifiers}}.resize(family.size());}
+\DoxyCodeLine{00223 }
+\DoxyCodeLine{00224   \textcolor{comment}{// NOTE: At the beginning, m\_identifiers= 1, .. , m\_columns.size() -\/ 1;}}
+\DoxyCodeLine{00225   \textcolor{keywordflow}{for} (i = 0; i < \mbox{\hyperlink{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}{m\_columns}}.size(); ++i) \{}
+\DoxyCodeLine{00226     \mbox{\hyperlink{class_index_table_ae787501a8b7b54425762e7e6aefdd74a}{m\_identifiers}}[i] = i;}
+\DoxyCodeLine{00227     \mbox{\hyperlink{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}{m\_columns}}[i].push\_back(\&family[i][0]);}
+\DoxyCodeLine{00228     \textcolor{comment}{// Each node referenced in the Table is signed as 'head' of the cirular}}
+\DoxyCodeLine{00229     \textcolor{comment}{// list.}}
+\DoxyCodeLine{00230     family[i][0].setAttribute(\mbox{\hyperlink{class_contour_node_a7a113f0a25502174a87d6880481bd93eabc7a9d16bfe65fc23691a4ec9adf38cb}{ContourNode::HEAD}});}
+\DoxyCodeLine{00231   \}}
+\DoxyCodeLine{00232 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_index_table_a60fffafae1d6688d842ccd5133c2a3f5}\label{class_index_table_a60fffafae1d6688d842ccd5133c2a3f5}} 
+\index{IndexTable@{IndexTable}!clear@{clear}}
+\index{clear@{clear}!IndexTable@{IndexTable}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void Index\+Table\+::clear (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00291 \{ \mbox{\hyperlink{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}{m\_columns}}.clear(), \mbox{\hyperlink{class_index_table_ae787501a8b7b54425762e7e6aefdd74a}{m\_identifiers}}.clear(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_index_table_a2ddea74e56aab6fa8f7c64fe385aa942}\label{class_index_table_a2ddea74e56aab6fa8f7c64fe385aa942}} 
+\index{IndexTable@{IndexTable}!columnOfId@{columnOfId}}
+\index{columnOfId@{columnOfId}!IndexTable@{IndexTable}}
+\doxysubsubsection{\texorpdfstring{columnOfId()}{columnOfId()}}
+{\footnotesize\ttfamily Index\+Column \& Index\+Table\+::column\+Of\+Id (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00124 \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}{m\_columns}}[\mbox{\hyperlink{class_index_table_ae787501a8b7b54425762e7e6aefdd74a}{m\_identifiers}}[id]]; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_index_table_a570f90101aa621065b0c540a51ee24a1}\label{class_index_table_a570f90101aa621065b0c540a51ee24a1}} 
+\index{IndexTable@{IndexTable}!find@{find}}
+\index{find@{find}!IndexTable@{IndexTable}}
+\doxysubsubsection{\texorpdfstring{find()}{find()}}
+{\footnotesize\ttfamily Index\+Table\+::\+Index\+Column\+::iterator Index\+Table\+::find (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_contour_node}{Contour\+Node}} $\ast$}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00242                                                                          \{}
+\DoxyCodeLine{00243   \textcolor{keywordtype}{int} indexId = \mbox{\hyperlink{class_index_table_ae787501a8b7b54425762e7e6aefdd74a}{m\_identifiers}}[sought-\/>m\_ancestorContour];}
+\DoxyCodeLine{00244   IndexColumn::iterator res;}
+\DoxyCodeLine{00245 }
+\DoxyCodeLine{00246   \textcolor{comment}{// Search for the HEAD attribute in index's Contour}}
+\DoxyCodeLine{00247   \textcolor{keywordflow}{for} (; !sought-\/>hasAttribute(\mbox{\hyperlink{class_contour_node_a7a113f0a25502174a87d6880481bd93eabc7a9d16bfe65fc23691a4ec9adf38cb}{ContourNode::HEAD}}); sought = sought-\/>m\_next)}
+\DoxyCodeLine{00248     ;}
+\DoxyCodeLine{00249 }
+\DoxyCodeLine{00250   \textcolor{comment}{// Finally, find index through our column}}
+\DoxyCodeLine{00251   \textcolor{keywordflow}{for} (res = \mbox{\hyperlink{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}{m\_columns}}[indexId].begin(); (*res) != sought; ++res)}
+\DoxyCodeLine{00252     ;}
+\DoxyCodeLine{00253 }
+\DoxyCodeLine{00254   \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{00255 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_index_table_a2ace10699abb84ad822977bb6e73b593}\label{class_index_table_a2ace10699abb84ad822977bb6e73b593}} 
+\index{IndexTable@{IndexTable}!merge@{merge}}
+\index{merge@{merge}!IndexTable@{IndexTable}}
+\doxysubsubsection{\texorpdfstring{merge()}{merge()}}
+{\footnotesize\ttfamily void Index\+Table\+::merge (\begin{DoxyParamCaption}\item[{Index\+Column\+::iterator}]{index1,  }\item[{Index\+Column\+::iterator}]{index2 }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00261                                                    \{}
+\DoxyCodeLine{00262   IndexColumn::iterator current;}
+\DoxyCodeLine{00263 }
+\DoxyCodeLine{00264   \textcolor{keywordtype}{int} identifier1 = \mbox{\hyperlink{class_index_table_ae787501a8b7b54425762e7e6aefdd74a}{m\_identifiers}}[(*index1)-\/>m\_ancestorContour],}
+\DoxyCodeLine{00265       identifier2 = \mbox{\hyperlink{class_index_table_ae787501a8b7b54425762e7e6aefdd74a}{m\_identifiers}}[(*index2)-\/>m\_ancestorContour];}
+\DoxyCodeLine{00266 }
+\DoxyCodeLine{00267   remove(index2);  \textcolor{comment}{// We maintain only one index of the merged contour}}
+\DoxyCodeLine{00268 }
+\DoxyCodeLine{00269   \textcolor{comment}{// Now, append columns}}
+\DoxyCodeLine{00270   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}{m\_columns}}[identifier2].empty()) \{}
+\DoxyCodeLine{00271     append<IndexTable::IndexColumn, IndexTable::IndexColumn::reverse\_iterator>(}
+\DoxyCodeLine{00272         \mbox{\hyperlink{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}{m\_columns}}[identifier1], \mbox{\hyperlink{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}{m\_columns}}[identifier2]);}
+\DoxyCodeLine{00273     \mbox{\hyperlink{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}{m\_columns}}[identifier2].clear();}
+\DoxyCodeLine{00274   \}}
+\DoxyCodeLine{00275 }
+\DoxyCodeLine{00276   \textcolor{comment}{// Then, update stored identifiers}}
+\DoxyCodeLine{00277   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} k = 0; k < \mbox{\hyperlink{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}{m\_columns}}.size(); ++k) \{}
+\DoxyCodeLine{00278     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_index_table_ae787501a8b7b54425762e7e6aefdd74a}{m\_identifiers}}[k] == identifier2) \mbox{\hyperlink{class_index_table_ae787501a8b7b54425762e7e6aefdd74a}{m\_identifiers}}[k] = identifier1;}
+\DoxyCodeLine{00279   \}}
+\DoxyCodeLine{00280 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_index_table_a3e63e89751b592b75ab184663b18f703}\label{class_index_table_a3e63e89751b592b75ab184663b18f703}} 
+\index{IndexTable@{IndexTable}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!IndexTable@{IndexTable}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily Index\+Column $\ast$ Index\+Table\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00123 \{ \textcolor{keywordflow}{return} \&\mbox{\hyperlink{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}{m\_columns}}[i]; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_index_table_acdc1238d69aa74c140ac402af716282c}\label{class_index_table_acdc1238d69aa74c140ac402af716282c}} 
+\index{IndexTable@{IndexTable}!remove@{remove}}
+\index{remove@{remove}!IndexTable@{IndexTable}}
+\doxysubsubsection{\texorpdfstring{remove()}{remove()}}
+{\footnotesize\ttfamily void Index\+Table\+::remove (\begin{DoxyParamCaption}\item[{Index\+Column\+::iterator}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00285                                                         \{}
+\DoxyCodeLine{00286   \mbox{\hyperlink{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}{m\_columns}}[\mbox{\hyperlink{class_index_table_ae787501a8b7b54425762e7e6aefdd74a}{m\_identifiers}}[(*index)-\/>m\_ancestorContour]].erase(index);}
+\DoxyCodeLine{00287 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}\label{class_index_table_ae5ad9fe1aa08464501459f1739d815cc}} 
+\index{IndexTable@{IndexTable}!m\_columns@{m\_columns}}
+\index{m\_columns@{m\_columns}!IndexTable@{IndexTable}}
+\doxysubsubsection{\texorpdfstring{m\_columns}{m\_columns}}
+{\footnotesize\ttfamily std\+::vector$<$Index\+Column$>$ Index\+Table\+::m\+\_\+columns}
+
+
+
+Contours set by \textquotesingle{}column identifier\textquotesingle{}. 
+
+\mbox{\Hypertarget{class_index_table_ae787501a8b7b54425762e7e6aefdd74a}\label{class_index_table_ae787501a8b7b54425762e7e6aefdd74a}} 
+\index{IndexTable@{IndexTable}!m\_identifiers@{m\_identifiers}}
+\index{m\_identifiers@{m\_identifiers}!IndexTable@{IndexTable}}
+\doxysubsubsection{\texorpdfstring{m\_identifiers}{m\_identifiers}}
+{\footnotesize\ttfamily std\+::vector$<$int$>$ Index\+Table\+::m\+\_\+identifiers}
+
+
+
+Column identifiers by original contour index. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tcenterlineskeletonizer.\+cpp\end{DoxyCompactItemize}

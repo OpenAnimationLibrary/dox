@@ -1,0 +1,345 @@
+\hypertarget{class_version_control_thread}{}\doxysection{Version\+Control\+Thread Class Reference}
+\label{class_version_control_thread}\index{VersionControlThread@{VersionControlThread}}
+Inheritance diagram for Version\+Control\+Thread\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_version_control_thread}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_version_control_thread_a2c2be4ba605b3883ee08578f2e9599c7}\label{class_version_control_thread_a2c2be4ba605b3883ee08578f2e9599c7}} 
+void {\bfseries error} (const QString \&error\+String)
+\item 
+\mbox{\Hypertarget{class_version_control_thread_a73c9c5d138677cd8af474d3fac6cd6c6}\label{class_version_control_thread_a73c9c5d138677cd8af474d3fac6cd6c6}} 
+void {\bfseries done} (const QString \&response)
+\item 
+\mbox{\Hypertarget{class_version_control_thread_ab7c8111b09b6c291cf1baa09c151f643}\label{class_version_control_thread_ab7c8111b09b6c291cf1baa09c151f643}} 
+void {\bfseries output\+Retrieved} (const QString \&text)
+\item 
+\mbox{\Hypertarget{class_version_control_thread_a95610954f3da141f37a3de393ad5a634}\label{class_version_control_thread_a95610954f3da141f37a3de393ad5a634}} 
+void {\bfseries status\+Retrieved} (const QString \&xml\+Response)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_version_control_thread_a78555be3c98e9d217ffc180198ae4a53}{Version\+Control\+Thread}} (QObject $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_version_control_thread_a18e90938bfa489585ddbb0f58cf12d87}{execute\+Command}} (const QString \&working\+Dir, const QString \&binary, const QString\+List \&args, bool read\+Output\+On\+Done=true)
+\item 
+void \mbox{\hyperlink{class_version_control_thread_a38bfb6e4615d7bb4d8414a595f59dc18}{get\+SVNStatus}} (const QString \&path, bool show\+Updates=false, bool non\+Recursive=false, bool depth\+Infinity=false)
+\item 
+void \mbox{\hyperlink{class_version_control_thread_a872a994d58676ab9f26ce119313c77c7}{get\+SVNStatus}} (const QString \&path, const QString\+List \&files, bool show\+Updates=false, bool non\+Recursive=false, bool depth\+Infinity=false)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QMutex \mbox{\hyperlink{class_version_control_thread_a73e2b1178e36b063a5e9ae8f0bb02690}{m\+\_\+mutex}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_version_control_thread_a4aee92c1a2fb73c105f616ca805dea62}{on\+Standard\+Output\+Ready}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_version_control_thread_aaee5a935330207944290eade64362bd1}{run}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_version_control_thread_a78555be3c98e9d217ffc180198ae4a53}\label{class_version_control_thread_a78555be3c98e9d217ffc180198ae4a53}} 
+\index{VersionControlThread@{VersionControlThread}!VersionControlThread@{VersionControlThread}}
+\index{VersionControlThread@{VersionControlThread}!VersionControlThread@{VersionControlThread}}
+\doxysubsubsection{\texorpdfstring{VersionControlThread()}{VersionControlThread()}}
+{\footnotesize\ttfamily Version\+Control\+Thread\+::\+Version\+Control\+Thread (\begin{DoxyParamCaption}\item[{QObject $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075     : QThread(parent)}
+\DoxyCodeLine{00076     , m\_abort(\textcolor{keyword}{false})}
+\DoxyCodeLine{00077     , m\_restart(\textcolor{keyword}{false})}
+\DoxyCodeLine{00078     , m\_getStatus(\textcolor{keyword}{false})}
+\DoxyCodeLine{00079     , m\_readOutputOnDone(\textcolor{keyword}{true})}
+\DoxyCodeLine{00080     , m\_process(0) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_version_control_thread_ab6d7c9457933f9e2689b431fd6f601d8}\label{class_version_control_thread_ab6d7c9457933f9e2689b431fd6f601d8}} 
+\index{VersionControlThread@{VersionControlThread}!````~VersionControlThread@{$\sim$VersionControlThread}}
+\index{````~VersionControlThread@{$\sim$VersionControlThread}!VersionControlThread@{VersionControlThread}}
+\doxysubsubsection{\texorpdfstring{$\sim$VersionControlThread()}{~VersionControlThread()}}
+{\footnotesize\ttfamily Version\+Control\+Thread\+::$\sim$\+Version\+Control\+Thread (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00084                                             \{}
+\DoxyCodeLine{00085   m\_mutex.lock();}
+\DoxyCodeLine{00086   m\_abort = \textcolor{keyword}{true};}
+\DoxyCodeLine{00087   m\_condition.wakeOne();}
+\DoxyCodeLine{00088   m\_mutex.unlock();}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090   wait();}
+\DoxyCodeLine{00091 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_version_control_thread_a18e90938bfa489585ddbb0f58cf12d87}\label{class_version_control_thread_a18e90938bfa489585ddbb0f58cf12d87}} 
+\index{VersionControlThread@{VersionControlThread}!executeCommand@{executeCommand}}
+\index{executeCommand@{executeCommand}!VersionControlThread@{VersionControlThread}}
+\doxysubsubsection{\texorpdfstring{executeCommand()}{executeCommand()}}
+{\footnotesize\ttfamily void Version\+Control\+Thread\+::execute\+Command (\begin{DoxyParamCaption}\item[{const QString \&}]{working\+Dir,  }\item[{const QString \&}]{binary,  }\item[{const QString\+List \&}]{args,  }\item[{bool}]{read\+Output\+On\+Done = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00212                                                                  \{}
+\DoxyCodeLine{00213   QMutexLocker locker(\&m\_mutex);}
+\DoxyCodeLine{00214 }
+\DoxyCodeLine{00215   m\_readOutputOnDone = readOutputOnDone;}
+\DoxyCodeLine{00216   m\_workingDir       = workingDir;}
+\DoxyCodeLine{00217   m\_binary           = binary;}
+\DoxyCodeLine{00218   m\_args             = args;}
+\DoxyCodeLine{00219 }
+\DoxyCodeLine{00220   \textcolor{keywordflow}{if} (m\_binary.isEmpty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00221 }
+\DoxyCodeLine{00222   \textcolor{keywordflow}{if} (!isRunning()) \{}
+\DoxyCodeLine{00223     start(QThread::NormalPriority);}
+\DoxyCodeLine{00224   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00225     m\_restart = \textcolor{keyword}{true};}
+\DoxyCodeLine{00226     m\_condition.wakeOne();}
+\DoxyCodeLine{00227   \}}
+\DoxyCodeLine{00228 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_version_control_thread_a38bfb6e4615d7bb4d8414a595f59dc18}\label{class_version_control_thread_a38bfb6e4615d7bb4d8414a595f59dc18}} 
+\index{VersionControlThread@{VersionControlThread}!getSVNStatus@{getSVNStatus}}
+\index{getSVNStatus@{getSVNStatus}!VersionControlThread@{VersionControlThread}}
+\doxysubsubsection{\texorpdfstring{getSVNStatus()}{getSVNStatus()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Version\+Control\+Thread\+::get\+SVNStatus (\begin{DoxyParamCaption}\item[{const QString \&}]{path,  }\item[{bool}]{show\+Updates = {\ttfamily false},  }\item[{bool}]{non\+Recursive = {\ttfamily false},  }\item[{bool}]{depth\+Infinity = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00233                                                                                \{}
+\DoxyCodeLine{00234   QMutexLocker locker(\&m\_mutex);}
+\DoxyCodeLine{00235 }
+\DoxyCodeLine{00236   m\_workingDir = path;}
+\DoxyCodeLine{00237   m\_binary     = QString(\textcolor{stringliteral}{"{}svn"{}});}
+\DoxyCodeLine{00238   QStringList args;}
+\DoxyCodeLine{00239   args << \textcolor{stringliteral}{"{}status"{}};}
+\DoxyCodeLine{00240   \textcolor{keywordflow}{if} (showUpdates)}
+\DoxyCodeLine{00241     args << \textcolor{stringliteral}{"{}-\/vu"{}};}
+\DoxyCodeLine{00242   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00243     args << \textcolor{stringliteral}{"{}-\/v"{}};}
+\DoxyCodeLine{00244   \textcolor{keywordflow}{if} (nonRecursive) args << \textcolor{stringliteral}{"{}-\/-\/non-\/recursive"{}};}
+\DoxyCodeLine{00245   \textcolor{keywordflow}{if} (depthInfinity)}
+\DoxyCodeLine{00246     args << \textcolor{stringliteral}{"{}-\/-\/depth"{}}}
+\DoxyCodeLine{00247          << \textcolor{stringliteral}{"{}infinity"{}};}
+\DoxyCodeLine{00248 }
+\DoxyCodeLine{00249   args << \textcolor{stringliteral}{"{}-\/-\/xml"{}};}
+\DoxyCodeLine{00250   m\_args = args;}
+\DoxyCodeLine{00251 }
+\DoxyCodeLine{00252   m\_getStatus        = \textcolor{keyword}{true};}
+\DoxyCodeLine{00253   m\_readOutputOnDone = \textcolor{keyword}{true};}
+\DoxyCodeLine{00254 }
+\DoxyCodeLine{00255   \textcolor{keywordflow}{if} (!isRunning()) \{}
+\DoxyCodeLine{00256     start(QThread::NormalPriority);}
+\DoxyCodeLine{00257   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00258     m\_restart = \textcolor{keyword}{true};}
+\DoxyCodeLine{00259     m\_condition.wakeOne();}
+\DoxyCodeLine{00260   \}}
+\DoxyCodeLine{00261 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_version_control_thread_a872a994d58676ab9f26ce119313c77c7}\label{class_version_control_thread_a872a994d58676ab9f26ce119313c77c7}} 
+\index{VersionControlThread@{VersionControlThread}!getSVNStatus@{getSVNStatus}}
+\index{getSVNStatus@{getSVNStatus}!VersionControlThread@{VersionControlThread}}
+\doxysubsubsection{\texorpdfstring{getSVNStatus()}{getSVNStatus()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Version\+Control\+Thread\+::get\+SVNStatus (\begin{DoxyParamCaption}\item[{const QString \&}]{path,  }\item[{const QString\+List \&}]{files,  }\item[{bool}]{show\+Updates = {\ttfamily false},  }\item[{bool}]{non\+Recursive = {\ttfamily false},  }\item[{bool}]{depth\+Infinity = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00268                                                             \{}
+\DoxyCodeLine{00269   QMutexLocker locker(\&m\_mutex);}
+\DoxyCodeLine{00270   m\_workingDir = path;}
+\DoxyCodeLine{00271   m\_binary     = QString(\textcolor{stringliteral}{"{}svn"{}});}
+\DoxyCodeLine{00272   QStringList args;}
+\DoxyCodeLine{00273   args << \textcolor{stringliteral}{"{}status"{}};}
+\DoxyCodeLine{00274   \textcolor{keywordflow}{if} (showUpdates)}
+\DoxyCodeLine{00275     args << \textcolor{stringliteral}{"{}-\/vu"{}};}
+\DoxyCodeLine{00276   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00277     args << \textcolor{stringliteral}{"{}-\/v"{}};}
+\DoxyCodeLine{00278 }
+\DoxyCodeLine{00279   \textcolor{keywordtype}{int} filesCount = files.size();}
+\DoxyCodeLine{00280   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < filesCount; i++) \{}
+\DoxyCodeLine{00281     QString f = files.at(i);}
+\DoxyCodeLine{00282     \textcolor{keywordflow}{if} (!f.isEmpty()) args << f;}
+\DoxyCodeLine{00283   \}}
+\DoxyCodeLine{00284   \textcolor{keywordflow}{if} (nonRecursive) args << \textcolor{stringliteral}{"{}-\/-\/non-\/recursive"{}};}
+\DoxyCodeLine{00285   \textcolor{keywordflow}{if} (depthInfinity)}
+\DoxyCodeLine{00286     args << \textcolor{stringliteral}{"{}-\/-\/depth"{}}}
+\DoxyCodeLine{00287          << \textcolor{stringliteral}{"{}infinity"{}};}
+\DoxyCodeLine{00288 }
+\DoxyCodeLine{00289   args << \textcolor{stringliteral}{"{}-\/-\/xml"{}};}
+\DoxyCodeLine{00290   m\_args = args;}
+\DoxyCodeLine{00291 }
+\DoxyCodeLine{00292   m\_getStatus        = \textcolor{keyword}{true};}
+\DoxyCodeLine{00293   m\_readOutputOnDone = \textcolor{keyword}{true};}
+\DoxyCodeLine{00294 }
+\DoxyCodeLine{00295   \textcolor{keywordflow}{if} (!isRunning()) \{}
+\DoxyCodeLine{00296     start(QThread::NormalPriority);}
+\DoxyCodeLine{00297   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00298     m\_restart = \textcolor{keyword}{true};}
+\DoxyCodeLine{00299     m\_condition.wakeOne();}
+\DoxyCodeLine{00300   \}}
+\DoxyCodeLine{00301 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_version_control_thread_a4aee92c1a2fb73c105f616ca805dea62}\label{class_version_control_thread_a4aee92c1a2fb73c105f616ca805dea62}} 
+\index{VersionControlThread@{VersionControlThread}!onStandardOutputReady@{onStandardOutputReady}}
+\index{onStandardOutputReady@{onStandardOutputReady}!VersionControlThread@{VersionControlThread}}
+\doxysubsubsection{\texorpdfstring{onStandardOutputReady}{onStandardOutputReady}}
+{\footnotesize\ttfamily void Version\+Control\+Thread\+::on\+Standard\+Output\+Ready (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00201                                                  \{}
+\DoxyCodeLine{00202   QString str = QString::fromUtf8(m\_process-\/>readAllStandardOutput().data());}
+\DoxyCodeLine{00203   \textcolor{keywordflow}{if} (str.isEmpty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00204   emit outputRetrieved(str);}
+\DoxyCodeLine{00205 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_version_control_thread_aaee5a935330207944290eade64362bd1}\label{class_version_control_thread_aaee5a935330207944290eade64362bd1}} 
+\index{VersionControlThread@{VersionControlThread}!run@{run}}
+\index{run@{run}!VersionControlThread@{VersionControlThread}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Version\+Control\+Thread\+::run (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00095                                \{}
+\DoxyCodeLine{00096   forever \{}
+\DoxyCodeLine{00097     m\_mutex.lock();}
+\DoxyCodeLine{00098     QString workingDir = m\_workingDir;}
+\DoxyCodeLine{00099     QString binary     = m\_binary;}
+\DoxyCodeLine{00100     QStringList args   = m\_args;}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102     \textcolor{comment}{// Add Username and Password (if exists)}}
+\DoxyCodeLine{00103 }
+\DoxyCodeLine{00104     \mbox{\hyperlink{class_version_control}{VersionControl}} *vc = VersionControl::instance();}
+\DoxyCodeLine{00105 }
+\DoxyCodeLine{00106     QString userName = vc-\/>getUserName();}
+\DoxyCodeLine{00107     QString password = vc-\/>getPassword();}
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00109     \textcolor{keywordflow}{if} (!userName.isEmpty() || !password.isEmpty()) \{}
+\DoxyCodeLine{00110       args << QString(\textcolor{stringliteral}{"{}-\/-\/username"{}}) << userName << QString(\textcolor{stringliteral}{"{}-\/-\/password"{}})}
+\DoxyCodeLine{00111            << password;}
+\DoxyCodeLine{00112     \}}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114     \textcolor{comment}{// Add "{}non-\/interactive"{} and "{}trust-\/server-\/cert"{} global options}}
+\DoxyCodeLine{00115     args << \textcolor{stringliteral}{"{}-\/-\/non-\/interactive"{}};}
+\DoxyCodeLine{00116     args << \textcolor{stringliteral}{"{}-\/-\/trust-\/server-\/cert"{}};}
+\DoxyCodeLine{00117 }
+\DoxyCodeLine{00118     QString executablePath                = vc-\/>getExecutablePath();}
+\DoxyCodeLine{00119     \textcolor{keywordflow}{if} (!executablePath.isEmpty()) binary = executablePath + \textcolor{stringliteral}{"{}/"{}} + m\_binary;}
+\DoxyCodeLine{00120 }
+\DoxyCodeLine{00121     m\_mutex.unlock();}
+\DoxyCodeLine{00122 }
+\DoxyCodeLine{00123     \textcolor{keywordflow}{if} (m\_abort) \{}
+\DoxyCodeLine{00124       \textcolor{keywordflow}{if} (m\_process) \{}
+\DoxyCodeLine{00125         m\_process-\/>close();}
+\DoxyCodeLine{00126         disconnect(m\_process, SIGNAL(readyReadStandardOutput()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00127                    SLOT(onStandardOutputReady()));}
+\DoxyCodeLine{00128         \textcolor{keyword}{delete} m\_process;}
+\DoxyCodeLine{00129         m\_process = 0;}
+\DoxyCodeLine{00130       \}}
+\DoxyCodeLine{00131       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00132     \}}
+\DoxyCodeLine{00133 }
+\DoxyCodeLine{00134     \textcolor{keywordflow}{if} (m\_process) \{}
+\DoxyCodeLine{00135       m\_process-\/>close();}
+\DoxyCodeLine{00136       disconnect(m\_process, SIGNAL(readyReadStandardOutput()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00137                  SLOT(onStandardOutputReady()));}
+\DoxyCodeLine{00138       \textcolor{keyword}{delete} m\_process;}
+\DoxyCodeLine{00139       m\_process = 0;}
+\DoxyCodeLine{00140     \}}
+\DoxyCodeLine{00141 }
+\DoxyCodeLine{00142     m\_process = \textcolor{keyword}{new} QProcess;}
+\DoxyCodeLine{00143     \textcolor{keywordflow}{if} (!workingDir.isEmpty() \&\& QFile::exists(workingDir))}
+\DoxyCodeLine{00144       m\_process-\/>setWorkingDirectory(workingDir);}
+\DoxyCodeLine{00145 }
+\DoxyCodeLine{00146     QStringList env = QProcess::systemEnvironment();}
+\DoxyCodeLine{00147     env << \textcolor{stringliteral}{"{}LC\_MESSAGES=en\_EN"{}};  \textcolor{comment}{// Add this environment variables to fix the}}
+\DoxyCodeLine{00148                                  \textcolor{comment}{// language to English}}
+\DoxyCodeLine{00149     m\_process-\/>setEnvironment(env);}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151     \textcolor{keywordflow}{if} (!m\_readOutputOnDone)}
+\DoxyCodeLine{00152       connect(m\_process, SIGNAL(readyReadStandardOutput()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00153               SLOT(onStandardOutputReady()));}
+\DoxyCodeLine{00154 }
+\DoxyCodeLine{00155     m\_process-\/>start(binary, args);}
+\DoxyCodeLine{00156     \textcolor{keywordflow}{if} (!m\_process-\/>waitForStarted()) \{}
+\DoxyCodeLine{00157       QString err = QString(\textcolor{stringliteral}{"{}Unable to launch \(\backslash\)"{}\%1\(\backslash\)"{}: \%2"{}})}
+\DoxyCodeLine{00158                         .arg(binary, m\_process-\/>errorString());}
+\DoxyCodeLine{00159       emit error(err);}
+\DoxyCodeLine{00160       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00161     \}}
+\DoxyCodeLine{00162 }
+\DoxyCodeLine{00163     m\_process-\/>closeWriteChannel();}
+\DoxyCodeLine{00164 }
+\DoxyCodeLine{00165     \textcolor{comment}{// Wait until users press cancel (every 1 sec I check for abort..}}
+\DoxyCodeLine{00166     \textcolor{keywordflow}{while} (!m\_process-\/>waitForFinished(1000)) \{}
+\DoxyCodeLine{00167       \textcolor{keywordflow}{if} (m\_abort) \{}
+\DoxyCodeLine{00168         m\_process-\/>kill();}
+\DoxyCodeLine{00169         m\_process-\/>waitForFinished();}
+\DoxyCodeLine{00170         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00171       \}}
+\DoxyCodeLine{00172     \}}
+\DoxyCodeLine{00173 }
+\DoxyCodeLine{00174     \textcolor{keywordflow}{if} (m\_process-\/>exitStatus() != QProcess::NormalExit) \{}
+\DoxyCodeLine{00175       QString err = QString(\textcolor{stringliteral}{"{}\(\backslash\)"{}\%1\(\backslash\)"{} crashed."{}}).arg(binary);}
+\DoxyCodeLine{00176       emit error(err);}
+\DoxyCodeLine{00177       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00178     \}}
+\DoxyCodeLine{00179 }
+\DoxyCodeLine{00180     \textcolor{keywordflow}{if} (m\_process-\/>exitCode()) \{}
+\DoxyCodeLine{00181       emit error(QString::fromUtf8(m\_process-\/>readAllStandardError().data()));}
+\DoxyCodeLine{00182       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00183     \}}
+\DoxyCodeLine{00184 }
+\DoxyCodeLine{00185     \textcolor{keywordflow}{if} (m\_getStatus) \{}
+\DoxyCodeLine{00186       emit statusRetrieved(}
+\DoxyCodeLine{00187           QString::fromUtf8(m\_process-\/>readAllStandardOutput().data()));}
+\DoxyCodeLine{00188       m\_getStatus = \textcolor{keyword}{false};}
+\DoxyCodeLine{00189     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00190       emit done(QString::fromUtf8(m\_process-\/>readAllStandardOutput().data()));}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192     m\_mutex.lock();}
+\DoxyCodeLine{00193     \textcolor{keywordflow}{if} (!m\_restart) m\_condition.wait(\&m\_mutex);}
+\DoxyCodeLine{00194     m\_restart = \textcolor{keyword}{false};}
+\DoxyCodeLine{00195     m\_mutex.unlock();}
+\DoxyCodeLine{00196   \}}
+\DoxyCodeLine{00197 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_version_control_thread_a73e2b1178e36b063a5e9ae8f0bb02690}\label{class_version_control_thread_a73e2b1178e36b063a5e9ae8f0bb02690}} 
+\index{VersionControlThread@{VersionControlThread}!m\_mutex@{m\_mutex}}
+\index{m\_mutex@{m\_mutex}!VersionControlThread@{VersionControlThread}}
+\doxysubsubsection{\texorpdfstring{m\_mutex}{m\_mutex}}
+{\footnotesize\ttfamily QMutex Version\+Control\+Thread\+::m\+\_\+mutex}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/versioncontrol.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/versioncontrol.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,148 @@
+\hypertarget{class_merge_cmapped_undo}{}\doxysection{Merge\+Cmapped\+Undo Class Reference}
+\label{class_merge_cmapped_undo}\index{MergeCmappedUndo@{MergeCmappedUndo}}
+Inheritance diagram for Merge\+Cmapped\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_merge_cmapped_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_merge_cmapped_undo_aa7a53567f5212924a8bcc7322db0d0ca}{Merge\+Cmapped\+Undo}} (\mbox{\hyperlink{class_t_xsh_level}{TXsh\+Level}} $\ast$xl, int merge\+Cmapped\+Session\+Id, int column, \mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$level, const std\+::map$<$ \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}}, QString $>$ \&images, int m\+Column, \mbox{\hyperlink{class_t_palette}{TPalette}} $\ast$palette)
+\item 
+void \mbox{\hyperlink{class_merge_cmapped_undo_abaa10fc9b7a8f77e0d1dd1f2cb25de60}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_merge_cmapped_undo_a64b5b328a6c293bc86810a06e3eea759}{redo}} () const override
+\item 
+int \mbox{\hyperlink{class_merge_cmapped_undo_a02b8ef7079939754a37f785243a4978b}{get\+Size}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_merge_cmapped_undo_aa7a53567f5212924a8bcc7322db0d0ca}\label{class_merge_cmapped_undo_aa7a53567f5212924a8bcc7322db0d0ca}} 
+\index{MergeCmappedUndo@{MergeCmappedUndo}!MergeCmappedUndo@{MergeCmappedUndo}}
+\index{MergeCmappedUndo@{MergeCmappedUndo}!MergeCmappedUndo@{MergeCmappedUndo}}
+\doxysubsubsection{\texorpdfstring{MergeCmappedUndo()}{MergeCmappedUndo()}}
+{\footnotesize\ttfamily Merge\+Cmapped\+Undo\+::\+Merge\+Cmapped\+Undo (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsh_level}{TXsh\+Level}} $\ast$}]{xl,  }\item[{int}]{merge\+Cmapped\+Session\+Id,  }\item[{int}]{column,  }\item[{\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{level,  }\item[{const std\+::map$<$ \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}}, QString $>$ \&}]{images,  }\item[{int}]{m\+Column,  }\item[{\mbox{\hyperlink{class_t_palette}{TPalette}} $\ast$}]{palette }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00366       : \mbox{\hyperlink{class_t_undo}{TUndo}}()}
+\DoxyCodeLine{00367       , m\_xl(xl)}
+\DoxyCodeLine{00368       , m\_mergeCmappedSessionId(mergeCmappedSessionId)}
+\DoxyCodeLine{00369       , m\_palette(palette-\/>clone())}
+\DoxyCodeLine{00370       , m\_level(level)}
+\DoxyCodeLine{00371       , m\_column(column)}
+\DoxyCodeLine{00372       , m\_mColumn(mColumn)}
+\DoxyCodeLine{00373       , m\_images(images)}
+\DoxyCodeLine{00374 }
+\DoxyCodeLine{00375   \{}
+\DoxyCodeLine{00376     m\_fullpath = m\_xl-\/>\mbox{\hyperlink{class_t_xsh_level_ab8ffcf067cadf0e1c4081b54ffde249d}{getPath}}().getWideString();}
+\DoxyCodeLine{00377   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_merge_cmapped_undo_aef77bc48ece4a893846a9f24658398d1}\label{class_merge_cmapped_undo_aef77bc48ece4a893846a9f24658398d1}} 
+\index{MergeCmappedUndo@{MergeCmappedUndo}!````~MergeCmappedUndo@{$\sim$MergeCmappedUndo}}
+\index{````~MergeCmappedUndo@{$\sim$MergeCmappedUndo}!MergeCmappedUndo@{MergeCmappedUndo}}
+\doxysubsubsection{\texorpdfstring{$\sim$MergeCmappedUndo()}{~MergeCmappedUndo()}}
+{\footnotesize\ttfamily Merge\+Cmapped\+Undo\+::$\sim$\+Merge\+Cmapped\+Undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00412                       \{}
+\DoxyCodeLine{00413     std::map<TFrameId, QString>::const\_iterator it = m\_images.begin();}
+\DoxyCodeLine{00414     \textcolor{keywordflow}{for} (; it != m\_images.end(); ++it)  \textcolor{comment}{//, ++mit)}}
+\DoxyCodeLine{00415     \{}
+\DoxyCodeLine{00416       QString \textcolor{keywordtype}{id} = \textcolor{stringliteral}{"{}MergeCmappedUndo"{}} + QString::number((uintptr\_t) \textcolor{keyword}{this}) +}
+\DoxyCodeLine{00417                    \textcolor{stringliteral}{"{}-\/"{}} + QString::number(it-\/>first.getNumber());}
+\DoxyCodeLine{00418       TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a57d63227dfe2532b0aed22c47113be66}{remove}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00419     \}}
+\DoxyCodeLine{00420     \textcolor{keyword}{delete} m\_palette;}
+\DoxyCodeLine{00421   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_merge_cmapped_undo_a02b8ef7079939754a37f785243a4978b}\label{class_merge_cmapped_undo_a02b8ef7079939754a37f785243a4978b}} 
+\index{MergeCmappedUndo@{MergeCmappedUndo}!getSize@{getSize}}
+\index{getSize@{getSize}!MergeCmappedUndo@{MergeCmappedUndo}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Merge\+Cmapped\+Undo\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00410 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(*this); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_merge_cmapped_undo_a64b5b328a6c293bc86810a06e3eea759}\label{class_merge_cmapped_undo_a64b5b328a6c293bc86810a06e3eea759}} 
+\index{MergeCmappedUndo@{MergeCmappedUndo}!redo@{redo}}
+\index{redo@{redo}!MergeCmappedUndo@{MergeCmappedUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Merge\+Cmapped\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00405                              \{}
+\DoxyCodeLine{00406     mergeCmapped(m\_column, m\_mColumn, QString::fromStdWString(m\_fullpath),}
+\DoxyCodeLine{00407                  \textcolor{keyword}{true});}
+\DoxyCodeLine{00408   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_merge_cmapped_undo_abaa10fc9b7a8f77e0d1dd1f2cb25de60}\label{class_merge_cmapped_undo_abaa10fc9b7a8f77e0d1dd1f2cb25de60}} 
+\index{MergeCmappedUndo@{MergeCmappedUndo}!undo@{undo}}
+\index{undo@{undo}!MergeCmappedUndo@{MergeCmappedUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Merge\+Cmapped\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00379                              \{}
+\DoxyCodeLine{00380     std::map<TFrameId, QString>::const\_iterator it = m\_images.begin();}
+\DoxyCodeLine{00381     \mbox{\hyperlink{class_t_palette}{TPalette}} *palette = m\_palette-\/>\mbox{\hyperlink{class_t_palette_abc3ef5824d89e65687b32c530cf25325}{clone}}();}
+\DoxyCodeLine{00382     m\_level-\/>\mbox{\hyperlink{class_t_xsh_simple_level_ab5634198656dc2ade669fae235bb19c0}{setPalette}}(palette);}
+\DoxyCodeLine{00383     std::vector<TFrameId> fids;}
+\DoxyCodeLine{00384     \textcolor{keywordflow}{for} (; it != m\_images.end(); ++it)  \textcolor{comment}{//, ++mit)}}
+\DoxyCodeLine{00385     \{}
+\DoxyCodeLine{00386       QString \textcolor{keywordtype}{id} = \textcolor{stringliteral}{"{}MergeCmappedUndo"{}} +}
+\DoxyCodeLine{00387                    QString::number(m\_mergeCmappedSessionId) + \textcolor{stringliteral}{"{}-\/"{}} +}
+\DoxyCodeLine{00388                    QString::number(it-\/>first.getNumber());}
+\DoxyCodeLine{00389       \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} img = TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_aea3ac2752efd6fa9689f5a7c1e895e41}{get}}(\textcolor{keywordtype}{id}, \textcolor{keyword}{false})-\/>\mbox{\hyperlink{class_t_image_a3632b96b398057030a4adfe6917d2e28}{cloneImage}}();}
+\DoxyCodeLine{00390       img-\/>\mbox{\hyperlink{class_t_image_a3377c18a849addff5c2cb238176ad04f}{setPalette}}(palette);}
+\DoxyCodeLine{00391       m\_level-\/>setFrame(it-\/>first, img);}
+\DoxyCodeLine{00392       fids.push\_back(it-\/>first);}
+\DoxyCodeLine{00393     \}}
+\DoxyCodeLine{00394 }
+\DoxyCodeLine{00395     removeLevel(m\_xl);}
+\DoxyCodeLine{00396 }
+\DoxyCodeLine{00397     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00398         -\/>getPaletteController()}
+\DoxyCodeLine{00399         -\/>getCurrentLevelPalette()}
+\DoxyCodeLine{00400         -\/>setPalette(palette);}
+\DoxyCodeLine{00401     m\_level-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a2d43337766628739707849f8808bf300}{setDirtyFlag}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00402     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00403   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/mergecmapped.\+cpp\end{DoxyCompactItemize}

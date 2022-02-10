@@ -1,0 +1,102 @@
+\hypertarget{class_t_image_writer_mesh}{}\doxysection{TImage\+Writer\+Mesh Class Reference}
+\label{class_t_image_writer_mesh}\index{TImageWriterMesh@{TImageWriterMesh}}
+Inheritance diagram for TImage\+Writer\+Mesh\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_t_image_writer_mesh}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_image_writer_mesh_a5cf6690d6af14c3400667db168a864ed}{TImage\+Writer\+Mesh}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&fp, const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&frame\+Id)
+\item 
+void \mbox{\hyperlink{class_t_image_writer_mesh_a3c2318108743a2da0c8aa92da2315067}{save}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_image_writer_mesh_a5cf6690d6af14c3400667db168a864ed}\label{class_t_image_writer_mesh_a5cf6690d6af14c3400667db168a864ed}} 
+\index{TImageWriterMesh@{TImageWriterMesh}!TImageWriterMesh@{TImageWriterMesh}}
+\index{TImageWriterMesh@{TImageWriterMesh}!TImageWriterMesh@{TImageWriterMesh}}
+\doxysubsubsection{\texorpdfstring{TImageWriterMesh()}{TImageWriterMesh()}}
+{\footnotesize\ttfamily TImage\+Writer\+Mesh\+::\+TImage\+Writer\+Mesh (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{fp,  }\item[{const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&}]{frame\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00034     : \mbox{\hyperlink{class_t_image_writer}{TImageWriter}}(fp), m\_fid(frameId) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_image_writer_mesh_a122566c263ebf6bc78daa26a2bb6fb2b}\label{class_t_image_writer_mesh_a122566c263ebf6bc78daa26a2bb6fb2b}} 
+\index{TImageWriterMesh@{TImageWriterMesh}!````~TImageWriterMesh@{$\sim$TImageWriterMesh}}
+\index{````~TImageWriterMesh@{$\sim$TImageWriterMesh}!TImageWriterMesh@{TImageWriterMesh}}
+\doxysubsubsection{\texorpdfstring{$\sim$TImageWriterMesh()}{~TImageWriterMesh()}}
+{\footnotesize\ttfamily TImage\+Writer\+Mesh\+::$\sim$\+TImage\+Writer\+Mesh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00021 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_image_writer_mesh_a3c2318108743a2da0c8aa92da2315067}\label{class_t_image_writer_mesh_a3c2318108743a2da0c8aa92da2315067}} 
+\index{TImageWriterMesh@{TImageWriterMesh}!save@{save}}
+\index{save@{save}!TImageWriterMesh@{TImageWriterMesh}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily void TImage\+Writer\+Mesh\+::save (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&}]{img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_image_writer}{TImage\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00038                                               \{}
+\DoxyCodeLine{00039   \mbox{\hyperlink{class_t_file_path}{TFilePath}} imagePath(this-\/>m\_path.\mbox{\hyperlink{class_t_file_path_a12f35b225e1882372ad7e02ad7fce543}{withFrame}}(m\_fid));}
+\DoxyCodeLine{00040 }
+\DoxyCodeLine{00041   \mbox{\hyperlink{class_t_o_stream}{TOStream}} ostream(imagePath, \textcolor{keyword}{true});  \textcolor{comment}{// Use compression}}
+\DoxyCodeLine{00042 }
+\DoxyCodeLine{00043   \mbox{\hyperlink{class_t_mesh_image_p}{TMeshImageP}} mi = img;}
+\DoxyCodeLine{00044 }
+\DoxyCodeLine{00045   \textcolor{comment}{// Save Header}}
+\DoxyCodeLine{00046   ostream.openChild(\textcolor{stringliteral}{"{}header"{}});}
+\DoxyCodeLine{00047   \{}
+\DoxyCodeLine{00048     \textcolor{comment}{// Save version}}
+\DoxyCodeLine{00049     ostream.openChild(\textcolor{stringliteral}{"{}version"{}});}
+\DoxyCodeLine{00050     ostream << 1 << 19;}
+\DoxyCodeLine{00051     ostream.closeChild();}
+\DoxyCodeLine{00052 }
+\DoxyCodeLine{00053     \textcolor{comment}{// Save dpi}}
+\DoxyCodeLine{00054     ostream.openChild(\textcolor{stringliteral}{"{}dpi"{}});}
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056     \textcolor{keywordtype}{double} dpiX, dpiY;}
+\DoxyCodeLine{00057     mi-\/>getDpi(dpiX, dpiY);}
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059     ostream << dpiX << dpiY;}
+\DoxyCodeLine{00060     ostream.closeChild();}
+\DoxyCodeLine{00061   \}}
+\DoxyCodeLine{00062   ostream.closeChild();}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064   \textcolor{comment}{// Save meshes}}
+\DoxyCodeLine{00065   \textcolor{keyword}{const} std::vector<TTextureMeshP> \&meshes = mi-\/>meshes();}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067   \textcolor{keywordtype}{int} m, mCount = meshes.size();}
+\DoxyCodeLine{00068   \textcolor{keywordflow}{for} (m = 0; m < mCount; ++m) \{}
+\DoxyCodeLine{00069     ostream.openChild(\textcolor{stringliteral}{"{}mesh"{}});}
+\DoxyCodeLine{00070     ostream << *meshes[m];}
+\DoxyCodeLine{00071     ostream.closeChild();}
+\DoxyCodeLine{00072   \}}
+\DoxyCodeLine{00073 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/mesh/tiio\+\_\+mesh.\+cpp\end{DoxyCompactItemize}

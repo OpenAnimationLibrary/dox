@@ -1,0 +1,296 @@
+\hypertarget{class_convert_popup_1_1_converter}{}\doxysection{Convert\+Popup\+::Converter Class Reference}
+\label{class_convert_popup_1_1_converter}\index{ConvertPopup::Converter@{ConvertPopup::Converter}}
+Inheritance diagram for Convert\+Popup\+::Converter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_convert_popup_1_1_converter}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_convert_popup_1_1_converter_ac1801cd538e5a4f3b9ae5256a7aabb8b}{Converter}} (\mbox{\hyperlink{class_convert_popup}{Convert\+Popup}} $\ast$parent)
+\item 
+void \mbox{\hyperlink{class_convert_popup_1_1_converter_a43d56f9158b030316f4f597eaae51acc}{run}} () override
+\item 
+void \mbox{\hyperlink{class_convert_popup_1_1_converter_a29ebee4c9a937886060795da9154bc00}{convert\+Level}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&fp)
+\item 
+void \mbox{\hyperlink{class_convert_popup_1_1_converter_a041ceaa40835824f29ff1e9e52e686e8}{convert\+Level\+With\+Convert2\+Tlv}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&fp)
+\item 
+int \mbox{\hyperlink{class_convert_popup_1_1_converter_a9641541b0c8678f5da91b69b5f06d0c6}{get\+Skipped\+Count}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_convert_popup_1_1_converter_ac1801cd538e5a4f3b9ae5256a7aabb8b}\label{class_convert_popup_1_1_converter_ac1801cd538e5a4f3b9ae5256a7aabb8b}} 
+\index{ConvertPopup::Converter@{ConvertPopup::Converter}!Converter@{Converter}}
+\index{Converter@{Converter}!ConvertPopup::Converter@{ConvertPopup::Converter}}
+\doxysubsubsection{\texorpdfstring{Converter()}{Converter()}}
+{\footnotesize\ttfamily Convert\+Popup\+::\+Converter\+::\+Converter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_convert_popup}{Convert\+Popup}} $\ast$}]{parent }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00103 : m\_parent(parent), m\_skippedCount(0) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_convert_popup_1_1_converter_a29ebee4c9a937886060795da9154bc00}\label{class_convert_popup_1_1_converter_a29ebee4c9a937886060795da9154bc00}} 
+\index{ConvertPopup::Converter@{ConvertPopup::Converter}!convertLevel@{convertLevel}}
+\index{convertLevel@{convertLevel}!ConvertPopup::Converter@{ConvertPopup::Converter}}
+\doxysubsubsection{\texorpdfstring{convertLevel()}{convertLevel()}}
+{\footnotesize\ttfamily void Convert\+Popup\+::\+Converter\+::convert\+Level (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{fp }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00176                                          \{}
+\DoxyCodeLine{00177   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *sc      = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00178   \mbox{\hyperlink{class_convert_popup}{ConvertPopup}} *popup = m\_parent;}
+\DoxyCodeLine{00179 }
+\DoxyCodeLine{00180   QString levelName = QString::fromStdString(sourceFileFullPath.getLevelName());}
+\DoxyCodeLine{00181   std::string ext   = popup-\/>m\_fileFormat-\/>currentText().toStdString();}
+\DoxyCodeLine{00182   \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}} *prop = popup-\/>getFormatProperties(ext);}
+\DoxyCodeLine{00183 }
+\DoxyCodeLine{00184   \mbox{\hyperlink{class_t_file_path}{TFilePath}} dstFileFullPath = popup-\/>getDestinationFilePath(sourceFileFullPath);}
+\DoxyCodeLine{00185 }
+\DoxyCodeLine{00186   \textcolor{comment}{// bool isTlvNonAA = isTlv \&\& popup-\/>getTlvMode() == TlvMode\_PaintedFromNonAA;}}
+\DoxyCodeLine{00187   \textcolor{keywordtype}{bool} isTlvNonAA =}
+\DoxyCodeLine{00188       !(m\_parent-\/>getTlvMode().compare(m\_parent-\/>TlvMode\_PaintedFromNonAA));}
+\DoxyCodeLine{00189 }
+\DoxyCodeLine{00190   \mbox{\hyperlink{class_t_frame_id}{TFrameId}} from, to;}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192   \textcolor{keywordflow}{if} (TFileType::isLevelFilePath(sourceFileFullPath)) \{}
+\DoxyCodeLine{00193     popup-\/>getFrameRange(sourceFileFullPath, from, to);}
+\DoxyCodeLine{00194 }
+\DoxyCodeLine{00195     \textcolor{keywordflow}{if} (from == \mbox{\hyperlink{class_t_frame_id}{TFrameId}}() || to == \mbox{\hyperlink{class_t_frame_id}{TFrameId}}()) \{}
+\DoxyCodeLine{00196       DVGui::warning(tr(\textcolor{stringliteral}{"{}Level \%1 has no frame; skipped."{}}).arg(levelName));}
+\DoxyCodeLine{00197       popup-\/>m\_notifier-\/>notifyError();}
+\DoxyCodeLine{00198 }
+\DoxyCodeLine{00199       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00200     \}}
+\DoxyCodeLine{00201   \}}
+\DoxyCodeLine{00202 }
+\DoxyCodeLine{00203   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}} *oprop = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00204                                  -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00205                                  -\/>getScene()}
+\DoxyCodeLine{00206                                  -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00207                                  -\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}();}
+\DoxyCodeLine{00208   \textcolor{keywordtype}{double} framerate = oprop-\/>\mbox{\hyperlink{class_t_output_properties_a0d9662971bc33097aa1b55111965b967}{getFrameRate}}();}
+\DoxyCodeLine{00209 }
+\DoxyCodeLine{00210   \textcolor{keywordflow}{if} (popup-\/>m\_fileFormat-\/>currentText() == TlvExtension) \{}
+\DoxyCodeLine{00211     \textcolor{comment}{// convert to TLV}}
+\DoxyCodeLine{00212     \textcolor{keywordflow}{if} (!(m\_parent-\/>getTlvMode().compare(m\_parent-\/>TlvMode\_PaintedFromNonAA))) \{}
+\DoxyCodeLine{00213       \textcolor{comment}{// no AA source (retas)}}
+\DoxyCodeLine{00214       \mbox{\hyperlink{class_t_smart_pointer_t}{TPaletteP}} palette = popup-\/>readUserProvidedPalette();}
+\DoxyCodeLine{00215       ImageUtils::convertNaa2Tlv(sourceFileFullPath, dstFileFullPath, from, to,}
+\DoxyCodeLine{00216                                  m\_parent-\/>m\_notifier, palette.getPointer(),}
+\DoxyCodeLine{00217                                  m\_parent-\/>m\_removeUnusedStyles-\/>isChecked(),}
+\DoxyCodeLine{00218                                  m\_parent-\/>m\_dpiFld-\/>\mbox{\hyperlink{class_d_v_gui_1_1_double_line_edit_a4cb043e4d9f7c7ffeed57a72bc10a26e}{getValue}}());}
+\DoxyCodeLine{00219     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00220       convertLevelWithConvert2Tlv(sourceFileFullPath);}
+\DoxyCodeLine{00221     \}}
+\DoxyCodeLine{00222   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (popup-\/>m\_fileFormat-\/>currentText() == OldLevelToTlvExtension) \{}
+\DoxyCodeLine{00223     \textcolor{comment}{// convert old levels (tzp/tzu) to tlv}}
+\DoxyCodeLine{00224     ImageUtils::convertOldLevel2Tlv(sourceFileFullPath, dstFileFullPath, from,}
+\DoxyCodeLine{00225                                     to, m\_parent-\/>m\_notifier);}
+\DoxyCodeLine{00226   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00227     \textcolor{comment}{// convert to full-\/color}}
+\DoxyCodeLine{00228     TPixel32 bgColor = m\_parent-\/>m\_bgColorField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_color_field_a6955ee5be0a395075590a99bc9262fe1}{getColor}}();}
+\DoxyCodeLine{00229     ImageUtils::convert(sourceFileFullPath, dstFileFullPath, from, to,}
+\DoxyCodeLine{00230                         framerate, prop, m\_parent-\/>m\_notifier, bgColor,}
+\DoxyCodeLine{00231                         m\_parent-\/>m\_removeDotBeforeFrameNumber-\/>isChecked());}
+\DoxyCodeLine{00232   \}}
+\DoxyCodeLine{00233 }
+\DoxyCodeLine{00234   popup-\/>m\_notifier-\/>notifyLevelCompleted(dstFileFullPath);}
+\DoxyCodeLine{00235 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_convert_popup_1_1_converter_a041ceaa40835824f29ff1e9e52e686e8}\label{class_convert_popup_1_1_converter_a041ceaa40835824f29ff1e9e52e686e8}} 
+\index{ConvertPopup::Converter@{ConvertPopup::Converter}!convertLevelWithConvert2Tlv@{convertLevelWithConvert2Tlv}}
+\index{convertLevelWithConvert2Tlv@{convertLevelWithConvert2Tlv}!ConvertPopup::Converter@{ConvertPopup::Converter}}
+\doxysubsubsection{\texorpdfstring{convertLevelWithConvert2Tlv()}{convertLevelWithConvert2Tlv()}}
+{\footnotesize\ttfamily void Convert\+Popup\+::\+Converter\+::convert\+Level\+With\+Convert2\+Tlv (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{fp }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00239                                          \{}
+\DoxyCodeLine{00240   \mbox{\hyperlink{class_convert_popup}{ConvertPopup}} *popup       = m\_parent;}
+\DoxyCodeLine{00241   \mbox{\hyperlink{class_convert2_tlv}{Convert2Tlv}} *tlvConverter = popup-\/>makeTlvConverter(sourceFileFullPath);}
+\DoxyCodeLine{00242 }
+\DoxyCodeLine{00243   \mbox{\hyperlink{class_t_file_path}{TFilePath}} levelOut = tlvConverter-\/>m\_levelOut;}
+\DoxyCodeLine{00244 }
+\DoxyCodeLine{00245   \textcolor{keywordflow}{if} (m\_saveToNopaintOnlyFlag) \{}
+\DoxyCodeLine{00246     \mbox{\hyperlink{class_t_file_path}{TFilePath}} unpaintedLevelPath =}
+\DoxyCodeLine{00247         tlvConverter-\/>m\_levelOut.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() + \textcolor{stringliteral}{"{}nopaint\(\backslash\)\(\backslash\)"{}} +}
+\DoxyCodeLine{00248         \mbox{\hyperlink{class_t_file_path}{TFilePath}}(tlvConverter-\/>m\_levelOut.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}() + \textcolor{stringliteral}{"{}\_np."{}} +}
+\DoxyCodeLine{00249                   tlvConverter-\/>m\_levelOut.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}());}
+\DoxyCodeLine{00250     tlvConverter-\/>m\_levelOut = unpaintedLevelPath;}
+\DoxyCodeLine{00251   \}}
+\DoxyCodeLine{00252 }
+\DoxyCodeLine{00253   std::string errorMessage;}
+\DoxyCodeLine{00254   \textcolor{keywordflow}{if} (!tlvConverter-\/>init(errorMessage)) \{}
+\DoxyCodeLine{00255     DVGui::warning(QString::fromStdString(errorMessage));}
+\DoxyCodeLine{00256     tlvConverter-\/>abort();}
+\DoxyCodeLine{00257   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00258     \textcolor{keywordtype}{int} count = tlvConverter-\/>getFramesToConvertCount();}
+\DoxyCodeLine{00259     popup-\/>m\_progressDialog-\/>setMinimum(0);}
+\DoxyCodeLine{00260     popup-\/>m\_progressDialog-\/>setMaximum(count);}
+\DoxyCodeLine{00261     \textcolor{keywordtype}{bool} stop = \textcolor{keyword}{false};}
+\DoxyCodeLine{00262     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < count \&\& !stop; j++) \{}
+\DoxyCodeLine{00263       \textcolor{keywordflow}{if} (!tlvConverter-\/>convertNext(errorMessage)) \{}
+\DoxyCodeLine{00264         stop = \textcolor{keyword}{true};}
+\DoxyCodeLine{00265         DVGui::warning(QString::fromStdString(errorMessage));}
+\DoxyCodeLine{00266       \}}
+\DoxyCodeLine{00267       \textcolor{keywordflow}{if} (popup-\/>m\_progressDialog-\/>wasCanceled()) stop = \textcolor{keyword}{true};}
+\DoxyCodeLine{00268 }
+\DoxyCodeLine{00269       popup-\/>m\_notifier-\/>notifyFrameCompleted(j);}
+\DoxyCodeLine{00270     \}}
+\DoxyCodeLine{00271     \textcolor{keywordflow}{if} (stop) tlvConverter-\/>abort();}
+\DoxyCodeLine{00272 }
+\DoxyCodeLine{00273     \textcolor{keyword}{delete} tlvConverter;}
+\DoxyCodeLine{00274   \}}
+\DoxyCodeLine{00275 }
+\DoxyCodeLine{00276   \textcolor{comment}{/*-\/-\/-\/ nopaintファイルを複製する -\/-\/-\/*/}}
+\DoxyCodeLine{00277   \textcolor{keywordflow}{if} (m\_parent-\/>isSaveTlvBackupToNopaintActive() \&\& !m\_saveToNopaintOnlyFlag) \{}
+\DoxyCodeLine{00278     \textcolor{comment}{/*-\/-\/-\/ nopaintフォルダの作成 -\/-\/-\/*/}}
+\DoxyCodeLine{00279     \mbox{\hyperlink{class_t_file_path}{TFilePath}} nopaintDir = levelOut.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() + \textcolor{stringliteral}{"{}nopaint"{}};}
+\DoxyCodeLine{00280     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(nopaintDir).doesExist()) \{}
+\DoxyCodeLine{00281       \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00282         TSystem::mkDir(nopaintDir);}
+\DoxyCodeLine{00283       \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00284         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00285       \}}
+\DoxyCodeLine{00286     \}}
+\DoxyCodeLine{00287 }
+\DoxyCodeLine{00288     \mbox{\hyperlink{class_t_file_path}{TFilePath}} unpaintedLevelPath =}
+\DoxyCodeLine{00289         levelOut.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() + \textcolor{stringliteral}{"{}nopaint\(\backslash\)\(\backslash\)"{}} +}
+\DoxyCodeLine{00290         \mbox{\hyperlink{class_t_file_path}{TFilePath}}(levelOut.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}() + \textcolor{stringliteral}{"{}\_np."{}} + levelOut.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}());}
+\DoxyCodeLine{00291 }
+\DoxyCodeLine{00292     \textcolor{comment}{/*-\/-\/-\/ もしnopaintのファイルがあった場合は消去する -\/-\/-\/*/}}
+\DoxyCodeLine{00293     \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(unpaintedLevelPath)) \{}
+\DoxyCodeLine{00294       TSystem::removeFileOrLevel(unpaintedLevelPath);}
+\DoxyCodeLine{00295       TSystem::deleteFile(}
+\DoxyCodeLine{00296           (unpaintedLevelPath.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() + unpaintedLevelPath.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}())}
+\DoxyCodeLine{00297               .withType(\textcolor{stringliteral}{"{}tpl"{}}));}
+\DoxyCodeLine{00298     \}}
+\DoxyCodeLine{00299 }
+\DoxyCodeLine{00300     TSystem::copyFile(unpaintedLevelPath, levelOut);}
+\DoxyCodeLine{00301 }
+\DoxyCodeLine{00302     \textcolor{comment}{/*-\/-\/-\/ Paletteのコピー -\/-\/-\/*/}}
+\DoxyCodeLine{00303     \mbox{\hyperlink{class_t_file_path}{TFilePath}} levelPalettePath =}
+\DoxyCodeLine{00304         levelOut.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(levelOut.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}() + \textcolor{stringliteral}{"{}.tpl"{}});}
+\DoxyCodeLine{00305 }
+\DoxyCodeLine{00306     \mbox{\hyperlink{class_t_file_path}{TFilePath}} unpaintedLevelPalettePath =}
+\DoxyCodeLine{00307         levelPalettePath.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() + \textcolor{stringliteral}{"{}nopaint\(\backslash\)\(\backslash\)"{}} +}
+\DoxyCodeLine{00308         \mbox{\hyperlink{class_t_file_path}{TFilePath}}(levelPalettePath.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}() + \textcolor{stringliteral}{"{}\_np."{}} +}
+\DoxyCodeLine{00309                   levelPalettePath.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}());}
+\DoxyCodeLine{00310 }
+\DoxyCodeLine{00311     TSystem::copyFile(unpaintedLevelPalettePath, levelPalettePath);}
+\DoxyCodeLine{00312   \}}
+\DoxyCodeLine{00313 }
+\DoxyCodeLine{00314   \textcolor{comment}{/*}}
+\DoxyCodeLine{00315 \textcolor{comment}{    QApplication::restoreOverrideCursor();}}
+\DoxyCodeLine{00316 \textcolor{comment}{    FileBrowser::refreshFolder(m\_srcFilePaths[0].getParentDir());}}
+\DoxyCodeLine{00317 \textcolor{comment}{    TFilePath::setUnderscoreFormatAllowed(false);}}
+\DoxyCodeLine{00318 \textcolor{comment}{}}
+\DoxyCodeLine{00319 \textcolor{comment}{        TFilePath levelOut(converters[i]-\/>m\_levelOut);}}
+\DoxyCodeLine{00320 \textcolor{comment}{delete converters[i];}}
+\DoxyCodeLine{00321 \textcolor{comment}{IconGenerator::instance()-\/>invalidate(levelOut);}}
+\DoxyCodeLine{00322 \textcolor{comment}{*/}}
+\DoxyCodeLine{00323 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_convert_popup_1_1_converter_a9641541b0c8678f5da91b69b5f06d0c6}\label{class_convert_popup_1_1_converter_a9641541b0c8678f5da91b69b5f06d0c6}} 
+\index{ConvertPopup::Converter@{ConvertPopup::Converter}!getSkippedCount@{getSkippedCount}}
+\index{getSkippedCount@{getSkippedCount}!ConvertPopup::Converter@{ConvertPopup::Converter}}
+\doxysubsubsection{\texorpdfstring{getSkippedCount()}{getSkippedCount()}}
+{\footnotesize\ttfamily int Convert\+Popup\+::\+Converter\+::get\+Skipped\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107 \{ \textcolor{keywordflow}{return} m\_skippedCount; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_convert_popup_1_1_converter_a43d56f9158b030316f4f597eaae51acc}\label{class_convert_popup_1_1_converter_a43d56f9158b030316f4f597eaae51acc}} 
+\index{ConvertPopup::Converter@{ConvertPopup::Converter}!run@{run}}
+\index{run@{run}!ConvertPopup::Converter@{ConvertPopup::Converter}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Convert\+Popup\+::\+Converter\+::run (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00110                                 \{}
+\DoxyCodeLine{00111   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *sc = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00112   \mbox{\hyperlink{class_d_v_gui_1_1_progress_dialog}{DVGui::ProgressDialog}} *progressDialog = m\_parent-\/>m\_progressDialog;}
+\DoxyCodeLine{00113   \textcolor{keywordtype}{int} levelCount                        = m\_parent-\/>m\_srcFilePaths.size();}
+\DoxyCodeLine{00114   \mbox{\hyperlink{class_t_file_path}{TFilePath}} dstFolder(m\_parent-\/>m\_saveInFileFld-\/>getPath());}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; !m\_parent-\/>m\_notifier-\/>abortTask() \&\& i < levelCount; i++) \{}
+\DoxyCodeLine{00117     \mbox{\hyperlink{class_t_file_path}{TFilePath}} sourceLevelPath = sc-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(m\_parent-\/>m\_srcFilePaths[i]);}
+\DoxyCodeLine{00118     QString levelName = QString::fromStdString(sourceLevelPath.\mbox{\hyperlink{class_t_file_path_a9b256108e6e5ff99f3ba828d4cdbd7ee}{getLevelName}}());}
+\DoxyCodeLine{00119 }
+\DoxyCodeLine{00120     \textcolor{comment}{// check already existent levels}}
+\DoxyCodeLine{00121     \mbox{\hyperlink{class_t_file_path}{TFilePath}} dstFilePath =}
+\DoxyCodeLine{00122         m\_parent-\/>getDestinationFilePath(m\_parent-\/>m\_srcFilePaths[i]);}
+\DoxyCodeLine{00123 }
+\DoxyCodeLine{00124     \textcolor{comment}{// perche' ??          TFilePath}}
+\DoxyCodeLine{00125     \textcolor{comment}{// path=dstFilePath.getParentDir()+(dstFilePath.getName()+"{}."{}+dstFilePath.getDottedType());}}
+\DoxyCodeLine{00126     \textcolor{comment}{//                   if(TSystem::doesExistFileOrLevel(dstFilePath)||TSystem::doesExistFileOrLevel(path))}}
+\DoxyCodeLine{00127 }
+\DoxyCodeLine{00128     m\_saveToNopaintOnlyFlag = \textcolor{keyword}{false};}
+\DoxyCodeLine{00129 }
+\DoxyCodeLine{00130     \textcolor{keywordflow}{if} (dstFilePath == sourceLevelPath) \{}
+\DoxyCodeLine{00131       DVGui::info(tr(\textcolor{stringliteral}{"{}Level \%1 converting to same file format; skipped."{}})}
+\DoxyCodeLine{00132                       .arg(levelName));}
+\DoxyCodeLine{00133       m\_skippedCount++;}
+\DoxyCodeLine{00134       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00135     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(dstFilePath)) \{}
+\DoxyCodeLine{00136       \textcolor{keywordflow}{if} (m\_parent-\/>m\_skip-\/>isChecked()) \{}
+\DoxyCodeLine{00137         DVGui::info(tr(\textcolor{stringliteral}{"{}Level \%1 already exists; skipped."{}}).arg(levelName));}
+\DoxyCodeLine{00138         m\_skippedCount++;}
+\DoxyCodeLine{00139         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00140       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00141         \textcolor{comment}{/*-\/-\/-\/ ここで、tlv形式に変換、かつ、UnpaintedTlvが選択され、かつ、}}
+\DoxyCodeLine{00142 \textcolor{comment}{　　　nopaintにバックアップを保存するオプションがONのとき、}}
+\DoxyCodeLine{00143 \textcolor{comment}{        出力先をnopaintに変更する。既にあるnopaint内のtlvを消す}}
+\DoxyCodeLine{00144 \textcolor{comment}{-\/-\/-\/*/}}
+\DoxyCodeLine{00145         \textcolor{keywordflow}{if} (m\_parent-\/>isSaveTlvBackupToNopaintActive()) \{}
+\DoxyCodeLine{00146           \mbox{\hyperlink{class_t_file_path}{TFilePath}} unpaintedLevelPath =}
+\DoxyCodeLine{00147               dstFilePath.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() + \textcolor{stringliteral}{"{}nopaint\(\backslash\)\(\backslash\)"{}} +}
+\DoxyCodeLine{00148               \mbox{\hyperlink{class_t_file_path}{TFilePath}}(dstFilePath.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}() + \textcolor{stringliteral}{"{}\_np."{}} + dstFilePath.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}());}
+\DoxyCodeLine{00149           \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(unpaintedLevelPath)) \{}
+\DoxyCodeLine{00150             TSystem::removeFileOrLevel(unpaintedLevelPath);}
+\DoxyCodeLine{00151             TSystem::deleteFile((unpaintedLevelPath.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() +}
+\DoxyCodeLine{00152                                  unpaintedLevelPath.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}())}
+\DoxyCodeLine{00153                                     .withType(\textcolor{stringliteral}{"{}tpl"{}}));}
+\DoxyCodeLine{00154           \}}
+\DoxyCodeLine{00155           m\_saveToNopaintOnlyFlag = \textcolor{keyword}{true};}
+\DoxyCodeLine{00156         \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00157           \textcolor{comment}{// todo: handle errors!!}}
+\DoxyCodeLine{00158           TSystem::removeFileOrLevel(dstFilePath);}
+\DoxyCodeLine{00159       \}}
+\DoxyCodeLine{00160     \}}
+\DoxyCodeLine{00161 }
+\DoxyCodeLine{00162     \textcolor{keywordflow}{if} (m\_parent-\/>m\_srcFilePaths.size() == 1) \{}
+\DoxyCodeLine{00163       progressDialog-\/>setLabelText(QString(tr(\textcolor{stringliteral}{"{}Converting \%1"{}}).arg(levelName)));}
+\DoxyCodeLine{00164     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00165       progressDialog-\/>setLabelText(QString(tr(\textcolor{stringliteral}{"{}Converting level \%1 of \%2: \%3"{}})}
+\DoxyCodeLine{00166                                                .arg(i + 1)}
+\DoxyCodeLine{00167                                                .arg(levelCount)}
+\DoxyCodeLine{00168                                                .arg(levelName)));}
+\DoxyCodeLine{00169     \}}
+\DoxyCodeLine{00170     m\_parent-\/>m\_notifier-\/>notifyFrameCompleted(0);}
+\DoxyCodeLine{00171     convertLevel(sourceLevelPath);}
+\DoxyCodeLine{00172   \}}
+\DoxyCodeLine{00173 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/convertpopup.\+cpp\end{DoxyCompactItemize}

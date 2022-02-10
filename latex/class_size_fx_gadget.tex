@@ -1,0 +1,129 @@
+\hypertarget{class_size_fx_gadget}{}\doxysection{Size\+Fx\+Gadget Class Reference}
+\label{class_size_fx_gadget}\index{SizeFxGadget@{SizeFxGadget}}
+Inheritance diagram for Size\+Fx\+Gadget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_size_fx_gadget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_size_fx_gadget_a07443893621aff6d94e39ea0413bd7d0}{Size\+Fx\+Gadget}} (\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$controller, const TDouble\+ParamP \&lx, const TDouble\+ParamP \&ly)
+\item 
+void \mbox{\hyperlink{class_size_fx_gadget_a4f74e8465e6c3a2625f8a48cd1d66bc0}{draw}} (bool picking) override
+\item 
+void \mbox{\hyperlink{class_size_fx_gadget_ae4f744d8d755eb318ea708117389ef79}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+void \mbox{\hyperlink{class_size_fx_gadget_ad5cfa1e5b80bf083a04d339263891e53}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_size_fx_gadget_a07443893621aff6d94e39ea0413bd7d0}\label{class_size_fx_gadget_a07443893621aff6d94e39ea0413bd7d0}} 
+\index{SizeFxGadget@{SizeFxGadget}!SizeFxGadget@{SizeFxGadget}}
+\index{SizeFxGadget@{SizeFxGadget}!SizeFxGadget@{SizeFxGadget}}
+\doxysubsubsection{\texorpdfstring{SizeFxGadget()}{SizeFxGadget()}}
+{\footnotesize\ttfamily Size\+Fx\+Gadget\+::\+Size\+Fx\+Gadget (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$}]{controller,  }\item[{const TDouble\+ParamP \&}]{lx,  }\item[{const TDouble\+ParamP \&}]{ly }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00767       : \mbox{\hyperlink{class_fx_gadget}{FxGadget}}(controller), m\_lx(lx), m\_ly(ly) \{}
+\DoxyCodeLine{00768     addParam(lx);}
+\DoxyCodeLine{00769     \textcolor{keywordflow}{if} (ly) addParam(ly);}
+\DoxyCodeLine{00770   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_size_fx_gadget_a4f74e8465e6c3a2625f8a48cd1d66bc0}\label{class_size_fx_gadget_a4f74e8465e6c3a2625f8a48cd1d66bc0}} 
+\index{SizeFxGadget@{SizeFxGadget}!draw@{draw}}
+\index{draw@{draw}!SizeFxGadget@{SizeFxGadget}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Size\+Fx\+Gadget\+::draw (\begin{DoxyParamCaption}\item[{bool}]{picking }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00780                                     \{}
+\DoxyCodeLine{00781   setPixelSize();}
+\DoxyCodeLine{00782 }
+\DoxyCodeLine{00783   \textcolor{keywordflow}{if} (isSelected())}
+\DoxyCodeLine{00784     glColor3dv(m\_selectedColor);}
+\DoxyCodeLine{00785   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00786     glColor3d(0, 0, 1);}
+\DoxyCodeLine{00787   glPushName(getId());}
+\DoxyCodeLine{00788   \textcolor{keywordtype}{double} lx = getValue(m\_lx), ly = m\_ly ? getValue(m\_ly) : lx;}
+\DoxyCodeLine{00789   \textcolor{keywordtype}{double} r = getPixelSize() * 3;}
+\DoxyCodeLine{00790 }
+\DoxyCodeLine{00791   glLineStipple(1, 0xCCCC);}
+\DoxyCodeLine{00792   glEnable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{00793   glBegin(GL\_LINES);}
+\DoxyCodeLine{00794   glVertex2d(0, 0);}
+\DoxyCodeLine{00795   glVertex2d(lx, 0);}
+\DoxyCodeLine{00796   glVertex2d(0, 0);}
+\DoxyCodeLine{00797   glVertex2d(0, ly);}
+\DoxyCodeLine{00798   glVertex2d(lx, 0);}
+\DoxyCodeLine{00799   glVertex2d(lx, ly -\/ r);}
+\DoxyCodeLine{00800   glVertex2d(0, ly);}
+\DoxyCodeLine{00801   glVertex2d(lx -\/ r, ly);}
+\DoxyCodeLine{00802   glEnd();}
+\DoxyCodeLine{00803   glDisable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{00804   drawDot(lx, ly);}
+\DoxyCodeLine{00805 }
+\DoxyCodeLine{00806   \textcolor{keywordtype}{double} d = getPixelSize() * 3;}
+\DoxyCodeLine{00807   glPopName();}
+\DoxyCodeLine{00808   \textcolor{keywordflow}{if} (isSelected()) \{}
+\DoxyCodeLine{00809     drawTooltip(\mbox{\hyperlink{class_t_point_t}{TPointD}}(lx, ly), getLabel());}
+\DoxyCodeLine{00810   \}}
+\DoxyCodeLine{00811 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_size_fx_gadget_ae4f744d8d755eb318ea708117389ef79}\label{class_size_fx_gadget_ae4f744d8d755eb318ea708117389ef79}} 
+\index{SizeFxGadget@{SizeFxGadget}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!SizeFxGadget@{SizeFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Size\+Fx\+Gadget\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00774 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_size_fx_gadget_ad5cfa1e5b80bf083a04d339263891e53}\label{class_size_fx_gadget_ad5cfa1e5b80bf083a04d339263891e53}} 
+\index{SizeFxGadget@{SizeFxGadget}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!SizeFxGadget@{SizeFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Size\+Fx\+Gadget\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00815                                                                          \{}
+\DoxyCodeLine{00816   \textcolor{keywordflow}{if} (m\_ly)}
+\DoxyCodeLine{00817     setValue(m\_lx, std::max(pos.x, 0.1)), setValue(m\_ly, std::max(pos.y, 0.1));}
+\DoxyCodeLine{00818   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00819     setValue(m\_lx, std::max(\{pos.x, pos.y, 0.1\}));}
+\DoxyCodeLine{00820 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/edittoolgadgets.\+cpp\end{DoxyCompactItemize}

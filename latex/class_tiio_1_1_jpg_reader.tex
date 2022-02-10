@@ -1,0 +1,236 @@
+\hypertarget{class_tiio_1_1_jpg_reader}{}\doxysection{Tiio\+::Jpg\+Reader Class Reference}
+\label{class_tiio_1_1_jpg_reader}\index{Tiio::JpgReader@{Tiio::JpgReader}}
+Inheritance diagram for Tiio\+::Jpg\+Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_tiio_1_1_jpg_reader}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Tiio\+::\+Row\+Order \mbox{\hyperlink{class_tiio_1_1_jpg_reader_a74a2ea6020d3cb3551c09382d4f07877}{get\+Row\+Order}} () const override
+\item 
+void \mbox{\hyperlink{class_tiio_1_1_jpg_reader_a0f169416588644f63dcc71c614da924c}{open}} (FILE $\ast$file) override
+\item 
+void \mbox{\hyperlink{class_tiio_1_1_jpg_reader_a32ac5113be709b1cf18ab309ef6e355c}{read\+Line}} (char $\ast$buffer, int x0, int x1, int shrink) override
+\item 
+int \mbox{\hyperlink{class_tiio_1_1_jpg_reader_ae889990b53dd6a7ce77a8df6b7bd4502}{skip\+Lines}} (int line\+Count) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_tiio_1_1_jpg_reader_a6b3098f7ecde11519935036ff12f1dc6}\label{class_tiio_1_1_jpg_reader_a6b3098f7ecde11519935036ff12f1dc6}} 
+\index{Tiio::JpgReader@{Tiio::JpgReader}!JpgReader@{JpgReader}}
+\index{JpgReader@{JpgReader}!Tiio::JpgReader@{Tiio::JpgReader}}
+\doxysubsubsection{\texorpdfstring{JpgReader()}{JpgReader()}}
+{\footnotesize\ttfamily Jpg\+Reader\+::\+Jpg\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054                      : m\_chan(0), m\_isOpen(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00055   memset(\&m\_cinfo, 0, \textcolor{keyword}{sizeof} m\_cinfo);}
+\DoxyCodeLine{00056   memset(\&m\_jerr, 0, \textcolor{keyword}{sizeof} m\_jerr);}
+\DoxyCodeLine{00057   memset(\&m\_buffer, 0, \textcolor{keyword}{sizeof} m\_buffer);}
+\DoxyCodeLine{00058 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tiio_1_1_jpg_reader_a7ea1adc9523c651787965370133a2318}\label{class_tiio_1_1_jpg_reader_a7ea1adc9523c651787965370133a2318}} 
+\index{Tiio::JpgReader@{Tiio::JpgReader}!````~JpgReader@{$\sim$JpgReader}}
+\index{````~JpgReader@{$\sim$JpgReader}!Tiio::JpgReader@{Tiio::JpgReader}}
+\doxysubsubsection{\texorpdfstring{$\sim$JpgReader()}{~JpgReader()}}
+{\footnotesize\ttfamily Jpg\+Reader\+::$\sim$\+Jpg\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00060                       \{}
+\DoxyCodeLine{00061   \textcolor{keywordflow}{if} (m\_isOpen) \{}
+\DoxyCodeLine{00062     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00063       jpeg\_finish\_decompress(\&m\_cinfo);}
+\DoxyCodeLine{00064       jpeg\_destroy\_decompress(\&m\_cinfo);}
+\DoxyCodeLine{00065     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00066     \}}
+\DoxyCodeLine{00067   \}}
+\DoxyCodeLine{00068   \textcolor{keywordflow}{if} (m\_chan) \{}
+\DoxyCodeLine{00069     m\_chan = 0;}
+\DoxyCodeLine{00070   \}}
+\DoxyCodeLine{00071 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tiio_1_1_jpg_reader_a74a2ea6020d3cb3551c09382d4f07877}\label{class_tiio_1_1_jpg_reader_a74a2ea6020d3cb3551c09382d4f07877}} 
+\index{Tiio::JpgReader@{Tiio::JpgReader}!getRowOrder@{getRowOrder}}
+\index{getRowOrder@{getRowOrder}!Tiio::JpgReader@{Tiio::JpgReader}}
+\doxysubsubsection{\texorpdfstring{getRowOrder()}{getRowOrder()}}
+{\footnotesize\ttfamily Tiio\+::\+Row\+Order Jpg\+Reader\+::get\+Row\+Order (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073 \{ \textcolor{keywordflow}{return} Tiio::TOP2BOTTOM; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tiio_1_1_jpg_reader_a0f169416588644f63dcc71c614da924c}\label{class_tiio_1_1_jpg_reader_a0f169416588644f63dcc71c614da924c}} 
+\index{Tiio::JpgReader@{Tiio::JpgReader}!open@{open}}
+\index{open@{open}!Tiio::JpgReader@{Tiio::JpgReader}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily void Jpg\+Reader\+::open (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075                                \{}
+\DoxyCodeLine{00076   m\_cinfo.err             = jpeg\_std\_error(\&m\_jerr);}
+\DoxyCodeLine{00077   m\_cinfo.err-\/>error\_exit = tnz\_error\_exit;}
+\DoxyCodeLine{00078 }
+\DoxyCodeLine{00079   jpeg\_create\_decompress(\&m\_cinfo);}
+\DoxyCodeLine{00080 }
+\DoxyCodeLine{00081   m\_chan = file;}
+\DoxyCodeLine{00082   jpeg\_stdio\_src(\&m\_cinfo, m\_chan);}
+\DoxyCodeLine{00083   jpeg\_save\_markers(\&m\_cinfo, JPEG\_APP0 + 1, 0xffff);  \textcolor{comment}{// EXIF}}
+\DoxyCodeLine{00084   \textcolor{keywordtype}{bool} ret = jpeg\_read\_header(\&m\_cinfo, TRUE);}
+\DoxyCodeLine{00085 }
+\DoxyCodeLine{00086   \textcolor{keywordtype}{bool} resolutionFoundInExif = \textcolor{keyword}{false};}
+\DoxyCodeLine{00087   jpeg\_saved\_marker\_ptr mark;}
+\DoxyCodeLine{00088   \textcolor{keywordflow}{for} (mark = m\_cinfo.marker\_list; NULL != mark; mark = mark-\/>next) \{}
+\DoxyCodeLine{00089     \textcolor{keywordflow}{switch} (mark-\/>marker) \{}
+\DoxyCodeLine{00090     \textcolor{keywordflow}{case} JPEG\_APP0 + 1:  \textcolor{comment}{// EXIF}}
+\DoxyCodeLine{00091       \mbox{\hyperlink{class_jpg_exif_reader}{JpgExifReader}} exifReader;}
+\DoxyCodeLine{00092       exifReader.process\_EXIF(mark-\/>data -\/ 2, mark-\/>data\_length);}
+\DoxyCodeLine{00093       \textcolor{keywordflow}{if} (exifReader.containsResolution()) \{}
+\DoxyCodeLine{00094         \textcolor{keywordtype}{int} resUnit           = exifReader.getResolutionUnit();}
+\DoxyCodeLine{00095         resolutionFoundInExif = \textcolor{keyword}{true};}
+\DoxyCodeLine{00096         \textcolor{keywordflow}{if} (resUnit == 1 || resUnit == 2) \{  \textcolor{comment}{// no unit(1) or inch(2)}}
+\DoxyCodeLine{00097           m\_info.\mbox{\hyperlink{class_t_image_info_ad66e78a66158fddceaa192d0063f68e8}{m\_dpix}} = (double)exifReader.getXResolution();}
+\DoxyCodeLine{00098           m\_info.\mbox{\hyperlink{class_t_image_info_ad8d3ccb14666297e487e04aa10ab7831}{m\_dpiy}} = (double)exifReader.getYResolution();}
+\DoxyCodeLine{00099         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (resUnit == 3) \{  \textcolor{comment}{// centimeter(3);}}
+\DoxyCodeLine{00100           m\_info.\mbox{\hyperlink{class_t_image_info_ad66e78a66158fddceaa192d0063f68e8}{m\_dpix}} = (double)exifReader.getXResolution() * 2.54;}
+\DoxyCodeLine{00101           m\_info.\mbox{\hyperlink{class_t_image_info_ad8d3ccb14666297e487e04aa10ab7831}{m\_dpiy}} = (double)exifReader.getYResolution() * 2.54;}
+\DoxyCodeLine{00102         \} \textcolor{keywordflow}{else}  \textcolor{comment}{// ignore millimeter(4) and micrometer(5) cases for now}}
+\DoxyCodeLine{00103           resolutionFoundInExif = \textcolor{keyword}{false};}
+\DoxyCodeLine{00104       \}}
+\DoxyCodeLine{00105       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00106     \}}
+\DoxyCodeLine{00107   \}}
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00109   ret = ret \&\& jpeg\_start\_decompress(\&m\_cinfo);}
+\DoxyCodeLine{00110   \textcolor{keywordflow}{if} (!ret) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00111 }
+\DoxyCodeLine{00112   \textcolor{keywordtype}{int} row\_stride = m\_cinfo.output\_width * m\_cinfo.output\_components;}
+\DoxyCodeLine{00113   m\_buffer = (*m\_cinfo.mem-\/>alloc\_sarray)((j\_common\_ptr)\&m\_cinfo, JPOOL\_IMAGE,}
+\DoxyCodeLine{00114                                           row\_stride, 1);}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116   m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}             = m\_cinfo.output\_width;}
+\DoxyCodeLine{00117   m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}}             = m\_cinfo.output\_height;}
+\DoxyCodeLine{00118   m\_info.\mbox{\hyperlink{class_t_image_info_a6b58380f718e21dde1b37577090f5c77}{m\_samplePerPixel}} = 3;}
+\DoxyCodeLine{00119   m\_info.\mbox{\hyperlink{class_t_image_info_a38cb10577dcf2003ce7026580d2c92ef}{m\_valid}}          = \textcolor{keyword}{true};}
+\DoxyCodeLine{00120   m\_isOpen                = \textcolor{keyword}{true};}
+\DoxyCodeLine{00121 }
+\DoxyCodeLine{00122   \textcolor{keywordflow}{if} (!resolutionFoundInExif \&\& (m\_cinfo.saw\_JFIF\_marker != 0) \&\&}
+\DoxyCodeLine{00123       (m\_cinfo.X\_density != 1) \&\& (m\_cinfo.Y\_density != 1)) \{}
+\DoxyCodeLine{00124     \textcolor{keywordflow}{if} (m\_cinfo.density\_unit == 1) \{}
+\DoxyCodeLine{00125       m\_info.\mbox{\hyperlink{class_t_image_info_ad66e78a66158fddceaa192d0063f68e8}{m\_dpix}} = (double)m\_cinfo.X\_density;}
+\DoxyCodeLine{00126       m\_info.\mbox{\hyperlink{class_t_image_info_ad8d3ccb14666297e487e04aa10ab7831}{m\_dpiy}} = (\textcolor{keywordtype}{double})m\_cinfo.Y\_density;}
+\DoxyCodeLine{00127     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_cinfo.density\_unit == 2) \{}
+\DoxyCodeLine{00128       m\_info.\mbox{\hyperlink{class_t_image_info_ad66e78a66158fddceaa192d0063f68e8}{m\_dpix}} = (double)m\_cinfo.X\_density * 2.54;}
+\DoxyCodeLine{00129       m\_info.\mbox{\hyperlink{class_t_image_info_ad8d3ccb14666297e487e04aa10ab7831}{m\_dpiy}} = (\textcolor{keywordtype}{double})m\_cinfo.Y\_density * 2.54;}
+\DoxyCodeLine{00130     \}}
+\DoxyCodeLine{00131   \}}
+\DoxyCodeLine{00132 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tiio_1_1_jpg_reader_a32ac5113be709b1cf18ab309ef6e355c}\label{class_tiio_1_1_jpg_reader_a32ac5113be709b1cf18ab309ef6e355c}} 
+\index{Tiio::JpgReader@{Tiio::JpgReader}!readLine@{readLine}}
+\index{readLine@{readLine}!Tiio::JpgReader@{Tiio::JpgReader}}
+\doxysubsubsection{\texorpdfstring{readLine()}{readLine()}}
+{\footnotesize\ttfamily void Jpg\+Reader\+::read\+Line (\begin{DoxyParamCaption}\item[{char $\ast$}]{buffer,  }\item[{int}]{x0,  }\item[{int}]{x1,  }\item[{int}]{shrink }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00134                                                                  \{}
+\DoxyCodeLine{00135   \textcolor{keywordflow}{if} (m\_cinfo.out\_color\_space == JCS\_RGB \&\& m\_cinfo.out\_color\_components == 3) \{}
+\DoxyCodeLine{00136     \textcolor{keywordtype}{int} ret = jpeg\_read\_scanlines(\&m\_cinfo, m\_buffer, 1);}
+\DoxyCodeLine{00137     assert(ret == 1);}
+\DoxyCodeLine{00138     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *src = m\_buffer[0];}
+\DoxyCodeLine{00139     TPixel32 *dst      = (TPixel32 *)buffer;}
+\DoxyCodeLine{00140     dst += x0;}
+\DoxyCodeLine{00141     src += 3 * x0;}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143     \textcolor{keywordtype}{int} width           = (m\_cinfo.output\_width -\/ 1) / shrink + 1;}
+\DoxyCodeLine{00144     \textcolor{keywordflow}{if} (x1 >= x0) width = (x1 -\/ x0) / shrink + 1;}
+\DoxyCodeLine{00145 }
+\DoxyCodeLine{00146     \textcolor{keywordflow}{while} (-\/-\/width >= 0) \{}
+\DoxyCodeLine{00147       dst-\/>r = src[0];}
+\DoxyCodeLine{00148       dst-\/>g = src[1];}
+\DoxyCodeLine{00149       dst-\/>b = src[2];}
+\DoxyCodeLine{00150       dst-\/>m = (char)255;}
+\DoxyCodeLine{00151       src += 3 * shrink;}
+\DoxyCodeLine{00152       dst += shrink;}
+\DoxyCodeLine{00153     \}}
+\DoxyCodeLine{00154   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_cinfo.out\_color\_components == 1) \{}
+\DoxyCodeLine{00155     \textcolor{keywordtype}{int} ret = jpeg\_read\_scanlines(\&m\_cinfo, m\_buffer, 1);}
+\DoxyCodeLine{00156     assert(ret == 1);}
+\DoxyCodeLine{00157     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *src = m\_buffer[0];}
+\DoxyCodeLine{00158     TPixel32 *dst      = (TPixel32 *)buffer;}
+\DoxyCodeLine{00159 }
+\DoxyCodeLine{00160     dst += x0;}
+\DoxyCodeLine{00161     src += x0;}
+\DoxyCodeLine{00162 }
+\DoxyCodeLine{00163     \textcolor{keywordtype}{int} width           = (m\_cinfo.output\_width -\/ 1) / shrink + 1;}
+\DoxyCodeLine{00164     \textcolor{keywordflow}{if} (x1 >= x0) width = (x1 -\/ x0) / shrink + 1;}
+\DoxyCodeLine{00165 }
+\DoxyCodeLine{00166     \textcolor{keywordflow}{while} (-\/-\/width >= 0) \{}
+\DoxyCodeLine{00167       dst-\/>r = *src;}
+\DoxyCodeLine{00168       dst-\/>g = *src;}
+\DoxyCodeLine{00169       dst-\/>b = *src;}
+\DoxyCodeLine{00170       dst-\/>m = (char)255;}
+\DoxyCodeLine{00171       src += shrink;}
+\DoxyCodeLine{00172       dst += shrink;}
+\DoxyCodeLine{00173     \}}
+\DoxyCodeLine{00174   \}}
+\DoxyCodeLine{00175 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tiio_1_1_jpg_reader_ae889990b53dd6a7ce77a8df6b7bd4502}\label{class_tiio_1_1_jpg_reader_ae889990b53dd6a7ce77a8df6b7bd4502}} 
+\index{Tiio::JpgReader@{Tiio::JpgReader}!skipLines@{skipLines}}
+\index{skipLines@{skipLines}!Tiio::JpgReader@{Tiio::JpgReader}}
+\doxysubsubsection{\texorpdfstring{skipLines()}{skipLines()}}
+{\footnotesize\ttfamily int Jpg\+Reader\+::skip\+Lines (\begin{DoxyParamCaption}\item[{int}]{line\+Count }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00177                                       \{}
+\DoxyCodeLine{00178   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < lineCount; i++) \{}
+\DoxyCodeLine{00179     \textcolor{keywordtype}{int} ret = jpeg\_read\_scanlines(\&m\_cinfo, m\_buffer, 1);}
+\DoxyCodeLine{00180     assert(ret == 1);}
+\DoxyCodeLine{00181   \}}
+\DoxyCodeLine{00182   \textcolor{keywordflow}{return} lineCount;}
+\DoxyCodeLine{00183 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tiio\+\_\+jpg.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tiio/tiio\+\_\+jpg.\+cpp\end{DoxyCompactItemize}

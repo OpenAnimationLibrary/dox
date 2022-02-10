@@ -1,0 +1,97 @@
+\hypertarget{class_sequence_simplifier}{}\doxysection{Sequence\+Simplifier Class Reference}
+\label{class_sequence_simplifier}\index{SequenceSimplifier@{SequenceSimplifier}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sequence_simplifier_a80e557ca5482089738d0b5764f125855}{Sequence\+Simplifier}} (const \mbox{\hyperlink{class_sequence}{Sequence}} $\ast$s)
+\item 
+void \mbox{\hyperlink{class_sequence_simplifier_aeb6b623acecdc2c40ea101b8c85400b3}{simplify}} (std\+::vector$<$ unsigned int $>$ \&result)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_sequence_simplifier_a80e557ca5482089738d0b5764f125855}\label{class_sequence_simplifier_a80e557ca5482089738d0b5764f125855}} 
+\index{SequenceSimplifier@{SequenceSimplifier}!SequenceSimplifier@{SequenceSimplifier}}
+\index{SequenceSimplifier@{SequenceSimplifier}!SequenceSimplifier@{SequenceSimplifier}}
+\doxysubsubsection{\texorpdfstring{SequenceSimplifier()}{SequenceSimplifier()}}
+{\footnotesize\ttfamily Sequence\+Simplifier\+::\+Sequence\+Simplifier (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_sequence}{Sequence}} $\ast$}]{s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00062 : m\_s(s), m\_graph(m\_s-\/>m\_graphHolder) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_sequence_simplifier_aeb6b623acecdc2c40ea101b8c85400b3}\label{class_sequence_simplifier_aeb6b623acecdc2c40ea101b8c85400b3}} 
+\index{SequenceSimplifier@{SequenceSimplifier}!simplify@{simplify}}
+\index{simplify@{simplify}!SequenceSimplifier@{SequenceSimplifier}}
+\doxysubsubsection{\texorpdfstring{simplify()}{simplify()}}
+{\footnotesize\ttfamily void Sequence\+Simplifier\+::simplify (\begin{DoxyParamCaption}\item[{std\+::vector$<$ unsigned int $>$ \&}]{result }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00071                                                                  \{}
+\DoxyCodeLine{00072   \textcolor{comment}{// Initialize variables}}
+\DoxyCodeLine{00073   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} n;}
+\DoxyCodeLine{00074   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i, j, iLink, jLink;}
+\DoxyCodeLine{00075 }
+\DoxyCodeLine{00076   \textcolor{comment}{// NOTE: If s is circular, we have to protect}}
+\DoxyCodeLine{00077 }
+\DoxyCodeLine{00078   i     = m\_s-\/>m\_head;}
+\DoxyCodeLine{00079   iLink = m\_s-\/>m\_headLink;}
+\DoxyCodeLine{00080   \textcolor{comment}{// NOTE: If m\_head==m\_tail then we have to force the first step by "{}|| n==1"{}}}
+\DoxyCodeLine{00081   \textcolor{keywordflow}{for} (n = 1; i != m\_s-\/>m\_tail || n == 1; ++n, m\_s-\/>next(i, iLink))}
+\DoxyCodeLine{00082     ;}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084   Length L\_att, L\_min, l\_min, l\_ji;}
+\DoxyCodeLine{00085   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} p\_i, a, b;}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087   std::vector<Length> M(n);}
+\DoxyCodeLine{00088   std::vector<Length> K(n);}
+\DoxyCodeLine{00089   std::vector<unsigned int> P(n);}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091   \textcolor{comment}{// Search for minimal path}}
+\DoxyCodeLine{00092   i     = m\_s-\/>m\_head;}
+\DoxyCodeLine{00093   iLink = m\_s-\/>m\_headLink;}
+\DoxyCodeLine{00094   \textcolor{keywordflow}{for} (a = 1; i != m\_s-\/>m\_tail || a == 1; m\_s-\/>next(i, iLink), ++a) \{}
+\DoxyCodeLine{00095     L\_min.infty();}
+\DoxyCodeLine{00096     l\_min.infty();}
+\DoxyCodeLine{00097     p\_i = 0;}
+\DoxyCodeLine{00098 }
+\DoxyCodeLine{00099     j                  = m\_s-\/>m\_head;}
+\DoxyCodeLine{00100     jLink              = m\_s-\/>m\_headLink;}
+\DoxyCodeLine{00101     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} iNext = m\_graph-\/>getNode(i).getLink(iLink).getNext();}
+\DoxyCodeLine{00102     \textcolor{keywordflow}{for} (b = 0; j != iNext || b == 0; m\_s-\/>next(j, jLink), ++b) \{}
+\DoxyCodeLine{00103       \textcolor{keywordflow}{if} ((L\_att = M[b] + (l\_ji = lengthOf(j, jLink, iNext))) < L\_min) \{}
+\DoxyCodeLine{00104         L\_min = L\_att;}
+\DoxyCodeLine{00105         p\_i   = b;}
+\DoxyCodeLine{00106         l\_min = l\_ji;}
+\DoxyCodeLine{00107       \}}
+\DoxyCodeLine{00108     \}}
+\DoxyCodeLine{00109     M[a] = L\_min;}
+\DoxyCodeLine{00110     K[a] = l\_min;}
+\DoxyCodeLine{00111     P[a] = p\_i;}
+\DoxyCodeLine{00112   \}}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114   \textcolor{comment}{// Copies minimal path found to the output reducedIndices vector}}
+\DoxyCodeLine{00115   \textcolor{comment}{// NOTE: size() is added due to circular sequences case handling}}
+\DoxyCodeLine{00116   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} redSize = result.size();}
+\DoxyCodeLine{00117 }
+\DoxyCodeLine{00118   result.resize(redSize + M[n -\/ 1].n + 1);}
+\DoxyCodeLine{00119 }
+\DoxyCodeLine{00120   result[redSize + M[n -\/ 1].n] = K[n -\/ 1].secondNode;}
+\DoxyCodeLine{00121   \textcolor{keywordflow}{for} (b = n -\/ 1, a = redSize + M[n -\/ 1].n -\/ 1; b > 0; b = P[b], -\/-\/a)}
+\DoxyCodeLine{00122     result[a] = K[b].firstNode;}
+\DoxyCodeLine{00123 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tcenterlinetostrokes.\+cpp\end{DoxyCompactItemize}

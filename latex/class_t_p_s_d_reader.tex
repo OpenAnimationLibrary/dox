@@ -1,0 +1,319 @@
+\hypertarget{class_t_p_s_d_reader}{}\doxysection{TPSDReader Class Reference}
+\label{class_t_p_s_d_reader}\index{TPSDReader@{TPSDReader}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_p_s_d_reader_a683e1809bf98bd14c49bd604fca3a4ca}{TPSDReader}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path)
+\item 
+\mbox{\Hypertarget{class_t_p_s_d_reader_ada916c14679466c3ad53b187fbedd9bf}\label{class_t_p_s_d_reader_ada916c14679466c3ad53b187fbedd9bf}} 
+\mbox{\hyperlink{class_t_image_reader_p}{TImage\+ReaderP}} {\bfseries get\+Frame\+Reader} (\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} path)
+\item 
+\mbox{\hyperlink{struct_t_p_s_d_header_info}{TPSDHeader\+Info}} \mbox{\hyperlink{class_t_p_s_d_reader_a146ddacc852c3763da7fa3aeb401d42f}{get\+PSDHeader\+Info}} ()
+\item 
+void \mbox{\hyperlink{class_t_p_s_d_reader_af717eb0a4510ae0d547dafc1c23a7e1a}{load}} (\mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&rasP, int layer\+Id)
+\item 
+\mbox{\hyperlink{class_t_dimension_t}{TDimension}} \mbox{\hyperlink{class_t_p_s_d_reader_a5bcfa6c2303900ed809d950ea1b3d9da}{get\+Size}} () const
+\item 
+\mbox{\hyperlink{struct_t_p_s_d_layer_info}{TPSDLayer\+Info}} $\ast$ \mbox{\hyperlink{class_t_p_s_d_reader_ad70ac1415bd384e5fc532f51ecc25b6d}{get\+Layer\+Info}} (int index)
+\item 
+int \mbox{\hyperlink{class_t_p_s_d_reader_ab6cf92cdb47992026d1fe90ab048e6aa}{get\+Layer\+Info\+Index\+By\+Id}} (int layer\+Id)
+\item 
+void \mbox{\hyperlink{class_t_p_s_d_reader_a05957645d91874ba329b7e07b950ccd2}{set\+Shrink}} (int shrink)
+\item 
+void \mbox{\hyperlink{class_t_p_s_d_reader_aff26b45cdd5610b71c088603eb83dd96}{set\+Shrink}} (int shrinkX, int shrinkY)
+\item 
+void \mbox{\hyperlink{class_t_p_s_d_reader_a550b792bd3bd6b34c11f4e461ebdde4c}{set\+Region}} (\mbox{\hyperlink{class_t_rect_t}{TRect}} region)
+\item 
+int \mbox{\hyperlink{class_t_p_s_d_reader_ab9bb38dfd1da5f5d28b58ae417af670b}{get\+ShrinkX}} ()
+\item 
+int \mbox{\hyperlink{class_t_p_s_d_reader_a60d0b17560d5c08abc2c341f2c3b9862}{get\+ShrinkY}} ()
+\item 
+\mbox{\hyperlink{class_t_rect_t}{TRect}} \mbox{\hyperlink{class_t_p_s_d_reader_a8db89aa437077d6e9c6642f9aee078b0}{get\+Region}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_p_s_d_reader_a683e1809bf98bd14c49bd604fca3a4ca}\label{class_t_p_s_d_reader_a683e1809bf98bd14c49bd604fca3a4ca}} 
+\index{TPSDReader@{TPSDReader}!TPSDReader@{TPSDReader}}
+\index{TPSDReader@{TPSDReader}!TPSDReader@{TPSDReader}}
+\doxysubsubsection{\texorpdfstring{TPSDReader()}{TPSDReader()}}
+{\footnotesize\ttfamily TPSDReader\+::\+TPSDReader (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055     : m\_shrinkX(1), m\_shrinkY(1), m\_region(\mbox{\hyperlink{class_t_rect_t}{TRect}}()) \{}
+\DoxyCodeLine{00056   m\_layerId    = 0;}
+\DoxyCodeLine{00057   QString name = path.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}().c\_str();}
+\DoxyCodeLine{00058   name.append(path.\mbox{\hyperlink{class_t_file_path_ae69f3fd881d12ebb858c7462417c82b8}{getDottedType}}().c\_str());}
+\DoxyCodeLine{00059   \textcolor{keywordtype}{int} sepPos = name.indexOf(\textcolor{stringliteral}{"{}\#"{}});}
+\DoxyCodeLine{00060   \textcolor{keywordtype}{int} dotPos = name.indexOf(\textcolor{stringliteral}{"{}."{}}, sepPos);}
+\DoxyCodeLine{00061   name.remove(sepPos, dotPos -\/ sepPos);}
+\DoxyCodeLine{00062   m\_path = path.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(name.toStdString());}
+\DoxyCodeLine{00063   \textcolor{comment}{// m\_path = path;}}
+\DoxyCodeLine{00064   QMutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00065   openFile();}
+\DoxyCodeLine{00066   \textcolor{keywordflow}{if} (!doInfo()) \{}
+\DoxyCodeLine{00067     fclose(m\_file);}
+\DoxyCodeLine{00068     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_image_exception}{TImageException}}(m\_path, \textcolor{stringliteral}{"{}Do PSD INFO ERROR"{}});}
+\DoxyCodeLine{00069   \}}
+\DoxyCodeLine{00070   fclose(m\_file);}
+\DoxyCodeLine{00071 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_reader_abcb45163d91d83db0d615848a6bfc68c}\label{class_t_p_s_d_reader_abcb45163d91d83db0d615848a6bfc68c}} 
+\index{TPSDReader@{TPSDReader}!````~TPSDReader@{$\sim$TPSDReader}}
+\index{````~TPSDReader@{$\sim$TPSDReader}!TPSDReader@{TPSDReader}}
+\doxysubsubsection{\texorpdfstring{$\sim$TPSDReader()}{~TPSDReader()}}
+{\footnotesize\ttfamily TPSDReader\+::$\sim$\+TPSDReader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00072                         \{}
+\DoxyCodeLine{00073   \textcolor{comment}{/*for(int i=0; i<m\_headerInfo.layersCount;i++)}}
+\DoxyCodeLine{00074 \textcolor{comment}{free(m\_headerInfo.linfo + i);*/}}
+\DoxyCodeLine{00075 }
+\DoxyCodeLine{00076   \textcolor{comment}{// NO -\/ L'istruzione sopra e' SBAGLIATA, si tratta di uno pseudo-\/array}}
+\DoxyCodeLine{00077   \textcolor{comment}{// allocato in blocco}}
+\DoxyCodeLine{00078   \textcolor{comment}{// con una SINGOLA malloc() -\/ quindi deve dovrebbe essere deallocato con una}}
+\DoxyCodeLine{00079   \textcolor{comment}{// SINGOLA free().}}
+\DoxyCodeLine{00080 }
+\DoxyCodeLine{00081   \textcolor{comment}{// Se fino ad ora funzionava e' perche' questa funzione NON VENIVA MAI}}
+\DoxyCodeLine{00082   \textcolor{comment}{// CHIAMATA -\/}}
+\DoxyCodeLine{00083   \textcolor{comment}{// LEAKAVA TUTTO.}}
+\DoxyCodeLine{00084 }
+\DoxyCodeLine{00085   \textcolor{comment}{// Non solo, ma il CONTENUTO delle singole strutture -\/ tra cui altri array -\/}}
+\DoxyCodeLine{00086   \textcolor{comment}{// non viene}}
+\DoxyCodeLine{00087   \textcolor{comment}{// deallocato. Non ho idea se sia garantito che venga deallocato prima di}}
+\DoxyCodeLine{00088   \textcolor{comment}{// arrivare qui,}}
+\DoxyCodeLine{00089   \textcolor{comment}{// ma NON E' AFFATTO SICURO.}}
+\DoxyCodeLine{00090 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_p_s_d_reader_ad70ac1415bd384e5fc532f51ecc25b6d}\label{class_t_p_s_d_reader_ad70ac1415bd384e5fc532f51ecc25b6d}} 
+\index{TPSDReader@{TPSDReader}!getLayerInfo@{getLayerInfo}}
+\index{getLayerInfo@{getLayerInfo}!TPSDReader@{TPSDReader}}
+\doxysubsubsection{\texorpdfstring{getLayerInfo()}{getLayerInfo()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_t_p_s_d_layer_info}{TPSDLayer\+Info}} $\ast$ TPSDReader\+::get\+Layer\+Info (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00508                                                  \{}
+\DoxyCodeLine{00509   \textcolor{keywordflow}{if} (index < 0 || index >= m\_headerInfo.layersCount) \textcolor{keywordflow}{return} NULL;}
+\DoxyCodeLine{00510   \textcolor{keywordflow}{return} m\_headerInfo.linfo + index;}
+\DoxyCodeLine{00511 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_reader_ab6cf92cdb47992026d1fe90ab048e6aa}\label{class_t_p_s_d_reader_ab6cf92cdb47992026d1fe90ab048e6aa}} 
+\index{TPSDReader@{TPSDReader}!getLayerInfoIndexById@{getLayerInfoIndexById}}
+\index{getLayerInfoIndexById@{getLayerInfoIndexById}!TPSDReader@{TPSDReader}}
+\doxysubsubsection{\texorpdfstring{getLayerInfoIndexById()}{getLayerInfoIndexById()}}
+{\footnotesize\ttfamily int TPSDReader\+::get\+Layer\+Info\+Index\+By\+Id (\begin{DoxyParamCaption}\item[{int}]{layer\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00495                                                  \{}
+\DoxyCodeLine{00496   \textcolor{keywordtype}{int} layerIndex = -\/1;}
+\DoxyCodeLine{00497   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_headerInfo.layersCount; i++) \{}
+\DoxyCodeLine{00498     \mbox{\hyperlink{struct_t_p_s_d_layer_info}{TPSDLayerInfo}} *litemp = m\_headerInfo.linfo + i;}
+\DoxyCodeLine{00499     \textcolor{keywordflow}{if} (litemp-\/>layerId == layerId) \{}
+\DoxyCodeLine{00500       layerIndex = i;}
+\DoxyCodeLine{00501       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00502     \}}
+\DoxyCodeLine{00503   \}}
+\DoxyCodeLine{00504   \textcolor{keywordflow}{if} (layerIndex < 0 \&\& layerId != 0)}
+\DoxyCodeLine{00505     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_image_exception}{TImageException}}(m\_path, \textcolor{stringliteral}{"{}Layer ID not exists"{}});}
+\DoxyCodeLine{00506   \textcolor{keywordflow}{return} layerIndex;}
+\DoxyCodeLine{00507 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_reader_a146ddacc852c3763da7fa3aeb401d42f}\label{class_t_p_s_d_reader_a146ddacc852c3763da7fa3aeb401d42f}} 
+\index{TPSDReader@{TPSDReader}!getPSDHeaderInfo@{getPSDHeaderInfo}}
+\index{getPSDHeaderInfo@{getPSDHeaderInfo}!TPSDReader@{TPSDReader}}
+\doxysubsubsection{\texorpdfstring{getPSDHeaderInfo()}{getPSDHeaderInfo()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_t_p_s_d_header_info}{TPSDHeader\+Info}} TPSDReader\+::get\+PSDHeader\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00512 \{ \textcolor{keywordflow}{return} m\_headerInfo; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_reader_a8db89aa437077d6e9c6642f9aee078b0}\label{class_t_p_s_d_reader_a8db89aa437077d6e9c6642f9aee078b0}} 
+\index{TPSDReader@{TPSDReader}!getRegion@{getRegion}}
+\index{getRegion@{getRegion}!TPSDReader@{TPSDReader}}
+\doxysubsubsection{\texorpdfstring{getRegion()}{getRegion()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_rect_t}{TRect}} TPSDReader\+::get\+Region (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00176 \{ \textcolor{keywordflow}{return} m\_region; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_reader_ab9bb38dfd1da5f5d28b58ae417af670b}\label{class_t_p_s_d_reader_ab9bb38dfd1da5f5d28b58ae417af670b}} 
+\index{TPSDReader@{TPSDReader}!getShrinkX@{getShrinkX}}
+\index{getShrinkX@{getShrinkX}!TPSDReader@{TPSDReader}}
+\doxysubsubsection{\texorpdfstring{getShrinkX()}{getShrinkX()}}
+{\footnotesize\ttfamily int TPSDReader\+::get\+ShrinkX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00174 \{ \textcolor{keywordflow}{return} m\_shrinkX; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_reader_a60d0b17560d5c08abc2c341f2c3b9862}\label{class_t_p_s_d_reader_a60d0b17560d5c08abc2c341f2c3b9862}} 
+\index{TPSDReader@{TPSDReader}!getShrinkY@{getShrinkY}}
+\index{getShrinkY@{getShrinkY}!TPSDReader@{TPSDReader}}
+\doxysubsubsection{\texorpdfstring{getShrinkY()}{getShrinkY()}}
+{\footnotesize\ttfamily int TPSDReader\+::get\+ShrinkY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00175 \{ \textcolor{keywordflow}{return} m\_shrinkY; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_reader_a5bcfa6c2303900ed809d950ea1b3d9da}\label{class_t_p_s_d_reader_a5bcfa6c2303900ed809d950ea1b3d9da}} 
+\index{TPSDReader@{TPSDReader}!getSize@{getSize}}
+\index{getSize@{getSize}!TPSDReader@{TPSDReader}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_dimension_t}{TDimension}} TPSDReader\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00161 \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_dimension_t}{TDimension}}(m\_lx, m\_ly); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_reader_af717eb0a4510ae0d547dafc1c23a7e1a}\label{class_t_p_s_d_reader_af717eb0a4510ae0d547dafc1c23a7e1a}} 
+\index{TPSDReader@{TPSDReader}!load@{load}}
+\index{load@{load}!TPSDReader@{TPSDReader}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily void TPSDReader\+::load (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&}]{rasP,  }\item[{int}]{layer\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00419                                                      \{}
+\DoxyCodeLine{00420   QMutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00421   \mbox{\hyperlink{struct_t_p_s_d_layer_info}{TPSDLayerInfo}} *li = NULL;}
+\DoxyCodeLine{00422   \textcolor{keywordtype}{int} layerIndex    = 0;}
+\DoxyCodeLine{00423   \textcolor{keywordflow}{if} (layerId > 0) \{}
+\DoxyCodeLine{00424     layerIndex = getLayerInfoIndexById(layerId);}
+\DoxyCodeLine{00425     li         = getLayerInfo(layerIndex);}
+\DoxyCodeLine{00426   \}}
+\DoxyCodeLine{00427   \textcolor{keywordflow}{if} (layerId < 0) \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_image_exception}{TImageException}}(m\_path, \textcolor{stringliteral}{"{}Layer ID not exists"{}});}
+\DoxyCodeLine{00428 }
+\DoxyCodeLine{00429   \textcolor{keywordflow}{if} (m\_headerInfo.mode == 4 || m\_headerInfo.depth == 32) \{}
+\DoxyCodeLine{00430     img = \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}();}
+\DoxyCodeLine{00431     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00432   \}}
+\DoxyCodeLine{00433 }
+\DoxyCodeLine{00434   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00435     \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} rasP;}
+\DoxyCodeLine{00436     openFile();}
+\DoxyCodeLine{00437     doImage(rasP, layerId);}
+\DoxyCodeLine{00438     fclose(m\_file);}
+\DoxyCodeLine{00439     \textcolor{comment}{/*}}
+\DoxyCodeLine{00440 \textcolor{comment}{    // do savebox}}
+\DoxyCodeLine{00441 \textcolor{comment}{    long sbx0 = li ? li-\/>left : 0;}}
+\DoxyCodeLine{00442 \textcolor{comment}{    long sby0 = li ? m\_headerInfo.rows-\/li-\/>bottom : 0;}}
+\DoxyCodeLine{00443 \textcolor{comment}{    long sbx1 = li ? li-\/>right -\/ 1 : m\_headerInfo.cols -\/ 1;}}
+\DoxyCodeLine{00444 \textcolor{comment}{    long sby1 = li ? m\_headerInfo.rows -\/ li-\/>top -\/ 1 : m\_headerInfo.rows -\/ 1;}}
+\DoxyCodeLine{00445 \textcolor{comment}{    TRect layerSaveBox;}}
+\DoxyCodeLine{00446 \textcolor{comment}{    layerSaveBox = TRect(sbx0,sby0,sbx1,sby1);}}
+\DoxyCodeLine{00447 \textcolor{comment}{    TRect imageRect = TRect(0,0,m\_headerInfo.cols-\/1,m\_headerInfo.rows-\/1);}}
+\DoxyCodeLine{00448 \textcolor{comment}{    // E' possibile che il layer sia in parte o tutto al di fuori della'immagine}}
+\DoxyCodeLine{00449 \textcolor{comment}{    // in questo caso considero solo la parte visibile, cioè che rientra}}
+\DoxyCodeLine{00450 \textcolor{comment}{    nell'immagine.}}
+\DoxyCodeLine{00451 \textcolor{comment}{    // Se è tutta fuori restutuisco TRasterImageP()}}
+\DoxyCodeLine{00452 \textcolor{comment}{    layerSaveBox *= imageRect;}}
+\DoxyCodeLine{00453 \textcolor{comment}{}}
+\DoxyCodeLine{00454 \textcolor{comment}{    if(layerSaveBox== TRect()) \{}}
+\DoxyCodeLine{00455 \textcolor{comment}{            img = TRasterImageP();}}
+\DoxyCodeLine{00456 \textcolor{comment}{            return;}}
+\DoxyCodeLine{00457 \textcolor{comment}{    \}            */}}
+\DoxyCodeLine{00458 }
+\DoxyCodeLine{00459     \textcolor{keywordflow}{if} (!rasP) \{}
+\DoxyCodeLine{00460       img = \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}();}
+\DoxyCodeLine{00461       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00462     \}  \textcolor{comment}{// Happens if layer image has 0 rows and (or?)}}
+\DoxyCodeLine{00463     \textcolor{comment}{// cols (dont ask me why, but I've seen it)}}
+\DoxyCodeLine{00464     \mbox{\hyperlink{class_t_rect_t}{TRect}} layerSaveBox = m\_layersSavebox[layerId];}
+\DoxyCodeLine{00465     \mbox{\hyperlink{class_t_rect_t}{TRect}} savebox(layerSaveBox);}
+\DoxyCodeLine{00466     \mbox{\hyperlink{class_t_dimension_t}{TDimension}} imgSize(rasP-\/>getLx(), rasP-\/>getLy());}
+\DoxyCodeLine{00467     assert(\mbox{\hyperlink{class_t_rect_t}{TRect}}(imgSize).contains(savebox));}
+\DoxyCodeLine{00468 }
+\DoxyCodeLine{00469     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}} ras = rasP) \{}
+\DoxyCodeLine{00470       \mbox{\hyperlink{class_t_pixel_g_r8}{TPixelGR8}} bgColor;}
+\DoxyCodeLine{00471       ras-\/>fillOutside(savebox, bgColor);}
+\DoxyCodeLine{00472       img = \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}(ras);}
+\DoxyCodeLine{00473     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras = rasP) \{}
+\DoxyCodeLine{00474       TPixel32 bgColor(0, 0, 0, 0);}
+\DoxyCodeLine{00475       \textcolor{keywordflow}{if} (savebox != \mbox{\hyperlink{class_t_rect_t}{TRect}}())}
+\DoxyCodeLine{00476         ras-\/>fillOutside(savebox, bgColor);}
+\DoxyCodeLine{00477       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00478         ras-\/>fill(bgColor);}
+\DoxyCodeLine{00479       img = \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}(ras);}
+\DoxyCodeLine{00480     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((\mbox{\hyperlink{class_t_raster_p_t}{TRaster64P}})rasP) \{}
+\DoxyCodeLine{00481       \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} raux(rasP-\/>getLx(), rasP-\/>getLy());}
+\DoxyCodeLine{00482       \mbox{\hyperlink{namespace_t_rop_a45a08fb48dd7d33ec629d722081d55c6}{TRop::convert}}(raux, rasP);}
+\DoxyCodeLine{00483       TPixel32 bgColor(0, 0, 0, 0);}
+\DoxyCodeLine{00484       raux-\/>fillOutside(savebox, bgColor);}
+\DoxyCodeLine{00485       img = \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}(raux);}
+\DoxyCodeLine{00486     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00487       \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_image_exception}{TImageException}}(m\_path, \textcolor{stringliteral}{"{}Invalid Raster"{}});}
+\DoxyCodeLine{00488     \}}
+\DoxyCodeLine{00489     img-\/>setDpi(m\_headerInfo.hres, m\_headerInfo.vres);}
+\DoxyCodeLine{00490     img-\/>setSavebox(savebox);}
+\DoxyCodeLine{00491   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00492   \}}
+\DoxyCodeLine{00493 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_reader_a550b792bd3bd6b34c11f4e461ebdde4c}\label{class_t_p_s_d_reader_a550b792bd3bd6b34c11f4e461ebdde4c}} 
+\index{TPSDReader@{TPSDReader}!setRegion@{setRegion}}
+\index{setRegion@{setRegion}!TPSDReader@{TPSDReader}}
+\doxysubsubsection{\texorpdfstring{setRegion()}{setRegion()}}
+{\footnotesize\ttfamily void TPSDReader\+::set\+Region (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_rect_t}{TRect}}}]{region }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00172 \{ m\_region = region; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_reader_a05957645d91874ba329b7e07b950ccd2}\label{class_t_p_s_d_reader_a05957645d91874ba329b7e07b950ccd2}} 
+\index{TPSDReader@{TPSDReader}!setShrink@{setShrink}}
+\index{setShrink@{setShrink}!TPSDReader@{TPSDReader}}
+\doxysubsubsection{\texorpdfstring{setShrink()}{setShrink()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void TPSDReader\+::set\+Shrink (\begin{DoxyParamCaption}\item[{int}]{shrink }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00164                              \{}
+\DoxyCodeLine{00165     m\_shrinkX = shrink;}
+\DoxyCodeLine{00166     m\_shrinkY = shrink;}
+\DoxyCodeLine{00167   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_reader_aff26b45cdd5610b71c088603eb83dd96}\label{class_t_p_s_d_reader_aff26b45cdd5610b71c088603eb83dd96}} 
+\index{TPSDReader@{TPSDReader}!setShrink@{setShrink}}
+\index{setShrink@{setShrink}!TPSDReader@{TPSDReader}}
+\doxysubsubsection{\texorpdfstring{setShrink()}{setShrink()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void TPSDReader\+::set\+Shrink (\begin{DoxyParamCaption}\item[{int}]{shrinkX,  }\item[{int}]{shrinkY }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00168                                            \{}
+\DoxyCodeLine{00169     m\_shrinkX = shrinkX;}
+\DoxyCodeLine{00170     m\_shrinkY = shrinkY;}
+\DoxyCodeLine{00171   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/psdlib/psd.\+h\item 
+E\+:/opentoonz/toonz/sources/common/psdlib/psd.\+cpp\end{DoxyCompactItemize}

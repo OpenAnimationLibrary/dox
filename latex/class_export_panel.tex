@@ -1,0 +1,390 @@
+\hypertarget{class_export_panel}{}\doxysection{Export\+Panel Class Reference}
+\label{class_export_panel}\index{ExportPanel@{ExportPanel}}
+Inheritance diagram for Export\+Panel\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_export_panel}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_export_panel_a4fc188a059315af77a6607f844f5fdc6}{generate\+Movie}} ()
+\item 
+void \mbox{\hyperlink{class_export_panel_a592968155186cca56e861ef3fa316c03}{on\+Use\+Marker\+Toggled}} (bool toggled)
+\item 
+void \mbox{\hyperlink{class_export_panel_a1efeee725bfd4dcbca90e98139f2cdb4}{on\+Scene\+Switched}} ()
+\item 
+void \mbox{\hyperlink{class_export_panel_a2a7674b433d442c81bd65092a900324b}{on\+Format\+Changed}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_export_panel_af20d0f488bd6d259256dc5dcdda83527}{open\+Settings\+Popup}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_export_panel_ae9035d71c8eaaaeb8cfec45710a607a0}{Export\+Panel}} (QWidget $\ast$parent=0, Qt\+::\+WFlags flags=0)
+\item 
+void \mbox{\hyperlink{class_export_panel_abba300011ceba013a83a4de566f2557c}{load\+Export\+Settings}} ()
+\item 
+void \mbox{\hyperlink{class_export_panel_a56a40a8d8a5fcae53538051f0a7a1928}{save\+Export\+Settings}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_export_panel_a4d964ef779e590dc037c2629d1666e76}{show\+Event}} (QShow\+Event $\ast$) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_export_panel_ae9035d71c8eaaaeb8cfec45710a607a0}\label{class_export_panel_ae9035d71c8eaaaeb8cfec45710a607a0}} 
+\index{ExportPanel@{ExportPanel}!ExportPanel@{ExportPanel}}
+\index{ExportPanel@{ExportPanel}!ExportPanel@{ExportPanel}}
+\doxysubsubsection{\texorpdfstring{ExportPanel()}{ExportPanel()}}
+{\footnotesize\ttfamily Export\+Panel\+::\+Export\+Panel (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0},  }\item[{Qt\+::\+WFlags}]{flags = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00780     : \mbox{\hyperlink{class_t_panel}{TPanel}}(parent)}
+\DoxyCodeLine{00781     , m\_clipListViewer(0)}
+\DoxyCodeLine{00782     , m\_saveInFileFld(0)}
+\DoxyCodeLine{00783     , m\_fileNameFld(0)}
+\DoxyCodeLine{00784     , m\_useMarker(0) \{}
+\DoxyCodeLine{00785   setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);}
+\DoxyCodeLine{00786   setWindowTitle(tr(\textcolor{stringliteral}{"{}Export"{}}));}
+\DoxyCodeLine{00787 }
+\DoxyCodeLine{00788   setMinimumWidth(270);}
+\DoxyCodeLine{00789 }
+\DoxyCodeLine{00790   \mbox{\hyperlink{class_render_controller}{RenderController}} *renderController = RenderController::instance();}
+\DoxyCodeLine{00791 }
+\DoxyCodeLine{00792   QFrame *box = \textcolor{keyword}{new} QFrame(\textcolor{keyword}{this});}
+\DoxyCodeLine{00793   box-\/>setObjectName(\textcolor{stringliteral}{"{}exportPanel"{}});}
+\DoxyCodeLine{00794   box-\/>setFrameStyle(QFrame::StyledPanel);}
+\DoxyCodeLine{00795   box-\/>setStyleSheet(\textcolor{stringliteral}{"{}\#exportPanel \{ margin: 1px; border: 0px; \}"{}});}
+\DoxyCodeLine{00796 }
+\DoxyCodeLine{00797   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00798   mainLayout-\/>setMargin(0);}
+\DoxyCodeLine{00799   mainLayout-\/>setSpacing(0);}
+\DoxyCodeLine{00800   mainLayout-\/>setAlignment(Qt::AlignTop);}
+\DoxyCodeLine{00801   \textcolor{comment}{// ClipList}}
+\DoxyCodeLine{00802   m\_clipListViewer = \textcolor{keyword}{new} \mbox{\hyperlink{class_clip_list_viewer}{ClipListViewer}}(box);}
+\DoxyCodeLine{00803   m\_clipListViewer-\/>setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Expanding);}
+\DoxyCodeLine{00804 }
+\DoxyCodeLine{00805   \mbox{\hyperlink{class_t_scene_handle}{TSceneHandle}} *sceneHandle = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}();}
+\DoxyCodeLine{00806 }
+\DoxyCodeLine{00807   connect(sceneHandle, SIGNAL(sceneSwitched()), \textcolor{keyword}{this}, SLOT(onSceneSwitched()));}
+\DoxyCodeLine{00808 }
+\DoxyCodeLine{00809   \textcolor{comment}{// Settings Box}}
+\DoxyCodeLine{00810   QFrame *settingsBox = \textcolor{keyword}{new} QFrame(box);}
+\DoxyCodeLine{00811   settingsBox-\/>setObjectName(\textcolor{stringliteral}{"{}settingsBox"{}});}
+\DoxyCodeLine{00812   settingsBox-\/>setFrameStyle(QFrame::StyledPanel);}
+\DoxyCodeLine{00813   QVBoxLayout *settingsLayout = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00814   settingsLayout-\/>setMargin(15);}
+\DoxyCodeLine{00815   settingsLayout-\/>setSpacing(5);}
+\DoxyCodeLine{00816   settingsLayout-\/>setAlignment(Qt::AlignTop);}
+\DoxyCodeLine{00817 }
+\DoxyCodeLine{00818   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene      = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00819   std::wstring sceneName = scene-\/>\mbox{\hyperlink{class_toonz_scene_a1fa0a1cbf9eb6360d980392acc99924b}{getSceneName}}();}
+\DoxyCodeLine{00820   \mbox{\hyperlink{class_t_file_path}{TFilePath}} scenePath =}
+\DoxyCodeLine{00821       scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}()-\/>\mbox{\hyperlink{class_t_output_properties_ab082a7e84177a558484d648215e4b4f7}{getPath}}().\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}();}
+\DoxyCodeLine{00822 }
+\DoxyCodeLine{00823   \textcolor{comment}{// Label + saveInFileFld}}
+\DoxyCodeLine{00824   QHBoxLayout *saveIn = \textcolor{keyword}{new} QHBoxLayout;}
+\DoxyCodeLine{00825   saveIn-\/>setMargin(0);}
+\DoxyCodeLine{00826   saveIn-\/>setSpacing(5);}
+\DoxyCodeLine{00827   m\_saveInFileFld = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_file_field}{DVGui::FileField}}(settingsBox);}
+\DoxyCodeLine{00828   m\_saveInFileFld-\/>setPath(QString::fromStdWString(scenePath.getWideString()));}
+\DoxyCodeLine{00829   QLabel *dirLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Save in:"{}}));}
+\DoxyCodeLine{00830   dirLabel-\/>setAlignment(Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00831   dirLabel-\/>setFixedSize(65, m\_saveInFileFld-\/>height());}
+\DoxyCodeLine{00832   saveIn-\/>addWidget(dirLabel);}
+\DoxyCodeLine{00833   saveIn-\/>addWidget(m\_saveInFileFld);}
+\DoxyCodeLine{00834 }
+\DoxyCodeLine{00835   \textcolor{comment}{// Label + m\_fileNameFld}}
+\DoxyCodeLine{00836   QHBoxLayout *fileNname = \textcolor{keyword}{new} QHBoxLayout;}
+\DoxyCodeLine{00837   fileNname-\/>setMargin(0);}
+\DoxyCodeLine{00838   fileNname-\/>setSpacing(5);}
+\DoxyCodeLine{00839   m\_fileNameFld =}
+\DoxyCodeLine{00840       \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_line_edit}{DVGui::LineEdit}}(QString::fromStdWString(sceneName), settingsBox);}
+\DoxyCodeLine{00841   QLabel *nameLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}File Name:"{}}));}
+\DoxyCodeLine{00842   nameLabel-\/>setAlignment(Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00843   nameLabel-\/>setFixedSize(65, m\_fileNameFld-\/>height());}
+\DoxyCodeLine{00844   fileNname-\/>addWidget(nameLabel);}
+\DoxyCodeLine{00845   fileNname-\/>addWidget(m\_fileNameFld);}
+\DoxyCodeLine{00846 }
+\DoxyCodeLine{00847   \textcolor{comment}{// file formats}}
+\DoxyCodeLine{00848   QHBoxLayout *fileFormatLayout = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00849   m\_fileFormat                  = \textcolor{keyword}{new} QComboBox();}
+\DoxyCodeLine{00850   QStringList formats;}
+\DoxyCodeLine{00851   TImageWriter::getSupportedFormats(formats, \textcolor{keyword}{true});}
+\DoxyCodeLine{00852   TLevelWriter::getSupportedFormats(formats, \textcolor{keyword}{true});}
+\DoxyCodeLine{00853   Tiio::Writer::getSupportedFormats(formats, \textcolor{keyword}{true});}
+\DoxyCodeLine{00854   formats.sort();}
+\DoxyCodeLine{00855 }
+\DoxyCodeLine{00856   m\_fileFormat-\/>addItems(formats);}
+\DoxyCodeLine{00857   m\_fileFormat-\/>setFixedHeight(DVGui::WidgetHeight + 2);}
+\DoxyCodeLine{00858   connect(m\_fileFormat, SIGNAL(currentIndexChanged(\textcolor{keyword}{const} QString \&)),}
+\DoxyCodeLine{00859           SLOT(onFormatChanged(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00860   \textcolor{comment}{// m\_fileFormat-\/>setCurrentIndex(formats.indexOf("{}mov"{}));}}
+\DoxyCodeLine{00861 }
+\DoxyCodeLine{00862   QPushButton *fileFormatButton = \textcolor{keyword}{new} QPushButton(QString(tr(\textcolor{stringliteral}{"{}Options"{}})));}
+\DoxyCodeLine{00863   fileFormatButton-\/>setMinimumWidth(75);}
+\DoxyCodeLine{00864   fileFormatButton-\/>setFixedHeight(DVGui::WidgetHeight);}
+\DoxyCodeLine{00865   connect(fileFormatButton, SIGNAL(pressed()), \textcolor{keyword}{this}, SLOT(openSettingsPopup()));}
+\DoxyCodeLine{00866   QLabel *fileFormat = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}File Format:"{}}));}
+\DoxyCodeLine{00867   fileFormat-\/>setAlignment(Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00868   fileFormat-\/>setFixedSize(65, fileFormatButton-\/>height());}
+\DoxyCodeLine{00869 }
+\DoxyCodeLine{00870   fileFormatLayout-\/>addWidget(fileFormat);}
+\DoxyCodeLine{00871   fileFormatLayout-\/>addWidget(m\_fileFormat);}
+\DoxyCodeLine{00872   fileFormatLayout-\/>addWidget(fileFormatButton);}
+\DoxyCodeLine{00873 }
+\DoxyCodeLine{00874   \textcolor{comment}{// Use Marker checkbox}}
+\DoxyCodeLine{00875   m\_useMarker = \textcolor{keyword}{new} QCheckBox(tr(\textcolor{stringliteral}{"{}Use Markers"{}}), settingsBox);}
+\DoxyCodeLine{00876   m\_useMarker-\/>setMinimumHeight(30);}
+\DoxyCodeLine{00877   m\_useMarker-\/>setChecked(ExportUseMarkers);}
+\DoxyCodeLine{00878   connect(m\_useMarker, SIGNAL(toggled(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00879           SLOT(onUseMarkerToggled(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00880 }
+\DoxyCodeLine{00881   \textcolor{comment}{// Export button}}
+\DoxyCodeLine{00882   QFrame *exportBox = \textcolor{keyword}{new} QFrame(box);}
+\DoxyCodeLine{00883   exportBox-\/>setFrameStyle(QFrame::StyledPanel);}
+\DoxyCodeLine{00884   exportBox-\/>setObjectName(\textcolor{stringliteral}{"{}exportBox"{}});}
+\DoxyCodeLine{00885 }
+\DoxyCodeLine{00886   QVBoxLayout *exportLayout = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00887   QPushButton *exportButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Export"{}}), exportBox);}
+\DoxyCodeLine{00888   exportButton-\/>setFixedSize(65, DVGui::WidgetHeight);}
+\DoxyCodeLine{00889   connect(exportButton, SIGNAL(pressed()), \textcolor{keyword}{this}, SLOT(generateMovie()));}
+\DoxyCodeLine{00890   exportLayout-\/>addWidget(exportButton, 0, Qt::AlignCenter);}
+\DoxyCodeLine{00891   exportBox-\/>setLayout(exportLayout);}
+\DoxyCodeLine{00892 }
+\DoxyCodeLine{00893   settingsLayout-\/>addLayout(saveIn);}
+\DoxyCodeLine{00894   settingsLayout-\/>addLayout(fileNname);}
+\DoxyCodeLine{00895   settingsLayout-\/>addLayout(fileFormatLayout);}
+\DoxyCodeLine{00896   settingsLayout-\/>addWidget(m\_useMarker);}
+\DoxyCodeLine{00897   settingsBox-\/>setLayout(settingsLayout);}
+\DoxyCodeLine{00898 }
+\DoxyCodeLine{00899   \textcolor{keywordflow}{if} (m\_clipListViewer) mainLayout-\/>addWidget(m\_clipListViewer);}
+\DoxyCodeLine{00900   mainLayout-\/>addWidget(\textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_separator}{DVGui::Separator}}(\textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{this}));}
+\DoxyCodeLine{00901   mainLayout-\/>addWidget(settingsBox, 0);}
+\DoxyCodeLine{00902   mainLayout-\/>addWidget(\textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_separator}{DVGui::Separator}}(\textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{this}));}
+\DoxyCodeLine{00903   mainLayout-\/>addWidget(exportBox, 0);}
+\DoxyCodeLine{00904 }
+\DoxyCodeLine{00905   connect(RenderController::instance(), SIGNAL(movieGenerated()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00906           SLOT(onMovieGenerated()));}
+\DoxyCodeLine{00907 }
+\DoxyCodeLine{00908   box-\/>setLayout(mainLayout);}
+\DoxyCodeLine{00909   setWidget(box);}
+\DoxyCodeLine{00910   loadExportSettings();}
+\DoxyCodeLine{00911 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_panel_ab197ab1f73bd5d52a56e96da2343a12b}\label{class_export_panel_ab197ab1f73bd5d52a56e96da2343a12b}} 
+\index{ExportPanel@{ExportPanel}!````~ExportPanel@{$\sim$ExportPanel}}
+\index{````~ExportPanel@{$\sim$ExportPanel}!ExportPanel@{ExportPanel}}
+\doxysubsubsection{\texorpdfstring{$\sim$ExportPanel()}{~ExportPanel()}}
+{\footnotesize\ttfamily Export\+Panel\+::$\sim$\+Export\+Panel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00915 \{ saveExportSettings(); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_export_panel_a4fc188a059315af77a6607f844f5fdc6}\label{class_export_panel_a4fc188a059315af77a6607f844f5fdc6}} 
+\index{ExportPanel@{ExportPanel}!generateMovie@{generateMovie}}
+\index{generateMovie@{generateMovie}!ExportPanel@{ExportPanel}}
+\doxysubsubsection{\texorpdfstring{generateMovie}{generateMovie}}
+{\footnotesize\ttfamily void Export\+Panel\+::generate\+Movie (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00985                                 \{}
+\DoxyCodeLine{00986   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00987   std::string ext   = RenderController::instance()-\/>getMovieExt();}
+\DoxyCodeLine{00988   QString path      = m\_saveInFileFld-\/>getPath();}
+\DoxyCodeLine{00989   \mbox{\hyperlink{class_t_file_path}{TFilePath}} outPath(path.toStdWString());}
+\DoxyCodeLine{00990   outPath = (outPath + m\_fileNameFld-\/>text().toStdWString()).withType(ext);}
+\DoxyCodeLine{00991   \textcolor{keywordflow}{if} (TFileType::getInfo(outPath) == TFileType::RASTER\_IMAGE ||}
+\DoxyCodeLine{00992       outPath.getType() == \textcolor{stringliteral}{"{}pct"{}} || outPath.getType() == \textcolor{stringliteral}{"{}pic"{}} ||}
+\DoxyCodeLine{00993       outPath.getType() == \textcolor{stringliteral}{"{}pict"{}})  \textcolor{comment}{// pct e' un formato"{}livello"{} (ha i settings}}
+\DoxyCodeLine{00994                                     \textcolor{comment}{// di quicktime) ma fatto di diversi frames}}
+\DoxyCodeLine{00995     outPath = outPath.withFrame(TFrameId::EMPTY\_FRAME);}
+\DoxyCodeLine{00996   RenderController::instance()-\/>generateMovie(scene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(outPath));}
+\DoxyCodeLine{00997 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_panel_abba300011ceba013a83a4de566f2557c}\label{class_export_panel_abba300011ceba013a83a4de566f2557c}} 
+\index{ExportPanel@{ExportPanel}!loadExportSettings@{loadExportSettings}}
+\index{loadExportSettings@{loadExportSettings}!ExportPanel@{ExportPanel}}
+\doxysubsubsection{\texorpdfstring{loadExportSettings()}{loadExportSettings()}}
+{\footnotesize\ttfamily void Export\+Panel\+::load\+Export\+Settings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00927                                      \{}
+\DoxyCodeLine{00928   \mbox{\hyperlink{class_t_file_path}{TFilePath}} exportPath = TEnv::getConfigDir() + \textcolor{stringliteral}{"{}exportsettings.txt"{}};}
+\DoxyCodeLine{00929   \textcolor{keywordflow}{if} (!TSystem::doesExistFileOrLevel(exportPath)) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00930   \mbox{\hyperlink{class_t_i_stream}{TIStream}} is(exportPath);}
+\DoxyCodeLine{00931   std::string tagName;}
+\DoxyCodeLine{00932   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00933     \textcolor{keywordflow}{while} (is.matchTag(tagName)) \{}
+\DoxyCodeLine{00934       \textcolor{keywordflow}{if} (tagName == \textcolor{stringliteral}{"{}ExportDir"{}}) \{}
+\DoxyCodeLine{00935         \mbox{\hyperlink{class_t_file_path}{TFilePath}} outPath;}
+\DoxyCodeLine{00936         is >> outPath;}
+\DoxyCodeLine{00937         m\_saveInFileFld-\/>setPath(}
+\DoxyCodeLine{00938             QString::fromStdWString(outPath.getWideString()));}
+\DoxyCodeLine{00939       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tagName == \textcolor{stringliteral}{"{}ExportFormat"{}}) \{}
+\DoxyCodeLine{00940         std::string ext;}
+\DoxyCodeLine{00941         is >> ext;}
+\DoxyCodeLine{00942         \textcolor{keywordtype}{int} index = m\_fileFormat-\/>findText(QString::fromStdString(ext));}
+\DoxyCodeLine{00943         m\_fileFormat-\/>setCurrentIndex(index);}
+\DoxyCodeLine{00944       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tagName == \textcolor{stringliteral}{"{}FormatSettings"{}}) \{}
+\DoxyCodeLine{00945         \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}} *outProp =}
+\DoxyCodeLine{00946             RenderController::instance()-\/>getOutputPropertites();}
+\DoxyCodeLine{00947         std::string ext       = m\_fileFormat-\/>currentText().toStdString();}
+\DoxyCodeLine{00948         \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}} *props = outProp-\/>\mbox{\hyperlink{class_t_output_properties_a9ef174e6f6239219fa563b037246c8d4}{getFileFormatProperties}}(ext);}
+\DoxyCodeLine{00949         props-\/>loadData(is);}
+\DoxyCodeLine{00950       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tagName == \textcolor{stringliteral}{"{}UseMarkers"{}}) \{}
+\DoxyCodeLine{00951         \textcolor{keywordtype}{int} value;}
+\DoxyCodeLine{00952         is >> value;}
+\DoxyCodeLine{00953         m\_useMarker-\/>setChecked(value);}
+\DoxyCodeLine{00954       \}}
+\DoxyCodeLine{00955       is.closeChild();}
+\DoxyCodeLine{00956     \}}
+\DoxyCodeLine{00957   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00958   \}}
+\DoxyCodeLine{00959 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_panel_a2a7674b433d442c81bd65092a900324b}\label{class_export_panel_a2a7674b433d442c81bd65092a900324b}} 
+\index{ExportPanel@{ExportPanel}!onFormatChanged@{onFormatChanged}}
+\index{onFormatChanged@{onFormatChanged}!ExportPanel@{ExportPanel}}
+\doxysubsubsection{\texorpdfstring{onFormatChanged}{onFormatChanged}}
+{\footnotesize\ttfamily void Export\+Panel\+::on\+Format\+Changed (\begin{DoxyParamCaption}\item[{const QString \&}]{format }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01023                                                        \{}
+\DoxyCodeLine{01024   RenderController::instance()-\/>setMovieExt(format.toStdString());}
+\DoxyCodeLine{01025 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_panel_a1efeee725bfd4dcbca90e98139f2cdb4}\label{class_export_panel_a1efeee725bfd4dcbca90e98139f2cdb4}} 
+\index{ExportPanel@{ExportPanel}!onSceneSwitched@{onSceneSwitched}}
+\index{onSceneSwitched@{onSceneSwitched}!ExportPanel@{ExportPanel}}
+\doxysubsubsection{\texorpdfstring{onSceneSwitched}{onSceneSwitched}}
+{\footnotesize\ttfamily void Export\+Panel\+::on\+Scene\+Switched (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01012                                   \{}
+\DoxyCodeLine{01013   \textcolor{keywordflow}{if} (m\_clipListViewer) \{}
+\DoxyCodeLine{01014     m\_clipListViewer-\/>resetList();}
+\DoxyCodeLine{01015     m\_clipListViewer-\/>update();}
+\DoxyCodeLine{01016   \}}
+\DoxyCodeLine{01017   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{01018   m\_fileNameFld-\/>setText(QString::fromStdWString(scene-\/>\mbox{\hyperlink{class_toonz_scene_a1fa0a1cbf9eb6360d980392acc99924b}{getSceneName}}()));}
+\DoxyCodeLine{01019 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_panel_a592968155186cca56e861ef3fa316c03}\label{class_export_panel_a592968155186cca56e861ef3fa316c03}} 
+\index{ExportPanel@{ExportPanel}!onUseMarkerToggled@{onUseMarkerToggled}}
+\index{onUseMarkerToggled@{onUseMarkerToggled}!ExportPanel@{ExportPanel}}
+\doxysubsubsection{\texorpdfstring{onUseMarkerToggled}{onUseMarkerToggled}}
+{\footnotesize\ttfamily void Export\+Panel\+::on\+Use\+Marker\+Toggled (\begin{DoxyParamCaption}\item[{bool}]{toggled }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01001                                                  \{}
+\DoxyCodeLine{01002   RenderController::instance()-\/>setUseMarkers(toggled);}
+\DoxyCodeLine{01003   \textcolor{keywordflow}{if} (toggled) \{}
+\DoxyCodeLine{01004     ExportUseMarkers = 1;}
+\DoxyCodeLine{01005   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01006     ExportUseMarkers = 0;}
+\DoxyCodeLine{01007   \}}
+\DoxyCodeLine{01008 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_panel_af20d0f488bd6d259256dc5dcdda83527}\label{class_export_panel_af20d0f488bd6d259256dc5dcdda83527}} 
+\index{ExportPanel@{ExportPanel}!openSettingsPopup@{openSettingsPopup}}
+\index{openSettingsPopup@{openSettingsPopup}!ExportPanel@{ExportPanel}}
+\doxysubsubsection{\texorpdfstring{openSettingsPopup}{openSettingsPopup}}
+{\footnotesize\ttfamily void Export\+Panel\+::open\+Settings\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01029                                     \{}
+\DoxyCodeLine{01030   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{01031   \textcolor{keywordflow}{if} (!scene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01032   std::string ext = RenderController::instance()-\/>getMovieExt();}
+\DoxyCodeLine{01033 }
+\DoxyCodeLine{01034   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}} *outProps =}
+\DoxyCodeLine{01035       RenderController::instance()-\/>getOutputPropertites();}
+\DoxyCodeLine{01036   \textcolor{keywordflow}{if} (!outProps) \{}
+\DoxyCodeLine{01037     \textcolor{comment}{// non dovrebbe mai capitare!}}
+\DoxyCodeLine{01038     assert(0);}
+\DoxyCodeLine{01039     outProps = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}}();}
+\DoxyCodeLine{01040     RenderController::instance()-\/>setOutputPropertites(outProps);}
+\DoxyCodeLine{01041   \}}
+\DoxyCodeLine{01042 }
+\DoxyCodeLine{01043   \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}} *props = outProps-\/>\mbox{\hyperlink{class_t_output_properties_a9ef174e6f6239219fa563b037246c8d4}{getFileFormatProperties}}(ext);}
+\DoxyCodeLine{01044   openFormatSettingsPopup(\textcolor{keyword}{this}, ext, props);}
+\DoxyCodeLine{01045 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_panel_a56a40a8d8a5fcae53538051f0a7a1928}\label{class_export_panel_a56a40a8d8a5fcae53538051f0a7a1928}} 
+\index{ExportPanel@{ExportPanel}!saveExportSettings@{saveExportSettings}}
+\index{saveExportSettings@{saveExportSettings}!ExportPanel@{ExportPanel}}
+\doxysubsubsection{\texorpdfstring{saveExportSettings()}{saveExportSettings()}}
+{\footnotesize\ttfamily void Export\+Panel\+::save\+Export\+Settings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00963                                      \{}
+\DoxyCodeLine{00964   QString path = m\_saveInFileFld-\/>getPath();}
+\DoxyCodeLine{00965   \mbox{\hyperlink{class_t_file_path}{TFilePath}} outPath(path.toStdWString());}
+\DoxyCodeLine{00966 }
+\DoxyCodeLine{00967   \mbox{\hyperlink{class_t_file_path}{TFilePath}} exportPath = TEnv::getConfigDir() + \textcolor{stringliteral}{"{}exportsettings.txt"{}};}
+\DoxyCodeLine{00968   \mbox{\hyperlink{class_t_o_stream}{TOStream}} os(exportPath);}
+\DoxyCodeLine{00969   os.child(\textcolor{stringliteral}{"{}ExportDir"{}}) << outPath;}
+\DoxyCodeLine{00970   std::string ext = m\_fileFormat-\/>currentText().toStdString();}
+\DoxyCodeLine{00971   os.child(\textcolor{stringliteral}{"{}ExportFormat"{}}) << ext;}
+\DoxyCodeLine{00972 }
+\DoxyCodeLine{00973   os.openChild(\textcolor{stringliteral}{"{}FormatSettings"{}});}
+\DoxyCodeLine{00974   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}} *outProp =}
+\DoxyCodeLine{00975       RenderController::instance()-\/>getOutputPropertites();}
+\DoxyCodeLine{00976   \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}} *props = outProp-\/>\mbox{\hyperlink{class_t_output_properties_a9ef174e6f6239219fa563b037246c8d4}{getFileFormatProperties}}(ext);}
+\DoxyCodeLine{00977   props-\/>saveData(os);}
+\DoxyCodeLine{00978   os.closeChild();}
+\DoxyCodeLine{00979 }
+\DoxyCodeLine{00980   os.child(\textcolor{stringliteral}{"{}UseMarkers"{}}) << (int)m\_useMarker-\/>isChecked();}
+\DoxyCodeLine{00981 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_panel_a4d964ef779e590dc037c2629d1666e76}\label{class_export_panel_a4d964ef779e590dc037c2629d1666e76}} 
+\index{ExportPanel@{ExportPanel}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!ExportPanel@{ExportPanel}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Export\+Panel\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00919                                         \{}
+\DoxyCodeLine{00920   \textcolor{keywordflow}{if} (m\_clipListViewer-\/>getItemCount() == 0) \{}
+\DoxyCodeLine{00921     m\_clipListViewer-\/>addCurrentScene();}
+\DoxyCodeLine{00922   \}}
+\DoxyCodeLine{00923 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/exportpanel.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/exportpanel.\+cpp\end{DoxyCompactItemize}

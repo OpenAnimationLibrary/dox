@@ -1,0 +1,36 @@
+\hypertarget{tellipticbrush_8cpp}{}\doxysection{E\+:/opentoonz/toonz/sources/common/tvrender/tellipticbrush.cpp File Reference}
+\label{tellipticbrush_8cpp}\index{E:/opentoonz/toonz/sources/common/tvrender/tellipticbrush.cpp@{E:/opentoonz/toonz/sources/common/tvrender/tellipticbrush.cpp}}
+
+
+This code performs the outlinization of a {\itshape brush} stroke with respect to a secondary {\itshape path} stroke. This is used to draw Adobe Illustrator-\/like vectors whose brush is itself a custom vector (and by extension, a complex vector image).  
+
+
+{\ttfamily \#include \char`\"{}tcurveutil.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}tinterval.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}tellipticbrush\+P.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}tstrokeoutline.\+h\char`\"{}}\newline
+
+
+\doxysubsection{Detailed Description}
+This code performs the outlinization of a {\itshape brush} stroke with respect to a secondary {\itshape path} stroke. This is used to draw Adobe Illustrator-\/like vectors whose brush is itself a custom vector (and by extension, a complex vector image). 
+
+This code deals with the \char`\"{}outlinization\char`\"{} process of a \mbox{\hyperlink{class_t_stroke}{TStroke}} instance.
+
+The process of extracting the outline of a thick stroke can be resumed in 2 main steps\+:
+
+
+\begin{DoxyEnumerate}
+\item Discretize the stroke centerline in the most appropriate centerline points, extracting infos about position and left/right derivatives at each.
+\item Build the outline points associated to each individual centerline point; eventually including additional junction points and caps.
+\end{DoxyEnumerate}
+
+The first major step has some sub-\/routines worth noting\+:
+
+1.\+1 Isolate regions of the stroke where the thickness speed is greater than the gemoetrical speed of the centerline. These points are \textquotesingle{}self-\/covered\textquotesingle{} by their immediate neighbourhood, and thus cannot be seen -\/ or build outline directions. 1.\+2 Some procedural style need to sample the centerline at a given length step. 1.\+3 The centerline should be sampled so that the resulting polygonal outline approximation is tightly close to the theoretical outline, up to an error bound. The recursive approach is the simplest to deal with this issue.
+
+The second step implements different outline styles to extrude the centerline points.
+
+Generalization\+: Introduce a repeat \% and a superposition \% in the algorithm 
+
+Definition in file \mbox{\hyperlink{}{tellipticbrush.\+cpp}}.
+

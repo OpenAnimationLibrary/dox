@@ -1,0 +1,215 @@
+\hypertarget{class_shading_context_manager}{}\doxysection{Shading\+Context\+Manager Class Reference}
+\label{class_shading_context_manager}\index{ShadingContextManager@{ShadingContextManager}}
+Inheritance diagram for Shading\+Context\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_shading_context_manager}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QMutex $\ast$ \mbox{\hyperlink{class_shading_context_manager_af6940bf355a47f3a6dc9642e899b3a08}{mutex}} () const
+\item 
+const \mbox{\hyperlink{class_shading_context}{Shading\+Context}} \& \mbox{\hyperlink{class_shading_context_manager_ae3e9b8895825169cf9a2dabeb562b2fe}{shading\+Context}} () const
+\item 
+\mbox{\hyperlink{class_shading_context}{Shading\+Context}} \& \mbox{\hyperlink{class_shading_context_manager_a73349cec95ecfc4b53371080af82edfe}{shading\+Context}} ()
+\item 
+void \mbox{\hyperlink{class_shading_context_manager_a8362dbbd6b82ead84812068d4f4c1daf}{on\+Render\+Instance\+Start}} ()
+\item 
+void \mbox{\hyperlink{class_shading_context_manager_a22c65063ac11e2bbe082fcbdd260be2e}{on\+Render\+Instance\+End}} ()
+\item 
+Shading\+Context\+::\+Support \mbox{\hyperlink{class_shading_context_manager_ac389825d4b3f485abe3b9d6ca065edb2}{touch\+Support}} ()
+\item 
+QOffscreen\+Surface $\ast$ \mbox{\hyperlink{class_shading_context_manager_af73dfa80377e355d87c6a7952945ed10}{get\+Surface}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_shading_context_manager}{Shading\+Context\+Manager}} $\ast$ \mbox{\hyperlink{class_shading_context_manager_ae9b6fa53115e315b9481ebfac48e3f87}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_shading_context_manager_a3915f14c3dcb2cb3956c626f809f8d40}\label{class_shading_context_manager_a3915f14c3dcb2cb3956c626f809f8d40}} 
+\index{ShadingContextManager@{ShadingContextManager}!ShadingContextManager@{ShadingContextManager}}
+\index{ShadingContextManager@{ShadingContextManager}!ShadingContextManager@{ShadingContextManager}}
+\doxysubsubsection{\texorpdfstring{ShadingContextManager()}{ShadingContextManager()}}
+{\footnotesize\ttfamily Shading\+Context\+Manager\+::\+Shading\+Context\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00237                           \{}
+\DoxyCodeLine{00238     \textcolor{comment}{/*}}
+\DoxyCodeLine{00239 \textcolor{comment}{The ShadingContext's QGLPixelBuffer must be destroyed *before* the global}}
+\DoxyCodeLine{00240 \textcolor{comment}{QApplication}}
+\DoxyCodeLine{00241 \textcolor{comment}{is. So, we will attach to a suitable parent object whose lifespan is shorter.}}
+\DoxyCodeLine{00242 \textcolor{comment}{}}
+\DoxyCodeLine{00243 \textcolor{comment}{FYI -\/ yes, this approach was adopted after a long and PAINFUL wrestling session}}
+\DoxyCodeLine{00244 \textcolor{comment}{with Qt.}}
+\DoxyCodeLine{00245 \textcolor{comment}{Suggestions are welcome as this is a tad beyond ridiculous...}}
+\DoxyCodeLine{00246 \textcolor{comment}{*/}}
+\DoxyCodeLine{00247 }
+\DoxyCodeLine{00248     QObject *mainScopeBoundObject =}
+\DoxyCodeLine{00249         QCoreApplication::instance()-\/>findChild<QObject *>(\textcolor{stringliteral}{"{}mainScope"{}});}
+\DoxyCodeLine{00250 }
+\DoxyCodeLine{00251     assert(thread() ==}
+\DoxyCodeLine{00252            mainScopeBoundObject}
+\DoxyCodeLine{00253                -\/>thread());  \textcolor{comment}{// Parent object must be in the same thread,}}
+\DoxyCodeLine{00254     \textcolor{comment}{// setParent(mainScopeBoundObject);  // otherwise reparenting fails}}
+\DoxyCodeLine{00255     m\_surface.reset(\textcolor{keyword}{new} QOffscreenSurface());}
+\DoxyCodeLine{00256     m\_surface-\/>create();}
+\DoxyCodeLine{00257     m\_shadingContext.reset(\textcolor{keyword}{new} \mbox{\hyperlink{class_shading_context}{ShadingContext}}(m\_surface.get()));}
+\DoxyCodeLine{00258   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_shading_context_manager_af73dfa80377e355d87c6a7952945ed10}\label{class_shading_context_manager_af73dfa80377e355d87c6a7952945ed10}} 
+\index{ShadingContextManager@{ShadingContextManager}!getSurface@{getSurface}}
+\index{getSurface@{getSurface}!ShadingContextManager@{ShadingContextManager}}
+\doxysubsubsection{\texorpdfstring{getSurface()}{getSurface()}}
+{\footnotesize\ttfamily QOffscreen\+Surface $\ast$ Shading\+Context\+Manager\+::get\+Surface (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00324 \{ \textcolor{keywordflow}{return} m\_surface.get(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shading_context_manager_ae9b6fa53115e315b9481ebfac48e3f87}\label{class_shading_context_manager_ae9b6fa53115e315b9481ebfac48e3f87}} 
+\index{ShadingContextManager@{ShadingContextManager}!instance@{instance}}
+\index{instance@{instance}!ShadingContextManager@{ShadingContextManager}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_shading_context_manager}{Shading\+Context\+Manager}} $\ast$ Shading\+Context\+Manager\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00260                                            \{}
+\DoxyCodeLine{00261     \textcolor{keyword}{static} \mbox{\hyperlink{class_shading_context_manager}{ShadingContextManager}} *theManager = \textcolor{keyword}{new} \mbox{\hyperlink{class_shading_context_manager}{ShadingContextManager}};}
+\DoxyCodeLine{00262     \textcolor{keywordflow}{return} theManager;}
+\DoxyCodeLine{00263   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shading_context_manager_af6940bf355a47f3a6dc9642e899b3a08}\label{class_shading_context_manager_af6940bf355a47f3a6dc9642e899b3a08}} 
+\index{ShadingContextManager@{ShadingContextManager}!mutex@{mutex}}
+\index{mutex@{mutex}!ShadingContextManager@{ShadingContextManager}}
+\doxysubsubsection{\texorpdfstring{mutex()}{mutex()}}
+{\footnotesize\ttfamily QMutex $\ast$ Shading\+Context\+Manager\+::mutex (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00265 \{ \textcolor{keywordflow}{return} \&m\_mutex; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shading_context_manager_a22c65063ac11e2bbe082fcbdd260be2e}\label{class_shading_context_manager_a22c65063ac11e2bbe082fcbdd260be2e}} 
+\index{ShadingContextManager@{ShadingContextManager}!onRenderInstanceEnd@{onRenderInstanceEnd}}
+\index{onRenderInstanceEnd@{onRenderInstanceEnd}!ShadingContextManager@{ShadingContextManager}}
+\doxysubsubsection{\texorpdfstring{onRenderInstanceEnd()}{onRenderInstanceEnd()}}
+{\footnotesize\ttfamily void Shading\+Context\+Manager\+::on\+Render\+Instance\+End (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00272                              \{}
+\DoxyCodeLine{00273     \textcolor{keywordflow}{if} (-\/-\/m\_activeRenderInstances == 0) \{}
+\DoxyCodeLine{00274       QMutexLocker mLocker(\&m\_mutex);}
+\DoxyCodeLine{00275 }
+\DoxyCodeLine{00276       \textcolor{comment}{// Release the shading context's output buffer}}
+\DoxyCodeLine{00277       ::ContextLocker cLocker(*m\_shadingContext);}
+\DoxyCodeLine{00278       m\_shadingContext-\/>resize(0, 0);}
+\DoxyCodeLine{00279 }
+\DoxyCodeLine{00280 \textcolor{preprocessor}{\#ifdef DIAGNOSTICS}}
+\DoxyCodeLine{00281       DIAGNOSTICS\_DUMP(\textcolor{stringliteral}{"{}ShaderLogs"{}});}
+\DoxyCodeLine{00282       DIAGNOSTICS\_CLEAR;}
+\DoxyCodeLine{00283 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00284     \}}
+\DoxyCodeLine{00285   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shading_context_manager_a8362dbbd6b82ead84812068d4f4c1daf}\label{class_shading_context_manager_a8362dbbd6b82ead84812068d4f4c1daf}} 
+\index{ShadingContextManager@{ShadingContextManager}!onRenderInstanceStart@{onRenderInstanceStart}}
+\index{onRenderInstanceStart@{onRenderInstanceStart}!ShadingContextManager@{ShadingContextManager}}
+\doxysubsubsection{\texorpdfstring{onRenderInstanceStart()}{onRenderInstanceStart()}}
+{\footnotesize\ttfamily void Shading\+Context\+Manager\+::on\+Render\+Instance\+Start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00270 \{ ++m\_activeRenderInstances; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shading_context_manager_a73349cec95ecfc4b53371080af82edfe}\label{class_shading_context_manager_a73349cec95ecfc4b53371080af82edfe}} 
+\index{ShadingContextManager@{ShadingContextManager}!shadingContext@{shadingContext}}
+\index{shadingContext@{shadingContext}!ShadingContextManager@{ShadingContextManager}}
+\doxysubsubsection{\texorpdfstring{shadingContext()}{shadingContext()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_shading_context}{Shading\+Context}} \& Shading\+Context\+Manager\+::shading\+Context (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00268 \{ \textcolor{keywordflow}{return} *m\_shadingContext; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shading_context_manager_ae3e9b8895825169cf9a2dabeb562b2fe}\label{class_shading_context_manager_ae3e9b8895825169cf9a2dabeb562b2fe}} 
+\index{ShadingContextManager@{ShadingContextManager}!shadingContext@{shadingContext}}
+\index{shadingContext@{shadingContext}!ShadingContextManager@{ShadingContextManager}}
+\doxysubsubsection{\texorpdfstring{shadingContext()}{shadingContext()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_shading_context}{Shading\+Context}} \& Shading\+Context\+Manager\+::shading\+Context (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00267 \{ \textcolor{keywordflow}{return} *m\_shadingContext; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shading_context_manager_ac389825d4b3f485abe3b9d6ca065edb2}\label{class_shading_context_manager_ac389825d4b3f485abe3b9d6ca065edb2}} 
+\index{ShadingContextManager@{ShadingContextManager}!touchSupport@{touchSupport}}
+\index{touchSupport@{touchSupport}!ShadingContextManager@{ShadingContextManager}}
+\doxysubsubsection{\texorpdfstring{touchSupport()}{touchSupport()}}
+{\footnotesize\ttfamily Shading\+Context\+::\+Support Shading\+Context\+Manager\+::touch\+Support (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00287                                        \{}
+\DoxyCodeLine{00288     \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{00289       \mbox{\hyperlink{class_shading_context_manager}{ShadingContextManager}} *m\_this;}
+\DoxyCodeLine{00290       ShadingContext::Support support() \{}
+\DoxyCodeLine{00291         QMutexLocker mLocker(\&m\_this-\/>m\_mutex);}
+\DoxyCodeLine{00292         ::ContextLocker cLocker(*m\_this-\/>m\_shadingContext);}
+\DoxyCodeLine{00293 }
+\DoxyCodeLine{00294         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_shading_context_ade447c645c1652ef203d6c7b85a4fec1}{ShadingContext::support}}();}
+\DoxyCodeLine{00295       \}}
+\DoxyCodeLine{00296     \} locals = \{\textcolor{keyword}{this}\};}
+\DoxyCodeLine{00297 }
+\DoxyCodeLine{00298     \textcolor{keyword}{static} ShadingContext::Support sup = locals.support();}
+\DoxyCodeLine{00299 }
+\DoxyCodeLine{00300     \textcolor{keyword}{static} \textcolor{keywordtype}{bool} sentMsg = \textcolor{keyword}{false};}
+\DoxyCodeLine{00301     \textcolor{keywordflow}{if} (!sentMsg) \{}
+\DoxyCodeLine{00302       \textcolor{keywordflow}{switch} (sup) \{}
+\DoxyCodeLine{00303       \textcolor{keywordflow}{case} ShadingContext::NO\_PIXEL\_BUFFER:}
+\DoxyCodeLine{00304         DVGui::warning(QOpenGLShaderProgram::tr(}
+\DoxyCodeLine{00305             \textcolor{stringliteral}{"{}This system configuration does not support OpenGL Pixel Buffers. "{}}}
+\DoxyCodeLine{00306             \textcolor{stringliteral}{"{}Shader Fxs will not be able to render."{}}));}
+\DoxyCodeLine{00307         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00308 }
+\DoxyCodeLine{00309       \textcolor{keywordflow}{case} ShadingContext::NO\_SHADERS:}
+\DoxyCodeLine{00310         DVGui::warning(QOpenGLShaderProgram::tr(}
+\DoxyCodeLine{00311             \textcolor{stringliteral}{"{}This system configuration does not support OpenGL Shader "{}}}
+\DoxyCodeLine{00312             \textcolor{stringliteral}{"{}Programs. Shader Fxs will not be able to render."{}}));}
+\DoxyCodeLine{00313         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00314       \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00315         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00316       \}}
+\DoxyCodeLine{00317 }
+\DoxyCodeLine{00318       sentMsg = \textcolor{keyword}{true};}
+\DoxyCodeLine{00319     \}}
+\DoxyCodeLine{00320 }
+\DoxyCodeLine{00321     \textcolor{keywordflow}{return} sup;}
+\DoxyCodeLine{00322   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/shaderfx.\+cpp\end{DoxyCompactItemize}

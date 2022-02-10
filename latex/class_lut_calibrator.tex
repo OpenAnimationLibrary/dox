@@ -1,0 +1,222 @@
+\hypertarget{class_lut_calibrator}{}\doxysection{Lut\+Calibrator Class Reference}
+\label{class_lut_calibrator}\index{LutCalibrator@{LutCalibrator}}
+Inheritance diagram for Lut\+Calibrator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_lut_calibrator}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_lut_calibrator_a0982e270f9e9381fbe8a04e0a6b301e5}{initialize}} ()
+\item 
+bool \mbox{\hyperlink{class_lut_calibrator_a3145170f662a6cd261bf41c62c179cdc}{is\+Valid}} ()
+\item 
+bool \mbox{\hyperlink{class_lut_calibrator_a8615c8c3683f63a06f0f15df597d47fa}{is\+Initialized}} ()
+\item 
+void \mbox{\hyperlink{class_lut_calibrator_a73acf3420d27ae249077255bd01e5675}{on\+End\+Draw}} (QOpen\+GLFramebuffer\+Object $\ast$)
+\item 
+void \mbox{\hyperlink{class_lut_calibrator_af4dfee01ba9c8dd28128891b954ace1d}{cleanup}} ()
+\item 
+void \mbox{\hyperlink{class_lut_calibrator_aea3dcb34097eaf7439c24d6374484d86}{update}} (bool texture\+Changed)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_lut_calibrator_a012d2ca44eaa538df0f711544b34328b}\label{class_lut_calibrator_a012d2ca44eaa538df0f711544b34328b}} 
+\index{LutCalibrator@{LutCalibrator}!LutCalibrator@{LutCalibrator}}
+\index{LutCalibrator@{LutCalibrator}!LutCalibrator@{LutCalibrator}}
+\doxysubsubsection{\texorpdfstring{LutCalibrator()}{LutCalibrator()}}
+{\footnotesize\ttfamily Lut\+Calibrator\+::\+Lut\+Calibrator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00169                              \{}
+\DoxyCodeLine{00170   LutManager::instance()-\/>registerCalibrator(\textcolor{keyword}{this});}
+\DoxyCodeLine{00171 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_calibrator_a687db7ccffd211c964c28d181ad35345}\label{class_lut_calibrator_a687db7ccffd211c964c28d181ad35345}} 
+\index{LutCalibrator@{LutCalibrator}!````~LutCalibrator@{$\sim$LutCalibrator}}
+\index{````~LutCalibrator@{$\sim$LutCalibrator}!LutCalibrator@{LutCalibrator}}
+\doxysubsubsection{\texorpdfstring{$\sim$LutCalibrator()}{~LutCalibrator()}}
+{\footnotesize\ttfamily Lut\+Calibrator\+::$\sim$\+Lut\+Calibrator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00175                               \{}
+\DoxyCodeLine{00176   LutManager::instance()-\/>removeCalibrator(\textcolor{keyword}{this});}
+\DoxyCodeLine{00177 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_lut_calibrator_af4dfee01ba9c8dd28128891b954ace1d}\label{class_lut_calibrator_af4dfee01ba9c8dd28128891b954ace1d}} 
+\index{LutCalibrator@{LutCalibrator}!cleanup@{cleanup}}
+\index{cleanup@{cleanup}!LutCalibrator@{LutCalibrator}}
+\doxysubsubsection{\texorpdfstring{cleanup()}{cleanup()}}
+{\footnotesize\ttfamily void Lut\+Calibrator\+::cleanup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00204                             \{}
+\DoxyCodeLine{00205   m\_isInitialized = \textcolor{keyword}{false};}
+\DoxyCodeLine{00206   \textcolor{keywordflow}{if} (!isValid()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00207   \textcolor{comment}{// release shader}}
+\DoxyCodeLine{00208   \textcolor{keywordflow}{if} (m\_shader.program) \{}
+\DoxyCodeLine{00209     \textcolor{keyword}{delete} m\_shader.program;}
+\DoxyCodeLine{00210     m\_shader.program = NULL;}
+\DoxyCodeLine{00211   \}}
+\DoxyCodeLine{00212   \textcolor{keywordflow}{if} (m\_shader.vert) \{}
+\DoxyCodeLine{00213     \textcolor{keyword}{delete} m\_shader.vert;}
+\DoxyCodeLine{00214     m\_shader.vert = NULL;}
+\DoxyCodeLine{00215   \}}
+\DoxyCodeLine{00216   \textcolor{keywordflow}{if} (m\_shader.frag) \{}
+\DoxyCodeLine{00217     \textcolor{keyword}{delete} m\_shader.frag;}
+\DoxyCodeLine{00218     m\_shader.frag = NULL;}
+\DoxyCodeLine{00219   \}}
+\DoxyCodeLine{00220   \textcolor{comment}{// release VBO}}
+\DoxyCodeLine{00221   \textcolor{keywordflow}{if} (m\_viewerVBO.isCreated()) m\_viewerVBO.destroy();}
+\DoxyCodeLine{00222   \textcolor{comment}{// release LUT texture}}
+\DoxyCodeLine{00223   \textcolor{keywordflow}{if} (m\_lutTex \&\& m\_lutTex-\/>isCreated()) \{}
+\DoxyCodeLine{00224     m\_lutTex-\/>destroy();}
+\DoxyCodeLine{00225     \textcolor{keyword}{delete} m\_lutTex;}
+\DoxyCodeLine{00226     m\_lutTex = NULL;}
+\DoxyCodeLine{00227   \}}
+\DoxyCodeLine{00228   m\_isValid = \textcolor{keyword}{false};}
+\DoxyCodeLine{00229 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_calibrator_a0982e270f9e9381fbe8a04e0a6b301e5}\label{class_lut_calibrator_a0982e270f9e9381fbe8a04e0a6b301e5}} 
+\index{LutCalibrator@{LutCalibrator}!initialize@{initialize}}
+\index{initialize@{initialize}!LutCalibrator@{LutCalibrator}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily void Lut\+Calibrator\+::initialize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00181                                \{}
+\DoxyCodeLine{00182   initializeOpenGLFunctions();}
+\DoxyCodeLine{00183   m\_isInitialized = \textcolor{keyword}{true};}
+\DoxyCodeLine{00184 }
+\DoxyCodeLine{00185   \textcolor{keywordflow}{if} (!LutManager::instance()-\/>isValid()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00186 }
+\DoxyCodeLine{00187   \textcolor{comment}{// create shader}}
+\DoxyCodeLine{00188   \textcolor{keywordflow}{if} (!initializeLutTextureShader()) \{}
+\DoxyCodeLine{00189     \textcolor{keywordflow}{if} (m\_shader.program) \textcolor{keyword}{delete} m\_shader.program;}
+\DoxyCodeLine{00190     \textcolor{keywordflow}{if} (m\_shader.vert) \textcolor{keyword}{delete} m\_shader.vert;}
+\DoxyCodeLine{00191     \textcolor{keywordflow}{if} (m\_shader.frag) \textcolor{keyword}{delete} m\_shader.frag;}
+\DoxyCodeLine{00192     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00193   \}}
+\DoxyCodeLine{00194   createViewerVBO();}
+\DoxyCodeLine{00195 }
+\DoxyCodeLine{00196   \textcolor{comment}{// input 3dlut data to the shader}}
+\DoxyCodeLine{00197   assignLutTexture();}
+\DoxyCodeLine{00198 }
+\DoxyCodeLine{00199   m\_isValid = \textcolor{keyword}{true};}
+\DoxyCodeLine{00200 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_calibrator_a8615c8c3683f63a06f0f15df597d47fa}\label{class_lut_calibrator_a8615c8c3683f63a06f0f15df597d47fa}} 
+\index{LutCalibrator@{LutCalibrator}!isInitialized@{isInitialized}}
+\index{isInitialized@{isInitialized}!LutCalibrator@{LutCalibrator}}
+\doxysubsubsection{\texorpdfstring{isInitialized()}{isInitialized()}}
+{\footnotesize\ttfamily bool Lut\+Calibrator\+::is\+Initialized (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00064 \{ \textcolor{keywordflow}{return} m\_isInitialized; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_calibrator_a3145170f662a6cd261bf41c62c179cdc}\label{class_lut_calibrator_a3145170f662a6cd261bf41c62c179cdc}} 
+\index{LutCalibrator@{LutCalibrator}!isValid@{isValid}}
+\index{isValid@{isValid}!LutCalibrator@{LutCalibrator}}
+\doxysubsubsection{\texorpdfstring{isValid()}{isValid()}}
+{\footnotesize\ttfamily bool Lut\+Calibrator\+::is\+Valid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00063 \{ \textcolor{keywordflow}{return} m\_isValid; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_calibrator_a73acf3420d27ae249077255bd01e5675}\label{class_lut_calibrator_a73acf3420d27ae249077255bd01e5675}} 
+\index{LutCalibrator@{LutCalibrator}!onEndDraw@{onEndDraw}}
+\index{onEndDraw@{onEndDraw}!LutCalibrator@{LutCalibrator}}
+\doxysubsubsection{\texorpdfstring{onEndDraw()}{onEndDraw()}}
+{\footnotesize\ttfamily void Lut\+Calibrator\+::on\+End\+Draw (\begin{DoxyParamCaption}\item[{QOpen\+GLFramebuffer\+Object $\ast$}]{fbo }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00331                                                            \{}
+\DoxyCodeLine{00332   assert((glGetError()) == GL\_NO\_ERROR);}
+\DoxyCodeLine{00333   fbo-\/>release();}
+\DoxyCodeLine{00334   GLuint textureId = fbo-\/>texture();}
+\DoxyCodeLine{00335 }
+\DoxyCodeLine{00336   glEnable(GL\_TEXTURE\_2D);}
+\DoxyCodeLine{00337   glActiveTexture(GL\_TEXTURE1);}
+\DoxyCodeLine{00338   glBindTexture(GL\_TEXTURE\_2D, textureId);}
+\DoxyCodeLine{00339 }
+\DoxyCodeLine{00340   glActiveTexture(GL\_TEXTURE2);}
+\DoxyCodeLine{00341   m\_lutTex-\/>bind();}
+\DoxyCodeLine{00342 }
+\DoxyCodeLine{00343   glPushMatrix();}
+\DoxyCodeLine{00344   glLoadIdentity();}
+\DoxyCodeLine{00345 }
+\DoxyCodeLine{00346   m\_shader.program-\/>bind();}
+\DoxyCodeLine{00347   m\_shader.program-\/>setUniformValue(m\_shader.texUniform,}
+\DoxyCodeLine{00348                                     1);  \textcolor{comment}{// use texture unit 1}}
+\DoxyCodeLine{00349   m\_shader.program-\/>setUniformValue(m\_shader.lutUniform,}
+\DoxyCodeLine{00350                                     2);  \textcolor{comment}{// use texture unit 2}}
+\DoxyCodeLine{00351   GLfloat size = (GLfloat)LutManager::instance()-\/>meshSize();}
+\DoxyCodeLine{00352   m\_shader.program-\/>setUniformValue(m\_shader.lutSizeUniform, size, size, size);}
+\DoxyCodeLine{00353 }
+\DoxyCodeLine{00354   m\_shader.program-\/>enableAttributeArray(m\_shader.vertexAttrib);}
+\DoxyCodeLine{00355   m\_shader.program-\/>enableAttributeArray(m\_shader.texCoordAttrib);}
+\DoxyCodeLine{00356 }
+\DoxyCodeLine{00357   m\_viewerVBO.bind();}
+\DoxyCodeLine{00358   m\_shader.program-\/>setAttributeBuffer(m\_shader.vertexAttrib, GL\_FLOAT, 0, 2);}
+\DoxyCodeLine{00359   m\_shader.program-\/>setAttributeBuffer(m\_shader.texCoordAttrib, GL\_FLOAT,}
+\DoxyCodeLine{00360                                        4 * 2 * \textcolor{keyword}{sizeof}(GLfloat), 2);}
+\DoxyCodeLine{00361   m\_viewerVBO.release();}
+\DoxyCodeLine{00362 }
+\DoxyCodeLine{00363   glDrawArrays(GL\_TRIANGLE\_FAN, 0, 4);}
+\DoxyCodeLine{00364 }
+\DoxyCodeLine{00365   m\_shader.program-\/>disableAttributeArray(m\_shader.vertexAttrib);}
+\DoxyCodeLine{00366   m\_shader.program-\/>disableAttributeArray(m\_shader.texCoordAttrib);}
+\DoxyCodeLine{00367 }
+\DoxyCodeLine{00368   m\_shader.program-\/>release();}
+\DoxyCodeLine{00369 }
+\DoxyCodeLine{00370   glPopMatrix();}
+\DoxyCodeLine{00371 }
+\DoxyCodeLine{00372   glActiveTexture(GL\_TEXTURE0);  \textcolor{comment}{// reset the active texture unit to 0}}
+\DoxyCodeLine{00373   glDisable(GL\_TEXTURE\_2D);}
+\DoxyCodeLine{00374 }
+\DoxyCodeLine{00375   assert((glGetError()) == GL\_NO\_ERROR);}
+\DoxyCodeLine{00376 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_calibrator_aea3dcb34097eaf7439c24d6374484d86}\label{class_lut_calibrator_aea3dcb34097eaf7439c24d6374484d86}} 
+\index{LutCalibrator@{LutCalibrator}!update@{update}}
+\index{update@{update}!LutCalibrator@{LutCalibrator}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Lut\+Calibrator\+::update (\begin{DoxyParamCaption}\item[{bool}]{texture\+Changed }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00401                                               \{}
+\DoxyCodeLine{00402   m\_isValid = LutManager::instance()-\/>isValid();}
+\DoxyCodeLine{00403   \textcolor{keywordflow}{if} (textureChanged) assignLutTexture();}
+\DoxyCodeLine{00404 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/lutcalibrator.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/lutcalibrator.\+cpp\end{DoxyCompactItemize}

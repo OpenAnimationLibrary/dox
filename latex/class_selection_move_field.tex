@@ -1,0 +1,132 @@
+\hypertarget{class_selection_move_field}{}\doxysection{Selection\+Move\+Field Class Reference}
+\label{class_selection_move_field}\index{SelectionMoveField@{SelectionMoveField}}
+Inheritance diagram for Selection\+Move\+Field\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_selection_move_field}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_selection_move_field_aaa4c8f7f0e093f838ff0cb40b85548c8}{Selection\+Move\+Field}} (\mbox{\hyperlink{class_selection_tool}{Selection\+Tool}} $\ast$tool, int id, QString name)
+\item 
+void \mbox{\hyperlink{class_selection_move_field_acd5ac206fe8a4112481ff5a16daaf392}{update\+Status}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_selection_move_field_a6169b9e386de71cd59a02918c0df68fe}{on\+Change}} (\mbox{\hyperlink{class_t_measured_value}{TMeasured\+Value}} $\ast$fld, bool add\+To\+Undo=true)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_selection_move_field_aaa4c8f7f0e093f838ff0cb40b85548c8}\label{class_selection_move_field_aaa4c8f7f0e093f838ff0cb40b85548c8}} 
+\index{SelectionMoveField@{SelectionMoveField}!SelectionMoveField@{SelectionMoveField}}
+\index{SelectionMoveField@{SelectionMoveField}!SelectionMoveField@{SelectionMoveField}}
+\doxysubsubsection{\texorpdfstring{SelectionMoveField()}{SelectionMoveField()}}
+{\footnotesize\ttfamily Selection\+Move\+Field\+::\+Selection\+Move\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_selection_tool}{Selection\+Tool}} $\ast$}]{tool,  }\item[{int}]{id,  }\item[{QString}]{name }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01383     : \mbox{\hyperlink{class_measured_value_field}{MeasuredValueField}}(0, name), m\_tool(tool), m\_id(\textcolor{keywordtype}{id}) \{}
+\DoxyCodeLine{01384   \textcolor{keywordtype}{bool} ret = connect(\textcolor{keyword}{this}, SIGNAL(measuredValueChanged(\mbox{\hyperlink{class_t_measured_value}{TMeasuredValue}} *, \textcolor{keywordtype}{bool})),}
+\DoxyCodeLine{01385                      SLOT(onChange(\mbox{\hyperlink{class_t_measured_value}{TMeasuredValue}} *, \textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{01386   assert(ret);}
+\DoxyCodeLine{01387   \textcolor{keywordflow}{if} (m\_id == 0)}
+\DoxyCodeLine{01388     setMeasure(\textcolor{stringliteral}{"{}length.x"{}});}
+\DoxyCodeLine{01389   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01390     setMeasure(\textcolor{stringliteral}{"{}length.y"{}});}
+\DoxyCodeLine{01391   updateStatus();}
+\DoxyCodeLine{01392 }
+\DoxyCodeLine{01393   \textcolor{comment}{// for translation value field, use size for the Edit Tool as it needs more}}
+\DoxyCodeLine{01394   \textcolor{comment}{// estate}}
+\DoxyCodeLine{01395   setMaximumWidth(getMaximumWidthForEditToolField(\textcolor{keyword}{this}));}
+\DoxyCodeLine{01396 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_move_field_ae8d31010678f4ce5e3746dade62d8461}\label{class_selection_move_field_ae8d31010678f4ce5e3746dade62d8461}} 
+\index{SelectionMoveField@{SelectionMoveField}!````~SelectionMoveField@{$\sim$SelectionMoveField}}
+\index{````~SelectionMoveField@{$\sim$SelectionMoveField}!SelectionMoveField@{SelectionMoveField}}
+\doxysubsubsection{\texorpdfstring{$\sim$SelectionMoveField()}{~SelectionMoveField()}}
+{\footnotesize\ttfamily Selection\+Move\+Field\+::$\sim$\+Selection\+Move\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00540 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_selection_move_field_a6169b9e386de71cd59a02918c0df68fe}\label{class_selection_move_field_a6169b9e386de71cd59a02918c0df68fe}} 
+\index{SelectionMoveField@{SelectionMoveField}!onChange@{onChange}}
+\index{onChange@{onChange}!SelectionMoveField@{SelectionMoveField}}
+\doxysubsubsection{\texorpdfstring{onChange}{onChange}}
+{\footnotesize\ttfamily void Selection\+Move\+Field\+::on\+Change (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_measured_value}{TMeasured\+Value}} $\ast$}]{fld,  }\item[{bool}]{add\+To\+Undo = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01400                                                                      \{}
+\DoxyCodeLine{01401   \textcolor{keywordflow}{if} (!m\_tool || !m\_tool-\/>isEnabled() ||}
+\DoxyCodeLine{01402       (m\_tool-\/>isSelectionEmpty() \&\& !m\_tool-\/>isLevelType()))}
+\DoxyCodeLine{01403     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01404 }
+\DoxyCodeLine{01405   \mbox{\hyperlink{class_drag_selection_tool_1_1_drag_tool}{DragSelectionTool::DragTool}} *moveTool = createNewMoveSelectionTool(m\_tool);}
+\DoxyCodeLine{01406 }
+\DoxyCodeLine{01407   \textcolor{keywordtype}{double} p        = getValue() * \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}};}
+\DoxyCodeLine{01408   \mbox{\hyperlink{class_t_point_t}{TPointD}} delta   = (m\_id == 0) ? \mbox{\hyperlink{class_t_point_t}{TPointD}}(p, 1) : \mbox{\hyperlink{class_t_point_t}{TPointD}}(1, p),}
+\DoxyCodeLine{01409           oldMove = \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}} * m\_tool-\/>m\_deformValues.m\_moveValue,}
+\DoxyCodeLine{01410           oldDelta =}
+\DoxyCodeLine{01411               (m\_id == 0) ? \mbox{\hyperlink{class_t_point_t}{TPointD}}(oldMove.x, 1) : \mbox{\hyperlink{class_t_point_t}{TPointD}}(1, oldMove.y),}
+\DoxyCodeLine{01412           newMove = (m\_id == 0) ? \mbox{\hyperlink{class_t_point_t}{TPointD}}(delta.x, oldMove.y)}
+\DoxyCodeLine{01413                                 : \mbox{\hyperlink{class_t_point_t}{TPointD}}(oldMove.x, delta.y);}
+\DoxyCodeLine{01414 }
+\DoxyCodeLine{01415   \mbox{\hyperlink{class_t_affine}{TAffine}} aff = \mbox{\hyperlink{class_t_translation}{TTranslation}}(-\/oldDelta) * \mbox{\hyperlink{class_t_translation}{TTranslation}}(delta);}
+\DoxyCodeLine{01416 }
+\DoxyCodeLine{01417   m\_tool-\/>m\_deformValues.m\_moveValue =}
+\DoxyCodeLine{01418       1 / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}} * newMove;  \textcolor{comment}{// Instruction order relevant here}}
+\DoxyCodeLine{01419   moveTool-\/>transform(aff);       \textcolor{comment}{//}}
+\DoxyCodeLine{01420 }
+\DoxyCodeLine{01421   \textcolor{keywordflow}{if} (!m\_tool-\/>isLevelType() \&\& addToUndo) moveTool-\/>addTransformUndo();}
+\DoxyCodeLine{01422 }
+\DoxyCodeLine{01423   setCursorPosition(0);}
+\DoxyCodeLine{01424 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_move_field_acd5ac206fe8a4112481ff5a16daaf392}\label{class_selection_move_field_acd5ac206fe8a4112481ff5a16daaf392}} 
+\index{SelectionMoveField@{SelectionMoveField}!updateStatus@{updateStatus}}
+\index{updateStatus@{updateStatus}!SelectionMoveField@{SelectionMoveField}}
+\doxysubsubsection{\texorpdfstring{updateStatus()}{updateStatus()}}
+{\footnotesize\ttfamily void Selection\+Move\+Field\+::update\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01428                                       \{}
+\DoxyCodeLine{01429   \textcolor{keywordflow}{if} (!m\_tool || !m\_tool-\/>isSelectionEditable() ||}
+\DoxyCodeLine{01430       (m\_tool-\/>isSelectionEmpty() \&\& !m\_tool-\/>isLevelType())) \{}
+\DoxyCodeLine{01431     setValue(0);}
+\DoxyCodeLine{01432     setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{01433     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01434   \}}
+\DoxyCodeLine{01435   setDisabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{01436 }
+\DoxyCodeLine{01437   \textcolor{keywordflow}{if} (m\_id == 0)}
+\DoxyCodeLine{01438     setValue(m\_tool-\/>m\_deformValues.m\_moveValue.x);}
+\DoxyCodeLine{01439   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01440     setValue(m\_tool-\/>m\_deformValues.m\_moveValue.y);}
+\DoxyCodeLine{01441 }
+\DoxyCodeLine{01442   setCursorPosition(0);}
+\DoxyCodeLine{01443 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptionscontrols.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptionscontrols.\+cpp\end{DoxyCompactItemize}

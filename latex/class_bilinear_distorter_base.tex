@@ -1,0 +1,157 @@
+\hypertarget{class_bilinear_distorter_base}{}\doxysection{Bilinear\+Distorter\+Base Class Reference}
+\label{class_bilinear_distorter_base}\index{BilinearDistorterBase@{BilinearDistorterBase}}
+
+
+{\ttfamily \#include $<$tdistort.\+h$>$}
+
+Inheritance diagram for Bilinear\+Distorter\+Base\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_bilinear_distorter_base}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_bilinear_distorter_base_ad6fb9f7305c93023111b17c98faa5914}{Bilinear\+Distorter\+Base}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p00s, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p10s, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p01s, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p11s, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p00d, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p10d, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p01d, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p11d)
+\item 
+\mbox{\hyperlink{class_t_point_t}{TPointD}} \mbox{\hyperlink{class_bilinear_distorter_base_a38b60f3a9f718c42004a98631cbfc3e1}{map}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p) const override
+\begin{DoxyCompactList}\small\item\em Returns the distorted image of point {\bfseries{p}}. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_bilinear_distorter_base_ae907e440a545215d86c7905e9e16358b}{inv\+Map}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p, \mbox{\hyperlink{class_t_point_t}{TPointD}} $\ast$results) const override
+\item 
+int \mbox{\hyperlink{class_bilinear_distorter_base_a1a90452fe63afaaff8ca21f1e50dc402}{max\+Inv\+Count}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_bilinear_distorter_base}{Bilinear\+Distorter\+Base}} is just a convenience class implementing a lightweight version of {\bfseries{\mbox{\hyperlink{class_bilinear_distorter}{Bilinear\+Distorter}}}} class when the source quad is a rect. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_bilinear_distorter_base_ad6fb9f7305c93023111b17c98faa5914}\label{class_bilinear_distorter_base_ad6fb9f7305c93023111b17c98faa5914}} 
+\index{BilinearDistorterBase@{BilinearDistorterBase}!BilinearDistorterBase@{BilinearDistorterBase}}
+\index{BilinearDistorterBase@{BilinearDistorterBase}!BilinearDistorterBase@{BilinearDistorterBase}}
+\doxysubsubsection{\texorpdfstring{BilinearDistorterBase()}{BilinearDistorterBase()}}
+{\footnotesize\ttfamily Bilinear\+Distorter\+Base\+::\+Bilinear\+Distorter\+Base (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p00s,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p10s,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p01s,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p11s,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p00d,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p10d,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p01d,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p11d }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00470     : \mbox{\hyperlink{class_t_quad_distorter}{TQuadDistorter}}(p00s, p10s, p01s, p11s, p00d, p10d, p01d, p11d)}
+\DoxyCodeLine{00471 }
+\DoxyCodeLine{00472 \{}
+\DoxyCodeLine{00473   m\_A = p00d;}
+\DoxyCodeLine{00474   m\_B = p10d -\/ p00d;}
+\DoxyCodeLine{00475   m\_C = p01d -\/ p00d;}
+\DoxyCodeLine{00476   m\_D = p11d -\/ p01d -\/ p10d + p00d;}
+\DoxyCodeLine{00477 }
+\DoxyCodeLine{00478   m\_a  = m\_D.x * m\_C.y -\/ m\_C.x * m\_D.y;}
+\DoxyCodeLine{00479   m\_b0 = m\_B.x * m\_C.y -\/ m\_C.x * m\_B.y;}
+\DoxyCodeLine{00480 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_bilinear_distorter_base_ae907e440a545215d86c7905e9e16358b}\label{class_bilinear_distorter_base_ae907e440a545215d86c7905e9e16358b}} 
+\index{BilinearDistorterBase@{BilinearDistorterBase}!invMap@{invMap}}
+\index{invMap@{invMap}!BilinearDistorterBase@{BilinearDistorterBase}}
+\doxysubsubsection{\texorpdfstring{invMap()}{invMap()}}
+{\footnotesize\ttfamily int Bilinear\+Distorter\+Base\+::inv\+Map (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p,  }\item[{\mbox{\hyperlink{class_t_point_t}{TPointD}} $\ast$}]{results }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Returns the pre-\/images of distorted point {\bfseries{p}}. The results are overed on the output image as they appear in the returned vector, so the user must be sure to sort them accordingly. {\bfseries{NOTE\+:}} The results array is already allocated with the number of entries specified by the max\+Inv\+Count() function in order to avoid allocation at this level; however, the number of effective inverses must be specified as a return value. 
+
+Implements \mbox{\hyperlink{class_t_distorter_aa1f4e823ae575d0585407b08ed0881d5}{TDistorter}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00494                                                                           \{}
+\DoxyCodeLine{00495   \textcolor{comment}{// See the book "{}Digital Image Warping"{} by G. Wolberg}}
+\DoxyCodeLine{00496   \textcolor{keywordtype}{double} b = m\_D.x * (m\_A.y -\/ p.y) + m\_D.y * (p.x -\/ m\_A.x) + m\_b0;}
+\DoxyCodeLine{00497   \textcolor{keywordtype}{double} c = m\_B.x * (m\_A.y -\/ p.y) + m\_B.y * (p.x -\/ m\_A.x);}
+\DoxyCodeLine{00498 }
+\DoxyCodeLine{00499   \textcolor{keywordflow}{if} (fabs(m\_a) > 0.001) \{}
+\DoxyCodeLine{00500     \textcolor{comment}{// If delta <0, the points cannot be inverse-\/mapped}}
+\DoxyCodeLine{00501     \textcolor{keywordtype}{double} delta = sq(b) -\/ 4.0 * m\_a * c;}
+\DoxyCodeLine{00502     \textcolor{keywordflow}{if} (delta < 0) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00503 }
+\DoxyCodeLine{00504     \textcolor{keywordtype}{double} sqrtDelta = sqrt(delta);}
+\DoxyCodeLine{00505     \textcolor{keywordtype}{double} k         = 0.5 / m\_a;}
+\DoxyCodeLine{00506     \textcolor{keywordtype}{double} v1        = k * (-\/b + sqrtDelta);}
+\DoxyCodeLine{00507     \textcolor{keywordtype}{double} v2        = k * (-\/b -\/ sqrtDelta);}
+\DoxyCodeLine{00508 }
+\DoxyCodeLine{00509     \textcolor{keywordtype}{double} u1, u2;}
+\DoxyCodeLine{00510     \textcolor{keywordtype}{double} den = m\_B.x + m\_D.x * v1;}
+\DoxyCodeLine{00511     \textcolor{keywordflow}{if} (fabs(den) > 0.01)}
+\DoxyCodeLine{00512       u1 = (p.x -\/ m\_A.x -\/ m\_C.x * v1) / den;}
+\DoxyCodeLine{00513     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00514       u1 = (p.y -\/ m\_A.y -\/ m\_C.y * v1) / (m\_B.y + m\_D.y * v1);}
+\DoxyCodeLine{00515 }
+\DoxyCodeLine{00516     den = m\_B.x + m\_D.x * v2;}
+\DoxyCodeLine{00517     \textcolor{keywordflow}{if} (fabs(den) > 0.01)}
+\DoxyCodeLine{00518       u2 = (p.x -\/ m\_A.x -\/ m\_C.x * v2) / den;}
+\DoxyCodeLine{00519     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00520       u2 = (p.y -\/ m\_A.y -\/ m\_C.y * v2) / (m\_B.y + m\_D.y * v2);}
+\DoxyCodeLine{00521 }
+\DoxyCodeLine{00522     \mbox{\hyperlink{class_t_point_t}{TPointD}} difP10\_P00 = m\_p10s -\/ m\_p00s;}
+\DoxyCodeLine{00523     \mbox{\hyperlink{class_t_point_t}{TPointD}} difP01\_P00 = m\_p01s -\/ m\_p00s;}
+\DoxyCodeLine{00524 }
+\DoxyCodeLine{00525     results[0] = m\_p00s + u1 * difP10\_P00 + v1 * difP01\_P00;}
+\DoxyCodeLine{00526     results[1] = m\_p00s + u2 * difP10\_P00 + v2 * difP01\_P00;}
+\DoxyCodeLine{00527     \textcolor{keywordflow}{return} 2;}
+\DoxyCodeLine{00528   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00529     \textcolor{comment}{// The equation reduces to first order.}}
+\DoxyCodeLine{00530     \textcolor{keywordtype}{double} v = -\/c / b;}
+\DoxyCodeLine{00531     \textcolor{keywordtype}{double} u = (p.x -\/ m\_A.x -\/ m\_C.x * v) / (m\_B.x + m\_D.x * v);}
+\DoxyCodeLine{00532 }
+\DoxyCodeLine{00533     results[0] = m\_p00s + u * (m\_p10s -\/ m\_p00s) + v * (m\_p01s -\/ m\_p00s);}
+\DoxyCodeLine{00534     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00535   \}}
+\DoxyCodeLine{00536 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_bilinear_distorter_base_a38b60f3a9f718c42004a98631cbfc3e1}\label{class_bilinear_distorter_base_a38b60f3a9f718c42004a98631cbfc3e1}} 
+\index{BilinearDistorterBase@{BilinearDistorterBase}!map@{map}}
+\index{map@{map}!BilinearDistorterBase@{BilinearDistorterBase}}
+\doxysubsubsection{\texorpdfstring{map()}{map()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_point_t}{TPointD}} Bilinear\+Distorter\+Base\+::map (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns the distorted image of point {\bfseries{p}}. 
+
+
+
+Implements \mbox{\hyperlink{class_t_distorter_a9e7047acf8cc0698ebc9b2041c15cc9d}{TDistorter}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00484                                                                 \{}
+\DoxyCodeLine{00485   \textcolor{keywordtype}{double} t = (p.x -\/ m\_p00s.x) / (m\_p10s.x -\/ m\_p00s.x);}
+\DoxyCodeLine{00486   \textcolor{keywordtype}{double} s = (p.y -\/ m\_p00s.y) / (m\_p01s.y -\/ m\_p00s.y);}
+\DoxyCodeLine{00487 }
+\DoxyCodeLine{00488   \textcolor{keywordflow}{return} (1 -\/ s) * (1 -\/ t) * m\_p00d + (1 -\/ s) * t * m\_p10d +}
+\DoxyCodeLine{00489          s * (1 -\/ t) * m\_p01d + s * t * m\_p11d;}
+\DoxyCodeLine{00490 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_bilinear_distorter_base_a1a90452fe63afaaff8ca21f1e50dc402}\label{class_bilinear_distorter_base_a1a90452fe63afaaff8ca21f1e50dc402}} 
+\index{BilinearDistorterBase@{BilinearDistorterBase}!maxInvCount@{maxInvCount}}
+\index{maxInvCount@{maxInvCount}!BilinearDistorterBase@{BilinearDistorterBase}}
+\doxysubsubsection{\texorpdfstring{maxInvCount()}{maxInvCount()}}
+{\footnotesize\ttfamily int Bilinear\+Distorter\+Base\+::max\+Inv\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_distorter}{TDistorter}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00126 \{ \textcolor{keywordflow}{return} 2; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/tdistort.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tdistort.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,382 @@
+\hypertarget{class_fx_painter}{}\doxysection{Fx\+Painter Class Reference}
+\label{class_fx_painter}\index{FxPainter@{FxPainter}}
+Inheritance diagram for Fx\+Painter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_fx_painter}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_fx_painter_a82cacff0a1ff178e711af36453279a8d}{Fx\+Painter}} (\mbox{\hyperlink{class_fx_schematic_node}{Fx\+Schematic\+Node}} $\ast$parent, double width, double height, const QString \&name, e\+Fx\+Type type, std\+::string fx\+Type)
+\item 
+QRectF \mbox{\hyperlink{class_fx_painter_a9c1cee269c693ce17d843ae9e33da021}{bounding\+Rect}} () const override
+\item 
+void \mbox{\hyperlink{class_fx_painter_a80f519f19b339b51760ec282c402a179}{paint}} (QPainter $\ast$painter, const QStyle\+Option\+Graphics\+Item $\ast$option, QWidget $\ast$widget=0) override
+\item 
+void \mbox{\hyperlink{class_fx_painter_aa474d28280ec7855a40699e17bdd6b3d}{set\+Name}} (const QString \&name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_fx_painter_afd1945994ebcfc4fe54c0330462d22a5}{context\+Menu\+Event}} (QGraphics\+Scene\+Context\+Menu\+Event $\ast$cme) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_fx_painter_a82cacff0a1ff178e711af36453279a8d}\label{class_fx_painter_a82cacff0a1ff178e711af36453279a8d}} 
+\index{FxPainter@{FxPainter}!FxPainter@{FxPainter}}
+\index{FxPainter@{FxPainter}!FxPainter@{FxPainter}}
+\doxysubsubsection{\texorpdfstring{FxPainter()}{FxPainter()}}
+{\footnotesize\ttfamily Fx\+Painter\+::\+Fx\+Painter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_schematic_node}{Fx\+Schematic\+Node}} $\ast$}]{parent,  }\item[{double}]{width,  }\item[{double}]{height,  }\item[{const QString \&}]{name,  }\item[{e\+Fx\+Type}]{type,  }\item[{std\+::string}]{fx\+Type }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00526     : QGraphicsItem(parent)}
+\DoxyCodeLine{00527     , m\_parent(parent)}
+\DoxyCodeLine{00528     , m\_name(name)}
+\DoxyCodeLine{00529     , m\_width(width)}
+\DoxyCodeLine{00530     , m\_height(height)}
+\DoxyCodeLine{00531     , m\_type(type)}
+\DoxyCodeLine{00532     , m\_fxType(fxType) \{}
+\DoxyCodeLine{00533   setFlag(QGraphicsItem::ItemIsMovable, \textcolor{keyword}{false});}
+\DoxyCodeLine{00534   setFlag(QGraphicsItem::ItemIsSelectable, \textcolor{keyword}{false});}
+\DoxyCodeLine{00535   setFlag(QGraphicsItem::ItemIsFocusable, \textcolor{keyword}{false});}
+\DoxyCodeLine{00536 }
+\DoxyCodeLine{00537   \textcolor{keywordflow}{switch} (m\_type) \{}
+\DoxyCodeLine{00538   \textcolor{keywordflow}{case} eNormalFx:}
+\DoxyCodeLine{00539   \textcolor{keywordflow}{case} eMacroFx:}
+\DoxyCodeLine{00540   \textcolor{keywordflow}{case} eNormalLayerBlendingFx:}
+\DoxyCodeLine{00541   \textcolor{keywordflow}{case} eNormalMatteFx:}
+\DoxyCodeLine{00542   \textcolor{keywordflow}{case} eNormalImageAdjustFx:}
+\DoxyCodeLine{00543     m\_label = QString::fromStdWString(}
+\DoxyCodeLine{00544         TStringTable::translate(parent-\/>getFx()-\/>getFxType()));}
+\DoxyCodeLine{00545     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00546   \textcolor{keywordflow}{case} eZeraryFx: \{}
+\DoxyCodeLine{00547     \mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *zfx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *\textcolor{keyword}{>}(parent-\/>getFx());}
+\DoxyCodeLine{00548     \textcolor{keywordflow}{if} (zfx) \{}
+\DoxyCodeLine{00549       \mbox{\hyperlink{class_t_fx}{TFx}} *zeraryFx = zfx-\/>getZeraryFx();}
+\DoxyCodeLine{00550       \textcolor{keywordflow}{if} (zeraryFx) \{}
+\DoxyCodeLine{00551         m\_label = QString::fromStdWString(}
+\DoxyCodeLine{00552             TStringTable::translate(zeraryFx-\/>getFxType()));}
+\DoxyCodeLine{00553       \}}
+\DoxyCodeLine{00554     \}}
+\DoxyCodeLine{00555     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00556   \}}
+\DoxyCodeLine{00557   \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00558     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00559   \}}
+\DoxyCodeLine{00560 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_painter_a71d86e86c70a484e12c54d5f0d8778e6}\label{class_fx_painter_a71d86e86c70a484e12c54d5f0d8778e6}} 
+\index{FxPainter@{FxPainter}!````~FxPainter@{$\sim$FxPainter}}
+\index{````~FxPainter@{$\sim$FxPainter}!FxPainter@{FxPainter}}
+\doxysubsubsection{\texorpdfstring{$\sim$FxPainter()}{~FxPainter()}}
+{\footnotesize\ttfamily Fx\+Painter\+::$\sim$\+Fx\+Painter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00564 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_fx_painter_a9c1cee269c693ce17d843ae9e33da021}\label{class_fx_painter_a9c1cee269c693ce17d843ae9e33da021}} 
+\index{FxPainter@{FxPainter}!boundingRect@{boundingRect}}
+\index{boundingRect@{boundingRect}!FxPainter@{FxPainter}}
+\doxysubsubsection{\texorpdfstring{boundingRect()}{boundingRect()}}
+{\footnotesize\ttfamily QRectF Fx\+Painter\+::bounding\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00568                                      \{}
+\DoxyCodeLine{00569   \textcolor{keywordflow}{return} QRectF(-\/5, -\/5, m\_width + 10, m\_height + 10);}
+\DoxyCodeLine{00570 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_painter_afd1945994ebcfc4fe54c0330462d22a5}\label{class_fx_painter_afd1945994ebcfc4fe54c0330462d22a5}} 
+\index{FxPainter@{FxPainter}!contextMenuEvent@{contextMenuEvent}}
+\index{contextMenuEvent@{contextMenuEvent}!FxPainter@{FxPainter}}
+\doxysubsubsection{\texorpdfstring{contextMenuEvent()}{contextMenuEvent()}}
+{\footnotesize\ttfamily void Fx\+Painter\+::context\+Menu\+Event (\begin{DoxyParamCaption}\item[{QGraphics\+Scene\+Context\+Menu\+Event $\ast$}]{cme }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00664                                                                     \{}
+\DoxyCodeLine{00665   \mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *fxScene = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{00666   QMenu menu(scene()-\/>views()[0]);}
+\DoxyCodeLine{00667 }
+\DoxyCodeLine{00668   \mbox{\hyperlink{class_t_fx}{TFx}} *fx = m\_parent-\/>getFx();}
+\DoxyCodeLine{00669   \textcolor{keywordtype}{bool} isInternalFx =}
+\DoxyCodeLine{00670       fxScene-\/>getXsheet()-\/>\mbox{\hyperlink{class_t_xsheet_adc7c74cce346abf3699bb250eb17a9c2}{getFxDag}}()-\/>getInternalFxs()-\/>containsFx(fx) ||}
+\DoxyCodeLine{00671       m\_type == eGroupedFx;}
+\DoxyCodeLine{00672   \textcolor{keywordtype}{bool} enableGroupAction = m\_parent-\/>isA(eZeraryFx) || isInternalFx;}
+\DoxyCodeLine{00673   \textcolor{keywordtype}{bool} enableInsertAction =}
+\DoxyCodeLine{00674       enableGroupAction \&\& (fx-\/>getAttributes()-\/>isGroupEditing() ||}
+\DoxyCodeLine{00675                             !fx-\/>getAttributes()-\/>isGrouped());}
+\DoxyCodeLine{00676   \textcolor{keywordflow}{if} (enableInsertAction) \{}
+\DoxyCodeLine{00677     \textcolor{comment}{// repeat the last command}}
+\DoxyCodeLine{00678     \textcolor{keywordflow}{if} (cme-\/>modifiers() \& Qt::ControlModifier) \{}
+\DoxyCodeLine{00679       \textcolor{keywordtype}{int} commands = (m\_type != eGroupedFx)}
+\DoxyCodeLine{00680                          ? AddFxContextMenu::Add | AddFxContextMenu::Insert |}
+\DoxyCodeLine{00681                                AddFxContextMenu::Replace}
+\DoxyCodeLine{00682                          : AddFxContextMenu::Add | AddFxContextMenu::Insert;}
+\DoxyCodeLine{00683       menu.addAction(fxScene-\/>getAgainAction(commands));}
+\DoxyCodeLine{00684       \textcolor{keywordflow}{if} (!menu.actions().isEmpty()) \{}
+\DoxyCodeLine{00685         menu.exec(cme-\/>screenPos());}
+\DoxyCodeLine{00686         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00687       \}}
+\DoxyCodeLine{00688     \}}
+\DoxyCodeLine{00689   \}}
+\DoxyCodeLine{00690 }
+\DoxyCodeLine{00691   QMenu *insertMenu    = fxScene-\/>getInsertFxMenu();}
+\DoxyCodeLine{00692   QMenu *replacefxMenu = fxScene-\/>getReplaceFxMenu();}
+\DoxyCodeLine{00693   fxScene-\/>initCursorScenePos();}
+\DoxyCodeLine{00694   QMenu *addMenu = fxScene-\/>getAddFxMenu();}
+\DoxyCodeLine{00695 }
+\DoxyCodeLine{00696   QAction *fxEditorPopup =}
+\DoxyCodeLine{00697       CommandManager::instance()-\/>getAction(MI\_FxParamEditor);}
+\DoxyCodeLine{00698   QAction *\mbox{\hyperlink{namespace_t_rop_a229eb7fd85c23c325ea4ba55478d5712}{copy}}    = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Copy"{}});}
+\DoxyCodeLine{00699   QAction *cut     = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Cut"{}});}
+\DoxyCodeLine{00700   QAction *group   = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Group"{}});}
+\DoxyCodeLine{00701   QAction *ungroup = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Ungroup"{}});}
+\DoxyCodeLine{00702 }
+\DoxyCodeLine{00703   QAction *editGroup = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Open Group"{}}), \&menu);}
+\DoxyCodeLine{00704   connect(editGroup, SIGNAL(triggered()), fxScene, SLOT(onEditGroup()));}
+\DoxyCodeLine{00705 }
+\DoxyCodeLine{00706   QAction *replacePaste = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Paste Replace"{}}), \&menu);}
+\DoxyCodeLine{00707   connect(replacePaste, SIGNAL(triggered()), fxScene, SLOT(onReplacePaste()));}
+\DoxyCodeLine{00708 }
+\DoxyCodeLine{00709   QAction *addPaste = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Paste Add"{}}), \&menu);}
+\DoxyCodeLine{00710   connect(addPaste, SIGNAL(triggered()), fxScene, SLOT(onAddPaste()));}
+\DoxyCodeLine{00711 }
+\DoxyCodeLine{00712   QAction *addOutputFx =}
+\DoxyCodeLine{00713       CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_NewOutputFx"{}});}
+\DoxyCodeLine{00714 }
+\DoxyCodeLine{00715   QAction *deleteFx = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Delete"{}}), \&menu);}
+\DoxyCodeLine{00716   connect(deleteFx, SIGNAL(triggered()), fxScene, SLOT(onDeleteFx()));}
+\DoxyCodeLine{00717 }
+\DoxyCodeLine{00718   QAction *disconnectFromXSheet =}
+\DoxyCodeLine{00719       \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Disconnect from Xsheet"{}}), \&menu);}
+\DoxyCodeLine{00720   connect(disconnectFromXSheet, SIGNAL(triggered()), fxScene,}
+\DoxyCodeLine{00721           SLOT(onDisconnectFromXSheet()));}
+\DoxyCodeLine{00722 }
+\DoxyCodeLine{00723   QAction *connectToXSheet = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Connect to Xsheet"{}}), \&menu);}
+\DoxyCodeLine{00724   connect(connectToXSheet, SIGNAL(triggered()), fxScene,}
+\DoxyCodeLine{00725           SLOT(onConnectToXSheet()));}
+\DoxyCodeLine{00726 }
+\DoxyCodeLine{00727   QAction *duplicateFx = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Create Linked FX"{}}), \&menu);}
+\DoxyCodeLine{00728   connect(duplicateFx, SIGNAL(triggered()), fxScene, SLOT(onDuplicateFx()));}
+\DoxyCodeLine{00729 }
+\DoxyCodeLine{00730   QAction *unlinkFx = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Unlink"{}}), \&menu);}
+\DoxyCodeLine{00731   connect(unlinkFx, SIGNAL(triggered()), fxScene, SLOT(onUnlinkFx()));}
+\DoxyCodeLine{00732 }
+\DoxyCodeLine{00733   QAction *macroFx = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Make Macro FX"{}}), \&menu);}
+\DoxyCodeLine{00734   connect(macroFx, SIGNAL(triggered()), fxScene, SLOT(onMacroFx()));}
+\DoxyCodeLine{00735 }
+\DoxyCodeLine{00736   QAction *explodeMacroFx = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Explode Macro FX"{}}), \&menu);}
+\DoxyCodeLine{00737   connect(explodeMacroFx, SIGNAL(triggered()), fxScene,}
+\DoxyCodeLine{00738           SLOT(onExplodeMacroFx()));}
+\DoxyCodeLine{00739 }
+\DoxyCodeLine{00740   QAction *openMacroFx = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Open Macro FX"{}}), \&menu);}
+\DoxyCodeLine{00741   connect(openMacroFx, SIGNAL(triggered()), fxScene, SLOT(onOpenMacroFx()));}
+\DoxyCodeLine{00742 }
+\DoxyCodeLine{00743   QAction *savePresetFx = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Save As Preset..."{}}), \&menu);}
+\DoxyCodeLine{00744   connect(savePresetFx, SIGNAL(triggered()), fxScene, SLOT(onSavePresetFx()));}
+\DoxyCodeLine{00745 }
+\DoxyCodeLine{00746   QAction *preview = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Preview"{}}), \&menu);}
+\DoxyCodeLine{00747   connect(preview, SIGNAL(triggered()), fxScene, SLOT(onPreview()));}
+\DoxyCodeLine{00748 }
+\DoxyCodeLine{00749   \textcolor{keywordtype}{bool} cacheEnabled = m\_parent-\/>isCached();}
+\DoxyCodeLine{00750 }
+\DoxyCodeLine{00751   QAction *cacheFx =}
+\DoxyCodeLine{00752       \textcolor{keyword}{new} QAction(cacheEnabled ? tr(\textcolor{stringliteral}{"{}\&Uncache FX"{}}) : tr(\textcolor{stringliteral}{"{}\&Cache FX"{}}), \&menu);}
+\DoxyCodeLine{00753   \textcolor{keywordflow}{if} (cacheEnabled)}
+\DoxyCodeLine{00754     connect(cacheFx, SIGNAL(triggered()), fxScene, SLOT(onUncacheFx()));}
+\DoxyCodeLine{00755   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00756     connect(cacheFx, SIGNAL(triggered()), fxScene, SLOT(onCacheFx()));}
+\DoxyCodeLine{00757 }
+\DoxyCodeLine{00758   QAction *collapse = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Collapse"{}});}
+\DoxyCodeLine{00759 }
+\DoxyCodeLine{00760   \mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *zsrc = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *\textcolor{keyword}{>}(fx);}
+\DoxyCodeLine{00761   \textcolor{comment}{// if(m\_type != eGroupedFx)}}
+\DoxyCodeLine{00762   \textcolor{comment}{// \{}}
+\DoxyCodeLine{00763   \textcolor{keywordflow}{if} (enableInsertAction) \{}
+\DoxyCodeLine{00764     menu.addMenu(insertMenu);}
+\DoxyCodeLine{00765     menu.addMenu(addMenu);}
+\DoxyCodeLine{00766     \textcolor{keywordflow}{if} (m\_type != eGroupedFx) menu.addMenu(replacefxMenu);}
+\DoxyCodeLine{00767   \}}
+\DoxyCodeLine{00768   \textcolor{keywordflow}{if} (m\_type != eGroupedFx) menu.addAction(fxEditorPopup);}
+\DoxyCodeLine{00769   \textcolor{keywordflow}{if} (enableInsertAction) \{}
+\DoxyCodeLine{00770     menu.addSeparator();}
+\DoxyCodeLine{00771     menu.addAction(copy);}
+\DoxyCodeLine{00772     menu.addAction(cut);}
+\DoxyCodeLine{00773     \textcolor{keywordflow}{if} (m\_type != eGroupedFx \&\& !fx-\/>getAttributes()-\/>isGrouped()) \{}
+\DoxyCodeLine{00774       menu.addAction(replacePaste);}
+\DoxyCodeLine{00775       menu.addAction(addPaste);}
+\DoxyCodeLine{00776     \}}
+\DoxyCodeLine{00777     menu.addAction(deleteFx);}
+\DoxyCodeLine{00778 }
+\DoxyCodeLine{00779     menu.addSeparator();}
+\DoxyCodeLine{00780     \textcolor{keywordflow}{if} (fxScene-\/>getXsheetHandle()}
+\DoxyCodeLine{00781             -\/>getXsheet()}
+\DoxyCodeLine{00782             -\/>\mbox{\hyperlink{class_t_xsheet_adc7c74cce346abf3699bb250eb17a9c2}{getFxDag}}()}
+\DoxyCodeLine{00783             -\/>getTerminalFxs()}
+\DoxyCodeLine{00784             -\/>containsFx(m\_parent-\/>getFx()))}
+\DoxyCodeLine{00785       menu.addAction(disconnectFromXSheet);}
+\DoxyCodeLine{00786     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00787       menu.addAction(connectToXSheet);}
+\DoxyCodeLine{00788     menu.addAction(duplicateFx);}
+\DoxyCodeLine{00789     \textcolor{keywordflow}{if} ((zsrc \&\& zsrc-\/>getZeraryFx() \&\&}
+\DoxyCodeLine{00790          zsrc-\/>getZeraryFx()-\/>getLinkedFx() != zsrc-\/>getZeraryFx()) ||}
+\DoxyCodeLine{00791         fx-\/>getLinkedFx() != fx)}
+\DoxyCodeLine{00792       menu.addAction(unlinkFx);}
+\DoxyCodeLine{00793   \}}
+\DoxyCodeLine{00794   menu.addSeparator();}
+\DoxyCodeLine{00795   \textcolor{comment}{//\}}}
+\DoxyCodeLine{00796   \textcolor{keywordflow}{if} (!fx-\/>getAttributes()-\/>isGrouped()) menu.addAction(addOutputFx);}
+\DoxyCodeLine{00797   menu.addAction(preview);}
+\DoxyCodeLine{00798   \textcolor{keywordflow}{if} (enableGroupAction) menu.addAction(cacheFx);}
+\DoxyCodeLine{00799   menu.addSeparator();}
+\DoxyCodeLine{00800   \textcolor{keywordflow}{if} (m\_type != eGroupedFx \&\& enableInsertAction) \{}
+\DoxyCodeLine{00801     menu.addAction(macroFx);}
+\DoxyCodeLine{00802     \textcolor{keywordflow}{if} (scene()-\/>selectedItems().size() == 1 \&\& m\_parent-\/>isA(eMacroFx)) \{}
+\DoxyCodeLine{00803       menu.addAction(explodeMacroFx);}
+\DoxyCodeLine{00804       menu.addAction(openMacroFx);}
+\DoxyCodeLine{00805     \}}
+\DoxyCodeLine{00806     menu.addAction(savePresetFx);}
+\DoxyCodeLine{00807     \textcolor{keywordflow}{if} (zsrc) \{}
+\DoxyCodeLine{00808       menu.addSeparator();}
+\DoxyCodeLine{00809       menu.addAction(collapse);}
+\DoxyCodeLine{00810     \}}
+\DoxyCodeLine{00811     menu.addSeparator();}
+\DoxyCodeLine{00812   \}}
+\DoxyCodeLine{00813   \textcolor{keywordflow}{if} (enableGroupAction) \{}
+\DoxyCodeLine{00814     menu.addAction(group);}
+\DoxyCodeLine{00815     \textcolor{keywordflow}{if} (m\_type == eGroupedFx) \{}
+\DoxyCodeLine{00816       menu.addAction(ungroup);}
+\DoxyCodeLine{00817       menu.addAction(editGroup);}
+\DoxyCodeLine{00818     \}}
+\DoxyCodeLine{00819   \}}
+\DoxyCodeLine{00820   menu.exec(cme-\/>screenPos());}
+\DoxyCodeLine{00821 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_painter_a80f519f19b339b51760ec282c402a179}\label{class_fx_painter_a80f519f19b339b51760ec282c402a179}} 
+\index{FxPainter@{FxPainter}!paint@{paint}}
+\index{paint@{paint}!FxPainter@{FxPainter}}
+\doxysubsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Fx\+Painter\+::paint (\begin{DoxyParamCaption}\item[{QPainter $\ast$}]{painter,  }\item[{const QStyle\+Option\+Graphics\+Item $\ast$}]{option,  }\item[{QWidget $\ast$}]{widget = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+draw the name only if it is not editing
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00575                                        \{}
+\DoxyCodeLine{00576   \mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *sceneFx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{00577   \textcolor{keywordflow}{if} (!sceneFx) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00578 }
+\DoxyCodeLine{00579   \textcolor{comment}{// if the scale is small, display with fx icons}}
+\DoxyCodeLine{00580   \textcolor{keywordflow}{if} (!m\_parent-\/>isNormalIconView()) \{}
+\DoxyCodeLine{00581     paint\_small(painter);}
+\DoxyCodeLine{00582     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00583   \}}
+\DoxyCodeLine{00584 }
+\DoxyCodeLine{00585   \textcolor{keywordflow}{if} (m\_type == eGroupedFx) \{}
+\DoxyCodeLine{00586     painter-\/>save();}
+\DoxyCodeLine{00587     QPen pen;}
+\DoxyCodeLine{00588     \textcolor{keywordflow}{if} (m\_parent-\/>isSelected()) \{}
+\DoxyCodeLine{00589       painter-\/>setBrush(QColor(0, 0, 0, 0));}
+\DoxyCodeLine{00590       pen.setColor(QColor(255, 255, 255, 255));}
+\DoxyCodeLine{00591       pen.setWidth(4.0);}
+\DoxyCodeLine{00592       pen.setJoinStyle(Qt::RoundJoin);}
+\DoxyCodeLine{00593       painter-\/>setPen(pen);}
+\DoxyCodeLine{00594       painter-\/>drawRect(-\/2, -\/2, m\_width + 4, m\_height + 4);}
+\DoxyCodeLine{00595     \}}
+\DoxyCodeLine{00596     painter-\/>restore();}
+\DoxyCodeLine{00597   \}}
+\DoxyCodeLine{00598 }
+\DoxyCodeLine{00599   QColor nodeColor;}
+\DoxyCodeLine{00600   \mbox{\hyperlink{class_schematic_viewer}{SchematicViewer}} *viewer = sceneFx-\/>getSchematicViewer();}
+\DoxyCodeLine{00601   viewer-\/>getNodeColor(m\_type, nodeColor);}
+\DoxyCodeLine{00602 }
+\DoxyCodeLine{00603   painter-\/>setBrush(nodeColor);}
+\DoxyCodeLine{00604   painter-\/>setPen(Qt::NoPen);}
+\DoxyCodeLine{00605   painter-\/>drawRect(0, 0, m\_width, m\_height);}
+\DoxyCodeLine{00606 }
+\DoxyCodeLine{00607   \textcolor{comment}{// draw diagonal line for disabled fx}}
+\DoxyCodeLine{00608   \textcolor{keywordtype}{bool} is\_enabled = m\_parent-\/>isEnabled();}
+\DoxyCodeLine{00609   \textcolor{keywordflow}{if} (!is\_enabled) \{}
+\DoxyCodeLine{00610     painter-\/>save();}
+\DoxyCodeLine{00611     painter-\/>setPen(QColor(255, 0, 0, 255));}
+\DoxyCodeLine{00612     painter-\/>drawLine(QPointF(0, m\_height), QPointF(m\_width, 0));}
+\DoxyCodeLine{00613     painter-\/>drawLine(QPointF(0, 0), QPointF(m\_width, m\_height));}
+\DoxyCodeLine{00614     painter-\/>restore();}
+\DoxyCodeLine{00615   \}}
+\DoxyCodeLine{00616 }
+\DoxyCodeLine{00617   QFont columnFont(painter-\/>font());}
+\DoxyCodeLine{00618   columnFont.setPixelSize(columnFont.pixelSize() -\/ 1);}
+\DoxyCodeLine{00619   painter-\/>setFont(columnFont);}
+\DoxyCodeLine{00620 }
+\DoxyCodeLine{00621   \textcolor{comment}{// draw fxId in the bottom part}}
+\DoxyCodeLine{00622   painter-\/>setPen(viewer-\/>getTextColor());}
+\DoxyCodeLine{00623   QString label;}
+\DoxyCodeLine{00624   \textcolor{keywordflow}{if} (m\_type == eGroupedFx)}
+\DoxyCodeLine{00625     label = \textcolor{stringliteral}{"{}Group "{}} +}
+\DoxyCodeLine{00626             QString::number(m\_parent-\/>getFx()-\/>getAttributes()-\/>getGroupId());}
+\DoxyCodeLine{00627   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00628     \textcolor{comment}{// for zerary fx}}
+\DoxyCodeLine{00629     \textcolor{keywordflow}{if} (m\_type == eZeraryFx) \{}
+\DoxyCodeLine{00630       \mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *zcFx =}
+\DoxyCodeLine{00631           \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *\textcolor{keyword}{>}(m\_parent-\/>getFx());}
+\DoxyCodeLine{00632       \textcolor{keywordflow}{if} (!zcFx) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00633       label = QString::fromStdWString(zcFx-\/>getZeraryFx()-\/>getFxId());}
+\DoxyCodeLine{00634     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00635       label = QString::fromStdWString(m\_parent-\/>getFx()-\/>getFxId());}
+\DoxyCodeLine{00636   \}}
+\DoxyCodeLine{00637 }
+\DoxyCodeLine{00638   \textcolor{keywordflow}{if} (label != m\_name) \{}
+\DoxyCodeLine{00639     label = elideText(label, painter-\/>font(), m\_width -\/ 21);}
+\DoxyCodeLine{00640     painter-\/>drawText(QRectF(3, 16, m\_width -\/ 21, 14),}
+\DoxyCodeLine{00641                       Qt::AlignLeft | Qt::AlignVCenter, label);}
+\DoxyCodeLine{00642   \}}
+\DoxyCodeLine{00643 }
+\DoxyCodeLine{00644   \textcolor{comment}{// draw user-\/defined fx name in the upper part}}
+\DoxyCodeLine{00646 \textcolor{comment}{}  \textcolor{keywordflow}{if} (!m\_parent-\/>isNameEditing()) \{}
+\DoxyCodeLine{00647     \mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *sceneFx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{00648     \textcolor{keywordflow}{if} (!sceneFx) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00649     \textcolor{keywordflow}{if} (sceneFx-\/>getCurrentFx() == m\_parent-\/>getFx())}
+\DoxyCodeLine{00650       painter-\/>setPen(viewer-\/>getSelectedNodeTextColor());}
+\DoxyCodeLine{00651     QRectF rect(3, 2, m\_width -\/ 21, 14);}
+\DoxyCodeLine{00652     \textcolor{keywordtype}{int} w = rect.width();}
+\DoxyCodeLine{00653     \textcolor{keywordflow}{if} (label == m\_name) \{}
+\DoxyCodeLine{00654       rect.adjust(0, 0, 0, 14);}
+\DoxyCodeLine{00655       w *= 2;}
+\DoxyCodeLine{00656     \}}
+\DoxyCodeLine{00657     QString elidedName = elideText(m\_name, painter-\/>font(), w);}
+\DoxyCodeLine{00658     painter-\/>drawText(rect, Qt::TextWrapAnywhere, elidedName);}
+\DoxyCodeLine{00659   \}}
+\DoxyCodeLine{00660 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_painter_aa474d28280ec7855a40699e17bdd6b3d}\label{class_fx_painter_aa474d28280ec7855a40699e17bdd6b3d}} 
+\index{FxPainter@{FxPainter}!setName@{setName}}
+\index{setName@{setName}!FxPainter@{FxPainter}}
+\doxysubsubsection{\texorpdfstring{setName()}{setName()}}
+{\footnotesize\ttfamily void Fx\+Painter\+::set\+Name (\begin{DoxyParamCaption}\item[{const QString \&}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00119 \{ m\_name = name; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/fxschematicnode.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/fxschematicnode.\+cpp\end{DoxyCompactItemize}

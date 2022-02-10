@@ -1,0 +1,87 @@
+\hypertarget{class_set_deceleration_command}{}\doxysection{Set\+Deceleration\+Command Class Reference}
+\label{class_set_deceleration_command}\index{SetDecelerationCommand@{SetDecelerationCommand}}
+Inheritance diagram for Set\+Deceleration\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_set_deceleration_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_set_deceleration_command_a38a044653ffc10654666a13f06ceee25}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_set_deceleration_command_af1ee5569f2c9f722cf8ba62dfeecad98}\label{class_set_deceleration_command_af1ee5569f2c9f722cf8ba62dfeecad98}} 
+\index{SetDecelerationCommand@{SetDecelerationCommand}!SetDecelerationCommand@{SetDecelerationCommand}}
+\index{SetDecelerationCommand@{SetDecelerationCommand}!SetDecelerationCommand@{SetDecelerationCommand}}
+\doxysubsubsection{\texorpdfstring{SetDecelerationCommand()}{SetDecelerationCommand()}}
+{\footnotesize\ttfamily Set\+Deceleration\+Command\+::\+Set\+Deceleration\+Command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01570 : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(MI\_SetDeceleration) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_set_deceleration_command_a38a044653ffc10654666a13f06ceee25}\label{class_set_deceleration_command_a38a044653ffc10654666a13f06ceee25}} 
+\index{SetDecelerationCommand@{SetDecelerationCommand}!execute@{execute}}
+\index{execute@{execute}!SetDecelerationCommand@{SetDecelerationCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Set\+Deceleration\+Command\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01572                           \{}
+\DoxyCodeLine{01573     \mbox{\hyperlink{class_t_app}{TApp}} *app    = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{01574     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{01575     \textcolor{keywordtype}{int} row      = app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>getFrame();}
+\DoxyCodeLine{01576 }
+\DoxyCodeLine{01577     \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} objectId = app-\/>\mbox{\hyperlink{class_t_app_a0d91c122eec2b756b7c4780014e49f9e}{getCurrentObject}}()-\/>getObjectId();}
+\DoxyCodeLine{01578     \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *pegbar    = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(objectId);}
+\DoxyCodeLine{01579 }
+\DoxyCodeLine{01580     \textcolor{keywordflow}{if} (!pegbar) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01581 }
+\DoxyCodeLine{01582     \textcolor{keywordtype}{int} r0, r1;}
+\DoxyCodeLine{01583     \textcolor{keywordtype}{double} ease0, ease1;}
+\DoxyCodeLine{01584 }
+\DoxyCodeLine{01585     pegbar-\/>getKeyframeSpan(row, r0, ease0, r1, ease1);}
+\DoxyCodeLine{01586 }
+\DoxyCodeLine{01587     std::unique\_ptr<TUndo> undo(}
+\DoxyCodeLine{01588         \textcolor{keyword}{new} KeyFrameHandleCommandUndo(objectId, r0, r1));}
+\DoxyCodeLine{01589 }
+\DoxyCodeLine{01590     \mbox{\hyperlink{struct_t_stage_object_1_1_keyframe}{TStageObject::Keyframe}} keyframe0 = pegbar-\/>\mbox{\hyperlink{class_t_stage_object_aacff624691523109a01d3039b8aae432}{getKeyframe}}(r0);}
+\DoxyCodeLine{01591     \mbox{\hyperlink{struct_t_stage_object_1_1_keyframe}{TStageObject::Keyframe}} keyframe1 = pegbar-\/>\mbox{\hyperlink{class_t_stage_object_aacff624691523109a01d3039b8aae432}{getKeyframe}}(r1);}
+\DoxyCodeLine{01592 }
+\DoxyCodeLine{01593     \textcolor{keywordtype}{int} dr = std::max(r1 -\/ r0, 0);}
+\DoxyCodeLine{01594     \textcolor{keywordflow}{if} (keyframe1.m\_easeIn == dr) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01595 }
+\DoxyCodeLine{01596     keyframe0.\mbox{\hyperlink{struct_t_stage_object_1_1_keyframe_a619322b9f7dbe1602599fa633b6ec65e}{m\_easeOut}} = 0;}
+\DoxyCodeLine{01597     keyframe1.m\_easeIn  = dr;}
+\DoxyCodeLine{01598 }
+\DoxyCodeLine{01599     pegbar-\/>setKeyframeWithoutUndo(r0, keyframe0);}
+\DoxyCodeLine{01600     pegbar-\/>setKeyframeWithoutUndo(r1, keyframe1);}
+\DoxyCodeLine{01601 }
+\DoxyCodeLine{01602     TUndoManager::manager()-\/>add(undo.release());}
+\DoxyCodeLine{01603 }
+\DoxyCodeLine{01604     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{01605     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a0d91c122eec2b756b7c4780014e49f9e}{getCurrentObject}}()-\/>notifyObjectIdChanged(\textcolor{keyword}{false});}
+\DoxyCodeLine{01606   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xsheetcmd.\+cpp\end{DoxyCompactItemize}

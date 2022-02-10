@@ -1,0 +1,314 @@
+\hypertarget{class_tone_curve_param_field}{}\doxysection{Tone\+Curve\+Param\+Field Class Reference}
+\label{class_tone_curve_param_field}\index{ToneCurveParamField@{ToneCurveParamField}}
+Inheritance diagram for Tone\+Curve\+Param\+Field\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_tone_curve_param_field}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_tone_curve_param_field_a5acc4bab5ee3bf56529916a9f0367a25}{Tone\+Curve\+Param\+Field}} (QWidget $\ast$parent, QString name, const \mbox{\hyperlink{class_t_tone_curve_param_p}{TTone\+Curve\+ParamP}} \&param)
+\item 
+void \mbox{\hyperlink{class_tone_curve_param_field_a4900f27b520ecfb4cb71cd7c1dcb0566}{update\+Field}} (const QList$<$ \mbox{\hyperlink{class_t_point_t}{TPointD}} $>$ value) override
+\item 
+void \mbox{\hyperlink{class_tone_curve_param_field_aeddd57d5313f0ce64f452be7058de10b}{set\+Params}} ()
+\item 
+QSize \mbox{\hyperlink{class_tone_curve_param_field_aa0eb54603d071da31397d1e05b59b8b6}{get\+Preferred\+Size}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_tone_curve_param_field_a0072afe3fab7d195457a9cb51cfb1fdb}{on\+Channel\+Changed}} (int)
+\item 
+void \mbox{\hyperlink{class_tone_curve_param_field_a0b04b4ddac72a3160f6a5be8065bc25f}{on\+Change}} (bool is\+Dragging)
+\item 
+void \mbox{\hyperlink{class_tone_curve_param_field_a428b0391c88911c7dd69365047583735}{on\+Point\+Added}} (int index)
+\item 
+void \mbox{\hyperlink{class_tone_curve_param_field_a9be1f06077233a18a26f5af4408ef51b}{on\+Point\+Removed}} (int index)
+\item 
+void \mbox{\hyperlink{class_tone_curve_param_field_a4013063fbf21c305139b919f21d96bc6}{on\+Is\+Linear\+Changed}} (bool)
+\item 
+void \mbox{\hyperlink{class_tone_curve_param_field_a912b6263da1a65910c712990896ea925}{on\+Key\+Toggled}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_tone_curve_param_field_a5acc4bab5ee3bf56529916a9f0367a25}\label{class_tone_curve_param_field_a5acc4bab5ee3bf56529916a9f0367a25}} 
+\index{ToneCurveParamField@{ToneCurveParamField}!ToneCurveParamField@{ToneCurveParamField}}
+\index{ToneCurveParamField@{ToneCurveParamField}!ToneCurveParamField@{ToneCurveParamField}}
+\doxysubsubsection{\texorpdfstring{ToneCurveParamField()}{ToneCurveParamField()}}
+{\footnotesize\ttfamily Tone\+Curve\+Param\+Field\+::\+Tone\+Curve\+Param\+Field (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{QString}]{name,  }\item[{const \mbox{\hyperlink{class_t_tone_curve_param_p}{TTone\+Curve\+ParamP}} \&}]{param }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01792     : \mbox{\hyperlink{class_animated_param_field}{AnimatedParamField<const QList<TPointD>}}, \mbox{\hyperlink{class_t_tone_curve_param_p}{TToneCurveParamP}}>(parent, name,}
+\DoxyCodeLine{01793                                                                  param, \textcolor{keyword}{false}) \{}
+\DoxyCodeLine{01794   QString str;}
+\DoxyCodeLine{01795   m\_paramName = str.fromStdString(param-\/>getName());}
+\DoxyCodeLine{01796 }
+\DoxyCodeLine{01797   \mbox{\hyperlink{class_params_page}{ParamsPage}} *paramsPage = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_params_page}{ParamsPage}} *\textcolor{keyword}{>}(parent);}
+\DoxyCodeLine{01798   \mbox{\hyperlink{class_fx_histogram_render}{FxHistogramRender}} *fxHistogramRender =}
+\DoxyCodeLine{01799       (paramsPage) ? paramsPage-\/>getFxHistogramRender() : 0;}
+\DoxyCodeLine{01800   m\_toneCurveField = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_tone_curve_field}{ToneCurveField}}(\textcolor{keyword}{this}, fxHistogramRender);}
+\DoxyCodeLine{01801   m\_toneCurveField-\/>setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);}
+\DoxyCodeLine{01802 }
+\DoxyCodeLine{01803   \textcolor{comment}{//-\/-\/-\/ layout}}
+\DoxyCodeLine{01804   m\_layout-\/>addWidget(m\_keyToggle);}
+\DoxyCodeLine{01805   m\_layout-\/>addWidget(m\_toneCurveField);}
+\DoxyCodeLine{01806   m\_layout-\/>addStretch();}
+\DoxyCodeLine{01807   setLayout(m\_layout);}
+\DoxyCodeLine{01808 }
+\DoxyCodeLine{01809   connect(m\_keyToggle, SIGNAL(keyToggled()), SLOT(onKeyToggled()));}
+\DoxyCodeLine{01810   connect(m\_toneCurveField, SIGNAL(currentChannelIndexChanged(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{01811           SLOT(onChannelChanged(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{01812   \textcolor{comment}{// on enlarged, make the ParamPageSet to recompute the preferred size}}
+\DoxyCodeLine{01813   \textcolor{keywordflow}{if} (paramsPage)}
+\DoxyCodeLine{01814     connect(m\_toneCurveField, SIGNAL(sizeChanged()), paramsPage,}
+\DoxyCodeLine{01815             SIGNAL(preferredPageSizeChanged()));}
+\DoxyCodeLine{01816 }
+\DoxyCodeLine{01817   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{01818   \textcolor{keywordflow}{for} (i = 0; i < m\_toneCurveField-\/>getChannelCount(); i++) \{}
+\DoxyCodeLine{01819     \mbox{\hyperlink{class_d_v_gui_1_1_chennel_curve_editor}{ChennelCurveEditor}} *c = m\_toneCurveField-\/>getChannelEditor(i);}
+\DoxyCodeLine{01820 }
+\DoxyCodeLine{01821     connect(c, SIGNAL(controlPointChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this}, SLOT(onChange(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{01822     connect(c, SIGNAL(controlPointAdded(\textcolor{keywordtype}{int})), \textcolor{keyword}{this}, SLOT(onPointAdded(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{01823     connect(c, SIGNAL(controlPointRemoved(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01824             SLOT(onPointRemoved(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{01825   \}}
+\DoxyCodeLine{01826   connect(m\_toneCurveField, SIGNAL(isLinearChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01827           SLOT(onIsLinearChanged(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{01828   updateField(param-\/>getValue(0));}
+\DoxyCodeLine{01829 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tone_curve_param_field_aa0eb54603d071da31397d1e05b59b8b6}\label{class_tone_curve_param_field_aa0eb54603d071da31397d1e05b59b8b6}} 
+\index{ToneCurveParamField@{ToneCurveParamField}!getPreferredSize@{getPreferredSize}}
+\index{getPreferredSize@{getPreferredSize}!ToneCurveParamField@{ToneCurveParamField}}
+\doxysubsubsection{\texorpdfstring{getPreferredSize()}{getPreferredSize()}}
+{\footnotesize\ttfamily QSize Tone\+Curve\+Param\+Field\+::get\+Preferred\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_param_field}{Param\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01865                                             \{}
+\DoxyCodeLine{01866   \textcolor{keywordflow}{if} (m\_toneCurveField-\/>isEnlarged())}
+\DoxyCodeLine{01867     \textcolor{keywordflow}{return} QSize(676, 640);}
+\DoxyCodeLine{01868   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01869     \textcolor{keywordflow}{return} QSize(420, 384);}
+\DoxyCodeLine{01870 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tone_curve_param_field_a0b04b4ddac72a3160f6a5be8065bc25f}\label{class_tone_curve_param_field_a0b04b4ddac72a3160f6a5be8065bc25f}} 
+\index{ToneCurveParamField@{ToneCurveParamField}!onChange@{onChange}}
+\index{onChange@{onChange}!ToneCurveParamField@{ToneCurveParamField}}
+\doxysubsubsection{\texorpdfstring{onChange}{onChange}}
+{\footnotesize\ttfamily void Tone\+Curve\+Param\+Field\+::on\+Change (\begin{DoxyParamCaption}\item[{bool}]{is\+Dragging }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01891                                                   \{}
+\DoxyCodeLine{01892   \textcolor{keywordflow}{if} (isDragging) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01893 }
+\DoxyCodeLine{01894   \mbox{\hyperlink{class_t_tone_curve_param_p}{TToneCurveParamP}} toneCurveParam = m\_actualParam;}
+\DoxyCodeLine{01895 }
+\DoxyCodeLine{01896   \mbox{\hyperlink{class_t_undo}{TUndo}} *undo = 0;}
+\DoxyCodeLine{01897   \textcolor{comment}{/*-\/-\/-\/ Undoを登録する条件：}}
+\DoxyCodeLine{01898 \textcolor{comment}{          値が変更されていて}}
+\DoxyCodeLine{01899 \textcolor{comment}{          キーフレーム上か、または、まだキーフレームが無い}}
+\DoxyCodeLine{01900 \textcolor{comment}{          （すなわち、実際にシーンの情報を変えることになる）場合}}
+\DoxyCodeLine{01901 \textcolor{comment}{  -\/-\/-\/*/}}
+\DoxyCodeLine{01902   \textcolor{keywordflow}{if} (toneCurveParam \&\&}
+\DoxyCodeLine{01903       toneCurveParam-\/>getValue(m\_frame) !=}
+\DoxyCodeLine{01904           m\_toneCurveField-\/>getCurrentChannelEditor()-\/>getPoints() \&\&}
+\DoxyCodeLine{01905       (m\_actualParam-\/>isKeyframe(m\_frame) ||}
+\DoxyCodeLine{01906        !m\_actualParam.getPointer()-\/>\mbox{\hyperlink{class_t_tone_curve_param_ab04a8945d5448dc5df1fe8b9074210a3}{hasKeyframes}}()))}
+\DoxyCodeLine{01907     undo = \textcolor{keyword}{new} \mbox{\hyperlink{class_tone_curve_param_field_undo}{ToneCurveParamFieldUndo}}(toneCurveParam, m\_interfaceName, m\_frame,}
+\DoxyCodeLine{01908                                        ParamField::m\_fxHandleStat);}
+\DoxyCodeLine{01909 }
+\DoxyCodeLine{01910   setParams();}
+\DoxyCodeLine{01911 }
+\DoxyCodeLine{01912   \textcolor{keywordflow}{if} (undo) TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{01913 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tone_curve_param_field_a0072afe3fab7d195457a9cb51cfb1fdb}\label{class_tone_curve_param_field_a0072afe3fab7d195457a9cb51cfb1fdb}} 
+\index{ToneCurveParamField@{ToneCurveParamField}!onChannelChanged@{onChannelChanged}}
+\index{onChannelChanged@{onChannelChanged}!ToneCurveParamField@{ToneCurveParamField}}
+\doxysubsubsection{\texorpdfstring{onChannelChanged}{onChannelChanged}}
+{\footnotesize\ttfamily void Tone\+Curve\+Param\+Field\+::on\+Channel\+Changed (\begin{DoxyParamCaption}\item[{int}]{channel }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01874                                                       \{}
+\DoxyCodeLine{01875   \textcolor{keywordflow}{if} (m\_actualParam-\/>getCurrentChannel() ==}
+\DoxyCodeLine{01876       TToneCurveParam::ToneChannel(channel)) \{}
+\DoxyCodeLine{01877     assert(m\_currentParam-\/>getCurrentChannel() ==}
+\DoxyCodeLine{01878            TToneCurveParam::ToneChannel(channel));}
+\DoxyCodeLine{01879     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01880   \}}
+\DoxyCodeLine{01881   m\_currentParam-\/>setCurrentChannel(TToneCurveParam::ToneChannel(channel));}
+\DoxyCodeLine{01882   m\_actualParam-\/>setCurrentChannel(TToneCurveParam::ToneChannel(channel));}
+\DoxyCodeLine{01883   updateField(m\_currentParam-\/>getValue(m\_frame));}
+\DoxyCodeLine{01884   updateKeyToggle();}
+\DoxyCodeLine{01885 }
+\DoxyCodeLine{01886   emit currentParamChanged();}
+\DoxyCodeLine{01887 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tone_curve_param_field_a4013063fbf21c305139b919f21d96bc6}\label{class_tone_curve_param_field_a4013063fbf21c305139b919f21d96bc6}} 
+\index{ToneCurveParamField@{ToneCurveParamField}!onIsLinearChanged@{onIsLinearChanged}}
+\index{onIsLinearChanged@{onIsLinearChanged}!ToneCurveParamField@{ToneCurveParamField}}
+\doxysubsubsection{\texorpdfstring{onIsLinearChanged}{onIsLinearChanged}}
+{\footnotesize\ttfamily void Tone\+Curve\+Param\+Field\+::on\+Is\+Linear\+Changed (\begin{DoxyParamCaption}\item[{bool}]{is\+Linear }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01957                                                          \{}
+\DoxyCodeLine{01958   m\_currentParam-\/>setIsLinear(isLinear);}
+\DoxyCodeLine{01959   m\_actualParam-\/>setIsLinear(isLinear);}
+\DoxyCodeLine{01960 }
+\DoxyCodeLine{01961   emit actualParamChanged();}
+\DoxyCodeLine{01962   emit currentParamChanged();}
+\DoxyCodeLine{01963 }
+\DoxyCodeLine{01964   \mbox{\hyperlink{class_t_tone_curve_param_p}{TToneCurveParamP}} toneCurveActualParam  = m\_actualParam;}
+\DoxyCodeLine{01965   \mbox{\hyperlink{class_t_tone_curve_param_p}{TToneCurveParamP}} toneCurveCurrentParam = m\_currentParam;}
+\DoxyCodeLine{01966   \textcolor{keywordflow}{if} (toneCurveActualParam \&\& toneCurveCurrentParam)}
+\DoxyCodeLine{01967     TUndoManager::manager()-\/>add(\textcolor{keyword}{new} \mbox{\hyperlink{class_tone_curve_param_field_toggle_linear_undo}{ToneCurveParamFieldToggleLinearUndo}}(}
+\DoxyCodeLine{01968         toneCurveActualParam, toneCurveCurrentParam, m\_interfaceName,}
+\DoxyCodeLine{01969         ParamField::m\_fxHandleStat));}
+\DoxyCodeLine{01970 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tone_curve_param_field_a912b6263da1a65910c712990896ea925}\label{class_tone_curve_param_field_a912b6263da1a65910c712990896ea925}} 
+\index{ToneCurveParamField@{ToneCurveParamField}!onKeyToggled@{onKeyToggled}}
+\index{onKeyToggled@{onKeyToggled}!ToneCurveParamField@{ToneCurveParamField}}
+\doxysubsubsection{\texorpdfstring{onKeyToggled}{onKeyToggled}}
+{\footnotesize\ttfamily void Tone\+Curve\+Param\+Field\+::on\+Key\+Toggled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01974 \{ onKeyToggle(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tone_curve_param_field_a428b0391c88911c7dd69365047583735}\label{class_tone_curve_param_field_a428b0391c88911c7dd69365047583735}} 
+\index{ToneCurveParamField@{ToneCurveParamField}!onPointAdded@{onPointAdded}}
+\index{onPointAdded@{onPointAdded}!ToneCurveParamField@{ToneCurveParamField}}
+\doxysubsubsection{\texorpdfstring{onPointAdded}{onPointAdded}}
+{\footnotesize\ttfamily void Tone\+Curve\+Param\+Field\+::on\+Point\+Added (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01917                                                 \{}
+\DoxyCodeLine{01918   QList<TPointD> value =}
+\DoxyCodeLine{01919       m\_toneCurveField-\/>getCurrentChannelEditor()-\/>getPoints();}
+\DoxyCodeLine{01920   m\_currentParam-\/>addValue(0, value, index);}
+\DoxyCodeLine{01921   m\_actualParam-\/>addValue(0, value, index);}
+\DoxyCodeLine{01922 }
+\DoxyCodeLine{01923   emit actualParamChanged();}
+\DoxyCodeLine{01924   emit currentParamChanged();}
+\DoxyCodeLine{01925 }
+\DoxyCodeLine{01926   \mbox{\hyperlink{class_t_tone_curve_param_p}{TToneCurveParamP}} toneCurveActualParam  = m\_actualParam;}
+\DoxyCodeLine{01927   \mbox{\hyperlink{class_t_tone_curve_param_p}{TToneCurveParamP}} toneCurveCurrentParam = m\_currentParam;}
+\DoxyCodeLine{01928   \textcolor{keywordflow}{if} (toneCurveActualParam \&\& toneCurveCurrentParam)}
+\DoxyCodeLine{01929     TUndoManager::manager()-\/>add(\textcolor{keyword}{new} \mbox{\hyperlink{class_tone_curve_param_field_add_remove_point_undo}{ToneCurveParamFieldAddRemovePointUndo}}(}
+\DoxyCodeLine{01930         toneCurveActualParam, toneCurveCurrentParam, value, index, \textcolor{keyword}{true},}
+\DoxyCodeLine{01931         m\_interfaceName, ParamField::m\_fxHandleStat));}
+\DoxyCodeLine{01932 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tone_curve_param_field_a9be1f06077233a18a26f5af4408ef51b}\label{class_tone_curve_param_field_a9be1f06077233a18a26f5af4408ef51b}} 
+\index{ToneCurveParamField@{ToneCurveParamField}!onPointRemoved@{onPointRemoved}}
+\index{onPointRemoved@{onPointRemoved}!ToneCurveParamField@{ToneCurveParamField}}
+\doxysubsubsection{\texorpdfstring{onPointRemoved}{onPointRemoved}}
+{\footnotesize\ttfamily void Tone\+Curve\+Param\+Field\+::on\+Point\+Removed (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01936                                                   \{}
+\DoxyCodeLine{01937   \mbox{\hyperlink{class_t_tone_curve_param_p}{TToneCurveParamP}} toneCurveActualParam  = m\_actualParam;}
+\DoxyCodeLine{01938   \mbox{\hyperlink{class_t_tone_curve_param_p}{TToneCurveParamP}} toneCurveCurrentParam = m\_currentParam;}
+\DoxyCodeLine{01939   \textcolor{keywordflow}{if} (toneCurveActualParam \&\& toneCurveCurrentParam) \{}
+\DoxyCodeLine{01940     QList<TPointD> value =}
+\DoxyCodeLine{01941         m\_toneCurveField-\/>getCurrentChannelEditor()-\/>getPoints();}
+\DoxyCodeLine{01942 }
+\DoxyCodeLine{01943     TUndoManager::manager()-\/>add(\textcolor{keyword}{new} \mbox{\hyperlink{class_tone_curve_param_field_add_remove_point_undo}{ToneCurveParamFieldAddRemovePointUndo}}(}
+\DoxyCodeLine{01944         toneCurveActualParam, toneCurveCurrentParam, value, index, \textcolor{keyword}{false},}
+\DoxyCodeLine{01945         m\_interfaceName, ParamField::m\_fxHandleStat));}
+\DoxyCodeLine{01946   \}}
+\DoxyCodeLine{01947 }
+\DoxyCodeLine{01948   m\_currentParam-\/>removeValue(0, index);}
+\DoxyCodeLine{01949   m\_actualParam-\/>removeValue(0, index);}
+\DoxyCodeLine{01950 }
+\DoxyCodeLine{01951   emit currentParamChanged();}
+\DoxyCodeLine{01952   emit actualParamChanged();}
+\DoxyCodeLine{01953 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tone_curve_param_field_aeddd57d5313f0ce64f452be7058de10b}\label{class_tone_curve_param_field_aeddd57d5313f0ce64f452be7058de10b}} 
+\index{ToneCurveParamField@{ToneCurveParamField}!setParams@{setParams}}
+\index{setParams@{setParams}!ToneCurveParamField@{ToneCurveParamField}}
+\doxysubsubsection{\texorpdfstring{setParams()}{setParams()}}
+{\footnotesize\ttfamily void Tone\+Curve\+Param\+Field\+::set\+Params (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01847                                     \{}
+\DoxyCodeLine{01848   QList<TPointD> value =}
+\DoxyCodeLine{01849       m\_toneCurveField-\/>getCurrentChannelEditor()-\/>getPoints();}
+\DoxyCodeLine{01850   m\_currentParam-\/>setValue(m\_frame, value);}
+\DoxyCodeLine{01851   \textcolor{keywordflow}{if} (m\_actualParam-\/>isKeyframe(m\_frame)) \{}
+\DoxyCodeLine{01852     m\_actualParam-\/>setValue(m\_frame, value);}
+\DoxyCodeLine{01853     emit actualParamChanged();}
+\DoxyCodeLine{01854   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!m\_actualParam-\/>hasKeyframes()) \{}
+\DoxyCodeLine{01855     m\_actualParam-\/>setDefaultValue(value);}
+\DoxyCodeLine{01856     emit actualParamChanged();}
+\DoxyCodeLine{01857   \}}
+\DoxyCodeLine{01858   updateKeyToggle();}
+\DoxyCodeLine{01859 }
+\DoxyCodeLine{01860   emit currentParamChanged();}
+\DoxyCodeLine{01861 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tone_curve_param_field_a4900f27b520ecfb4cb71cd7c1dcb0566}\label{class_tone_curve_param_field_a4900f27b520ecfb4cb71cd7c1dcb0566}} 
+\index{ToneCurveParamField@{ToneCurveParamField}!updateField@{updateField}}
+\index{updateField@{updateField}!ToneCurveParamField@{ToneCurveParamField}}
+\doxysubsubsection{\texorpdfstring{updateField()}{updateField()}}
+{\footnotesize\ttfamily void Tone\+Curve\+Param\+Field\+::update\+Field (\begin{DoxyParamCaption}\item[{const QList$<$ \mbox{\hyperlink{class_t_point_t}{TPointD}} $>$}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_animated_param_field}{Animated\+Param\+Field$<$ const QList$<$ TPoint\+D $>$, TTone\+Curve\+Param\+P $>$}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01833                                                                 \{}
+\DoxyCodeLine{01834   \textcolor{keywordflow}{if} (m\_actualParam) \{}
+\DoxyCodeLine{01835     assert(m\_currentParam \&\& m\_currentParam-\/>getCurrentChannel() ==}
+\DoxyCodeLine{01836                                  m\_actualParam-\/>getCurrentChannel());}
+\DoxyCodeLine{01837     m\_toneCurveField-\/>setCurrentChannel(m\_actualParam-\/>getCurrentChannel());}
+\DoxyCodeLine{01838     assert(m\_currentParam \&\&}
+\DoxyCodeLine{01839            m\_currentParam-\/>isLinear() == m\_actualParam-\/>isLinear());}
+\DoxyCodeLine{01840     m\_toneCurveField-\/>setIsLinearCheckBox(m\_actualParam-\/>isLinear());}
+\DoxyCodeLine{01841   \}}
+\DoxyCodeLine{01842   m\_toneCurveField-\/>getCurrentChannelEditor()-\/>setPoints(value);}
+\DoxyCodeLine{01843 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/paramfield.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/paramfield.\+cpp\end{DoxyCompactItemize}

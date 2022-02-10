@@ -1,0 +1,153 @@
+\hypertarget{sequence__ops_8h}{}\doxysection{E\+:/opentoonz/toonz/sources/include/tcg/sequence\+\_\+ops.h File Reference}
+\label{sequence__ops_8h}\index{E:/opentoonz/toonz/sources/include/tcg/sequence\_ops.h@{E:/opentoonz/toonz/sources/include/tcg/sequence\_ops.h}}
+
+
+This file contains algorithms returning sub-\/sequences of some input iterator range.  
+
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structtcg_1_1sequence__ops_1_1_edge_evaluator}{tcg\+::sequence\+\_\+ops\+::\+Edge\+Evaluator$<$ It, Pen $>$}}
+\begin{DoxyCompactList}\small\item\em Base interface for an evaluator object supported by function {\ttfamily tcg\+::minimal\+Path()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename ranit\+\_\+type , typename edge\+\_\+eval , typename containers\+\_\+reader $>$ }\\bool \mbox{\hyperlink{sequence__ops_8hpp_a73a5644b911df46f3f8436d5c0146c77}{tcg\+::sequence\+\_\+ops\+::minimal\+Path}} (ranit\+\_\+type begin, ranit\+\_\+type end, edge\+\_\+eval \&evaluator, containers\+\_\+reader \&output)
+\begin{DoxyCompactList}\small\item\em Builds the sequence\textquotesingle{}s minimal subpath from the specified evaluator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file contains algorithms returning sub-\/sequences of some input iterator range. 
+
+
+
+Definition in file \mbox{\hyperlink{}{sequence\+\_\+ops.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{sequence__ops_8hpp_a73a5644b911df46f3f8436d5c0146c77}\label{sequence__ops_8hpp_a73a5644b911df46f3f8436d5c0146c77}} 
+\index{sequence\_ops.h@{sequence\_ops.h}!minimalPath@{minimalPath}}
+\index{minimalPath@{minimalPath}!sequence\_ops.h@{sequence\_ops.h}}
+\doxysubsubsection{\texorpdfstring{minimalPath()}{minimalPath()}}
+{\footnotesize\ttfamily template$<$typename ranit\+\_\+type , typename edge\+\_\+eval , typename containers\+\_\+reader $>$ \\
+bool tcg\+::sequence\+\_\+ops\+::minimal\+Path (\begin{DoxyParamCaption}\item[{ranit\+\_\+type}]{begin,  }\item[{ranit\+\_\+type}]{end,  }\item[{edge\+\_\+eval \&}]{evaluator,  }\item[{containers\+\_\+reader \&}]{output }\end{DoxyParamCaption})}
+
+
+
+Builds the sequence\textquotesingle{}s minimal subpath from the specified evaluator. 
+
+This function traverses the input sequence (end excluded) searching for the minimal allowed path with respect to the number of vertices (primarily) and the penalty associated to each path edge; returns true whether such a path could be found, false if {\bfseries{no}} path from begin to --end could be established.
+
+The minimal path function applies a simplified Bellman optimality algorithm on a sequence, where graph edges are specified through an edge evaluator functor, rather than being built in a graph class.
+
+It works this way\+:
+
+\begin{DoxyItemize}
+\item The minimal number of edges required to traverse the sequence can be found by traversing the sequence with the maximum step allowed. \begin{DoxyVerb}        \li Each node have the minimal number of edges required to reach
+\end{DoxyVerb}
+ the sequence end, the minimal penalty to it, and obviously the next node which allow this optimal configuration.\end{DoxyItemize}
+\begin{DoxyItemize}
+\item The optimal \char`\"{}edge number-\/penalty\char`\"{} value from one point sums with the one of the next point in the optimal configuration; thus, it can be found retroactively starting from the end.\end{DoxyItemize}
+\begin{DoxyItemize}
+\item The path retrieved with the maximum step allowed defines the remaining steps to achieve the optimal number of edges, starting from the end.\end{DoxyItemize}
+\begin{DoxyRemark}{Remarks}
+This function is currently working only for random access iterators.
+\end{DoxyRemark}
+\begin{DoxySeeAlso}{See also}
+The Edge\+Evaluator class for the supported evaluator interface. 
+\end{DoxySeeAlso}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00021                                             \{}
+\DoxyCodeLine{00022   \textcolor{keyword}{typedef} \textcolor{keyword}{typename} ranit\_type::difference\_type diff\_type;}
+\DoxyCodeLine{00023   \textcolor{keyword}{typedef} \textcolor{keyword}{typename} edge\_eval::penalty\_type penalty\_type;}
+\DoxyCodeLine{00024 }
+\DoxyCodeLine{00025   ranit\_type a, b;}
+\DoxyCodeLine{00026   diff\_type i, j, m, n = end -\/ begin, last = n -\/ 1;}
+\DoxyCodeLine{00027 }
+\DoxyCodeLine{00028   \textcolor{comment}{// Precache the longest edge possible from each vertex, imposing that furthest}}
+\DoxyCodeLine{00029   \textcolor{comment}{// nodes have increasing indices.}}
+\DoxyCodeLine{00030 }
+\DoxyCodeLine{00031   std::vector<diff\_type> furthest(n);}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033   diff\_type currFurthest = furthest[last] = last;}
+\DoxyCodeLine{00034   \textcolor{keywordflow}{for} (i = last -\/ 1; i >= 0; -\/-\/i) \{}
+\DoxyCodeLine{00035     currFurthest = furthest[i] =}
+\DoxyCodeLine{00036         std::min(eval.furthestFrom(begin + i) -\/ begin, currFurthest);}
+\DoxyCodeLine{00037     \textcolor{keywordflow}{if} (currFurthest == i)}
+\DoxyCodeLine{00038       \textcolor{keywordflow}{return} \textcolor{keyword}{false};  \textcolor{comment}{// There exists no path from start to end -\/ quit}}
+\DoxyCodeLine{00039   \}}
+\DoxyCodeLine{00040 }
+\DoxyCodeLine{00041   \textcolor{comment}{// Iterate from begin to end, using the maximum step allowed. The number of}}
+\DoxyCodeLine{00042   \textcolor{comment}{// iterations is the number of output edges.}}
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00044   \textcolor{keywordflow}{for} (i = 0, m = 0; i < last; i = furthest[i], ++m)}
+\DoxyCodeLine{00045     ;}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047   \textcolor{comment}{// Also, build the iteration sequence. It will define the upper bounds for the}}
+\DoxyCodeLine{00048   \textcolor{comment}{// k-\/th vertex of the output.}}
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00050   std::vector<diff\_type> upperBound(m + 1);}
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{00052   \textcolor{keywordflow}{for} (i = 0, j = 0; i <= m; j = furthest[j], ++i) upperBound[i] = j;}
+\DoxyCodeLine{00053 }
+\DoxyCodeLine{00054   \textcolor{comment}{// Now, the body of the algorithm}}
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056   std::vector<penalty\_type> minPenaltyToEnd(n);}
+\DoxyCodeLine{00057   std::vector<diff\_type> minPenaltyNext(last);}
+\DoxyCodeLine{00058   diff\_type aIdx, bIdx;}
+\DoxyCodeLine{00059   penalty\_type newPenalty;}
+\DoxyCodeLine{00060 }
+\DoxyCodeLine{00061   minPenaltyToEnd[last] = 0;}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063   diff\_type nextLowerBound;}
+\DoxyCodeLine{00064   \textcolor{keywordflow}{for} (j = m -\/ 1, nextLowerBound = last; j >= 0; -\/-\/j) \{}
+\DoxyCodeLine{00065     \textcolor{comment}{// Build the minimal penalty to end (also storing the next iterator}}
+\DoxyCodeLine{00066     \textcolor{comment}{// leading to it) from each vertex of the polygon, assuming the minimal}}
+\DoxyCodeLine{00067     \textcolor{comment}{// number of edges from the vertex to end.}}
+\DoxyCodeLine{00068 }
+\DoxyCodeLine{00069     \textcolor{comment}{// The j-\/th polygon vertex must lie in the [lowerBound, upperBound[j]]}}
+\DoxyCodeLine{00070     \textcolor{comment}{// interval, whereas the (j+1)-\/th will be in [nextLowerBound,}}
+\DoxyCodeLine{00071     \textcolor{comment}{// upperBound[j+1]].}}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073     \textcolor{comment}{// Please, observe that we always have upperBound[j] < nextLowerBound due}}
+\DoxyCodeLine{00074     \textcolor{comment}{// to the minimal edge count constraint.}}
+\DoxyCodeLine{00075 }
+\DoxyCodeLine{00076     \textcolor{keywordflow}{for} (aIdx = upperBound[j]; aIdx >= 0 \&\& furthest[aIdx] >= nextLowerBound;}
+\DoxyCodeLine{00077          -\/-\/aIdx) \{}
+\DoxyCodeLine{00078       a = begin + aIdx;}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080       \textcolor{comment}{// Search the vertex next to a which minimizes the penalty to end -\/ and}}
+\DoxyCodeLine{00081       \textcolor{comment}{// store it.}}
+\DoxyCodeLine{00082       minPenaltyToEnd[aIdx] = (std::numeric\_limits<penalty\_type>::max)();}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084       \textcolor{keywordflow}{for} (bIdx = nextLowerBound, b = begin + nextLowerBound;}
+\DoxyCodeLine{00085            furthest[aIdx] >= bIdx; ++b, ++bIdx) \{}
+\DoxyCodeLine{00086         assert(minPenaltyToEnd[bIdx] <}
+\DoxyCodeLine{00087                (std::numeric\_limits<penalty\_type>::max)());}
+\DoxyCodeLine{00088         newPenalty = eval.penalty(a, b) + minPenaltyToEnd[bIdx];}
+\DoxyCodeLine{00089         \textcolor{keywordflow}{if} (newPenalty < minPenaltyToEnd[aIdx]) \{}
+\DoxyCodeLine{00090           minPenaltyToEnd[aIdx] = newPenalty;}
+\DoxyCodeLine{00091           minPenaltyNext[aIdx]  = bIdx;}
+\DoxyCodeLine{00092         \}}
+\DoxyCodeLine{00093       \}}
+\DoxyCodeLine{00094     \}}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096     \textcolor{comment}{// Update}}
+\DoxyCodeLine{00097     nextLowerBound = aIdx;}
+\DoxyCodeLine{00098     ++nextLowerBound;}
+\DoxyCodeLine{00099   \}}
+\DoxyCodeLine{00100 }
+\DoxyCodeLine{00101   \textcolor{comment}{// Finally, build the output sequence}}
+\DoxyCodeLine{00102   output.openContainer(begin);}
+\DoxyCodeLine{00103   \textcolor{keywordflow}{for} (i = minPenaltyNext[0], j = 1; j < m; i = minPenaltyNext[i], ++j)}
+\DoxyCodeLine{00104     output.addElement(begin + i);}
+\DoxyCodeLine{00105   output.addElement(begin + last);}
+\DoxyCodeLine{00106   output.closeContainer();}
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00109 \}}
+
+\end{DoxyCode}

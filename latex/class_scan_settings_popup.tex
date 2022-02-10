@@ -1,0 +1,390 @@
+\hypertarget{class_scan_settings_popup}{}\doxysection{Scan\+Settings\+Popup Class Reference}
+\label{class_scan_settings_popup}\index{ScanSettingsPopup@{ScanSettingsPopup}}
+
+
+The \mbox{\hyperlink{class_scan_settings_popup}{Scan\+Settings\+Popup}} class provides a dialog to change scan settings.  
+
+
+Inheritance diagram for Scan\+Settings\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_scan_settings_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_scan_settings_popup_a4d350034f91bb51ccf077c7d9ea6ddc4}{update\+UI}} ()
+\item 
+void \mbox{\hyperlink{class_scan_settings_popup_ab9d90ad3e07ac50a73d1d0b5d026e66f}{on\+Toggle}} (int)
+\item 
+void \mbox{\hyperlink{class_scan_settings_popup_af4d6f95682ed96b663d36a7dc9c0f70b}{on\+Paper\+Changed}} (const QString \&format)
+\item 
+void \mbox{\hyperlink{class_scan_settings_popup_a8e658dc875af7f33e48253b036dbad46}{on\+Value\+Changed}} (bool)
+\item 
+void \mbox{\hyperlink{class_scan_settings_popup_a34c43141fc98aee416243a3ca1306bd2}{on\+Mode\+Changed}} (const QString \&mode)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_scan_settings_popup_ab3d32215df63bfaa61892d0390a9c05a}{show\+Event}} (QShow\+Event $\ast$event) override
+\item 
+void \mbox{\hyperlink{class_scan_settings_popup_ad009899da97fe0fa6867d5957048abeb}{hide\+Event}} (QHide\+Event $\ast$event) override
+\item 
+void \mbox{\hyperlink{class_scan_settings_popup_ae437930f343b45dd48ee646c28f91f6c}{connect\+All}} ()
+\item 
+void \mbox{\hyperlink{class_scan_settings_popup_af66dbf17baab19c635a8a5cdafa1d173}{disconnect\+All}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_scan_settings_popup}{Scan\+Settings\+Popup}} class provides a dialog to change scan settings. 
+
+\begin{DoxyVerb}         Inherits \b Dialog.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_scan_settings_popup_a283b862ee8a3d893a37d80d9d8feee58}\label{class_scan_settings_popup_a283b862ee8a3d893a37d80d9d8feee58}} 
+\index{ScanSettingsPopup@{ScanSettingsPopup}!ScanSettingsPopup@{ScanSettingsPopup}}
+\index{ScanSettingsPopup@{ScanSettingsPopup}!ScanSettingsPopup@{ScanSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{ScanSettingsPopup()}{ScanSettingsPopup()}}
+{\footnotesize\ttfamily Scan\+Settings\+Popup\+::\+Scan\+Settings\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00245     : \mbox{\hyperlink{class_d_v_gui_1_1_dialog}{Dialog}}(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{false}, \textcolor{keyword}{true}, \textcolor{stringliteral}{"{}ScanSettings"{}}) \{}
+\DoxyCodeLine{00246   setWindowTitle(tr(\textcolor{stringliteral}{"{}Scan Settings"{}}));}
+\DoxyCodeLine{00247   m\_scannerNameLbl = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}[no scanner]"{}}));}
+\DoxyCodeLine{00248 }
+\DoxyCodeLine{00249   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(m\_scannerNameLbl);}
+\DoxyCodeLine{00250 }
+\DoxyCodeLine{00251   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ae7de609b3b23233656bc68852a2d10cb}{beginVLayout}}();}
+\DoxyCodeLine{00252 }
+\DoxyCodeLine{00253   m\_paperFormatOm = \textcolor{keyword}{new} QComboBox();}
+\DoxyCodeLine{00254   m\_paperFormatOm-\/>setFixedSize(150, WidgetHeight);}
+\DoxyCodeLine{00255   std::vector<std::string> formats;}
+\DoxyCodeLine{00256   TPaperFormatManager::instance()-\/>getFormats(formats);}
+\DoxyCodeLine{00257   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00258   \textcolor{keywordflow}{for} (i = 0; i < (int)formats.size(); i++)}
+\DoxyCodeLine{00259     m\_paperFormatOm-\/>addItem(QString(formats[i].c\_str()));}
+\DoxyCodeLine{00260   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a578c4c2c44fee6d954896d93eb693aae}{addWidgets}}(m\_formatLbl = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Paper Format:"{}})), m\_paperFormatOm);}
+\DoxyCodeLine{00261 }
+\DoxyCodeLine{00262   m\_reverseOrderCB = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_check_box}{CheckBox}}(tr(\textcolor{stringliteral}{"{}Reverse Order"{}}));}
+\DoxyCodeLine{00263   m\_reverseOrderCB-\/>setFixedSize(150, WidgetHeight);}
+\DoxyCodeLine{00264   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(m\_reverseOrderCB);}
+\DoxyCodeLine{00265 }
+\DoxyCodeLine{00266   m\_paperFeederCB = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_check_box}{CheckBox}}(tr(\textcolor{stringliteral}{"{}Paper Feeder"{}}));}
+\DoxyCodeLine{00267   m\_paperFeederCB-\/>setFixedSize(150, WidgetHeight);}
+\DoxyCodeLine{00268   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(m\_paperFeederCB);}
+\DoxyCodeLine{00269 }
+\DoxyCodeLine{00270   m\_dpi = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_double_field}{DVGui::DoubleField}}();}
+\DoxyCodeLine{00271   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a578c4c2c44fee6d954896d93eb693aae}{addWidgets}}(m\_dpiLbl = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Dpi: "{}})), m\_dpi);}
+\DoxyCodeLine{00272   m\_dpi-\/>hide();}
+\DoxyCodeLine{00273   m\_dpiLbl-\/>hide();}
+\DoxyCodeLine{00274 }
+\DoxyCodeLine{00275   m\_modeOm = \textcolor{keyword}{new} QComboBox();}
+\DoxyCodeLine{00276   m\_modeOm-\/>setMaximumHeight(WidgetHeight);}
+\DoxyCodeLine{00277   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a578c4c2c44fee6d954896d93eb693aae}{addWidgets}}(m\_modeLbl = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Mode:"{}})), m\_modeOm);}
+\DoxyCodeLine{00278 }
+\DoxyCodeLine{00279   m\_threshold = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{DVGui::IntField}}();}
+\DoxyCodeLine{00280   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a578c4c2c44fee6d954896d93eb693aae}{addWidgets}}(m\_thresholdLbl = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Threshold: "{}})), m\_threshold);}
+\DoxyCodeLine{00281   m\_threshold-\/>hide(), m\_thresholdLbl-\/>hide();}
+\DoxyCodeLine{00282 }
+\DoxyCodeLine{00283   m\_brightness = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{DVGui::IntField}}();}
+\DoxyCodeLine{00284   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a578c4c2c44fee6d954896d93eb693aae}{addWidgets}}(m\_brightnessLbl = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Brightness: "{}})), m\_brightness);}
+\DoxyCodeLine{00285   m\_brightness-\/>hide(), m\_brightnessLbl-\/>hide();}
+\DoxyCodeLine{00286 }
+\DoxyCodeLine{00287   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ab88d88334402845e544da6ca1f207c79}{endVLayout}}();}
+\DoxyCodeLine{00288 }
+\DoxyCodeLine{00289   connectAll();}
+\DoxyCodeLine{00290 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_scan_settings_popup_ae437930f343b45dd48ee646c28f91f6c}\label{class_scan_settings_popup_ae437930f343b45dd48ee646c28f91f6c}} 
+\index{ScanSettingsPopup@{ScanSettingsPopup}!connectAll@{connectAll}}
+\index{connectAll@{connectAll}!ScanSettingsPopup@{ScanSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{connectAll()}{connectAll()}}
+{\footnotesize\ttfamily void Scan\+Settings\+Popup\+::connect\+All (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00308                                    \{}
+\DoxyCodeLine{00309   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00310   ret      = ret \&\&}
+\DoxyCodeLine{00311         connect(m\_paperFormatOm, SIGNAL(currentIndexChanged(\textcolor{keyword}{const} QString \&)),}
+\DoxyCodeLine{00312                 SLOT(onPaperChanged(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00313   ret = ret \&\& connect(m\_reverseOrderCB, SIGNAL(stateChanged(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00314                        SLOT(onToggle(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00315   ret = ret \&\& connect(m\_paperFeederCB, SIGNAL(stateChanged(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00316                        SLOT(onToggle(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00317   ret = ret \&\&}
+\DoxyCodeLine{00318         connect(m\_dpi, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), SLOT(onValueChanged(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00319   ret = ret \&\& connect(m\_brightness, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})),}
+\DoxyCodeLine{00320                        SLOT(onValueChanged(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00321   ret = ret \&\& connect(m\_threshold, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})),}
+\DoxyCodeLine{00322                        SLOT(onValueChanged(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00323   ret = ret \&\& connect(m\_modeOm, SIGNAL(currentIndexChanged(\textcolor{keyword}{const} QString \&)),}
+\DoxyCodeLine{00324                        SLOT(onModeChanged(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00325   ret = ret \&\& connect(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentScene(),}
+\DoxyCodeLine{00326                        SIGNAL(sceneSwitched()), SLOT(updateUI()));}
+\DoxyCodeLine{00327   assert(ret);}
+\DoxyCodeLine{00328 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scan_settings_popup_af66dbf17baab19c635a8a5cdafa1d173}\label{class_scan_settings_popup_af66dbf17baab19c635a8a5cdafa1d173}} 
+\index{ScanSettingsPopup@{ScanSettingsPopup}!disconnectAll@{disconnectAll}}
+\index{disconnectAll@{disconnectAll}!ScanSettingsPopup@{ScanSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{disconnectAll()}{disconnectAll()}}
+{\footnotesize\ttfamily void Scan\+Settings\+Popup\+::disconnect\+All (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00332                                       \{}
+\DoxyCodeLine{00333   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00334   ret      = ret \&\& m\_paperFormatOm-\/>disconnect();}
+\DoxyCodeLine{00335   ret      = ret \&\& m\_reverseOrderCB-\/>disconnect();}
+\DoxyCodeLine{00336   ret      = ret \&\& m\_paperFeederCB-\/>disconnect();}
+\DoxyCodeLine{00337   ret      = ret \&\& m\_dpi-\/>disconnect();}
+\DoxyCodeLine{00338   ret      = ret \&\& m\_threshold-\/>disconnect();}
+\DoxyCodeLine{00339   ret      = ret \&\& m\_brightness-\/>disconnect();}
+\DoxyCodeLine{00340   ret      = ret \&\& m\_modeOm-\/>disconnect();}
+\DoxyCodeLine{00341   ret      = ret \&\& disconnect(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentScene(),}
+\DoxyCodeLine{00342                           SIGNAL(sceneSwitched()), \textcolor{keyword}{this}, SLOT(updateUI()));}
+\DoxyCodeLine{00343   assert(ret);}
+\DoxyCodeLine{00344 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scan_settings_popup_ad009899da97fe0fa6867d5957048abeb}\label{class_scan_settings_popup_ad009899da97fe0fa6867d5957048abeb}} 
+\index{ScanSettingsPopup@{ScanSettingsPopup}!hideEvent@{hideEvent}}
+\index{hideEvent@{hideEvent}!ScanSettingsPopup@{ScanSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{hideEvent()}{hideEvent()}}
+{\footnotesize\ttfamily void Scan\+Settings\+Popup\+::hide\+Event (\begin{DoxyParamCaption}\item[{QHide\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00301                                                    \{}
+\DoxyCodeLine{00302   disconnectAll();}
+\DoxyCodeLine{00303   Dialog::hideEvent(event);}
+\DoxyCodeLine{00304 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scan_settings_popup_a34c43141fc98aee416243a3ca1306bd2}\label{class_scan_settings_popup_a34c43141fc98aee416243a3ca1306bd2}} 
+\index{ScanSettingsPopup@{ScanSettingsPopup}!onModeChanged@{onModeChanged}}
+\index{onModeChanged@{onModeChanged}!ScanSettingsPopup@{ScanSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{onModeChanged}{onModeChanged}}
+{\footnotesize\ttfamily void Scan\+Settings\+Popup\+::on\+Mode\+Changed (\begin{DoxyParamCaption}\item[{const QString \&}]{mode }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00389                                                          \{}
+\DoxyCodeLine{00390   \textcolor{keywordflow}{if} (!ScannerHasBeenDefined) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00391 }
+\DoxyCodeLine{00392   \mbox{\hyperlink{class_t_scanner_parameters}{TScannerParameters}} *sp = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00393                                -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00394                                -\/>getScene()}
+\DoxyCodeLine{00395                                -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00396                                -\/>\mbox{\hyperlink{class_t_scene_properties_a2e4fb1abfbf34970a670e16e15ac5ed6}{getScanParameters}}();}
+\DoxyCodeLine{00397   m\_threshold-\/>setVisible(\textcolor{keyword}{false});}
+\DoxyCodeLine{00398   m\_thresholdLbl-\/>setVisible(\textcolor{keyword}{false});}
+\DoxyCodeLine{00399 }
+\DoxyCodeLine{00400   \textcolor{keywordflow}{if} (mode == BlackAndWhite) \{}
+\DoxyCodeLine{00401     sp-\/>setScanType(TScannerParameters::BW);}
+\DoxyCodeLine{00402     m\_threshold-\/>setVisible(\textcolor{keyword}{true});}
+\DoxyCodeLine{00403     m\_thresholdLbl-\/>setVisible(\textcolor{keyword}{true});}
+\DoxyCodeLine{00404   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (mode == Graytones)}
+\DoxyCodeLine{00405     sp-\/>setScanType(TScannerParameters::GR8);}
+\DoxyCodeLine{00406   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (mode == Rgbcolors)}
+\DoxyCodeLine{00407     sp-\/>setScanType(TScannerParameters::RGB24);}
+\DoxyCodeLine{00408   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00409     \textcolor{comment}{// assert(0);}}
+\DoxyCodeLine{00410     sp-\/>setScanType(TScannerParameters::None);}
+\DoxyCodeLine{00411   \}}
+\DoxyCodeLine{00412 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scan_settings_popup_af4d6f95682ed96b663d36a7dc9c0f70b}\label{class_scan_settings_popup_af4d6f95682ed96b663d36a7dc9c0f70b}} 
+\index{ScanSettingsPopup@{ScanSettingsPopup}!onPaperChanged@{onPaperChanged}}
+\index{onPaperChanged@{onPaperChanged}!ScanSettingsPopup@{ScanSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{onPaperChanged}{onPaperChanged}}
+{\footnotesize\ttfamily void Scan\+Settings\+Popup\+::on\+Paper\+Changed (\begin{DoxyParamCaption}\item[{const QString \&}]{format }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00374                                                             \{}
+\DoxyCodeLine{00375   \textcolor{keywordflow}{if} (!ScannerHasBeenDefined) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00376 }
+\DoxyCodeLine{00377   \mbox{\hyperlink{class_t_scanner_parameters}{TScannerParameters}} *sp = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00378                                -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00379                                -\/>getScene()}
+\DoxyCodeLine{00380                                -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00381                                -\/>\mbox{\hyperlink{class_t_scene_properties_a2e4fb1abfbf34970a670e16e15ac5ed6}{getScanParameters}}();}
+\DoxyCodeLine{00382   sp-\/>setPaperFormat(format.toStdString());}
+\DoxyCodeLine{00383   sp-\/>setCropBox(sp-\/>getScanArea());}
+\DoxyCodeLine{00384   checkPaperFormat(sp);}
+\DoxyCodeLine{00385 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scan_settings_popup_ab9d90ad3e07ac50a73d1d0b5d026e66f}\label{class_scan_settings_popup_ab9d90ad3e07ac50a73d1d0b5d026e66f}} 
+\index{ScanSettingsPopup@{ScanSettingsPopup}!onToggle@{onToggle}}
+\index{onToggle@{onToggle}!ScanSettingsPopup@{ScanSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{onToggle}{onToggle}}
+{\footnotesize\ttfamily void Scan\+Settings\+Popup\+::on\+Toggle (\begin{DoxyParamCaption}\item[{int}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00361                                     \{}
+\DoxyCodeLine{00362   \mbox{\hyperlink{class_t_scanner_parameters}{TScannerParameters}} *sp = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00363                                -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00364                                -\/>getScene()}
+\DoxyCodeLine{00365                                -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00366                                -\/>\mbox{\hyperlink{class_t_scene_properties_a2e4fb1abfbf34970a670e16e15ac5ed6}{getScanParameters}}();}
+\DoxyCodeLine{00367 }
+\DoxyCodeLine{00368   sp-\/>setReverseOrder(m\_reverseOrderCB-\/>isChecked());}
+\DoxyCodeLine{00369   sp-\/>enablePaperFeeder(m\_paperFeederCB-\/>isChecked());}
+\DoxyCodeLine{00370 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scan_settings_popup_a8e658dc875af7f33e48253b036dbad46}\label{class_scan_settings_popup_a8e658dc875af7f33e48253b036dbad46}} 
+\index{ScanSettingsPopup@{ScanSettingsPopup}!onValueChanged@{onValueChanged}}
+\index{onValueChanged@{onValueChanged}!ScanSettingsPopup@{ScanSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{onValueChanged}{onValueChanged}}
+{\footnotesize\ttfamily void Scan\+Settings\+Popup\+::on\+Value\+Changed (\begin{DoxyParamCaption}\item[{bool}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00348                                            \{}
+\DoxyCodeLine{00349   \mbox{\hyperlink{class_t_scanner_parameters}{TScannerParameters}} *params = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00350                                    -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00351                                    -\/>getScene()}
+\DoxyCodeLine{00352                                    -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00353                                    -\/>\mbox{\hyperlink{class_t_scene_properties_a2e4fb1abfbf34970a670e16e15ac5ed6}{getScanParameters}}();}
+\DoxyCodeLine{00354   params-\/>m\_dpi.m\_value        = m\_dpi-\/>getValue();}
+\DoxyCodeLine{00355   params-\/>m\_threshold.m\_value  = m\_threshold-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_a5657b3a478f9e4993c7d48a5338dbb75}{getValue}}();}
+\DoxyCodeLine{00356   params-\/>m\_brightness.m\_value = m\_brightness-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_a5657b3a478f9e4993c7d48a5338dbb75}{getValue}}();}
+\DoxyCodeLine{00357 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scan_settings_popup_ab3d32215df63bfaa61892d0390a9c05a}\label{class_scan_settings_popup_ab3d32215df63bfaa61892d0390a9c05a}} 
+\index{ScanSettingsPopup@{ScanSettingsPopup}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!ScanSettingsPopup@{ScanSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Scan\+Settings\+Popup\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00294                                                    \{}
+\DoxyCodeLine{00295   connectAll();}
+\DoxyCodeLine{00296   updateUI();}
+\DoxyCodeLine{00297 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scan_settings_popup_a4d350034f91bb51ccf077c7d9ea6ddc4}\label{class_scan_settings_popup_a4d350034f91bb51ccf077c7d9ea6ddc4}} 
+\index{ScanSettingsPopup@{ScanSettingsPopup}!updateUI@{updateUI}}
+\index{updateUI@{updateUI}!ScanSettingsPopup@{ScanSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{updateUI}{updateUI}}
+{\footnotesize\ttfamily void Scan\+Settings\+Popup\+::update\+UI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00416                                  \{}
+\DoxyCodeLine{00417   disconnectAll();}
+\DoxyCodeLine{00418   checkScannerDefinition();}
+\DoxyCodeLine{00419   \mbox{\hyperlink{class_t_scanner_parameters}{TScannerParameters}} *params = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00420                                    -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00421                                    -\/>getScene()}
+\DoxyCodeLine{00422                                    -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00423                                    -\/>\mbox{\hyperlink{class_t_scene_properties_a2e4fb1abfbf34970a670e16e15ac5ed6}{getScanParameters}}();}
+\DoxyCodeLine{00424   QApplication::setOverrideCursor(Qt::WaitCursor);}
+\DoxyCodeLine{00425   params-\/>adaptToCurrentScanner();}
+\DoxyCodeLine{00426   QApplication::restoreOverrideCursor();}
+\DoxyCodeLine{00427 }
+\DoxyCodeLine{00428   \mbox{\hyperlink{class_t_scanner}{TScanner}} *scanner = TScanner::instance();}
+\DoxyCodeLine{00429   m\_scannerNameLbl-\/>setText(scanner \&\& scanner-\/>getName() != \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00430                                 ? scanner-\/>getName()}
+\DoxyCodeLine{00431                                 : \textcolor{stringliteral}{"{}[no scanner]"{}});}
+\DoxyCodeLine{00432 }
+\DoxyCodeLine{00433   m\_reverseOrderCB-\/>setChecked(params-\/>isReverseOrder());}
+\DoxyCodeLine{00434   m\_paperFeederCB-\/>setChecked(params-\/>m\_paperFeeder.m\_value == 1.0);}
+\DoxyCodeLine{00435 }
+\DoxyCodeLine{00436   \textcolor{keywordflow}{if} (params-\/>m\_dpi.m\_supported) \{}
+\DoxyCodeLine{00437     \textcolor{keywordflow}{if} (params-\/>m\_dpi.m\_max > params-\/>m\_dpi.m\_min) \{}
+\DoxyCodeLine{00438       m\_dpi-\/>setRange(params-\/>m\_dpi.m\_min, params-\/>m\_dpi.m\_max);}
+\DoxyCodeLine{00439       m\_dpi-\/>setValue(params-\/>m\_dpi.m\_value);}
+\DoxyCodeLine{00440     \}}
+\DoxyCodeLine{00441     m\_dpi-\/>show(), m\_dpiLbl-\/>show();}
+\DoxyCodeLine{00442   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00443     m\_dpi-\/>hide(), m\_dpiLbl-\/>hide();}
+\DoxyCodeLine{00444 }
+\DoxyCodeLine{00445   \textcolor{keywordflow}{if} (TScanner::m\_isTwain) \{}
+\DoxyCodeLine{00446     m\_paperFeederCB-\/>hide();}
+\DoxyCodeLine{00447     m\_modeOm-\/>hide(), m\_modeLbl-\/>hide();}
+\DoxyCodeLine{00448     m\_paperFormatOm-\/>hide(), m\_formatLbl-\/>hide();}
+\DoxyCodeLine{00449     m\_threshold-\/>hide(), m\_thresholdLbl-\/>hide();}
+\DoxyCodeLine{00450     m\_brightness-\/>hide(), m\_brightnessLbl-\/>hide();}
+\DoxyCodeLine{00451     connectAll();}
+\DoxyCodeLine{00452     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00453   \}}
+\DoxyCodeLine{00454   m\_paperFeederCB-\/>show();}
+\DoxyCodeLine{00455   m\_modeOm-\/>show(), m\_modeLbl-\/>show();}
+\DoxyCodeLine{00456   m\_paperFormatOm-\/>show(), m\_formatLbl-\/>show();}
+\DoxyCodeLine{00457 }
+\DoxyCodeLine{00458   disconnect(m\_modeOm);}
+\DoxyCodeLine{00459   fillOutputType(m\_modeOm, params);}
+\DoxyCodeLine{00460   connect(m\_modeOm, SIGNAL(currentIndexChanged(\textcolor{keyword}{const} QString \&)),}
+\DoxyCodeLine{00461           SLOT(onModeChanged(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00462 }
+\DoxyCodeLine{00463   m\_modeOm-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00464   \textcolor{keywordflow}{switch} (params-\/>getScanType()) \{}
+\DoxyCodeLine{00465   \textcolor{keywordflow}{case} TScannerParameters::BW:}
+\DoxyCodeLine{00466     m\_modeOm-\/>setCurrentIndex(m\_modeOm-\/>findText(BlackAndWhite));}
+\DoxyCodeLine{00467     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00468   \textcolor{keywordflow}{case} TScannerParameters::GR8:}
+\DoxyCodeLine{00469     m\_modeOm-\/>setCurrentIndex(m\_modeOm-\/>findText(Graytones));}
+\DoxyCodeLine{00470     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00471   \textcolor{keywordflow}{case} TScannerParameters::RGB24:}
+\DoxyCodeLine{00472     m\_modeOm-\/>setCurrentIndex(m\_modeOm-\/>findText(Rgbcolors));}
+\DoxyCodeLine{00473     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00474   \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00475     m\_modeOm-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00476     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00477   \}}
+\DoxyCodeLine{00478 }
+\DoxyCodeLine{00479   m\_paperFormatOm-\/>setCurrentIndex(m\_paperFormatOm-\/>findText(}
+\DoxyCodeLine{00480       QString::fromStdString(params-\/>getPaperFormat())));}
+\DoxyCodeLine{00481 }
+\DoxyCodeLine{00482   \textcolor{keywordflow}{if} (params-\/>m\_threshold.m\_supported) \{}
+\DoxyCodeLine{00483     m\_threshold-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_a055d473a8dde4481be33a83c9fa04c96}{setRange}}(params-\/>m\_threshold.m\_min, params-\/>m\_threshold.m\_max);}
+\DoxyCodeLine{00484     m\_threshold-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_aed421e2c52946f2c7643534b4f6f13f7}{setValue}}(params-\/>m\_threshold.m\_value);}
+\DoxyCodeLine{00485     \textcolor{keywordflow}{if} (params-\/>getScanType() == TScannerParameters::BW) \{}
+\DoxyCodeLine{00486       m\_threshold-\/>show();}
+\DoxyCodeLine{00487       m\_thresholdLbl-\/>show();}
+\DoxyCodeLine{00488     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00489       m\_threshold-\/>hide();}
+\DoxyCodeLine{00490       m\_thresholdLbl-\/>hide();}
+\DoxyCodeLine{00491     \}}
+\DoxyCodeLine{00492   \}}
+\DoxyCodeLine{00493   \textcolor{keywordflow}{if} (params-\/>m\_brightness.m\_supported) \{}
+\DoxyCodeLine{00494     \textcolor{keywordflow}{if} (params-\/>m\_brightness.m\_max > params-\/>m\_brightness.m\_min) \{}
+\DoxyCodeLine{00495       m\_brightness-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_a055d473a8dde4481be33a83c9fa04c96}{setRange}}(params-\/>m\_brightness.m\_min,}
+\DoxyCodeLine{00496                              params-\/>m\_brightness.m\_max);}
+\DoxyCodeLine{00497       m\_brightness-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_aed421e2c52946f2c7643534b4f6f13f7}{setValue}}(params-\/>m\_brightness.m\_value);}
+\DoxyCodeLine{00498     \}}
+\DoxyCodeLine{00499     m\_brightness-\/>show(), m\_brightnessLbl-\/>show();}
+\DoxyCodeLine{00500   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00501     m\_brightness-\/>hide(), m\_brightnessLbl-\/>hide();}
+\DoxyCodeLine{00502 }
+\DoxyCodeLine{00503   connectAll();}
+\DoxyCodeLine{00504 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/scanpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/scanpopup.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,574 @@
+\hypertarget{class_adjust_levels_popup}{}\doxysection{Adjust\+Levels\+Popup Class Reference}
+\label{class_adjust_levels_popup}\index{AdjustLevelsPopup@{AdjustLevelsPopup}}
+Inheritance diagram for Adjust\+Levels\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_adjust_levels_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_adjust_levels_popup_1_1_swatch}{Swatch}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_adjust_levels_popup_af3b67961637da93522ce7fa9a0fc60b7}{clamp\+Range}} ()
+\item 
+void \mbox{\hyperlink{class_adjust_levels_popup_a932c5e2c87cd4cd2281bfce4b062f91c}{auto\+Adjust}} ()
+\item 
+void \mbox{\hyperlink{class_adjust_levels_popup_ac164bf9fba7834d05a868d07707b321e}{reset}} ()
+\item 
+void \mbox{\hyperlink{class_adjust_levels_popup_abf85305a0dbc4b26296b58692cd11be6}{on\+Selection\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_adjust_levels_popup_a5050f7cd484d53b4b45be25a1bf358d1}{on\+Params\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_adjust_levels_popup_a0b436f361b3590762f3c72adf526d7a5}{apply}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_adjust_levels_popup_ac7d05a316d92602d38938ede7596871f}{show\+Event}} (QShow\+Event $\ast$se) override
+\item 
+void \mbox{\hyperlink{class_adjust_levels_popup_ad00298665534ccb34b5a0eecb951192f}{hide\+Event}} (QHide\+Event $\ast$se) override
+\item 
+void \mbox{\hyperlink{class_adjust_levels_popup_a9b228c00d270a3fb903bce1e2ca65f0d}{acquire\+Raster}} ()
+\item 
+void \mbox{\hyperlink{class_adjust_levels_popup_af12dbd56b8eb21d9ca954ab1bf99da9d}{update\+Processed\+Image}} ()
+\item 
+void \mbox{\hyperlink{class_adjust_levels_popup_ac90ebd32f78bb70d967b8f69595a55da}{get\+Parameters}} (int $\ast$in0, int $\ast$in1, int $\ast$out0, int $\ast$out1)
+\item 
+void \mbox{\hyperlink{class_adjust_levels_popup_a47e68c6952955c5273baa6a9d973b44b}{set\+Threshold}} (double t)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_adjust_levels_popup_a2a7c645e8d2bd3872f677d187a3a8eb4}\label{class_adjust_levels_popup_a2a7c645e8d2bd3872f677d187a3a8eb4}} 
+\index{AdjustLevelsPopup@{AdjustLevelsPopup}!AdjustLevelsPopup@{AdjustLevelsPopup}}
+\index{AdjustLevelsPopup@{AdjustLevelsPopup}!AdjustLevelsPopup@{AdjustLevelsPopup}}
+\doxysubsubsection{\texorpdfstring{AdjustLevelsPopup()}{AdjustLevelsPopup()}}
+{\footnotesize\ttfamily Adjust\+Levels\+Popup\+::\+Adjust\+Levels\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00223     : \mbox{\hyperlink{class_d_v_gui_1_1_dialog}{DVGui::Dialog}}(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false},}
+\DoxyCodeLine{00224                     \textcolor{stringliteral}{"{}AdjustLevels"{}})}
+\DoxyCodeLine{00225     , m\_thresholdD(0.005)  \textcolor{comment}{// 0.5\% of the image size}}
+\DoxyCodeLine{00226 \{}
+\DoxyCodeLine{00227   \textcolor{keywordtype}{int} i, j;}
+\DoxyCodeLine{00228 }
+\DoxyCodeLine{00229   setWindowTitle(tr(\textcolor{stringliteral}{"{}Adjust Levels"{}}));}
+\DoxyCodeLine{00230   setLabelWidth(0);}
+\DoxyCodeLine{00231   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00232 }
+\DoxyCodeLine{00233   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a7aa8ccf399f483fe1f36c30a1318987a}{setTopMargin}}(0);}
+\DoxyCodeLine{00234   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_af1334e3123db7e7c9a9b90ee7c73e226}{setTopSpacing}}(0);}
+\DoxyCodeLine{00235 }
+\DoxyCodeLine{00236   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ae7de609b3b23233656bc68852a2d10cb}{beginVLayout}}();}
+\DoxyCodeLine{00237 }
+\DoxyCodeLine{00238   QSplitter *splitter = \textcolor{keyword}{new} QSplitter(Qt::Vertical);}
+\DoxyCodeLine{00239   splitter-\/>setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,}
+\DoxyCodeLine{00240                                       QSizePolicy::MinimumExpanding));}
+\DoxyCodeLine{00241   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(splitter);}
+\DoxyCodeLine{00242 }
+\DoxyCodeLine{00243   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ab88d88334402845e544da6ca1f207c79}{endVLayout}}();}
+\DoxyCodeLine{00244 }
+\DoxyCodeLine{00245   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Top Layout -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00246 }
+\DoxyCodeLine{00247   QScrollArea *scrollArea = \textcolor{keyword}{new} QScrollArea(splitter);}
+\DoxyCodeLine{00248   scrollArea-\/>setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);}
+\DoxyCodeLine{00249   scrollArea-\/>setWidgetResizable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00250   scrollArea-\/>setMinimumWidth(450);}
+\DoxyCodeLine{00251   splitter-\/>addWidget(scrollArea);}
+\DoxyCodeLine{00252   splitter-\/>setStretchFactor(0, 1);}
+\DoxyCodeLine{00253 }
+\DoxyCodeLine{00254   QFrame *topWidget = \textcolor{keyword}{new} QFrame(scrollArea);}
+\DoxyCodeLine{00255   scrollArea-\/>setWidget(topWidget);}
+\DoxyCodeLine{00256 }
+\DoxyCodeLine{00257   QVBoxLayout *topVLayout =}
+\DoxyCodeLine{00258       \textcolor{keyword}{new} QVBoxLayout(topWidget);  \textcolor{comment}{// Needed to justify at top}}
+\DoxyCodeLine{00259   topWidget-\/>setLayout(topVLayout);}
+\DoxyCodeLine{00260 }
+\DoxyCodeLine{00261   QHBoxLayout *topLayout = \textcolor{keyword}{new} QHBoxLayout(topWidget);}
+\DoxyCodeLine{00262   topVLayout-\/>addLayout(topLayout);}
+\DoxyCodeLine{00263   topVLayout-\/>addStretch(1);}
+\DoxyCodeLine{00264 }
+\DoxyCodeLine{00265   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Histogram -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00266 }
+\DoxyCodeLine{00267   m\_histogram = \textcolor{keyword}{new} \mbox{\hyperlink{class_histogram}{Histogram}}(topWidget);}
+\DoxyCodeLine{00268   topLayout-\/>addWidget(m\_histogram);}
+\DoxyCodeLine{00269 }
+\DoxyCodeLine{00270   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Mark Bars -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00271 }
+\DoxyCodeLine{00272   QVBoxLayout *histogramViewLayout;}
+\DoxyCodeLine{00273 }
+\DoxyCodeLine{00274   \textcolor{keywordflow}{for} (i = 0; i < 5; ++i) \{}
+\DoxyCodeLine{00275     \mbox{\hyperlink{class_histogram_view}{HistogramView}} *view = m\_histogram-\/>getHistograms()-\/>getHistogramView(i);}
+\DoxyCodeLine{00276     histogramViewLayout = \textcolor{keyword}{static\_cast<}QVBoxLayout *\textcolor{keyword}{>}(view-\/>layout());}
+\DoxyCodeLine{00277 }
+\DoxyCodeLine{00278     \textcolor{comment}{// Don't draw channel numbers}}
+\DoxyCodeLine{00279     view-\/>channelBar()-\/>setDrawNumbers(\textcolor{keyword}{false});}
+\DoxyCodeLine{00280 }
+\DoxyCodeLine{00281     \textcolor{keywordflow}{for} (j = 0; j < 2; ++j) \{}
+\DoxyCodeLine{00282       \mbox{\hyperlink{class_editable_marks_bar}{EditableMarksBar}} *editableMarksBar = m\_marksBar[j + (i << 1)] =}
+\DoxyCodeLine{00283           \textcolor{keyword}{new} \mbox{\hyperlink{class_editable_marks_bar}{EditableMarksBar}};}
+\DoxyCodeLine{00284       \mbox{\hyperlink{class_marks_bar}{MarksBar}} *marksBar = editableMarksBar-\/>marksBar();}
+\DoxyCodeLine{00285 }
+\DoxyCodeLine{00286       \textcolor{comment}{// Set margins up to cover the histogram}}
+\DoxyCodeLine{00287       editableMarksBar-\/>layout()-\/>setContentsMargins(6, 0, 5, 0);}
+\DoxyCodeLine{00288       connect(editableMarksBar, SIGNAL(paramsChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00289               SLOT(onParamsChanged()));}
+\DoxyCodeLine{00290 }
+\DoxyCodeLine{00291       histogramViewLayout-\/>insertWidget(1 + (j << 1), editableMarksBar);}
+\DoxyCodeLine{00292     \}}
+\DoxyCodeLine{00293   \}}
+\DoxyCodeLine{00294 }
+\DoxyCodeLine{00295   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ View Widget -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00296 }
+\DoxyCodeLine{00297   \textcolor{comment}{// NOTE: It's IMPORTANT that parent widget is supplied. It's somewhat}}
+\DoxyCodeLine{00298   \textcolor{comment}{// used by QSplitter to decide the initial widget sizes...}}
+\DoxyCodeLine{00299 }
+\DoxyCodeLine{00300   m\_viewer = \textcolor{keyword}{new} Swatch(splitter);}
+\DoxyCodeLine{00301   m\_viewer-\/>setMinimumHeight(150);}
+\DoxyCodeLine{00302   m\_viewer-\/>setFocusPolicy(Qt::WheelFocus);}
+\DoxyCodeLine{00303   splitter-\/>addWidget(m\_viewer);}
+\DoxyCodeLine{00304 }
+\DoxyCodeLine{00305   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Buttons -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00306 }
+\DoxyCodeLine{00307   QVBoxLayout *buttonsLayout = \textcolor{keyword}{new} QVBoxLayout(topWidget);}
+\DoxyCodeLine{00308   topLayout-\/>addLayout(buttonsLayout);}
+\DoxyCodeLine{00309 }
+\DoxyCodeLine{00310   buttonsLayout-\/>addSpacing(50);}
+\DoxyCodeLine{00311 }
+\DoxyCodeLine{00312   QPushButton *clampRange = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Clamp"{}}), topWidget);}
+\DoxyCodeLine{00313   clampRange-\/>setMinimumSize(65, 25);}
+\DoxyCodeLine{00314   buttonsLayout-\/>addWidget(clampRange);}
+\DoxyCodeLine{00315   connect(clampRange, SIGNAL(clicked(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this}, SLOT(clampRange()));}
+\DoxyCodeLine{00316 }
+\DoxyCodeLine{00317   QPushButton *autoAdjust = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Auto"{}}), topWidget);}
+\DoxyCodeLine{00318   autoAdjust-\/>setMinimumSize(65, 25);}
+\DoxyCodeLine{00319   buttonsLayout-\/>addWidget(autoAdjust);}
+\DoxyCodeLine{00320   connect(autoAdjust, SIGNAL(clicked(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this}, SLOT(autoAdjust()));}
+\DoxyCodeLine{00321 }
+\DoxyCodeLine{00322   QPushButton *resetBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Reset"{}}), topWidget);}
+\DoxyCodeLine{00323   resetBtn-\/>setMinimumSize(65, 25);}
+\DoxyCodeLine{00324   buttonsLayout-\/>addWidget(resetBtn);}
+\DoxyCodeLine{00325   connect(resetBtn, SIGNAL(clicked(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this}, SLOT(reset()));}
+\DoxyCodeLine{00326 }
+\DoxyCodeLine{00327   buttonsLayout-\/>addStretch(1);}
+\DoxyCodeLine{00328 }
+\DoxyCodeLine{00329   m\_okBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Apply"{}}));}
+\DoxyCodeLine{00330   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(m\_okBtn);}
+\DoxyCodeLine{00331 }
+\DoxyCodeLine{00332   connect(m\_okBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(apply()));}
+\DoxyCodeLine{00333 }
+\DoxyCodeLine{00334   \textcolor{comment}{// Finally, acquire current selection}}
+\DoxyCodeLine{00335   acquireRaster();}
+\DoxyCodeLine{00336 }
+\DoxyCodeLine{00337   m\_viewer-\/>resize(0, 350);}
+\DoxyCodeLine{00338   resize(600, 700);}
+\DoxyCodeLine{00339 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_adjust_levels_popup_a9b228c00d270a3fb903bce1e2ca65f0d}\label{class_adjust_levels_popup_a9b228c00d270a3fb903bce1e2ca65f0d}} 
+\index{AdjustLevelsPopup@{AdjustLevelsPopup}!acquireRaster@{acquireRaster}}
+\index{acquireRaster@{acquireRaster}!AdjustLevelsPopup@{AdjustLevelsPopup}}
+\doxysubsubsection{\texorpdfstring{acquireRaster()}{acquireRaster()}}
+{\footnotesize\ttfamily void Adjust\+Levels\+Popup\+::acquire\+Raster (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00366                                       \{}
+\DoxyCodeLine{00367   \textcolor{comment}{// Retrieve current selection}}
+\DoxyCodeLine{00368   \mbox{\hyperlink{class_t_app}{TApp}} *app                     = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00369   \mbox{\hyperlink{class_t_selection}{TSelection}} *selection         = app-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}()-\/>getSelection();}
+\DoxyCodeLine{00370   \mbox{\hyperlink{class_t_cell_selection}{TCellSelection}} *cellSelection = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_cell_selection}{TCellSelection}} *\textcolor{keyword}{>}(selection);}
+\DoxyCodeLine{00371   \mbox{\hyperlink{class_t_filmstrip_selection}{TFilmstripSelection}} *filmstripSelection =}
+\DoxyCodeLine{00372       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_filmstrip_selection}{TFilmstripSelection}} *\textcolor{keyword}{>}(selection);}
+\DoxyCodeLine{00373 }
+\DoxyCodeLine{00374   \textcolor{comment}{// Retrieve the input raster}}
+\DoxyCodeLine{00375   m\_inputRas = \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}();}
+\DoxyCodeLine{00376   \textcolor{keywordflow}{if} (cellSelection) \{}
+\DoxyCodeLine{00377     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh  = app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00378     \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>getFrameIndex(),}
+\DoxyCodeLine{00379                                  app-\/>\mbox{\hyperlink{class_t_app_a1e294e7cff300851d12a8c3d196943f6}{getCurrentColumn}}()-\/>getColumnIndex());}
+\DoxyCodeLine{00380     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} rasImage                            = cell.\mbox{\hyperlink{class_t_xsh_cell_a20b623d308bc09b820ec6b116516f564}{getImage}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00381     \textcolor{keywordflow}{if} (rasImage \&\& rasImage-\/>getRaster()) m\_inputRas = rasImage-\/>getRaster();}
+\DoxyCodeLine{00382   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (filmstripSelection) \{}
+\DoxyCodeLine{00383     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *simpleLevel = app-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>getSimpleLevel();}
+\DoxyCodeLine{00384     \textcolor{keywordflow}{if} (simpleLevel) \{}
+\DoxyCodeLine{00385       \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} rasImage = (\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}})simpleLevel-\/>getFrame(}
+\DoxyCodeLine{00386           app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>getFid(), \textcolor{keyword}{true});}
+\DoxyCodeLine{00387       \textcolor{keywordflow}{if} (rasImage \&\& rasImage-\/>getRaster()) m\_inputRas = rasImage-\/>getRaster();}
+\DoxyCodeLine{00388     \}}
+\DoxyCodeLine{00389   \}}
+\DoxyCodeLine{00390 }
+\DoxyCodeLine{00391   \textcolor{keywordflow}{if} (m\_inputRas) \{}
+\DoxyCodeLine{00392     m\_threshold = m\_inputRas-\/>getLx() * m\_inputRas-\/>getLy() * m\_thresholdD;}
+\DoxyCodeLine{00393     m\_okBtn-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00394   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00395     m\_inputRas = \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}();}
+\DoxyCodeLine{00396     m\_okBtn-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00397   \}}
+\DoxyCodeLine{00398 }
+\DoxyCodeLine{00399   \textcolor{comment}{// Build histograms}}
+\DoxyCodeLine{00400   m\_histogram-\/>setRaster(m\_inputRas);}
+\DoxyCodeLine{00401 }
+\DoxyCodeLine{00402   \textcolor{comment}{// Update the corresponding processed image in the viewer}}
+\DoxyCodeLine{00403   updateProcessedImage();}
+\DoxyCodeLine{00404 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_adjust_levels_popup_a0b436f361b3590762f3c72adf526d7a5}\label{class_adjust_levels_popup_a0b436f361b3590762f3c72adf526d7a5}} 
+\index{AdjustLevelsPopup@{AdjustLevelsPopup}!apply@{apply}}
+\index{apply@{apply}!AdjustLevelsPopup@{AdjustLevelsPopup}}
+\doxysubsubsection{\texorpdfstring{apply}{apply}}
+{\footnotesize\ttfamily void Adjust\+Levels\+Popup\+::apply (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00651                               \{}
+\DoxyCodeLine{00652   \textcolor{comment}{// Retrieve parameters}}
+\DoxyCodeLine{00653   \textcolor{keywordtype}{int} in0[5], in1[5], out0[5], out1[5];}
+\DoxyCodeLine{00654   getParameters(in0, in1, out0, out1);}
+\DoxyCodeLine{00655 }
+\DoxyCodeLine{00656   \textcolor{comment}{// Operate depending on the selection kind}}
+\DoxyCodeLine{00657   \mbox{\hyperlink{class_t_cell_selection}{TCellSelection}} *cellSelection =}
+\DoxyCodeLine{00658       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_cell_selection}{TCellSelection}} *\textcolor{keyword}{>}(TSelection::getCurrent());}
+\DoxyCodeLine{00659   \textcolor{keywordflow}{if} (cellSelection) \{}
+\DoxyCodeLine{00660     std::set<TRasterImage *>}
+\DoxyCodeLine{00661         images;  \textcolor{comment}{// Multiple cells may yield the same image...}}
+\DoxyCodeLine{00662 }
+\DoxyCodeLine{00663     \textcolor{keywordtype}{int} r0, c0, r1, c1;}
+\DoxyCodeLine{00664     cellSelection-\/>getSelectedCells(r0, c0, r1, c1);}
+\DoxyCodeLine{00665     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsheet      = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00666     \textcolor{keywordtype}{bool} oneImageChanged = \textcolor{keyword}{false};}
+\DoxyCodeLine{00667 }
+\DoxyCodeLine{00668     TUndoManager::manager()-\/>beginBlock();}
+\DoxyCodeLine{00669     \{}
+\DoxyCodeLine{00670       \textcolor{keywordtype}{int} c, r;}
+\DoxyCodeLine{00671       \textcolor{keywordflow}{for} (c = c0; c <= c1; c++) \{}
+\DoxyCodeLine{00672         \textcolor{keywordflow}{for} (r = r0; r <= r1; r++) \{}
+\DoxyCodeLine{00673           \textcolor{keyword}{const} \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} \&cell = xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r, c);}
+\DoxyCodeLine{00674 }
+\DoxyCodeLine{00675           \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} rasImage = (\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}})cell.\mbox{\hyperlink{class_t_xsh_cell_a20b623d308bc09b820ec6b116516f564}{getImage}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00676           \textcolor{keywordflow}{if} (!rasImage) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00677 }
+\DoxyCodeLine{00678           \textcolor{keywordflow}{if} (images.find(rasImage.getPointer()) != images.end()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00679 }
+\DoxyCodeLine{00680           \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras = rasImage-\/>getRaster();}
+\DoxyCodeLine{00681           \textcolor{keywordflow}{if} (!ras) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00682 }
+\DoxyCodeLine{00683           images.insert(rasImage.getPointer());}
+\DoxyCodeLine{00684           oneImageChanged = \textcolor{keyword}{true};}
+\DoxyCodeLine{00685 }
+\DoxyCodeLine{00686           TUndoManager::manager()-\/>add(}
+\DoxyCodeLine{00687               \textcolor{keyword}{new} \mbox{\hyperlink{class_adjust_levels_undo}{AdjustLevelsUndo}}(in0, in1, out0, out1, r, c, ras-\/>clone()));}
+\DoxyCodeLine{00688           \mbox{\hyperlink{namespace_t_rop_ae2160d9b4cacd0527c741e83181f17be}{TRop::rgbmAdjust}}(ras, ras, in0, in1, out0, out1);}
+\DoxyCodeLine{00689 }
+\DoxyCodeLine{00690           \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *simpleLevel = cell.\mbox{\hyperlink{class_t_xsh_cell_a8898cc47eba24e59477bfba8e2511f1d}{getSimpleLevel}}();}
+\DoxyCodeLine{00691           assert(simpleLevel);}
+\DoxyCodeLine{00692           simpleLevel-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a3c20a8d11037048322d2035b0f286209}{touchFrame}}(cell.\mbox{\hyperlink{class_t_xsh_cell_a5a1965b96c2c698d6f0fb42a80c03406}{getFrameId}}());}
+\DoxyCodeLine{00693           simpleLevel-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a2d43337766628739707849f8808bf300}{setDirtyFlag}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00694 }
+\DoxyCodeLine{00695           IconGenerator::instance()-\/>invalidate(simpleLevel, cell.\mbox{\hyperlink{class_t_xsh_cell_a5a1965b96c2c698d6f0fb42a80c03406}{getFrameId}}());}
+\DoxyCodeLine{00696         \}}
+\DoxyCodeLine{00697       \}}
+\DoxyCodeLine{00698     \}}
+\DoxyCodeLine{00699     TUndoManager::manager()-\/>endBlock();}
+\DoxyCodeLine{00700 }
+\DoxyCodeLine{00701     \textcolor{keywordflow}{if} (oneImageChanged) \{}
+\DoxyCodeLine{00702       close();}
+\DoxyCodeLine{00703       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00704     \}}
+\DoxyCodeLine{00705   \}}
+\DoxyCodeLine{00706 }
+\DoxyCodeLine{00707   \mbox{\hyperlink{class_t_filmstrip_selection}{TFilmstripSelection}} *filmstripSelection =}
+\DoxyCodeLine{00708       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_filmstrip_selection}{TFilmstripSelection}} *\textcolor{keyword}{>}(TSelection::getCurrent());}
+\DoxyCodeLine{00709   \textcolor{keywordflow}{if} (filmstripSelection) \{}
+\DoxyCodeLine{00710     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *simpleLevel =}
+\DoxyCodeLine{00711         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>getSimpleLevel();}
+\DoxyCodeLine{00712     \textcolor{keywordflow}{if} (simpleLevel) \{}
+\DoxyCodeLine{00713       std::set<TFrameId> fids = filmstripSelection-\/>getSelectedFids();}
+\DoxyCodeLine{00714       \textcolor{keywordtype}{bool} oneImageChanged    = \textcolor{keyword}{false};}
+\DoxyCodeLine{00715 }
+\DoxyCodeLine{00716       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \textcolor{keyword}{const} \&fid : fids) \{}
+\DoxyCodeLine{00717         \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} rasImage =}
+\DoxyCodeLine{00718             (\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}})simpleLevel-\/>getFrame(fid, \textcolor{keyword}{true});}
+\DoxyCodeLine{00719         \textcolor{keywordflow}{if} (!rasImage) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00720 }
+\DoxyCodeLine{00721         \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras = rasImage-\/>getRaster();}
+\DoxyCodeLine{00722         \textcolor{keywordflow}{if} (!ras) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00723 }
+\DoxyCodeLine{00724         oneImageChanged = \textcolor{keyword}{true};}
+\DoxyCodeLine{00725         \mbox{\hyperlink{namespace_t_rop_ae2160d9b4cacd0527c741e83181f17be}{TRop::rgbmAdjust}}(ras, ras, in0, in1, out0, out1);}
+\DoxyCodeLine{00726 }
+\DoxyCodeLine{00727         simpleLevel-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a3c20a8d11037048322d2035b0f286209}{touchFrame}}(fid);}
+\DoxyCodeLine{00728         simpleLevel-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a2d43337766628739707849f8808bf300}{setDirtyFlag}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00729 }
+\DoxyCodeLine{00730         IconGenerator::instance()-\/>invalidate(simpleLevel, fid);}
+\DoxyCodeLine{00731       \}}
+\DoxyCodeLine{00732 }
+\DoxyCodeLine{00733       \textcolor{keywordflow}{if} (oneImageChanged) \{}
+\DoxyCodeLine{00734         close();}
+\DoxyCodeLine{00735         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00736       \}}
+\DoxyCodeLine{00737     \}}
+\DoxyCodeLine{00738   \}}
+\DoxyCodeLine{00739 }
+\DoxyCodeLine{00740   DVGui::error(QObject::tr(\textcolor{stringliteral}{"{}The current selection is invalid."{}}));}
+\DoxyCodeLine{00741   \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00742 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_adjust_levels_popup_a932c5e2c87cd4cd2281bfce4b062f91c}\label{class_adjust_levels_popup_a932c5e2c87cd4cd2281bfce4b062f91c}} 
+\index{AdjustLevelsPopup@{AdjustLevelsPopup}!autoAdjust@{autoAdjust}}
+\index{autoAdjust@{autoAdjust}!AdjustLevelsPopup@{AdjustLevelsPopup}}
+\doxysubsubsection{\texorpdfstring{autoAdjust}{autoAdjust}}
+{\footnotesize\ttfamily void Adjust\+Levels\+Popup\+::auto\+Adjust (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00513                                    \{}
+\DoxyCodeLine{00514   \textcolor{keywordflow}{if} (!m\_inputRas) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00515 }
+\DoxyCodeLine{00516   \mbox{\hyperlink{class_histograms}{Histograms}} *histograms = m\_histogram-\/>getHistograms();}
+\DoxyCodeLine{00517   \textcolor{keywordtype}{int} channelIdx         = histograms-\/>currentIndex();}
+\DoxyCodeLine{00518   \textcolor{keywordtype}{int} inputBarIdx        = (channelIdx << 1);}
+\DoxyCodeLine{00519 }
+\DoxyCodeLine{00520   \mbox{\hyperlink{class_editable_marks_bar}{EditableMarksBar}} *editableMarksBar = m\_marksBar[inputBarIdx];}
+\DoxyCodeLine{00521 }
+\DoxyCodeLine{00522   \textcolor{keywordtype}{int} min, max;}
+\DoxyCodeLine{00523 }
+\DoxyCodeLine{00524   \textcolor{comment}{// Clamp histogram}}
+\DoxyCodeLine{00525   \textcolor{keyword}{const} QVector<int> \&values =}
+\DoxyCodeLine{00526       histograms-\/>getHistogramView(channelIdx)-\/>values();}
+\DoxyCodeLine{00527   \textcolor{keywordflow}{if} (channelIdx == 0) \{}
+\DoxyCodeLine{00528     \textcolor{keywordtype}{int} minR, maxR, minG, maxG, minB, maxB;}
+\DoxyCodeLine{00529 }
+\DoxyCodeLine{00530     ::getRange(histograms-\/>getHistogramView(1)-\/>values(), m\_threshold, minR,}
+\DoxyCodeLine{00531                maxR);}
+\DoxyCodeLine{00532     ::getRange(histograms-\/>getHistogramView(2)-\/>values(), m\_threshold, minG,}
+\DoxyCodeLine{00533                maxG);}
+\DoxyCodeLine{00534     ::getRange(histograms-\/>getHistogramView(3)-\/>values(), m\_threshold, minB,}
+\DoxyCodeLine{00535                maxB);}
+\DoxyCodeLine{00536 }
+\DoxyCodeLine{00537     min = std::min(\{minR, minG, minB\});}
+\DoxyCodeLine{00538     max = std::max(\{maxR, maxG, maxB\});}
+\DoxyCodeLine{00539   \} else}
+\DoxyCodeLine{00540     ::getRange(values, m\_threshold, min, max);}
+\DoxyCodeLine{00541 }
+\DoxyCodeLine{00542   QVector<int> \&marks = editableMarksBar-\/>marksBar()-\/>values();}
+\DoxyCodeLine{00543   \textcolor{keywordflow}{if} (min < max)}
+\DoxyCodeLine{00544     marks[0] = min, marks[1] = max + 1;}
+\DoxyCodeLine{00545   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00546     marks[0] = 0, marks[1] = 256;}
+\DoxyCodeLine{00547 }
+\DoxyCodeLine{00548   editableMarksBar-\/>updateFields();}
+\DoxyCodeLine{00549   onParamsChanged();}
+\DoxyCodeLine{00550   update();}
+\DoxyCodeLine{00551 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_adjust_levels_popup_af3b67961637da93522ce7fa9a0fc60b7}\label{class_adjust_levels_popup_af3b67961637da93522ce7fa9a0fc60b7}} 
+\index{AdjustLevelsPopup@{AdjustLevelsPopup}!clampRange@{clampRange}}
+\index{clampRange@{clampRange}!AdjustLevelsPopup@{AdjustLevelsPopup}}
+\doxysubsubsection{\texorpdfstring{clampRange}{clampRange}}
+{\footnotesize\ttfamily void Adjust\+Levels\+Popup\+::clamp\+Range (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00484                                    \{}
+\DoxyCodeLine{00485   \textcolor{keywordflow}{if} (!m\_inputRas) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00486 }
+\DoxyCodeLine{00487   \mbox{\hyperlink{class_histograms}{Histograms}} *histograms = m\_histogram-\/>getHistograms();}
+\DoxyCodeLine{00488   \textcolor{keywordtype}{int} channelIdx         = histograms-\/>currentIndex();}
+\DoxyCodeLine{00489   \textcolor{keywordtype}{int} inputBarIdx        = (channelIdx << 1);}
+\DoxyCodeLine{00490 }
+\DoxyCodeLine{00491   \mbox{\hyperlink{class_editable_marks_bar}{EditableMarksBar}} *editableMarksBar = m\_marksBar[inputBarIdx];}
+\DoxyCodeLine{00492 }
+\DoxyCodeLine{00493   \textcolor{keywordtype}{int} min, max;}
+\DoxyCodeLine{00494 }
+\DoxyCodeLine{00495   \textcolor{comment}{// Clamp histogram}}
+\DoxyCodeLine{00496   \textcolor{keyword}{const} QVector<int> \&values =}
+\DoxyCodeLine{00497       histograms-\/>getHistogramView(channelIdx)-\/>values();}
+\DoxyCodeLine{00498   ::getRange(values, min, max);}
+\DoxyCodeLine{00499 }
+\DoxyCodeLine{00500   QVector<int> \&marks = editableMarksBar-\/>marksBar()-\/>values();}
+\DoxyCodeLine{00501   \textcolor{keywordflow}{if} (min < max)}
+\DoxyCodeLine{00502     marks[0] = min, marks[1] = max + 1;}
+\DoxyCodeLine{00503   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00504     marks[0] = 0, marks[1] = 256;}
+\DoxyCodeLine{00505 }
+\DoxyCodeLine{00506   editableMarksBar-\/>updateFields();}
+\DoxyCodeLine{00507   onParamsChanged();}
+\DoxyCodeLine{00508   update();}
+\DoxyCodeLine{00509 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_adjust_levels_popup_ac90ebd32f78bb70d967b8f69595a55da}\label{class_adjust_levels_popup_ac90ebd32f78bb70d967b8f69595a55da}} 
+\index{AdjustLevelsPopup@{AdjustLevelsPopup}!getParameters@{getParameters}}
+\index{getParameters@{getParameters}!AdjustLevelsPopup@{AdjustLevelsPopup}}
+\doxysubsubsection{\texorpdfstring{getParameters()}{getParameters()}}
+{\footnotesize\ttfamily void Adjust\+Levels\+Popup\+::get\+Parameters (\begin{DoxyParamCaption}\item[{int $\ast$}]{in0,  }\item[{int $\ast$}]{in1,  }\item[{int $\ast$}]{out0,  }\item[{int $\ast$}]{out1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00417                                                  \{}
+\DoxyCodeLine{00418   \textcolor{keywordtype}{int} p[2];}
+\DoxyCodeLine{00419 }
+\DoxyCodeLine{00420   \textcolor{keywordtype}{int} i, j;}
+\DoxyCodeLine{00421   \textcolor{keywordflow}{for} (i = j = 0; i < 10; i += 2, ++j) \{}
+\DoxyCodeLine{00422     m\_marksBar[i]-\/>getValues(p);}
+\DoxyCodeLine{00423     in0[j] = p[0], in1[j] = p[1];}
+\DoxyCodeLine{00424 }
+\DoxyCodeLine{00425     m\_marksBar[i + 1]-\/>getValues(p);}
+\DoxyCodeLine{00426     out0[j] = p[0], out1[j] = p[1];}
+\DoxyCodeLine{00427   \}}
+\DoxyCodeLine{00428 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_adjust_levels_popup_ad00298665534ccb34b5a0eecb951192f}\label{class_adjust_levels_popup_ad00298665534ccb34b5a0eecb951192f}} 
+\index{AdjustLevelsPopup@{AdjustLevelsPopup}!hideEvent@{hideEvent}}
+\index{hideEvent@{hideEvent}!AdjustLevelsPopup@{AdjustLevelsPopup}}
+\doxysubsubsection{\texorpdfstring{hideEvent()}{hideEvent()}}
+{\footnotesize\ttfamily void Adjust\+Levels\+Popup\+::hide\+Event (\begin{DoxyParamCaption}\item[{QHide\+Event $\ast$}]{se }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00353                                                 \{}
+\DoxyCodeLine{00354   Dialog::hideEvent(he);}
+\DoxyCodeLine{00355 }
+\DoxyCodeLine{00356   \mbox{\hyperlink{class_t_selection_handle}{TSelectionHandle}} *selectionHandle = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}();}
+\DoxyCodeLine{00357   disconnect(selectionHandle, SIGNAL(selectionChanged(\mbox{\hyperlink{class_t_selection}{TSelection}} *)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00358              SLOT(onSelectionChanged()));}
+\DoxyCodeLine{00359 }
+\DoxyCodeLine{00360   m\_inputRas         = \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}();}
+\DoxyCodeLine{00361   m\_viewer-\/>raster() = \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}();}
+\DoxyCodeLine{00362 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_adjust_levels_popup_a5050f7cd484d53b4b45be25a1bf358d1}\label{class_adjust_levels_popup_a5050f7cd484d53b4b45be25a1bf358d1}} 
+\index{AdjustLevelsPopup@{AdjustLevelsPopup}!onParamsChanged@{onParamsChanged}}
+\index{onParamsChanged@{onParamsChanged}!AdjustLevelsPopup@{AdjustLevelsPopup}}
+\doxysubsubsection{\texorpdfstring{onParamsChanged}{onParamsChanged}}
+{\footnotesize\ttfamily void Adjust\+Levels\+Popup\+::on\+Params\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00462 \{ updateProcessedImage(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_adjust_levels_popup_abf85305a0dbc4b26296b58692cd11be6}\label{class_adjust_levels_popup_abf85305a0dbc4b26296b58692cd11be6}} 
+\index{AdjustLevelsPopup@{AdjustLevelsPopup}!onSelectionChanged@{onSelectionChanged}}
+\index{onSelectionChanged@{onSelectionChanged}!AdjustLevelsPopup@{AdjustLevelsPopup}}
+\doxysubsubsection{\texorpdfstring{onSelectionChanged}{onSelectionChanged}}
+{\footnotesize\ttfamily void Adjust\+Levels\+Popup\+::on\+Selection\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00457 \{ acquireRaster(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_adjust_levels_popup_ac164bf9fba7834d05a868d07707b321e}\label{class_adjust_levels_popup_ac164bf9fba7834d05a868d07707b321e}} 
+\index{AdjustLevelsPopup@{AdjustLevelsPopup}!reset@{reset}}
+\index{reset@{reset}!AdjustLevelsPopup@{AdjustLevelsPopup}}
+\doxysubsubsection{\texorpdfstring{reset}{reset}}
+{\footnotesize\ttfamily void Adjust\+Levels\+Popup\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00467                               \{}
+\DoxyCodeLine{00468   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00469   \textcolor{keywordflow}{for} (i = 0; i < 10; ++i) \{}
+\DoxyCodeLine{00470     \mbox{\hyperlink{class_editable_marks_bar}{EditableMarksBar}} *editableMarksBar = m\_marksBar[i];}
+\DoxyCodeLine{00471 }
+\DoxyCodeLine{00472     QVector<int> \&marks = editableMarksBar-\/>marksBar()-\/>values();}
+\DoxyCodeLine{00473     marks[0] = 0, marks[1] = 256;}
+\DoxyCodeLine{00474 }
+\DoxyCodeLine{00475     editableMarksBar-\/>updateFields();}
+\DoxyCodeLine{00476   \}}
+\DoxyCodeLine{00477 }
+\DoxyCodeLine{00478   onParamsChanged();}
+\DoxyCodeLine{00479   update();}
+\DoxyCodeLine{00480 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_adjust_levels_popup_a47e68c6952955c5273baa6a9d973b44b}\label{class_adjust_levels_popup_a47e68c6952955c5273baa6a9d973b44b}} 
+\index{AdjustLevelsPopup@{AdjustLevelsPopup}!setThreshold@{setThreshold}}
+\index{setThreshold@{setThreshold}!AdjustLevelsPopup@{AdjustLevelsPopup}}
+\doxysubsubsection{\texorpdfstring{setThreshold()}{setThreshold()}}
+{\footnotesize\ttfamily void Adjust\+Levels\+Popup\+::set\+Threshold (\begin{DoxyParamCaption}\item[{double}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00408                                              \{}
+\DoxyCodeLine{00409   m\_thresholdD = t;}
+\DoxyCodeLine{00410   \textcolor{keywordflow}{if} (m\_inputRas)}
+\DoxyCodeLine{00411     m\_threshold = m\_inputRas-\/>getLx() * m\_inputRas-\/>getLy() * m\_thresholdD;}
+\DoxyCodeLine{00412 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_adjust_levels_popup_ac7d05a316d92602d38938ede7596871f}\label{class_adjust_levels_popup_ac7d05a316d92602d38938ede7596871f}} 
+\index{AdjustLevelsPopup@{AdjustLevelsPopup}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!AdjustLevelsPopup@{AdjustLevelsPopup}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Adjust\+Levels\+Popup\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{se }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00343                                                 \{}
+\DoxyCodeLine{00344   \mbox{\hyperlink{class_t_selection_handle}{TSelectionHandle}} *selectionHandle = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}();}
+\DoxyCodeLine{00345   connect(selectionHandle, SIGNAL(selectionChanged(\mbox{\hyperlink{class_t_selection}{TSelection}} *)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00346           SLOT(onSelectionChanged()));}
+\DoxyCodeLine{00347 }
+\DoxyCodeLine{00348   acquireRaster();}
+\DoxyCodeLine{00349 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_adjust_levels_popup_af12dbd56b8eb21d9ca954ab1bf99da9d}\label{class_adjust_levels_popup_af12dbd56b8eb21d9ca954ab1bf99da9d}} 
+\index{AdjustLevelsPopup@{AdjustLevelsPopup}!updateProcessedImage@{updateProcessedImage}}
+\index{updateProcessedImage@{updateProcessedImage}!AdjustLevelsPopup@{AdjustLevelsPopup}}
+\doxysubsubsection{\texorpdfstring{updateProcessedImage()}{updateProcessedImage()}}
+{\footnotesize\ttfamily void Adjust\+Levels\+Popup\+::update\+Processed\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00432                                              \{}
+\DoxyCodeLine{00433   \textcolor{keywordflow}{if} (!m\_inputRas) \{}
+\DoxyCodeLine{00434     m\_viewer-\/>raster() = \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}();}
+\DoxyCodeLine{00435     m\_viewer-\/>update();}
+\DoxyCodeLine{00436     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00437   \}}
+\DoxyCodeLine{00438 }
+\DoxyCodeLine{00439   \textcolor{comment}{// Allocate a conformant output, if necessary}}
+\DoxyCodeLine{00440   \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&outRas = m\_viewer-\/>raster();}
+\DoxyCodeLine{00441   \textcolor{keywordflow}{if} (!outRas || outRas-\/>getPixelSize() != m\_inputRas-\/>getPixelSize() ||}
+\DoxyCodeLine{00442       outRas-\/>getSize() != m\_inputRas-\/>getSize())}
+\DoxyCodeLine{00443     outRas = m\_inputRas-\/>create(m\_inputRas-\/>getLx(), m\_inputRas-\/>getLy());}
+\DoxyCodeLine{00444 }
+\DoxyCodeLine{00445   \textcolor{comment}{// Perform the operation preview}}
+\DoxyCodeLine{00446   \textcolor{keywordtype}{int} in0[5], in1[5], out0[5], out1[5];}
+\DoxyCodeLine{00447   getParameters(in0, in1, out0, out1);}
+\DoxyCodeLine{00448 }
+\DoxyCodeLine{00449   \mbox{\hyperlink{namespace_t_rop_ae2160d9b4cacd0527c741e83181f17be}{TRop::rgbmAdjust}}(outRas, m\_inputRas, in0, in1, out0, out1);}
+\DoxyCodeLine{00450 }
+\DoxyCodeLine{00451   \textcolor{comment}{// Update the swatch}}
+\DoxyCodeLine{00452   m\_viewer-\/>update();}
+\DoxyCodeLine{00453 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/adjustlevelspopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/adjustlevelspopup.\+cpp\end{DoxyCompactItemize}

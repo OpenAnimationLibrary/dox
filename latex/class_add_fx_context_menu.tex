@@ -1,0 +1,273 @@
+\hypertarget{class_add_fx_context_menu}{}\doxysection{Add\+Fx\+Context\+Menu Class Reference}
+\label{class_add_fx_context_menu}\index{AddFxContextMenu@{AddFxContextMenu}}
+
+
+{\ttfamily \#include $<$addfxcontextmenu.\+h$>$}
+
+Inheritance diagram for Add\+Fx\+Context\+Menu\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_add_fx_context_menu}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries Commands} \{ {\bfseries Insert} = 0x1
+, {\bfseries Add} = 0x2
+, {\bfseries Replace} = 0x4
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_add_fx_context_menu_a42b35664befbbb8166b1d492d3962667}{result}} (\mbox{\hyperlink{class_plugin_information}{Plugin\+Information}} $\ast$)
+\item 
+void \mbox{\hyperlink{class_add_fx_context_menu_a4a15a3bff0250ae8ee64572102d4b6b0}{fixup}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QMenu $\ast$ \mbox{\hyperlink{class_add_fx_context_menu_a51504983b50abf2d6fb784c85956b3e5}{get\+Insert\+Menu}} ()
+\item 
+QMenu $\ast$ \mbox{\hyperlink{class_add_fx_context_menu_a51568dd02c13b45343aaac52923ac198}{get\+Add\+Menu}} ()
+\item 
+QMenu $\ast$ \mbox{\hyperlink{class_add_fx_context_menu_a4a9a0731e6fdd309efaf6b92c5896199}{get\+Replace\+Menu}} ()
+\item 
+void \mbox{\hyperlink{class_add_fx_context_menu_ac966acc6054502d5e44fcbd8ebcccd54}{set\+Application}} (\mbox{\hyperlink{class_t_application}{TApplication}} $\ast$app)
+\item 
+void \mbox{\hyperlink{class_add_fx_context_menu_a3d4b4fa09796044315a29a68e7d0bb29}{set\+Selection}} (\mbox{\hyperlink{class_fx_selection}{Fx\+Selection}} $\ast$selection)
+\item 
+void \mbox{\hyperlink{class_add_fx_context_menu_a9e1dbaea73a5dc592b0813615462acdc}{set\+Current\+Cursor\+Scene\+Pos}} (const QPointF \&scene\+Pos)
+\item 
+QAction $\ast$ \mbox{\hyperlink{class_add_fx_context_menu_a86483091019ab238939c27a2a84022b3}{get\+Again\+Command}} (int command)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Create Insert -\/ Add -\/ Replace menus for the context menu of a \mbox{\hyperlink{class_fx_schematic_scene}{Fx\+Schematic\+Scene}} and its items! This method is used to create and keep updated the three menus. Each menus contains all toonz special effect and effect presets. 
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_add_fx_context_menu_a6da9d7fc9e99e3718e8d52f70bb82d6e}\label{class_add_fx_context_menu_a6da9d7fc9e99e3718e8d52f70bb82d6e}} 
+\index{AddFxContextMenu@{AddFxContextMenu}!Commands@{Commands}}
+\index{Commands@{Commands}!AddFxContextMenu@{AddFxContextMenu}}
+\doxysubsubsection{\texorpdfstring{Commands}{Commands}}
+{\footnotesize\ttfamily enum Add\+Fx\+Context\+Menu\+::\+Commands}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055 \{ Insert = 0x1, Add = 0x2, Replace = 0x4 \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_add_fx_context_menu_ab98413f236e65eef37251f8951096a1c}\label{class_add_fx_context_menu_ab98413f236e65eef37251f8951096a1c}} 
+\index{AddFxContextMenu@{AddFxContextMenu}!AddFxContextMenu@{AddFxContextMenu}}
+\index{AddFxContextMenu@{AddFxContextMenu}!AddFxContextMenu@{AddFxContextMenu}}
+\doxysubsubsection{\texorpdfstring{AddFxContextMenu()}{AddFxContextMenu()}}
+{\footnotesize\ttfamily Add\+Fx\+Context\+Menu\+::\+Add\+Fx\+Context\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00157     : QObject(), m\_app(0), m\_currentCursorScenePos(0, 0), m\_againCommand(0) \{}
+\DoxyCodeLine{00158   m\_fxListPath = \mbox{\hyperlink{class_t_file_path}{TFilePath}}(ToonzFolder::getProfileFolder() + \textcolor{stringliteral}{"{}layouts"{}} + \textcolor{stringliteral}{"{}fxs"{}} +}
+\DoxyCodeLine{00159                            \textcolor{stringliteral}{"{}fxs.lst"{}});}
+\DoxyCodeLine{00160   m\_presetPath = \mbox{\hyperlink{class_t_file_path}{TFilePath}}(ToonzFolder::getFxPresetFolder() + \textcolor{stringliteral}{"{}presets"{}});}
+\DoxyCodeLine{00161 }
+\DoxyCodeLine{00162   m\_insertMenu         = \textcolor{keyword}{new} QMenu(tr(\textcolor{stringliteral}{"{}Insert FX"{}}), 0);}
+\DoxyCodeLine{00163   m\_insertActionGroup  = \textcolor{keyword}{new} QActionGroup(m\_insertMenu);}
+\DoxyCodeLine{00164   m\_addMenu            = \textcolor{keyword}{new} QMenu(tr(\textcolor{stringliteral}{"{}Add FX"{}}), 0);}
+\DoxyCodeLine{00165   m\_addActionGroup     = \textcolor{keyword}{new} QActionGroup(m\_addMenu);}
+\DoxyCodeLine{00166   m\_replaceMenu        = \textcolor{keyword}{new} QMenu(tr(\textcolor{stringliteral}{"{}Replace FX"{}}), 0);}
+\DoxyCodeLine{00167   m\_replaceActionGroup = \textcolor{keyword}{new} QActionGroup(m\_replaceMenu);}
+\DoxyCodeLine{00168 }
+\DoxyCodeLine{00169   connect(m\_insertActionGroup, SIGNAL(triggered(QAction *)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00170           SLOT(onInsertFx(QAction *)));}
+\DoxyCodeLine{00171   connect(m\_addActionGroup, SIGNAL(triggered(QAction *)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00172           SLOT(onAddFx(QAction *)));}
+\DoxyCodeLine{00173   connect(m\_replaceActionGroup, SIGNAL(triggered(QAction *)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00174           SLOT(onReplaceFx(QAction *)));}
+\DoxyCodeLine{00175 }
+\DoxyCodeLine{00176   fillMenus();}
+\DoxyCodeLine{00177 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_add_fx_context_menu_a86ec7eeb7dae05bf420ab967f208241f}\label{class_add_fx_context_menu_a86ec7eeb7dae05bf420ab967f208241f}} 
+\index{AddFxContextMenu@{AddFxContextMenu}!````~AddFxContextMenu@{$\sim$AddFxContextMenu}}
+\index{````~AddFxContextMenu@{$\sim$AddFxContextMenu}!AddFxContextMenu@{AddFxContextMenu}}
+\doxysubsubsection{\texorpdfstring{$\sim$AddFxContextMenu()}{~AddFxContextMenu()}}
+{\footnotesize\ttfamily Add\+Fx\+Context\+Menu\+::$\sim$\+Add\+Fx\+Context\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00189 \{ clear\_all\_plugins(); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_add_fx_context_menu_a4a15a3bff0250ae8ee64572102d4b6b0}\label{class_add_fx_context_menu_a4a15a3bff0250ae8ee64572102d4b6b0}} 
+\index{AddFxContextMenu@{AddFxContextMenu}!fixup@{fixup}}
+\index{fixup@{fixup}!AddFxContextMenu@{AddFxContextMenu}}
+\doxysubsubsection{\texorpdfstring{fixup}{fixup}}
+{\footnotesize\ttfamily void Add\+Fx\+Context\+Menu\+::fixup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00228 \{ loadFxPluginGroup(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_add_fx_context_menu_a51568dd02c13b45343aaac52923ac198}\label{class_add_fx_context_menu_a51568dd02c13b45343aaac52923ac198}} 
+\index{AddFxContextMenu@{AddFxContextMenu}!getAddMenu@{getAddMenu}}
+\index{getAddMenu@{getAddMenu}!AddFxContextMenu@{AddFxContextMenu}}
+\doxysubsubsection{\texorpdfstring{getAddMenu()}{getAddMenu()}}
+{\footnotesize\ttfamily QMenu $\ast$ Add\+Fx\+Context\+Menu\+::get\+Add\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00045 \{ \textcolor{keywordflow}{return} m\_addMenu; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_add_fx_context_menu_a86483091019ab238939c27a2a84022b3}\label{class_add_fx_context_menu_a86483091019ab238939c27a2a84022b3}} 
+\index{AddFxContextMenu@{AddFxContextMenu}!getAgainCommand@{getAgainCommand}}
+\index{getAgainCommand@{getAgainCommand}!AddFxContextMenu@{AddFxContextMenu}}
+\doxysubsubsection{\texorpdfstring{getAgainCommand()}{getAgainCommand()}}
+{\footnotesize\ttfamily QAction $\ast$ Add\+Fx\+Context\+Menu\+::get\+Again\+Command (\begin{DoxyParamCaption}\item[{int}]{command }\end{DoxyParamCaption})}
+
+repeat the last fx creation command done in the schematic. arrgument \char`\"{}command\char`\"{} is sum of the ids of available commands(\+Insert, Add, \+Replace) 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00613                                                       \{}
+\DoxyCodeLine{00614   QString commandName = m\_app-\/>getCurrentFx()-\/>getPreviousActionString();}
+\DoxyCodeLine{00615   \textcolor{comment}{// return if the last action is not registered}}
+\DoxyCodeLine{00616   \textcolor{keywordflow}{if} (commandName.isEmpty()) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00617 }
+\DoxyCodeLine{00618   \textcolor{comment}{// classify action by commandName}}
+\DoxyCodeLine{00619   Commands com;}
+\DoxyCodeLine{00620   QString commandStr;}
+\DoxyCodeLine{00621   \textcolor{keywordflow}{if} (commandName.startsWith(\textcolor{stringliteral}{"{}I "{}})) \{}
+\DoxyCodeLine{00622     com        = Insert;}
+\DoxyCodeLine{00623     commandStr = tr(\textcolor{stringliteral}{"{}Insert "{}});}
+\DoxyCodeLine{00624   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (commandName.startsWith(\textcolor{stringliteral}{"{}A "{}})) \{}
+\DoxyCodeLine{00625     com        = Add;}
+\DoxyCodeLine{00626     commandStr = tr(\textcolor{stringliteral}{"{}Add "{}});}
+\DoxyCodeLine{00627   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (commandName.startsWith(\textcolor{stringliteral}{"{}R "{}})) \{}
+\DoxyCodeLine{00628     com        = Replace;}
+\DoxyCodeLine{00629     commandStr = tr(\textcolor{stringliteral}{"{}Replace "{}});}
+\DoxyCodeLine{00630   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00631     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00632 }
+\DoxyCodeLine{00633   \textcolor{comment}{// return if the action is not available}}
+\DoxyCodeLine{00634   \textcolor{keywordflow}{if} (!(command \& com)) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00635 }
+\DoxyCodeLine{00636   QString fxStr = commandName.right(commandName.size() -\/ 2);}
+\DoxyCodeLine{00637   QString translatedCommandName =}
+\DoxyCodeLine{00638       commandStr +}
+\DoxyCodeLine{00639       QString::fromStdWString(TStringTable::translate(fxStr.toStdString()));}
+\DoxyCodeLine{00640   \textcolor{comment}{// return the action if the command is the exactly same}}
+\DoxyCodeLine{00641   \textcolor{keywordflow}{if} (m\_againCommand \&\& commandName == m\_againCommand-\/>data().toString())}
+\DoxyCodeLine{00642     \textcolor{keywordflow}{return} m\_againCommand;}
+\DoxyCodeLine{00643 }
+\DoxyCodeLine{00644   \textcolor{comment}{// create an action}}
+\DoxyCodeLine{00645   \textcolor{keywordflow}{if} (!m\_againCommand) \{}
+\DoxyCodeLine{00646     m\_againCommand = \textcolor{keyword}{new} QAction();}
+\DoxyCodeLine{00647     connect(m\_againCommand, SIGNAL(triggered()), \textcolor{keyword}{this}, SLOT(onAgainCommand()));}
+\DoxyCodeLine{00648   \}}
+\DoxyCodeLine{00649   \textcolor{comment}{// set the action name}}
+\DoxyCodeLine{00650   m\_againCommand-\/>setText(translatedCommandName);}
+\DoxyCodeLine{00651   m\_againCommand-\/>setData(commandName);}
+\DoxyCodeLine{00652   \textcolor{keywordflow}{return} m\_againCommand;}
+\DoxyCodeLine{00653 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_add_fx_context_menu_a51504983b50abf2d6fb784c85956b3e5}\label{class_add_fx_context_menu_a51504983b50abf2d6fb784c85956b3e5}} 
+\index{AddFxContextMenu@{AddFxContextMenu}!getInsertMenu@{getInsertMenu}}
+\index{getInsertMenu@{getInsertMenu}!AddFxContextMenu@{AddFxContextMenu}}
+\doxysubsubsection{\texorpdfstring{getInsertMenu()}{getInsertMenu()}}
+{\footnotesize\ttfamily QMenu $\ast$ Add\+Fx\+Context\+Menu\+::get\+Insert\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044 \{ \textcolor{keywordflow}{return} m\_insertMenu; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_add_fx_context_menu_a4a9a0731e6fdd309efaf6b92c5896199}\label{class_add_fx_context_menu_a4a9a0731e6fdd309efaf6b92c5896199}} 
+\index{AddFxContextMenu@{AddFxContextMenu}!getReplaceMenu@{getReplaceMenu}}
+\index{getReplaceMenu@{getReplaceMenu}!AddFxContextMenu@{AddFxContextMenu}}
+\doxysubsubsection{\texorpdfstring{getReplaceMenu()}{getReplaceMenu()}}
+{\footnotesize\ttfamily QMenu $\ast$ Add\+Fx\+Context\+Menu\+::get\+Replace\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046 \{ \textcolor{keywordflow}{return} m\_replaceMenu; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_add_fx_context_menu_a42b35664befbbb8166b1d492d3962667}\label{class_add_fx_context_menu_a42b35664befbbb8166b1d492d3962667}} 
+\index{AddFxContextMenu@{AddFxContextMenu}!result@{result}}
+\index{result@{result}!AddFxContextMenu@{AddFxContextMenu}}
+\doxysubsubsection{\texorpdfstring{result}{result}}
+{\footnotesize\ttfamily void Add\+Fx\+Context\+Menu\+::result (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_plugin_information}{Plugin\+Information}} $\ast$}]{pi }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00217                                                    \{}
+\DoxyCodeLine{00218   \textcolor{comment}{/* slot receives PluginInformation on the main thread たぶん */}}
+\DoxyCodeLine{00219   printf(\textcolor{stringliteral}{"{}AddFxContextMenu::result() pi:\%p\(\backslash\)n"{}}, pi);}
+\DoxyCodeLine{00220   \textcolor{comment}{/* addfxcontextmenu.cpp の dict に登録する */}}
+\DoxyCodeLine{00221   \textcolor{keywordflow}{if} (pi)}
+\DoxyCodeLine{00222     plugin\_dict\_.insert(}
+\DoxyCodeLine{00223         std::pair<std::string, PluginInformation *>(pi-\/>desc\_-\/>id\_, pi));}
+\DoxyCodeLine{00224   \textcolor{comment}{// RasterFxPluginHost* plug = new RasterFxPluginHost(pi);}}
+\DoxyCodeLine{00225   \textcolor{comment}{// pi-\/>handler\_-\/>create(plug);}}
+\DoxyCodeLine{00226 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_add_fx_context_menu_ac966acc6054502d5e44fcbd8ebcccd54}\label{class_add_fx_context_menu_ac966acc6054502d5e44fcbd8ebcccd54}} 
+\index{AddFxContextMenu@{AddFxContextMenu}!setApplication@{setApplication}}
+\index{setApplication@{setApplication}!AddFxContextMenu@{AddFxContextMenu}}
+\doxysubsubsection{\texorpdfstring{setApplication()}{setApplication()}}
+{\footnotesize\ttfamily void Add\+Fx\+Context\+Menu\+::set\+Application (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_application}{TApplication}} $\ast$}]{app }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00193                                                        \{}
+\DoxyCodeLine{00194   m\_app = app;}
+\DoxyCodeLine{00195 }
+\DoxyCodeLine{00196   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_fx_handle}{TFxHandle}} *fxHandle = app-\/>getCurrentFx()) \{}
+\DoxyCodeLine{00197     connect(fxHandle, SIGNAL(fxPresetSaved()), \textcolor{keyword}{this}, SLOT(onFxPresetHandled()));}
+\DoxyCodeLine{00198     connect(fxHandle, SIGNAL(fxPresetRemoved()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00199             SLOT(onFxPresetHandled()));}
+\DoxyCodeLine{00200   \}}
+\DoxyCodeLine{00201 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_add_fx_context_menu_a9e1dbaea73a5dc592b0813615462acdc}\label{class_add_fx_context_menu_a9e1dbaea73a5dc592b0813615462acdc}} 
+\index{AddFxContextMenu@{AddFxContextMenu}!setCurrentCursorScenePos@{setCurrentCursorScenePos}}
+\index{setCurrentCursorScenePos@{setCurrentCursorScenePos}!AddFxContextMenu@{AddFxContextMenu}}
+\doxysubsubsection{\texorpdfstring{setCurrentCursorScenePos()}{setCurrentCursorScenePos()}}
+{\footnotesize\ttfamily void Add\+Fx\+Context\+Menu\+::set\+Current\+Cursor\+Scene\+Pos (\begin{DoxyParamCaption}\item[{const QPointF \&}]{scene\+Pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00051                                                          \{}
+\DoxyCodeLine{00052     m\_currentCursorScenePos = scenePos;}
+\DoxyCodeLine{00053   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_add_fx_context_menu_a3d4b4fa09796044315a29a68e7d0bb29}\label{class_add_fx_context_menu_a3d4b4fa09796044315a29a68e7d0bb29}} 
+\index{AddFxContextMenu@{AddFxContextMenu}!setSelection@{setSelection}}
+\index{setSelection@{setSelection}!AddFxContextMenu@{AddFxContextMenu}}
+\doxysubsubsection{\texorpdfstring{setSelection()}{setSelection()}}
+{\footnotesize\ttfamily void Add\+Fx\+Context\+Menu\+::set\+Selection (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_selection}{Fx\+Selection}} $\ast$}]{selection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00049 \{ m\_selection = selection; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/addfxcontextmenu.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/addfxcontextmenu.\+cpp\end{DoxyCompactItemize}

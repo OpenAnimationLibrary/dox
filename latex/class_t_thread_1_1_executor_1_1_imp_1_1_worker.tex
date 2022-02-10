@@ -1,0 +1,160 @@
+\hypertarget{class_t_thread_1_1_executor_1_1_imp_1_1_worker}{}\doxysection{TThread\+::Executor\+::Imp\+::Worker Class Reference}
+\label{class_t_thread_1_1_executor_1_1_imp_1_1_worker}\index{TThread::Executor::Imp::Worker@{TThread::Executor::Imp::Worker}}
+Inheritance diagram for TThread\+::Executor\+::Imp\+::Worker\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_t_thread_1_1_executor_1_1_imp_1_1_worker}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_thread_1_1_executor_1_1_imp_1_1_worker_a09373aa8120f100b47b9dbdd19a07584}{Worker}} (\mbox{\hyperlink{class_t_smart_pointer_t}{ImpP}} owner)
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_executor_1_1_imp_1_1_worker_ae9adbb9f01d151d8f7fd886c9418dffd}{run}} ()
+\begin{DoxyCompactList}\small\item\em The central code of the task that is executed by a worker thread. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_t_thread_1_1_executor_1_1_imp_1_1_worker_a3d48285c215da19ebd373418fb3d3a83}{do\+Cleanup}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{ImpP}} \mbox{\hyperlink{class_t_thread_1_1_executor_1_1_imp_1_1_worker_ab1d45c0cf80986066a062157217af35e}{m\+\_\+owner}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_1_1_imp_1_1_worker_a09373aa8120f100b47b9dbdd19a07584}\label{class_t_thread_1_1_executor_1_1_imp_1_1_worker_a09373aa8120f100b47b9dbdd19a07584}} 
+\index{TThread::Executor::Imp::Worker@{TThread::Executor::Imp::Worker}!Worker@{Worker}}
+\index{Worker@{Worker}!TThread::Executor::Imp::Worker@{TThread::Executor::Imp::Worker}}
+\doxysubsubsection{\texorpdfstring{Worker()}{Worker()}}
+{\footnotesize\ttfamily TThread\+::\+Executor\+::\+Imp\+::\+Worker\+::\+Worker (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{ImpP}}}]{owner }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00420 : Runnable(), m\_owner(owner) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_1_1_imp_1_1_worker_a8abcb114412202cffec1b967fe6a073d}\label{class_t_thread_1_1_executor_1_1_imp_1_1_worker_a8abcb114412202cffec1b967fe6a073d}} 
+\index{TThread::Executor::Imp::Worker@{TThread::Executor::Imp::Worker}!````~Worker@{$\sim$Worker}}
+\index{````~Worker@{$\sim$Worker}!TThread::Executor::Imp::Worker@{TThread::Executor::Imp::Worker}}
+\doxysubsubsection{\texorpdfstring{$\sim$Worker()}{~Worker()}}
+{\footnotesize\ttfamily TThread\+::\+Executor\+::\+Imp\+::\+Worker\+::$\sim$\+Worker (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00421 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_1_1_imp_1_1_worker_a3d48285c215da19ebd373418fb3d3a83}\label{class_t_thread_1_1_executor_1_1_imp_1_1_worker_a3d48285c215da19ebd373418fb3d3a83}} 
+\index{TThread::Executor::Imp::Worker@{TThread::Executor::Imp::Worker}!doCleanup@{doCleanup}}
+\index{doCleanup@{doCleanup}!TThread::Executor::Imp::Worker@{TThread::Executor::Imp::Worker}}
+\doxysubsubsection{\texorpdfstring{doCleanup()}{doCleanup()}}
+{\footnotesize\ttfamily void TThread\+::\+Executor\+::\+Imp\+::\+Worker\+::do\+Cleanup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00538                                          \{}
+\DoxyCodeLine{00539   std::map<long, Thread *>::iterator it =}
+\DoxyCodeLine{00540       m\_owner-\/>m\_workerThreads.find(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{long}\textcolor{keyword}{>}(\textcolor{keyword}{this}));}
+\DoxyCodeLine{00541 }
+\DoxyCodeLine{00542   \textcolor{keywordflow}{if} (it != m\_owner-\/>m\_workerThreads.end()) \{}
+\DoxyCodeLine{00543     Thread *thread = it-\/>second;}
+\DoxyCodeLine{00544     \textcolor{keyword}{delete} thread;}
+\DoxyCodeLine{00545     m\_owner-\/>m\_workerThreads.erase(it);}
+\DoxyCodeLine{00546   \}}
+\DoxyCodeLine{00547 }
+\DoxyCodeLine{00548   \textcolor{keywordflow}{if} (m\_owner-\/>m\_workerThreads.size() == 0)}
+\DoxyCodeLine{00549     m\_owner-\/>m\_taskQueueEmpty.notifyAll();}
+\DoxyCodeLine{00550 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_1_1_imp_1_1_worker_ae9adbb9f01d151d8f7fd886c9418dffd}\label{class_t_thread_1_1_executor_1_1_imp_1_1_worker_ae9adbb9f01d151d8f7fd886c9418dffd}} 
+\index{TThread::Executor::Imp::Worker@{TThread::Executor::Imp::Worker}!run@{run}}
+\index{run@{run}!TThread::Executor::Imp::Worker@{TThread::Executor::Imp::Worker}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void TThread\+::\+Executor\+::\+Imp\+::\+Worker\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+The central code of the task that is executed by a worker thread. 
+
+
+
+Implements \mbox{\hyperlink{class_t_thread_1_1_runnable_ad3b8ee5e7b375bd169f7382fa26b00ef}{TThread\+::\+Runnable}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00484                                    \{}
+\DoxyCodeLine{00485   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00486     \textcolor{keywordflow}{while} (\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{00487       \textcolor{comment}{// check if thread has been canceled}}
+\DoxyCodeLine{00488       Thread::milestone();}
+\DoxyCodeLine{00489 }
+\DoxyCodeLine{00490       \textcolor{comment}{// get the next task}}
+\DoxyCodeLine{00491       RunnableP task = 0;}
+\DoxyCodeLine{00492 }
+\DoxyCodeLine{00493       \{}
+\DoxyCodeLine{00494         ScopedLock sl(m\_owner-\/>m\_mutex);}
+\DoxyCodeLine{00495         \textcolor{keywordflow}{if} (m\_owner-\/>m\_tasks.empty()) \{}
+\DoxyCodeLine{00496           \textcolor{comment}{// la lista di task e' stata esaurita}}
+\DoxyCodeLine{00497           \textcolor{keywordflow}{if} (m\_owner-\/>m\_suspend) \{}
+\DoxyCodeLine{00498             \textcolor{comment}{// il thread deve sospendersi}}
+\DoxyCodeLine{00499             m\_owner-\/>m\_taskQueueNotEmpty.wait(sl);}
+\DoxyCodeLine{00500 }
+\DoxyCodeLine{00501             \textcolor{comment}{// a questo punto il thread e' stato risvegliato}}
+\DoxyCodeLine{00502             \textcolor{keywordflow}{if} (m\_owner-\/>m\_threadHasToDie) \{}
+\DoxyCodeLine{00503               doCleanup();}
+\DoxyCodeLine{00504               \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00505             \}}
+\DoxyCodeLine{00506           \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00507             \textcolor{comment}{// il thread sta per morire -\/> bisogna eliminarlo dalla lista dei}}
+\DoxyCodeLine{00508             \textcolor{comment}{// worker thread}}
+\DoxyCodeLine{00509             doCleanup();}
+\DoxyCodeLine{00510             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00511           \}}
+\DoxyCodeLine{00512         \}}
+\DoxyCodeLine{00513 }
+\DoxyCodeLine{00514         \textcolor{keywordflow}{if} (!m\_owner-\/>m\_tasks.empty()) \{}
+\DoxyCodeLine{00515           task = m\_owner-\/>m\_tasks.front();}
+\DoxyCodeLine{00516           m\_owner-\/>m\_tasks.pop();}
+\DoxyCodeLine{00517         \}}
+\DoxyCodeLine{00518       \}}
+\DoxyCodeLine{00519 }
+\DoxyCodeLine{00520       \textcolor{keywordflow}{if} (task) task-\/>run();}
+\DoxyCodeLine{00521 }
+\DoxyCodeLine{00522       \textcolor{comment}{// check if thread has been canceled}}
+\DoxyCodeLine{00523       Thread::milestone();}
+\DoxyCodeLine{00524     \}}
+\DoxyCodeLine{00525   \} \textcolor{keywordflow}{catch} (TThread::Interrupt \&) \{}
+\DoxyCodeLine{00526     \textcolor{comment}{// m\_owner-\/>m\_cond.notifyOne();}}
+\DoxyCodeLine{00527   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00528     \textcolor{comment}{// eccezione non prevista -\/-\/> bisogna eliminare il thread}}
+\DoxyCodeLine{00529     \textcolor{comment}{// dalla lista dei worker thread}}
+\DoxyCodeLine{00530 }
+\DoxyCodeLine{00531     ScopedLock sl(m\_owner-\/>m\_mutex);}
+\DoxyCodeLine{00532     doCleanup();}
+\DoxyCodeLine{00533   \}}
+\DoxyCodeLine{00534 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_1_1_imp_1_1_worker_ab1d45c0cf80986066a062157217af35e}\label{class_t_thread_1_1_executor_1_1_imp_1_1_worker_ab1d45c0cf80986066a062157217af35e}} 
+\index{TThread::Executor::Imp::Worker@{TThread::Executor::Imp::Worker}!m\_owner@{m\_owner}}
+\index{m\_owner@{m\_owner}!TThread::Executor::Imp::Worker@{TThread::Executor::Imp::Worker}}
+\doxysubsubsection{\texorpdfstring{m\_owner}{m\_owner}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{ImpP}} TThread\+::\+Executor\+::\+Imp\+::\+Worker\+::m\+\_\+owner}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tnzcore\+\_\+stuff/tthread.\+cpp\end{DoxyCompactItemize}

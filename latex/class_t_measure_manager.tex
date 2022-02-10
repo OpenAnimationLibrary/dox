@@ -1,0 +1,130 @@
+\hypertarget{class_t_measure_manager}{}\doxysection{TMeasure\+Manager Class Reference}
+\label{class_t_measure_manager}\index{TMeasureManager@{TMeasureManager}}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef double \mbox{\hyperlink{class_t_measure_manager_a0e3a0f8e54d6843b01ba28eb2f4760ac}{Camera\+Size\+Provider}}()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_measure_manager_a0ef175bd04f1e33f57a5ec738c51164b}{add}} (\mbox{\hyperlink{class_t_measure}{TMeasure}} $\ast$m)
+\item 
+\mbox{\hyperlink{class_t_measure}{TMeasure}} $\ast$ \mbox{\hyperlink{class_t_measure_manager_a99adfd1f712b9cc382aa9b86e4f88698}{get}} (std\+::string name) const
+\item 
+void \mbox{\hyperlink{class_t_measure_manager_a021d65b9f9a285a3275f0247907564df}{add\+Camera\+Measures}} (Camera\+Size\+Provider $\ast$camera\+Size\+Provider)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_measure_manager}{TMeasure\+Manager}} $\ast$ \mbox{\hyperlink{class_t_measure_manager_ab7dd2205f465b45768de2f46c8e2ec84}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{class_t_measure_manager_a0e3a0f8e54d6843b01ba28eb2f4760ac}\label{class_t_measure_manager_a0e3a0f8e54d6843b01ba28eb2f4760ac}} 
+\index{TMeasureManager@{TMeasureManager}!CameraSizeProvider@{CameraSizeProvider}}
+\index{CameraSizeProvider@{CameraSizeProvider}!TMeasureManager@{TMeasureManager}}
+\doxysubsubsection{\texorpdfstring{CameraSizeProvider}{CameraSizeProvider}}
+{\footnotesize\ttfamily typedef double TMeasure\+Manager\+::\+Camera\+Size\+Provider()}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_measure_manager_a0ef175bd04f1e33f57a5ec738c51164b}\label{class_t_measure_manager_a0ef175bd04f1e33f57a5ec738c51164b}} 
+\index{TMeasureManager@{TMeasureManager}!add@{add}}
+\index{add@{add}!TMeasureManager@{TMeasureManager}}
+\doxysubsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily void TMeasure\+Manager\+::add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_measure}{TMeasure}} $\ast$}]{m }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00418 \{ m\_measures[m-\/>getName()] = m; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_manager_a021d65b9f9a285a3275f0247907564df}\label{class_t_measure_manager_a021d65b9f9a285a3275f0247907564df}} 
+\index{TMeasureManager@{TMeasureManager}!addCameraMeasures@{addCameraMeasures}}
+\index{addCameraMeasures@{addCameraMeasures}!TMeasureManager@{TMeasureManager}}
+\doxysubsubsection{\texorpdfstring{addCameraMeasures()}{addCameraMeasures()}}
+{\footnotesize\ttfamily void TMeasure\+Manager\+::add\+Camera\+Measures (\begin{DoxyParamCaption}\item[{Camera\+Size\+Provider $\ast$}]{camera\+Size\+Provider }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00648                                             \{}
+\DoxyCodeLine{00649   \mbox{\hyperlink{class_t_unit}{TUnit}} u0(L\textcolor{stringliteral}{"{}z"{}}), u1(L\textcolor{stringliteral}{"{}fld"{}}, \textcolor{keyword}{new} ZDepthUnitConverter(cameraSizeProvider)),}
+\DoxyCodeLine{00650       u2(L\textcolor{stringliteral}{"{}fld"{}}, \textcolor{keyword}{new} CameraZDepthUnitConverter(cameraSizeProvider)),}
+\DoxyCodeLine{00651       u3(L\textcolor{stringliteral}{"{}fld"{}}, \textcolor{keyword}{new} ZDepthHandleUnitConverter(cameraSizeProvider)),}
+\DoxyCodeLine{00652       u4(L\textcolor{stringliteral}{"{}fld"{}}, \textcolor{keyword}{new} CameraZDepthHandleUnitConverter(cameraSizeProvider));}
+\DoxyCodeLine{00653 }
+\DoxyCodeLine{00654   \mbox{\hyperlink{class_t_measure}{TMeasure}} *zdepth = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_measure}{TMeasure}}(\textcolor{stringliteral}{"{}zdepth"{}}, u0.clone());}
+\DoxyCodeLine{00655   \mbox{\hyperlink{class_t_unit}{TUnit}} *u         = u1.clone();}
+\DoxyCodeLine{00656   zdepth-\/>add(u);}
+\DoxyCodeLine{00657   zdepth-\/>setCurrentUnit(u);}
+\DoxyCodeLine{00658   zdepth-\/>setStandardUnit(u);}
+\DoxyCodeLine{00659   TMeasureManager::instance()-\/>add(zdepth);}
+\DoxyCodeLine{00660 }
+\DoxyCodeLine{00661   zdepth = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_measure}{TMeasure}}(\textcolor{stringliteral}{"{}zdepth.cam"{}}, u0.clone());}
+\DoxyCodeLine{00662   u      = u2.clone();}
+\DoxyCodeLine{00663   zdepth-\/>add(u);}
+\DoxyCodeLine{00664   zdepth-\/>setCurrentUnit(u);}
+\DoxyCodeLine{00665   zdepth-\/>setStandardUnit(u);}
+\DoxyCodeLine{00666 }
+\DoxyCodeLine{00667   TMeasureManager::instance()-\/>add(zdepth);}
+\DoxyCodeLine{00668 }
+\DoxyCodeLine{00669   zdepth = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_measure}{TMeasure}}(\textcolor{stringliteral}{"{}zdepth.handle"{}}, u0.clone());}
+\DoxyCodeLine{00670   u      = u3.clone();}
+\DoxyCodeLine{00671   zdepth-\/>add(u);}
+\DoxyCodeLine{00672   zdepth-\/>setCurrentUnit(u);}
+\DoxyCodeLine{00673   zdepth-\/>setStandardUnit(u);}
+\DoxyCodeLine{00674   TMeasureManager::instance()-\/>add(zdepth);}
+\DoxyCodeLine{00675 }
+\DoxyCodeLine{00676   zdepth = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_measure}{TMeasure}}(\textcolor{stringliteral}{"{}zdepth.cam.handle"{}}, u0.clone());}
+\DoxyCodeLine{00677   u      = u4.clone();}
+\DoxyCodeLine{00678   zdepth-\/>add(u);}
+\DoxyCodeLine{00679   zdepth-\/>setCurrentUnit(u);}
+\DoxyCodeLine{00680   zdepth-\/>setStandardUnit(u);}
+\DoxyCodeLine{00681   TMeasureManager::instance()-\/>add(zdepth);}
+\DoxyCodeLine{00682 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_manager_a99adfd1f712b9cc382aa9b86e4f88698}\label{class_t_measure_manager_a99adfd1f712b9cc382aa9b86e4f88698}} 
+\index{TMeasureManager@{TMeasureManager}!get@{get}}
+\index{get@{get}!TMeasureManager@{TMeasureManager}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_measure}{TMeasure}} $\ast$ TMeasure\+Manager\+::get (\begin{DoxyParamCaption}\item[{std\+::string}]{name }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00422                                                    \{}
+\DoxyCodeLine{00423   std::map<std::string, TMeasure *>::const\_iterator it;}
+\DoxyCodeLine{00424   it = m\_measures.find(name);}
+\DoxyCodeLine{00425   \textcolor{keywordflow}{if} (it == m\_measures.end())}
+\DoxyCodeLine{00426     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00427   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00428     \textcolor{keywordflow}{return} it-\/>second;}
+\DoxyCodeLine{00429 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_manager_ab7dd2205f465b45768de2f46c8e2ec84}\label{class_t_measure_manager_ab7dd2205f465b45768de2f46c8e2ec84}} 
+\index{TMeasureManager@{TMeasureManager}!instance@{instance}}
+\index{instance@{instance}!TMeasureManager@{TMeasureManager}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_t_measure_manager}{TMeasure\+Manager}} $\ast$ TMeasure\+Manager\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00128                                      \{}
+\DoxyCodeLine{00129     \textcolor{keyword}{static} \mbox{\hyperlink{class_t_measure_manager}{TMeasureManager}} \_instance;}
+\DoxyCodeLine{00130     \textcolor{keywordflow}{return} \&\_instance;}
+\DoxyCodeLine{00131   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tunit.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tunit/tunit.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,167 @@
+\hypertarget{class_xsheet_selection_drag_tool}{}\doxysection{Xsheet\+Selection\+Drag\+Tool Class Reference}
+\label{class_xsheet_selection_drag_tool}\index{XsheetSelectionDragTool@{XsheetSelectionDragTool}}
+Inheritance diagram for Xsheet\+Selection\+Drag\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_xsheet_selection_drag_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_xsheet_selection_drag_tool_ae13117a7cc8821e628d8e0ebfb8a2a0e}{Xsheet\+Selection\+Drag\+Tool}} (\mbox{\hyperlink{class_xsheet_viewer}{Xsheet\+Viewer}} $\ast$viewer)
+\item 
+void \mbox{\hyperlink{class_xsheet_selection_drag_tool_a99fffe13e7a79841ba394abc55d419bb}{on\+Click}} (const QMouse\+Event $\ast$event) override
+\item 
+void \mbox{\hyperlink{class_xsheet_selection_drag_tool_a46d3909012d4dfdb62ad6fc75d46dc1f}{on\+Drag}} (const \mbox{\hyperlink{class_cell_position}{Cell\+Position}} \&pos) override
+\item 
+void \mbox{\hyperlink{class_xsheet_selection_drag_tool_a3a76bad40b7b0ef2cd85eb4fcc63cabb}{on\+Release}} (const QMouse\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_xsheet_selection_drag_tool_ae13117a7cc8821e628d8e0ebfb8a2a0e}\label{class_xsheet_selection_drag_tool_ae13117a7cc8821e628d8e0ebfb8a2a0e}} 
+\index{XsheetSelectionDragTool@{XsheetSelectionDragTool}!XsheetSelectionDragTool@{XsheetSelectionDragTool}}
+\index{XsheetSelectionDragTool@{XsheetSelectionDragTool}!XsheetSelectionDragTool@{XsheetSelectionDragTool}}
+\doxysubsubsection{\texorpdfstring{XsheetSelectionDragTool()}{XsheetSelectionDragTool()}}
+{\footnotesize\ttfamily Xsheet\+Selection\+Drag\+Tool\+::\+Xsheet\+Selection\+Drag\+Tool (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_xsheet_viewer}{Xsheet\+Viewer}} $\ast$}]{viewer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00122       : DragTool(viewer), m\_firstRow(0), m\_firstCol(0), m\_modifier() \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_xsheet_selection_drag_tool_a99fffe13e7a79841ba394abc55d419bb}\label{class_xsheet_selection_drag_tool_a99fffe13e7a79841ba394abc55d419bb}} 
+\index{XsheetSelectionDragTool@{XsheetSelectionDragTool}!onClick@{onClick}}
+\index{onClick@{onClick}!XsheetSelectionDragTool@{XsheetSelectionDragTool}}
+\doxysubsubsection{\texorpdfstring{onClick()}{onClick()}}
+{\footnotesize\ttfamily void Xsheet\+Selection\+Drag\+Tool\+::on\+Click (\begin{DoxyParamCaption}\item[{const QMouse\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{Xsheet\+GUI\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00124                                                   \{}
+\DoxyCodeLine{00125     m\_modifier       = \textcolor{keyword}{event}-\/>modifiers();}
+\DoxyCodeLine{00126     \mbox{\hyperlink{class_cell_position}{CellPosition}} pos = getViewer()-\/>xyToPosition(event-\/>pos());}
+\DoxyCodeLine{00127     \textcolor{keywordtype}{int} row          = pos.frame();}
+\DoxyCodeLine{00128     \textcolor{keywordtype}{int} col          = pos.layer();}
+\DoxyCodeLine{00129     m\_firstCol       = col;}
+\DoxyCodeLine{00130     m\_firstRow       = row;}
+\DoxyCodeLine{00131     \textcolor{comment}{// First, check switching of the selection types. This may clear the}}
+\DoxyCodeLine{00132     \textcolor{comment}{// previous selection.}}
+\DoxyCodeLine{00133     \textcolor{keywordflow}{if} (m\_modifier \& Qt::ControlModifier)}
+\DoxyCodeLine{00134       getViewer()-\/>getCellKeyframeSelection()-\/>makeCurrent();}
+\DoxyCodeLine{00135     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00136       getViewer()-\/>getCellSelection()-\/>makeCurrent();}
+\DoxyCodeLine{00137     \textcolor{keywordflow}{if} (m\_modifier \& Qt::ShiftModifier) \{}
+\DoxyCodeLine{00138       \textcolor{keywordtype}{int} r0, c0, r1, c1;}
+\DoxyCodeLine{00139       getViewer()-\/>getCellSelection()-\/>getSelectedCells(r0, c0, r1, c1);}
+\DoxyCodeLine{00140       \textcolor{keywordflow}{if} (r0 <= r1 \&\& c0 <= c1) \{}
+\DoxyCodeLine{00141         \textcolor{keywordflow}{if} (abs(row -\/ r0) < abs(row -\/ r1)) \{}
+\DoxyCodeLine{00142           m\_firstRow = r1;}
+\DoxyCodeLine{00143           r0         = row;}
+\DoxyCodeLine{00144         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00145           m\_firstRow = r0;}
+\DoxyCodeLine{00146           r1         = row;}
+\DoxyCodeLine{00147         \}}
+\DoxyCodeLine{00148         \textcolor{keywordflow}{if} (abs(col -\/ c0) < abs(col -\/ c1)) \{}
+\DoxyCodeLine{00149           m\_firstCol = c1;}
+\DoxyCodeLine{00150           c0         = col;}
+\DoxyCodeLine{00151         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00152           m\_firstCol = c0;}
+\DoxyCodeLine{00153           c1         = col;}
+\DoxyCodeLine{00154         \}}
+\DoxyCodeLine{00155         \textcolor{keywordflow}{if} (m\_modifier \& Qt::ControlModifier)}
+\DoxyCodeLine{00156           getViewer()-\/>getCellKeyframeSelection()-\/>\mbox{\hyperlink{class_t_cell_keyframe_selection_a398f9b96df010d52ae8137d52f7a60af}{selectCellsKeyframes}}(r0, c0,}
+\DoxyCodeLine{00157                                                                         r1, c1);}
+\DoxyCodeLine{00158         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00159           getViewer()-\/>getCellSelection()-\/>\mbox{\hyperlink{class_t_cell_selection_ac081c8305a9b9269fbf82eb0c9e06bc3}{selectCells}}(r0, c0, r1, c1);}
+\DoxyCodeLine{00160       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00161         \textcolor{keywordflow}{if} (m\_modifier \& Qt::ControlModifier)}
+\DoxyCodeLine{00162           getViewer()-\/>getCellKeyframeSelection()-\/>\mbox{\hyperlink{class_t_cell_keyframe_selection_a398f9b96df010d52ae8137d52f7a60af}{selectCellsKeyframes}}(}
+\DoxyCodeLine{00163               row, col, row, col);}
+\DoxyCodeLine{00164         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00165           getViewer()-\/>getCellSelection()-\/>\mbox{\hyperlink{class_t_cell_selection_ac081c8305a9b9269fbf82eb0c9e06bc3}{selectCells}}(row, col, row, col);}
+\DoxyCodeLine{00166         getViewer()-\/>setCurrentColumn(col);}
+\DoxyCodeLine{00167         \textcolor{keywordflow}{if} (Preferences::instance()-\/>isMoveCurrentEnabled())}
+\DoxyCodeLine{00168           getViewer()-\/>setCurrentRow(row);}
+\DoxyCodeLine{00169       \}}
+\DoxyCodeLine{00170     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00171       getViewer()-\/>setCurrentColumn(col);}
+\DoxyCodeLine{00172       \textcolor{keywordflow}{if} (Preferences::instance()-\/>isMoveCurrentEnabled())}
+\DoxyCodeLine{00173         getViewer()-\/>setCurrentRow(row);}
+\DoxyCodeLine{00174       \textcolor{keywordflow}{if} (m\_modifier \& Qt::ControlModifier)}
+\DoxyCodeLine{00175         getViewer()-\/>getCellKeyframeSelection()-\/>selectCellKeyframe(row, col);}
+\DoxyCodeLine{00176       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00177         getViewer()-\/>getCellSelection()-\/>selectCell(row, col);}
+\DoxyCodeLine{00178     \}}
+\DoxyCodeLine{00179     \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool_ac2e0a67ad6ccbcc326cd0ebf27385b49}{refreshCellsArea}}();}
+\DoxyCodeLine{00180     refreshRowsArea();}
+\DoxyCodeLine{00181   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_selection_drag_tool_a46d3909012d4dfdb62ad6fc75d46dc1f}\label{class_xsheet_selection_drag_tool_a46d3909012d4dfdb62ad6fc75d46dc1f}} 
+\index{XsheetSelectionDragTool@{XsheetSelectionDragTool}!onDrag@{onDrag}}
+\index{onDrag@{onDrag}!XsheetSelectionDragTool@{XsheetSelectionDragTool}}
+\doxysubsubsection{\texorpdfstring{onDrag()}{onDrag()}}
+{\footnotesize\ttfamily void Xsheet\+Selection\+Drag\+Tool\+::on\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_cell_position}{Cell\+Position}} \&}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{Xsheet\+GUI\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00182                                                 \{}
+\DoxyCodeLine{00183     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00184     \textcolor{keywordtype}{int} row = pos.frame(), col = pos.layer();}
+\DoxyCodeLine{00185     \textcolor{keywordtype}{int} firstCol =}
+\DoxyCodeLine{00186         Preferences::instance()-\/>isXsheetCameraColumnVisible() ? -\/1 : 0;}
+\DoxyCodeLine{00187     \textcolor{keywordflow}{if} (col < firstCol || (!getViewer()-\/>orientation()-\/>isVerticalTimeline() \&\&}
+\DoxyCodeLine{00188                            col >= xsh-\/>\mbox{\hyperlink{class_t_xsheet_a17464dc5617cf87a46f03e1a52d36cc1}{getColumnCount}}()))}
+\DoxyCodeLine{00189       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00190     \textcolor{keywordflow}{if} (row < 0) row = 0;}
+\DoxyCodeLine{00191     \textcolor{keywordflow}{if} (m\_modifier \& Qt::ControlModifier)}
+\DoxyCodeLine{00192       getViewer()-\/>getCellKeyframeSelection()-\/>\mbox{\hyperlink{class_t_cell_keyframe_selection_a398f9b96df010d52ae8137d52f7a60af}{selectCellsKeyframes}}(}
+\DoxyCodeLine{00193           m\_firstRow, m\_firstCol, row, col);}
+\DoxyCodeLine{00194     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00195       getViewer()-\/>getCellSelection()-\/>\mbox{\hyperlink{class_t_cell_selection_ac081c8305a9b9269fbf82eb0c9e06bc3}{selectCells}}(m\_firstRow, m\_firstCol, row,}
+\DoxyCodeLine{00196                                                    col);}
+\DoxyCodeLine{00197     \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool_ac2e0a67ad6ccbcc326cd0ebf27385b49}{refreshCellsArea}}();}
+\DoxyCodeLine{00198     refreshRowsArea();}
+\DoxyCodeLine{00199   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_selection_drag_tool_a3a76bad40b7b0ef2cd85eb4fcc63cabb}\label{class_xsheet_selection_drag_tool_a3a76bad40b7b0ef2cd85eb4fcc63cabb}} 
+\index{XsheetSelectionDragTool@{XsheetSelectionDragTool}!onRelease@{onRelease}}
+\index{onRelease@{onRelease}!XsheetSelectionDragTool@{XsheetSelectionDragTool}}
+\doxysubsubsection{\texorpdfstring{onRelease()}{onRelease()}}
+{\footnotesize\ttfamily void Xsheet\+Selection\+Drag\+Tool\+::on\+Release (\begin{DoxyParamCaption}\item[{const QMouse\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{Xsheet\+GUI\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00200                                                     \{}
+\DoxyCodeLine{00201     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}()-\/>notifySelectionChanged();}
+\DoxyCodeLine{00202     refreshRowsArea();}
+\DoxyCodeLine{00203   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xsheetdragtool.\+cpp\end{DoxyCompactItemize}

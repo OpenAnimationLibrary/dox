@@ -1,0 +1,108 @@
+\hypertarget{class_t_fx_factory}{}\doxysection{TFx\+Factory Class Reference}
+\label{class_t_fx_factory}\index{TFxFactory@{TFxFactory}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_fx_factory_ab4942167d68230813bd062741e6fe68d}{add}} (const \mbox{\hyperlink{class_t_fx_info}{TFx\+Info}} \&info, \mbox{\hyperlink{class_t_fx_declaration}{TFx\+Declaration}} $\ast$decl)
+\item 
+\mbox{\hyperlink{class_t_fx}{TFx}} $\ast$ \mbox{\hyperlink{class_t_fx_factory_a4be4255806a758179750b99cc9a8c8b7}{create}} (std\+::string name)
+\item 
+void \mbox{\hyperlink{class_t_fx_factory_ab54e8a8b16f5616ab16017d7b31237a8}{get\+Fx\+Infos}} (std\+::vector$<$ \mbox{\hyperlink{class_t_fx_info}{TFx\+Info}} $>$ \&info) const
+\item 
+\mbox{\hyperlink{class_t_fx_info}{TFx\+Info}} \mbox{\hyperlink{class_t_fx_factory_a6decdfc2025b2d8a6c8ceb5763032d36}{get\+Fx\+Info}} (const std\+::string \&fx\+Identifier) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_fx_factory}{TFx\+Factory}} $\ast$ \mbox{\hyperlink{class_t_fx_factory_a8c82aa3e12a61995d8c1da4e479753aa}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_fx_factory_ab4942167d68230813bd062741e6fe68d}\label{class_t_fx_factory_ab4942167d68230813bd062741e6fe68d}} 
+\index{TFxFactory@{TFxFactory}!add@{add}}
+\index{add@{add}!TFxFactory@{TFxFactory}}
+\doxysubsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily void TFx\+Factory\+::add (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_fx_info}{TFx\+Info}} \&}]{info,  }\item[{\mbox{\hyperlink{class_t_fx_declaration}{TFx\+Declaration}} $\ast$}]{decl }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00214                                                       \{}
+\DoxyCodeLine{00215     \textcolor{comment}{// check for dups ???}}
+\DoxyCodeLine{00216     std::pair<TFxInfo, TFxDeclaration *> p(info, decl);}
+\DoxyCodeLine{00217     m\_table[info.m\_name] = p;}
+\DoxyCodeLine{00218   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_fx_factory_a4be4255806a758179750b99cc9a8c8b7}\label{class_t_fx_factory_a4be4255806a758179750b99cc9a8c8b7}} 
+\index{TFxFactory@{TFxFactory}!create@{create}}
+\index{create@{create}!TFxFactory@{TFxFactory}}
+\doxysubsubsection{\texorpdfstring{create()}{create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_fx}{TFx}} $\ast$ TFx\+Factory\+::create (\begin{DoxyParamCaption}\item[{std\+::string}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00220                               \{}
+\DoxyCodeLine{00221     Table::iterator it = m\_table.find(name);}
+\DoxyCodeLine{00222     \textcolor{keywordflow}{if} (it != m\_table.end()) \{}
+\DoxyCodeLine{00223       \mbox{\hyperlink{class_t_fx_declaration}{TFxDeclaration}} *decl = it-\/>second.second;}
+\DoxyCodeLine{00224 }
+\DoxyCodeLine{00225       \mbox{\hyperlink{class_t_persist}{TPersist}} *obj = decl-\/>create();}
+\DoxyCodeLine{00226       assert(obj);}
+\DoxyCodeLine{00227 }
+\DoxyCodeLine{00228       \textcolor{keywordflow}{return} \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_fx}{TFx}} *\textcolor{keyword}{>}(obj);}
+\DoxyCodeLine{00229     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00230       \textcolor{keywordflow}{return} TExternFx::create(name);}
+\DoxyCodeLine{00231   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_fx_factory_a6decdfc2025b2d8a6c8ceb5763032d36}\label{class_t_fx_factory_a6decdfc2025b2d8a6c8ceb5763032d36}} 
+\index{TFxFactory@{TFxFactory}!getFxInfo@{getFxInfo}}
+\index{getFxInfo@{getFxInfo}!TFxFactory@{TFxFactory}}
+\doxysubsubsection{\texorpdfstring{getFxInfo()}{getFxInfo()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_fx_info}{TFx\+Info}} TFx\+Factory\+::get\+Fx\+Info (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{fx\+Identifier }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00238                                                          \{}
+\DoxyCodeLine{00239     Table::const\_iterator it = m\_table.find(fxIdentifier);}
+\DoxyCodeLine{00240     \textcolor{keywordflow}{return} (it != m\_table.end()) ? it-\/>second.first : \mbox{\hyperlink{class_t_fx_info}{TFxInfo}}();}
+\DoxyCodeLine{00241   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_fx_factory_ab54e8a8b16f5616ab16017d7b31237a8}\label{class_t_fx_factory_ab54e8a8b16f5616ab16017d7b31237a8}} 
+\index{TFxFactory@{TFxFactory}!getFxInfos@{getFxInfos}}
+\index{getFxInfos@{getFxInfos}!TFxFactory@{TFxFactory}}
+\doxysubsubsection{\texorpdfstring{getFxInfos()}{getFxInfos()}}
+{\footnotesize\ttfamily void TFx\+Factory\+::get\+Fx\+Infos (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_t_fx_info}{TFx\+Info}} $>$ \&}]{info }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00233                                                   \{}
+\DoxyCodeLine{00234     \textcolor{keywordflow}{for} (Table::const\_iterator it = m\_table.begin(); it != m\_table.end(); ++it)}
+\DoxyCodeLine{00235       info.push\_back(it-\/>second.first);}
+\DoxyCodeLine{00236   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_fx_factory_a8c82aa3e12a61995d8c1da4e479753aa}\label{class_t_fx_factory_a8c82aa3e12a61995d8c1da4e479753aa}} 
+\index{TFxFactory@{TFxFactory}!instance@{instance}}
+\index{instance@{instance}!TFxFactory@{TFxFactory}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_t_fx_factory}{TFx\+Factory}} $\ast$ TFx\+Factory\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00209                                 \{}
+\DoxyCodeLine{00210     \textcolor{keyword}{static} \mbox{\hyperlink{class_t_fx_factory}{TFxFactory}} \_instance;}
+\DoxyCodeLine{00211     \textcolor{keywordflow}{return} \&\_instance;}
+\DoxyCodeLine{00212   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tfx/tfx.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,110 @@
+\hypertarget{struct_drawable_texture_data}{}\doxysection{Drawable\+Texture\+Data Struct Reference}
+\label{struct_drawable_texture_data}\index{DrawableTextureData@{DrawableTextureData}}
+
+
+\mbox{\hyperlink{struct_drawable_texture_data}{Drawable\+Texture\+Data}} is a \mbox{\hyperlink{struct_mesh_texturizer_1_1_texture_data}{Mesh\+Texturizer\+::\+Texture\+Data}} wrapper that.  
+
+
+
+
+{\ttfamily \#include $<$ttexturesstorage.\+h$>$}
+
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_mesh_texturizer_1_1_texture_data}{Mesh\+Texturizer\+::\+Texture\+Data}} $\ast$ \mbox{\hyperlink{struct_drawable_texture_data_a9f92711d9640ed33135302846a08d191}{m\+\_\+texture\+Data}}
+\begin{DoxyCompactList}\small\item\em The wrapped texture data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{struct_drawable_texture_data_a17b664d44d083cb2c0c148a03e38070c}{TTextures\+Storage}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{struct_drawable_texture_data}{Drawable\+Texture\+Data}} is a \mbox{\hyperlink{struct_mesh_texturizer_1_1_texture_data}{Mesh\+Texturizer\+::\+Texture\+Data}} wrapper that. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{struct_drawable_texture_data_a9f20d36eddbdc1bbfba47a4b5cd9e169}\label{struct_drawable_texture_data_a9f20d36eddbdc1bbfba47a4b5cd9e169}} 
+\index{DrawableTextureData@{DrawableTextureData}!DrawableTextureData@{DrawableTextureData}}
+\index{DrawableTextureData@{DrawableTextureData}!DrawableTextureData@{DrawableTextureData}}
+\doxysubsubsection{\texorpdfstring{DrawableTextureData()}{DrawableTextureData()}}
+{\footnotesize\ttfamily Drawable\+Texture\+Data\+::\+Drawable\+Texture\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{struct_drawable_texture_data_a0606e3d3dd2a20233c6858832514f098}\label{struct_drawable_texture_data_a0606e3d3dd2a20233c6858832514f098}} 
+\index{DrawableTextureData@{DrawableTextureData}!````~DrawableTextureData@{$\sim$DrawableTextureData}}
+\index{````~DrawableTextureData@{$\sim$DrawableTextureData}!DrawableTextureData@{DrawableTextureData}}
+\doxysubsubsection{\texorpdfstring{$\sim$DrawableTextureData()}{~DrawableTextureData()}}
+{\footnotesize\ttfamily Drawable\+Texture\+Data\+::$\sim$\+Drawable\+Texture\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00079                                           \{}
+\DoxyCodeLine{00080   QMutexLocker locker(\&l\_mutex);}
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00082   \mbox{\hyperlink{struct_textures_container}{TexturesContainer}} *texContainer = l\_texturesContainers[m\_dlSpaceId];}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084   \textcolor{keywordflow}{if} (m\_dlSpaceId >= 0) \{}
+\DoxyCodeLine{00085     \textcolor{comment}{// Load the container's display lists space (remember current OpenGL}}
+\DoxyCodeLine{00086     \textcolor{comment}{// context, too)}}
+\DoxyCodeLine{00087     \mbox{\hyperlink{class_t_g_l_display_lists_proxy}{TGLDisplayListsProxy}} *proxy =}
+\DoxyCodeLine{00088         TGLDisplayListsManager::instance()-\/>\mbox{\hyperlink{class_t_g_l_display_lists_manager_a8cd00685cbea9a7de2bc8dc77891f35a}{dlProxy}}(m\_dlSpaceId);}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090     TGlContext currentContext = tglGetCurrentContext();}
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00092     \textcolor{comment}{// Unbind the textures}}
+\DoxyCodeLine{00093     \{}
+\DoxyCodeLine{00094       QMutexLocker locker(proxy-\/>mutex());}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096       proxy-\/>makeCurrent();}
+\DoxyCodeLine{00097       texContainer-\/>\mbox{\hyperlink{struct_textures_container_a9e3189bea66ba23859160a956be12238}{m\_texturizer}}.\mbox{\hyperlink{class_mesh_texturizer_abe81d212c56c9b739e4988143570383b}{unbindTexture}}(m\_texId);}
+\DoxyCodeLine{00098     \}}
+\DoxyCodeLine{00099 }
+\DoxyCodeLine{00100     \textcolor{comment}{// Restore OpenGL context -\/ equivalent to tglDoneCurrent if currentContext}}
+\DoxyCodeLine{00101     \textcolor{comment}{// == TGlContext()}}
+\DoxyCodeLine{00102     tglMakeCurrent(currentContext);}
+\DoxyCodeLine{00103   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00104     \textcolor{comment}{// Temporary -\/ use current OpenGL context directly}}
+\DoxyCodeLine{00105     texContainer-\/>\mbox{\hyperlink{struct_textures_container_a9e3189bea66ba23859160a956be12238}{m\_texturizer}}.\mbox{\hyperlink{class_mesh_texturizer_abe81d212c56c9b739e4988143570383b}{unbindTexture}}(m\_texId);}
+\DoxyCodeLine{00106 }
+\DoxyCodeLine{00107   texContainer-\/>\mbox{\hyperlink{struct_textures_container_a971e7ae8f8660ea690f00eddd76da7d9}{m\_keys}}.erase(m\_objIdx);}
+\DoxyCodeLine{00108 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{struct_drawable_texture_data_a17b664d44d083cb2c0c148a03e38070c}\label{struct_drawable_texture_data_a17b664d44d083cb2c0c148a03e38070c}} 
+\index{DrawableTextureData@{DrawableTextureData}!TTexturesStorage@{TTexturesStorage}}
+\index{TTexturesStorage@{TTexturesStorage}!DrawableTextureData@{DrawableTextureData}}
+\doxysubsubsection{\texorpdfstring{TTexturesStorage}{TTexturesStorage}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{class_t_textures_storage}{TTextures\+Storage}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{struct_drawable_texture_data_a9f92711d9640ed33135302846a08d191}\label{struct_drawable_texture_data_a9f92711d9640ed33135302846a08d191}} 
+\index{DrawableTextureData@{DrawableTextureData}!m\_textureData@{m\_textureData}}
+\index{m\_textureData@{m\_textureData}!DrawableTextureData@{DrawableTextureData}}
+\doxysubsubsection{\texorpdfstring{m\_textureData}{m\_textureData}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_mesh_texturizer_1_1_texture_data}{Mesh\+Texturizer\+::\+Texture\+Data}}$\ast$ Drawable\+Texture\+Data\+::m\+\_\+texture\+Data}
+
+
+
+The wrapped texture data. 
+
+
+
+Referenced by \mbox{\hyperlink{l00136}{TTextures\+Storage\+::load\+Texture()}}.
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/ext/ttexturesstorage.\+h\item 
+E\+:/opentoonz/toonz/sources/tnzext/ttexturesstorage.\+cpp\end{DoxyCompactItemize}

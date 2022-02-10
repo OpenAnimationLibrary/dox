@@ -1,0 +1,131 @@
+\hypertarget{class_t_functor_invoker}{}\doxysection{TFunctor\+Invoker Class Reference}
+\label{class_t_functor_invoker}\index{TFunctorInvoker@{TFunctorInvoker}}
+
+
+The \mbox{\hyperlink{class_t_functor_invoker}{TFunctor\+Invoker}} is a singleton class that can be used to invoke functions as Qt slots without having to inherit from QObject.  
+
+
+
+
+{\ttfamily \#include $<$tfunctorinvoker.\+h$>$}
+
+Inheritance diagram for TFunctor\+Invoker\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_t_functor_invoker}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_t_functor_invoker_1_1_base_functor}{Base\+Functor}}
+\begin{DoxyCompactList}\small\item\em Polymorphic base {\itshape zerary} functor for TFunctor\+Invoker-\/compatible functors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_functor_invoker_a99fb6258ce3bfa91ce545b91beeda35d}{invoke}} (void $\ast$v\+Ptr)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_functor_invoker_a7950723931635e7f8ea5418b69c551e8}{invoke\+Queued}} (\mbox{\hyperlink{class_t_functor_invoker_1_1_base_functor}{Base\+Functor}} $\ast$functor)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_functor_invoker}{TFunctor\+Invoker}} $\ast$ \mbox{\hyperlink{class_t_functor_invoker_aa177d2623dc2214007e78450f3d4b9c1}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_t_functor_invoker}{TFunctor\+Invoker}} is a singleton class that can be used to invoke functions as Qt slots without having to inherit from QObject. 
+
+\begin{DoxyParagraph}{Rationale}
+Signal and slots are an important part of the Qt framework -\/ however, using them requires to explicitly inherit from QObject. This singleton object is provided to avoid the memory overhead of inheriting from QObject in the case of simple function calls -\/ notably functions that need to synchronize with Qt\textquotesingle{}s main event loop.
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{Usage}
+Inherit from \mbox{\hyperlink{class_t_functor_invoker_1_1_base_functor}{TFunctor\+Invoker\+::\+Base\+Functor}} and allocate a new instance on the heap, to be supplied to the TFunctor\+Invoker\+::invoke() slot. ~\newline
+ The following code exemplifies a correct usage for this class\+: ~\newline
+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{              \textcolor{keyword}{class }MyFunctor final : \textcolor{keyword}{public} \mbox{\hyperlink{class_t_functor_invoker_1_1_base_functor}{TFunctorInvoker::BaseFunctor}}}
+\DoxyCodeLine{              \{}
+\DoxyCodeLine{                MyParams m\_params;                                \textcolor{comment}{// Function}}
+\DoxyCodeLine{parameters}
+\DoxyCodeLine{}
+\DoxyCodeLine{              \textcolor{keyword}{public}:}
+\DoxyCodeLine{}
+\DoxyCodeLine{                MyFunctor(\textcolor{keyword}{const} MyParams\& params) : m\_params(params) \{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{                \textcolor{keywordtype}{void} operator()()}
+\DoxyCodeLine{                \{}
+\DoxyCodeLine{                  \textcolor{comment}{// The function body, operating on m\_params}}
+\DoxyCodeLine{                \}}
+\DoxyCodeLine{              \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{              \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{}
+\DoxyCodeLine{              \textcolor{keywordtype}{void} invokeMyFunctor\_queued(\textcolor{keyword}{const} MyParams\& params)}
+\DoxyCodeLine{              \{}
+\DoxyCodeLine{                QMetaObject::invokeMethod(TFunctorInvoker::instance(), \textcolor{stringliteral}{"{}invoke"{}},}
+\DoxyCodeLine{Qt::QueuedConnection,}
+\DoxyCodeLine{                  Q\_ARG(\textcolor{keywordtype}{void}*, \textcolor{keyword}{new} MyFunctor(params))}
+\DoxyCodeLine{                );}
+\DoxyCodeLine{              \}}
+
+\end{DoxyCode}
+ 
+\end{DoxyParagraph}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_functor_invoker_aa177d2623dc2214007e78450f3d4b9c1}\label{class_t_functor_invoker_aa177d2623dc2214007e78450f3d4b9c1}} 
+\index{TFunctorInvoker@{TFunctorInvoker}!instance@{instance}}
+\index{instance@{instance}!TFunctorInvoker@{TFunctorInvoker}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_functor_invoker}{TFunctor\+Invoker}} $\ast$ TFunctor\+Invoker\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00012                                            \{}
+\DoxyCodeLine{00013   \textcolor{keyword}{static} \mbox{\hyperlink{class_t_functor_invoker}{TFunctorInvoker}} theInstance;}
+\DoxyCodeLine{00014   \textcolor{keywordflow}{return} \&theInstance;}
+\DoxyCodeLine{00015 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_functor_invoker_a99fb6258ce3bfa91ce545b91beeda35d}\label{class_t_functor_invoker_a99fb6258ce3bfa91ce545b91beeda35d}} 
+\index{TFunctorInvoker@{TFunctorInvoker}!invoke@{invoke}}
+\index{invoke@{invoke}!TFunctorInvoker@{TFunctorInvoker}}
+\doxysubsubsection{\texorpdfstring{invoke}{invoke}}
+{\footnotesize\ttfamily void TFunctor\+Invoker\+::invoke (\begin{DoxyParamCaption}\item[{void $\ast$}]{v\+Ptr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00100                           \{}
+\DoxyCodeLine{00101     BaseFunctor *func = (BaseFunctor *)vPtr;}
+\DoxyCodeLine{00102 }
+\DoxyCodeLine{00103     (*func)();    \textcolor{comment}{// Invoke functor ...}}
+\DoxyCodeLine{00104     \textcolor{keyword}{delete} func;  \textcolor{comment}{// ... and then delete it}}
+\DoxyCodeLine{00105   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_functor_invoker_a7950723931635e7f8ea5418b69c551e8}\label{class_t_functor_invoker_a7950723931635e7f8ea5418b69c551e8}} 
+\index{TFunctorInvoker@{TFunctorInvoker}!invokeQueued@{invokeQueued}}
+\index{invokeQueued@{invokeQueued}!TFunctorInvoker@{TFunctorInvoker}}
+\doxysubsubsection{\texorpdfstring{invokeQueued()}{invokeQueued()}}
+{\footnotesize\ttfamily void TFunctor\+Invoker\+::invoke\+Queued (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_functor_invoker_1_1_base_functor}{Base\+Functor}} $\ast$}]{functor }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019                                                        \{}
+\DoxyCodeLine{00020   QMetaObject::invokeMethod(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}invoke"{}}, Qt::QueuedConnection,}
+\DoxyCodeLine{00021                             Q\_ARG(\textcolor{keywordtype}{void} *, functor));}
+\DoxyCodeLine{00022 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tfunctorinvoker.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tcore/tfunctorinvoker.\+cpp\end{DoxyCompactItemize}

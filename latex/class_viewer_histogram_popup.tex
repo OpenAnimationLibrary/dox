@@ -1,0 +1,117 @@
+\hypertarget{class_viewer_histogram_popup}{}\doxysection{Viewer\+Histogram\+Popup Class Reference}
+\label{class_viewer_histogram_popup}\index{ViewerHistogramPopup@{ViewerHistogramPopup}}
+
+
+The \mbox{\hyperlink{class_viewer_histogram_popup}{Viewer\+Histogram\+Popup}} show the histogram pertain to current viewer.  
+
+
+Inheritance diagram for Viewer\+Histogram\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_viewer_histogram_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_viewer_histogram_popup_a58cf25ac94db3b432530ccec9fc39c9e}{set\+Current\+Raster}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_viewer_histogram_popup_a9b5b8445219e1a82c2ccf6fb0c8b515a}{show\+Event}} (QShow\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_viewer_histogram_popup_a6d9eb546a2cf61937206a02ce7762b38}{hide\+Event}} (QHide\+Event $\ast$e) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_viewer_histogram_popup}{Viewer\+Histogram\+Popup}} show the histogram pertain to current viewer. 
+
+\begin{DoxyVerb}         Inherits \b Dialog.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_viewer_histogram_popup_a9f0b0f377532c84af72bea0f5796c773}\label{class_viewer_histogram_popup_a9f0b0f377532c84af72bea0f5796c773}} 
+\index{ViewerHistogramPopup@{ViewerHistogramPopup}!ViewerHistogramPopup@{ViewerHistogramPopup}}
+\index{ViewerHistogramPopup@{ViewerHistogramPopup}!ViewerHistogramPopup@{ViewerHistogramPopup}}
+\doxysubsubsection{\texorpdfstring{ViewerHistogramPopup()}{ViewerHistogramPopup()}}
+{\footnotesize\ttfamily Viewer\+Histogram\+Popup\+::\+Viewer\+Histogram\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00119     : \mbox{\hyperlink{class_histogram_popup}{HistogramPopup}}(tr(\textcolor{stringliteral}{"{}Viewer Histogram"{}})) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_viewer_histogram_popup_a6d9eb546a2cf61937206a02ce7762b38}\label{class_viewer_histogram_popup_a6d9eb546a2cf61937206a02ce7762b38}} 
+\index{ViewerHistogramPopup@{ViewerHistogramPopup}!hideEvent@{hideEvent}}
+\index{hideEvent@{hideEvent}!ViewerHistogramPopup@{ViewerHistogramPopup}}
+\doxysubsubsection{\texorpdfstring{hideEvent()}{hideEvent()}}
+{\footnotesize\ttfamily void Viewer\+Histogram\+Popup\+::hide\+Event (\begin{DoxyParamCaption}\item[{QHide\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00134                                                   \{}
+\DoxyCodeLine{00135   disconnect(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentFrame(), SIGNAL(frameSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00136              SLOT(setCurrentRaster()));}
+\DoxyCodeLine{00137   disconnect(\mbox{\hyperlink{class_previewer_a5eb765b66490a3d99d432f90864bfacd}{Previewer::instance}}(), SIGNAL(activedChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00138              SLOT(setCurrentRaster()));}
+\DoxyCodeLine{00139 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_viewer_histogram_popup_a58cf25ac94db3b432530ccec9fc39c9e}\label{class_viewer_histogram_popup_a58cf25ac94db3b432530ccec9fc39c9e}} 
+\index{ViewerHistogramPopup@{ViewerHistogramPopup}!setCurrentRaster@{setCurrentRaster}}
+\index{setCurrentRaster@{setCurrentRaster}!ViewerHistogramPopup@{ViewerHistogramPopup}}
+\doxysubsubsection{\texorpdfstring{setCurrentRaster}{setCurrentRaster}}
+{\footnotesize\ttfamily void Viewer\+Histogram\+Popup\+::set\+Current\+Raster (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00143                                             \{}
+\DoxyCodeLine{00144   \mbox{\hyperlink{class_t_app}{TApp}} *app            = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00145   \mbox{\hyperlink{class_previewer}{Previewer}} *previewer = \mbox{\hyperlink{class_previewer_a5eb765b66490a3d99d432f90864bfacd}{Previewer::instance}}();}
+\DoxyCodeLine{00146   \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras         = 0;}
+\DoxyCodeLine{00147   \textcolor{keywordflow}{if} (previewer-\/>isActive()) \{}
+\DoxyCodeLine{00148     \textcolor{keywordtype}{int} currentFrame = app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>getFrameIndex();}
+\DoxyCodeLine{00149     \textcolor{comment}{// Se il preview del frame non e' pronto richiamo questo metodo dopo un}}
+\DoxyCodeLine{00150     \textcolor{comment}{// intervallo di 10 ms}}
+\DoxyCodeLine{00151     \textcolor{keywordflow}{if} (!previewer-\/>\mbox{\hyperlink{class_previewer_a43b83e2f98aa1ee5fc316fe9eeeaea15}{isFrameReady}}(currentFrame)) \{}
+\DoxyCodeLine{00152       QTimer::singleShot(10, \textcolor{keyword}{this}, SLOT(setCurrentRaster()));}
+\DoxyCodeLine{00153       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00154     \}}
+\DoxyCodeLine{00155     ras = previewer-\/>\mbox{\hyperlink{class_previewer_afb0f0a5c7ca1fb9366996407ea58d4cc}{getRaster}}(currentFrame);}
+\DoxyCodeLine{00156   \}}
+\DoxyCodeLine{00157   m\_histogram-\/>setRaster(ras);}
+\DoxyCodeLine{00158   update();}
+\DoxyCodeLine{00159 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_viewer_histogram_popup_a9b5b8445219e1a82c2ccf6fb0c8b515a}\label{class_viewer_histogram_popup_a9b5b8445219e1a82c2ccf6fb0c8b515a}} 
+\index{ViewerHistogramPopup@{ViewerHistogramPopup}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!ViewerHistogramPopup@{ViewerHistogramPopup}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Viewer\+Histogram\+Popup\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00123                                                   \{}
+\DoxyCodeLine{00124   connect(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentFrame(), SIGNAL(frameSwitched()),}
+\DoxyCodeLine{00125           SLOT(setCurrentRaster()));}
+\DoxyCodeLine{00126   connect(\mbox{\hyperlink{class_previewer_a5eb765b66490a3d99d432f90864bfacd}{Previewer::instance}}(), SIGNAL(activedChanged()),}
+\DoxyCodeLine{00127           SLOT(setCurrentRaster()));}
+\DoxyCodeLine{00128 }
+\DoxyCodeLine{00129   setCurrentRaster();}
+\DoxyCodeLine{00130 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/histogrampopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/histogrampopup.\+cpp\end{DoxyCompactItemize}

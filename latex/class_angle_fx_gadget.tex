@@ -1,0 +1,124 @@
+\hypertarget{class_angle_fx_gadget}{}\doxysection{Angle\+Fx\+Gadget Class Reference}
+\label{class_angle_fx_gadget}\index{AngleFxGadget@{AngleFxGadget}}
+Inheritance diagram for Angle\+Fx\+Gadget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_angle_fx_gadget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_angle_fx_gadget_adbad74f6ff764fee60eca1dcc9c703e6}{Angle\+Fx\+Gadget}} (\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$controller, const TDouble\+ParamP \&param, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos)
+\item 
+void \mbox{\hyperlink{class_angle_fx_gadget_ae8ee1779060a5a55c6084793831afd99}{draw}} (bool picking) override
+\item 
+void \mbox{\hyperlink{class_angle_fx_gadget_a6534d964714ae782bfb2cc6ed26e20f8}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+void \mbox{\hyperlink{class_angle_fx_gadget_a7ced6a51f09e8aed932fd231b5c3f3e0}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_angle_fx_gadget_adbad74f6ff764fee60eca1dcc9c703e6}\label{class_angle_fx_gadget_adbad74f6ff764fee60eca1dcc9c703e6}} 
+\index{AngleFxGadget@{AngleFxGadget}!AngleFxGadget@{AngleFxGadget}}
+\index{AngleFxGadget@{AngleFxGadget}!AngleFxGadget@{AngleFxGadget}}
+\doxysubsubsection{\texorpdfstring{AngleFxGadget()}{AngleFxGadget()}}
+{\footnotesize\ttfamily Angle\+Fx\+Gadget\+::\+Angle\+Fx\+Gadget (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$}]{controller,  }\item[{const TDouble\+ParamP \&}]{param,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00485     : \mbox{\hyperlink{class_fx_gadget}{FxGadget}}(controller), m\_param(param), m\_pos(pos) \{}
+\DoxyCodeLine{00486   addParam(param);}
+\DoxyCodeLine{00487 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_angle_fx_gadget_ae8ee1779060a5a55c6084793831afd99}\label{class_angle_fx_gadget_ae8ee1779060a5a55c6084793831afd99}} 
+\index{AngleFxGadget@{AngleFxGadget}!draw@{draw}}
+\index{draw@{draw}!AngleFxGadget@{AngleFxGadget}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Angle\+Fx\+Gadget\+::draw (\begin{DoxyParamCaption}\item[{bool}]{picking }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00491                                      \{}
+\DoxyCodeLine{00492   \textcolor{keywordflow}{if} (isSelected())}
+\DoxyCodeLine{00493     glColor3dv(m\_selectedColor);}
+\DoxyCodeLine{00494   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00495     glColor3d(0, 0, 1);}
+\DoxyCodeLine{00496   glPushName(getId());}
+\DoxyCodeLine{00497   \textcolor{keywordtype}{double} pixelSize = sqrt(tglGetPixelSize2()) * getDevPixRatio();}
+\DoxyCodeLine{00498   \textcolor{keywordtype}{double} r         = pixelSize * 40;}
+\DoxyCodeLine{00499   \textcolor{keywordtype}{double} a = pixelSize * 10, b = pixelSize * 5;}
+\DoxyCodeLine{00500   tglDrawCircle(m\_pos, r);}
+\DoxyCodeLine{00501   \textcolor{keywordtype}{double} phi = getValue(m\_param);}
+\DoxyCodeLine{00502   glPushMatrix();}
+\DoxyCodeLine{00503   glTranslated(m\_pos.x, m\_pos.y, 0);}
+\DoxyCodeLine{00504   glRotated(phi, 0, 0, 1);}
+\DoxyCodeLine{00505   glBegin(GL\_LINES);}
+\DoxyCodeLine{00506   glVertex2d(0, 0);}
+\DoxyCodeLine{00507   glVertex2d(r, 0);}
+\DoxyCodeLine{00508   glVertex2d(r, 0);}
+\DoxyCodeLine{00509   glVertex2d(r -\/ a, b);}
+\DoxyCodeLine{00510   glVertex2d(r, 0);}
+\DoxyCodeLine{00511   glVertex2d(r -\/ a, -\/b);}
+\DoxyCodeLine{00512   glEnd();}
+\DoxyCodeLine{00513   glPopMatrix();}
+\DoxyCodeLine{00514   glPopName();}
+\DoxyCodeLine{00515 }
+\DoxyCodeLine{00516   \textcolor{keywordflow}{if} (isSelected()) \{}
+\DoxyCodeLine{00517     drawTooltip(m\_pos + \mbox{\hyperlink{class_t_point_t}{TPointD}}(0.707, 0.707) * r, getLabel());}
+\DoxyCodeLine{00518   \}}
+\DoxyCodeLine{00519 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_angle_fx_gadget_a6534d964714ae782bfb2cc6ed26e20f8}\label{class_angle_fx_gadget_a6534d964714ae782bfb2cc6ed26e20f8}} 
+\index{AngleFxGadget@{AngleFxGadget}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!AngleFxGadget@{AngleFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Angle\+Fx\+Gadget\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00523 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_angle_fx_gadget_a7ced6a51f09e8aed932fd231b5c3f3e0}\label{class_angle_fx_gadget_a7ced6a51f09e8aed932fd231b5c3f3e0}} 
+\index{AngleFxGadget@{AngleFxGadget}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!AngleFxGadget@{AngleFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Angle\+Fx\+Gadget\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00527                                                                           \{}
+\DoxyCodeLine{00528   \mbox{\hyperlink{class_t_point_t}{TPointD}} d  = pos -\/ m\_pos;}
+\DoxyCodeLine{00529   \textcolor{keywordtype}{double} phi = atan2(d.y, d.x);}
+\DoxyCodeLine{00530   setValue(m\_param, phi * M\_180\_PI);}
+\DoxyCodeLine{00531 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/edittoolgadgets.\+cpp\end{DoxyCompactItemize}

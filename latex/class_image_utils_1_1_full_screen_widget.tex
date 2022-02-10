@@ -1,0 +1,235 @@
+\hypertarget{class_image_utils_1_1_full_screen_widget}{}\doxysection{Image\+Utils\+::Full\+Screen\+Widget Class Reference}
+\label{class_image_utils_1_1_full_screen_widget}\index{ImageUtils::FullScreenWidget@{ImageUtils::FullScreenWidget}}
+
+
+Temporary class used to deal with QTBUG \#7556 -\/ QGLWidgets going fullscreen {\itshape need} a containing widget that leaves a small margin to prevent the widget from covering other widgets (specifically, context menus).  
+
+
+
+
+{\ttfamily \#include $<$imageutils.\+h$>$}
+
+Inheritance diagram for Image\+Utils\+::Full\+Screen\+Widget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_image_utils_1_1_full_screen_widget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_image_utils_1_1_full_screen_widget_a80e892c48df5fd2967343d500607eab1}{toggle\+Full\+Screen}} (bool quit=false)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_image_utils_1_1_full_screen_widget_ade21511d9128da6dc12a4ab2043a977a}{Full\+Screen\+Widget}} (QWidget $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_image_utils_1_1_full_screen_widget_a539dd1466691037c4d7136065496e13b}{set\+Widget}} (QWidget $\ast$widget)
+\begin{DoxyCompactList}\small\item\em Sets the content, surrendering ownership. \end{DoxyCompactList}\item 
+QWidget $\ast$ \mbox{\hyperlink{class_image_utils_1_1_full_screen_widget_a39691d9bced2cb209ac9652b53ff1625}{widget}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Temporary class used to deal with QTBUG \#7556 -\/ QGLWidgets going fullscreen {\itshape need} a containing widget that leaves a small margin to prevent the widget from covering other widgets (specifically, context menus). 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_image_utils_1_1_full_screen_widget_ade21511d9128da6dc12a4ab2043a977a}\label{class_image_utils_1_1_full_screen_widget_ade21511d9128da6dc12a4ab2043a977a}} 
+\index{ImageUtils::FullScreenWidget@{ImageUtils::FullScreenWidget}!FullScreenWidget@{FullScreenWidget}}
+\index{FullScreenWidget@{FullScreenWidget}!ImageUtils::FullScreenWidget@{ImageUtils::FullScreenWidget}}
+\doxysubsubsection{\texorpdfstring{FullScreenWidget()}{FullScreenWidget()}}
+{\footnotesize\ttfamily Image\+Utils\+::\+Full\+Screen\+Widget\+::\+Full\+Screen\+Widget (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00890                                                   : QWidget(parent) \{}
+\DoxyCodeLine{00891   QHBoxLayout *layout = \textcolor{keyword}{new} QHBoxLayout(\textcolor{keyword}{this});}
+\DoxyCodeLine{00892   layout-\/>setMargin(0);}
+\DoxyCodeLine{00893   layout-\/>setSpacing(0);}
+\DoxyCodeLine{00894 }
+\DoxyCodeLine{00895   setLayout(layout);}
+\DoxyCodeLine{00896 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_image_utils_1_1_full_screen_widget_a539dd1466691037c4d7136065496e13b}\label{class_image_utils_1_1_full_screen_widget_a539dd1466691037c4d7136065496e13b}} 
+\index{ImageUtils::FullScreenWidget@{ImageUtils::FullScreenWidget}!setWidget@{setWidget}}
+\index{setWidget@{setWidget}!ImageUtils::FullScreenWidget@{ImageUtils::FullScreenWidget}}
+\doxysubsubsection{\texorpdfstring{setWidget()}{setWidget()}}
+{\footnotesize\ttfamily void Image\+Utils\+::\+Full\+Screen\+Widget\+::set\+Widget (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{widget }\end{DoxyParamCaption})}
+
+
+
+Sets the content, surrendering ownership. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00900                                                 \{}
+\DoxyCodeLine{00901   QLayout *layout = this-\/>layout();}
+\DoxyCodeLine{00902 }
+\DoxyCodeLine{00903   \textcolor{keyword}{delete} layout-\/>takeAt(0);}
+\DoxyCodeLine{00904   \textcolor{keywordflow}{if} ((m\_widget = widget)) layout-\/>addWidget(m\_widget);}
+\DoxyCodeLine{00905 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_image_utils_1_1_full_screen_widget_a80e892c48df5fd2967343d500607eab1}\label{class_image_utils_1_1_full_screen_widget_a80e892c48df5fd2967343d500607eab1}} 
+\index{ImageUtils::FullScreenWidget@{ImageUtils::FullScreenWidget}!toggleFullScreen@{toggleFullScreen}}
+\index{toggleFullScreen@{toggleFullScreen}!ImageUtils::FullScreenWidget@{ImageUtils::FullScreenWidget}}
+\doxysubsubsection{\texorpdfstring{toggleFullScreen}{toggleFullScreen}}
+{\footnotesize\ttfamily bool Image\+Utils\+::\+Full\+Screen\+Widget\+::toggle\+Full\+Screen (\begin{DoxyParamCaption}\item[{bool}]{quit = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00923 \{}
+\DoxyCodeLine{00924   \textcolor{comment}{// Initialize the return value.}}
+\DoxyCodeLine{00925   \textcolor{keywordtype}{bool} fFullScreenStateToggled = \textcolor{keyword}{false};}
+\DoxyCodeLine{00926 }
+\DoxyCodeLine{00927   \textcolor{comment}{// Define some constants for setting and clearing window flags.}}
+\DoxyCodeLine{00928   \textcolor{keyword}{const} Qt::WindowFlags kwfFullScreenWidgetFlags =}
+\DoxyCodeLine{00929       Qt::Window |              \textcolor{comment}{// <-\/-\/ Make the widget become a window.}}
+\DoxyCodeLine{00930       Qt::FramelessWindowHint;  \textcolor{comment}{// <-\/-\/ Full screen windows have no border.}}
+\DoxyCodeLine{00931 }
+\DoxyCodeLine{00932   \textcolor{keyword}{const} Qt::WindowFlags kwfFullScreenWidgetExcludedFlagsMask =}
+\DoxyCodeLine{00933       (Qt::WindowFlags)\string~Qt::WindowTitleHint;  \textcolor{comment}{// <-\/-\/ Full screen windows have no}}
+\DoxyCodeLine{00934                                               \textcolor{comment}{// titlebar.}}
+\DoxyCodeLine{00935 }
+\DoxyCodeLine{00936   \textcolor{comment}{// Determine whether to enter or leave full screen mode}}
+\DoxyCodeLine{00937   \textcolor{keywordflow}{if} (this-\/>windowState() \& Qt::WindowFullScreen) \{}
+\DoxyCodeLine{00938     this-\/>hide();}
+\DoxyCodeLine{00939 }
+\DoxyCodeLine{00940     this-\/>setWindowFlags(this-\/>windowFlags() \& \string~kwfFullScreenWidgetFlags);}
+\DoxyCodeLine{00941 }
+\DoxyCodeLine{00942     this-\/>showNormal();}
+\DoxyCodeLine{00943 }
+\DoxyCodeLine{00944     this-\/>m\_widget-\/>setFocus();}
+\DoxyCodeLine{00945 }
+\DoxyCodeLine{00946     \textcolor{comment}{// Set the return value to indicate that the full screen mode has been}}
+\DoxyCodeLine{00947     \textcolor{comment}{// changed.}}
+\DoxyCodeLine{00948     fFullScreenStateToggled = \textcolor{keyword}{true};}
+\DoxyCodeLine{00949   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00950     \textcolor{comment}{// There's no point to switching into full screen if the}}
+\DoxyCodeLine{00951     \textcolor{comment}{// application is in the process of quitting.}}
+\DoxyCodeLine{00952     \textcolor{keywordflow}{if} (!kfApplicationQuitInProgress) \{}
+\DoxyCodeLine{00953       \textcolor{comment}{//==============================================================}}
+\DoxyCodeLine{00954       \textcolor{comment}{//}}
+\DoxyCodeLine{00955       \textcolor{comment}{//  NOTE:}}
+\DoxyCodeLine{00956       \textcolor{comment}{//}}
+\DoxyCodeLine{00957       \textcolor{comment}{//    This new way of going into full screen mode does things manually in}}
+\DoxyCodeLine{00958       \textcolor{comment}{//    order to bypass Qt's incorrect policy of always relocating a widget}}
+\DoxyCodeLine{00959       \textcolor{comment}{//    to desktop coordinates (0,0) when the widget becomes a window via}}
+\DoxyCodeLine{00960       \textcolor{comment}{//    setting the Qt::Window flag.}}
+\DoxyCodeLine{00961       \textcolor{comment}{//}}
+\DoxyCodeLine{00962       \textcolor{comment}{//    This makes full screen mode work MUCH better on X11 systems with}}
+\DoxyCodeLine{00963       \textcolor{comment}{//    multiple displays.}}
+\DoxyCodeLine{00964       \textcolor{comment}{//}}
+\DoxyCodeLine{00965       \textcolor{comment}{//==============================================================}}
+\DoxyCodeLine{00966       \textcolor{comment}{//}}
+\DoxyCodeLine{00967       \textcolor{comment}{//  STRATEGY:}}
+\DoxyCodeLine{00968       \textcolor{comment}{//}}
+\DoxyCodeLine{00969       \textcolor{comment}{//    1.    Obtain the rectangle of the screen that the widgets host}}
+\DoxyCodeLine{00970       \textcolor{comment}{//    window is on. This has to be done first, otherwise the CORRECT}}
+\DoxyCodeLine{00971       \textcolor{comment}{//    screen info can potentially become unavailable in the following}}
+\DoxyCodeLine{00972       \textcolor{comment}{//    steps.}}
+\DoxyCodeLine{00973       \textcolor{comment}{//}}
+\DoxyCodeLine{00974       \textcolor{comment}{//    2.    Manually set all the necessary flags for the full screen}}
+\DoxyCodeLine{00975       \textcolor{comment}{//    window attributes and state. Qt WILL hide the widget/window when}}
+\DoxyCodeLine{00976       \textcolor{comment}{//    this is done.}}
+\DoxyCodeLine{00977       \textcolor{comment}{//}}
+\DoxyCodeLine{00978       \textcolor{comment}{//    3.    Set the window geometry/rect to be the same as the screen from}}
+\DoxyCodeLine{00979       \textcolor{comment}{//    Step 1.}}
+\DoxyCodeLine{00980       \textcolor{comment}{//}}
+\DoxyCodeLine{00981       \textcolor{comment}{//    4.    Make the window visible again.}}
+\DoxyCodeLine{00982       \textcolor{comment}{//}}
+\DoxyCodeLine{00983       \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00984       \textcolor{comment}{// STEP 1:}}
+\DoxyCodeLine{00985 }
+\DoxyCodeLine{00986       \textcolor{comment}{// Get the window widget that contains this widget.}}
+\DoxyCodeLine{00987       QWidget *ptrWindowWidget = this-\/>window();}
+\DoxyCodeLine{00988       \textcolor{keywordflow}{if} (ptrWindowWidget) \{}
+\DoxyCodeLine{00989         \textcolor{comment}{// Get the access to the QWindow object of the containing window.}}
+\DoxyCodeLine{00990         QWindow *ptrContainingQWindow = ptrWindowWidget-\/>windowHandle();}
+\DoxyCodeLine{00991         \textcolor{keywordflow}{if} (ptrContainingQWindow) \{}
+\DoxyCodeLine{00992           \textcolor{comment}{// Get access to the screen the window is on.}}
+\DoxyCodeLine{00993           QScreen *ptrScreenThisWindowIsOn = ptrContainingQWindow-\/>screen();}
+\DoxyCodeLine{00994           \textcolor{keywordflow}{if} (ptrScreenThisWindowIsOn) \{}
+\DoxyCodeLine{00995 \textcolor{preprocessor}{\#if !defined(\_WIN32)}}
+\DoxyCodeLine{00996             \textcolor{comment}{// Get the geometry rect for the correct screen.}}
+\DoxyCodeLine{00997             QRect qrcScreen = ptrScreenThisWindowIsOn-\/>geometry();}
+\DoxyCodeLine{00998 }
+\DoxyCodeLine{00999             \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{01000             \textcolor{comment}{// STEP 2:}}
+\DoxyCodeLine{01001 }
+\DoxyCodeLine{01002             \textcolor{comment}{// Set the window flags to be frameless and with no titlebar.}}
+\DoxyCodeLine{01003             \textcolor{comment}{//}}
+\DoxyCodeLine{01004             \textcolor{comment}{// This call will turn the widget into a "{}window"{}, and HIDE it. This}}
+\DoxyCodeLine{01005             \textcolor{comment}{// is because Qt always hides a widget when it transforms a widget}}
+\DoxyCodeLine{01006             \textcolor{comment}{//  into a window, or turns a window into a widget.}}
+\DoxyCodeLine{01007             \textcolor{comment}{//}}
+\DoxyCodeLine{01008             this-\/>setWindowFlags(}
+\DoxyCodeLine{01009                 (this-\/>windowFlags() \& kwfFullScreenWidgetExcludedFlagsMask) |}
+\DoxyCodeLine{01010                 kwfFullScreenWidgetFlags);}
+\DoxyCodeLine{01011 }
+\DoxyCodeLine{01012             \textcolor{comment}{// Set the window state flag to indicate that it's now in fullscreen}}
+\DoxyCodeLine{01013             \textcolor{comment}{// mode.}}
+\DoxyCodeLine{01014             \textcolor{comment}{// If this state flag isn't set, the test for whether to enter or}}
+\DoxyCodeLine{01015             \textcolor{comment}{// leave full screen mode won't work correctly.}}
+\DoxyCodeLine{01016             this-\/>setWindowState(Qt::WindowFullScreen);}
+\DoxyCodeLine{01017 }
+\DoxyCodeLine{01018             \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{01019             \textcolor{comment}{// STEP 3:}}
+\DoxyCodeLine{01020 }
+\DoxyCodeLine{01021             \textcolor{comment}{// Set the window to the geometry rect of the correct screen.}}
+\DoxyCodeLine{01022             this-\/>setGeometry(qrcScreen);}
+\DoxyCodeLine{01023 }
+\DoxyCodeLine{01024             \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{01025             \textcolor{comment}{// STEP 4:}}
+\DoxyCodeLine{01026 }
+\DoxyCodeLine{01027             \textcolor{comment}{// Make the window visible. This also causes all the changes to the}}
+\DoxyCodeLine{01028             \textcolor{comment}{// widget's flags, state and geometry that was just set to take}}
+\DoxyCodeLine{01029             \textcolor{comment}{// effect.}}
+\DoxyCodeLine{01030             this-\/>show();}
+\DoxyCodeLine{01031 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{01032             this-\/>setWindowFlags(this-\/>windowFlags() | Qt::Window);}
+\DoxyCodeLine{01033             this-\/>window()-\/>windowHandle()-\/>setScreen(ptrScreenThisWindowIsOn);}
+\DoxyCodeLine{01034 }
+\DoxyCodeLine{01035             \textcolor{comment}{// http://doc.qt.io/qt-\/5/windows-\/issues.html\#fullscreen-\/opengl-\/based-\/windows}}
+\DoxyCodeLine{01036             this-\/>winId();}
+\DoxyCodeLine{01037             QWindowsWindowFunctions::setHasBorderInFullScreen(}
+\DoxyCodeLine{01038                 this-\/>windowHandle(), \textcolor{keyword}{true});}
+\DoxyCodeLine{01039 }
+\DoxyCodeLine{01040             this-\/>showFullScreen();}
+\DoxyCodeLine{01041 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01042           \}}
+\DoxyCodeLine{01043         \}}
+\DoxyCodeLine{01044       \}}
+\DoxyCodeLine{01045 }
+\DoxyCodeLine{01046       \textcolor{comment}{// Set the return value to indicate that the full screen mode has been}}
+\DoxyCodeLine{01047       \textcolor{comment}{// changed.}}
+\DoxyCodeLine{01048       fFullScreenStateToggled = \textcolor{keyword}{true};}
+\DoxyCodeLine{01049     \}}
+\DoxyCodeLine{01050   \}}
+\DoxyCodeLine{01051 }
+\DoxyCodeLine{01052   \textcolor{keywordflow}{return} (fFullScreenStateToggled);}
+\DoxyCodeLine{01053 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_image_utils_1_1_full_screen_widget_a39691d9bced2cb209ac9652b53ff1625}\label{class_image_utils_1_1_full_screen_widget_a39691d9bced2cb209ac9652b53ff1625}} 
+\index{ImageUtils::FullScreenWidget@{ImageUtils::FullScreenWidget}!widget@{widget}}
+\index{widget@{widget}!ImageUtils::FullScreenWidget@{ImageUtils::FullScreenWidget}}
+\doxysubsubsection{\texorpdfstring{widget()}{widget()}}
+{\footnotesize\ttfamily QWidget $\ast$ Image\+Utils\+::\+Full\+Screen\+Widget\+::widget (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00170 \{ \textcolor{keywordflow}{return} m\_widget; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/imageutils.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/imageutils.\+cpp\end{DoxyCompactItemize}

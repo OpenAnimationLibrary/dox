@@ -1,0 +1,251 @@
+\hypertarget{classtipc_1_1_stream}{}\doxysection{tipc\+::Stream Class Reference}
+\label{classtipc_1_1_stream}\index{tipc::Stream@{tipc::Stream}}
+
+
+{\ttfamily \#include $<$tipc.\+h$>$}
+
+Inheritance diagram for tipc\+::Stream\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtipc_1_1_stream}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtipc_1_1_stream_ad2beb9a4dd18549636560e40915f6ce0}{Stream}} (QLocal\+Socket $\ast$socket)
+\item 
+QLocal\+Socket $\ast$ \mbox{\hyperlink{classtipc_1_1_stream_ad11fe09471ab9b7b3c829261530bd8eb}{socket}} ()
+\item 
+int \mbox{\hyperlink{classtipc_1_1_stream_a319d5b124ba1047d6ee40ac5a79dc03d}{read\+Size}} ()
+\item 
+bool \mbox{\hyperlink{classtipc_1_1_stream_ac3be3f22c133dc28889f7334362e92b6}{message\+Ready}} ()
+\item 
+bool \mbox{\hyperlink{classtipc_1_1_stream_a293967e64b2b626d70c838ee52f863d1}{read\+Data}} (char $\ast$data, qint64 data\+Size, int msecs=-\/1)
+\item 
+bool \mbox{\hyperlink{classtipc_1_1_stream_adcecdfe5a227fa2e64f4fd4d3bb7886b}{read\+Message}} (\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&msg, int msecs=-\/1)
+\item 
+bool \mbox{\hyperlink{classtipc_1_1_stream_a9530b0eaa53131ac2f8a6d9753434889}{read\+Data\+NB}} (char $\ast$data, qint64 data\+Size, int msecs=-\/1, QEvent\+Loop\+::\+Process\+Events\+Flag flag=QEvent\+Loop\+::\+All\+Events)
+\item 
+bool \mbox{\hyperlink{classtipc_1_1_stream_a4217859111bd3dab6811bebb10915e4d}{read\+Message\+NB}} (\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&msg, int msecs=-\/1, QEvent\+Loop\+::\+Process\+Events\+Flag flag=QEvent\+Loop\+::\+All\+Events)
+\item 
+bool \mbox{\hyperlink{classtipc_1_1_stream_ae0da21c97a71a36b3e3238d7c7621a75}{flush}} (int msecs=-\/1)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A \mbox{\hyperlink{classtipc_1_1_stream}{tipc\+::\+Stream}} is a specialized QData\+Stream designed to work with a tipc-\/based QLocal\+Socket instance. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtipc_1_1_stream_ad2beb9a4dd18549636560e40915f6ce0}\label{classtipc_1_1_stream_ad2beb9a4dd18549636560e40915f6ce0}} 
+\index{tipc::Stream@{tipc::Stream}!Stream@{Stream}}
+\index{Stream@{Stream}!tipc::Stream@{tipc::Stream}}
+\doxysubsubsection{\texorpdfstring{Stream()}{Stream()}}
+{\footnotesize\ttfamily tipc\+::\+Stream\+::\+Stream (\begin{DoxyParamCaption}\item[{QLocal\+Socket $\ast$}]{socket }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00129 : QDataStream(socket), m\_socket(socket) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtipc_1_1_stream_ae0da21c97a71a36b3e3238d7c7621a75}\label{classtipc_1_1_stream_ae0da21c97a71a36b3e3238d7c7621a75}} 
+\index{tipc::Stream@{tipc::Stream}!flush@{flush}}
+\index{flush@{flush}!tipc::Stream@{tipc::Stream}}
+\doxysubsubsection{\texorpdfstring{flush()}{flush()}}
+{\footnotesize\ttfamily bool tipc\+::\+Stream\+::flush (\begin{DoxyParamCaption}\item[{int}]{msecs = {\ttfamily -\/1} }\end{DoxyParamCaption})}
+
+Flushes all data written to the stream. This function waits until all data written on the stream has been successfully delivered in output. Returns true if the operation was successful, false if it timed out or an error occurred. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00206                                 \{}
+\DoxyCodeLine{00207   tipc\_debug(qDebug(\textcolor{stringliteral}{"{}tipc:flush entry"{}}));}
+\DoxyCodeLine{00208 }
+\DoxyCodeLine{00209   \textcolor{keywordflow}{while} (m\_socket-\/>bytesToWrite() > 0) \{}
+\DoxyCodeLine{00210     tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}bytes to write:"{}} << m\_socket-\/>bytesToWrite());}
+\DoxyCodeLine{00211     \textcolor{keywordtype}{bool} ok = m\_socket-\/>flush();}
+\DoxyCodeLine{00212     tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}flush success:"{}} << ok}
+\DoxyCodeLine{00213                         << \textcolor{stringliteral}{"{}bytes to write:"{}} << m\_socket-\/>bytesToWrite());}
+\DoxyCodeLine{00214     \textcolor{keywordflow}{if} (m\_socket-\/>bytesToWrite() > 0 \&\& !m\_socket-\/>waitForBytesWritten(msecs))}
+\DoxyCodeLine{00215       \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00216   \}}
+\DoxyCodeLine{00217 }
+\DoxyCodeLine{00218   tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}tipc:flush exit -\/ bytes to write:"{}}}
+\DoxyCodeLine{00219                       << m\_socket-\/>bytesToWrite());}
+\DoxyCodeLine{00220   \textcolor{keywordflow}{return} (m\_socket-\/>bytesToWrite() == 0);}
+\DoxyCodeLine{00221 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l00422}{tipc\+::read\+Message()}}, and \mbox{\hyperlink{l00682}{tipc\+::read\+Sh\+Mem\+Buffer()}}.
+
+\mbox{\Hypertarget{classtipc_1_1_stream_ac3be3f22c133dc28889f7334362e92b6}\label{classtipc_1_1_stream_ac3be3f22c133dc28889f7334362e92b6}} 
+\index{tipc::Stream@{tipc::Stream}!messageReady@{messageReady}}
+\index{messageReady@{messageReady}!tipc::Stream@{tipc::Stream}}
+\doxysubsubsection{\texorpdfstring{messageReady()}{messageReady()}}
+{\footnotesize\ttfamily bool tipc\+::\+Stream\+::message\+Ready (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00095                               \{}
+\DoxyCodeLine{00096   TINT32 msgSize;}
+\DoxyCodeLine{00097   \textcolor{keywordflow}{return} (msgSize = readSize()) >= 0 \&\& m\_socket-\/>bytesAvailable() >= msgSize;}
+\DoxyCodeLine{00098 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtipc_1_1_stream_a293967e64b2b626d70c838ee52f863d1}\label{classtipc_1_1_stream_a293967e64b2b626d70c838ee52f863d1}} 
+\index{tipc::Stream@{tipc::Stream}!readData@{readData}}
+\index{readData@{readData}!tipc::Stream@{tipc::Stream}}
+\doxysubsubsection{\texorpdfstring{readData()}{readData()}}
+{\footnotesize\ttfamily bool tipc\+::\+Stream\+::read\+Data (\begin{DoxyParamCaption}\item[{char $\ast$}]{data,  }\item[{qint64}]{data\+Size,  }\item[{int}]{msecs = {\ttfamily -\/1} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00102                                                                 \{}
+\DoxyCodeLine{00103   tipc\_debug(qDebug(\textcolor{stringliteral}{"{}tipc::Stream::readData entry"{}}));}
+\DoxyCodeLine{00104   qint64 r, dataRead = 0;}
+\DoxyCodeLine{00105   \textcolor{keywordtype}{char} *currData = data;}
+\DoxyCodeLine{00106 }
+\DoxyCodeLine{00107   \textcolor{keywordflow}{while} (dataRead < dataSize) \{}
+\DoxyCodeLine{00108     \textcolor{keywordflow}{if} ((m\_socket-\/>bytesAvailable() == 0) \&\&}
+\DoxyCodeLine{00109         !m\_socket-\/>waitForReadyRead(msecs)) \{}
+\DoxyCodeLine{00110       tipc\_debug(}
+\DoxyCodeLine{00111           qDebug(\textcolor{stringliteral}{"{}tipc::Stream::readData exit (unexpected loss of data)"{}}));}
+\DoxyCodeLine{00112       \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00113     \}}
+\DoxyCodeLine{00114 }
+\DoxyCodeLine{00115     \textcolor{comment}{// Read the supplied data}}
+\DoxyCodeLine{00116     currData += r = m\_socket-\/>read(currData, dataSize -\/ dataRead);}
+\DoxyCodeLine{00117     dataRead += r;}
+\DoxyCodeLine{00118   \}}
+\DoxyCodeLine{00119 }
+\DoxyCodeLine{00120   tipc\_debug(qDebug(\textcolor{stringliteral}{"{}tipc::Stream::readData exit"{}}));}
+\DoxyCodeLine{00121 }
+\DoxyCodeLine{00122   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00123 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtipc_1_1_stream_a9530b0eaa53131ac2f8a6d9753434889}\label{classtipc_1_1_stream_a9530b0eaa53131ac2f8a6d9753434889}} 
+\index{tipc::Stream@{tipc::Stream}!readDataNB@{readDataNB}}
+\index{readDataNB@{readDataNB}!tipc::Stream@{tipc::Stream}}
+\doxysubsubsection{\texorpdfstring{readDataNB()}{readDataNB()}}
+{\footnotesize\ttfamily bool tipc\+::\+Stream\+::read\+Data\+NB (\begin{DoxyParamCaption}\item[{char $\ast$}]{data,  }\item[{qint64}]{data\+Size,  }\item[{int}]{msecs = {\ttfamily -\/1},  }\item[{QEvent\+Loop\+::\+Process\+Events\+Flag}]{flag = {\ttfamily QEventLoop\+:\+:AllEvents} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00128                                                                 \{}
+\DoxyCodeLine{00129   tipc\_debug(qDebug(\textcolor{stringliteral}{"{}tipc::Stream::readDataNB entry"{}}));}
+\DoxyCodeLine{00130   qint64 r, dataRead = 0;}
+\DoxyCodeLine{00131   \textcolor{keywordtype}{char} *currData = data;}
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00133   QEventLoop loop;}
+\DoxyCodeLine{00134   QObject::connect(m\_socket, SIGNAL(readyRead()), \&loop, SLOT(quit()));}
+\DoxyCodeLine{00135   QObject::connect(m\_socket, SIGNAL(error(QLocalSocket::LocalSocketError)),}
+\DoxyCodeLine{00136                    \&loop, SLOT(quit()));}
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00138   \textcolor{keywordflow}{if} (msecs >= 0) QTimer::singleShot(msecs, \&loop, SLOT(quit()));}
+\DoxyCodeLine{00139 }
+\DoxyCodeLine{00140   \textcolor{keywordflow}{while} (dataRead < dataSize) \{}
+\DoxyCodeLine{00141     \textcolor{keywordflow}{if} (m\_socket-\/>bytesAvailable() == 0) \{}
+\DoxyCodeLine{00142       loop.exec(flag);}
+\DoxyCodeLine{00143       \textcolor{keywordflow}{if} (m\_socket-\/>bytesAvailable() == 0) \{}
+\DoxyCodeLine{00144         tipc\_debug(}
+\DoxyCodeLine{00145             qDebug(\textcolor{stringliteral}{"{}tipc::Stream::readDataNB exit (unexpected loss of data)"{}}));}
+\DoxyCodeLine{00146         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00147       \}}
+\DoxyCodeLine{00148     \}}
+\DoxyCodeLine{00149 }
+\DoxyCodeLine{00150     \textcolor{comment}{// Read the supplied data}}
+\DoxyCodeLine{00151     currData += r = m\_socket-\/>read(currData, dataSize -\/ dataRead);}
+\DoxyCodeLine{00152     dataRead += r;}
+\DoxyCodeLine{00153   \}}
+\DoxyCodeLine{00154 }
+\DoxyCodeLine{00155   tipc\_debug(qDebug(\textcolor{stringliteral}{"{}tipc::Stream::readDataNB exit"{}}));}
+\DoxyCodeLine{00156 }
+\DoxyCodeLine{00157   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00158 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtipc_1_1_stream_adcecdfe5a227fa2e64f4fd4d3bb7886b}\label{classtipc_1_1_stream_adcecdfe5a227fa2e64f4fd4d3bb7886b}} 
+\index{tipc::Stream@{tipc::Stream}!readMessage@{readMessage}}
+\index{readMessage@{readMessage}!tipc::Stream@{tipc::Stream}}
+\doxysubsubsection{\texorpdfstring{readMessage()}{readMessage()}}
+{\footnotesize\ttfamily bool tipc\+::\+Stream\+::read\+Message (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&}]{msg,  }\item[{int}]{msecs = {\ttfamily -\/1} }\end{DoxyParamCaption})}
+
+Reads the message and returns its header. This function reads a complete message from the socket, waiting until it is completely available. The function accepts an inactivity timeout which can be supplied to drop the operation after msecs milliseconds no data has been received. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00169                                                     \{}
+\DoxyCodeLine{00170   TINT32 msgSize = 0;}
+\DoxyCodeLine{00171   \textcolor{keywordflow}{if} (!readData((\textcolor{keywordtype}{char} *)\&msgSize, \textcolor{keyword}{sizeof}(TINT32), msecs)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00172 }
+\DoxyCodeLine{00173   msg.ba().resize(msgSize);}
+\DoxyCodeLine{00174   \textcolor{keywordflow}{if} (!readData(msg.ba().data(), msgSize, msecs)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00175 }
+\DoxyCodeLine{00176   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00177 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l00422}{tipc\+::read\+Message()}}.
+
+\mbox{\Hypertarget{classtipc_1_1_stream_a4217859111bd3dab6811bebb10915e4d}\label{classtipc_1_1_stream_a4217859111bd3dab6811bebb10915e4d}} 
+\index{tipc::Stream@{tipc::Stream}!readMessageNB@{readMessageNB}}
+\index{readMessageNB@{readMessageNB}!tipc::Stream@{tipc::Stream}}
+\doxysubsubsection{\texorpdfstring{readMessageNB()}{readMessageNB()}}
+{\footnotesize\ttfamily bool tipc\+::\+Stream\+::read\+Message\+NB (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&}]{msg,  }\item[{int}]{msecs = {\ttfamily -\/1},  }\item[{QEvent\+Loop\+::\+Process\+Events\+Flag}]{flag = {\ttfamily QEventLoop\+:\+:AllEvents} }\end{DoxyParamCaption})}
+
+The non-\/blocking equivalent to \mbox{\hyperlink{classtipc_1_1_stream_adcecdfe5a227fa2e64f4fd4d3bb7886b}{read\+Message()}}, this function performs event processing in a local event loop until all message data has been received. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00187                                                                    \{}
+\DoxyCodeLine{00188   TINT32 msgSize = 0;}
+\DoxyCodeLine{00189   \textcolor{keywordflow}{if} (!readDataNB((\textcolor{keywordtype}{char} *)\&msgSize, \textcolor{keyword}{sizeof}(TINT32), msecs, flag)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00190 }
+\DoxyCodeLine{00191   msg.ba().resize(msgSize);}
+\DoxyCodeLine{00192   \textcolor{keywordflow}{if} (!readDataNB(msg.ba().data(), msgSize, msecs, flag)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00194   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00195 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l00437}{tipc\+::read\+Message\+NB()}}.
+
+\mbox{\Hypertarget{classtipc_1_1_stream_a319d5b124ba1047d6ee40ac5a79dc03d}\label{classtipc_1_1_stream_a319d5b124ba1047d6ee40ac5a79dc03d}} 
+\index{tipc::Stream@{tipc::Stream}!readSize@{readSize}}
+\index{readSize@{readSize}!tipc::Stream@{tipc::Stream}}
+\doxysubsubsection{\texorpdfstring{readSize()}{readSize()}}
+{\footnotesize\ttfamily int tipc\+::\+Stream\+::read\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00084                          \{}
+\DoxyCodeLine{00085   \textcolor{keywordflow}{if} (m\_socket-\/>bytesAvailable() < \textcolor{keyword}{sizeof}(TINT32)) \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087   TINT32 msgSize = -\/1;}
+\DoxyCodeLine{00088   m\_socket-\/>peek((\textcolor{keywordtype}{char} *)\&msgSize, \textcolor{keyword}{sizeof}(TINT32));}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090   \textcolor{keywordflow}{return} msgSize;}
+\DoxyCodeLine{00091 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtipc_1_1_stream_ad11fe09471ab9b7b3c829261530bd8eb}\label{classtipc_1_1_stream_ad11fe09471ab9b7b3c829261530bd8eb}} 
+\index{tipc::Stream@{tipc::Stream}!socket@{socket}}
+\index{socket@{socket}!tipc::Stream@{tipc::Stream}}
+\doxysubsubsection{\texorpdfstring{socket()}{socket()}}
+{\footnotesize\ttfamily QLocal\+Socket $\ast$ tipc\+::\+Stream\+::socket (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00131 \{ \textcolor{keywordflow}{return} m\_socket; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tipc.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tipc/tipc.\+cpp\end{DoxyCompactItemize}

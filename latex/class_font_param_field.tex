@@ -1,0 +1,231 @@
+\hypertarget{class_font_param_field}{}\doxysection{Font\+Param\+Field Class Reference}
+\label{class_font_param_field}\index{FontParamField@{FontParamField}}
+Inheritance diagram for Font\+Param\+Field\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_font_param_field}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_font_param_field_a81a13e8daa3509b74451358a5df8ac36}{Font\+Param\+Field}} (QWidget $\ast$parent, QString name, const TFont\+ParamP \&param)
+\item 
+void \mbox{\hyperlink{class_font_param_field_a182d65350d9e053c937badbde84c2ab4}{set\+Param}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TParamP}} \&current, const \mbox{\hyperlink{class_t_smart_pointer_t}{TParamP}} \&actual, int frame) override
+\item 
+void \mbox{\hyperlink{class_font_param_field_a49397d9b1188766f6c16314efdf561dd}{update}} (int frame) override
+\item 
+QSize \mbox{\hyperlink{class_font_param_field_a20503a2e0d200ad69b8dd626202c4ba3}{get\+Preferred\+Size}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_font_param_field_a45937b32d8e6397dbb42e2a7cfc3f2cc}{find\+Styles}} (const QFont \&font)
+\item 
+void \mbox{\hyperlink{class_font_param_field_a034145f5ff208c1bce9d33846cba04c3}{on\+Size\+Change}} (bool)
+\item 
+void \mbox{\hyperlink{class_font_param_field_a2a25b4f9da1026db3b980e24e6ef77ea}{on\+Change}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_font_param_field_a81a13e8daa3509b74451358a5df8ac36}\label{class_font_param_field_a81a13e8daa3509b74451358a5df8ac36}} 
+\index{FontParamField@{FontParamField}!FontParamField@{FontParamField}}
+\index{FontParamField@{FontParamField}!FontParamField@{FontParamField}}
+\doxysubsubsection{\texorpdfstring{FontParamField()}{FontParamField()}}
+{\footnotesize\ttfamily Font\+Param\+Field\+::\+Font\+Param\+Field (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{QString}]{name,  }\item[{const TFont\+ParamP \&}]{param }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01665     : \mbox{\hyperlink{class_param_field}{ParamField}}(parent, name, param) \{}
+\DoxyCodeLine{01666   m\_paramName = QString::fromStdString(param-\/>getName());}
+\DoxyCodeLine{01667 }
+\DoxyCodeLine{01668   m\_fontCombo  = \textcolor{keyword}{new} QFontComboBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{01669   m\_styleCombo = \textcolor{keyword}{new} QComboBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{01670   m\_sizeField  = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{IntField}}(\textcolor{keyword}{this}, \textcolor{keyword}{false});}
+\DoxyCodeLine{01671 }
+\DoxyCodeLine{01672   m\_sizeField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_a055d473a8dde4481be33a83c9fa04c96}{setRange}}(1, 500);}
+\DoxyCodeLine{01673   m\_sizeField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_a79de4affcf614514c906ef751a06e932}{enableSlider}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{01674 }
+\DoxyCodeLine{01675   m\_layout-\/>addWidget(m\_fontCombo);}
+\DoxyCodeLine{01676   m\_layout-\/>addSpacing(5);}
+\DoxyCodeLine{01677   m\_layout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Style:"{}}), \textcolor{keyword}{this}), 0,}
+\DoxyCodeLine{01678                       Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{01679   m\_layout-\/>addWidget(m\_styleCombo);}
+\DoxyCodeLine{01680   m\_layout-\/>addSpacing(5);}
+\DoxyCodeLine{01681   m\_layout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Size:"{}}), \textcolor{keyword}{this}), 0,}
+\DoxyCodeLine{01682                       Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{01683   m\_layout-\/>addWidget(m\_sizeField);}
+\DoxyCodeLine{01684 }
+\DoxyCodeLine{01685   m\_layout-\/>addStretch();}
+\DoxyCodeLine{01686 }
+\DoxyCodeLine{01687   setLayout(m\_layout);}
+\DoxyCodeLine{01688 }
+\DoxyCodeLine{01689   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{01690   ret = ret \&\& connect(m\_fontCombo, SIGNAL(activated(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{01691                        SLOT(onChange()));}
+\DoxyCodeLine{01692   ret = ret \&\& connect(m\_styleCombo, SIGNAL(activated(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{01693                        SLOT(onChange()));}
+\DoxyCodeLine{01694   ret = ret \&\& connect(m\_sizeField, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01695                        SLOT(onSizeChange(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{01696   assert(ret);}
+\DoxyCodeLine{01697 }
+\DoxyCodeLine{01698   findStyles(m\_fontCombo-\/>currentFont());}
+\DoxyCodeLine{01699 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_font_param_field_a45937b32d8e6397dbb42e2a7cfc3f2cc}\label{class_font_param_field_a45937b32d8e6397dbb42e2a7cfc3f2cc}} 
+\index{FontParamField@{FontParamField}!findStyles@{findStyles}}
+\index{findStyles@{findStyles}!FontParamField@{FontParamField}}
+\doxysubsubsection{\texorpdfstring{findStyles}{findStyles}}
+{\footnotesize\ttfamily void Font\+Param\+Field\+::find\+Styles (\begin{DoxyParamCaption}\item[{const QFont \&}]{font }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01703                                                  \{}
+\DoxyCodeLine{01704   QFontDatabase fontDatabase;}
+\DoxyCodeLine{01705   QString currentItem = m\_styleCombo-\/>currentText();}
+\DoxyCodeLine{01706   m\_styleCombo-\/>clear();}
+\DoxyCodeLine{01707 }
+\DoxyCodeLine{01708   \textcolor{keywordflow}{for} (\textcolor{keyword}{const} QString \&style : fontDatabase.styles(font.family()))}
+\DoxyCodeLine{01709     m\_styleCombo-\/>addItem(style);}
+\DoxyCodeLine{01710 }
+\DoxyCodeLine{01711   \textcolor{keywordtype}{int} styleIndex = m\_styleCombo-\/>findText(currentItem);}
+\DoxyCodeLine{01712 }
+\DoxyCodeLine{01713   \textcolor{keywordflow}{if} (styleIndex == -\/1)}
+\DoxyCodeLine{01714     m\_styleCombo-\/>setCurrentIndex(0);}
+\DoxyCodeLine{01715   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01716     m\_styleCombo-\/>setCurrentIndex(styleIndex);}
+\DoxyCodeLine{01717 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_font_param_field_a20503a2e0d200ad69b8dd626202c4ba3}\label{class_font_param_field_a20503a2e0d200ad69b8dd626202c4ba3}} 
+\index{FontParamField@{FontParamField}!getPreferredSize@{getPreferredSize}}
+\index{getPreferredSize@{getPreferredSize}!FontParamField@{FontParamField}}
+\doxysubsubsection{\texorpdfstring{getPreferredSize()}{getPreferredSize()}}
+{\footnotesize\ttfamily QSize Font\+Param\+Field\+::get\+Preferred\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_param_field}{Param\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00669 \{ \textcolor{keywordflow}{return} QSize(150, 20); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_font_param_field_a2a25b4f9da1026db3b980e24e6ef77ea}\label{class_font_param_field_a2a25b4f9da1026db3b980e24e6ef77ea}} 
+\index{FontParamField@{FontParamField}!onChange@{onChange}}
+\index{onChange@{onChange}!FontParamField@{FontParamField}}
+\doxysubsubsection{\texorpdfstring{onChange}{onChange}}
+{\footnotesize\ttfamily void Font\+Param\+Field\+::on\+Change (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01728                               \{}
+\DoxyCodeLine{01729   QString family = m\_fontCombo-\/>currentFont().family();}
+\DoxyCodeLine{01730 }
+\DoxyCodeLine{01731   TFontParamP fontParam = m\_actualParam;}
+\DoxyCodeLine{01732   QFont currentFont;}
+\DoxyCodeLine{01733   currentFont.fromString(QString::fromStdWString(fontParam-\/>getValue()));}
+\DoxyCodeLine{01734   \textcolor{keywordflow}{if} (family != currentFont.family()) \{}
+\DoxyCodeLine{01735     findStyles(QFont(family));}
+\DoxyCodeLine{01736   \}}
+\DoxyCodeLine{01737   QString style = m\_styleCombo-\/>currentText();}
+\DoxyCodeLine{01738   \textcolor{keywordtype}{int} size      = m\_sizeField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_a5657b3a478f9e4993c7d48a5338dbb75}{getValue}}();}
+\DoxyCodeLine{01739   \textcolor{keywordtype}{int} min, max;}
+\DoxyCodeLine{01740   m\_sizeField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_afece4a64035ba54ec3291c9b740828f7}{getRange}}(min, max);}
+\DoxyCodeLine{01741   \textcolor{keywordflow}{if} (size < min) size = min;}
+\DoxyCodeLine{01742 }
+\DoxyCodeLine{01743   QFontDatabase fontDatabase;}
+\DoxyCodeLine{01744   QFont font = fontDatabase.font(family, style, 10);}
+\DoxyCodeLine{01745   font.setPixelSize(size);}
+\DoxyCodeLine{01746 }
+\DoxyCodeLine{01747   \mbox{\hyperlink{class_t_undo}{TUndo}} *undo = 0;}
+\DoxyCodeLine{01748 }
+\DoxyCodeLine{01749   \textcolor{keywordflow}{if} (fontParam \&\& currentFont != font)}
+\DoxyCodeLine{01750     undo = \textcolor{keyword}{new} \mbox{\hyperlink{class_font_param_field_undo}{FontParamFieldUndo}}(fontParam, m\_interfaceName,}
+\DoxyCodeLine{01751                                   ParamField::m\_fxHandleStat);}
+\DoxyCodeLine{01752 }
+\DoxyCodeLine{01753   m\_actualParam-\/>setValue(font.toString().toStdWString());}
+\DoxyCodeLine{01754   emit currentParamChanged();}
+\DoxyCodeLine{01755   m\_currentParam-\/>setValue(font.toString().toStdWString());}
+\DoxyCodeLine{01756   emit actualParamChanged();}
+\DoxyCodeLine{01757 }
+\DoxyCodeLine{01758   \textcolor{keywordflow}{if} (undo) TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{01759 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_font_param_field_a034145f5ff208c1bce9d33846cba04c3}\label{class_font_param_field_a034145f5ff208c1bce9d33846cba04c3}} 
+\index{FontParamField@{FontParamField}!onSizeChange@{onSizeChange}}
+\index{onSizeChange@{onSizeChange}!FontParamField@{FontParamField}}
+\doxysubsubsection{\texorpdfstring{onSizeChange}{onSizeChange}}
+{\footnotesize\ttfamily void Font\+Param\+Field\+::on\+Size\+Change (\begin{DoxyParamCaption}\item[{bool}]{is\+Dragging }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01721                                                  \{}
+\DoxyCodeLine{01722   \textcolor{keywordflow}{if} (isDragging) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01723   onChange();}
+\DoxyCodeLine{01724 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_font_param_field_a182d65350d9e053c937badbde84c2ab4}\label{class_font_param_field_a182d65350d9e053c937badbde84c2ab4}} 
+\index{FontParamField@{FontParamField}!setParam@{setParam}}
+\index{setParam@{setParam}!FontParamField@{FontParamField}}
+\doxysubsubsection{\texorpdfstring{setParam()}{setParam()}}
+{\footnotesize\ttfamily void Font\+Param\+Field\+::set\+Param (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TParamP}} \&}]{current,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TParamP}} \&}]{actual,  }\item[{int}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_param_field}{Param\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01764                                          \{}
+\DoxyCodeLine{01765   m\_currentParam = current;}
+\DoxyCodeLine{01766   m\_actualParam  = actual;}
+\DoxyCodeLine{01767   assert(m\_currentParam);}
+\DoxyCodeLine{01768   assert(m\_actualParam);}
+\DoxyCodeLine{01769   update(frame);}
+\DoxyCodeLine{01770 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_font_param_field_a49397d9b1188766f6c16314efdf561dd}\label{class_font_param_field_a49397d9b1188766f6c16314efdf561dd}} 
+\index{FontParamField@{FontParamField}!update@{update}}
+\index{update@{update}!FontParamField@{FontParamField}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Font\+Param\+Field\+::update (\begin{DoxyParamCaption}\item[{int}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_param_field}{Param\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01774                                      \{}
+\DoxyCodeLine{01775   \textcolor{keywordflow}{if} (!m\_actualParam || !m\_currentParam) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01776   QFont font;}
+\DoxyCodeLine{01777   font.fromString(QString::fromStdWString(m\_actualParam-\/>getValue()));}
+\DoxyCodeLine{01778   \textcolor{keywordflow}{if} (m\_fontCombo-\/>currentText() != font.family()) \{}
+\DoxyCodeLine{01779     m\_fontCombo-\/>setCurrentFont(font);}
+\DoxyCodeLine{01780     findStyles(font);}
+\DoxyCodeLine{01781   \}}
+\DoxyCodeLine{01782   m\_styleCombo-\/>setCurrentText(font.styleName());}
+\DoxyCodeLine{01783   m\_sizeField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_aed421e2c52946f2c7643534b4f6f13f7}{setValue}}(font.pixelSize());}
+\DoxyCodeLine{01784 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/paramfield.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/paramfield.\+cpp\end{DoxyCompactItemize}

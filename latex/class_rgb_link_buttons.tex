@@ -1,0 +1,111 @@
+\hypertarget{class_rgb_link_buttons}{}\doxysection{Rgb\+Link\+Buttons Class Reference}
+\label{class_rgb_link_buttons}\index{RgbLinkButtons@{RgbLinkButtons}}
+Inheritance diagram for Rgb\+Link\+Buttons\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_rgb_link_buttons}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_rgb_link_buttons_aa7f55122496ab5e1aefa5650678ca9b5}{Rgb\+Link\+Buttons}} (QString str1, QString str2, QWidget $\ast$parent, \mbox{\hyperlink{class_pixel_param_field}{Pixel\+Param\+Field}} $\ast$field1, \mbox{\hyperlink{class_pixel_param_field}{Pixel\+Param\+Field}} $\ast$field2)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_rgb_link_buttons_a12bcd6d34ae7efd7149b752c209dd69a}{on\+Copy\+Button\+Clicked}} ()
+\item 
+void \mbox{\hyperlink{class_rgb_link_buttons_a6069e4eb7cd9ffb8e9dd68b2e56a3bb3}{on\+Swap\+Button\+Clicked}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_rgb_link_buttons_aa7f55122496ab5e1aefa5650678ca9b5}\label{class_rgb_link_buttons_aa7f55122496ab5e1aefa5650678ca9b5}} 
+\index{RgbLinkButtons@{RgbLinkButtons}!RgbLinkButtons@{RgbLinkButtons}}
+\index{RgbLinkButtons@{RgbLinkButtons}!RgbLinkButtons@{RgbLinkButtons}}
+\doxysubsubsection{\texorpdfstring{RgbLinkButtons()}{RgbLinkButtons()}}
+{\footnotesize\ttfamily Rgb\+Link\+Buttons\+::\+Rgb\+Link\+Buttons (\begin{DoxyParamCaption}\item[{QString}]{str1,  }\item[{QString}]{str2,  }\item[{QWidget $\ast$}]{parent,  }\item[{\mbox{\hyperlink{class_pixel_param_field}{Pixel\+Param\+Field}} $\ast$}]{field1,  }\item[{\mbox{\hyperlink{class_pixel_param_field}{Pixel\+Param\+Field}} $\ast$}]{field2 }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01122     : QWidget(parent), m\_field1(field1), m\_field2(field2) \{}
+\DoxyCodeLine{01123   QString copyButtonStr   = tr(\textcolor{stringliteral}{"{}Copy RGB : \%1 > \%2"{}}).arg(str1).arg(str2);}
+\DoxyCodeLine{01124   QString swapButtonStr   = tr(\textcolor{stringliteral}{"{}Swap \%1 and \%2"{}}).arg(str1).arg(str2);}
+\DoxyCodeLine{01125   QPushButton *copyButton = \textcolor{keyword}{new} QPushButton(copyButtonStr, \textcolor{keyword}{this});}
+\DoxyCodeLine{01126   QPushButton *swapButton = \textcolor{keyword}{new} QPushButton(swapButtonStr, \textcolor{keyword}{this});}
+\DoxyCodeLine{01127 }
+\DoxyCodeLine{01128   copyButton-\/>setFixedHeight(21);}
+\DoxyCodeLine{01129   swapButton-\/>setFixedHeight(21);}
+\DoxyCodeLine{01130 }
+\DoxyCodeLine{01131   QHBoxLayout *lay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{01132   lay-\/>setMargin(0);}
+\DoxyCodeLine{01133   lay-\/>setSpacing(5);}
+\DoxyCodeLine{01134   \{}
+\DoxyCodeLine{01135     lay-\/>addWidget(copyButton, 0);}
+\DoxyCodeLine{01136     lay-\/>addWidget(swapButton, 0);}
+\DoxyCodeLine{01137     lay-\/>addStretch(1);}
+\DoxyCodeLine{01138   \}}
+\DoxyCodeLine{01139   setLayout(lay);}
+\DoxyCodeLine{01140 }
+\DoxyCodeLine{01141   connect(copyButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onCopyButtonClicked()));}
+\DoxyCodeLine{01142   connect(swapButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onSwapButtonClicked()));}
+\DoxyCodeLine{01143 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_rgb_link_buttons_a12bcd6d34ae7efd7149b752c209dd69a}\label{class_rgb_link_buttons_a12bcd6d34ae7efd7149b752c209dd69a}} 
+\index{RgbLinkButtons@{RgbLinkButtons}!onCopyButtonClicked@{onCopyButtonClicked}}
+\index{onCopyButtonClicked@{onCopyButtonClicked}!RgbLinkButtons@{RgbLinkButtons}}
+\doxysubsubsection{\texorpdfstring{onCopyButtonClicked}{onCopyButtonClicked}}
+{\footnotesize\ttfamily void Rgb\+Link\+Buttons\+::on\+Copy\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01147                                          \{}
+\DoxyCodeLine{01148   \textcolor{keywordflow}{if} (!m\_field1 || !m\_field2) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01149   TPixel32 val1 = m\_field1-\/>getColor();}
+\DoxyCodeLine{01150   TPixel32 val2 = m\_field2-\/>getColor();}
+\DoxyCodeLine{01151 }
+\DoxyCodeLine{01152   \textcolor{comment}{// keep alpha channel unchanged}}
+\DoxyCodeLine{01153   val1.m = val2.m;}
+\DoxyCodeLine{01154 }
+\DoxyCodeLine{01155   \textcolor{keywordflow}{if} (val1 == val2) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01156 }
+\DoxyCodeLine{01157   m\_field2-\/>setColor(val1);}
+\DoxyCodeLine{01158 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_rgb_link_buttons_a6069e4eb7cd9ffb8e9dd68b2e56a3bb3}\label{class_rgb_link_buttons_a6069e4eb7cd9ffb8e9dd68b2e56a3bb3}} 
+\index{RgbLinkButtons@{RgbLinkButtons}!onSwapButtonClicked@{onSwapButtonClicked}}
+\index{onSwapButtonClicked@{onSwapButtonClicked}!RgbLinkButtons@{RgbLinkButtons}}
+\doxysubsubsection{\texorpdfstring{onSwapButtonClicked}{onSwapButtonClicked}}
+{\footnotesize\ttfamily void Rgb\+Link\+Buttons\+::on\+Swap\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01162                                          \{}
+\DoxyCodeLine{01163   \textcolor{keywordflow}{if} (!m\_field1 || !m\_field2) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01164   TPixel32 val1 = m\_field1-\/>getColor();}
+\DoxyCodeLine{01165   TPixel32 val2 = m\_field2-\/>getColor();}
+\DoxyCodeLine{01166 }
+\DoxyCodeLine{01167   \textcolor{keywordflow}{if} (val1 == val2) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01168 }
+\DoxyCodeLine{01169   TUndoManager::manager()-\/>beginBlock();}
+\DoxyCodeLine{01170   m\_field2-\/>setColor(val1);}
+\DoxyCodeLine{01171   m\_field1-\/>setColor(val2);}
+\DoxyCodeLine{01172   TUndoManager::manager()-\/>endBlock();}
+\DoxyCodeLine{01173 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/paramfield.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/paramfield.\+cpp\end{DoxyCompactItemize}

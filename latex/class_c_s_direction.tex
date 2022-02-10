@@ -1,0 +1,176 @@
+\hypertarget{class_c_s_direction}{}\doxysection{CSDirection Class Reference}
+\label{class_c_s_direction}\index{CSDirection@{CSDirection}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_c_s_direction_a1524e0a735bc1046c083ef4263a2b4d2}{CSDirection}} (const int lX, const int lY, const UCHAR $\ast$sel, const int sens)
+\item 
+\mbox{\hyperlink{class_c_s_direction_abfa3edf92a7469e2541dd79e59ab1b37}{CSDirection}} (const int lX, const int lY, const UCHAR $\ast$sel, const int sens, const int border)
+\item 
+void \mbox{\hyperlink{class_c_s_direction_a4f71d961b7cd33dd05ff74e9553cd656}{do\+Dir}} ()
+\item 
+void \mbox{\hyperlink{class_c_s_direction_aa5bb3cfc4c44f7195906655bc69bc828}{do\+Radius}} (const double rH, const double r\+LR, const double rV, const double r\+RL, const int d\+Blur)
+\item 
+void \mbox{\hyperlink{class_c_s_direction_a0c40db1d9600ec0e0edd11894ee2b988}{get\+Result}} (UCHAR $\ast$sel)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_c_s_direction_a4a22d69f2fb3cec4b983fdc758787738}\label{class_c_s_direction_a4a22d69f2fb3cec4b983fdc758787738}} 
+\index{CSDirection@{CSDirection}!CSDirection@{CSDirection}}
+\index{CSDirection@{CSDirection}!CSDirection@{CSDirection}}
+\doxysubsubsection{\texorpdfstring{CSDirection()}{CSDirection()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily CSDirection\+::\+CSDirection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00016                          : m\_lX(0), m\_lY(0), m\_lDf(0) \{}
+\DoxyCodeLine{00017   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < NBDIR; i++) m\_df[i] = 0;}
+\DoxyCodeLine{00018 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_c_s_direction_a1524e0a735bc1046c083ef4263a2b4d2}\label{class_c_s_direction_a1524e0a735bc1046c083ef4263a2b4d2}} 
+\index{CSDirection@{CSDirection}!CSDirection@{CSDirection}}
+\index{CSDirection@{CSDirection}!CSDirection@{CSDirection}}
+\doxysubsubsection{\texorpdfstring{CSDirection()}{CSDirection()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily CSDirection\+::\+CSDirection (\begin{DoxyParamCaption}\item[{const int}]{lX,  }\item[{const int}]{lY,  }\item[{const UCHAR $\ast$}]{sel,  }\item[{const int}]{sens }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022     : m\_lX(lX), m\_lY(lY), m\_lDf(0) \{}
+\DoxyCodeLine{00023   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < NBDIR; i++) m\_df[i] = 0;}
+\DoxyCodeLine{00024 }
+\DoxyCodeLine{00025   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00026     \textcolor{keywordflow}{if} (m\_lX > 0 \&\& m\_lY > 0) \{}
+\DoxyCodeLine{00027       m\_dir.reset(\textcolor{keyword}{new} UCHAR[m\_lX * m\_lY]);}
+\DoxyCodeLine{00028       \textcolor{keywordflow}{if} (!m\_dir) \{}
+\DoxyCodeLine{00029         null();}
+\DoxyCodeLine{00030         \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_s_mem_alloc_error}{SMemAllocError}}(\textcolor{stringliteral}{"{}in directionMap"{}});}
+\DoxyCodeLine{00031       \}}
+\DoxyCodeLine{00032       memcpy(m\_dir.get(), sel, \textcolor{keyword}{sizeof}(UCHAR) * m\_lX * m\_lY);}
+\DoxyCodeLine{00033       setDir01();}
+\DoxyCodeLine{00034       \textcolor{comment}{//            For optimalization purpose.}}
+\DoxyCodeLine{00035       \textcolor{comment}{//            The quality is better, if it is removed.}}
+\DoxyCodeLine{00036       \textcolor{comment}{//            setContourBorder(2);}}
+\DoxyCodeLine{00037       makeDirFilter(sens);}
+\DoxyCodeLine{00038     \}}
+\DoxyCodeLine{00039   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_s_mem_alloc_error}{SMemAllocError}}) \{}
+\DoxyCodeLine{00040     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00041   \}}
+\DoxyCodeLine{00042 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_c_s_direction_abfa3edf92a7469e2541dd79e59ab1b37}\label{class_c_s_direction_abfa3edf92a7469e2541dd79e59ab1b37}} 
+\index{CSDirection@{CSDirection}!CSDirection@{CSDirection}}
+\index{CSDirection@{CSDirection}!CSDirection@{CSDirection}}
+\doxysubsubsection{\texorpdfstring{CSDirection()}{CSDirection()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily CSDirection\+::\+CSDirection (\begin{DoxyParamCaption}\item[{const int}]{lX,  }\item[{const int}]{lY,  }\item[{const UCHAR $\ast$}]{sel,  }\item[{const int}]{sens,  }\item[{const int}]{border }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046     : m\_lX(lX), m\_lY(lY), m\_lDf(0) \{}
+\DoxyCodeLine{00047   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < NBDIR; i++) m\_df[i] = 0;}
+\DoxyCodeLine{00048 }
+\DoxyCodeLine{00049   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00050     \textcolor{keywordflow}{if} (m\_lX > 0 \&\& m\_lY > 0) \{}
+\DoxyCodeLine{00051       m\_dir.reset(\textcolor{keyword}{new} UCHAR[m\_lX * m\_lY]);}
+\DoxyCodeLine{00052       \textcolor{keywordflow}{if} (!m\_dir) \{}
+\DoxyCodeLine{00053         null();}
+\DoxyCodeLine{00054         \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_s_mem_alloc_error}{SMemAllocError}}(\textcolor{stringliteral}{"{}in directionMap"{}});}
+\DoxyCodeLine{00055       \}}
+\DoxyCodeLine{00056       memcpy(m\_dir.get(), sel, \textcolor{keyword}{sizeof}(UCHAR) * m\_lX * m\_lY);}
+\DoxyCodeLine{00057       setDir01();}
+\DoxyCodeLine{00058       \textcolor{keywordflow}{if} (border > 0) setContourBorder(border);}
+\DoxyCodeLine{00059       makeDirFilter(sens);}
+\DoxyCodeLine{00060     \}}
+\DoxyCodeLine{00061   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_s_mem_alloc_error}{SMemAllocError}}) \{}
+\DoxyCodeLine{00062     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00063   \}}
+\DoxyCodeLine{00064 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_c_s_direction_a080316ede3d815ef1acd508e4847c73e}\label{class_c_s_direction_a080316ede3d815ef1acd508e4847c73e}} 
+\index{CSDirection@{CSDirection}!````~CSDirection@{$\sim$CSDirection}}
+\index{````~CSDirection@{$\sim$CSDirection}!CSDirection@{CSDirection}}
+\doxysubsubsection{\texorpdfstring{$\sim$CSDirection()}{~CSDirection()}}
+{\footnotesize\ttfamily CSDirection\+::$\sim$\+CSDirection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00097 \{ null(); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_c_s_direction_a4f71d961b7cd33dd05ff74e9553cd656}\label{class_c_s_direction_a4f71d961b7cd33dd05ff74e9553cd656}} 
+\index{CSDirection@{CSDirection}!doDir@{doDir}}
+\index{doDir@{doDir}!CSDirection@{CSDirection}}
+\doxysubsubsection{\texorpdfstring{doDir()}{doDir()}}
+{\footnotesize\ttfamily void CSDirection\+::do\+Dir (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00357                         \{}
+\DoxyCodeLine{00358   \textcolor{keywordflow}{if} (m\_lX > 0 \&\& m\_lY > 0 \&\& m\_dir) \{}
+\DoxyCodeLine{00359     std::unique\_ptr<UCHAR[]> sel(\textcolor{keyword}{new} UCHAR[m\_lX * m\_lY]);}
+\DoxyCodeLine{00360     \textcolor{keywordflow}{if} (!sel) \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_s_mem_alloc_error}{SMemAllocError}}(\textcolor{stringliteral}{"{}in directionMap"{}});}
+\DoxyCodeLine{00361     \textcolor{keywordtype}{size\_t} length = (size\_t)(m\_lX * m\_lY * \textcolor{keyword}{sizeof}(UCHAR));}
+\DoxyCodeLine{00362     memcpy(sel.get(), m\_dir.get(), length);}
+\DoxyCodeLine{00363     makeDir(sel.get());}
+\DoxyCodeLine{00364     memcpy(sel.get(), m\_dir.get(), length);}
+\DoxyCodeLine{00365     equalizeDir(sel.get(), 3);}
+\DoxyCodeLine{00366   \}}
+\DoxyCodeLine{00367 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_c_s_direction_aa5bb3cfc4c44f7195906655bc69bc828}\label{class_c_s_direction_aa5bb3cfc4c44f7195906655bc69bc828}} 
+\index{CSDirection@{CSDirection}!doRadius@{doRadius}}
+\index{doRadius@{doRadius}!CSDirection@{CSDirection}}
+\doxysubsubsection{\texorpdfstring{doRadius()}{doRadius()}}
+{\footnotesize\ttfamily void CSDirection\+::do\+Radius (\begin{DoxyParamCaption}\item[{const double}]{rH,  }\item[{const double}]{r\+LR,  }\item[{const double}]{rV,  }\item[{const double}]{r\+RL,  }\item[{const int}]{d\+Blur }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00370                                                               \{}
+\DoxyCodeLine{00371   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00372     \textcolor{keywordtype}{int} xy      = m\_lX * m\_lY;}
+\DoxyCodeLine{00373     UCHAR *pDir = m\_dir.get();}
+\DoxyCodeLine{00374     \textcolor{keywordtype}{double} r[4] = \{D\_CUT\_0\_1(rH), D\_CUT\_0\_1(rLR), D\_CUT\_0\_1(rV),}
+\DoxyCodeLine{00375                    D\_CUT\_0\_1(rRL)\};}
+\DoxyCodeLine{00376 }
+\DoxyCodeLine{00377     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < xy; i++, pDir++)}
+\DoxyCodeLine{00378       \textcolor{keywordflow}{if} (*pDir < (UCHAR)50) \{}
+\DoxyCodeLine{00379         *pDir = (UCHAR)0;}
+\DoxyCodeLine{00380       \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00381         *pDir = getRadius((\textcolor{keywordtype}{double})(*pDir -\/ 50), r);}
+\DoxyCodeLine{00382 }
+\DoxyCodeLine{00383     \textcolor{keywordflow}{if} (dBlur > 0) blurRadius(dBlur);}
+\DoxyCodeLine{00384   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_s_mem_alloc_error}{SMemAllocError}}) \{}
+\DoxyCodeLine{00385     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00386   \}}
+\DoxyCodeLine{00387 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_c_s_direction_a0c40db1d9600ec0e0edd11894ee2b988}\label{class_c_s_direction_a0c40db1d9600ec0e0edd11894ee2b988}} 
+\index{CSDirection@{CSDirection}!getResult@{getResult}}
+\index{getResult@{getResult}!CSDirection@{CSDirection}}
+\doxysubsubsection{\texorpdfstring{getResult()}{getResult()}}
+{\footnotesize\ttfamily void CSDirection\+::get\+Result (\begin{DoxyParamCaption}\item[{UCHAR $\ast$}]{sel }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00389                                       \{}
+\DoxyCodeLine{00390   memcpy(sel, m\_dir.get(), (\textcolor{keywordtype}{size\_t})(m\_lX * m\_lY * \textcolor{keyword}{sizeof}(UCHAR)));}
+\DoxyCodeLine{00391 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/sandor\+\_\+fxs/SDirection.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/sandor\+\_\+fxs/SDirection.\+cpp\end{DoxyCompactItemize}

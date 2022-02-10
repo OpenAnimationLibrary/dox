@@ -1,0 +1,130 @@
+\hypertarget{class_project_settings_popup}{}\doxysection{Project\+Settings\+Popup Class Reference}
+\label{class_project_settings_popup}\index{ProjectSettingsPopup@{ProjectSettingsPopup}}
+
+
+The \mbox{\hyperlink{class_project_settings_popup}{Project\+Settings\+Popup}} class provides a dialog to change current project settings.  
+
+
+Inheritance diagram for Project\+Settings\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_project_settings_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_project_settings_popup_a391bd6e8b3985e2f30bca0408effd6c3}{on\+Something\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_project_settings_popup_ab03430f5202e12db33d5510ae2cb01e5}{on\+Choose\+Project\+Changed}} (int)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_project_settings_popup}{Project\+Settings\+Popup}} class provides a dialog to change current project settings. 
+
+\begin{DoxyVerb}         Inherits \b ProjectPopup.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_project_settings_popup_acf251053a0a7384a7d566caacc4f30f7}\label{class_project_settings_popup_acf251053a0a7384a7d566caacc4f30f7}} 
+\index{ProjectSettingsPopup@{ProjectSettingsPopup}!ProjectSettingsPopup@{ProjectSettingsPopup}}
+\index{ProjectSettingsPopup@{ProjectSettingsPopup}!ProjectSettingsPopup@{ProjectSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{ProjectSettingsPopup()}{ProjectSettingsPopup()}}
+{\footnotesize\ttfamily Project\+Settings\+Popup\+::\+Project\+Settings\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00572                                            : \mbox{\hyperlink{class_project_popup}{ProjectPopup}}(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00573   setWindowTitle(tr(\textcolor{stringliteral}{"{}Project Settings"{}}));}
+\DoxyCodeLine{00574 }
+\DoxyCodeLine{00575   m\_prjNameLabel-\/>hide();}
+\DoxyCodeLine{00576   m\_nameFld-\/>hide();}
+\DoxyCodeLine{00577   m\_choosePrjLabel-\/>show();}
+\DoxyCodeLine{00578   m\_chooseProjectCombo-\/>show();}
+\DoxyCodeLine{00579 }
+\DoxyCodeLine{00580   m\_treeView-\/>hide();}
+\DoxyCodeLine{00581   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00582   \textcolor{keywordflow}{for} (i = 0; i < m\_folderFlds.size(); i++) \{}
+\DoxyCodeLine{00583     \mbox{\hyperlink{class_d_v_gui_1_1_file_field}{FileField}} *ff = m\_folderFlds[i].second;}
+\DoxyCodeLine{00584     connect(ff, SIGNAL(pathChanged()), \textcolor{keyword}{this}, SLOT(onSomethingChanged()));}
+\DoxyCodeLine{00585   \}}
+\DoxyCodeLine{00586   \textcolor{keywordflow}{for} (i = 0; i < m\_useScenePathCbs.size(); i++) \{}
+\DoxyCodeLine{00587     \mbox{\hyperlink{class_d_v_gui_1_1_check_box}{CheckBox}} *cb = m\_useScenePathCbs[i].second;}
+\DoxyCodeLine{00588     connect(cb, SIGNAL(stateChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this}, SLOT(onSomethingChanged()));}
+\DoxyCodeLine{00589   \}}
+\DoxyCodeLine{00590 }
+\DoxyCodeLine{00591   connect(m\_chooseProjectCombo, SIGNAL(activated(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00592           SLOT(onChooseProjectChanged(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00593 }
+\DoxyCodeLine{00594   \textcolor{comment}{// file path settings}}
+\DoxyCodeLine{00595   connect(m\_rulePreferenceBG, SIGNAL(idClicked(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00596           SLOT(onSomethingChanged()));}
+\DoxyCodeLine{00597   connect(m\_acceptNonAlphabetSuffixCB, SIGNAL(clicked(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00598           SLOT(onSomethingChanged()));}
+\DoxyCodeLine{00599   connect(m\_letterCountCombo, SIGNAL(activated(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00600           SLOT(onSomethingChanged()));}
+\DoxyCodeLine{00601 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_project_settings_popup_ab03430f5202e12db33d5510ae2cb01e5}\label{class_project_settings_popup_ab03430f5202e12db33d5510ae2cb01e5}} 
+\index{ProjectSettingsPopup@{ProjectSettingsPopup}!onChooseProjectChanged@{onChooseProjectChanged}}
+\index{onChooseProjectChanged@{onChooseProjectChanged}!ProjectSettingsPopup@{ProjectSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{onChooseProjectChanged}{onChooseProjectChanged}}
+{\footnotesize\ttfamily void Project\+Settings\+Popup\+::on\+Choose\+Project\+Changed (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00605                                                            \{}
+\DoxyCodeLine{00606   \mbox{\hyperlink{class_t_file_path}{TFilePath}} projectFp = m\_projectPaths[index];}
+\DoxyCodeLine{00607 }
+\DoxyCodeLine{00608   \mbox{\hyperlink{class_t_project_manager}{TProjectManager}} *pm = \mbox{\hyperlink{class_t_project_manager_a150ca0d6e2eb171b8117b0c5f03dbfad}{TProjectManager::instance}}();}
+\DoxyCodeLine{00609   pm-\/>\mbox{\hyperlink{class_t_project_manager_aa55b362becc698e787db40c822f79bc3}{setCurrentProjectPath}}(projectFp);}
+\DoxyCodeLine{00610 }
+\DoxyCodeLine{00611   \mbox{\hyperlink{class_t_project}{TProject}} *projectP =}
+\DoxyCodeLine{00612       \mbox{\hyperlink{class_t_project_manager_a150ca0d6e2eb171b8117b0c5f03dbfad}{TProjectManager::instance}}()-\/>\mbox{\hyperlink{class_t_project_manager_a5267cfeae48d4e7585c3fc56d8d5b0b3}{getCurrentProject}}().getPointer();}
+\DoxyCodeLine{00613 }
+\DoxyCodeLine{00614   \textcolor{comment}{// In case the project file was upgraded to current version, save it now}}
+\DoxyCodeLine{00615   \textcolor{keywordflow}{if} (projectP-\/>\mbox{\hyperlink{class_t_project_ab97b51d9527c7ede8dc52dc0007dc27b}{getProjectPath}}() != projectFp) \{}
+\DoxyCodeLine{00616     m\_projectPaths[index] = projectP-\/>\mbox{\hyperlink{class_t_project_ab97b51d9527c7ede8dc52dc0007dc27b}{getProjectPath}}();}
+\DoxyCodeLine{00617     projectP-\/>\mbox{\hyperlink{class_t_project_a620a88aa773f5521435d7f53d77e920a}{save}}();}
+\DoxyCodeLine{00618   \}}
+\DoxyCodeLine{00619 }
+\DoxyCodeLine{00620   updateFieldsFromProject(projectP);}
+\DoxyCodeLine{00621   IoCmd::saveSceneIfNeeded(\textcolor{stringliteral}{"{}Change project"{}});}
+\DoxyCodeLine{00622   IoCmd::newScene();}
+\DoxyCodeLine{00623 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_project_settings_popup_a391bd6e8b3985e2f30bca0408effd6c3}\label{class_project_settings_popup_a391bd6e8b3985e2f30bca0408effd6c3}} 
+\index{ProjectSettingsPopup@{ProjectSettingsPopup}!onSomethingChanged@{onSomethingChanged}}
+\index{onSomethingChanged@{onSomethingChanged}!ProjectSettingsPopup@{ProjectSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{onSomethingChanged}{onSomethingChanged}}
+{\footnotesize\ttfamily void Project\+Settings\+Popup\+::on\+Something\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00627                                               \{}
+\DoxyCodeLine{00628   \mbox{\hyperlink{class_t_smart_pointer_t}{TProjectP}} project = \mbox{\hyperlink{class_t_project_manager_a150ca0d6e2eb171b8117b0c5f03dbfad}{TProjectManager::instance}}()-\/>\mbox{\hyperlink{class_t_project_manager_a5267cfeae48d4e7585c3fc56d8d5b0b3}{getCurrentProject}}();}
+\DoxyCodeLine{00629   updateProjectFromFields(project.getPointer());}
+\DoxyCodeLine{00630   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00631     project-\/>save();}
+\DoxyCodeLine{00632   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_system_exception}{TSystemException}} se) \{}
+\DoxyCodeLine{00633     DVGui::warning(QString::fromStdWString(se.getMessage()));}
+\DoxyCodeLine{00634     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00635   \}}
+\DoxyCodeLine{00636   DvDirModel::instance()-\/>refreshFolder(project-\/>getProjectFolder());}
+\DoxyCodeLine{00637 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/projectpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/projectpopup.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,124 @@
+\hypertarget{class_raylit_fx}{}\doxysection{Raylit\+Fx Class Reference}
+\label{class_raylit_fx}\index{RaylitFx@{RaylitFx}}
+Inheritance diagram for Raylit\+Fx\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_raylit_fx}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_raylit_fx_ac9888fbf8c6cacaab037d8f8590e3432}{do\+Compute}} (\mbox{\hyperlink{class_t_tile}{TTile}} \&tile, double frame, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+TPixel\+ParamP \mbox{\hyperlink{class_raylit_fx_a9f732a5bc8658b1b03fa61fddac403d3}{m\+\_\+color}}
+\item 
+TBool\+ParamP \mbox{\hyperlink{class_raylit_fx_abad48526c0aab25bbbeec262de0de492}{m\+\_\+invert}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_raylit_fx_a5a0acb4cc371a0c466a8739e519f320b}\label{class_raylit_fx_a5a0acb4cc371a0c466a8739e519f320b}} 
+\index{RaylitFx@{RaylitFx}!RaylitFx@{RaylitFx}}
+\index{RaylitFx@{RaylitFx}!RaylitFx@{RaylitFx}}
+\doxysubsubsection{\texorpdfstring{RaylitFx()}{RaylitFx()}}
+{\footnotesize\ttfamily Raylit\+Fx\+::\+Raylit\+Fx (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00133              : m\_color(TPixel(255, 80, 0)), m\_invert(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00134     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}color"{}}, m\_color);}
+\DoxyCodeLine{00135     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}invert"{}}, m\_invert);}
+\DoxyCodeLine{00136   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_raylit_fx_ac9888fbf8c6cacaab037d8f8590e3432}\label{class_raylit_fx_ac9888fbf8c6cacaab037d8f8590e3432}} 
+\index{RaylitFx@{RaylitFx}!doCompute@{doCompute}}
+\index{doCompute@{doCompute}!RaylitFx@{RaylitFx}}
+\doxysubsubsection{\texorpdfstring{doCompute()}{doCompute()}}
+{\footnotesize\ttfamily void Raylit\+Fx\+::do\+Compute (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_tile}{TTile}} \&}]{tile,  }\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{ri }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00146                                                     \{}
+\DoxyCodeLine{00147   \textcolor{keywordflow}{if} (!m\_input.isConnected()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149   \textcolor{keywordtype}{double} scale = sqrt(fabs(ri.\mbox{\hyperlink{class_t_render_settings_a1250181bf3fe8e05db005d5faa76b3ea}{m\_affine}}.det()));}
+\DoxyCodeLine{00150   \textcolor{keywordtype}{int} shrink   = (ri.\mbox{\hyperlink{class_t_render_settings_a52dd41881bbf6aaf953fe300be2e233e}{m\_shrinkX}} + ri.\mbox{\hyperlink{class_t_render_settings_ae1882f584ce9ffad12ce6bf9ff23814c}{m\_shrinkY}}) / 2;}
+\DoxyCodeLine{00151 }
+\DoxyCodeLine{00152   \mbox{\hyperlink{class_t_point_t}{TPointD}} p(ri.\mbox{\hyperlink{class_t_render_settings_a1250181bf3fe8e05db005d5faa76b3ea}{m\_affine}} * m\_p-\/>getValue(frame));}
+\DoxyCodeLine{00153 }
+\DoxyCodeLine{00154   \mbox{\hyperlink{class_t_rect_t}{TRectD}} rectIn(tileOut.m\_pos, \mbox{\hyperlink{class_t_dimension_t}{TDimensionD}}(tileOut.getRaster()-\/>getLx(),}
+\DoxyCodeLine{00155                                            tileOut.getRaster()-\/>getLy()));}
+\DoxyCodeLine{00156   \mbox{\hyperlink{class_t_rect_t}{TRectD}} bboxIn;}
+\DoxyCodeLine{00157   m\_input-\/>getBBox(frame, bboxIn, ri);}
+\DoxyCodeLine{00158   \textcolor{keywordflow}{if} (bboxIn == TConsts::infiniteRectD) bboxIn = rectIn;}
+\DoxyCodeLine{00159 }
+\DoxyCodeLine{00160   \textcolor{keywordflow}{if} (!bboxIn.\mbox{\hyperlink{class_t_rect_t_a53ce09c6112f8a019b43ad82d721a93b}{isEmpty}}()) \{}
+\DoxyCodeLine{00161     \mbox{\hyperlink{class_t_point_t}{TPoint}} posIn, posOut;}
+\DoxyCodeLine{00162 }
+\DoxyCodeLine{00163     \mbox{\hyperlink{class_t_tile}{TTile}} tileIn;}
+\DoxyCodeLine{00164     \mbox{\hyperlink{class_t_dimension_t}{TDimension}} sizeIn(std::max(tceil(bboxIn.getLx()), 1),}
+\DoxyCodeLine{00165                       std::max(tceil(bboxIn.getLy()), 1));}
+\DoxyCodeLine{00166     m\_input-\/>allocateAndCompute(tileIn, bboxIn.getP00(), sizeIn,}
+\DoxyCodeLine{00167                                 tileOut.getRaster(), frame, ri);}
+\DoxyCodeLine{00168 }
+\DoxyCodeLine{00169     \mbox{\hyperlink{struct_t_rop_1_1_raylit_params}{TRop::RaylitParams}} params;}
+\DoxyCodeLine{00170 }
+\DoxyCodeLine{00171     params.m\_scale = scale;}
+\DoxyCodeLine{00172 }
+\DoxyCodeLine{00173     params.m\_lightOriginSrc.x = params.m\_lightOriginDst.x = p.x;}
+\DoxyCodeLine{00174     params.m\_lightOriginSrc.y = params.m\_lightOriginDst.y = p.y;}
+\DoxyCodeLine{00175     params.m\_lightOriginSrc.z = params.m\_lightOriginDst.z =}
+\DoxyCodeLine{00176         (int)m\_z-\/>getValue(frame);}
+\DoxyCodeLine{00177     params.m\_color        = m\_color-\/>getValue(frame);}
+\DoxyCodeLine{00178     params.m\_intensity    = m\_intensity-\/>getValue(frame);}
+\DoxyCodeLine{00179     params.m\_decay        = m\_decay-\/>getValue(frame);}
+\DoxyCodeLine{00180     params.m\_smoothness   = m\_smoothness-\/>getValue(frame);}
+\DoxyCodeLine{00181     params.m\_invert       = m\_invert-\/>getValue();}
+\DoxyCodeLine{00182     params.m\_includeInput = m\_includeInput-\/>getValue();}
+\DoxyCodeLine{00183     params.m\_lightOriginSrc.x -\/= (int)tileIn.m\_pos.x;}
+\DoxyCodeLine{00184     params.m\_lightOriginSrc.y -\/= (\textcolor{keywordtype}{int})tileIn.m\_pos.y;}
+\DoxyCodeLine{00185     params.m\_lightOriginDst.x -\/= (int)tileOut.m\_pos.x;}
+\DoxyCodeLine{00186     params.m\_lightOriginDst.y -\/= (\textcolor{keywordtype}{int})tileOut.m\_pos.y;}
+\DoxyCodeLine{00187     params.m\_radius = m\_radius-\/>getValue(frame);}
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189     \mbox{\hyperlink{namespace_t_rop_ac6e615dabc3bd3a4f7681ca7d0a743f1}{TRop::raylit}}(tileOut.getRaster(), tileIn.getRaster(), params);}
+\DoxyCodeLine{00190   \}}
+\DoxyCodeLine{00191 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_raylit_fx_a9f732a5bc8658b1b03fa61fddac403d3}\label{class_raylit_fx_a9f732a5bc8658b1b03fa61fddac403d3}} 
+\index{RaylitFx@{RaylitFx}!m\_color@{m\_color}}
+\index{m\_color@{m\_color}!RaylitFx@{RaylitFx}}
+\doxysubsubsection{\texorpdfstring{m\_color}{m\_color}}
+{\footnotesize\ttfamily TPixel\+ParamP Raylit\+Fx\+::m\+\_\+color\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_raylit_fx_abad48526c0aab25bbbeec262de0de492}\label{class_raylit_fx_abad48526c0aab25bbbeec262de0de492}} 
+\index{RaylitFx@{RaylitFx}!m\_invert@{m\_invert}}
+\index{m\_invert@{m\_invert}!RaylitFx@{RaylitFx}}
+\doxysubsubsection{\texorpdfstring{m\_invert}{m\_invert}}
+{\footnotesize\ttfamily TBool\+ParamP Raylit\+Fx\+::m\+\_\+invert\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/raylitfx.\+cpp\end{DoxyCompactItemize}

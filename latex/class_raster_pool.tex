@@ -1,0 +1,194 @@
+\hypertarget{class_raster_pool}{}\doxysection{Raster\+Pool Class Reference}
+\label{class_raster_pool}\index{RasterPool@{RasterPool}}
+
+
+Stores a list of Raster\+Items under \mbox{\hyperlink{class_t_renderer}{TRenderer}}\textquotesingle{}s requests.  
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_raster_pool_a118405ae7a181614e2dac24ccd5207c2}{set\+Raster\+Specs}} (const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&size, int bpp)
+\item 
+void \mbox{\hyperlink{class_raster_pool_acb59d74bc2bf866d900ad53156720308}{get\+Raster\+Specs}} (\mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&size, int \&bpp)
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \mbox{\hyperlink{class_raster_pool_a5ced6c81a08eebfb4c4dea5bd5a72ddc}{get\+Raster}} ()
+\begin{DoxyCompactList}\small\item\em Returns for the first not-\/busy raster. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \mbox{\hyperlink{class_raster_pool_ad55598298ea165232fc1ce9038b9dc35}{get\+Raster}} (const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&size, int bpp)
+\item 
+void \mbox{\hyperlink{class_raster_pool_aba17ef1e87c928422bc337f06249f19e}{release\+Raster}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&r)
+\item 
+void \mbox{\hyperlink{class_raster_pool_acf58d4c9145761ad547aad62ec4f4f35}{clear}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Stores a list of Raster\+Items under \mbox{\hyperlink{class_t_renderer}{TRenderer}}\textquotesingle{}s requests. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_raster_pool_a6300aa89ff4daf0b2af2207e79a3d3c8}\label{class_raster_pool_a6300aa89ff4daf0b2af2207e79a3d3c8}} 
+\index{RasterPool@{RasterPool}!RasterPool@{RasterPool}}
+\index{RasterPool@{RasterPool}!RasterPool@{RasterPool}}
+\doxysubsubsection{\texorpdfstring{RasterPool()}{RasterPool()}}
+{\footnotesize\ttfamily Raster\+Pool\+::\+Raster\+Pool (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00173 : m\_size(-\/1, -\/1) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_raster_pool_a393c9315b33be471212a7802ab56fb75}\label{class_raster_pool_a393c9315b33be471212a7802ab56fb75}} 
+\index{RasterPool@{RasterPool}!````~RasterPool@{$\sim$RasterPool}}
+\index{````~RasterPool@{$\sim$RasterPool}!RasterPool@{RasterPool}}
+\doxysubsubsection{\texorpdfstring{$\sim$RasterPool()}{~RasterPool()}}
+{\footnotesize\ttfamily Raster\+Pool\+::$\sim$\+Raster\+Pool (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00267                         \{}
+\DoxyCodeLine{00268   \textcolor{comment}{/*if (m\_rasterRepository.size())}}
+\DoxyCodeLine{00269 \textcolor{comment}{TSystem::outputDebug("{}\string~RasterPool: itemCount = "{} + toString}}
+\DoxyCodeLine{00270 \textcolor{comment}{((int)m\_rasterRepository.size())+"{} (should be 0)\(\backslash\)n"{});*/}}
+\DoxyCodeLine{00271 }
+\DoxyCodeLine{00272   \textcolor{comment}{// Release all raster items}}
+\DoxyCodeLine{00273   clear();}
+\DoxyCodeLine{00274 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_raster_pool_acf58d4c9145761ad547aad62ec4f4f35}\label{class_raster_pool_acf58d4c9145761ad547aad62ec4f4f35}} 
+\index{RasterPool@{RasterPool}!clear@{clear}}
+\index{clear@{clear}!RasterPool@{RasterPool}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void Raster\+Pool\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00192                        \{}
+\DoxyCodeLine{00193   QMutexLocker sl(\&m\_repositoryLock);}
+\DoxyCodeLine{00194   clearPointerContainer(m\_rasterRepository);}
+\DoxyCodeLine{00195 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_raster_pool_a5ced6c81a08eebfb4c4dea5bd5a72ddc}\label{class_raster_pool_a5ced6c81a08eebfb4c4dea5bd5a72ddc}} 
+\index{RasterPool@{RasterPool}!getRaster@{getRaster}}
+\index{getRaster@{getRaster}!RasterPool@{RasterPool}}
+\doxysubsubsection{\texorpdfstring{getRaster()}{getRaster()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} Raster\+Pool\+::get\+Raster (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns for the first not-\/busy raster. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00217                                \{}
+\DoxyCodeLine{00218   QMutexLocker sl(\&m\_repositoryLock);}
+\DoxyCodeLine{00219 }
+\DoxyCodeLine{00220   RasterRepository::iterator it = m\_rasterRepository.begin();}
+\DoxyCodeLine{00221   \textcolor{keywordflow}{while} (it != m\_rasterRepository.end()) \{}
+\DoxyCodeLine{00222     \mbox{\hyperlink{class_raster_item}{RasterItem}} *rasItem = *it;}
+\DoxyCodeLine{00223     \textcolor{keywordflow}{if} (rasItem-\/>m\_busy == \textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00224       \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} raster = rasItem-\/>getRaster();}
+\DoxyCodeLine{00225 }
+\DoxyCodeLine{00226       \textcolor{keywordflow}{if} (!raster) \{}
+\DoxyCodeLine{00227         \textcolor{keyword}{delete} rasItem;}
+\DoxyCodeLine{00228         m\_rasterRepository.erase(it++);}
+\DoxyCodeLine{00229         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00230       \}}
+\DoxyCodeLine{00231 }
+\DoxyCodeLine{00232       rasItem-\/>m\_busy = \textcolor{keyword}{true};}
+\DoxyCodeLine{00233       raster-\/>clear();}
+\DoxyCodeLine{00234       \textcolor{keywordflow}{return} raster;}
+\DoxyCodeLine{00235     \}}
+\DoxyCodeLine{00236 }
+\DoxyCodeLine{00237     ++it;}
+\DoxyCodeLine{00238   \}}
+\DoxyCodeLine{00239 }
+\DoxyCodeLine{00240   \mbox{\hyperlink{class_raster_item}{RasterItem}} *rasItem = \textcolor{keyword}{new} \mbox{\hyperlink{class_raster_item}{RasterItem}}(m\_size, m\_bpp, \textcolor{keyword}{true});}
+\DoxyCodeLine{00241   m\_rasterRepository.push\_back(rasItem);}
+\DoxyCodeLine{00242 }
+\DoxyCodeLine{00243   \textcolor{keywordflow}{return} rasItem-\/>getRaster();}
+\DoxyCodeLine{00244 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_raster_pool_ad55598298ea165232fc1ce9038b9dc35}\label{class_raster_pool_ad55598298ea165232fc1ce9038b9dc35}} 
+\index{RasterPool@{RasterPool}!getRaster@{getRaster}}
+\index{getRaster@{getRaster}!RasterPool@{RasterPool}}
+\doxysubsubsection{\texorpdfstring{getRaster()}{getRaster()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} Raster\+Pool\+::get\+Raster (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&}]{size,  }\item[{int}]{bpp }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00209                                                               \{}
+\DoxyCodeLine{00210   assert(size == m\_size \&\& bpp == m\_bpp);}
+\DoxyCodeLine{00211   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_raster_pool_a5ced6c81a08eebfb4c4dea5bd5a72ddc}{getRaster}}();}
+\DoxyCodeLine{00212 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_raster_pool_acb59d74bc2bf866d900ad53156720308}\label{class_raster_pool_acb59d74bc2bf866d900ad53156720308}} 
+\index{RasterPool@{RasterPool}!getRasterSpecs@{getRasterSpecs}}
+\index{getRasterSpecs@{getRasterSpecs}!RasterPool@{RasterPool}}
+\doxysubsubsection{\texorpdfstring{getRasterSpecs()}{getRasterSpecs()}}
+{\footnotesize\ttfamily void Raster\+Pool\+::get\+Raster\+Specs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&}]{size,  }\item[{int \&}]{bpp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00177                                                   \{}
+\DoxyCodeLine{00178     size = m\_size;}
+\DoxyCodeLine{00179     bpp  = m\_bpp;}
+\DoxyCodeLine{00180   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_raster_pool_aba17ef1e87c928422bc337f06249f19e}\label{class_raster_pool_aba17ef1e87c928422bc337f06249f19e}} 
+\index{RasterPool@{RasterPool}!releaseRaster@{releaseRaster}}
+\index{releaseRaster@{releaseRaster}!RasterPool@{RasterPool}}
+\doxysubsubsection{\texorpdfstring{releaseRaster()}{releaseRaster()}}
+{\footnotesize\ttfamily void Raster\+Pool\+::release\+Raster (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&}]{r }\end{DoxyParamCaption})}
+
+Cerca il raster {\bfseries{r}} in m\+\_\+raster\+Repository; se lo trova setta a {\bfseries{false}} il campo {\bfseries{m\+\_\+busy}}. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00250                                                 \{}
+\DoxyCodeLine{00251   \textcolor{keywordflow}{if} (!r) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00252 }
+\DoxyCodeLine{00253   QMutexLocker sl(\&m\_repositoryLock);}
+\DoxyCodeLine{00254   \textcolor{keywordflow}{for} (RasterRepository::iterator it = m\_rasterRepository.begin();}
+\DoxyCodeLine{00255        it != m\_rasterRepository.end(); ++it) \{}
+\DoxyCodeLine{00256     \mbox{\hyperlink{class_raster_item}{RasterItem}} *rasItem = *it;}
+\DoxyCodeLine{00257     \textcolor{keywordflow}{if} (rasItem-\/>getRaster()-\/>\mbox{\hyperlink{class_t_raster_a5ce02b7e8a5b8b594863aa272d8dcdbc}{getRawData}}() == r-\/>\mbox{\hyperlink{class_t_raster_a5ce02b7e8a5b8b594863aa272d8dcdbc}{getRawData}}()) \{}
+\DoxyCodeLine{00258       assert(rasItem-\/>m\_busy);}
+\DoxyCodeLine{00259       rasItem-\/>m\_busy = \textcolor{keyword}{false};}
+\DoxyCodeLine{00260       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00261     \}}
+\DoxyCodeLine{00262   \}}
+\DoxyCodeLine{00263 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00158}{TRaster\+::get\+Raw\+Data()}}.
+
+\mbox{\Hypertarget{class_raster_pool_a118405ae7a181614e2dac24ccd5207c2}\label{class_raster_pool_a118405ae7a181614e2dac24ccd5207c2}} 
+\index{RasterPool@{RasterPool}!setRasterSpecs@{setRasterSpecs}}
+\index{setRasterSpecs@{setRasterSpecs}!RasterPool@{RasterPool}}
+\doxysubsubsection{\texorpdfstring{setRasterSpecs()}{setRasterSpecs()}}
+{\footnotesize\ttfamily void Raster\+Pool\+::set\+Raster\+Specs (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&}]{size,  }\item[{int}]{bpp }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00199                                                                \{}
+\DoxyCodeLine{00200   \textcolor{keywordflow}{if} (size != m\_size || bpp != m\_bpp) \{}
+\DoxyCodeLine{00201     m\_size = size;}
+\DoxyCodeLine{00202     m\_bpp  = bpp;}
+\DoxyCodeLine{00203     clear();}
+\DoxyCodeLine{00204   \}}
+\DoxyCodeLine{00205 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tfx/trenderer.\+cpp\end{DoxyCompactItemize}

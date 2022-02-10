@@ -1,0 +1,225 @@
+\hypertarget{class_tool_utils_1_1_undo_modify_list_stroke}{}\doxysection{Tool\+Utils\+::Undo\+Modify\+List\+Stroke Class Reference}
+\label{class_tool_utils_1_1_undo_modify_list_stroke}\index{ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}}
+Inheritance diagram for Tool\+Utils\+::Undo\+Modify\+List\+Stroke\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_tool_utils_1_1_undo_modify_list_stroke}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_tool_utils_1_1_undo_modify_list_stroke_a551b5286165aaf83ccde1ac0fed4ff7f}{Undo\+Modify\+List\+Stroke}} (\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$level, const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&frame\+Id, const std\+::vector$<$ \mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$ $>$ \&stroke\+List)
+\item 
+void \mbox{\hyperlink{class_tool_utils_1_1_undo_modify_list_stroke_a3e3830d8cbc9bd302ac4ec6407ec7ebf}{on\+Add}} () override
+\item 
+void \mbox{\hyperlink{class_tool_utils_1_1_undo_modify_list_stroke_a8aa687bde1266e8ed1b24b6e60dd417c}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_tool_utils_1_1_undo_modify_list_stroke_a3593a8f474f235ea9652075f12e2c64d}{redo}} () const override
+\item 
+int \mbox{\hyperlink{class_tool_utils_1_1_undo_modify_list_stroke_a6f96f8a169b6c0bd7e9e275588830bcb}{get\+Size}} () const override
+\item 
+QString \mbox{\hyperlink{class_tool_utils_1_1_undo_modify_list_stroke_a1a2fa133361b56cd80016f4f6eb6ce2f}{get\+Tool\+Name}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_tool_utils_1_1_undo_modify_list_stroke_a551b5286165aaf83ccde1ac0fed4ff7f}\label{class_tool_utils_1_1_undo_modify_list_stroke_a551b5286165aaf83ccde1ac0fed4ff7f}} 
+\index{ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}!UndoModifyListStroke@{UndoModifyListStroke}}
+\index{UndoModifyListStroke@{UndoModifyListStroke}!ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}}
+\doxysubsubsection{\texorpdfstring{UndoModifyListStroke()}{UndoModifyListStroke()}}
+{\footnotesize\ttfamily Tool\+Utils\+::\+Undo\+Modify\+List\+Stroke\+::\+Undo\+Modify\+List\+Stroke (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{level,  }\item[{const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&}]{frame\+Id,  }\item[{const std\+::vector$<$ \mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$ $>$ \&}]{stroke\+List }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00922     : TToolUndo(level, frameId), m\_fillInformation(0) \{}
+\DoxyCodeLine{00923   UINT strokeNum      = strokeVect.size();}
+\DoxyCodeLine{00924   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} image = level-\/>getFrame(frameId, \textcolor{keyword}{true});}
+\DoxyCodeLine{00925   assert(image);}
+\DoxyCodeLine{00926   \textcolor{keywordflow}{for} (UINT i = 0; i < strokeNum; i++) \{}
+\DoxyCodeLine{00927     m\_oldBBox += (strokeVect[i])-\/>getBBox();}
+\DoxyCodeLine{00928     \textcolor{keywordtype}{int} strokeIndex = image-\/>getStrokeIndex(strokeVect[i]);}
+\DoxyCodeLine{00929     m\_strokeList.push\_back(\textcolor{keyword}{new} UndoModifyStroke(level, frameId, strokeIndex));}
+\DoxyCodeLine{00930   \}}
+\DoxyCodeLine{00931 }
+\DoxyCodeLine{00932   m\_beginIt = m\_strokeList.begin();}
+\DoxyCodeLine{00933   m\_endIt   = m\_strokeList.end();}
+\DoxyCodeLine{00934 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tool_utils_1_1_undo_modify_list_stroke_ad9b5d26a0d82e3a298053de2d727bf38}\label{class_tool_utils_1_1_undo_modify_list_stroke_ad9b5d26a0d82e3a298053de2d727bf38}} 
+\index{ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}!````~UndoModifyListStroke@{$\sim$UndoModifyListStroke}}
+\index{````~UndoModifyListStroke@{$\sim$UndoModifyListStroke}!ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}}
+\doxysubsubsection{\texorpdfstring{$\sim$UndoModifyListStroke()}{~UndoModifyListStroke()}}
+{\footnotesize\ttfamily Tool\+Utils\+::\+Undo\+Modify\+List\+Stroke\+::$\sim$\+Undo\+Modify\+List\+Stroke (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00938                                                      \{}
+\DoxyCodeLine{00939   clearPointerContainer(m\_strokeList);}
+\DoxyCodeLine{00940   \textcolor{keyword}{delete} m\_fillInformation;}
+\DoxyCodeLine{00941 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tool_utils_1_1_undo_modify_list_stroke_a6f96f8a169b6c0bd7e9e275588830bcb}\label{class_tool_utils_1_1_undo_modify_list_stroke_a6f96f8a169b6c0bd7e9e275588830bcb}} 
+\index{ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}!getSize@{getSize}}
+\index{getSize@{getSize}!ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Tool\+Utils\+::\+Undo\+Modify\+List\+Stroke\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01018                                                  \{}
+\DoxyCodeLine{01019   \textcolor{keywordtype}{int} sum = 0;}
+\DoxyCodeLine{01020 }
+\DoxyCodeLine{01021   std::list<UndoModifyStroke *>::iterator it = m\_beginIt;}
+\DoxyCodeLine{01022 }
+\DoxyCodeLine{01023   \textcolor{keywordflow}{for} (; it != m\_endIt; ++it) \{}
+\DoxyCodeLine{01024     sum += (*it)-\/>getSize();}
+\DoxyCodeLine{01025   \}}
+\DoxyCodeLine{01026 }
+\DoxyCodeLine{01027   \textcolor{keywordflow}{if} (m\_fillInformation)}
+\DoxyCodeLine{01028     sum += m\_fillInformation-\/>capacity() * \textcolor{keyword}{sizeof}(\mbox{\hyperlink{class_t_filled_region_inf}{TFilledRegionInf}});}
+\DoxyCodeLine{01029 }
+\DoxyCodeLine{01030   \textcolor{keywordflow}{return} sum;}
+\DoxyCodeLine{01031 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tool_utils_1_1_undo_modify_list_stroke_a1a2fa133361b56cd80016f4f6eb6ce2f}\label{class_tool_utils_1_1_undo_modify_list_stroke_a1a2fa133361b56cd80016f4f6eb6ce2f}} 
+\index{ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}!getToolName@{getToolName}}
+\index{getToolName@{getToolName}!ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}}
+\doxysubsubsection{\texorpdfstring{getToolName()}{getToolName()}}
+{\footnotesize\ttfamily QString Tool\+Utils\+::\+Undo\+Modify\+List\+Stroke\+::get\+Tool\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tool_utils_1_1_t_tool_undo}{Tool\+Utils\+::\+TTool\+Undo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00292 \{ \textcolor{keywordflow}{return} QObject::tr(\textcolor{stringliteral}{"{}Modify Stroke Tool"{}}); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tool_utils_1_1_undo_modify_list_stroke_a3e3830d8cbc9bd302ac4ec6407ec7ebf}\label{class_tool_utils_1_1_undo_modify_list_stroke_a3e3830d8cbc9bd302ac4ec6407ec7ebf}} 
+\index{ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}!onAdd@{onAdd}}
+\index{onAdd@{onAdd}!ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}}
+\doxysubsubsection{\texorpdfstring{onAdd()}{onAdd()}}
+{\footnotesize\ttfamily void Tool\+Utils\+::\+Undo\+Modify\+List\+Stroke\+::on\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00945                                           \{}
+\DoxyCodeLine{00946   std::list<UndoModifyStroke *>::iterator it = m\_beginIt;}
+\DoxyCodeLine{00947   \mbox{\hyperlink{class_t_rect_t}{TRectD}} newBBox;}
+\DoxyCodeLine{00948 }
+\DoxyCodeLine{00949   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} image = m\_level-\/>getFrame(m\_frameId, \textcolor{keyword}{true});}
+\DoxyCodeLine{00950   assert(!!image);}
+\DoxyCodeLine{00951   \textcolor{keywordflow}{if} (!image) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00952 }
+\DoxyCodeLine{00953   \textcolor{keywordflow}{for} (; it != m\_endIt; ++it) \{}
+\DoxyCodeLine{00954     \mbox{\hyperlink{class_t_stroke}{TStroke}} *s = image-\/>getStroke((*it)-\/>m\_strokeIndex);}
+\DoxyCodeLine{00955     (*it)-\/>onAdd();}
+\DoxyCodeLine{00956   \}}
+\DoxyCodeLine{00957   m\_fillInformation = \textcolor{keyword}{new} std::vector<TFilledRegionInf>;}
+\DoxyCodeLine{00958 }
+\DoxyCodeLine{00959   \textcolor{keywordflow}{if} (m\_beginIt != m\_endIt)}
+\DoxyCodeLine{00960     ImageUtils::getFillingInformationOverlappingArea(image, *m\_fillInformation,}
+\DoxyCodeLine{00961                                                      m\_oldBBox, newBBox);}
+\DoxyCodeLine{00962 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tool_utils_1_1_undo_modify_list_stroke_a3593a8f474f235ea9652075f12e2c64d}\label{class_tool_utils_1_1_undo_modify_list_stroke_a3593a8f474f235ea9652075f12e2c64d}} 
+\index{ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}!redo@{redo}}
+\index{redo@{redo}!ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Tool\+Utils\+::\+Undo\+Modify\+List\+Stroke\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01002                                                \{}
+\DoxyCodeLine{01003   \mbox{\hyperlink{class_t_application}{TTool::Application}} *app = TTool::getApplication();}
+\DoxyCodeLine{01004   \textcolor{keywordflow}{if} (!app) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01005 }
+\DoxyCodeLine{01006   std::list<UndoModifyStroke *>::iterator it = m\_beginIt;}
+\DoxyCodeLine{01007 }
+\DoxyCodeLine{01008   \textcolor{keywordflow}{for} (; it != m\_endIt; ++it) \{}
+\DoxyCodeLine{01009     (*it)-\/>redo();}
+\DoxyCodeLine{01010   \}}
+\DoxyCodeLine{01011 }
+\DoxyCodeLine{01012   app-\/>getCurrentXsheet()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{01013   notifyImageChanged();}
+\DoxyCodeLine{01014 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tool_utils_1_1_undo_modify_list_stroke_a8aa687bde1266e8ed1b24b6e60dd417c}\label{class_tool_utils_1_1_undo_modify_list_stroke_a8aa687bde1266e8ed1b24b6e60dd417c}} 
+\index{ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}!undo@{undo}}
+\index{undo@{undo}!ToolUtils::UndoModifyListStroke@{ToolUtils::UndoModifyListStroke}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Tool\+Utils\+::\+Undo\+Modify\+List\+Stroke\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00966                                                \{}
+\DoxyCodeLine{00967   \mbox{\hyperlink{class_t_application}{TTool::Application}} *app = TTool::getApplication();}
+\DoxyCodeLine{00968   \textcolor{keywordflow}{if} (!app) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00969 }
+\DoxyCodeLine{00970   std::list<UndoModifyStroke *>::iterator stroke\_it = m\_beginIt;}
+\DoxyCodeLine{00971   \textcolor{keywordflow}{if} (m\_beginIt == m\_endIt) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00972 }
+\DoxyCodeLine{00973   \textcolor{keywordflow}{for} (; stroke\_it != m\_endIt; ++stroke\_it) \{}
+\DoxyCodeLine{00974     (*stroke\_it)-\/>undo();}
+\DoxyCodeLine{00975   \}}
+\DoxyCodeLine{00976 }
+\DoxyCodeLine{00977   UINT size = m\_fillInformation-\/>size();}
+\DoxyCodeLine{00978   \textcolor{keywordflow}{if} (!size) \{}
+\DoxyCodeLine{00979     app-\/>getCurrentXsheet()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00980     app-\/>getCurrentTool()-\/>getTool()-\/>\mbox{\hyperlink{class_t_tool_abd1824e9b49705c534e0a773305294c4}{notifyImageChanged}}();}
+\DoxyCodeLine{00981     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00982   \}}
+\DoxyCodeLine{00983 }
+\DoxyCodeLine{00984   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} image = m\_level-\/>getFrame(m\_frameId, \textcolor{keyword}{true});}
+\DoxyCodeLine{00985   assert(!!image);}
+\DoxyCodeLine{00986   \textcolor{keywordflow}{if} (!image) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00987 }
+\DoxyCodeLine{00988   image-\/>findRegions();}
+\DoxyCodeLine{00989 }
+\DoxyCodeLine{00990   \mbox{\hyperlink{class_t_region}{TRegion}} *reg;}
+\DoxyCodeLine{00991   \textcolor{keywordflow}{for} (UINT i = 0; i < size; i++) \{}
+\DoxyCodeLine{00992     reg = image-\/>getRegion((*m\_fillInformation)[i].m\_regionId);}
+\DoxyCodeLine{00993     assert(reg);}
+\DoxyCodeLine{00994     \textcolor{keywordflow}{if} (reg) reg-\/>setStyle((*m\_fillInformation)[i].m\_styleId);}
+\DoxyCodeLine{00995   \}}
+\DoxyCodeLine{00996   app-\/>getCurrentXsheet()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00997   notifyImageChanged();}
+\DoxyCodeLine{00998 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tools/toolutils.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/toolutils.\+cpp\end{DoxyCompactItemize}

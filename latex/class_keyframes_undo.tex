@@ -1,0 +1,189 @@
+\hypertarget{class_keyframes_undo}{}\doxysection{Keyframes\+Undo Class Reference}
+\label{class_keyframes_undo}\index{KeyframesUndo@{KeyframesUndo}}
+Inheritance diagram for Keyframes\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_keyframes_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_keyframes_undo_a6658db68f22de7ca1402c07d88232381}{Keyframes\+Undo}} (\mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$param)
+\item 
+void \mbox{\hyperlink{class_keyframes_undo_af0ca70251525a17ed2629a46689b46b2}{add\+Keyframe}} (int k\+Index)
+\item 
+int \mbox{\hyperlink{class_keyframes_undo_a0e677d2654667b729a9f57f9dbb1296f}{create\+Keyframe}} (double frame)
+\item 
+void \mbox{\hyperlink{class_keyframes_undo_a56fe0e8870d6db9ca137f1c328e90162}{on\+Add}} () override
+\item 
+void \mbox{\hyperlink{class_keyframes_undo_a4fd6444655bd85ecc2f3c1c6e8f76ace}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_keyframes_undo_acce581269e4e769baa11b63a61f67603}{redo}} () const override
+\item 
+int \mbox{\hyperlink{class_keyframes_undo_a5aa38349f518042a395d49805af0b919}{get\+Size}} () const override
+\item 
+QString \mbox{\hyperlink{class_keyframes_undo_aa7f01bf27074d9b438ccc63b75fc6043}{get\+History\+String}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_keyframes_undo_a6658db68f22de7ca1402c07d88232381}\label{class_keyframes_undo_a6658db68f22de7ca1402c07d88232381}} 
+\index{KeyframesUndo@{KeyframesUndo}!KeyframesUndo@{KeyframesUndo}}
+\index{KeyframesUndo@{KeyframesUndo}!KeyframesUndo@{KeyframesUndo}}
+\doxysubsubsection{\texorpdfstring{KeyframesUndo()}{KeyframesUndo()}}
+{\footnotesize\ttfamily Keyframes\+Undo\+::\+Keyframes\+Undo (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$}]{param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026 : m\_param(param) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_keyframes_undo_af0ca70251525a17ed2629a46689b46b2}\label{class_keyframes_undo_af0ca70251525a17ed2629a46689b46b2}} 
+\index{KeyframesUndo@{KeyframesUndo}!addKeyframe@{addKeyframe}}
+\index{addKeyframe@{addKeyframe}!KeyframesUndo@{KeyframesUndo}}
+\doxysubsubsection{\texorpdfstring{addKeyframe()}{addKeyframe()}}
+{\footnotesize\ttfamily void Keyframes\+Undo\+::add\+Keyframe (\begin{DoxyParamCaption}\item[{int}]{k\+Index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027                                \{}
+\DoxyCodeLine{00028     \textcolor{keywordflow}{if} (m\_oldKeyframes.count(kIndex) > 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00029     assert(0 <= kIndex \&\& kIndex < m\_param-\/>getKeyframeCount());}
+\DoxyCodeLine{00030     m\_oldKeyframes[kIndex] = m\_param-\/>getKeyframe(kIndex);}
+\DoxyCodeLine{00031   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframes_undo_a0e677d2654667b729a9f57f9dbb1296f}\label{class_keyframes_undo_a0e677d2654667b729a9f57f9dbb1296f}} 
+\index{KeyframesUndo@{KeyframesUndo}!createKeyframe@{createKeyframe}}
+\index{createKeyframe@{createKeyframe}!KeyframesUndo@{KeyframesUndo}}
+\doxysubsubsection{\texorpdfstring{createKeyframe()}{createKeyframe()}}
+{\footnotesize\ttfamily int Keyframes\+Undo\+::create\+Keyframe (\begin{DoxyParamCaption}\item[{double}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00032                                    \{}
+\DoxyCodeLine{00033     \mbox{\hyperlink{class_t_double_keyframe}{TDoubleKeyframe}} oldKeyframe = m\_param-\/>getKeyframeAt(frame);}
+\DoxyCodeLine{00034     \textcolor{keywordflow}{if} (oldKeyframe.m\_isKeyframe) \{}
+\DoxyCodeLine{00035       \textcolor{keywordtype}{int} kIndex = m\_param-\/>getClosestKeyframe(oldKeyframe.m\_frame);}
+\DoxyCodeLine{00036       assert(0 <= kIndex \&\& kIndex < m\_param-\/>getKeyframeCount());}
+\DoxyCodeLine{00037       assert(m\_param-\/>keyframeIndexToFrame(kIndex) == oldKeyframe.m\_frame);}
+\DoxyCodeLine{00038       \textcolor{keywordflow}{return} kIndex;}
+\DoxyCodeLine{00039     \}}
+\DoxyCodeLine{00040     m\_param-\/>setKeyframe(oldKeyframe);}
+\DoxyCodeLine{00041     \textcolor{keywordtype}{int} kIndex = m\_param-\/>getClosestKeyframe(oldKeyframe.m\_frame);}
+\DoxyCodeLine{00042     assert(0 <= kIndex \&\& kIndex < m\_param-\/>getKeyframeCount());}
+\DoxyCodeLine{00043     assert(m\_param-\/>keyframeIndexToFrame(kIndex) == oldKeyframe.m\_frame);}
+\DoxyCodeLine{00044     assert(m\_oldKeyframes.count(kIndex) == 0);}
+\DoxyCodeLine{00045     m\_oldKeyframes[kIndex] = oldKeyframe;}
+\DoxyCodeLine{00046     \textcolor{keywordflow}{return} kIndex;}
+\DoxyCodeLine{00047   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframes_undo_aa7f01bf27074d9b438ccc63b75fc6043}\label{class_keyframes_undo_aa7f01bf27074d9b438ccc63b75fc6043}} 
+\index{KeyframesUndo@{KeyframesUndo}!getHistoryString@{getHistoryString}}
+\index{getHistoryString@{getHistoryString}!KeyframesUndo@{KeyframesUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryString()}{getHistoryString()}}
+{\footnotesize\ttfamily QString Keyframes\+Undo\+::get\+History\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073 \{ \textcolor{keywordflow}{return} QObject::tr(\textcolor{stringliteral}{"{}Set Keyframe"{}}); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframes_undo_a5aa38349f518042a395d49805af0b919}\label{class_keyframes_undo_a5aa38349f518042a395d49805af0b919}} 
+\index{KeyframesUndo@{KeyframesUndo}!getSize@{getSize}}
+\index{getSize@{getSize}!KeyframesUndo@{KeyframesUndo}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Keyframes\+Undo\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00069                                \{}
+\DoxyCodeLine{00070     \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(*this) +}
+\DoxyCodeLine{00071            \textcolor{keyword}{sizeof}(*m\_oldKeyframes.begin()) * 2 * m\_oldKeyframes.size();}
+\DoxyCodeLine{00072   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframes_undo_a56fe0e8870d6db9ca137f1c328e90162}\label{class_keyframes_undo_a56fe0e8870d6db9ca137f1c328e90162}} 
+\index{KeyframesUndo@{KeyframesUndo}!onAdd@{onAdd}}
+\index{onAdd@{onAdd}!KeyframesUndo@{KeyframesUndo}}
+\doxysubsubsection{\texorpdfstring{onAdd()}{onAdd()}}
+{\footnotesize\ttfamily void Keyframes\+Undo\+::on\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00049                         \{}
+\DoxyCodeLine{00050     Keyframes::iterator it;}
+\DoxyCodeLine{00051     \textcolor{keywordflow}{for} (it = m\_oldKeyframes.begin(); it != m\_oldKeyframes.end(); ++it) \{}
+\DoxyCodeLine{00052       \textcolor{keywordtype}{int} kIndex = it-\/>first;}
+\DoxyCodeLine{00053       assert(0 <= kIndex \&\& kIndex < m\_param-\/>getKeyframeCount());}
+\DoxyCodeLine{00054       m\_newKeyframes[kIndex] = m\_param-\/>getKeyframe(kIndex);}
+\DoxyCodeLine{00055     \}}
+\DoxyCodeLine{00056   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframes_undo_acce581269e4e769baa11b63a61f67603}\label{class_keyframes_undo_acce581269e4e769baa11b63a61f67603}} 
+\index{KeyframesUndo@{KeyframesUndo}!redo@{redo}}
+\index{redo@{redo}!KeyframesUndo@{KeyframesUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Keyframes\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00063                              \{}
+\DoxyCodeLine{00064     Keyframes::const\_iterator it;}
+\DoxyCodeLine{00065     \textcolor{keywordflow}{for} (it = m\_oldKeyframes.begin(); it != m\_oldKeyframes.end(); ++it)}
+\DoxyCodeLine{00066       \textcolor{keywordflow}{if} (!it-\/>second.m\_isKeyframe) m\_param-\/>setKeyframe(it-\/>second);}
+\DoxyCodeLine{00067     m\_param-\/>setKeyframes(m\_newKeyframes);}
+\DoxyCodeLine{00068   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframes_undo_a4fd6444655bd85ecc2f3c1c6e8f76ace}\label{class_keyframes_undo_a4fd6444655bd85ecc2f3c1c6e8f76ace}} 
+\index{KeyframesUndo@{KeyframesUndo}!undo@{undo}}
+\index{undo@{undo}!KeyframesUndo@{KeyframesUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Keyframes\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057                              \{}
+\DoxyCodeLine{00058     m\_param-\/>setKeyframes(m\_oldKeyframes);}
+\DoxyCodeLine{00059     Keyframes::const\_iterator it;}
+\DoxyCodeLine{00060     \textcolor{keywordflow}{for} (it = m\_oldKeyframes.begin(); it != m\_oldKeyframes.end(); ++it)}
+\DoxyCodeLine{00061       \textcolor{keywordflow}{if} (!it-\/>second.m\_isKeyframe) m\_param-\/>deleteKeyframe(it-\/>second.m\_frame);}
+\DoxyCodeLine{00062   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/doubleparamcmd.\+cpp\end{DoxyCompactItemize}

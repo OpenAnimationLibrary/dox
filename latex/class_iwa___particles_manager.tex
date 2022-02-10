@@ -1,0 +1,124 @@
+\hypertarget{class_iwa___particles_manager}{}\doxysection{Iwa\+\_\+\+Particles\+Manager Class Reference}
+\label{class_iwa___particles_manager}\index{Iwa\_ParticlesManager@{Iwa\_ParticlesManager}}
+Inheritance diagram for Iwa\+\_\+\+Particles\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_iwa___particles_manager}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_iwa___particles_manager_1_1_frame_data}{Frame\+Data}}
+\item 
+struct \mbox{\hyperlink{struct_iwa___particles_manager_1_1_fx_data}{Fx\+Data}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_iwa___particles_manager_1_1_frame_data}{Frame\+Data}} $\ast$ \mbox{\hyperlink{class_iwa___particles_manager_a50342d6e61cecd0844a5a783c444a82b}{data}} (unsigned long fx\+Id)
+\item 
+bool \mbox{\hyperlink{class_iwa___particles_manager_a048254c0ca0d2407a0a57e8ef57c993e}{is\+Cached}} (unsigned long fx\+Id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_iwa___particles_manager}{Iwa\+\_\+\+Particles\+Manager}} $\ast$ \mbox{\hyperlink{class_iwa___particles_manager_aa48a8c67819e0c33ebcec01b640af4e0}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_iwa___particles_manager_af13a3a1f5d9c426d2f077fbc2b546c85}\label{class_iwa___particles_manager_af13a3a1f5d9c426d2f077fbc2b546c85}} 
+\index{Iwa\_ParticlesManager@{Iwa\_ParticlesManager}!Iwa\_ParticlesManager@{Iwa\_ParticlesManager}}
+\index{Iwa\_ParticlesManager@{Iwa\_ParticlesManager}!Iwa\_ParticlesManager@{Iwa\_ParticlesManager}}
+\doxysubsubsection{\texorpdfstring{Iwa\_ParticlesManager()}{Iwa\_ParticlesManager()}}
+{\footnotesize\ttfamily Iwa\+\_\+\+Particles\+Manager\+::\+Iwa\+\_\+\+Particles\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00105 : m\_renderStatus(-\/1) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_iwa___particles_manager_aac1f517bbb62eb4e7ab5d61f97b1d43f}\label{class_iwa___particles_manager_aac1f517bbb62eb4e7ab5d61f97b1d43f}} 
+\index{Iwa\_ParticlesManager@{Iwa\_ParticlesManager}!````~Iwa\_ParticlesManager@{$\sim$Iwa\_ParticlesManager}}
+\index{````~Iwa\_ParticlesManager@{$\sim$Iwa\_ParticlesManager}!Iwa\_ParticlesManager@{Iwa\_ParticlesManager}}
+\doxysubsubsection{\texorpdfstring{$\sim$Iwa\_ParticlesManager()}{~Iwa\_ParticlesManager()}}
+{\footnotesize\ttfamily Iwa\+\_\+\+Particles\+Manager\+::$\sim$\+Iwa\+\_\+\+Particles\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00109                                             \{}
+\DoxyCodeLine{00110   \textcolor{comment}{// Release all fxDatas}}
+\DoxyCodeLine{00111   std::map<unsigned long, FxData *>::iterator it, end = m\_fxs.end();}
+\DoxyCodeLine{00112   \textcolor{keywordflow}{for} (it = m\_fxs.begin(); it != end; ++it) it-\/>second-\/>release();}
+\DoxyCodeLine{00113 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_iwa___particles_manager_a50342d6e61cecd0844a5a783c444a82b}\label{class_iwa___particles_manager_a50342d6e61cecd0844a5a783c444a82b}} 
+\index{Iwa\_ParticlesManager@{Iwa\_ParticlesManager}!data@{data}}
+\index{data@{data}!Iwa\_ParticlesManager@{Iwa\_ParticlesManager}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_iwa___particles_manager_1_1_frame_data}{Iwa\+\_\+\+Particles\+Manager\+::\+Frame\+Data}} $\ast$ Iwa\+\_\+\+Particles\+Manager\+::data (\begin{DoxyParamCaption}\item[{unsigned long}]{fx\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00124                         \{}
+\DoxyCodeLine{00125   QMutexLocker locker(\&m\_mutex);}
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127   std::map<unsigned long, FxData *>::iterator it = m\_fxs.find(fxId);}
+\DoxyCodeLine{00128   \textcolor{keywordflow}{if} (it == m\_fxs.end()) \{}
+\DoxyCodeLine{00129     it = m\_fxs.insert(std::make\_pair(fxId, \textcolor{keyword}{new} FxData)).first;}
+\DoxyCodeLine{00130     it-\/>second-\/>addRef();}
+\DoxyCodeLine{00131   \}}
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00133   FxData *fxData = it-\/>second;}
+\DoxyCodeLine{00134   FrameData *d   = fxData-\/>m\_frames.localData();}
+\DoxyCodeLine{00135   \textcolor{keywordflow}{if} (!d) \{}
+\DoxyCodeLine{00136     d = \textcolor{keyword}{new} FrameData(fxData);}
+\DoxyCodeLine{00137     fxData-\/>m\_frames.setLocalData(d);}
+\DoxyCodeLine{00138   \}}
+\DoxyCodeLine{00139 }
+\DoxyCodeLine{00140   \textcolor{keywordflow}{return} d;}
+\DoxyCodeLine{00141 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_iwa___particles_manager_aa48a8c67819e0c33ebcec01b640af4e0}\label{class_iwa___particles_manager_aa48a8c67819e0c33ebcec01b640af4e0}} 
+\index{Iwa\_ParticlesManager@{Iwa\_ParticlesManager}!instance@{instance}}
+\index{instance@{instance}!Iwa\_ParticlesManager@{Iwa\_ParticlesManager}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_iwa___particles_manager}{Iwa\+\_\+\+Particles\+Manager}} $\ast$ Iwa\+\_\+\+Particles\+Manager\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00098                                                      \{}
+\DoxyCodeLine{00099   \textcolor{keywordflow}{return} \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{class_iwa___particles_manager}{Iwa\_ParticlesManager}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{00100       Iwa\_ParticlesManager::gen()-\/>getManager(\mbox{\hyperlink{class_t_renderer_ab120ad7931abf8858c10459d66f4c659}{TRenderer::renderId}}()));}
+\DoxyCodeLine{00101 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_iwa___particles_manager_a048254c0ca0d2407a0a57e8ef57c993e}\label{class_iwa___particles_manager_a048254c0ca0d2407a0a57e8ef57c993e}} 
+\index{Iwa\_ParticlesManager@{Iwa\_ParticlesManager}!isCached@{isCached}}
+\index{isCached@{isCached}!Iwa\_ParticlesManager@{Iwa\_ParticlesManager}}
+\doxysubsubsection{\texorpdfstring{isCached()}{isCached()}}
+{\footnotesize\ttfamily bool Iwa\+\_\+\+Particles\+Manager\+::is\+Cached (\begin{DoxyParamCaption}\item[{unsigned long}]{fx\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00143                                                       \{}
+\DoxyCodeLine{00144   std::map<unsigned long, FxData *>::iterator it = m\_fxs.find(fxId);}
+\DoxyCodeLine{00145   \textcolor{keywordflow}{return} (it != m\_fxs.end());}
+\DoxyCodeLine{00146 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/iwa\+\_\+particlesmanager.\+h\item 
+E\+:/opentoonz/toonz/sources/stdfx/iwa\+\_\+particlesmanager.\+cpp\end{DoxyCompactItemize}

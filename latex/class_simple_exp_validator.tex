@@ -1,0 +1,93 @@
+\hypertarget{class_simple_exp_validator}{}\doxysection{Simple\+Exp\+Validator Class Reference}
+\label{class_simple_exp_validator}\index{SimpleExpValidator@{SimpleExpValidator}}
+Inheritance diagram for Simple\+Exp\+Validator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_simple_exp_validator}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_simple_exp_validator_a333a673e0c115d452097ec86f81a9332}{Simple\+Exp\+Validator}} (QObject $\ast$parent)
+\item 
+State \mbox{\hyperlink{class_simple_exp_validator_a71363b9964b5ecfb83c6e68f7fc855cc}{validate}} (QString \&input, int \&pos) const override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_simple_exp_validator_a333a673e0c115d452097ec86f81a9332}\label{class_simple_exp_validator_a333a673e0c115d452097ec86f81a9332}} 
+\index{SimpleExpValidator@{SimpleExpValidator}!SimpleExpValidator@{SimpleExpValidator}}
+\index{SimpleExpValidator@{SimpleExpValidator}!SimpleExpValidator@{SimpleExpValidator}}
+\doxysubsubsection{\texorpdfstring{SimpleExpValidator()}{SimpleExpValidator()}}
+{\footnotesize\ttfamily Simple\+Exp\+Validator\+::\+Simple\+Exp\+Validator (\begin{DoxyParamCaption}\item[{QObject $\ast$}]{parent }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00049 : QValidator(parent)\{\};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_simple_exp_validator_a71363b9964b5ecfb83c6e68f7fc855cc}\label{class_simple_exp_validator_a71363b9964b5ecfb83c6e68f7fc855cc}} 
+\index{SimpleExpValidator@{SimpleExpValidator}!validate@{validate}}
+\index{validate@{validate}!SimpleExpValidator@{SimpleExpValidator}}
+\doxysubsubsection{\texorpdfstring{validate()}{validate()}}
+{\footnotesize\ttfamily QValidator\+::\+State Simple\+Exp\+Validator\+::validate (\begin{DoxyParamCaption}\item[{QString \&}]{input,  }\item[{int \&}]{pos }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075                                                                            \{}
+\DoxyCodeLine{00076   \textcolor{comment}{/*-\/-\/-\/使用可能な文字-\/-\/-\/*/}}
+\DoxyCodeLine{00077   QString validChars(\textcolor{stringliteral}{"{}0123456789/."{}});}
+\DoxyCodeLine{00078 }
+\DoxyCodeLine{00079   \textcolor{keywordtype}{int} slashCount = 0;}
+\DoxyCodeLine{00080 }
+\DoxyCodeLine{00081   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < input.length(); i++) \{}
+\DoxyCodeLine{00082     \textcolor{comment}{/*-\/-\/-\/ まず、使用不可能な文字が含まれている場合はInvalid -\/-\/-\/*/}}
+\DoxyCodeLine{00083     \textcolor{keywordflow}{if} (!validChars.contains(input.at(i))) \textcolor{keywordflow}{return} Invalid;}
+\DoxyCodeLine{00084     \textcolor{keywordflow}{if} (input.at(i) == \textcolor{charliteral}{'/'}) slashCount++;}
+\DoxyCodeLine{00085   \}}
+\DoxyCodeLine{00086   \textcolor{comment}{/*-\/-\/-\/ 中身は普通の数字。Doubleに変換可能ならOK -\/-\/-\/*/}}
+\DoxyCodeLine{00087   \textcolor{keywordflow}{if} (slashCount == 0) \{}
+\DoxyCodeLine{00088     \textcolor{keywordtype}{bool} ok;}
+\DoxyCodeLine{00089     \textcolor{keywordtype}{double} tmp = input.toDouble(\&ok);}
+\DoxyCodeLine{00090     \textcolor{keywordflow}{if} (ok)}
+\DoxyCodeLine{00091       \textcolor{keywordflow}{return} (tmp > 0) ? Acceptable : Intermediate;}
+\DoxyCodeLine{00092     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00093       \textcolor{keywordflow}{return} Intermediate;}
+\DoxyCodeLine{00094   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (slashCount >= 2) \{}
+\DoxyCodeLine{00095     \textcolor{keywordflow}{return} Intermediate;}
+\DoxyCodeLine{00096   \} \textcolor{keywordflow}{else}  \textcolor{comment}{// slashCount == 1}}
+\DoxyCodeLine{00097   \{}
+\DoxyCodeLine{00098     \textcolor{keywordflow}{if} (input.at(0) == \textcolor{charliteral}{'/'} || input.at(input.length() -\/ 1) == \textcolor{charliteral}{'/'})}
+\DoxyCodeLine{00099       \textcolor{keywordflow}{return} Intermediate;}
+\DoxyCodeLine{00100     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00101       QStringList strList = input.split(\textcolor{charliteral}{'/'});}
+\DoxyCodeLine{00102       \textcolor{comment}{/*-\/-\/-\/}}
+\DoxyCodeLine{00103 \textcolor{comment}{       * スラッシュの左右でDoubleに変換できるかチェック。できないとIntermediate。}}
+\DoxyCodeLine{00104 \textcolor{comment}{       * -\/-\/-\/*/}}
+\DoxyCodeLine{00105       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < strList.size(); i++) \{}
+\DoxyCodeLine{00106         QString tmpStr = strList.at(i);}
+\DoxyCodeLine{00107         \textcolor{keywordtype}{bool} ok;}
+\DoxyCodeLine{00108         \textcolor{keywordtype}{double} tmp = tmpStr.toDouble(\&ok);}
+\DoxyCodeLine{00109         \textcolor{keywordflow}{if} (!ok) \textcolor{keywordflow}{return} Intermediate;}
+\DoxyCodeLine{00110         \textcolor{keywordflow}{if} (ok \&\& tmp <= 0) \textcolor{keywordflow}{return} Intermediate;}
+\DoxyCodeLine{00111       \}}
+\DoxyCodeLine{00112       \textcolor{comment}{/*-\/-\/-\/ 左右でDoubleに変換できたのでOK -\/-\/-\/*/}}
+\DoxyCodeLine{00113       \textcolor{keywordflow}{return} Acceptable;}
+\DoxyCodeLine{00114     \}}
+\DoxyCodeLine{00115   \}}
+\DoxyCodeLine{00116 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/camerasettingswidget.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/camerasettingswidget.\+cpp\end{DoxyCompactItemize}

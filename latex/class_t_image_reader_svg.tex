@@ -1,0 +1,126 @@
+\hypertarget{class_t_image_reader_svg}{}\doxysection{TImage\+Reader\+Svg Class Reference}
+\label{class_t_image_reader_svg}\index{TImageReaderSvg@{TImageReaderSvg}}
+Inheritance diagram for TImage\+Reader\+Svg\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_t_image_reader_svg}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_image_reader_svg_a0318d16440e455a36bb1dd7e0dd01bb9}{TImage\+Reader\+Svg}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, \mbox{\hyperlink{class_t_level_p}{TLevelP}} \&level)
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \mbox{\hyperlink{class_t_image_reader_svg_ae182502fa147aba6ac5809f74f8536dc}{load}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_image_reader_svg_a0318d16440e455a36bb1dd7e0dd01bb9}\label{class_t_image_reader_svg_a0318d16440e455a36bb1dd7e0dd01bb9}} 
+\index{TImageReaderSvg@{TImageReaderSvg}!TImageReaderSvg@{TImageReaderSvg}}
+\index{TImageReaderSvg@{TImageReaderSvg}!TImageReaderSvg@{TImageReaderSvg}}
+\doxysubsubsection{\texorpdfstring{TImageReaderSvg()}{TImageReaderSvg()}}
+{\footnotesize\ttfamily TImage\+Reader\+Svg\+::\+TImage\+Reader\+Svg (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{\mbox{\hyperlink{class_t_level_p}{TLevelP}} \&}]{level }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01798       : \mbox{\hyperlink{class_t_image_reader}{TImageReader}}(path), m\_level(level) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_image_reader_svg_ae182502fa147aba6ac5809f74f8536dc}\label{class_t_image_reader_svg_ae182502fa147aba6ac5809f74f8536dc}} 
+\index{TImageReaderSvg@{TImageReaderSvg}!load@{load}}
+\index{load@{load}!TImageReaderSvg@{TImageReaderSvg}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} TImage\+Reader\+Svg\+::load (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Load Image from disk. If set region then loads only image\textquotesingle{}s region. If set shrink then loads image (or region, if set) with shrink.
+
+Note\+: if the region, or part of it, is not contained in the image then returns only the intersection between the image and region. If the intersection is void returns TImage\+P(); 
+
+Reimplemented from \mbox{\hyperlink{class_t_image_reader_ade3cafcda8a3e691b08892fb9cb3a97a}{TImage\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02107                               \{}
+\DoxyCodeLine{02108   NSVGimage *svgImg =}
+\DoxyCodeLine{02109       nsvgParseFromFile(m\_path.getQString().toStdString().c\_str());}
+\DoxyCodeLine{02110   \textcolor{keywordflow}{if} (!svgImg) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}}();}
+\DoxyCodeLine{02111 }
+\DoxyCodeLine{02112   \mbox{\hyperlink{class_t_palette}{TPalette}} *plt = m\_level-\/>getPalette();}
+\DoxyCodeLine{02113   assert(plt);}
+\DoxyCodeLine{02114 }
+\DoxyCodeLine{02115   \mbox{\hyperlink{class_t_vector_image}{TVectorImage}} *vimage = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_vector_image}{TVectorImage}}();}
+\DoxyCodeLine{02116   vimage-\/>\mbox{\hyperlink{class_t_image_a3377c18a849addff5c2cb238176ad04f}{setPalette}}(plt);}
+\DoxyCodeLine{02117 }
+\DoxyCodeLine{02118   \textcolor{keywordflow}{for} (NSVGshape *shape = svgImg-\/>shapes; shape; shape = shape-\/>next) \{}
+\DoxyCodeLine{02119     \textcolor{keywordtype}{int} inkIndex, paintIndex;}
+\DoxyCodeLine{02120     NSVGpath *path = shape-\/>paths;}
+\DoxyCodeLine{02121     \textcolor{keywordflow}{if} (!path) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{02122 }
+\DoxyCodeLine{02123     \textcolor{comment}{// TVectorImageP vapp = new TVectorImage();}}
+\DoxyCodeLine{02124     \textcolor{comment}{// TPalette* appPlt = new TPalette();}}
+\DoxyCodeLine{02125     \textcolor{comment}{// vapp-\/>setPalette(appPlt);}}
+\DoxyCodeLine{02126 }
+\DoxyCodeLine{02127     TPixel color(shape-\/>fillColor \& 0xFF, (shape-\/>fillColor >> 8) \& 0xFF,}
+\DoxyCodeLine{02128                  shape-\/>fillColor >> 16);}
+\DoxyCodeLine{02129     \textcolor{keywordflow}{if} (!shape-\/>hasFill) \{}
+\DoxyCodeLine{02130       assert(color == TPixel::Black);}
+\DoxyCodeLine{02131       shape-\/>hasFill = \textcolor{keyword}{true};}
+\DoxyCodeLine{02132     \}}
+\DoxyCodeLine{02133     \textcolor{keywordflow}{if} (shape-\/>hasStroke) inkIndex = findColor(plt, shape-\/>strokeColor);}
+\DoxyCodeLine{02134 }
+\DoxyCodeLine{02135     \textcolor{keywordflow}{if} (shape-\/>hasFill) paintIndex = findColor(plt, shape-\/>fillColor);}
+\DoxyCodeLine{02136 }
+\DoxyCodeLine{02137     \textcolor{comment}{// vapp-\/>setPalette(plt.getPointer());}}
+\DoxyCodeLine{02138     \textcolor{keywordtype}{int} startStrokeIndex = vimage-\/>\mbox{\hyperlink{class_t_vector_image_add44e109ce62ba075799c0602724a841}{getStrokeCount}}();}
+\DoxyCodeLine{02139     \textcolor{keywordflow}{for} (; path; path = path-\/>next) \{}
+\DoxyCodeLine{02140       \mbox{\hyperlink{class_t_stroke}{TStroke}} *s = buildStroke(path, shape-\/>hasStroke ? shape-\/>strokeWidth : 0);}
+\DoxyCodeLine{02141       \textcolor{keywordflow}{if} (!s) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{02142       s-\/>\mbox{\hyperlink{class_t_stroke_a33f59dfbed74b577700351eac8c2fc7b}{setStyle}}(shape-\/>hasStroke ? inkIndex : 0);}
+\DoxyCodeLine{02143       vimage-\/>\mbox{\hyperlink{class_t_vector_image_ae79fbf2aec0f00876382f920227bfa05}{addStroke}}(s);}
+\DoxyCodeLine{02144     \}}
+\DoxyCodeLine{02145     \textcolor{keywordflow}{if} (startStrokeIndex == vimage-\/>\mbox{\hyperlink{class_t_vector_image_add44e109ce62ba075799c0602724a841}{getStrokeCount}}()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{02146 }
+\DoxyCodeLine{02147     vimage-\/>\mbox{\hyperlink{class_t_vector_image_a98b3b27c9f496d13fe584d9cf83bf230}{group}}(startStrokeIndex,}
+\DoxyCodeLine{02148                   vimage-\/>\mbox{\hyperlink{class_t_vector_image_add44e109ce62ba075799c0602724a841}{getStrokeCount}}() -\/ startStrokeIndex);}
+\DoxyCodeLine{02149     \textcolor{keywordflow}{if} (shape-\/>hasFill) \{}
+\DoxyCodeLine{02150       vimage-\/>enterGroup(startStrokeIndex);}
+\DoxyCodeLine{02151       vimage-\/>\mbox{\hyperlink{class_t_vector_image_a21a45dbb1a37fa54736d23d546fe2588}{selectFill}}(\mbox{\hyperlink{class_t_rect_t}{TRectD}}(-\/9999999, -\/9999999, 9999999, 9999999), 0,}
+\DoxyCodeLine{02152                          paintIndex, \textcolor{keyword}{true}, \textcolor{keyword}{true}, \textcolor{keyword}{false});}
+\DoxyCodeLine{02153       vimage-\/>exitGroup();}
+\DoxyCodeLine{02154     \}}
+\DoxyCodeLine{02155 }
+\DoxyCodeLine{02156     \textcolor{comment}{/* vapp-\/>findRegions();}}
+\DoxyCodeLine{02157 \textcolor{comment}{if (paintIndex!=-\/1)}}
+\DoxyCodeLine{02158 \textcolor{comment}{for (int i=0; i<(int)vapp-\/>getRegionCount(); i++)}}
+\DoxyCodeLine{02159 \textcolor{comment}{vapp-\/>getRegion(i)-\/>setStyle(paintIndex);}}
+\DoxyCodeLine{02160 \textcolor{comment}{std::vector<int> indexes(vapp-\/>getStrokeCount());}}
+\DoxyCodeLine{02161 \textcolor{comment}{for (int i=0; i<(int)vapp-\/>getStrokeCount() ;i++)}}
+\DoxyCodeLine{02162 \textcolor{comment}{indexes[i] = vimage-\/>getStrokeCount()+i;}}
+\DoxyCodeLine{02163 \textcolor{comment}{vimage-\/>insertImage(vapp, indexes);*/}}
+\DoxyCodeLine{02164     \textcolor{comment}{// delete appPlt;}}
+\DoxyCodeLine{02165   \}}
+\DoxyCodeLine{02166 }
+\DoxyCodeLine{02167   nsvgDelete(svgImg);}
+\DoxyCodeLine{02168   \textcolor{comment}{// if (m\_level)}}
+\DoxyCodeLine{02169   \textcolor{comment}{// m\_level-\/>setPalette(plt);}}
+\DoxyCodeLine{02170   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}}(vimage);}
+\DoxyCodeLine{02171 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00150}{TVector\+Image\+::add\+Stroke()}}, \mbox{\hyperlink{l00424}{TXsh\+Simple\+Level\+::get\+Palette()}}, \mbox{\hyperlink{l00388}{TVector\+Image\+::get\+Stroke\+Count()}}, \mbox{\hyperlink{l02548}{TVector\+Image\+::group()}}, \mbox{\hyperlink{l00772}{TVector\+Image\+::select\+Fill()}}, \mbox{\hyperlink{l00009}{TImage\+::set\+Palette()}}, and \mbox{\hyperlink{l02370}{TStroke\+::set\+Style()}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/svg/tiio\+\_\+svg.\+cpp\end{DoxyCompactItemize}

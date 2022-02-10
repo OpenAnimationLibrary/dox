@@ -1,0 +1,132 @@
+\hypertarget{class_s_v_n_log_reader}{}\doxysection{SVNLog\+Reader Class Reference}
+\label{class_s_v_n_log_reader}\index{SVNLogReader@{SVNLogReader}}
+Inheritance diagram for SVNLog\+Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_v_n_log_reader}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_v_n_log_reader_a18bdcffb9206f805ac89ffb14e14dd57}{SVNLog\+Reader}} (const QString \&xml\+SVNResponse)
+\item 
+QList$<$ \mbox{\hyperlink{struct_s_v_n_log}{SVNLog}} $>$ \mbox{\hyperlink{class_s_v_n_log_reader_a49b949f3c23205d01cfb350d87282137}{get\+Log}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_v_n_log_reader_a790b07800fef02be96e0d97ea5e93730}{read\+Entry}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_log_reader_a82547bbeb3050f3599da6fc1ae2d1038}{read\+Unknown\+Element}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_v_n_log_reader_a18bdcffb9206f805ac89ffb14e14dd57}\label{class_s_v_n_log_reader_a18bdcffb9206f805ac89ffb14e14dd57}} 
+\index{SVNLogReader@{SVNLogReader}!SVNLogReader@{SVNLogReader}}
+\index{SVNLogReader@{SVNLogReader}!SVNLogReader@{SVNLogReader}}
+\doxysubsubsection{\texorpdfstring{SVNLogReader()}{SVNLogReader()}}
+{\footnotesize\ttfamily SVNLog\+Reader\+::\+SVNLog\+Reader (\begin{DoxyParamCaption}\item[{const QString \&}]{xml\+SVNResponse }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00418     : m\_data(xmlSVNResponse) \{}
+\DoxyCodeLine{00419   addData(m\_data);}
+\DoxyCodeLine{00420 }
+\DoxyCodeLine{00421   \textcolor{keywordflow}{while} (!atEnd()) \{}
+\DoxyCodeLine{00422     readNext();}
+\DoxyCodeLine{00423 }
+\DoxyCodeLine{00424     \textcolor{keywordflow}{if} (isStartElement()) \{}
+\DoxyCodeLine{00425       \textcolor{keywordflow}{if} (name() == \textcolor{stringliteral}{"{}logentry"{}}) readEntry();}
+\DoxyCodeLine{00426     \}}
+\DoxyCodeLine{00427   \}}
+\DoxyCodeLine{00428 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_v_n_log_reader_a49b949f3c23205d01cfb350d87282137}\label{class_s_v_n_log_reader_a49b949f3c23205d01cfb350d87282137}} 
+\index{SVNLogReader@{SVNLogReader}!getLog@{getLog}}
+\index{getLog@{getLog}!SVNLogReader@{SVNLogReader}}
+\doxysubsubsection{\texorpdfstring{getLog()}{getLog()}}
+{\footnotesize\ttfamily QList$<$ \mbox{\hyperlink{struct_s_v_n_log}{SVNLog}} $>$ SVNLog\+Reader\+::get\+Log (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00157 \{ \textcolor{keywordflow}{return} m\_log; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_log_reader_a790b07800fef02be96e0d97ea5e93730}\label{class_s_v_n_log_reader_a790b07800fef02be96e0d97ea5e93730}} 
+\index{SVNLogReader@{SVNLogReader}!readEntry@{readEntry}}
+\index{readEntry@{readEntry}!SVNLogReader@{SVNLogReader}}
+\doxysubsubsection{\texorpdfstring{readEntry()}{readEntry()}}
+{\footnotesize\ttfamily void SVNLog\+Reader\+::read\+Entry (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00431                              \{}
+\DoxyCodeLine{00432   Q\_ASSERT(isStartElement() \&\& name() == \textcolor{stringliteral}{"{}logentry"{}});}
+\DoxyCodeLine{00433 }
+\DoxyCodeLine{00434   m\_currentRevision = attributes().value(\textcolor{stringliteral}{"{}revision"{}}).toString();}
+\DoxyCodeLine{00435 }
+\DoxyCodeLine{00436   \textcolor{keywordflow}{while} (!atEnd()) \{}
+\DoxyCodeLine{00437     readNext();}
+\DoxyCodeLine{00438 }
+\DoxyCodeLine{00439     \textcolor{keywordflow}{if} (isEndElement()) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00440     \textcolor{keywordflow}{if} (isStartElement()) \{}
+\DoxyCodeLine{00441       \textcolor{keywordflow}{if} (name() == \textcolor{stringliteral}{"{}author"{}}) \{}
+\DoxyCodeLine{00442         m\_currentAuthor = readElementText();}
+\DoxyCodeLine{00443         readNext();}
+\DoxyCodeLine{00444       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (name() == \textcolor{stringliteral}{"{}date"{}}) \{}
+\DoxyCodeLine{00445         m\_currentDate = readElementText();}
+\DoxyCodeLine{00446         readNext();}
+\DoxyCodeLine{00447       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (name() == \textcolor{stringliteral}{"{}msg"{}}) \{}
+\DoxyCodeLine{00448         m\_currentMsg = readElementText();}
+\DoxyCodeLine{00449         readNext();}
+\DoxyCodeLine{00450       \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00451         readUnknownElement();}
+\DoxyCodeLine{00452     \}}
+\DoxyCodeLine{00453   \}}
+\DoxyCodeLine{00454 }
+\DoxyCodeLine{00455   \mbox{\hyperlink{struct_s_v_n_log}{SVNLog}} log;}
+\DoxyCodeLine{00456   log.m\_revision = m\_currentRevision;}
+\DoxyCodeLine{00457   log.m\_author   = m\_currentAuthor;}
+\DoxyCodeLine{00458   log.m\_date     = m\_currentDate;}
+\DoxyCodeLine{00459   log.m\_msg      = m\_currentMsg;}
+\DoxyCodeLine{00460 }
+\DoxyCodeLine{00461   m\_log.append(log);}
+\DoxyCodeLine{00462 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_log_reader_a82547bbeb3050f3599da6fc1ae2d1038}\label{class_s_v_n_log_reader_a82547bbeb3050f3599da6fc1ae2d1038}} 
+\index{SVNLogReader@{SVNLogReader}!readUnknownElement@{readUnknownElement}}
+\index{readUnknownElement@{readUnknownElement}!SVNLogReader@{SVNLogReader}}
+\doxysubsubsection{\texorpdfstring{readUnknownElement()}{readUnknownElement()}}
+{\footnotesize\ttfamily void SVNLog\+Reader\+::read\+Unknown\+Element (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00466                                       \{}
+\DoxyCodeLine{00467   Q\_ASSERT(isStartElement());}
+\DoxyCodeLine{00468 }
+\DoxyCodeLine{00469   \textcolor{keywordflow}{while} (!atEnd()) \{}
+\DoxyCodeLine{00470     readNext();}
+\DoxyCodeLine{00471 }
+\DoxyCodeLine{00472     \textcolor{keywordflow}{if} (isEndElement()) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00473 }
+\DoxyCodeLine{00474     \textcolor{keywordflow}{if} (isStartElement()) readUnknownElement();}
+\DoxyCodeLine{00475   \}}
+\DoxyCodeLine{00476 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/versioncontrolxmlreader.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/versioncontrolxmlreader.\+cpp\end{DoxyCompactItemize}

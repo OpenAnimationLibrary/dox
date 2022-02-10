@@ -1,0 +1,101 @@
+\hypertarget{class_tiio_1_1_mov_writer_properties}{}\doxysection{Tiio\+::Mov\+Writer\+Properties Class Reference}
+\label{class_tiio_1_1_mov_writer_properties}\index{Tiio::MovWriterProperties@{Tiio::MovWriterProperties}}
+Inheritance diagram for Tiio\+::Mov\+Writer\+Properties\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_tiio_1_1_mov_writer_properties}
+\end{center}
+\end{figure}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_tiio_1_1_mov_writer_properties_a4dd3e66a17936d75718e3f7d7d6b8813}\label{class_tiio_1_1_mov_writer_properties_a4dd3e66a17936d75718e3f7d7d6b8813}} 
+\index{Tiio::MovWriterProperties@{Tiio::MovWriterProperties}!MovWriterProperties@{MovWriterProperties}}
+\index{MovWriterProperties@{MovWriterProperties}!Tiio::MovWriterProperties@{Tiio::MovWriterProperties}}
+\doxysubsubsection{\texorpdfstring{MovWriterProperties()}{MovWriterProperties()}}
+{\footnotesize\ttfamily Tiio\+::\+Mov\+Writer\+Properties\+::\+Mov\+Writer\+Properties (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00167 \{}
+\DoxyCodeLine{00168   \textcolor{keywordflow}{if} (QuickTimeStuff::instance()-\/>getStatus() != noErr) \{}
+\DoxyCodeLine{00169     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00170   \}}
+\DoxyCodeLine{00171 }
+\DoxyCodeLine{00172   \textcolor{comment}{// if (InitializeQTML(0)!=noErr)}}
+\DoxyCodeLine{00173   \textcolor{comment}{//    return;}}
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00175   ComponentInstance ci =}
+\DoxyCodeLine{00176       OpenDefaultComponent(StandardCompressionType, StandardCompressionSubType);}
+\DoxyCodeLine{00177   QTAtomContainer settings;}
+\DoxyCodeLine{00178 }
+\DoxyCodeLine{00179   \textcolor{keywordflow}{if} (SCGetSettingsAsAtomContainer(ci, \&settings) != noErr) assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181   fromAtomsToProperties(settings, *\textcolor{keyword}{this});}
+\DoxyCodeLine{00182 }
+\DoxyCodeLine{00183   \textcolor{comment}{/*}}
+\DoxyCodeLine{00184 \textcolor{comment}{CodecNameSpecListPtr codecList;}}
+\DoxyCodeLine{00185 \textcolor{comment}{if (GetCodecNameList(\&codecList, 0) !=noErr) return;}}
+\DoxyCodeLine{00186 \textcolor{comment}{}}
+\DoxyCodeLine{00187 \textcolor{comment}{TIntEnumeration codecNames;}}
+\DoxyCodeLine{00188 \textcolor{comment}{for (short i = 0; i < codecList-\/>count; ++i)}}
+\DoxyCodeLine{00189 \textcolor{comment}{\{}}
+\DoxyCodeLine{00190 \textcolor{comment}{CodecNameSpec *codecNameSpec = \&(codecList-\/>list[i]);}}
+\DoxyCodeLine{00191 \textcolor{comment}{// codecNameSpec-\/>typeName contains the name of the codec in Pascal String}}
+\DoxyCodeLine{00192 \textcolor{comment}{Format}}
+\DoxyCodeLine{00193 \textcolor{comment}{// byte 0 = Len}}
+\DoxyCodeLine{00194 \textcolor{comment}{// byte [1..Len] data}}
+\DoxyCodeLine{00195 \textcolor{comment}{UCHAR len = codecNameSpec-\/>typeName[0];}}
+\DoxyCodeLine{00196 \textcolor{comment}{string name((char*)\&codecNameSpec-\/>typeName[1], len);}}
+\DoxyCodeLine{00197 \textcolor{comment}{  m\_codec.addValue(toWideString(name));}}
+\DoxyCodeLine{00198 \textcolor{comment}{  if (i==0) m\_codec.setValue(toWideString(name));}}
+\DoxyCodeLine{00199 \textcolor{comment}{  m\_codecMap[toWideString(name)] = codecNameSpec-\/>cType;}}
+\DoxyCodeLine{00200 \textcolor{comment}{}}
+\DoxyCodeLine{00201 \textcolor{comment}{\}}}
+\DoxyCodeLine{00202 \textcolor{comment}{}}
+\DoxyCodeLine{00203 \textcolor{comment}{DisposeCodecNameList(codecList);}}
+\DoxyCodeLine{00204 \textcolor{comment}{}}
+\DoxyCodeLine{00205 \textcolor{comment}{TIntEnumeration  codecQuality;}}
+\DoxyCodeLine{00206 \textcolor{comment}{}}
+\DoxyCodeLine{00207 \textcolor{comment}{m\_quality.addValue(L"{}min quality"{});}}
+\DoxyCodeLine{00208 \textcolor{comment}{m\_qualityMap[L"{}min quality"{}] = codecMinQuality;}}
+\DoxyCodeLine{00209 \textcolor{comment}{m\_quality.addValue(L"{}low quality"{});}}
+\DoxyCodeLine{00210 \textcolor{comment}{m\_qualityMap[L"{}low quality"{}] = codecLowQuality;}}
+\DoxyCodeLine{00211 \textcolor{comment}{m\_quality.addValue(L"{}normal quality"{});}}
+\DoxyCodeLine{00212 \textcolor{comment}{m\_qualityMap[L"{}normal quality"{}] = codecNormalQuality;}}
+\DoxyCodeLine{00213 \textcolor{comment}{m\_quality.addValue(L"{}high quality"{});}}
+\DoxyCodeLine{00214 \textcolor{comment}{m\_qualityMap[L"{}high quality"{}] = codecHighQuality;}}
+\DoxyCodeLine{00215 \textcolor{comment}{m\_quality.addValue(L"{}max quality"{});}}
+\DoxyCodeLine{00216 \textcolor{comment}{m\_qualityMap[L"{}max quality"{}] = codecMaxQuality;}}
+\DoxyCodeLine{00217 \textcolor{comment}{m\_quality.addValue(L"{}lossless quality"{});}}
+\DoxyCodeLine{00218 \textcolor{comment}{m\_qualityMap[L"{}lossless quality"{}] = codecLosslessQuality;}}
+\DoxyCodeLine{00219 \textcolor{comment}{}}
+\DoxyCodeLine{00220 \textcolor{comment}{m\_quality.setValue(L"{}normal quality"{});}}
+\DoxyCodeLine{00221 \textcolor{comment}{}}
+\DoxyCodeLine{00222 \textcolor{comment}{bind(m\_codec);}}
+\DoxyCodeLine{00223 \textcolor{comment}{bind(m\_quality);}}
+\DoxyCodeLine{00224 \textcolor{comment}{*/}}
+\DoxyCodeLine{00225   \textcolor{comment}{/*}}
+\DoxyCodeLine{00226 \textcolor{comment}{m\_qualityTable.insert(QualityTable::value\_type(q++, codecMinQuality));}}
+\DoxyCodeLine{00227 \textcolor{comment}{m\_qualityTable.insert(QualityTable::value\_type(q++, codecLowQuality));}}
+\DoxyCodeLine{00228 \textcolor{comment}{m\_qualityTable.insert(QualityTable::value\_type(q++, codecMaxQuality));}}
+\DoxyCodeLine{00229 \textcolor{comment}{m\_qualityTable.insert(QualityTable::value\_type(q++, codecNormalQuality));}}
+\DoxyCodeLine{00230 \textcolor{comment}{m\_qualityTable.insert(QualityTable::value\_type(q++, codecHighQuality));}}
+\DoxyCodeLine{00231 \textcolor{comment}{m\_qualityTable.insert(QualityTable::value\_type(q++, codecLosslessQuality));}}
+\DoxyCodeLine{00232 \textcolor{comment}{}}
+\DoxyCodeLine{00233 \textcolor{comment}{addProperty(CodecQualityId, codecQuality,0);*/}}
+\DoxyCodeLine{00234 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/mov/tiio\+\_\+mov.\+h\item 
+E\+:/opentoonz/toonz/sources/image/mov/tiio\+\_\+mov\+M.\+h\item 
+E\+:/opentoonz/toonz/sources/image/mov/tiio\+\_\+mov\+M.\+cpp\item 
+E\+:/opentoonz/toonz/sources/image/mov/tiio\+\_\+mov\+W.\+cpp\end{DoxyCompactItemize}

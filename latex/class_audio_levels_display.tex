@@ -1,0 +1,106 @@
+\hypertarget{class_audio_levels_display}{}\doxysection{Audio\+Levels\+Display Class Reference}
+\label{class_audio_levels_display}\index{AudioLevelsDisplay@{AudioLevelsDisplay}}
+Inheritance diagram for Audio\+Levels\+Display\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_audio_levels_display}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_audio_levels_display_a9d4f44f08de14f6625907979a2f1b1eb}{Audio\+Levels\+Display}} (QWidget $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_audio_levels_display_a6be775b50b376490fc6b55b5e7f525bf}{set\+Level}} (qreal level, qreal peak)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_audio_levels_display_a7535a6b79a9542b2e4cc7701e2eca8d8}{paint\+Event}} (QPaint\+Event $\ast$event)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_audio_levels_display_a9d4f44f08de14f6625907979a2f1b1eb}\label{class_audio_levels_display_a9d4f44f08de14f6625907979a2f1b1eb}} 
+\index{AudioLevelsDisplay@{AudioLevelsDisplay}!AudioLevelsDisplay@{AudioLevelsDisplay}}
+\index{AudioLevelsDisplay@{AudioLevelsDisplay}!AudioLevelsDisplay@{AudioLevelsDisplay}}
+\doxysubsubsection{\texorpdfstring{AudioLevelsDisplay()}{AudioLevelsDisplay()}}
+{\footnotesize\ttfamily Audio\+Levels\+Display\+::\+Audio\+Levels\+Display (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00852     : QWidget(parent), m\_level(0.0), m\_peakL(0.0) \{}
+\DoxyCodeLine{00853   setFixedHeight(20);}
+\DoxyCodeLine{00854   setFixedWidth(300);}
+\DoxyCodeLine{00855 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_audio_levels_display_a7535a6b79a9542b2e4cc7701e2eca8d8}\label{class_audio_levels_display_a7535a6b79a9542b2e4cc7701e2eca8d8}} 
+\index{AudioLevelsDisplay@{AudioLevelsDisplay}!paintEvent@{paintEvent}}
+\index{paintEvent@{paintEvent}!AudioLevelsDisplay@{AudioLevelsDisplay}}
+\doxysubsubsection{\texorpdfstring{paintEvent()}{paintEvent()}}
+{\footnotesize\ttfamily void Audio\+Levels\+Display\+::paint\+Event (\begin{DoxyParamCaption}\item[{QPaint\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00865                                                       \{}
+\DoxyCodeLine{00866   Q\_UNUSED(event);}
+\DoxyCodeLine{00867 }
+\DoxyCodeLine{00868   QPainter painter(\textcolor{keyword}{this});}
+\DoxyCodeLine{00869   QColor color;}
+\DoxyCodeLine{00870 }
+\DoxyCodeLine{00871   \textcolor{keywordflow}{if} (m\_level < 0.0) \{}
+\DoxyCodeLine{00872     \textcolor{keywordflow}{return}; \textcolor{comment}{// draw nothing...}}
+\DoxyCodeLine{00873   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_level < 0.5) \{}
+\DoxyCodeLine{00874     color = Qt::green;}
+\DoxyCodeLine{00875   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_level < 0.75) \{}
+\DoxyCodeLine{00876     color = QColor(204, 205, 0);  \textcolor{comment}{// yellow}}
+\DoxyCodeLine{00877   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_level < 0.95) \{}
+\DoxyCodeLine{00878     color = QColor(255, 115, 0);  \textcolor{comment}{// orange}}
+\DoxyCodeLine{00879   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00880     color = Qt::red;}
+\DoxyCodeLine{00881 }
+\DoxyCodeLine{00882   \textcolor{keywordtype}{int} widthLevel = m\_level * width();}
+\DoxyCodeLine{00883   \textcolor{keywordtype}{int} widthPeakL = m\_peakL * width();}
+\DoxyCodeLine{00884   painter.fillRect(widthLevel, 0, width(), height(), Qt::black);}
+\DoxyCodeLine{00885   \textcolor{keywordflow}{if} (widthPeakL >= 0) \{}
+\DoxyCodeLine{00886     \textcolor{keywordflow}{if} (m\_peakL >= 0.995) \{}
+\DoxyCodeLine{00887       painter.fillRect(width() -\/ 4, 0, 4, height(), Qt::red);}
+\DoxyCodeLine{00888     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00889       painter.setPen(QColor(64, 64, 64));  \textcolor{comment}{// very dark gray}}
+\DoxyCodeLine{00890       painter.drawLine(widthPeakL, 0, widthPeakL, height());}
+\DoxyCodeLine{00891     \}}
+\DoxyCodeLine{00892   \}}
+\DoxyCodeLine{00893   painter.fillRect(0, 0, widthLevel, height(), color);}
+\DoxyCodeLine{00894 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_audio_levels_display_a6be775b50b376490fc6b55b5e7f525bf}\label{class_audio_levels_display_a6be775b50b376490fc6b55b5e7f525bf}} 
+\index{AudioLevelsDisplay@{AudioLevelsDisplay}!setLevel@{setLevel}}
+\index{setLevel@{setLevel}!AudioLevelsDisplay@{AudioLevelsDisplay}}
+\doxysubsubsection{\texorpdfstring{setLevel()}{setLevel()}}
+{\footnotesize\ttfamily void Audio\+Levels\+Display\+::set\+Level (\begin{DoxyParamCaption}\item[{qreal}]{level,  }\item[{qreal}]{peak }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00857                                                               \{}
+\DoxyCodeLine{00858   \textcolor{keywordflow}{if} (m\_level != level || m\_peakL != peakLevel) \{}
+\DoxyCodeLine{00859     m\_level = level;}
+\DoxyCodeLine{00860     m\_peakL = peakLevel;}
+\DoxyCodeLine{00861     update();}
+\DoxyCodeLine{00862   \}}
+\DoxyCodeLine{00863 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/audiorecordingpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/audiorecordingpopup.\+cpp\end{DoxyCompactItemize}

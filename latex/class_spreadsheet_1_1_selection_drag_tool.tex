@@ -1,0 +1,102 @@
+\hypertarget{class_spreadsheet_1_1_selection_drag_tool}{}\doxysection{Spreadsheet\+::Selection\+Drag\+Tool Class Reference}
+\label{class_spreadsheet_1_1_selection_drag_tool}\index{Spreadsheet::SelectionDragTool@{Spreadsheet::SelectionDragTool}}
+Inheritance diagram for Spreadsheet\+::Selection\+Drag\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_spreadsheet_1_1_selection_drag_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_spreadsheet_1_1_selection_drag_tool_a1d516c3f1338eb777bb6d4e89aa845ab}{Selection\+Drag\+Tool}} (\mbox{\hyperlink{class_spreadsheet_viewer}{Spreadsheet\+Viewer}} $\ast$viewer)
+\item 
+void \mbox{\hyperlink{class_spreadsheet_1_1_selection_drag_tool_aba3ed3829a73af53ac947c4f5aeb61dc}{click}} (int row, int col, QMouse\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_spreadsheet_1_1_selection_drag_tool_a4ab3c2ad00cb023fa01885124be98261}{drag}} (int row, int col, QMouse\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_spreadsheet_1_1_selection_drag_tool_a8b8f52abf7eceae62019d3d2dcdbbbbb}{release}} (int row, int col, QMouse\+Event $\ast$e) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_spreadsheet_1_1_selection_drag_tool_a1d516c3f1338eb777bb6d4e89aa845ab}\label{class_spreadsheet_1_1_selection_drag_tool_a1d516c3f1338eb777bb6d4e89aa845ab}} 
+\index{Spreadsheet::SelectionDragTool@{Spreadsheet::SelectionDragTool}!SelectionDragTool@{SelectionDragTool}}
+\index{SelectionDragTool@{SelectionDragTool}!Spreadsheet::SelectionDragTool@{Spreadsheet::SelectionDragTool}}
+\doxysubsubsection{\texorpdfstring{SelectionDragTool()}{SelectionDragTool()}}
+{\footnotesize\ttfamily Spreadsheet\+::\+Selection\+Drag\+Tool\+::\+Selection\+Drag\+Tool (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_spreadsheet_viewer}{Spreadsheet\+Viewer}} $\ast$}]{viewer }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00211     : m\_viewer(viewer), m\_firstRow(-\/1), m\_firstCol(-\/1) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_spreadsheet_1_1_selection_drag_tool_aba3ed3829a73af53ac947c4f5aeb61dc}\label{class_spreadsheet_1_1_selection_drag_tool_aba3ed3829a73af53ac947c4f5aeb61dc}} 
+\index{Spreadsheet::SelectionDragTool@{Spreadsheet::SelectionDragTool}!click@{click}}
+\index{click@{click}!Spreadsheet::SelectionDragTool@{Spreadsheet::SelectionDragTool}}
+\doxysubsubsection{\texorpdfstring{click()}{click()}}
+{\footnotesize\ttfamily void Spreadsheet\+::\+Selection\+Drag\+Tool\+::click (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col,  }\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_spreadsheet_1_1_drag_tool}{Spreadsheet\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00213                                                               \{}
+\DoxyCodeLine{00214   m\_firstCol = col;}
+\DoxyCodeLine{00215   m\_firstRow = row;}
+\DoxyCodeLine{00216   QRect selectedCells(col, row, 1, 1);}
+\DoxyCodeLine{00217   m\_viewer-\/>selectCells(selectedCells);}
+\DoxyCodeLine{00218 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_spreadsheet_1_1_selection_drag_tool_a4ab3c2ad00cb023fa01885124be98261}\label{class_spreadsheet_1_1_selection_drag_tool_a4ab3c2ad00cb023fa01885124be98261}} 
+\index{Spreadsheet::SelectionDragTool@{Spreadsheet::SelectionDragTool}!drag@{drag}}
+\index{drag@{drag}!Spreadsheet::SelectionDragTool@{Spreadsheet::SelectionDragTool}}
+\doxysubsubsection{\texorpdfstring{drag()}{drag()}}
+{\footnotesize\ttfamily void Spreadsheet\+::\+Selection\+Drag\+Tool\+::drag (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col,  }\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_spreadsheet_1_1_drag_tool}{Spreadsheet\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00220                                                              \{}
+\DoxyCodeLine{00221   \textcolor{keywordtype}{int} r0 = std::min(row, m\_firstRow);}
+\DoxyCodeLine{00222   \textcolor{keywordtype}{int} r1 = std::max(row, m\_firstRow);}
+\DoxyCodeLine{00223   \textcolor{keywordtype}{int} c0 = std::min(col, m\_firstCol);}
+\DoxyCodeLine{00224   \textcolor{keywordtype}{int} c1 = std::max(col, m\_firstCol);}
+\DoxyCodeLine{00225   QRect selectedCells(c0, r0, c1 -\/ c0 + 1, r1 -\/ r0 + 1);}
+\DoxyCodeLine{00226   m\_viewer-\/>selectCells(selectedCells);}
+\DoxyCodeLine{00227 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_spreadsheet_1_1_selection_drag_tool_a8b8f52abf7eceae62019d3d2dcdbbbbb}\label{class_spreadsheet_1_1_selection_drag_tool_a8b8f52abf7eceae62019d3d2dcdbbbbb}} 
+\index{Spreadsheet::SelectionDragTool@{Spreadsheet::SelectionDragTool}!release@{release}}
+\index{release@{release}!Spreadsheet::SelectionDragTool@{Spreadsheet::SelectionDragTool}}
+\doxysubsubsection{\texorpdfstring{release()}{release()}}
+{\footnotesize\ttfamily void Spreadsheet\+::\+Selection\+Drag\+Tool\+::release (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col,  }\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_spreadsheet_1_1_drag_tool}{Spreadsheet\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00229 \{\}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/spreadsheetviewer.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/spreadsheetviewer.\+cpp\end{DoxyCompactItemize}

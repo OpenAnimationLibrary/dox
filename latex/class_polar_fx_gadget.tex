@@ -1,0 +1,144 @@
+\hypertarget{class_polar_fx_gadget}{}\doxysection{Polar\+Fx\+Gadget Class Reference}
+\label{class_polar_fx_gadget}\index{PolarFxGadget@{PolarFxGadget}}
+Inheritance diagram for Polar\+Fx\+Gadget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_polar_fx_gadget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_polar_fx_gadget_a7d2beb7b782755502603501b1ab2ff7e}{Polar\+Fx\+Gadget}} (\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$controller, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const TDouble\+ParamP \&phi\+Param, const TDouble\+ParamP \&length\+Param)
+\item 
+void \mbox{\hyperlink{class_polar_fx_gadget_a21f675fecc8398849da3e939ba5eb8d8}{draw}} (bool picking) override
+\item 
+void \mbox{\hyperlink{class_polar_fx_gadget_ab774886dcd7a66f4dcb0fd1a41a4d25a}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+void \mbox{\hyperlink{class_polar_fx_gadget_af9611073e9476fdd53380d9898fbd733}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_polar_fx_gadget_a7d2beb7b782755502603501b1ab2ff7e}\label{class_polar_fx_gadget_a7d2beb7b782755502603501b1ab2ff7e}} 
+\index{PolarFxGadget@{PolarFxGadget}!PolarFxGadget@{PolarFxGadget}}
+\index{PolarFxGadget@{PolarFxGadget}!PolarFxGadget@{PolarFxGadget}}
+\doxysubsubsection{\texorpdfstring{PolarFxGadget()}{PolarFxGadget()}}
+{\footnotesize\ttfamily Polar\+Fx\+Gadget\+::\+Polar\+Fx\+Gadget (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$}]{controller,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const TDouble\+ParamP \&}]{phi\+Param,  }\item[{const TDouble\+ParamP \&}]{length\+Param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00934       : \mbox{\hyperlink{class_fx_gadget}{FxGadget}}(controller)}
+\DoxyCodeLine{00935       , m\_pos(pos)}
+\DoxyCodeLine{00936       , m\_phiParam(phiParam)}
+\DoxyCodeLine{00937       , m\_lengthParam(lengthParam) \{}
+\DoxyCodeLine{00938     addParam(phiParam);}
+\DoxyCodeLine{00939     addParam(lengthParam);}
+\DoxyCodeLine{00940   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_polar_fx_gadget_a21f675fecc8398849da3e939ba5eb8d8}\label{class_polar_fx_gadget_a21f675fecc8398849da3e939ba5eb8d8}} 
+\index{PolarFxGadget@{PolarFxGadget}!draw@{draw}}
+\index{draw@{draw}!PolarFxGadget@{PolarFxGadget}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Polar\+Fx\+Gadget\+::draw (\begin{DoxyParamCaption}\item[{bool}]{picking }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00942                                    \{}
+\DoxyCodeLine{00943     setPixelSize();}
+\DoxyCodeLine{00944     \textcolor{keywordflow}{if} (isSelected())}
+\DoxyCodeLine{00945       glColor3dv(m\_selectedColor);}
+\DoxyCodeLine{00946     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00947       glColor3d(0, 0, 1);}
+\DoxyCodeLine{00948     glPushName(getId());}
+\DoxyCodeLine{00949     \textcolor{keywordtype}{double} pixelSize = getPixelSize();}
+\DoxyCodeLine{00950     \textcolor{keywordtype}{double} r         = getValue(m\_lengthParam);}
+\DoxyCodeLine{00951     \textcolor{keywordtype}{double} a = pixelSize * 10, b = pixelSize * 5, c = pixelSize * 4;}
+\DoxyCodeLine{00952     \textcolor{comment}{// tglDrawCircle(m\_pos, r);}}
+\DoxyCodeLine{00953     \textcolor{keywordtype}{double} phi = getValue(m\_phiParam);}
+\DoxyCodeLine{00954     glPushMatrix();}
+\DoxyCodeLine{00955     glTranslated(m\_pos.x, m\_pos.y, 0);}
+\DoxyCodeLine{00956     glRotated(phi, 0, 0, 1);}
+\DoxyCodeLine{00957     \textcolor{keywordtype}{double} rr = r -\/ c;}
+\DoxyCodeLine{00958     \textcolor{keywordflow}{if} (rr > 0) \{}
+\DoxyCodeLine{00959       glLineStipple(1, 0xAAAA);}
+\DoxyCodeLine{00960       glEnable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{00961       glBegin(GL\_LINE\_STRIP);}
+\DoxyCodeLine{00962       glVertex2d(0, 0);}
+\DoxyCodeLine{00963       glVertex2d(rr, 0);}
+\DoxyCodeLine{00964       glEnd();}
+\DoxyCodeLine{00965       glDisable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{00966     \}}
+\DoxyCodeLine{00967     glBegin(GL\_LINES);}
+\DoxyCodeLine{00968     glVertex2d(rr, 0);}
+\DoxyCodeLine{00969     glVertex2d(rr -\/ a, b);}
+\DoxyCodeLine{00970     glVertex2d(rr, 0);}
+\DoxyCodeLine{00971     glVertex2d(rr -\/ a, -\/b);}
+\DoxyCodeLine{00972     glEnd();}
+\DoxyCodeLine{00973     glTranslated(r, 0, 0);}
+\DoxyCodeLine{00974     glRotated(-\/phi, 0, 0, 1);}
+\DoxyCodeLine{00975     drawDot(0, 0);}
+\DoxyCodeLine{00976     glPopMatrix();}
+\DoxyCodeLine{00977     glPopName();}
+\DoxyCodeLine{00978 }
+\DoxyCodeLine{00979     \textcolor{keywordflow}{if} (isSelected()) \{}
+\DoxyCodeLine{00980       \textcolor{keywordtype}{double} phiRad      = phi * M\_PI\_180;}
+\DoxyCodeLine{00981       \mbox{\hyperlink{class_t_point_t}{TPointD}} toolTipPos = m\_pos + r * \mbox{\hyperlink{class_t_point_t}{TPointD}}(cos(phiRad), sin(phiRad));}
+\DoxyCodeLine{00982       drawTooltip(toolTipPos, getLabel());}
+\DoxyCodeLine{00983     \}}
+\DoxyCodeLine{00984   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_polar_fx_gadget_ab774886dcd7a66f4dcb0fd1a41a4d25a}\label{class_polar_fx_gadget_ab774886dcd7a66f4dcb0fd1a41a4d25a}} 
+\index{PolarFxGadget@{PolarFxGadget}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!PolarFxGadget@{PolarFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Polar\+Fx\+Gadget\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00986 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_polar_fx_gadget_af9611073e9476fdd53380d9898fbd733}\label{class_polar_fx_gadget_af9611073e9476fdd53380d9898fbd733}} 
+\index{PolarFxGadget@{PolarFxGadget}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!PolarFxGadget@{PolarFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Polar\+Fx\+Gadget\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00987                                                                         \{}
+\DoxyCodeLine{00988     \mbox{\hyperlink{class_t_point_t}{TPointD}} d     = pos -\/ m\_pos;}
+\DoxyCodeLine{00989     \textcolor{keywordtype}{double} phi    = atan2(d.y, d.x);}
+\DoxyCodeLine{00990     \textcolor{keywordtype}{double} length = norm(d);}
+\DoxyCodeLine{00991     setValue(m\_phiParam, phi * M\_180\_PI);}
+\DoxyCodeLine{00992     setValue(m\_lengthParam, length);}
+\DoxyCodeLine{00993   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/edittoolgadgets.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,202 @@
+\hypertarget{class_t_level_writer_mp4}{}\doxysection{TLevel\+Writer\+Mp4 Class Reference}
+\label{class_t_level_writer_mp4}\index{TLevelWriterMp4@{TLevelWriterMp4}}
+Inheritance diagram for TLevel\+Writer\+Mp4\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_t_level_writer_mp4}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_level_writer_mp4_abbf67705b33c1c58d8126411a33428d6}{TLevel\+Writer\+Mp4}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, \mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$winfo)
+\item 
+void \mbox{\hyperlink{class_t_level_writer_mp4_af168e546dc74446b0ec14ac976d1680e}{set\+Frame\+Rate}} (double fps) override
+\item 
+\mbox{\hyperlink{class_t_image_writer_p}{TImage\+WriterP}} \mbox{\hyperlink{class_t_level_writer_mp4_ae59d1a1081031e2925362422d7716739}{get\+Frame\+Writer}} (\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} fid) override
+\item 
+void \mbox{\hyperlink{class_t_level_writer_mp4_a561935d14846cea049aa94e851b3db92}{save}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&image, int frame\+Index)
+\item 
+void \mbox{\hyperlink{class_t_level_writer_mp4_a0e9eaa9b2ed72e012e9c420d68679bfa}{save\+Sound\+Track}} (\mbox{\hyperlink{class_t_sound_track}{TSound\+Track}} $\ast$st) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}} $\ast$ \mbox{\hyperlink{class_t_level_writer_mp4_a037673c01add58da21621f93d9eb2d5c}{create}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, \mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$winfo)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_level_writer_mp4_abbf67705b33c1c58d8126411a33428d6}\label{class_t_level_writer_mp4_abbf67705b33c1c58d8126411a33428d6}} 
+\index{TLevelWriterMp4@{TLevelWriterMp4}!TLevelWriterMp4@{TLevelWriterMp4}}
+\index{TLevelWriterMp4@{TLevelWriterMp4}!TLevelWriterMp4@{TLevelWriterMp4}}
+\doxysubsubsection{\texorpdfstring{TLevelWriterMp4()}{TLevelWriterMp4()}}
+{\footnotesize\ttfamily TLevel\+Writer\+Mp4\+::\+TLevel\+Writer\+Mp4 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$}]{winfo }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040     : \mbox{\hyperlink{class_t_level_writer}{TLevelWriter}}(path, winfo) \{}
+\DoxyCodeLine{00041   \textcolor{keywordflow}{if} (!m\_properties) m\_properties = \textcolor{keyword}{new} \mbox{\hyperlink{class_tiio_1_1_mp4_writer_properties}{Tiio::Mp4WriterProperties}}();}
+\DoxyCodeLine{00042   \textcolor{keywordflow}{if} (m\_properties-\/>getPropertyCount() == 0) \{}
+\DoxyCodeLine{00043     m\_scale      = 100;}
+\DoxyCodeLine{00044     m\_vidQuality = 100;}
+\DoxyCodeLine{00045   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00046     std::string scale = m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Scale"{}})-\/>getValueAsString();}
+\DoxyCodeLine{00047     m\_scale           = QString::fromStdString(scale).toInt();}
+\DoxyCodeLine{00048     std::string quality =}
+\DoxyCodeLine{00049         m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Quality"{}})-\/>getValueAsString();}
+\DoxyCodeLine{00050     m\_vidQuality = QString::fromStdString(quality).toInt();}
+\DoxyCodeLine{00051   \}}
+\DoxyCodeLine{00052   ffmpegWriter = \textcolor{keyword}{new} \mbox{\hyperlink{class_ffmpeg}{Ffmpeg}}();}
+\DoxyCodeLine{00053   ffmpegWriter-\/>setPath(m\_path);}
+\DoxyCodeLine{00054   \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(m\_path)) TSystem::deleteFile(m\_path);}
+\DoxyCodeLine{00055 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_mp4_acdcd73541b795c3e128bf6c5295ac13d}\label{class_t_level_writer_mp4_acdcd73541b795c3e128bf6c5295ac13d}} 
+\index{TLevelWriterMp4@{TLevelWriterMp4}!````~TLevelWriterMp4@{$\sim$TLevelWriterMp4}}
+\index{````~TLevelWriterMp4@{$\sim$TLevelWriterMp4}!TLevelWriterMp4@{TLevelWriterMp4}}
+\doxysubsubsection{\texorpdfstring{$\sim$TLevelWriterMp4()}{~TLevelWriterMp4()}}
+{\footnotesize\ttfamily TLevel\+Writer\+Mp4\+::$\sim$\+TLevel\+Writer\+Mp4 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059                                   \{}
+\DoxyCodeLine{00060   \textcolor{comment}{// QProcess createMp4;}}
+\DoxyCodeLine{00061   QStringList preIArgs;}
+\DoxyCodeLine{00062   QStringList postIArgs;}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064   \textcolor{keywordtype}{int} outLx = m\_lx;}
+\DoxyCodeLine{00065   \textcolor{keywordtype}{int} outLy = m\_ly;}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067   \textcolor{comment}{// set scaling}}
+\DoxyCodeLine{00068   \textcolor{keywordflow}{if} (m\_scale != 0) \{}
+\DoxyCodeLine{00069     outLx = m\_lx * m\_scale / 100;}
+\DoxyCodeLine{00070     outLy = m\_ly * m\_scale / 100;}
+\DoxyCodeLine{00071   \}}
+\DoxyCodeLine{00072   \textcolor{comment}{// ffmpeg doesn't like resolutions that aren't divisible by 2.}}
+\DoxyCodeLine{00073   \textcolor{keywordflow}{if} (outLx \% 2 != 0) outLx++;}
+\DoxyCodeLine{00074   \textcolor{keywordflow}{if} (outLy \% 2 != 0) outLy++;}
+\DoxyCodeLine{00075 }
+\DoxyCodeLine{00076   \textcolor{comment}{// calculate quality (bitrate)}}
+\DoxyCodeLine{00077   \textcolor{keywordtype}{int} pixelCount   = m\_lx * m\_ly;}
+\DoxyCodeLine{00078   \textcolor{keywordtype}{int} bitRate      = pixelCount / 150;  \textcolor{comment}{// crude but gets decent values}}
+\DoxyCodeLine{00079   \textcolor{keywordtype}{double} quality   = m\_vidQuality / 100.0;}
+\DoxyCodeLine{00080   \textcolor{keywordtype}{double} tempRate  = (double)bitRate * quality;}
+\DoxyCodeLine{00081   \textcolor{keywordtype}{int} finalBitrate = (int)tempRate;}
+\DoxyCodeLine{00082   \textcolor{keywordtype}{int} crf          = 51 -\/ (m\_vidQuality * 51 / 100);}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084   preIArgs << \textcolor{stringliteral}{"{}-\/framerate"{}};}
+\DoxyCodeLine{00085   preIArgs << QString::number(m\_frameRate);}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087   postIArgs << \textcolor{stringliteral}{"{}-\/pix\_fmt"{}};}
+\DoxyCodeLine{00088   postIArgs << \textcolor{stringliteral}{"{}yuv420p"{}};}
+\DoxyCodeLine{00089   postIArgs << \textcolor{stringliteral}{"{}-\/s"{}};}
+\DoxyCodeLine{00090   postIArgs << QString::number(outLx) + \textcolor{stringliteral}{"{}x"{}} + QString::number(outLy);}
+\DoxyCodeLine{00091   postIArgs << \textcolor{stringliteral}{"{}-\/b"{}};}
+\DoxyCodeLine{00092   postIArgs << QString::number(finalBitrate) + \textcolor{stringliteral}{"{}k"{}};}
+\DoxyCodeLine{00093 }
+\DoxyCodeLine{00094   ffmpegWriter-\/>runFfmpeg(preIArgs, postIArgs, \textcolor{keyword}{false}, \textcolor{keyword}{false}, \textcolor{keyword}{true});}
+\DoxyCodeLine{00095   ffmpegWriter-\/>cleanUpFiles();}
+\DoxyCodeLine{00096 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_level_writer_mp4_a037673c01add58da21621f93d9eb2d5c}\label{class_t_level_writer_mp4_a037673c01add58da21621f93d9eb2d5c}} 
+\index{TLevelWriterMp4@{TLevelWriterMp4}!create@{create}}
+\index{create@{create}!TLevelWriterMp4@{TLevelWriterMp4}}
+\doxysubsubsection{\texorpdfstring{create()}{create()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}} $\ast$ TLevel\+Writer\+Mp4\+::create (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$}]{winfo }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00029                                                                             \{}
+\DoxyCodeLine{00030     \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_t_level_writer_mp4}{TLevelWriterMp4}}(path, winfo);}
+\DoxyCodeLine{00031   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_mp4_ae59d1a1081031e2925362422d7716739}\label{class_t_level_writer_mp4_ae59d1a1081031e2925362422d7716739}} 
+\index{TLevelWriterMp4@{TLevelWriterMp4}!getFrameWriter@{getFrameWriter}}
+\index{getFrameWriter@{getFrameWriter}!TLevelWriterMp4@{TLevelWriterMp4}}
+\doxysubsubsection{\texorpdfstring{getFrameWriter()}{getFrameWriter()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_image_writer_p}{TImage\+WriterP}} TLevel\+Writer\+Mp4\+::get\+Frame\+Writer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}}}]{fid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00100                                                           \{}
+\DoxyCodeLine{00101   \textcolor{comment}{// if (IOError != 0)}}
+\DoxyCodeLine{00102   \textcolor{comment}{//    throw TImageException(m\_path, buildMp4ExceptionString(IOError));}}
+\DoxyCodeLine{00103   \textcolor{keywordflow}{if} (!fid.getLetter().isEmpty()) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_image_writer_p}{TImageWriterP}}(0);}
+\DoxyCodeLine{00104   \textcolor{keywordtype}{int} index            = fid.getNumber();}
+\DoxyCodeLine{00105   \mbox{\hyperlink{class_t_image_writer_mp4}{TImageWriterMp4}} *iwg = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_image_writer_mp4}{TImageWriterMp4}}(m\_path, index, \textcolor{keyword}{this});}
+\DoxyCodeLine{00106   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_image_writer_p}{TImageWriterP}}(iwg);}
+\DoxyCodeLine{00107 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_mp4_a561935d14846cea049aa94e851b3db92}\label{class_t_level_writer_mp4_a561935d14846cea049aa94e851b3db92}} 
+\index{TLevelWriterMp4@{TLevelWriterMp4}!save@{save}}
+\index{save@{save}!TLevelWriterMp4@{TLevelWriterMp4}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily void TLevel\+Writer\+Mp4\+::save (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&}]{image,  }\item[{int}]{frame\+Index }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00121                                                              \{}
+\DoxyCodeLine{00122   \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} image(img);}
+\DoxyCodeLine{00123   m\_lx = image-\/>getRaster()-\/>getLx();}
+\DoxyCodeLine{00124   m\_ly = image-\/>getRaster()-\/>getLy();}
+\DoxyCodeLine{00125   ffmpegWriter-\/>createIntermediateImage(img, frameIndex);}
+\DoxyCodeLine{00126 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_mp4_a0e9eaa9b2ed72e012e9c420d68679bfa}\label{class_t_level_writer_mp4_a0e9eaa9b2ed72e012e9c420d68679bfa}} 
+\index{TLevelWriterMp4@{TLevelWriterMp4}!saveSoundTrack@{saveSoundTrack}}
+\index{saveSoundTrack@{saveSoundTrack}!TLevelWriterMp4@{TLevelWriterMp4}}
+\doxysubsubsection{\texorpdfstring{saveSoundTrack()}{saveSoundTrack()}}
+{\footnotesize\ttfamily void TLevel\+Writer\+Mp4\+::save\+Sound\+Track (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_sound_track}{TSound\+Track}} $\ast$}]{st }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00115                                                     \{}
+\DoxyCodeLine{00116   ffmpegWriter-\/>saveSoundTrack(st);}
+\DoxyCodeLine{00117 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_mp4_af168e546dc74446b0ec14ac976d1680e}\label{class_t_level_writer_mp4_af168e546dc74446b0ec14ac976d1680e}} 
+\index{TLevelWriterMp4@{TLevelWriterMp4}!setFrameRate@{setFrameRate}}
+\index{setFrameRate@{setFrameRate}!TLevelWriterMp4@{TLevelWriterMp4}}
+\doxysubsubsection{\texorpdfstring{setFrameRate()}{setFrameRate()}}
+{\footnotesize\ttfamily void TLevel\+Writer\+Mp4\+::set\+Frame\+Rate (\begin{DoxyParamCaption}\item[{double}]{fps }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00110                                              \{}
+\DoxyCodeLine{00111   m\_frameRate = fps;}
+\DoxyCodeLine{00112   ffmpegWriter-\/>setFrameRate(fps);}
+\DoxyCodeLine{00113 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/ffmpeg/tiio\+\_\+mp4.\+h\item 
+E\+:/opentoonz/toonz/sources/image/ffmpeg/tiio\+\_\+mp4.\+cpp\end{DoxyCompactItemize}

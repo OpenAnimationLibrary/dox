@@ -1,0 +1,173 @@
+\hypertarget{class_resequence_undo}{}\doxysection{Resequence\+Undo Class Reference}
+\label{class_resequence_undo}\index{ResequenceUndo@{ResequenceUndo}}
+Inheritance diagram for Resequence\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_resequence_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_resequence_undo_ab8ea1545c2352495657583c980fce6e0}{Resequence\+Undo}} (int col, int count)
+\item 
+void \mbox{\hyperlink{class_resequence_undo_a415d7b45bc4074a37dcf7b4c9236f7ab}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_resequence_undo_a380e213ffff1b2af1292e780c629adc9}{redo}} () const override
+\item 
+int \mbox{\hyperlink{class_resequence_undo_a853bc5ba191ec5475260a0090dee9371}{get\+Size}} () const override
+\item 
+QString \mbox{\hyperlink{class_resequence_undo_ac976c48306d9916ab407dc1d886f5dd6}{get\+History\+String}} () override
+\item 
+int \mbox{\hyperlink{class_resequence_undo_ad549c4304437dbd98fa331e87b884f15}{get\+History\+Type}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_resequence_undo_ab8ea1545c2352495657583c980fce6e0}\label{class_resequence_undo_ab8ea1545c2352495657583c980fce6e0}} 
+\index{ResequenceUndo@{ResequenceUndo}!ResequenceUndo@{ResequenceUndo}}
+\index{ResequenceUndo@{ResequenceUndo}!ResequenceUndo@{ResequenceUndo}}
+\doxysubsubsection{\texorpdfstring{ResequenceUndo()}{ResequenceUndo()}}
+{\footnotesize\ttfamily Resequence\+Undo\+::\+Resequence\+Undo (\begin{DoxyParamCaption}\item[{int}]{col,  }\item[{int}]{count }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00900       : m\_index(col), m\_r0(0), m\_newFramesCount(count) \{}
+\DoxyCodeLine{00901     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00902     \textcolor{keywordtype}{int} r0, r1;}
+\DoxyCodeLine{00903     xsh-\/>\mbox{\hyperlink{class_t_xsheet_a26850469fb0f2886b717479050c32be2}{getCellRange}}(col, r0, r1);}
+\DoxyCodeLine{00904     m\_r0 = r0;}
+\DoxyCodeLine{00905     assert(r0 <= r1);}
+\DoxyCodeLine{00906     \textcolor{keywordflow}{if} (r0 > r1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00907     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} r = r0; r <= r1; r++) \{}
+\DoxyCodeLine{00908       \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r, col);}
+\DoxyCodeLine{00909       assert(cell.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}() || cell.m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a6ef7d48e41f4f214b414e959512e6377}{getChildLevel}}());}
+\DoxyCodeLine{00910       m\_oldFrames.push\_back(cell.m\_frameId);}
+\DoxyCodeLine{00911     \}}
+\DoxyCodeLine{00912   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_resequence_undo_ac976c48306d9916ab407dc1d886f5dd6}\label{class_resequence_undo_ac976c48306d9916ab407dc1d886f5dd6}} 
+\index{ResequenceUndo@{ResequenceUndo}!getHistoryString@{getHistoryString}}
+\index{getHistoryString@{getHistoryString}!ResequenceUndo@{ResequenceUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryString()}{getHistoryString()}}
+{\footnotesize\ttfamily QString Resequence\+Undo\+::get\+History\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00955                                       \{}
+\DoxyCodeLine{00956     \textcolor{keywordflow}{return} QObject::tr(\textcolor{stringliteral}{"{}Resequence :  Col\%1"{}}).arg(QString::number(m\_index + 1));}
+\DoxyCodeLine{00957   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resequence_undo_ad549c4304437dbd98fa331e87b884f15}\label{class_resequence_undo_ad549c4304437dbd98fa331e87b884f15}} 
+\index{ResequenceUndo@{ResequenceUndo}!getHistoryType@{getHistoryType}}
+\index{getHistoryType@{getHistoryType}!ResequenceUndo@{ResequenceUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryType()}{getHistoryType()}}
+{\footnotesize\ttfamily int Resequence\+Undo\+::get\+History\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00959 \{ \textcolor{keywordflow}{return} HistoryType::Xsheet; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resequence_undo_a853bc5ba191ec5475260a0090dee9371}\label{class_resequence_undo_a853bc5ba191ec5475260a0090dee9371}} 
+\index{ResequenceUndo@{ResequenceUndo}!getSize@{getSize}}
+\index{getSize@{getSize}!ResequenceUndo@{ResequenceUndo}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Resequence\+Undo\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00951                                \{}
+\DoxyCodeLine{00952     \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(*this) + m\_oldFrames.size() * \textcolor{keyword}{sizeof}(\mbox{\hyperlink{class_t_frame_id}{TFrameId}});}
+\DoxyCodeLine{00953   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resequence_undo_a380e213ffff1b2af1292e780c629adc9}\label{class_resequence_undo_a380e213ffff1b2af1292e780c629adc9}} 
+\index{ResequenceUndo@{ResequenceUndo}!redo@{redo}}
+\index{redo@{redo}!ResequenceUndo@{ResequenceUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Resequence\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00934                              \{}
+\DoxyCodeLine{00935     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00936     \textcolor{keywordtype}{int} r0, r1;}
+\DoxyCodeLine{00937     xsh-\/>\mbox{\hyperlink{class_t_xsheet_a26850469fb0f2886b717479050c32be2}{getCellRange}}(m\_index, r0, r1);}
+\DoxyCodeLine{00938     assert(r0 <= r1);}
+\DoxyCodeLine{00939     \textcolor{keywordflow}{if} (r0 > r1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00940     \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r0, m\_index);}
+\DoxyCodeLine{00941     assert(!cell.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}());}
+\DoxyCodeLine{00942     assert(cell.m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a6ef7d48e41f4f214b414e959512e6377}{getChildLevel}}());}
+\DoxyCodeLine{00943     xsh-\/>\mbox{\hyperlink{class_t_xsheet_a28381fbf27f33822b68cf66f689266da}{clearCells}}(r0, m\_index, r1 -\/ r0 + 1);}
+\DoxyCodeLine{00944     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_newFramesCount; i++) \{}
+\DoxyCodeLine{00945       cell.m\_frameId = \mbox{\hyperlink{class_t_frame_id}{TFrameId}}(i + 1);}
+\DoxyCodeLine{00946       xsh-\/>setCell(m\_r0 + i, m\_index, cell);}
+\DoxyCodeLine{00947     \}}
+\DoxyCodeLine{00948     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00949   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resequence_undo_a415d7b45bc4074a37dcf7b4c9236f7ab}\label{class_resequence_undo_a415d7b45bc4074a37dcf7b4c9236f7ab}} 
+\index{ResequenceUndo@{ResequenceUndo}!undo@{undo}}
+\index{undo@{undo}!ResequenceUndo@{ResequenceUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Resequence\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00914                              \{}
+\DoxyCodeLine{00915     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00916     \textcolor{keywordtype}{int} r0, r1;}
+\DoxyCodeLine{00917     xsh-\/>\mbox{\hyperlink{class_t_xsheet_a26850469fb0f2886b717479050c32be2}{getCellRange}}(m\_index, r0, r1);}
+\DoxyCodeLine{00918     assert(r0 <= r1);}
+\DoxyCodeLine{00919     \textcolor{keywordflow}{if} (r0 > r1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00920     \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r0, m\_index);}
+\DoxyCodeLine{00921     assert(!cell.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}());}
+\DoxyCodeLine{00922     assert(cell.m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a6ef7d48e41f4f214b414e959512e6377}{getChildLevel}}());}
+\DoxyCodeLine{00923     xsh-\/>\mbox{\hyperlink{class_t_xsheet_a28381fbf27f33822b68cf66f689266da}{clearCells}}(r0, m\_index, r1 -\/ r0 + 1);}
+\DoxyCodeLine{00924     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_oldFrames.size(); i++) \{}
+\DoxyCodeLine{00925       \mbox{\hyperlink{class_t_frame_id}{TFrameId}} fid = m\_oldFrames[i];}
+\DoxyCodeLine{00926       \textcolor{keywordflow}{if} (fid != TFrameId::EMPTY\_FRAME) \{}
+\DoxyCodeLine{00927         cell.m\_frameId = fid;}
+\DoxyCodeLine{00928         xsh-\/>setCell(m\_r0 + i, m\_index, cell);}
+\DoxyCodeLine{00929       \}}
+\DoxyCodeLine{00930     \}}
+\DoxyCodeLine{00931     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00932   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/columncommand.\+cpp\end{DoxyCompactItemize}

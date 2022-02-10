@@ -1,0 +1,121 @@
+\hypertarget{classmov__io_1_1_l_r_image_read_s_h_m_parser}{}\doxysection{mov\+\_\+io\+::LRImage\+Read\+SHMParser Class Reference}
+\label{classmov__io_1_1_l_r_image_read_s_h_m_parser}\index{mov\_io::LRImageReadSHMParser@{mov\_io::LRImageReadSHMParser}}
+Inheritance diagram for mov\+\_\+io\+::LRImage\+Read\+SHMParser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmov__io_1_1_l_r_image_read_s_h_m_parser}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{classmov__io_1_1_l_r_image_read_s_h_m_parser_ae94186d41b057e5a8a842ccae0fbaac0}{header}} () const override
+\item 
+void \mbox{\hyperlink{classmov__io_1_1_l_r_image_read_s_h_m_parser_a519ff006cd985f54b0bcae25dfd5d066}{operator()}} (\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&stream) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmov__io_1_1_l_r_image_read_s_h_m_parser_ae94186d41b057e5a8a842ccae0fbaac0}\label{classmov__io_1_1_l_r_image_read_s_h_m_parser_ae94186d41b057e5a8a842ccae0fbaac0}} 
+\index{mov\_io::LRImageReadSHMParser@{mov\_io::LRImageReadSHMParser}!header@{header}}
+\index{header@{header}!mov\_io::LRImageReadSHMParser@{mov\_io::LRImageReadSHMParser}}
+\doxysubsubsection{\texorpdfstring{header()}{header()}}
+{\footnotesize\ttfamily QString mov\+\_\+io\+::\+LRImage\+Read\+SHMParser\+::header (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00212 \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$LRMovImageReadSHM"{}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmov__io_1_1_l_r_image_read_s_h_m_parser_a519ff006cd985f54b0bcae25dfd5d066}\label{classmov__io_1_1_l_r_image_read_s_h_m_parser_a519ff006cd985f54b0bcae25dfd5d066}} 
+\index{mov\_io::LRImageReadSHMParser@{mov\_io::LRImageReadSHMParser}!operator()@{operator()}}
+\index{operator()@{operator()}!mov\_io::LRImageReadSHMParser@{mov\_io::LRImageReadSHMParser}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily void mov\+\_\+io\+::\+LRImage\+Read\+SHMParser\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00540                                                   \{}
+\DoxyCodeLine{00541   tipc\_debug(QTime fTime; QTime irTime; fTime.start(););}
+\DoxyCodeLine{00542 }
+\DoxyCodeLine{00543   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} id;}
+\DoxyCodeLine{00544   \textcolor{keywordtype}{int} lx, ly, frameIdx;}
+\DoxyCodeLine{00545   QString shMemId;}
+\DoxyCodeLine{00546 }
+\DoxyCodeLine{00547   msg >> \textcolor{keywordtype}{id} >> lx >> ly >> frameIdx >> shMemId >> clr;}
+\DoxyCodeLine{00548 }
+\DoxyCodeLine{00549   tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}LoadImageSHM data:"{}} << \textcolor{keywordtype}{id} << lx << ly << frameIdx}
+\DoxyCodeLine{00550                       << shMemId);}
+\DoxyCodeLine{00551 }
+\DoxyCodeLine{00552   QHash<unsigned int, TLevelReaderP>::iterator it = readers.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00553   \textcolor{keywordflow}{if} (it == readers.end()) \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00554 }
+\DoxyCodeLine{00555   \textcolor{comment}{// Attach the shared memory segment the raster}}
+\DoxyCodeLine{00556   \{}
+\DoxyCodeLine{00557     QSharedMemory shm(shMemId);}
+\DoxyCodeLine{00558     shm.attach();}
+\DoxyCodeLine{00559     \textcolor{keywordflow}{if} (!shm.isAttached()) \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00560 }
+\DoxyCodeLine{00561     \textcolor{comment}{// Load the raster}}
+\DoxyCodeLine{00562     \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras(lx, ly, lx, (TPixel32 *)shm.data());}
+\DoxyCodeLine{00563     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00564       tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}loading image..."{}});}
+\DoxyCodeLine{00565       tipc\_debug(irTime.start());}
+\DoxyCodeLine{00566 }
+\DoxyCodeLine{00567       shm.lock();}
+\DoxyCodeLine{00568       \mbox{\hyperlink{class_t_image_reader_p}{TImageReaderP}} ir(it.value()-\/>getFrameReader(frameIdx + 1));}
+\DoxyCodeLine{00569       ir-\/>load(ras, \mbox{\hyperlink{class_t_point_t}{TPoint}}(), 1, 1);}
+\DoxyCodeLine{00570       shm.unlock();}
+\DoxyCodeLine{00571 }
+\DoxyCodeLine{00572       tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}load time:"{}} << irTime.elapsed());}
+\DoxyCodeLine{00573     \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_image_exception}{TImageException}} e) \{}
+\DoxyCodeLine{00574       shm.unlock();}
+\DoxyCodeLine{00575       tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}Image Read Error:"{}}}
+\DoxyCodeLine{00576                           << QString::fromStdWString(e.getMessage()));}
+\DoxyCodeLine{00577       \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00578     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00579       shm.unlock();}
+\DoxyCodeLine{00580       tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}Unknown Image Read Error"{}});}
+\DoxyCodeLine{00581       \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00582     \}}
+\DoxyCodeLine{00583   \}}
+\DoxyCodeLine{00584 }
+\DoxyCodeLine{00585   msg << QString(\textcolor{stringliteral}{"{}ok"{}});}
+\DoxyCodeLine{00586 }
+\DoxyCodeLine{00587 \textcolor{preprocessor}{\#ifdef WIN32}}
+\DoxyCodeLine{00588 }
+\DoxyCodeLine{00589   UCHAR hh, mm, ss, ff;}
+\DoxyCodeLine{00590   \mbox{\hyperlink{class_t_level_reader_mov}{TLevelReaderMov}} *lrm =}
+\DoxyCodeLine{00591       \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{class_t_level_reader_mov}{TLevelReaderMov}} *\textcolor{keyword}{>}(it.value().getPointer());}
+\DoxyCodeLine{00592   lrm-\/>loadedTimecode(hh, mm, ss, ff);}
+\DoxyCodeLine{00593 }
+\DoxyCodeLine{00594   tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}TLevelReaderMov::loadImage time:"{}} << fTime.elapsed());}
+\DoxyCodeLine{00595   msg << hh << mm << ss << ff;}
+\DoxyCodeLine{00596 }
+\DoxyCodeLine{00597 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00598 }
+\DoxyCodeLine{00599   \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00600 }
+\DoxyCodeLine{00601 err:}
+\DoxyCodeLine{00602 }
+\DoxyCodeLine{00603   msg << QString(\textcolor{stringliteral}{"{}err"{}});}
+\DoxyCodeLine{00604 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+h\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+cpp\end{DoxyCompactItemize}

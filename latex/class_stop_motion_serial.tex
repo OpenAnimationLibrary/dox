@@ -1,0 +1,202 @@
+\hypertarget{class_stop_motion_serial}{}\doxysection{Stop\+Motion\+Serial Class Reference}
+\label{class_stop_motion_serial}\index{StopMotionSerial@{StopMotionSerial}}
+Inheritance diagram for Stop\+Motion\+Serial\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_stop_motion_serial}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QString\+List \mbox{\hyperlink{class_stop_motion_serial_a77b7a34affd30d368ae1ea6df9a3ad9c}{get\+Available\+Serial\+Ports}} ()
+\item 
+bool \mbox{\hyperlink{class_stop_motion_serial_ad0de831ced4b3ad8622cb3f6483d25a2}{set\+Serial\+Port}} (QString port)
+\item 
+void \mbox{\hyperlink{class_stop_motion_serial_ab383f7e7f61af696618b0712083e0a13}{send\+Serial\+Data}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QString\+List \mbox{\hyperlink{class_stop_motion_serial_ab1ad836e6033773310d67e791f9c9203}{m\+\_\+control\+Baud\+Rates}}
+\item 
+QString\+List \mbox{\hyperlink{class_stop_motion_serial_a8cc136c22d485f38ef20bde431f0858c}{m\+\_\+serial\+Devices}}
+\item 
+QSerial\+Port $\ast$ \mbox{\hyperlink{class_stop_motion_serial_a45697b06a2262166a7f6fd6ba1328f6c}{m\+\_\+serial\+Port}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_stop_motion_serial_aa4db812862b94c3dc12e62688b343ef2}\label{class_stop_motion_serial_aa4db812862b94c3dc12e62688b343ef2}} 
+\index{StopMotionSerial@{StopMotionSerial}!StopMotionSerial@{StopMotionSerial}}
+\index{StopMotionSerial@{StopMotionSerial}!StopMotionSerial@{StopMotionSerial}}
+\doxysubsubsection{\texorpdfstring{StopMotionSerial()}{StopMotionSerial()}}
+{\footnotesize\ttfamily Stop\+Motion\+Serial\+::\+Stop\+Motion\+Serial (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00008 \{ m\_serialPort = \textcolor{keyword}{new} QSerialPort(\textcolor{keyword}{this}); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_stop_motion_serial_ace568172b405ec55877d3f647f6a21af}\label{class_stop_motion_serial_ace568172b405ec55877d3f647f6a21af}} 
+\index{StopMotionSerial@{StopMotionSerial}!````~StopMotionSerial@{$\sim$StopMotionSerial}}
+\index{````~StopMotionSerial@{$\sim$StopMotionSerial}!StopMotionSerial@{StopMotionSerial}}
+\doxysubsubsection{\texorpdfstring{$\sim$StopMotionSerial()}{~StopMotionSerial()}}
+{\footnotesize\ttfamily Stop\+Motion\+Serial\+::$\sim$\+Stop\+Motion\+Serial (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00009 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_stop_motion_serial_a77b7a34affd30d368ae1ea6df9a3ad9c}\label{class_stop_motion_serial_a77b7a34affd30d368ae1ea6df9a3ad9c}} 
+\index{StopMotionSerial@{StopMotionSerial}!getAvailableSerialPorts@{getAvailableSerialPorts}}
+\index{getAvailableSerialPorts@{getAvailableSerialPorts}!StopMotionSerial@{StopMotionSerial}}
+\doxysubsubsection{\texorpdfstring{getAvailableSerialPorts()}{getAvailableSerialPorts()}}
+{\footnotesize\ttfamily QString\+List Stop\+Motion\+Serial\+::get\+Available\+Serial\+Ports (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00013                                                       \{}
+\DoxyCodeLine{00014   QList<QSerialPortInfo> list = QSerialPortInfo::availablePorts();}
+\DoxyCodeLine{00015   QStringList ports;}
+\DoxyCodeLine{00016   ports.push\_back(tr(\textcolor{stringliteral}{"{}No Device"{}}));}
+\DoxyCodeLine{00017   \textcolor{keywordtype}{int} size = list.size();}
+\DoxyCodeLine{00018   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < size; i++) \{}
+\DoxyCodeLine{00019     std::string desc  = list.at(i).description().toStdString();}
+\DoxyCodeLine{00020     std::string port  = list.at(i).portName().toStdString();}
+\DoxyCodeLine{00021     std::string maker = list.at(i).manufacturer().toStdString();}
+\DoxyCodeLine{00022     ports.push\_back(list.at(i).portName());}
+\DoxyCodeLine{00023     \textcolor{keywordflow}{if} (list.at(i).hasProductIdentifier()) \{}
+\DoxyCodeLine{00024       std::string \textcolor{keywordtype}{id} =}
+\DoxyCodeLine{00025           QString::number(list.at(i).productIdentifier()).toStdString();}
+\DoxyCodeLine{00026     \}}
+\DoxyCodeLine{00027     \textcolor{keywordflow}{if} (list.at(i).hasVendorIdentifier()) \{}
+\DoxyCodeLine{00028       std::string \textcolor{keywordtype}{id} =}
+\DoxyCodeLine{00029           QString::number(list.at(i).vendorIdentifier()).toStdString();}
+\DoxyCodeLine{00030     \}}
+\DoxyCodeLine{00031   \}}
+\DoxyCodeLine{00032   \textcolor{keywordflow}{return} ports;}
+\DoxyCodeLine{00033 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_stop_motion_serial_ab383f7e7f61af696618b0712083e0a13}\label{class_stop_motion_serial_ab383f7e7f61af696618b0712083e0a13}} 
+\index{StopMotionSerial@{StopMotionSerial}!sendSerialData@{sendSerialData}}
+\index{sendSerialData@{sendSerialData}!StopMotionSerial@{StopMotionSerial}}
+\doxysubsubsection{\texorpdfstring{sendSerialData()}{sendSerialData()}}
+{\footnotesize\ttfamily void Stop\+Motion\+Serial\+::send\+Serial\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075                                       \{}
+\DoxyCodeLine{00076   \textcolor{keywordflow}{if} (m\_serialPort-\/>isOpen()) \{}
+\DoxyCodeLine{00077     std::string fNumber =}
+\DoxyCodeLine{00078         std::to\_string(StopMotion::instance()-\/>getXSheetFrameNumber());}
+\DoxyCodeLine{00079     \textcolor{keywordtype}{char} \textcolor{keyword}{const}* fNumberChar = fNumber.c\_str();}
+\DoxyCodeLine{00080     m\_serialPort-\/>write(fNumberChar);}
+\DoxyCodeLine{00081     m\_serialPort-\/>waitForBytesWritten(10);}
+\DoxyCodeLine{00082     QByteArray DataReceive = m\_serialPort-\/>readLine();}
+\DoxyCodeLine{00083     \textcolor{keywordflow}{while} (m\_serialPort-\/>waitForReadyRead(30)) \{}
+\DoxyCodeLine{00084       DataReceive += m\_serialPort-\/>readLine();}
+\DoxyCodeLine{00085     \}}
+\DoxyCodeLine{00086     QByteArray response = DataReceive;}
+\DoxyCodeLine{00087     QString s(response);}
+\DoxyCodeLine{00088     std::string text = response.toStdString();}
+\DoxyCodeLine{00089   \}}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091   \textcolor{comment}{// for not data sending is not implemented yet, just the frame number.}}
+\DoxyCodeLine{00092   \textcolor{comment}{// These lines are here to be a reference for using column data as movement.}}
+\DoxyCodeLine{00093   \textcolor{comment}{// TDoubleParam *param =}}
+\DoxyCodeLine{00094   \textcolor{comment}{// TApp::instance()-\/>getCurrentScene()-\/>getScene()-\/>getXsheet()-\/>getStageObjectTree()-\/>getStageObject(0)-\/>getParam(TStageObject::T\_X);}}
+\DoxyCodeLine{00095   \textcolor{comment}{// double value =}}
+\DoxyCodeLine{00096   \textcolor{comment}{// TApp::instance()-\/>getCurrentScene()-\/>getScene()-\/>getXsheet()-\/>getStageObjectTree()-\/>getStageObject(0)-\/>getParam(TStageObject::T\_X,}}
+\DoxyCodeLine{00097   \textcolor{comment}{// m\_xSheetFrameNumber -\/ 1);}}
+\DoxyCodeLine{00098   \textcolor{comment}{// QString isCam =}}
+\DoxyCodeLine{00099   \textcolor{comment}{// TApp::instance()-\/>getCurrentScene()-\/>getScene()-\/>getXsheet()-\/>getStageObjectTree()-\/>getStageObject(0)-\/>getId().isCamera()}}
+\DoxyCodeLine{00100   \textcolor{comment}{// ? "{}yep"{} : "{}nope"{};}}
+\DoxyCodeLine{00101   \textcolor{comment}{// std::string name =}}
+\DoxyCodeLine{00102   \textcolor{comment}{// TApp::instance()-\/>getCurrentScene()-\/>getScene()-\/>getXsheet()-\/>getStageObjectTree()-\/>getStageObject(0)-\/>getName();}}
+\DoxyCodeLine{00103   \textcolor{comment}{// TMeasure *measure =param-\/>getMeasure();}}
+\DoxyCodeLine{00104   \textcolor{comment}{// const TUnit *unit = measure-\/>getCurrentUnit();}}
+\DoxyCodeLine{00105   \textcolor{comment}{// double newValue = unit-\/>convertTo(value);}}
+\DoxyCodeLine{00106 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_stop_motion_serial_ad0de831ced4b3ad8622cb3f6483d25a2}\label{class_stop_motion_serial_ad0de831ced4b3ad8622cb3f6483d25a2}} 
+\index{StopMotionSerial@{StopMotionSerial}!setSerialPort@{setSerialPort}}
+\index{setSerialPort@{setSerialPort}!StopMotionSerial@{StopMotionSerial}}
+\doxysubsubsection{\texorpdfstring{setSerialPort()}{setSerialPort()}}
+{\footnotesize\ttfamily bool Stop\+Motion\+Serial\+::set\+Serial\+Port (\begin{DoxyParamCaption}\item[{QString}]{port }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00037                                                  \{}
+\DoxyCodeLine{00038   \textcolor{keywordflow}{if} (m\_serialPort-\/>isOpen()) m\_serialPort-\/>close();}
+\DoxyCodeLine{00039   QList<QSerialPortInfo> list = QSerialPortInfo::availablePorts();}
+\DoxyCodeLine{00040   QStringList ports;}
+\DoxyCodeLine{00041   \textcolor{keywordtype}{bool} success = \textcolor{keyword}{false};}
+\DoxyCodeLine{00042   \textcolor{keywordtype}{int} size     = list.size();}
+\DoxyCodeLine{00043   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < size; i++) \{}
+\DoxyCodeLine{00044     \textcolor{keywordflow}{if} (port == list.at(i).portName()) \{}
+\DoxyCodeLine{00045       m\_serialPort-\/>setPort(list.at(i));}
+\DoxyCodeLine{00046     \}}
+\DoxyCodeLine{00047   \}}
+\DoxyCodeLine{00048   \textcolor{comment}{// m\_serialPort-\/>setBaudRate(9600);}}
+\DoxyCodeLine{00049   \textcolor{keywordtype}{bool} connected = m\_serialPort-\/>open(QIODevice::ReadWrite);}
+\DoxyCodeLine{00050   \textcolor{keywordflow}{if} (connected) \{}
+\DoxyCodeLine{00051     success = m\_serialPort-\/>setBaudRate(QSerialPort::Baud9600) \&}
+\DoxyCodeLine{00052               m\_serialPort-\/>setParity(QSerialPort::NoParity) \&}
+\DoxyCodeLine{00053               m\_serialPort-\/>setDataBits(QSerialPort::Data8) \&}
+\DoxyCodeLine{00054               m\_serialPort-\/>setStopBits(QSerialPort::OneStop) \&}
+\DoxyCodeLine{00055               m\_serialPort-\/>setFlowControl(QSerialPort::NoFlowControl);}
+\DoxyCodeLine{00056     std::string fNumber =}
+\DoxyCodeLine{00057         std::to\_string(StopMotion::instance()-\/>getXSheetFrameNumber());}
+\DoxyCodeLine{00058     \textcolor{keywordtype}{char} \textcolor{keyword}{const}* fNumberChar = fNumber.c\_str();}
+\DoxyCodeLine{00059     m\_serialPort-\/>write(fNumberChar);}
+\DoxyCodeLine{00060     m\_serialPort-\/>waitForBytesWritten(10);}
+\DoxyCodeLine{00061     QByteArray DataReceive = m\_serialPort-\/>readLine();}
+\DoxyCodeLine{00062     \textcolor{keywordflow}{while} (m\_serialPort-\/>waitForReadyRead(30)) \{}
+\DoxyCodeLine{00063       DataReceive += m\_serialPort-\/>readLine();}
+\DoxyCodeLine{00064     \}}
+\DoxyCodeLine{00065     QByteArray response = DataReceive;}
+\DoxyCodeLine{00066     QString s(response);}
+\DoxyCodeLine{00067     std::string text = response.toStdString();}
+\DoxyCodeLine{00068     \textcolor{comment}{//\}}}
+\DoxyCodeLine{00069   \}}
+\DoxyCodeLine{00070   \textcolor{keywordflow}{return} success;}
+\DoxyCodeLine{00071 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_stop_motion_serial_ab1ad836e6033773310d67e791f9c9203}\label{class_stop_motion_serial_ab1ad836e6033773310d67e791f9c9203}} 
+\index{StopMotionSerial@{StopMotionSerial}!m\_controlBaudRates@{m\_controlBaudRates}}
+\index{m\_controlBaudRates@{m\_controlBaudRates}!StopMotionSerial@{StopMotionSerial}}
+\doxysubsubsection{\texorpdfstring{m\_controlBaudRates}{m\_controlBaudRates}}
+{\footnotesize\ttfamily QString\+List Stop\+Motion\+Serial\+::m\+\_\+control\+Baud\+Rates}
+
+\mbox{\Hypertarget{class_stop_motion_serial_a8cc136c22d485f38ef20bde431f0858c}\label{class_stop_motion_serial_a8cc136c22d485f38ef20bde431f0858c}} 
+\index{StopMotionSerial@{StopMotionSerial}!m\_serialDevices@{m\_serialDevices}}
+\index{m\_serialDevices@{m\_serialDevices}!StopMotionSerial@{StopMotionSerial}}
+\doxysubsubsection{\texorpdfstring{m\_serialDevices}{m\_serialDevices}}
+{\footnotesize\ttfamily QString\+List Stop\+Motion\+Serial\+::m\+\_\+serial\+Devices}
+
+\mbox{\Hypertarget{class_stop_motion_serial_a45697b06a2262166a7f6fd6ba1328f6c}\label{class_stop_motion_serial_a45697b06a2262166a7f6fd6ba1328f6c}} 
+\index{StopMotionSerial@{StopMotionSerial}!m\_serialPort@{m\_serialPort}}
+\index{m\_serialPort@{m\_serialPort}!StopMotionSerial@{StopMotionSerial}}
+\doxysubsubsection{\texorpdfstring{m\_serialPort}{m\_serialPort}}
+{\footnotesize\ttfamily QSerial\+Port$\ast$ Stop\+Motion\+Serial\+::m\+\_\+serial\+Port}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stopmotion/stopmotionserial.\+h\item 
+E\+:/opentoonz/toonz/sources/stopmotion/stopmotionserial.\+cpp\end{DoxyCompactItemize}

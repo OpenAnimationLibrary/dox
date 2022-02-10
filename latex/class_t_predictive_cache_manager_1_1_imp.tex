@@ -1,0 +1,92 @@
+\hypertarget{class_t_predictive_cache_manager_1_1_imp}{}\doxysection{TPredictive\+Cache\+Manager\+::Imp Class Reference}
+\label{class_t_predictive_cache_manager_1_1_imp}\index{TPredictiveCacheManager::Imp@{TPredictiveCacheManager::Imp}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_predictive_cache_manager_1_1_imp_a32452ae00fedb3052b6c79114e7fed0a}{run}} (\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}} \&resource, const std\+::string \&alias, const \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} \&fx, double frame, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&rs, \mbox{\hyperlink{struct_resource_declaration}{Resource\+Declaration}} $\ast$res\+Data)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_t_predictive_cache_manager_1_1_imp_a80ed998a62ba629ef6cdedd853fab3e9}{m\+\_\+render\+Status}}
+\item 
+bool \mbox{\hyperlink{class_t_predictive_cache_manager_1_1_imp_aa8bd55cae363f410527000217d2b4701}{m\+\_\+enabled}}
+\item 
+std\+::map$<$ \mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}}, \mbox{\hyperlink{struct_prediction_data}{Prediction\+Data}} $>$ \mbox{\hyperlink{class_t_predictive_cache_manager_1_1_imp_acfbfb031042a40b88322c2906f8712e3}{m\+\_\+resources}}
+\item 
+QMutex \mbox{\hyperlink{class_t_predictive_cache_manager_1_1_imp_aac296b054b50691a03fb54c046194758}{m\+\_\+mutex}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_predictive_cache_manager_1_1_imp_a27cca3a6d7d75cd7fb9a32d376eb1e93}\label{class_t_predictive_cache_manager_1_1_imp_a27cca3a6d7d75cd7fb9a32d376eb1e93}} 
+\index{TPredictiveCacheManager::Imp@{TPredictiveCacheManager::Imp}!Imp@{Imp}}
+\index{Imp@{Imp}!TPredictiveCacheManager::Imp@{TPredictiveCacheManager::Imp}}
+\doxysubsubsection{\texorpdfstring{Imp()}{Imp()}}
+{\footnotesize\ttfamily TPredictive\+Cache\+Manager\+::\+Imp\+::\+Imp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068       : m\_renderStatus(TRenderer::IDLE)}
+\DoxyCodeLine{00069       , m\_enabled(\mbox{\hyperlink{class_t_renderer_a93afee3c1ce8ff2b753a05fa0fe3dc9d}{TRenderer::instance}}().isPrecomputingEnabled()) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_predictive_cache_manager_1_1_imp_a32452ae00fedb3052b6c79114e7fed0a}\label{class_t_predictive_cache_manager_1_1_imp_a32452ae00fedb3052b6c79114e7fed0a}} 
+\index{TPredictiveCacheManager::Imp@{TPredictiveCacheManager::Imp}!run@{run}}
+\index{run@{run}!TPredictiveCacheManager::Imp@{TPredictiveCacheManager::Imp}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void TPredictive\+Cache\+Manager\+::\+Imp\+::run (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}} \&}]{resource,  }\item[{const std\+::string \&}]{alias,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} \&}]{fx,  }\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{rs,  }\item[{\mbox{\hyperlink{struct_resource_declaration}{Resource\+Declaration}} $\ast$}]{res\+Data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073                                          \{}
+\DoxyCodeLine{00074     \textcolor{keywordflow}{switch} (m\_renderStatus) \{}
+\DoxyCodeLine{00075     \textcolor{keywordflow}{case} TRenderer::IDLE:}
+\DoxyCodeLine{00076     \textcolor{keywordflow}{case} TRenderer::COMPUTING:}
+\DoxyCodeLine{00077       getResourceComputing(resource, alias, fx, frame, rs, resData);}
+\DoxyCodeLine{00078       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00079     \textcolor{keywordflow}{case} TRenderer::TESTRUN:}
+\DoxyCodeLine{00080       getResourceTestRun(resource, alias, fx, frame, rs, resData);}
+\DoxyCodeLine{00081       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00082     \}}
+\DoxyCodeLine{00083   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_predictive_cache_manager_1_1_imp_aa8bd55cae363f410527000217d2b4701}\label{class_t_predictive_cache_manager_1_1_imp_aa8bd55cae363f410527000217d2b4701}} 
+\index{TPredictiveCacheManager::Imp@{TPredictiveCacheManager::Imp}!m\_enabled@{m\_enabled}}
+\index{m\_enabled@{m\_enabled}!TPredictiveCacheManager::Imp@{TPredictiveCacheManager::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_enabled}{m\_enabled}}
+{\footnotesize\ttfamily bool TPredictive\+Cache\+Manager\+::\+Imp\+::m\+\_\+enabled}
+
+\mbox{\Hypertarget{class_t_predictive_cache_manager_1_1_imp_aac296b054b50691a03fb54c046194758}\label{class_t_predictive_cache_manager_1_1_imp_aac296b054b50691a03fb54c046194758}} 
+\index{TPredictiveCacheManager::Imp@{TPredictiveCacheManager::Imp}!m\_mutex@{m\_mutex}}
+\index{m\_mutex@{m\_mutex}!TPredictiveCacheManager::Imp@{TPredictiveCacheManager::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_mutex}{m\_mutex}}
+{\footnotesize\ttfamily QMutex TPredictive\+Cache\+Manager\+::\+Imp\+::m\+\_\+mutex}
+
+\mbox{\Hypertarget{class_t_predictive_cache_manager_1_1_imp_a80ed998a62ba629ef6cdedd853fab3e9}\label{class_t_predictive_cache_manager_1_1_imp_a80ed998a62ba629ef6cdedd853fab3e9}} 
+\index{TPredictiveCacheManager::Imp@{TPredictiveCacheManager::Imp}!m\_renderStatus@{m\_renderStatus}}
+\index{m\_renderStatus@{m\_renderStatus}!TPredictiveCacheManager::Imp@{TPredictiveCacheManager::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_renderStatus}{m\_renderStatus}}
+{\footnotesize\ttfamily int TPredictive\+Cache\+Manager\+::\+Imp\+::m\+\_\+render\+Status}
+
+\mbox{\Hypertarget{class_t_predictive_cache_manager_1_1_imp_acfbfb031042a40b88322c2906f8712e3}\label{class_t_predictive_cache_manager_1_1_imp_acfbfb031042a40b88322c2906f8712e3}} 
+\index{TPredictiveCacheManager::Imp@{TPredictiveCacheManager::Imp}!m\_resources@{m\_resources}}
+\index{m\_resources@{m\_resources}!TPredictiveCacheManager::Imp@{TPredictiveCacheManager::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_resources}{m\_resources}}
+{\footnotesize\ttfamily std\+::map$<$\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}}, \mbox{\hyperlink{struct_prediction_data}{Prediction\+Data}}$>$ TPredictive\+Cache\+Manager\+::\+Imp\+::m\+\_\+resources}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tfx/tpredictivecachemanager.\+cpp\end{DoxyCompactItemize}

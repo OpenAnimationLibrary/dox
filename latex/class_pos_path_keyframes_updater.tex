@@ -1,0 +1,113 @@
+\hypertarget{class_pos_path_keyframes_updater}{}\doxysection{Pos\+Path\+Keyframes\+Updater Class Reference}
+\label{class_pos_path_keyframes_updater}\index{PosPathKeyframesUpdater@{PosPathKeyframesUpdater}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_pos_path_keyframes_updater_acb3f3b64c84317ede4e4c2bb36f33b2a}{Pos\+Path\+Keyframes\+Updater}} (\mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$old\+Spline, \mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$new\+Spline)
+\item 
+void \mbox{\hyperlink{class_pos_path_keyframes_updater_a72b64f5133a603d2f3a04d2171420b0b}{update}} (\mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$param)
+\item 
+void \mbox{\hyperlink{class_pos_path_keyframes_updater_a0f7f02ae8245f9d11505cf77ea832f13}{update}} (double \&s)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_pos_path_keyframes_updater_acb3f3b64c84317ede4e4c2bb36f33b2a}\label{class_pos_path_keyframes_updater_acb3f3b64c84317ede4e4c2bb36f33b2a}} 
+\index{PosPathKeyframesUpdater@{PosPathKeyframesUpdater}!PosPathKeyframesUpdater@{PosPathKeyframesUpdater}}
+\index{PosPathKeyframesUpdater@{PosPathKeyframesUpdater}!PosPathKeyframesUpdater@{PosPathKeyframesUpdater}}
+\doxysubsubsection{\texorpdfstring{PosPathKeyframesUpdater()}{PosPathKeyframesUpdater()}}
+{\footnotesize\ttfamily Pos\+Path\+Keyframes\+Updater\+::\+Pos\+Path\+Keyframes\+Updater (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$}]{old\+Spline,  }\item[{\mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$}]{new\+Spline }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041       : m\_oldSplineLength(0), m\_newSplineLength(0) \{}
+\DoxyCodeLine{00042     assert(oldSpline);}
+\DoxyCodeLine{00043     assert(newSpline);}
+\DoxyCodeLine{00044     m\_oldSplineLength = oldSpline-\/>\mbox{\hyperlink{class_t_stroke_a079a513cb8a60d9a759b4f0c8211eab4}{getLength}}();}
+\DoxyCodeLine{00045     m\_newSplineLength = newSpline-\/>\mbox{\hyperlink{class_t_stroke_a079a513cb8a60d9a759b4f0c8211eab4}{getLength}}();}
+\DoxyCodeLine{00046     \textcolor{keywordtype}{int} m;}
+\DoxyCodeLine{00047     m = oldSpline-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}();}
+\DoxyCodeLine{00048     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m; i += 4)}
+\DoxyCodeLine{00049       m\_oldControlPointsLengths.push\_back(}
+\DoxyCodeLine{00050           oldSpline-\/>\mbox{\hyperlink{class_t_stroke_a18abce70ef2b2ecd88a50ac9bc8d6d7b}{getLengthAtControlPoint}}(i));}
+\DoxyCodeLine{00051     m = newSpline-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}();}
+\DoxyCodeLine{00052     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m; i += 4)}
+\DoxyCodeLine{00053       m\_newControlPointsLengths.push\_back(}
+\DoxyCodeLine{00054           newSpline-\/>\mbox{\hyperlink{class_t_stroke_a18abce70ef2b2ecd88a50ac9bc8d6d7b}{getLengthAtControlPoint}}(i));}
+\DoxyCodeLine{00055   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_pos_path_keyframes_updater_a0f7f02ae8245f9d11505cf77ea832f13}\label{class_pos_path_keyframes_updater_a0f7f02ae8245f9d11505cf77ea832f13}} 
+\index{PosPathKeyframesUpdater@{PosPathKeyframesUpdater}!update@{update}}
+\index{update@{update}!PosPathKeyframesUpdater@{PosPathKeyframesUpdater}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Pos\+Path\+Keyframes\+Updater\+::update (\begin{DoxyParamCaption}\item[{double \&}]{s }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00074                                               \{}
+\DoxyCodeLine{00075   \textcolor{keywordtype}{int} k    = 0;}
+\DoxyCodeLine{00076   \textcolor{keywordtype}{int} oldm = (int)m\_oldControlPointsLengths.size();}
+\DoxyCodeLine{00077   \textcolor{keywordtype}{int} newm = (int)m\_newControlPointsLengths.size();}
+\DoxyCodeLine{00078   \textcolor{keywordflow}{while} (k < oldm \&\& m\_oldControlPointsLengths[k] <= s) k++;}
+\DoxyCodeLine{00079   \textcolor{keywordflow}{if} (k >= oldm) \{}
+\DoxyCodeLine{00080     \textcolor{comment}{// all CP lengths <=s}}
+\DoxyCodeLine{00081     \textcolor{keywordflow}{if} (oldm -\/ 1 < newm)}
+\DoxyCodeLine{00082       s = m\_newControlPointsLengths[oldm -\/ 1];}
+\DoxyCodeLine{00083     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00084       s = m\_newSplineLength;}
+\DoxyCodeLine{00085   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (k == 0) \{}
+\DoxyCodeLine{00086     \textcolor{comment}{// all CP lengths >s}}
+\DoxyCodeLine{00087     s = 0;}
+\DoxyCodeLine{00088   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00089     \textcolor{keywordflow}{if} (k >= newm)}
+\DoxyCodeLine{00090       s = m\_newSplineLength;}
+\DoxyCodeLine{00091     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00092       \textcolor{keywordtype}{double} sa    = m\_oldControlPointsLengths[k -\/ 1];}
+\DoxyCodeLine{00093       \textcolor{keywordtype}{double} sb    = m\_oldControlPointsLengths[k];}
+\DoxyCodeLine{00094       \textcolor{keywordtype}{double} newSa = m\_newControlPointsLengths[k -\/ 1];}
+\DoxyCodeLine{00095       \textcolor{keywordtype}{double} newSb = m\_newControlPointsLengths[k];}
+\DoxyCodeLine{00096       assert(sa <= s \&\& s < sb);}
+\DoxyCodeLine{00097       \textcolor{keywordflow}{if} (sa >= sb) \{}
+\DoxyCodeLine{00098         s = (newSa + newSb) * 0.5;}
+\DoxyCodeLine{00099       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00100         s = newSa + (newSb -\/ newSa) * (s -\/ sa) / (sb -\/ sa);}
+\DoxyCodeLine{00101       \}}
+\DoxyCodeLine{00102     \}}
+\DoxyCodeLine{00103   \}}
+\DoxyCodeLine{00104 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_pos_path_keyframes_updater_a72b64f5133a603d2f3a04d2171420b0b}\label{class_pos_path_keyframes_updater_a72b64f5133a603d2f3a04d2171420b0b}} 
+\index{PosPathKeyframesUpdater@{PosPathKeyframesUpdater}!update@{update}}
+\index{update@{update}!PosPathKeyframesUpdater@{PosPathKeyframesUpdater}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Pos\+Path\+Keyframes\+Updater\+::update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$}]{param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057                                    \{}
+\DoxyCodeLine{00058     assert(m\_newSplineLength > 0);}
+\DoxyCodeLine{00059     \textcolor{keywordflow}{if} (m\_newSplineLength <= 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00060     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < param-\/>getKeyframeCount(); j++) \{}
+\DoxyCodeLine{00061       \mbox{\hyperlink{class_t_double_keyframe}{TDoubleKeyframe}} kf = param-\/>getKeyframe(j);}
+\DoxyCodeLine{00062       \textcolor{keywordtype}{double} s           = m\_oldSplineLength * kf.m\_value * 0.01;}
+\DoxyCodeLine{00063       update(s);}
+\DoxyCodeLine{00064       \textcolor{keywordtype}{double} updatedValue = s * 100.0 / m\_newSplineLength;}
+\DoxyCodeLine{00065       kf.m\_value          = updatedValue;}
+\DoxyCodeLine{00066       param-\/>\mbox{\hyperlink{class_t_double_param_a3447e9b5820724eacf6b43d34a75737f}{setKeyframe}}(j, kf);}
+\DoxyCodeLine{00067     \}}
+\DoxyCodeLine{00068   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tstageobjectspline.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,190 @@
+\hypertarget{class_t_fx_cache_manager_1_1_imp}{}\doxysection{TFx\+Cache\+Manager\+::Imp Class Reference}
+\label{class_t_fx_cache_manager_1_1_imp}\index{TFxCacheManager::Imp@{TFxCacheManager::Imp}}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::map$<$ std\+::string, \mbox{\hyperlink{struct_resource_declaration}{Resource\+Declaration}} $>$ \mbox{\hyperlink{class_t_fx_cache_manager_1_1_imp_a311b7aab360833c04f81b9b34005c994}{Resource\+Instance\+Data\+Map}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_fx_cache_manager_1_1_imp_a0a6905769d0c3da834d6521e557be362}{prepare\+Tiles\+To\+Calculate}} (\mbox{\hyperlink{struct_resource_declaration}{Resource\+Declaration}} \&data)
+\item 
+void \mbox{\hyperlink{class_t_fx_cache_manager_1_1_imp_a646f02ded93717538c40a42bf34bd2be}{subdivide\+Into\+Smaller\+Tiles}} (const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&rect, std\+::vector$<$ \mbox{\hyperlink{class_t_rect_t}{TRectD}} $>$ \&tile\+Set)
+\item 
+void \mbox{\hyperlink{class_t_fx_cache_manager_1_1_imp_aed7ab0d24d4889da1db7413f516171f9}{recursive\+Rect\+Subdivide}} (std\+::vector$<$ \mbox{\hyperlink{struct_resource_declaration_1_1_tile_data}{Resource\+Declaration\+::\+Tile\+Data}} $>$ \&results, \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}} $\ast$fx, const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&rect, double frame, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&info, int drop\+Tol=(std\+::numeric\+\_\+limits$<$ int $>$\+::max)())
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Resource\+Instance\+Data\+Map \mbox{\hyperlink{class_t_fx_cache_manager_1_1_imp_a4af550a73a189a4056862aceb4360992}{m\+\_\+resources\+Data}}
+\item 
+std\+::map$<$ \mbox{\hyperlink{struct_resource_declaration}{Resource\+Declaration}} $\ast$, \mbox{\hyperlink{struct_resource_declaration_1_1_raw_data}{Resource\+Declaration\+::\+Raw\+Data}} $>$ \mbox{\hyperlink{class_t_fx_cache_manager_1_1_imp_a83c0adf4d32f45423e24a2808b653af8}{m\+\_\+raw\+Data}}
+\item 
+int \mbox{\hyperlink{class_t_fx_cache_manager_1_1_imp_a60132a0351dc705ce89a24a8309f4772}{m\+\_\+render\+Status}}
+\item 
+QMutex \mbox{\hyperlink{class_t_fx_cache_manager_1_1_imp_a362128dd4c23f6debd7b5630efd83d50}{m\+\_\+mutex}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{class_t_fx_cache_manager_1_1_imp_a311b7aab360833c04f81b9b34005c994}\label{class_t_fx_cache_manager_1_1_imp_a311b7aab360833c04f81b9b34005c994}} 
+\index{TFxCacheManager::Imp@{TFxCacheManager::Imp}!ResourceInstanceDataMap@{ResourceInstanceDataMap}}
+\index{ResourceInstanceDataMap@{ResourceInstanceDataMap}!TFxCacheManager::Imp@{TFxCacheManager::Imp}}
+\doxysubsubsection{\texorpdfstring{ResourceInstanceDataMap}{ResourceInstanceDataMap}}
+{\footnotesize\ttfamily typedef std\+::map$<$std\+::string, \mbox{\hyperlink{struct_resource_declaration}{Resource\+Declaration}}$>$ TFx\+Cache\+Manager\+::\+Imp\+::\+Resource\+Instance\+Data\+Map}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_fx_cache_manager_1_1_imp_a0a6905769d0c3da834d6521e557be362}\label{class_t_fx_cache_manager_1_1_imp_a0a6905769d0c3da834d6521e557be362}} 
+\index{TFxCacheManager::Imp@{TFxCacheManager::Imp}!prepareTilesToCalculate@{prepareTilesToCalculate}}
+\index{prepareTilesToCalculate@{prepareTilesToCalculate}!TFxCacheManager::Imp@{TFxCacheManager::Imp}}
+\doxysubsubsection{\texorpdfstring{prepareTilesToCalculate()}{prepareTilesToCalculate()}}
+{\footnotesize\ttfamily void TFx\+Cache\+Manager\+::\+Imp\+::prepare\+Tiles\+To\+Calculate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_resource_declaration}{Resource\+Declaration}} \&}]{data }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00398                                                                           \{}
+\DoxyCodeLine{00399   \textcolor{comment}{// First, build the total sum of declared tiles}}
+\DoxyCodeLine{00400   \mbox{\hyperlink{class_t_rect_t}{TRectD}} sum;}
+\DoxyCodeLine{00401   \textcolor{keywordtype}{int} tilesCount = data.m\_rawData-\/>\mbox{\hyperlink{struct_resource_declaration_1_1_raw_data_a86d877a4f2fec0585742b691a31d5faf}{m\_tiles}}.size();}
+\DoxyCodeLine{00402 }
+\DoxyCodeLine{00403   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < tilesCount; ++i) sum += data.m\_rawData-\/>\mbox{\hyperlink{struct_resource_declaration_1_1_raw_data_a86d877a4f2fec0585742b691a31d5faf}{m\_tiles}}[i];}
+\DoxyCodeLine{00404 }
+\DoxyCodeLine{00405   \textcolor{comment}{// Intersect the sum with bbox and ensure integer geometry}}
+\DoxyCodeLine{00406   \textcolor{comment}{// sum *= data.m\_rawData-\/>m\_bbox;}}
+\DoxyCodeLine{00407   enlargeToI(sum);}
+\DoxyCodeLine{00408 }
+\DoxyCodeLine{00409   \textcolor{keywordflow}{if} (!data.m\_rawData-\/>\mbox{\hyperlink{struct_resource_declaration_1_1_raw_data_ac5c3af8eb899838a78f66bdb414f0dc6}{m\_subtileable}}) \{}
+\DoxyCodeLine{00410     data.m\_tiles.push\_back(sum);}
+\DoxyCodeLine{00411     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00412   \}}
+\DoxyCodeLine{00413 }
+\DoxyCodeLine{00414   \mbox{\hyperlink{class_t_raster_fx}{TRasterFx}} *fx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_raster_fx}{TRasterFx}} *\textcolor{keyword}{>}(data.m\_rawData-\/>\mbox{\hyperlink{struct_resource_declaration_1_1_raw_data_a516ce63017fbc6a2217fda73ac304d0b}{m\_fx}}.getPointer());}
+\DoxyCodeLine{00415 }
+\DoxyCodeLine{00416   \textcolor{comment}{// Now, subdivide the sum}}
+\DoxyCodeLine{00417   recursiveRectSubdivide(data.m\_tiles, fx, sum, data.m\_rawData-\/>\mbox{\hyperlink{struct_resource_declaration_1_1_raw_data_a3c42f17a6a51220266719f400b8677de}{m\_frame}},}
+\DoxyCodeLine{00418                          data.m\_rawData-\/>\mbox{\hyperlink{struct_resource_declaration_1_1_raw_data_a9f7e9faa8cb7ff48b8d3a86b7f71e1cc}{m\_rs}});}
+\DoxyCodeLine{00419 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_fx_cache_manager_1_1_imp_aed7ab0d24d4889da1db7413f516171f9}\label{class_t_fx_cache_manager_1_1_imp_aed7ab0d24d4889da1db7413f516171f9}} 
+\index{TFxCacheManager::Imp@{TFxCacheManager::Imp}!recursiveRectSubdivide@{recursiveRectSubdivide}}
+\index{recursiveRectSubdivide@{recursiveRectSubdivide}!TFxCacheManager::Imp@{TFxCacheManager::Imp}}
+\doxysubsubsection{\texorpdfstring{recursiveRectSubdivide()}{recursiveRectSubdivide()}}
+{\footnotesize\ttfamily void TFx\+Cache\+Manager\+::\+Imp\+::recursive\+Rect\+Subdivide (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{struct_resource_declaration_1_1_tile_data}{Resource\+Declaration\+::\+Tile\+Data}} $>$ \&}]{results,  }\item[{\mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}} $\ast$}]{fx,  }\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{rect,  }\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{info,  }\item[{int}]{drop\+Tol = {\ttfamily (std\+:\+:numeric\+\_\+limits$<$int$>$\+:\+:max)()} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00449                  \{}
+\DoxyCodeLine{00450   \textcolor{comment}{// Here is the subdivision strategy:}}
+\DoxyCodeLine{00451   \textcolor{comment}{//  -\/ First, since cache tiles are newly ALLOCATED, we impose the raster}}
+\DoxyCodeLine{00452   \textcolor{comment}{//    size restriction on them directly}}
+\DoxyCodeLine{00453   \textcolor{comment}{//  -\/ Then, we check that the memory requirement for the fx (max raster size}}
+\DoxyCodeLine{00454   \textcolor{comment}{//    that it will allocate) is little.}}
+\DoxyCodeLine{00455   \textcolor{comment}{//  -\/ As an exception to previous point, if the memory requirement stagnates}}
+\DoxyCodeLine{00456   \textcolor{comment}{//    near the same memory size, quit}}
+\DoxyCodeLine{00457   \textcolor{comment}{// NOTE: Level images pass here, but haven't any fx. So they are currently not}}
+\DoxyCodeLine{00458   \textcolor{comment}{// subdivided.}}
+\DoxyCodeLine{00459 }
+\DoxyCodeLine{00460   \textcolor{comment}{// Retrieve the memory requirement for this input.}}
+\DoxyCodeLine{00461   \textcolor{keywordtype}{int} memReq = fx ? fx-\/>\mbox{\hyperlink{class_t_raster_fx_af8eb991c9756f4fb2e48d9f96cbacfba}{getMemoryRequirement}}(rect, frame, info) : 0;}
+\DoxyCodeLine{00462 }
+\DoxyCodeLine{00463   \textcolor{comment}{// In case memReq < 0, we assume a strong subdivision denial, just as if the}}
+\DoxyCodeLine{00464   \textcolor{comment}{// usage was}}
+\DoxyCodeLine{00465   \textcolor{comment}{// explicitly set as unsubdividable.}}
+\DoxyCodeLine{00466   \textcolor{keywordflow}{if} (memReq < 0) \{}
+\DoxyCodeLine{00467     results.push\_back(rect);}
+\DoxyCodeLine{00468     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00469   \}}
+\DoxyCodeLine{00470 }
+\DoxyCodeLine{00471   \textcolor{keywordflow}{if} ((memReq > info.m\_maxTileSize \&\& memReq < dropTol) ||}
+\DoxyCodeLine{00472       \mbox{\hyperlink{class_t_raster_fx_a909a7afa779121b6caef5093da6447b0}{TRasterFx::memorySize}}(rect, info.m\_bpp) > info.m\_maxTileSize) \{}
+\DoxyCodeLine{00473     std::vector<TRectD> subTileRects;}
+\DoxyCodeLine{00474     \mbox{\hyperlink{class_t_fx_cache_manager_1_1_imp_a646f02ded93717538c40a42bf34bd2be}{subdivideIntoSmallerTiles}}(rect, subTileRects);}
+\DoxyCodeLine{00475 }
+\DoxyCodeLine{00476     \textcolor{keywordflow}{while} (!subTileRects.empty()) \{}
+\DoxyCodeLine{00477       \mbox{\hyperlink{class_t_rect_t}{TRectD}} subTileRect(subTileRects.back());}
+\DoxyCodeLine{00478       subTileRects.pop\_back();}
+\DoxyCodeLine{00479 }
+\DoxyCodeLine{00480       \textcolor{comment}{// Pass subdivision below, with updated drop-\/tolerance}}
+\DoxyCodeLine{00481       recursiveRectSubdivide(results, fx, subTileRect, frame, info,}
+\DoxyCodeLine{00482                              memReq -\/ (memReq >> 2));}
+\DoxyCodeLine{00483 }
+\DoxyCodeLine{00484       \textcolor{comment}{// The newly required memory must be under 3/4 of the previous.}}
+\DoxyCodeLine{00485       \textcolor{comment}{// This is required in order to make it worth subdividing.}}
+\DoxyCodeLine{00486     \}}
+\DoxyCodeLine{00487 }
+\DoxyCodeLine{00488     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00489   \}}
+\DoxyCodeLine{00490 }
+\DoxyCodeLine{00491   results.push\_back(\mbox{\hyperlink{struct_resource_declaration_1_1_tile_data}{ResourceDeclaration::TileData}}(rect));}
+\DoxyCodeLine{00492 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_fx_cache_manager_1_1_imp_a646f02ded93717538c40a42bf34bd2be}\label{class_t_fx_cache_manager_1_1_imp_a646f02ded93717538c40a42bf34bd2be}} 
+\index{TFxCacheManager::Imp@{TFxCacheManager::Imp}!subdivideIntoSmallerTiles@{subdivideIntoSmallerTiles}}
+\index{subdivideIntoSmallerTiles@{subdivideIntoSmallerTiles}!TFxCacheManager::Imp@{TFxCacheManager::Imp}}
+\doxysubsubsection{\texorpdfstring{subdivideIntoSmallerTiles()}{subdivideIntoSmallerTiles()}}
+{\footnotesize\ttfamily void TFx\+Cache\+Manager\+::\+Imp\+::subdivide\+Into\+Smaller\+Tiles (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{rect,  }\item[{std\+::vector$<$ \mbox{\hyperlink{class_t_rect_t}{TRectD}} $>$ \&}]{tile\+Set }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Calculates at max 4 smaller subrects of passed one. Returns true or false whether the subdivision was successfully applied. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00427                                                     \{}
+\DoxyCodeLine{00428   \textcolor{comment}{// Find the greater rect edge}}
+\DoxyCodeLine{00429   \mbox{\hyperlink{class_t_rect_t}{TRectD}} subTile1, subTile2;}
+\DoxyCodeLine{00430   \textcolor{keywordflow}{if} (rect.getLx() > rect.getLy()) \{}
+\DoxyCodeLine{00431     \textcolor{keywordtype}{int} sep  = rect.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} + tceil(0.5 * rect.getLx());}
+\DoxyCodeLine{00432     subTile1 = \mbox{\hyperlink{class_t_rect_t}{TRectD}}(rect.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}, rect.y0, sep, rect.y1);}
+\DoxyCodeLine{00433     subTile2 = \mbox{\hyperlink{class_t_rect_t}{TRectD}}(sep, rect.y0, rect.x1, rect.y1);}
+\DoxyCodeLine{00434   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00435     \textcolor{keywordtype}{int} sep  = rect.y0 + tceil(0.5 * rect.getLy());}
+\DoxyCodeLine{00436     subTile1 = \mbox{\hyperlink{class_t_rect_t}{TRectD}}(rect.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}, rect.y0, rect.x1, sep);}
+\DoxyCodeLine{00437     subTile2 = \mbox{\hyperlink{class_t_rect_t}{TRectD}}(rect.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}, sep, rect.x1, rect.y1);}
+\DoxyCodeLine{00438   \}}
+\DoxyCodeLine{00439 }
+\DoxyCodeLine{00440   tileSet.push\_back(subTile1);}
+\DoxyCodeLine{00441   tileSet.push\_back(subTile2);}
+\DoxyCodeLine{00442 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00557}{TRect\+T$<$ T $>$\+::x0}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_fx_cache_manager_1_1_imp_a362128dd4c23f6debd7b5630efd83d50}\label{class_t_fx_cache_manager_1_1_imp_a362128dd4c23f6debd7b5630efd83d50}} 
+\index{TFxCacheManager::Imp@{TFxCacheManager::Imp}!m\_mutex@{m\_mutex}}
+\index{m\_mutex@{m\_mutex}!TFxCacheManager::Imp@{TFxCacheManager::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_mutex}{m\_mutex}}
+{\footnotesize\ttfamily QMutex TFx\+Cache\+Manager\+::\+Imp\+::m\+\_\+mutex}
+
+\mbox{\Hypertarget{class_t_fx_cache_manager_1_1_imp_a83c0adf4d32f45423e24a2808b653af8}\label{class_t_fx_cache_manager_1_1_imp_a83c0adf4d32f45423e24a2808b653af8}} 
+\index{TFxCacheManager::Imp@{TFxCacheManager::Imp}!m\_rawData@{m\_rawData}}
+\index{m\_rawData@{m\_rawData}!TFxCacheManager::Imp@{TFxCacheManager::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_rawData}{m\_rawData}}
+{\footnotesize\ttfamily std\+::map$<$\mbox{\hyperlink{struct_resource_declaration}{Resource\+Declaration}} $\ast$, \mbox{\hyperlink{struct_resource_declaration_1_1_raw_data}{Resource\+Declaration\+::\+Raw\+Data}}$>$ TFx\+Cache\+Manager\+::\+Imp\+::m\+\_\+raw\+Data}
+
+\mbox{\Hypertarget{class_t_fx_cache_manager_1_1_imp_a60132a0351dc705ce89a24a8309f4772}\label{class_t_fx_cache_manager_1_1_imp_a60132a0351dc705ce89a24a8309f4772}} 
+\index{TFxCacheManager::Imp@{TFxCacheManager::Imp}!m\_renderStatus@{m\_renderStatus}}
+\index{m\_renderStatus@{m\_renderStatus}!TFxCacheManager::Imp@{TFxCacheManager::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_renderStatus}{m\_renderStatus}}
+{\footnotesize\ttfamily int TFx\+Cache\+Manager\+::\+Imp\+::m\+\_\+render\+Status}
+
+\mbox{\Hypertarget{class_t_fx_cache_manager_1_1_imp_a4af550a73a189a4056862aceb4360992}\label{class_t_fx_cache_manager_1_1_imp_a4af550a73a189a4056862aceb4360992}} 
+\index{TFxCacheManager::Imp@{TFxCacheManager::Imp}!m\_resourcesData@{m\_resourcesData}}
+\index{m\_resourcesData@{m\_resourcesData}!TFxCacheManager::Imp@{TFxCacheManager::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_resourcesData}{m\_resourcesData}}
+{\footnotesize\ttfamily Resource\+Instance\+Data\+Map TFx\+Cache\+Manager\+::\+Imp\+::m\+\_\+resources\+Data}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tfx/tfxcachemanager.\+cpp\end{DoxyCompactItemize}

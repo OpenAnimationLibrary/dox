@@ -1,0 +1,462 @@
+\hypertarget{class_plastic_deformer_storage}{}\doxysection{Plastic\+Deformer\+Storage Class Reference}
+\label{class_plastic_deformer_storage}\index{PlasticDeformerStorage@{PlasticDeformerStorage}}
+
+
+\mbox{\hyperlink{class_plastic_deformer_storage}{Plastic\+Deformer\+Storage}} is the global storage class for plastic deformers.  
+
+
+
+
+{\ttfamily \#include $<$plasticdeformerstorage.\+h$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_plastic_deformer_storage_1_1_imp}{Imp}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries Data\+Type} \{ \newline
+{\bfseries NONE} = 0x0
+, {\bfseries HANDLES} = 0x1
+, {\bfseries SO} = 0x4
+, {\bfseries MESH} = 0x8
+, \newline
+{\bfseries ALL} = HANDLES $\vert$ SO $\vert$ MESH
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{struct_plastic_deformer_data_group}{Plastic\+Deformer\+Data\+Group}} $\ast$ \mbox{\hyperlink{class_plastic_deformer_storage_a66afba01e651d1e83113c74ee02abce3}{process}} (double frame, const \mbox{\hyperlink{class_t_mesh_image}{TMesh\+Image}} $\ast$mesh\+Image, const \mbox{\hyperlink{class_plastic_skeleton_deformation}{Plastic\+Skeleton\+Deformation}} $\ast$deformation, int skeleton\+Id, const \mbox{\hyperlink{class_t_affine}{TAffine}} \&deformation\+To\+Mesh\+Affine, Data\+Type data\+Type=ALL)
+\item 
+void \mbox{\hyperlink{class_plastic_deformer_storage_aa3d8b19da78ccfd0e8a5748d9bd34743}{invalidate\+Mesh\+Image}} (const \mbox{\hyperlink{class_t_mesh_image}{TMesh\+Image}} $\ast$mesh\+Image, int recompiled\+Data\+Type=NONE)
+\item 
+void \mbox{\hyperlink{class_plastic_deformer_storage_a39a845a381c4dde3b1c97295a4df36b9}{invalidate\+Skeleton}} (const \mbox{\hyperlink{class_plastic_skeleton_deformation}{Plastic\+Skeleton\+Deformation}} $\ast$deformation, int skeleton\+Id, int recompiled\+Data\+Type=NONE)
+\item 
+void \mbox{\hyperlink{class_plastic_deformer_storage_a5d8d1f31ce46100daca876d7c9f5b8a1}{invalidate\+Deformation}} (const \mbox{\hyperlink{class_plastic_skeleton_deformation}{Plastic\+Skeleton\+Deformation}} $\ast$deformation, int recompiled\+Data\+Type=NONE)
+\item 
+void \mbox{\hyperlink{class_plastic_deformer_storage_a2005b6f93c5519f4cd1fc9442723fa13}{release\+Mesh\+Data}} (const \mbox{\hyperlink{class_t_mesh_image}{TMesh\+Image}} $\ast$mesh\+Image)
+\begin{DoxyCompactList}\small\item\em Releases all deformers associated to the specified mesh image. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_plastic_deformer_storage_a20ed433b60ee667fc4663652e5e0f6b4}{release\+Skeleton\+Data}} (const \mbox{\hyperlink{class_plastic_skeleton_deformation}{Plastic\+Skeleton\+Deformation}} $\ast$deformation, int skeleton\+Id)
+\begin{DoxyCompactList}\small\item\em Releases all deformers associated to the specified skeletal deformation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_plastic_deformer_storage_a5f81f044d1e368bc5e2a7f80d32e7fae}{release\+Deformation\+Data}} (const \mbox{\hyperlink{class_plastic_skeleton_deformation}{Plastic\+Skeleton\+Deformation}} $\ast$deformation)
+\begin{DoxyCompactList}\small\item\em Releases all deformers associated to the specified skeletal deformation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_plastic_deformer_storage_aaa079cb22e1bd35b97ea487746b1b88e}{clear}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_plastic_deformer_storage}{Plastic\+Deformer\+Storage}} $\ast$ \mbox{\hyperlink{class_plastic_deformer_storage_a0da9dcd995ebbbae7b1ce3b97be596d8}{instance}} ()
+\item 
+static const \mbox{\hyperlink{struct_plastic_deformer_data_group}{Plastic\+Deformer\+Data\+Group}} $\ast$ \mbox{\hyperlink{class_plastic_deformer_storage_a13ce55eb903490040949635bb97a246d}{process\+Once}} (double frame, const \mbox{\hyperlink{class_t_mesh_image}{TMesh\+Image}} $\ast$mesh\+Image, const \mbox{\hyperlink{class_plastic_skeleton_deformation}{Plastic\+Skeleton\+Deformation}} $\ast$deformation, int skeleton\+Id, const \mbox{\hyperlink{class_t_affine}{TAffine}} \&deformation\+To\+Mesh\+Affine, Data\+Type data\+Type=ALL)
+\begin{DoxyCompactList}\small\item\em Performs the specified deformation once, {\bfseries{without}} caching data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_plastic_deformer_storage}{Plastic\+Deformer\+Storage}} is the global storage class for plastic deformers. 
+
+\mbox{\hyperlink{class_plastic_deformer}{Plastic\+Deformer}} models a mesh-\/deformer object that can be used together with texturing to create an interactive image-\/deformation technique. Direct use of \mbox{\hyperlink{class_plastic_deformer}{Plastic\+Deformer}} instances is discouraged, as they can be considered as technical low-\/level interfaces to the deformation job.
+
+\begin{DoxyParagraph}{Rationale}
+
+\end{DoxyParagraph}
+The crucial reason behind the existence of this class lies in the necessity to cache \mbox{\hyperlink{class_plastic_deformer}{Plastic\+Deformer}} instances to achieve real-\/time speed in the processing of part of its algorithms. ~\newline
+~\newline
+ In this context, caching is all about storing intermediate data so that they are recalculated only when strictly necessary. In \mbox{\hyperlink{class_plastic_deformer}{Plastic\+Deformer}}\textquotesingle{}s case, we can see 3 chained processing stages that need to be calculated before the final result is produced\+:
+
+\begin{DoxyItemize}
+\item {\bfseries{ Initialization\+: \texorpdfstring{$<$}{<}\textbackslash{}B\texorpdfstring{$>$}{>} A mesh is acquired }}\item {\bfseries{ {\bfseries{ Compilation\+: \texorpdfstring{$<$}{<}\textbackslash{}B\texorpdfstring{$>$}{>} The deformation\textquotesingle{}s source domain data is acquired }}}}\item {\bfseries{{\bfseries{ {\bfseries{ \mbox{\hyperlink{class_deformation}{Deformation}}\+: \texorpdfstring{$<$}{<}\textbackslash{}B\texorpdfstring{$>$}{>} The deformation\textquotesingle{}s destination domain data is acquired}}}}}}\end{DoxyItemize}
+Each step requires that the previous one has been computed. Obviously when, say, only the deformation\textquotesingle{}s destination data change, there is no need to process the first 2 steps -\/ their cached data remains valid.
+
+{\bfseries{{\bfseries{{\bfseries{\begin{DoxyParagraph}{Interface}
+
+\end{DoxyParagraph}
+This class provides the preferential high-\/level interface to plastic deformers. ~\newline
+~\newline
+ The storage caches data about every requested deform specification, that is kept until an explicit release command is issued. A data request is issued with a call to the \mbox{\hyperlink{class_plastic_deformer_storage_a66afba01e651d1e83113c74ee02abce3}{process()}} method, which accepts specification of a subset of deform-\/related data to be returned, skipping unnecessary computations. ~\newline
+~\newline
+ The storage requires explicit content invalidation to know that is must recalculate subsequent requests. Invalidation is specific to changes in a \mbox{\hyperlink{class_plastic_skeleton_deformation}{Plastic\+Skeleton\+Deformation}} instance, and can be restrained to the destination (deformed) domain, or require more expensive invalidation.}}}}}}
+
+{\bfseries{{\bfseries{{\bfseries{\begin{DoxyParagraph}{Deformations and Data requests}
+
+\end{DoxyParagraph}
+Cached data is uniquely associated with pairs of mesh\+Image and deformed skeletons, meaning that the same mesh\+Image can be deformed by multiple skeletons, and viceversa. ~\newline
+~\newline
+ A deformer data request needs an affine transform in input, which is intended to map the skeleton deformation on top of the mesh (in mesh coordinates). The storage {\itshape  does not \texorpdfstring{$<$}{<}\textbackslash{}I\texorpdfstring{$>$}{>} store a \mbox{\hyperlink{class_plastic_deformer}{Plastic\+Deformer}} instance for each different affine supplied, but rather {\itshape invalidates} the old data in case it changes. ~\newline
+~\newline
+ The mesh vertex coordinates resulting from a deformation will be stored in the resulting \mbox{\hyperlink{struct_plastic_deformer_data_a083106a1ecb542d2d5bb7d69ff6e91df}{Plastic\+Deformer\+Data\+::m\+\_\+output}} member of each entry of the output array, one for each mesh of the input mesh\+Image. The returned coordinates are intended in the mesh reference.}}}}}}}
+
+{\bfseries{{\bfseries{{\bfseries{{\itshape \begin{DoxyParagraph}{Lifetime and Ownership}
+
+\end{DoxyParagraph}
+This class {\bfseries{ does not claim ownerhip \texorpdfstring{$<$}{<}\textbackslash{}B\texorpdfstring{$>$}{>} of neither the mesh nor the deformation that are specified in a deformer request -\/ and {\itshape  lifetime tracking \texorpdfstring{$<$}{<}\textbackslash{}I\texorpdfstring{$>$}{>} of the objects involved in plastic deforming is a burden of callers. ~\newline
+~\newline
+ This class requires that the destruction of either a mesh or a deformation be signaled by a call to the appropriate release method in order to enforce the associated deformers destruction.}}}}}}}}}}
+
+{\bfseries{{\bfseries{{\bfseries{{\itshape {\bfseries{{\itshape  \begin{DoxyWarning}{Warning}
+No call to the appropriate release method when either a mesh or a deformation which has requested a deformer is destroyed {\bfseries{will}} result in a {\bfseries{leak}}. 
+\end{DoxyWarning}
+}}}}}}}}}}
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_plastic_deformer_storage_a386ede07d605f898ae876e24da0fd0a4}\label{class_plastic_deformer_storage_a386ede07d605f898ae876e24da0fd0a4}} 
+\index{PlasticDeformerStorage@{PlasticDeformerStorage}!DataType@{DataType}}
+\index{DataType@{DataType}!PlasticDeformerStorage@{PlasticDeformerStorage}}
+\doxysubsubsection{\texorpdfstring{DataType}{DataType}}
+{\footnotesize\ttfamily enum Plastic\+Deformer\+Storage\+::\+Data\+Type}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00192                 \{}
+\DoxyCodeLine{00193     NONE    = 0x0,}
+\DoxyCodeLine{00194     HANDLES = 0x1,  \textcolor{comment}{// Handles data}}
+\DoxyCodeLine{00195     SO      = 0x4,  \textcolor{comment}{// Stacking Order data}}
+\DoxyCodeLine{00196     MESH    = 0x8,  \textcolor{comment}{// The deformed Mesh}}
+\DoxyCodeLine{00197 }
+\DoxyCodeLine{00198     ALL = HANDLES | SO | MESH}
+\DoxyCodeLine{00199   \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_plastic_deformer_storage_a9130c4e705fe26dd09155ebaa4500f59}\label{class_plastic_deformer_storage_a9130c4e705fe26dd09155ebaa4500f59}} 
+\index{PlasticDeformerStorage@{PlasticDeformerStorage}!PlasticDeformerStorage@{PlasticDeformerStorage}}
+\index{PlasticDeformerStorage@{PlasticDeformerStorage}!PlasticDeformerStorage@{PlasticDeformerStorage}}
+\doxysubsubsection{\texorpdfstring{PlasticDeformerStorage()}{PlasticDeformerStorage()}}
+{\footnotesize\ttfamily Plastic\+Deformer\+Storage\+::\+Plastic\+Deformer\+Storage (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00425 : m\_imp(\textcolor{keyword}{new} Imp) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plastic_deformer_storage_adadaf2a7c34cc96f1360c096dba39b3c}\label{class_plastic_deformer_storage_adadaf2a7c34cc96f1360c096dba39b3c}} 
+\index{PlasticDeformerStorage@{PlasticDeformerStorage}!````~PlasticDeformerStorage@{$\sim$PlasticDeformerStorage}}
+\index{````~PlasticDeformerStorage@{$\sim$PlasticDeformerStorage}!PlasticDeformerStorage@{PlasticDeformerStorage}}
+\doxysubsubsection{\texorpdfstring{$\sim$PlasticDeformerStorage()}{~PlasticDeformerStorage()}}
+{\footnotesize\ttfamily Plastic\+Deformer\+Storage\+::$\sim$\+Plastic\+Deformer\+Storage (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00429 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_plastic_deformer_storage_aaa079cb22e1bd35b97ea487746b1b88e}\label{class_plastic_deformer_storage_aaa079cb22e1bd35b97ea487746b1b88e}} 
+\index{PlasticDeformerStorage@{PlasticDeformerStorage}!clear@{clear}}
+\index{clear@{clear}!PlasticDeformerStorage@{PlasticDeformerStorage}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void Plastic\+Deformer\+Storage\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Releases all deformers, effectively returning the storage to its empty state. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00651                                    \{}
+\DoxyCodeLine{00652   QMutexLocker locker(\&m\_imp-\/>m\_mutex);}
+\DoxyCodeLine{00653 }
+\DoxyCodeLine{00654   m\_imp-\/>m\_deformers.clear();}
+\DoxyCodeLine{00655 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plastic_deformer_storage_a0da9dcd995ebbbae7b1ce3b97be596d8}\label{class_plastic_deformer_storage_a0da9dcd995ebbbae7b1ce3b97be596d8}} 
+\index{PlasticDeformerStorage@{PlasticDeformerStorage}!instance@{instance}}
+\index{instance@{instance}!PlasticDeformerStorage@{PlasticDeformerStorage}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_plastic_deformer_storage}{Plastic\+Deformer\+Storage}} $\ast$ Plastic\+Deformer\+Storage\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00433                                                          \{}
+\DoxyCodeLine{00434   \textcolor{keyword}{static} \mbox{\hyperlink{class_plastic_deformer_storage}{PlasticDeformerStorage}} theInstance;}
+\DoxyCodeLine{00435   \textcolor{keywordflow}{return} \&theInstance;}
+\DoxyCodeLine{00436 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plastic_deformer_storage_a5d8d1f31ce46100daca876d7c9f5b8a1}\label{class_plastic_deformer_storage_a5d8d1f31ce46100daca876d7c9f5b8a1}} 
+\index{PlasticDeformerStorage@{PlasticDeformerStorage}!invalidateDeformation@{invalidateDeformation}}
+\index{invalidateDeformation@{invalidateDeformation}!PlasticDeformerStorage@{PlasticDeformerStorage}}
+\doxysubsubsection{\texorpdfstring{invalidateDeformation()}{invalidateDeformation()}}
+{\footnotesize\ttfamily void Plastic\+Deformer\+Storage\+::invalidate\+Deformation (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_plastic_skeleton_deformation}{Plastic\+Skeleton\+Deformation}} $\ast$}]{deformation,  }\item[{int}]{recompiled\+Data\+Type = {\ttfamily NONE} }\end{DoxyParamCaption})}
+
+Similarly to \mbox{\hyperlink{class_plastic_deformer_storage_a39a845a381c4dde3b1c97295a4df36b9}{invalidate\+Skeleton()}}, for everything attached to the specified deformation. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00577                                                                        \{}
+\DoxyCodeLine{00578   QMutexLocker locker(\&m\_imp-\/>m\_mutex);}
+\DoxyCodeLine{00579 }
+\DoxyCodeLine{00580   DeformersByDeformedSkeleton \&deformers =}
+\DoxyCodeLine{00581       m\_imp-\/>m\_deformers.get<DeformedSkeleton>();}
+\DoxyCodeLine{00582 }
+\DoxyCodeLine{00583   DeformedSkeleton dsBegin(deformation, -\/(std::numeric\_limits<int>::max)()),}
+\DoxyCodeLine{00584       dsEnd(deformation, (std::numeric\_limits<int>::max)());}
+\DoxyCodeLine{00585 }
+\DoxyCodeLine{00586   DeformersByDeformedSkeleton::iterator dBegin(deformers.lower\_bound(dsBegin));}
+\DoxyCodeLine{00587   DeformersByDeformedSkeleton::iterator dEnd(deformers.upper\_bound(dsEnd));}
+\DoxyCodeLine{00588 }
+\DoxyCodeLine{00589   \textcolor{keywordflow}{if} (dBegin == dEnd) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00590 }
+\DoxyCodeLine{00591   \textcolor{keywordflow}{for} (DeformersByDeformedSkeleton::iterator dt = dBegin; dt != dEnd; ++dt) \{}
+\DoxyCodeLine{00592     dt-\/>m\_dataGroup-\/>m\_outputFrame =}
+\DoxyCodeLine{00593         (std::numeric\_limits<double>::max)();  \textcolor{comment}{// Schedule for redeformation}}
+\DoxyCodeLine{00594     \textcolor{keywordflow}{if} (recompiledData)}
+\DoxyCodeLine{00595       dt-\/>m\_dataGroup-\/>m\_compiled \&=}
+\DoxyCodeLine{00596           \string~recompiledData;  \textcolor{comment}{// Schedule for recompilation, too}}
+\DoxyCodeLine{00597   \}}
+\DoxyCodeLine{00598 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plastic_deformer_storage_aa3d8b19da78ccfd0e8a5748d9bd34743}\label{class_plastic_deformer_storage_aa3d8b19da78ccfd0e8a5748d9bd34743}} 
+\index{PlasticDeformerStorage@{PlasticDeformerStorage}!invalidateMeshImage@{invalidateMeshImage}}
+\index{invalidateMeshImage@{invalidateMeshImage}!PlasticDeformerStorage@{PlasticDeformerStorage}}
+\doxysubsubsection{\texorpdfstring{invalidateMeshImage()}{invalidateMeshImage()}}
+{\footnotesize\ttfamily void Plastic\+Deformer\+Storage\+::invalidate\+Mesh\+Image (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_mesh_image}{TMesh\+Image}} $\ast$}]{mesh\+Image,  }\item[{int}]{recompiled\+Data\+Type = {\ttfamily NONE} }\end{DoxyParamCaption})}
+
+Similarly to \mbox{\hyperlink{class_plastic_deformer_storage_a39a845a381c4dde3b1c97295a4df36b9}{invalidate\+Skeleton()}}, for every deformer attached to the specified mesh. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00531                                                                      \{}
+\DoxyCodeLine{00532   QMutexLocker locker(\&m\_imp-\/>m\_mutex);}
+\DoxyCodeLine{00533 }
+\DoxyCodeLine{00534   DeformersByMeshImage \&deformers = m\_imp-\/>m\_deformers.get<\mbox{\hyperlink{class_t_mesh_image}{TMeshImage}}>();}
+\DoxyCodeLine{00535 }
+\DoxyCodeLine{00536   DeformersByMeshImage::iterator dBegin(deformers.lower\_bound(meshImage));}
+\DoxyCodeLine{00537   \textcolor{keywordflow}{if} (dBegin == deformers.end()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00538 }
+\DoxyCodeLine{00539   DeformersByMeshImage::iterator dt, dEnd(deformers.upper\_bound(meshImage));}
+\DoxyCodeLine{00540   \textcolor{keywordflow}{for} (dt = dBegin; dt != dEnd; ++dt) \{}
+\DoxyCodeLine{00541     dt-\/>m\_dataGroup-\/>m\_outputFrame =}
+\DoxyCodeLine{00542         (std::numeric\_limits<double>::max)();  \textcolor{comment}{// Schedule for redeformation}}
+\DoxyCodeLine{00543     \textcolor{keywordflow}{if} (recompiledData)}
+\DoxyCodeLine{00544       dt-\/>m\_dataGroup-\/>m\_compiled \&=}
+\DoxyCodeLine{00545           \string~recompiledData;  \textcolor{comment}{// Schedule for recompilation, too}}
+\DoxyCodeLine{00546   \}}
+\DoxyCodeLine{00547 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plastic_deformer_storage_a39a845a381c4dde3b1c97295a4df36b9}\label{class_plastic_deformer_storage_a39a845a381c4dde3b1c97295a4df36b9}} 
+\index{PlasticDeformerStorage@{PlasticDeformerStorage}!invalidateSkeleton@{invalidateSkeleton}}
+\index{invalidateSkeleton@{invalidateSkeleton}!PlasticDeformerStorage@{PlasticDeformerStorage}}
+\doxysubsubsection{\texorpdfstring{invalidateSkeleton()}{invalidateSkeleton()}}
+{\footnotesize\ttfamily void Plastic\+Deformer\+Storage\+::invalidate\+Skeleton (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_plastic_skeleton_deformation}{Plastic\+Skeleton\+Deformation}} $\ast$}]{deformation,  }\item[{int}]{skeleton\+Id,  }\item[{int}]{recompiled\+Data\+Type = {\ttfamily NONE} }\end{DoxyParamCaption})}
+
+Schedules all stored deformers associated to the specified deformation for either re-\/deformation (stage 3 invalidation) or re-\/compilation (stage 2 invalidation).
+
+Recompilation should be selected whenever the deformation has sustained source domain changes, such as a vertex addition or removal, or when the {\itshape source} skeletal configuration has changed.
+
+\begin{DoxyNote}{Note}
+Recompilation is typically a slower process than the mere deformers update. Select it explicitly only when it truly needs to be done. 
+\end{DoxyNote}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00553                         \{}
+\DoxyCodeLine{00554   QMutexLocker locker(\&m\_imp-\/>m\_mutex);}
+\DoxyCodeLine{00555 }
+\DoxyCodeLine{00556   DeformedSkeleton ds(deformation, skelId);}
+\DoxyCodeLine{00557 }
+\DoxyCodeLine{00558   DeformersByDeformedSkeleton \&deformers =}
+\DoxyCodeLine{00559       m\_imp-\/>m\_deformers.get<DeformedSkeleton>();}
+\DoxyCodeLine{00560 }
+\DoxyCodeLine{00561   DeformersByDeformedSkeleton::iterator dBegin(deformers.lower\_bound(ds));}
+\DoxyCodeLine{00562   \textcolor{keywordflow}{if} (dBegin == deformers.end()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00563 }
+\DoxyCodeLine{00564   DeformersByDeformedSkeleton::iterator dt, dEnd(deformers.upper\_bound(ds));}
+\DoxyCodeLine{00565   \textcolor{keywordflow}{for} (dt = dBegin; dt != dEnd; ++dt) \{}
+\DoxyCodeLine{00566     dt-\/>m\_dataGroup-\/>m\_outputFrame =}
+\DoxyCodeLine{00567         (std::numeric\_limits<double>::max)();  \textcolor{comment}{// Schedule for redeformation}}
+\DoxyCodeLine{00568     \textcolor{keywordflow}{if} (recompiledData)}
+\DoxyCodeLine{00569       dt-\/>m\_dataGroup-\/>m\_compiled \&=}
+\DoxyCodeLine{00570           \string~recompiledData;  \textcolor{comment}{// Schedule for recompilation, too}}
+\DoxyCodeLine{00571   \}}
+\DoxyCodeLine{00572 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l01529}{Plastic\+Tool\+::on\+Property\+Changed()}}.
+
+\mbox{\Hypertarget{class_plastic_deformer_storage_a66afba01e651d1e83113c74ee02abce3}\label{class_plastic_deformer_storage_a66afba01e651d1e83113c74ee02abce3}} 
+\index{PlasticDeformerStorage@{PlasticDeformerStorage}!process@{process}}
+\index{process@{process}!PlasticDeformerStorage@{PlasticDeformerStorage}}
+\doxysubsubsection{\texorpdfstring{process()}{process()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{struct_plastic_deformer_data_group}{Plastic\+Deformer\+Data\+Group}} $\ast$ Plastic\+Deformer\+Storage\+::process (\begin{DoxyParamCaption}\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_mesh_image}{TMesh\+Image}} $\ast$}]{mesh\+Image,  }\item[{const \mbox{\hyperlink{class_plastic_skeleton_deformation}{Plastic\+Skeleton\+Deformation}} $\ast$}]{deformation,  }\item[{int}]{skeleton\+Id,  }\item[{const \mbox{\hyperlink{class_t_affine}{TAffine}} \&}]{deformation\+To\+Mesh\+Affine,  }\item[{Data\+Type}]{data\+Type = {\ttfamily ALL} }\end{DoxyParamCaption})}
+
+This function processes the specified mesh\+Image-\/deformation pair, returning a Data\+Group with the required data.
+
+\begin{DoxyNote}{Note}
+This function {\bfseries{caches}} all required data, so that subsequent requests about the same triplet can be sped up considerably in case of cache match. 
+\end{DoxyNote}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00465                                                       \{}
+\DoxyCodeLine{00466   QMutexLocker locker(\&m\_imp-\/>m\_mutex);}
+\DoxyCodeLine{00467 }
+\DoxyCodeLine{00468   \mbox{\hyperlink{struct_plastic_deformer_data_group}{PlasticDeformerDataGroup}} *group =}
+\DoxyCodeLine{00469       deformerData(meshImage, deformation, skelId);}
+\DoxyCodeLine{00470 }
+\DoxyCodeLine{00471   \textcolor{comment}{// On-\/the-\/fly checks for data invalidation}}
+\DoxyCodeLine{00472   \textcolor{keywordflow}{if} (group-\/>m\_skeletonAffine != skeletonAffine) \{}
+\DoxyCodeLine{00473     group-\/>m\_upToDate       = NONE;}
+\DoxyCodeLine{00474     group-\/>m\_compiled       = NONE;}
+\DoxyCodeLine{00475     group-\/>m\_skeletonAffine = skeletonAffine;}
+\DoxyCodeLine{00476   \}}
+\DoxyCodeLine{00477 }
+\DoxyCodeLine{00478   \textcolor{keywordflow}{if} (group-\/>m\_outputFrame != frame) \{}
+\DoxyCodeLine{00479     group-\/>m\_upToDate    = NONE;}
+\DoxyCodeLine{00480     group-\/>m\_outputFrame = frame;}
+\DoxyCodeLine{00481   \}}
+\DoxyCodeLine{00482 }
+\DoxyCodeLine{00483   \textcolor{keywordtype}{bool} doMesh    = (dataType \& MESH);}
+\DoxyCodeLine{00484   \textcolor{keywordtype}{bool} doSO      = (dataType \& SO) || doMesh;}
+\DoxyCodeLine{00485   \textcolor{keywordtype}{bool} doHandles = (bool)dataType;}
+\DoxyCodeLine{00486 }
+\DoxyCodeLine{00487   \textcolor{comment}{// Process data}}
+\DoxyCodeLine{00488   \textcolor{keywordflow}{if} (doHandles)}
+\DoxyCodeLine{00489     processHandles(group, frame, meshImage, deformation, skelId,}
+\DoxyCodeLine{00490                    skeletonAffine);}
+\DoxyCodeLine{00491 }
+\DoxyCodeLine{00492   \textcolor{keywordflow}{if} (doSO)}
+\DoxyCodeLine{00493     processSO(group, frame, meshImage, deformation, skelId, skeletonAffine);}
+\DoxyCodeLine{00494 }
+\DoxyCodeLine{00495   \textcolor{keywordflow}{if} (doMesh)}
+\DoxyCodeLine{00496     processMesh(group, frame, meshImage, deformation, skelId, skeletonAffine);}
+\DoxyCodeLine{00497 }
+\DoxyCodeLine{00498   \textcolor{keywordflow}{return} group;}
+\DoxyCodeLine{00499 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plastic_deformer_storage_a13ce55eb903490040949635bb97a246d}\label{class_plastic_deformer_storage_a13ce55eb903490040949635bb97a246d}} 
+\index{PlasticDeformerStorage@{PlasticDeformerStorage}!processOnce@{processOnce}}
+\index{processOnce@{processOnce}!PlasticDeformerStorage@{PlasticDeformerStorage}}
+\doxysubsubsection{\texorpdfstring{processOnce()}{processOnce()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{struct_plastic_deformer_data_group}{Plastic\+Deformer\+Data\+Group}} $\ast$ Plastic\+Deformer\+Storage\+::process\+Once (\begin{DoxyParamCaption}\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_mesh_image}{TMesh\+Image}} $\ast$}]{mesh\+Image,  }\item[{const \mbox{\hyperlink{class_plastic_skeleton_deformation}{Plastic\+Skeleton\+Deformation}} $\ast$}]{deformation,  }\item[{int}]{skeleton\+Id,  }\item[{const \mbox{\hyperlink{class_t_affine}{TAffine}} \&}]{deformation\+To\+Mesh\+Affine,  }\item[{Data\+Type}]{data\+Type = {\ttfamily ALL} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Performs the specified deformation once, {\bfseries{without}} caching data. 
+
+This method allows the user to perform a single-\/shot Platic deformation, without dealing with caching issues.
+
+\begin{DoxyNote}{Note}
+Since caching is disabled, this method is comparably {\itshape slower} than its cached counterpart, in case the same deformation is repeatedly invoked. It is meant to be used only in absence of user interaction.
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+The returned pointer is owned by the {\bfseries{caller}}, and must be manually deleted when no longer needed. 
+\end{DoxyWarning}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00506                                                       \{}
+\DoxyCodeLine{00507   \mbox{\hyperlink{struct_plastic_deformer_data_group}{PlasticDeformerDataGroup}} *group = \textcolor{keyword}{new} \mbox{\hyperlink{struct_plastic_deformer_data_group}{PlasticDeformerDataGroup}};}
+\DoxyCodeLine{00508   initializeDeformersData(group, meshImage);}
+\DoxyCodeLine{00509 }
+\DoxyCodeLine{00510   \textcolor{keywordtype}{bool} doMesh    = (dataType \& MESH);}
+\DoxyCodeLine{00511   \textcolor{keywordtype}{bool} doSO      = (dataType \& SO) || doMesh;}
+\DoxyCodeLine{00512   \textcolor{keywordtype}{bool} doHandles = (bool)dataType;}
+\DoxyCodeLine{00513 }
+\DoxyCodeLine{00514   \textcolor{comment}{// Process data}}
+\DoxyCodeLine{00515   \textcolor{keywordflow}{if} (doHandles)}
+\DoxyCodeLine{00516     processHandles(group, frame, meshImage, deformation, skelId,}
+\DoxyCodeLine{00517                    skeletonAffine);}
+\DoxyCodeLine{00518 }
+\DoxyCodeLine{00519   \textcolor{keywordflow}{if} (doSO)}
+\DoxyCodeLine{00520     processSO(group, frame, meshImage, deformation, skelId, skeletonAffine);}
+\DoxyCodeLine{00521 }
+\DoxyCodeLine{00522   \textcolor{keywordflow}{if} (doMesh)}
+\DoxyCodeLine{00523     processMesh(group, frame, meshImage, deformation, skelId, skeletonAffine);}
+\DoxyCodeLine{00524 }
+\DoxyCodeLine{00525   \textcolor{keywordflow}{return} group;}
+\DoxyCodeLine{00526 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plastic_deformer_storage_a5f81f044d1e368bc5e2a7f80d32e7fae}\label{class_plastic_deformer_storage_a5f81f044d1e368bc5e2a7f80d32e7fae}} 
+\index{PlasticDeformerStorage@{PlasticDeformerStorage}!releaseDeformationData@{releaseDeformationData}}
+\index{releaseDeformationData@{releaseDeformationData}!PlasticDeformerStorage@{PlasticDeformerStorage}}
+\doxysubsubsection{\texorpdfstring{releaseDeformationData()}{releaseDeformationData()}}
+{\footnotesize\ttfamily void Plastic\+Deformer\+Storage\+::release\+Deformation\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_plastic_skeleton_deformation}{Plastic\+Skeleton\+Deformation}} $\ast$}]{deformation }\end{DoxyParamCaption})}
+
+
+
+Releases all deformers associated to the specified skeletal deformation. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00632                                                                           \{}
+\DoxyCodeLine{00633   QMutexLocker locker(\&m\_imp-\/>m\_mutex);}
+\DoxyCodeLine{00634 }
+\DoxyCodeLine{00635   DeformersByDeformedSkeleton \&deformers =}
+\DoxyCodeLine{00636       m\_imp-\/>m\_deformers.get<DeformedSkeleton>();}
+\DoxyCodeLine{00637 }
+\DoxyCodeLine{00638   DeformedSkeleton dsBegin(deformation, -\/(std::numeric\_limits<int>::max)()),}
+\DoxyCodeLine{00639       dsEnd(deformation, (std::numeric\_limits<int>::max)());}
+\DoxyCodeLine{00640 }
+\DoxyCodeLine{00641   DeformersByDeformedSkeleton::iterator dBegin(deformers.lower\_bound(dsBegin));}
+\DoxyCodeLine{00642   DeformersByDeformedSkeleton::iterator dEnd(deformers.upper\_bound(dsEnd));}
+\DoxyCodeLine{00643 }
+\DoxyCodeLine{00644   \textcolor{keywordflow}{if} (dBegin == dEnd) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00645 }
+\DoxyCodeLine{00646   deformers.erase(dBegin, dEnd);}
+\DoxyCodeLine{00647 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l01151}{TStage\+Object\+::set\+Plastic\+Skeleton\+Deformation()}}, and \mbox{\hyperlink{l00450}{TStage\+Object\+::$\sim$\+TStage\+Object()}}.
+
+\mbox{\Hypertarget{class_plastic_deformer_storage_a2005b6f93c5519f4cd1fc9442723fa13}\label{class_plastic_deformer_storage_a2005b6f93c5519f4cd1fc9442723fa13}} 
+\index{PlasticDeformerStorage@{PlasticDeformerStorage}!releaseMeshData@{releaseMeshData}}
+\index{releaseMeshData@{releaseMeshData}!PlasticDeformerStorage@{PlasticDeformerStorage}}
+\doxysubsubsection{\texorpdfstring{releaseMeshData()}{releaseMeshData()}}
+{\footnotesize\ttfamily void Plastic\+Deformer\+Storage\+::release\+Mesh\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_mesh_image}{TMesh\+Image}} $\ast$}]{mesh\+Image }\end{DoxyParamCaption})}
+
+
+
+Releases all deformers associated to the specified mesh image. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00602                                                                         \{}
+\DoxyCodeLine{00603   QMutexLocker locker(\&m\_imp-\/>m\_mutex);}
+\DoxyCodeLine{00604 }
+\DoxyCodeLine{00605   DeformersByMeshImage \&deformers = m\_imp-\/>m\_deformers.get<\mbox{\hyperlink{class_t_mesh_image}{TMeshImage}}>();}
+\DoxyCodeLine{00606 }
+\DoxyCodeLine{00607   DeformersByMeshImage::iterator dBegin(deformers.lower\_bound(meshImage));}
+\DoxyCodeLine{00608   \textcolor{keywordflow}{if} (dBegin == deformers.end()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00609 }
+\DoxyCodeLine{00610   deformers.erase(dBegin, deformers.upper\_bound(meshImage));}
+\DoxyCodeLine{00611 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plastic_deformer_storage_a20ed433b60ee667fc4663652e5e0f6b4}\label{class_plastic_deformer_storage_a20ed433b60ee667fc4663652e5e0f6b4}} 
+\index{PlasticDeformerStorage@{PlasticDeformerStorage}!releaseSkeletonData@{releaseSkeletonData}}
+\index{releaseSkeletonData@{releaseSkeletonData}!PlasticDeformerStorage@{PlasticDeformerStorage}}
+\doxysubsubsection{\texorpdfstring{releaseSkeletonData()}{releaseSkeletonData()}}
+{\footnotesize\ttfamily void Plastic\+Deformer\+Storage\+::release\+Skeleton\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_plastic_skeleton_deformation}{Plastic\+Skeleton\+Deformation}} $\ast$}]{deformation,  }\item[{int}]{skeleton\+Id }\end{DoxyParamCaption})}
+
+
+
+Releases all deformers associated to the specified skeletal deformation. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00616                                                              \{}
+\DoxyCodeLine{00617   QMutexLocker locker(\&m\_imp-\/>m\_mutex);}
+\DoxyCodeLine{00618 }
+\DoxyCodeLine{00619   DeformedSkeleton ds(deformation, skelId);}
+\DoxyCodeLine{00620 }
+\DoxyCodeLine{00621   DeformersByDeformedSkeleton \&deformers =}
+\DoxyCodeLine{00622       m\_imp-\/>m\_deformers.get<DeformedSkeleton>();}
+\DoxyCodeLine{00623 }
+\DoxyCodeLine{00624   DeformersByDeformedSkeleton::iterator dBegin(deformers.lower\_bound(ds));}
+\DoxyCodeLine{00625   \textcolor{keywordflow}{if} (dBegin == deformers.end()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00626 }
+\DoxyCodeLine{00627   deformers.erase(dBegin, deformers.upper\_bound(ds));}
+\DoxyCodeLine{00628 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/ext/plasticdeformerstorage.\+h\item 
+E\+:/opentoonz/toonz/sources/tnzext/plasticdeformerstorage.\+cpp\end{DoxyCompactItemize}

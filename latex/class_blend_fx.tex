@@ -1,0 +1,96 @@
+\hypertarget{class_blend_fx}{}\doxysection{Blend\+Fx Class Reference}
+\label{class_blend_fx}\index{BlendFx@{BlendFx}}
+Inheritance diagram for Blend\+Fx\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_blend_fx}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_blend_fx_a7e1ea61f821cfb228d2ce0be9f18b6a3}{requires\+Full\+Rect}} () override
+\item 
+void \mbox{\hyperlink{class_blend_fx_a2d609f958b9defbc3c7361bf91ecb505}{process}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&up, const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&down, double frame) override
+\item 
+\mbox{\hyperlink{class_t_fx_port}{TFx\+Port}} $\ast$ \mbox{\hyperlink{class_blend_fx_a5e9c5dbb10f78384ef2816b2cb7d9211}{get\+Xsheet\+Port}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_blend_fx_af82d00b9ab8088d69fd8ecf3e1846395}\label{class_blend_fx_af82d00b9ab8088d69fd8ecf3e1846395}} 
+\index{BlendFx@{BlendFx}!BlendFx@{BlendFx}}
+\index{BlendFx@{BlendFx}!BlendFx@{BlendFx}}
+\doxysubsubsection{\texorpdfstring{BlendFx()}{BlendFx()}}
+{\footnotesize\ttfamily Blend\+Fx\+::\+Blend\+Fx (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00447             : m\_value(0.0) \{}
+\DoxyCodeLine{00448     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}value"{}}, m\_value);}
+\DoxyCodeLine{00449     m\_value-\/>setValueRange(0.0, 100.0);}
+\DoxyCodeLine{00450   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_blend_fx_a5e9c5dbb10f78384ef2816b2cb7d9211}\label{class_blend_fx_a5e9c5dbb10f78384ef2816b2cb7d9211}} 
+\index{BlendFx@{BlendFx}!getXsheetPort@{getXsheetPort}}
+\index{getXsheetPort@{getXsheetPort}!BlendFx@{BlendFx}}
+\doxysubsubsection{\texorpdfstring{getXsheetPort()}{getXsheetPort()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_fx_port}{TFx\+Port}} $\ast$ Blend\+Fx\+::get\+Xsheet\+Port (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_fx}{TFx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00462 \{ \textcolor{keywordflow}{return} getInputPort(1); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_blend_fx_a2d609f958b9defbc3c7361bf91ecb505}\label{class_blend_fx_a2d609f958b9defbc3c7361bf91ecb505}} 
+\index{BlendFx@{BlendFx}!process@{process}}
+\index{process@{process}!BlendFx@{BlendFx}}
+\doxysubsubsection{\texorpdfstring{process()}{process()}}
+{\footnotesize\ttfamily void Blend\+Fx\+::process (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&}]{up,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&}]{down,  }\item[{double}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+The raster processing function that must be reimplemented to perform the fx 
+
+Implements \mbox{\hyperlink{class_t_image_combination_fx_ab29e8e0e2d142fe97abf6f7e4e390cc4}{TImage\+Combination\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00455                                       \{}
+\DoxyCodeLine{00456     \textcolor{keywordtype}{double} value     = 0.01 * m\_value-\/>getValue(frame);}
+\DoxyCodeLine{00457     UCHAR matteValue = (UCHAR)(value * 255.0 + 0.5);}
+\DoxyCodeLine{00458 }
+\DoxyCodeLine{00459     TRop::crossDissolve(up, down, down, matteValue);}
+\DoxyCodeLine{00460   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_blend_fx_a7e1ea61f821cfb228d2ce0be9f18b6a3}\label{class_blend_fx_a7e1ea61f821cfb228d2ce0be9f18b6a3}} 
+\index{BlendFx@{BlendFx}!requiresFullRect@{requiresFullRect}}
+\index{requiresFullRect@{requiresFullRect}!BlendFx@{BlendFx}}
+\doxysubsubsection{\texorpdfstring{requiresFullRect()}{requiresFullRect()}}
+{\footnotesize\ttfamily bool Blend\+Fx\+::requires\+Full\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Whether the \textquotesingle{}up\textquotesingle{} rasters of \mbox{\hyperlink{class_blend_fx_a2d609f958b9defbc3c7361bf91ecb505}{process()}} invocations must be allocated to entirely cover the \textquotesingle{}down\textquotesingle{} counterpart. Should be enabled if the \mbox{\hyperlink{class_blend_fx_a2d609f958b9defbc3c7361bf91ecb505}{process()}} function affects \textquotesingle{}down\textquotesingle{} pixels when the \textquotesingle{}up\textquotesingle{}s are fully transparent. 
+
+Reimplemented from \mbox{\hyperlink{class_t_image_combination_fx_a38952ba142ec4e1200fc52f0079001d4}{TImage\+Combination\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00452 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{true}; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tfx/binary\+Fx.\+cpp\end{DoxyCompactItemize}

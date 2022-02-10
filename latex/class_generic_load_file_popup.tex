@@ -1,0 +1,94 @@
+\hypertarget{class_generic_load_file_popup}{}\doxysection{Generic\+Load\+File\+Popup Class Reference}
+\label{class_generic_load_file_popup}\index{GenericLoadFilePopup@{GenericLoadFilePopup}}
+
+
+{\ttfamily \#include $<$filebrowserpopup.\+h$>$}
+
+Inheritance diagram for Generic\+Load\+File\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_generic_load_file_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_generic_load_file_popup_ac9a52479662de0309a5b5bac81fe7293}{Generic\+Load\+File\+Popup}} (const QString \&title)
+\item 
+\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \mbox{\hyperlink{class_generic_load_file_popup_ae0f03ea09d3bd4d14a8f166b0602f533}{get\+Path}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_generic_load_file_popup_a67e6b4e9cbed95e60401aa55a45b3e08}{execute}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_generic_load_file_popup}{Generic\+Load\+File\+Popup}} is a simple, standard Toonz popup that asks the user for {\itshape single} file to be loaded from disk. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_generic_load_file_popup_ac9a52479662de0309a5b5bac81fe7293}\label{class_generic_load_file_popup_ac9a52479662de0309a5b5bac81fe7293}} 
+\index{GenericLoadFilePopup@{GenericLoadFilePopup}!GenericLoadFilePopup@{GenericLoadFilePopup}}
+\index{GenericLoadFilePopup@{GenericLoadFilePopup}!GenericLoadFilePopup@{GenericLoadFilePopup}}
+\doxysubsubsection{\texorpdfstring{GenericLoadFilePopup()}{GenericLoadFilePopup()}}
+{\footnotesize\ttfamily Generic\+Load\+File\+Popup\+::\+Generic\+Load\+File\+Popup (\begin{DoxyParamCaption}\item[{const QString \&}]{title }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00434     : \mbox{\hyperlink{class_file_browser_popup}{FileBrowserPopup}}(title) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_generic_load_file_popup_a67e6b4e9cbed95e60401aa55a45b3e08}\label{class_generic_load_file_popup_a67e6b4e9cbed95e60401aa55a45b3e08}} 
+\index{GenericLoadFilePopup@{GenericLoadFilePopup}!execute@{execute}}
+\index{execute@{execute}!GenericLoadFilePopup@{GenericLoadFilePopup}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily bool Generic\+Load\+File\+Popup\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+Performs some action on m\+\_\+paths and returns whether the action was successful (accepted) -\/ in which case the popup closes. 
+
+Implements \mbox{\hyperlink{class_file_browser_popup_a8158b9b8756ac5dfa893b78cdc2fd9af}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00438                                    \{}
+\DoxyCodeLine{00439   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.empty()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00440 }
+\DoxyCodeLine{00441   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_file_path}{TFilePath}} \&path = *\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.begin();}
+\DoxyCodeLine{00442   assert(!path.isEmpty());  \textcolor{comment}{// Should always be, see}}
+\DoxyCodeLine{00443                             \textcolor{comment}{// FileBrowserPopup::onOk..()}}
+\DoxyCodeLine{00444   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_file_status}{TFileStatus}}(path).doesExist();}
+\DoxyCodeLine{00445 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00090}{File\+Browser\+Popup\+::m\+\_\+selected\+Paths}}.
+
+\mbox{\Hypertarget{class_generic_load_file_popup_ae0f03ea09d3bd4d14a8f166b0602f533}\label{class_generic_load_file_popup_ae0f03ea09d3bd4d14a8f166b0602f533}} 
+\index{GenericLoadFilePopup@{GenericLoadFilePopup}!getPath@{getPath}}
+\index{getPath@{getPath}!GenericLoadFilePopup@{GenericLoadFilePopup}}
+\doxysubsubsection{\texorpdfstring{getPath()}{getPath()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} Generic\+Load\+File\+Popup\+::get\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This function shows the popup and blocks until an {\itshape existing} file has been selected -\/ if the returned path is empty, the action was explicitly aborted by the user. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00449                                         \{}
+\DoxyCodeLine{00450   \textcolor{keywordflow}{return} (exec() == QDialog::Rejected) ? \mbox{\hyperlink{class_t_file_path}{TFilePath}}() : *\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.begin();}
+\DoxyCodeLine{00451 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00090}{File\+Browser\+Popup\+::m\+\_\+selected\+Paths}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowserpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowserpopup.\+cpp\end{DoxyCompactItemize}

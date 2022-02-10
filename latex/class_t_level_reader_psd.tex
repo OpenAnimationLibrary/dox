@@ -1,0 +1,267 @@
+\hypertarget{class_t_level_reader_psd}{}\doxysection{TLevel\+Reader\+Psd Class Reference}
+\label{class_t_level_reader_psd}\index{TLevelReaderPsd@{TLevelReaderPsd}}
+Inheritance diagram for TLevel\+Reader\+Psd\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_t_level_reader_psd}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_level_reader_psd_ab2610348529a54ad043046744d97c7fd}{TLevel\+Reader\+Psd}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path)
+\item 
+\mbox{\hyperlink{class_t_image_reader_p}{TImage\+ReaderP}} \mbox{\hyperlink{class_t_level_reader_psd_aac3ef666c39c34230c33ac39624dc94d}{get\+Frame\+Reader}} (\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} fid) override
+\item 
+\mbox{\hyperlink{class_t_level_p}{TLevelP}} \mbox{\hyperlink{class_t_level_reader_psd_af9923694c4d23cbd652abd24f433b8c9}{load\+Info}} () override
+\item 
+const \mbox{\hyperlink{class_t_image_info}{TImage\+Info}} $\ast$ \mbox{\hyperlink{class_t_level_reader_psd_a5d71293b198451dc5366d5e4c4ae0427}{get\+Image\+Info}} (\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} fid) override
+\item 
+const \mbox{\hyperlink{class_t_image_info}{TImage\+Info}} $\ast$ \mbox{\hyperlink{class_t_level_reader_psd_acff749a0517ff537b623cb7c114b9eff}{get\+Image\+Info}} () override
+\item 
+void \mbox{\hyperlink{class_t_level_reader_psd_aa70443a25e70dd70f6ff444464a1b4e5}{load}} (\mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&rasP, int shrinkX=1, int shrinkY=1, \mbox{\hyperlink{class_t_rect_t}{TRect}} region=\mbox{\hyperlink{class_t_rect_t}{TRect}}())
+\item 
+\mbox{\hyperlink{class_t_dimension_t}{TDimension}} \mbox{\hyperlink{class_t_level_reader_psd_ae239499042ece741d714fcc44222ed16}{get\+Size}} () const
+\item 
+\mbox{\hyperlink{class_t_rect_t}{TRect}} \mbox{\hyperlink{class_t_level_reader_psd_ac1f730892b3a1691b2ac463ee41b3d19}{get\+BBox}} () const
+\item 
+void \mbox{\hyperlink{class_t_level_reader_psd_a64c60adfcb0fa13df675503d2c38c027}{set\+Layer\+Id}} (int layer\+Id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}} $\ast$ \mbox{\hyperlink{class_t_level_reader_psd_a288fe045b71313a787b4e03636e2e721}{create}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&f)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_thread_1_1_mutex}{TThread\+::\+Mutex}} \mbox{\hyperlink{class_t_level_reader_psd_a8bc362659d5711f58bd0d69a3e4ec768}{m\+\_\+mutex}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_level_reader_psd_ab2610348529a54ad043046744d97c7fd}\label{class_t_level_reader_psd_ab2610348529a54ad043046744d97c7fd}} 
+\index{TLevelReaderPsd@{TLevelReaderPsd}!TLevelReaderPsd@{TLevelReaderPsd}}
+\index{TLevelReaderPsd@{TLevelReaderPsd}!TLevelReaderPsd@{TLevelReaderPsd}}
+\doxysubsubsection{\texorpdfstring{TLevelReaderPsd()}{TLevelReaderPsd()}}
+{\footnotesize\ttfamily TLevel\+Reader\+Psd\+::\+TLevel\+Reader\+Psd (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023     : \mbox{\hyperlink{class_t_level_reader}{TLevelReader}}(path), m\_path(path), m\_layerId(0) \{}
+\DoxyCodeLine{00024   m\_psdreader           = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_p_s_d_reader}{TPSDReader}}(m\_path);}
+\DoxyCodeLine{00025   \mbox{\hyperlink{struct_t_p_s_d_header_info}{TPSDHeaderInfo}} header = m\_psdreader-\/>getPSDHeaderInfo();}
+\DoxyCodeLine{00026   m\_lx                  = header.cols;}
+\DoxyCodeLine{00027   m\_ly                  = header.rows;}
+\DoxyCodeLine{00028   m\_layersCount         = header.layersCount;}
+\DoxyCodeLine{00029   \textcolor{comment}{// set m\_info}}
+\DoxyCodeLine{00030   m\_info                   = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_image_info}{TImageInfo}}();}
+\DoxyCodeLine{00031   m\_info-\/>\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}             = m\_lx;}
+\DoxyCodeLine{00032   m\_info-\/>\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}}             = m\_ly;}
+\DoxyCodeLine{00033   m\_info-\/>\mbox{\hyperlink{class_t_image_info_ad66e78a66158fddceaa192d0063f68e8}{m\_dpix}}           = header.hres;}
+\DoxyCodeLine{00034   m\_info-\/>\mbox{\hyperlink{class_t_image_info_ad8d3ccb14666297e487e04aa10ab7831}{m\_dpiy}}           = header.vres;}
+\DoxyCodeLine{00035   m\_info-\/>\mbox{\hyperlink{class_t_image_info_aa69221d579b49a27bcd54ffaabb2e8be}{m\_bitsPerSample}}  = header.depth;}
+\DoxyCodeLine{00036   m\_info-\/>\mbox{\hyperlink{class_t_image_info_a6b58380f718e21dde1b37577090f5c77}{m\_samplePerPixel}} = header.channels;}
+\DoxyCodeLine{00037 }
+\DoxyCodeLine{00038   QString name     = m\_path.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}().c\_str();}
+\DoxyCodeLine{00039   QStringList list = name.split(\textcolor{stringliteral}{"{}\#"{}});}
+\DoxyCodeLine{00040   \textcolor{keywordflow}{if} (list.size() >= 2) \{}
+\DoxyCodeLine{00041     \textcolor{comment}{// There's a layer id, otherwise the level is loaded in FLAT mode}}
+\DoxyCodeLine{00042     \textcolor{keyword}{const} QString \&layerStr = list.at(1);}
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00044 \textcolor{preprocessor}{\#ifdef REF\_LAYER\_BY\_NAME}}
+\DoxyCodeLine{00045 \textcolor{preprocessor}{\#if (defined(x64) || defined(\_\_LP64\_\_))}}
+\DoxyCodeLine{00046     \textcolor{keywordflow}{if} (layerStr != \textcolor{stringliteral}{"{}frames"{}}) \{}
+\DoxyCodeLine{00047       QTextCodec *layerNameCodec = QTextCodec::codecForName(}
+\DoxyCodeLine{00048           Preferences::instance()-\/>getLayerNameEncoding().c\_str());}
+\DoxyCodeLine{00049       \mbox{\hyperlink{class_t_p_s_d_parser}{TPSDParser}} psdparser(m\_path);}
+\DoxyCodeLine{00050       m\_layerId = psdparser.getLevelIdByName(}
+\DoxyCodeLine{00051           layerNameCodec-\/>fromUnicode(layerStr).toStdString());}
+\DoxyCodeLine{00052     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00053       m\_layerId = layerStr.toInt();}
+\DoxyCodeLine{00054     \}}
+\DoxyCodeLine{00055 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00056 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00057     m\_layerId = layerName.toInt();}
+\DoxyCodeLine{00058 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00059   \}}
+\DoxyCodeLine{00060 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_psd_a2779a67089708218a448d547ae7d16ea}\label{class_t_level_reader_psd_a2779a67089708218a448d547ae7d16ea}} 
+\index{TLevelReaderPsd@{TLevelReaderPsd}!````~TLevelReaderPsd@{$\sim$TLevelReaderPsd}}
+\index{````~TLevelReaderPsd@{$\sim$TLevelReaderPsd}!TLevelReaderPsd@{TLevelReaderPsd}}
+\doxysubsubsection{\texorpdfstring{$\sim$TLevelReaderPsd()}{~TLevelReaderPsd()}}
+{\footnotesize\ttfamily TLevel\+Reader\+Psd\+::$\sim$\+TLevel\+Reader\+Psd (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00064 \{ \textcolor{keyword}{delete} m\_psdreader; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_level_reader_psd_a288fe045b71313a787b4e03636e2e721}\label{class_t_level_reader_psd_a288fe045b71313a787b4e03636e2e721}} 
+\index{TLevelReaderPsd@{TLevelReaderPsd}!create@{create}}
+\index{create@{create}!TLevelReaderPsd@{TLevelReaderPsd}}
+\doxysubsubsection{\texorpdfstring{create()}{create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}} $\ast$ TLevel\+Reader\+Psd\+::create (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00096                                                         \{}
+\DoxyCodeLine{00097   \mbox{\hyperlink{class_t_level_reader_psd}{TLevelReaderPsd}} *reader = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_level_reader_psd}{TLevelReaderPsd}}(f);}
+\DoxyCodeLine{00098   \textcolor{keywordflow}{return} reader;}
+\DoxyCodeLine{00099 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_psd_ac1f730892b3a1691b2ac463ee41b3d19}\label{class_t_level_reader_psd_ac1f730892b3a1691b2ac463ee41b3d19}} 
+\index{TLevelReaderPsd@{TLevelReaderPsd}!getBBox@{getBBox}}
+\index{getBBox@{getBBox}!TLevelReaderPsd@{TLevelReaderPsd}}
+\doxysubsubsection{\texorpdfstring{getBBox()}{getBBox()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_rect_t}{TRect}} TLevel\+Reader\+Psd\+::get\+BBox (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022 \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_rect_t}{TRect}}(0, 0, m\_lx -\/ 1, m\_ly -\/ 1); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_psd_aac3ef666c39c34230c33ac39624dc94d}\label{class_t_level_reader_psd_aac3ef666c39c34230c33ac39624dc94d}} 
+\index{TLevelReaderPsd@{TLevelReaderPsd}!getFrameReader@{getFrameReader}}
+\index{getFrameReader@{getFrameReader}!TLevelReaderPsd@{TLevelReaderPsd}}
+\doxysubsubsection{\texorpdfstring{getFrameReader()}{getFrameReader()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_image_reader_p}{TImage\+ReaderP}} TLevel\+Reader\+Psd\+::get\+Frame\+Reader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}}}]{fid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00142                                                           \{}
+\DoxyCodeLine{00143   \textcolor{keywordtype}{int} layerId = m\_frameTable[fid];}
+\DoxyCodeLine{00144   \mbox{\hyperlink{class_t_image_reader_layer_psd}{TImageReaderLayerPsd}} *ir =}
+\DoxyCodeLine{00145       \textcolor{keyword}{new} \mbox{\hyperlink{class_t_image_reader_layer_psd}{TImageReaderLayerPsd}}(m\_path, layerId, \textcolor{keyword}{this}, m\_info);}
+\DoxyCodeLine{00146   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_image_reader_p}{TImageReaderP}}(ir);}
+\DoxyCodeLine{00147 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_psd_acff749a0517ff537b623cb7c114b9eff}\label{class_t_level_reader_psd_acff749a0517ff537b623cb7c114b9eff}} 
+\index{TLevelReaderPsd@{TLevelReaderPsd}!getImageInfo@{getImageInfo}}
+\index{getImageInfo@{getImageInfo}!TLevelReaderPsd@{TLevelReaderPsd}}
+\doxysubsubsection{\texorpdfstring{getImageInfo()}{getImageInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_t_image_info}{TImage\+Info}} $\ast$ TLevel\+Reader\+Psd\+::get\+Image\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00017 \{ \textcolor{keywordflow}{return} m\_info; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_psd_a5d71293b198451dc5366d5e4c4ae0427}\label{class_t_level_reader_psd_a5d71293b198451dc5366d5e4c4ae0427}} 
+\index{TLevelReaderPsd@{TLevelReaderPsd}!getImageInfo@{getImageInfo}}
+\index{getImageInfo@{getImageInfo}!TLevelReaderPsd@{TLevelReaderPsd}}
+\doxysubsubsection{\texorpdfstring{getImageInfo()}{getImageInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_t_image_info}{TImage\+Info}} $\ast$ TLevel\+Reader\+Psd\+::get\+Image\+Info (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}}}]{fid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00016 \{ \textcolor{keywordflow}{return} m\_info; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_psd_ae239499042ece741d714fcc44222ed16}\label{class_t_level_reader_psd_ae239499042ece741d714fcc44222ed16}} 
+\index{TLevelReaderPsd@{TLevelReaderPsd}!getSize@{getSize}}
+\index{getSize@{getSize}!TLevelReaderPsd@{TLevelReaderPsd}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_dimension_t}{TDimension}} TLevel\+Reader\+Psd\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00021 \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_dimension_t}{TDimension}}(m\_lx, m\_ly); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_psd_aa70443a25e70dd70f6ff444464a1b4e5}\label{class_t_level_reader_psd_aa70443a25e70dd70f6ff444464a1b4e5}} 
+\index{TLevelReaderPsd@{TLevelReaderPsd}!load@{load}}
+\index{load@{load}!TLevelReaderPsd@{TLevelReaderPsd}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily void TLevel\+Reader\+Psd\+::load (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&}]{rasP,  }\item[{int}]{shrinkX = {\ttfamily 1},  }\item[{int}]{shrinkY = {\ttfamily 1},  }\item[{\mbox{\hyperlink{class_t_rect_t}{TRect}}}]{region = {\ttfamily \mbox{\hyperlink{class_t_rect_t}{TRect}}()} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00069                                          \{}
+\DoxyCodeLine{00070   QMutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00071   \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} img;}
+\DoxyCodeLine{00072   m\_psdreader-\/>setShrink(shrinkX, shrinkY);}
+\DoxyCodeLine{00073   m\_psdreader-\/>setRegion(region);}
+\DoxyCodeLine{00074   m\_psdreader-\/>load(img, m\_layerId);  \textcolor{comment}{// if layerId==0 load Merged}}
+\DoxyCodeLine{00075   rasP = img;}
+\DoxyCodeLine{00076 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_psd_af9923694c4d23cbd652abd24f433b8c9}\label{class_t_level_reader_psd_af9923694c4d23cbd652abd24f433b8c9}} 
+\index{TLevelReaderPsd@{TLevelReaderPsd}!loadInfo@{loadInfo}}
+\index{loadInfo@{loadInfo}!TLevelReaderPsd@{TLevelReaderPsd}}
+\doxysubsubsection{\texorpdfstring{loadInfo()}{loadInfo()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_level_p}{TLevelP}} TLevel\+Reader\+Psd\+::load\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00078                                   \{}
+\DoxyCodeLine{00079   \mbox{\hyperlink{class_t_p_s_d_parser}{TPSDParser}} *psdparser = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_p_s_d_parser}{TPSDParser}}(m\_path);}
+\DoxyCodeLine{00080   assert(m\_layerId >= 0);}
+\DoxyCodeLine{00081   \textcolor{keywordtype}{int} framesCount = psdparser-\/>getFramesCount(m\_layerId);}
+\DoxyCodeLine{00082   \mbox{\hyperlink{class_t_level_p}{TLevelP}} level;}
+\DoxyCodeLine{00083   level-\/>setName(psdparser-\/>getLevelName(m\_layerId));}
+\DoxyCodeLine{00084   m\_frameTable.clear();}
+\DoxyCodeLine{00085   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < framesCount; i++) \{}
+\DoxyCodeLine{00086     \mbox{\hyperlink{class_t_frame_id}{TFrameId}} frame(i + 1);}
+\DoxyCodeLine{00087     m\_frameTable.insert(}
+\DoxyCodeLine{00088         std::make\_pair(frame, psdparser-\/>getFrameId(m\_layerId, i)));}
+\DoxyCodeLine{00089     level-\/>setFrame(frame, \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}}());}
+\DoxyCodeLine{00090   \}}
+\DoxyCodeLine{00091   \textcolor{keywordflow}{return} level;}
+\DoxyCodeLine{00092 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_psd_a64c60adfcb0fa13df675503d2c38c027}\label{class_t_level_reader_psd_a64c60adfcb0fa13df675503d2c38c027}} 
+\index{TLevelReaderPsd@{TLevelReaderPsd}!setLayerId@{setLayerId}}
+\index{setLayerId@{setLayerId}!TLevelReaderPsd@{TLevelReaderPsd}}
+\doxysubsubsection{\texorpdfstring{setLayerId()}{setLayerId()}}
+{\footnotesize\ttfamily void TLevel\+Reader\+Psd\+::set\+Layer\+Id (\begin{DoxyParamCaption}\item[{int}]{layer\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00024 \{ m\_layerId = layerId; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_level_reader_psd_a8bc362659d5711f58bd0d69a3e4ec768}\label{class_t_level_reader_psd_a8bc362659d5711f58bd0d69a3e4ec768}} 
+\index{TLevelReaderPsd@{TLevelReaderPsd}!m\_mutex@{m\_mutex}}
+\index{m\_mutex@{m\_mutex}!TLevelReaderPsd@{TLevelReaderPsd}}
+\doxysubsubsection{\texorpdfstring{m\_mutex}{m\_mutex}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_thread_1_1_mutex}{TThread\+::\+Mutex}} TLevel\+Reader\+Psd\+::m\+\_\+mutex}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/psd/tiio\+\_\+psd.\+h\item 
+E\+:/opentoonz/toonz/sources/image/psd/tiio\+\_\+psd.\+cpp\end{DoxyCompactItemize}

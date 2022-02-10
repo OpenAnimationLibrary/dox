@@ -1,0 +1,81 @@
+\hypertarget{class_save_curve_popup}{}\doxysection{Save\+Curve\+Popup Class Reference}
+\label{class_save_curve_popup}\index{SaveCurvePopup@{SaveCurvePopup}}
+Inheritance diagram for Save\+Curve\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_save_curve_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_save_curve_popup_a3b1b55ffc0f8e3d252dc28e3109d9bc6}{Save\+Curve\+Popup}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} folder\+Path, \mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$curve)
+\item 
+bool \mbox{\hyperlink{class_save_curve_popup_a9113028c7b33a7e745f333f4f7c4851b}{execute}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_save_curve_popup_a3b1b55ffc0f8e3d252dc28e3109d9bc6}\label{class_save_curve_popup_a3b1b55ffc0f8e3d252dc28e3109d9bc6}} 
+\index{SaveCurvePopup@{SaveCurvePopup}!SaveCurvePopup@{SaveCurvePopup}}
+\index{SaveCurvePopup@{SaveCurvePopup}!SaveCurvePopup@{SaveCurvePopup}}
+\doxysubsubsection{\texorpdfstring{SaveCurvePopup()}{SaveCurvePopup()}}
+{\footnotesize\ttfamily Save\+Curve\+Popup\+::\+Save\+Curve\+Popup (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}}}]{folder\+Path,  }\item[{\mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$}]{curve }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00078       : \mbox{\hyperlink{class_curve_popup}{CurvePopup}}(QObject::tr(\textcolor{stringliteral}{"{}Save Curve"{}}), folderPath, curve) \{}
+\DoxyCodeLine{00079     setOkText(QObject::tr(\textcolor{stringliteral}{"{}Save"{}}));}
+\DoxyCodeLine{00080     setFilterType(\textcolor{stringliteral}{"{}curve"{}});}
+\DoxyCodeLine{00081   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_save_curve_popup_a9113028c7b33a7e745f333f4f7c4851b}\label{class_save_curve_popup_a9113028c7b33a7e745f333f4f7c4851b}} 
+\index{SaveCurvePopup@{SaveCurvePopup}!execute@{execute}}
+\index{execute@{execute}!SaveCurvePopup@{SaveCurvePopup}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily bool Save\+Curve\+Popup\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Performs some action on m\+\_\+paths and returns whether the action was successful (accepted) -\/ in which case the popup closes. 
+
+Implements \mbox{\hyperlink{class_file_browser_popup_a8158b9b8756ac5dfa893b78cdc2fd9af}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00088                              \{}
+\DoxyCodeLine{00089   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.empty()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp(*\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.begin());}
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{00093   \textcolor{keywordflow}{if} (fp.getType() == \textcolor{stringliteral}{"{}"{}}) fp = fp.withType(\textcolor{stringliteral}{"{}curve"{}});}
+\DoxyCodeLine{00094 }
+\DoxyCodeLine{00095   \textcolor{keywordflow}{if} (!checkOverride(fp)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00096 }
+\DoxyCodeLine{00097   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00098     TSystem::touchParentDir(fp);}
+\DoxyCodeLine{00099     \mbox{\hyperlink{class_t_o_stream}{TOStream}} os(fp);}
+\DoxyCodeLine{00100     getCurve()-\/>\mbox{\hyperlink{class_t_double_param_ad9cfb947075d08bd0fbcc8b7b8ff8c74}{saveData}}(os);}
+\DoxyCodeLine{00101     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00102   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00103     DVGui::warning(QObject::tr(\textcolor{stringliteral}{"{}It is not possible to save the curve."{}}));}
+\DoxyCodeLine{00104     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00105   \}}
+\DoxyCodeLine{00106 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00225}{TFile\+Path\+::get\+Type()}}, \mbox{\hyperlink{l00090}{File\+Browser\+Popup\+::m\+\_\+selected\+Paths}}, \mbox{\hyperlink{l01190}{TDouble\+Param\+::save\+Data()}}, and \mbox{\hyperlink{l00774}{TFile\+Path\+::with\+Type()}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/curveio.\+cpp\end{DoxyCompactItemize}

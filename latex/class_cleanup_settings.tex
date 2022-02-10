@@ -1,0 +1,376 @@
+\hypertarget{class_cleanup_settings}{}\doxysection{Cleanup\+Settings Class Reference}
+\label{class_cleanup_settings}\index{CleanupSettings@{CleanupSettings}}
+Inheritance diagram for Cleanup\+Settings\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_cleanup_settings}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_cleanup_settings_acb2e4b9414a52873149b0df4628758a8}{update\+Gui}} (bool post\+Process\+Previews)
+\item 
+void \mbox{\hyperlink{class_cleanup_settings_adc547ccf3049cecf4b3525fa47aa8a18}{enable\+Swatch}} (bool)
+\item 
+void \mbox{\hyperlink{class_cleanup_settings_a7bf5031ac8021e4e805df0bff8c41f80}{enable\+Opacity\+Check}} (bool)
+\end{DoxyCompactItemize}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_cleanup_settings_a6535bb98229c397cfaf6d150a3ca4671}{window\+Title\+Changed}} (const QString \&title)
+\begin{DoxyCompactList}\small\item\em Signals a change of the window title. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_cleanup_settings_a1bf8713b24980501aa0752cb907dba26}{Cleanup\+Settings}} (QWidget $\ast$parent=0)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_cleanup_settings_a59185a6d72683fcdd9f74d7ff2e0e25c}{show\+Event}} (QShow\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_cleanup_settings_a7de91a2f1d965c7649699828b7d0661b}{hide\+Event}} (QHide\+Event $\ast$) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_cleanup_settings_a1bf8713b24980501aa0752cb907dba26}\label{class_cleanup_settings_a1bf8713b24980501aa0752cb907dba26}} 
+\index{CleanupSettings@{CleanupSettings}!CleanupSettings@{CleanupSettings}}
+\index{CleanupSettings@{CleanupSettings}!CleanupSettings@{CleanupSettings}}
+\doxysubsubsection{\texorpdfstring{CleanupSettings()}{CleanupSettings()}}
+{\footnotesize\ttfamily Cleanup\+Settings\+::\+Cleanup\+Settings (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00511     : QWidget(parent), m\_attached(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00512   QVBoxLayout *vLayout = \textcolor{keyword}{new} QVBoxLayout(\textcolor{keyword}{this});}
+\DoxyCodeLine{00513   vLayout-\/>setMargin(1);  \textcolor{comment}{// NOTE: This works to show the 1-\/pix black border,}}
+\DoxyCodeLine{00514                           \textcolor{comment}{// because this is a QWidget (not QFrame) heir...}}
+\DoxyCodeLine{00515   setLayout(vLayout);}
+\DoxyCodeLine{00516 }
+\DoxyCodeLine{00517   \textcolor{comment}{//   Tabs Container}}
+\DoxyCodeLine{00518   \textcolor{comment}{// Used to deal with styled background and other stuff}}
+\DoxyCodeLine{00519 }
+\DoxyCodeLine{00520   \mbox{\hyperlink{class_tab_bar_containter}{TabBarContainter}} *tabBarContainer = \textcolor{keyword}{new} \mbox{\hyperlink{class_tab_bar_containter}{TabBarContainter}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00521   QHBoxLayout *hLayout              = \textcolor{keyword}{new} QHBoxLayout(tabBarContainer);}
+\DoxyCodeLine{00522 }
+\DoxyCodeLine{00523   hLayout-\/>setMargin(0);}
+\DoxyCodeLine{00524   hLayout-\/>setAlignment(Qt::AlignLeft);}
+\DoxyCodeLine{00525   hLayout-\/>addSpacing(6);}
+\DoxyCodeLine{00526 }
+\DoxyCodeLine{00527   vLayout-\/>addWidget(tabBarContainer);}
+\DoxyCodeLine{00528 }
+\DoxyCodeLine{00529   \textcolor{comment}{//  Tabs Bar}}
+\DoxyCodeLine{00530 }
+\DoxyCodeLine{00531   \mbox{\hyperlink{class_d_v_gui_1_1_tab_bar}{DVGui::TabBar}} *tabBar = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_tab_bar}{DVGui::TabBar}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00532   hLayout-\/>addWidget(tabBar);}
+\DoxyCodeLine{00533 }
+\DoxyCodeLine{00534   tabBar-\/>addSimpleTab(tr(\textcolor{stringliteral}{"{}Cleanup"{}}));}
+\DoxyCodeLine{00535   tabBar-\/>addSimpleTab(tr(\textcolor{stringliteral}{"{}Processing"{}}));}
+\DoxyCodeLine{00536   tabBar-\/>addSimpleTab(tr(\textcolor{stringliteral}{"{}Camera"{}}));}
+\DoxyCodeLine{00537   tabBar-\/>setDrawBase(\textcolor{keyword}{false});}
+\DoxyCodeLine{00538 }
+\DoxyCodeLine{00539   \textcolor{comment}{//  Splitter}}
+\DoxyCodeLine{00540 }
+\DoxyCodeLine{00541   QSplitter *split = \textcolor{keyword}{new} QSplitter(Qt::Vertical, \textcolor{keyword}{this});}
+\DoxyCodeLine{00542   split-\/>setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,}
+\DoxyCodeLine{00543                                    QSizePolicy::MinimumExpanding));}
+\DoxyCodeLine{00544   vLayout-\/>addWidget(split);}
+\DoxyCodeLine{00545 }
+\DoxyCodeLine{00546   \textcolor{comment}{//  Stacked Widget}}
+\DoxyCodeLine{00547 }
+\DoxyCodeLine{00548   QStackedWidget *stackedWidget = \textcolor{keyword}{new} QStackedWidget(split);}
+\DoxyCodeLine{00549   stackedWidget-\/>setMinimumWidth(300);}
+\DoxyCodeLine{00550   \textcolor{comment}{// stackedWidget-\/>setMinimumHeight(250);}}
+\DoxyCodeLine{00551 }
+\DoxyCodeLine{00552   split-\/>addWidget(stackedWidget);}
+\DoxyCodeLine{00553   split-\/>setStretchFactor(0, 1);}
+\DoxyCodeLine{00554 }
+\DoxyCodeLine{00555   \textcolor{comment}{//  Cleanup Tab}}
+\DoxyCodeLine{00556 }
+\DoxyCodeLine{00557   QScrollArea *scrollArea = \textcolor{keyword}{new} QScrollArea(stackedWidget);}
+\DoxyCodeLine{00558   stackedWidget-\/>addWidget(scrollArea);}
+\DoxyCodeLine{00559 }
+\DoxyCodeLine{00560   scrollArea-\/>setWidgetResizable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00561   scrollArea-\/>setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);}
+\DoxyCodeLine{00562 }
+\DoxyCodeLine{00563   m\_cleanupTab = \textcolor{keyword}{new} \mbox{\hyperlink{class_cleanup_tab}{CleanupTab}};}
+\DoxyCodeLine{00564   scrollArea-\/>setWidget(m\_cleanupTab);}
+\DoxyCodeLine{00565 }
+\DoxyCodeLine{00566   \textcolor{comment}{//  Processing Tab}}
+\DoxyCodeLine{00567 }
+\DoxyCodeLine{00568   scrollArea = \textcolor{keyword}{new} QScrollArea(stackedWidget);}
+\DoxyCodeLine{00569   stackedWidget-\/>addWidget(scrollArea);}
+\DoxyCodeLine{00570 }
+\DoxyCodeLine{00571   scrollArea-\/>setWidgetResizable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00572   scrollArea-\/>setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);}
+\DoxyCodeLine{00573 }
+\DoxyCodeLine{00574   m\_processingTab = \textcolor{keyword}{new} \mbox{\hyperlink{class_processing_tab}{ProcessingTab}};}
+\DoxyCodeLine{00575   scrollArea-\/>setWidget(m\_processingTab);}
+\DoxyCodeLine{00576 }
+\DoxyCodeLine{00577   \textcolor{comment}{//  Camera Tab}}
+\DoxyCodeLine{00578 }
+\DoxyCodeLine{00579   scrollArea = \textcolor{keyword}{new} QScrollArea(stackedWidget);}
+\DoxyCodeLine{00580   stackedWidget-\/>addWidget(scrollArea);}
+\DoxyCodeLine{00581 }
+\DoxyCodeLine{00582   scrollArea-\/>setWidgetResizable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00583   scrollArea-\/>setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);}
+\DoxyCodeLine{00584 }
+\DoxyCodeLine{00585   m\_cameraTab = \textcolor{keyword}{new} \mbox{\hyperlink{class_camera_tab}{CameraTab}};}
+\DoxyCodeLine{00586   scrollArea-\/>setWidget(m\_cameraTab);}
+\DoxyCodeLine{00587 }
+\DoxyCodeLine{00588   m\_cameraTab-\/>setCameraPresetListFile(ToonzFolder::getReslistPath(\textcolor{keyword}{true}));}
+\DoxyCodeLine{00589 }
+\DoxyCodeLine{00590   \textcolor{comment}{//  Swatch}}
+\DoxyCodeLine{00591 }
+\DoxyCodeLine{00592   m\_swatch = \textcolor{keyword}{new} \mbox{\hyperlink{class_cleanup_swatch}{CleanupSwatch}}(split, 200, 150);}
+\DoxyCodeLine{00593   split-\/>addWidget(m\_swatch);}
+\DoxyCodeLine{00594 }
+\DoxyCodeLine{00595   \textcolor{comment}{//  ToolBar}}
+\DoxyCodeLine{00596 }
+\DoxyCodeLine{00597   QWidget *toolBarWidget = \textcolor{keyword}{new} QWidget(\textcolor{keyword}{this});}
+\DoxyCodeLine{00598   vLayout-\/>addWidget(toolBarWidget);}
+\DoxyCodeLine{00599 }
+\DoxyCodeLine{00600   toolBarWidget-\/>setFixedHeight(22);}
+\DoxyCodeLine{00601 }
+\DoxyCodeLine{00602   QHBoxLayout *toolBarLayout = \textcolor{keyword}{new} QHBoxLayout(toolBarWidget);}
+\DoxyCodeLine{00603   toolBarWidget-\/>setLayout(toolBarLayout);}
+\DoxyCodeLine{00604 }
+\DoxyCodeLine{00605   toolBarLayout-\/>setMargin(0);}
+\DoxyCodeLine{00606   toolBarLayout-\/>setSpacing(0);}
+\DoxyCodeLine{00607 }
+\DoxyCodeLine{00608   QToolBar *leftToolBar = \textcolor{keyword}{new} QToolBar(toolBarWidget);}
+\DoxyCodeLine{00609   toolBarLayout-\/>addWidget(leftToolBar, 0, Qt::AlignLeft);}
+\DoxyCodeLine{00610 }
+\DoxyCodeLine{00611   leftToolBar-\/>setFixedWidth(110);}
+\DoxyCodeLine{00612 }
+\DoxyCodeLine{00613   m\_swatchAct =}
+\DoxyCodeLine{00614       \textcolor{keyword}{new} QAction(createQIcon(\textcolor{stringliteral}{"{}preview"{}}), tr(\textcolor{stringliteral}{"{}Toggle Swatch Preview"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00615   m\_swatchAct-\/>setCheckable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00616   leftToolBar-\/>addAction(m\_swatchAct);}
+\DoxyCodeLine{00617   leftToolBar-\/>addSeparator();}
+\DoxyCodeLine{00618 }
+\DoxyCodeLine{00619   m\_opacityAct = \textcolor{keyword}{new} QAction(createQIcon(\textcolor{stringliteral}{"{}opacitycheck"{}}),}
+\DoxyCodeLine{00620                              tr(\textcolor{stringliteral}{"{}Toggle Opacity Check"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00621   m\_opacityAct-\/>setCheckable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00622   leftToolBar-\/>addAction(m\_opacityAct);}
+\DoxyCodeLine{00623 }
+\DoxyCodeLine{00624   QToolBar *spacingToolBar1 = \textcolor{keyword}{new} QToolBar(toolBarWidget);}
+\DoxyCodeLine{00625   toolBarLayout-\/>addWidget(spacingToolBar1, 1);}
+\DoxyCodeLine{00626 }
+\DoxyCodeLine{00627   spacingToolBar1-\/>setMinimumHeight(22);}
+\DoxyCodeLine{00628 }
+\DoxyCodeLine{00629   QToolBar *rightToolBar = \textcolor{keyword}{new} QToolBar(toolBarWidget);}
+\DoxyCodeLine{00630   toolBarLayout-\/>addWidget(rightToolBar, 0, Qt::AlignRight);}
+\DoxyCodeLine{00631 }
+\DoxyCodeLine{00632   rightToolBar-\/>setFixedWidth(110);}
+\DoxyCodeLine{00633 }
+\DoxyCodeLine{00634   QAction *saveAct =}
+\DoxyCodeLine{00635       \textcolor{keyword}{new} QAction(createQIcon(\textcolor{stringliteral}{"{}save"{}}), tr(\textcolor{stringliteral}{"{}Save Settings"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00636   rightToolBar-\/>addAction(saveAct);}
+\DoxyCodeLine{00637   QAction *loadAct =}
+\DoxyCodeLine{00638       \textcolor{keyword}{new} QAction(createQIcon(\textcolor{stringliteral}{"{}load"{}}), tr(\textcolor{stringliteral}{"{}Load Settings"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00639   rightToolBar-\/>addAction(loadAct);}
+\DoxyCodeLine{00640   rightToolBar-\/>addSeparator();}
+\DoxyCodeLine{00641   QAction *resetAct =}
+\DoxyCodeLine{00642       \textcolor{keyword}{new} QAction(createQIcon(\textcolor{stringliteral}{"{}settings\_reset"{}}), tr(\textcolor{stringliteral}{"{}Reset Settings"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00643   rightToolBar-\/>addAction(resetAct);}
+\DoxyCodeLine{00644 }
+\DoxyCodeLine{00645   \textcolor{comment}{//  Model-\/related stuff}}
+\DoxyCodeLine{00646   \mbox{\hyperlink{class_cleanup_settings_model}{CleanupSettingsModel}} *model = CleanupSettingsModel::instance();}
+\DoxyCodeLine{00647   m\_backupParams.assign(model-\/>getCurrentParameters(), \textcolor{keyword}{false});}
+\DoxyCodeLine{00648 }
+\DoxyCodeLine{00649   \textcolor{comment}{//  Connections}}
+\DoxyCodeLine{00650 }
+\DoxyCodeLine{00651   QAction *opacityCheckCmd =}
+\DoxyCodeLine{00652       CommandManager::instance()-\/>getAction(MI\_OpacityCheck);}
+\DoxyCodeLine{00653   assert(opacityCheckCmd);}
+\DoxyCodeLine{00654 }
+\DoxyCodeLine{00655   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00656   ret      = ret \&\& connect(tabBar, SIGNAL(currentChanged(\textcolor{keywordtype}{int})), stackedWidget,}
+\DoxyCodeLine{00657                        SLOT(setCurrentIndex(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00658   ret = ret \&\&}
+\DoxyCodeLine{00659         connect(m\_swatchAct, SIGNAL(toggled(\textcolor{keywordtype}{bool})), SLOT(enableSwatch(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00660   ret = ret \&\& connect(m\_opacityAct, SIGNAL(triggered(\textcolor{keywordtype}{bool})), opacityCheckCmd,}
+\DoxyCodeLine{00661                        SLOT(trigger()));}
+\DoxyCodeLine{00662   ret = ret \&\& connect(saveAct, SIGNAL(triggered()), model, SLOT(promptSave()));}
+\DoxyCodeLine{00663   ret = ret \&\& connect(loadAct, SIGNAL(triggered()), model, SLOT(promptLoad()));}
+\DoxyCodeLine{00664   ret = ret \&\& connect(resetAct, SIGNAL(triggered()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00665                        SLOT(onRestoreSceneSettings()));}
+\DoxyCodeLine{00666 }
+\DoxyCodeLine{00667   assert(ret);}
+\DoxyCodeLine{00668 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_cleanup_settings_a7bf5031ac8021e4e805df0bff8c41f80}\label{class_cleanup_settings_a7bf5031ac8021e4e805df0bff8c41f80}} 
+\index{CleanupSettings@{CleanupSettings}!enableOpacityCheck@{enableOpacityCheck}}
+\index{enableOpacityCheck@{enableOpacityCheck}!CleanupSettings@{CleanupSettings}}
+\doxysubsubsection{\texorpdfstring{enableOpacityCheck}{enableOpacityCheck}}
+{\footnotesize\ttfamily void Cleanup\+Settings\+::enable\+Opacity\+Check (\begin{DoxyParamCaption}\item[{bool}]{enable }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00774                                                     \{}
+\DoxyCodeLine{00775   \mbox{\hyperlink{class_cleanup_settings_model}{CleanupSettingsModel}} *model = CleanupSettingsModel::instance();}
+\DoxyCodeLine{00776   \mbox{\hyperlink{class_cleanup_parameters}{CleanupParameters}} *params   = model-\/>getCurrentParameters();}
+\DoxyCodeLine{00777 }
+\DoxyCodeLine{00778   params-\/>m\_transparencyCheckEnabled = enable;}
+\DoxyCodeLine{00779 }
+\DoxyCodeLine{00780   model-\/>\mbox{\hyperlink{class_cleanup_settings_model_a7b1f1768b04906a781f54d03965d7016}{commitChanges}}();}
+\DoxyCodeLine{00781 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_settings_adc547ccf3049cecf4b3525fa47aa8a18}\label{class_cleanup_settings_adc547ccf3049cecf4b3525fa47aa8a18}} 
+\index{CleanupSettings@{CleanupSettings}!enableSwatch@{enableSwatch}}
+\index{enableSwatch@{enableSwatch}!CleanupSettings@{CleanupSettings}}
+\doxysubsubsection{\texorpdfstring{enableSwatch}{enableSwatch}}
+{\footnotesize\ttfamily void Cleanup\+Settings\+::enable\+Swatch (\begin{DoxyParamCaption}\item[{bool}]{enable }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00757                                               \{}
+\DoxyCodeLine{00758   \mbox{\hyperlink{class_cleanup_settings_model}{CleanupSettingsModel}} *model = CleanupSettingsModel::instance();}
+\DoxyCodeLine{00759   \textcolor{keywordflow}{if} (enable) \{}
+\DoxyCodeLine{00760     model-\/>\mbox{\hyperlink{class_cleanup_settings_model_a244bd70aa1bc4af824a6c8e299cd5d79}{attach}}(CleanupSettingsModel::PREVIEWER);}
+\DoxyCodeLine{00761     connect(model, SIGNAL(previewDataChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00762             SLOT(onPreviewDataChanged()));}
+\DoxyCodeLine{00763     onPreviewDataChanged();}
+\DoxyCodeLine{00764   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00765     model-\/>\mbox{\hyperlink{class_cleanup_settings_model_a26a2edbdf4fe3ed77fe4f40020189579}{detach}}(CleanupSettingsModel::PREVIEWER);}
+\DoxyCodeLine{00766     disconnect(model, SIGNAL(previewDataChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00767                SLOT(onPreviewDataChanged()));}
+\DoxyCodeLine{00768     m\_swatch-\/>setRaster(\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}(), \mbox{\hyperlink{class_t_affine}{TAffine}}(), \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}());}
+\DoxyCodeLine{00769   \}}
+\DoxyCodeLine{00770 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_settings_a7de91a2f1d965c7649699828b7d0661b}\label{class_cleanup_settings_a7de91a2f1d965c7649699828b7d0661b}} 
+\index{CleanupSettings@{CleanupSettings}!hideEvent@{hideEvent}}
+\index{hideEvent@{hideEvent}!CleanupSettings@{CleanupSettings}}
+\doxysubsubsection{\texorpdfstring{hideEvent()}{hideEvent()}}
+{\footnotesize\ttfamily void Cleanup\+Settings\+::hide\+Event (\begin{DoxyParamCaption}\item[{QHide\+Event $\ast$}]{he }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00704                                               \{}
+\DoxyCodeLine{00705   \textcolor{comment}{// Surprisingly enough, it seems that Qt may trigger hideEvents for widgets}}
+\DoxyCodeLine{00706   \textcolor{comment}{// that}}
+\DoxyCodeLine{00707   \textcolor{comment}{// have never been shown -\/ this is why we need to check a user-\/made bool to}}
+\DoxyCodeLine{00708   \textcolor{comment}{// know whether}}
+\DoxyCodeLine{00709   \textcolor{comment}{// model attachment has happened... and no, detaching without attaching is}}
+\DoxyCodeLine{00710   \textcolor{comment}{// *BAD*}}
+\DoxyCodeLine{00711 }
+\DoxyCodeLine{00712   \textcolor{keywordflow}{if} (m\_attached) \{}
+\DoxyCodeLine{00713     m\_attached = \textcolor{keyword}{false};}
+\DoxyCodeLine{00714 }
+\DoxyCodeLine{00715     \textcolor{comment}{// Should put swatch to off...}}
+\DoxyCodeLine{00716     \mbox{\hyperlink{class_cleanup_settings_model}{CleanupSettingsModel}} *model = CleanupSettingsModel::instance();}
+\DoxyCodeLine{00717 }
+\DoxyCodeLine{00718     model-\/>\mbox{\hyperlink{class_cleanup_settings_model_a26a2edbdf4fe3ed77fe4f40020189579}{detach}}(CleanupSettingsModel::LISTENER);}
+\DoxyCodeLine{00719 }
+\DoxyCodeLine{00720     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00721     ret      = ret \&\& disconnect(model, SIGNAL(imageSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00722                             SLOT(onImageSwitched()));}
+\DoxyCodeLine{00723     ret = ret \&\& disconnect(model, SIGNAL(modelChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00724                             SLOT(updateGui(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00725     ret = ret \&\&}
+\DoxyCodeLine{00726           disconnect(model, SIGNAL(clnLoaded()), \textcolor{keyword}{this}, SLOT(onClnLoaded()));}
+\DoxyCodeLine{00727     assert(ret);}
+\DoxyCodeLine{00728 }
+\DoxyCodeLine{00729     \textcolor{keywordflow}{if} (m\_swatchAct-\/>isChecked()) enableSwatch(\textcolor{keyword}{false});  \textcolor{comment}{// detach swatch}}
+\DoxyCodeLine{00730   \}}
+\DoxyCodeLine{00731 }
+\DoxyCodeLine{00732   QWidget::hideEvent(he);}
+\DoxyCodeLine{00733 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_settings_a59185a6d72683fcdd9f74d7ff2e0e25c}\label{class_cleanup_settings_a59185a6d72683fcdd9f74d7ff2e0e25c}} 
+\index{CleanupSettings@{CleanupSettings}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!CleanupSettings@{CleanupSettings}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Cleanup\+Settings\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{se }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00672                                               \{}
+\DoxyCodeLine{00673   QWidget::showEvent(se);}
+\DoxyCodeLine{00674 }
+\DoxyCodeLine{00675   \textcolor{keywordflow}{if} (!m\_attached) \{}
+\DoxyCodeLine{00676     m\_attached = \textcolor{keyword}{true};}
+\DoxyCodeLine{00677 }
+\DoxyCodeLine{00678     \textcolor{comment}{// Should ensure that swatch is off...}}
+\DoxyCodeLine{00679     \mbox{\hyperlink{class_cleanup_settings_model}{CleanupSettingsModel}} *model = CleanupSettingsModel::instance();}
+\DoxyCodeLine{00680 }
+\DoxyCodeLine{00681     model-\/>\mbox{\hyperlink{class_cleanup_settings_model_a244bd70aa1bc4af824a6c8e299cd5d79}{attach}}(CleanupSettingsModel::LISTENER);}
+\DoxyCodeLine{00682 }
+\DoxyCodeLine{00683     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00684     ret      = ret \&\& connect(model, SIGNAL(imageSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00685                          SLOT(onImageSwitched()));}
+\DoxyCodeLine{00686     ret = ret \&\& connect(model, SIGNAL(modelChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00687                          SLOT(updateGui(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00688     ret = ret \&\& connect(model, SIGNAL(clnLoaded()), \textcolor{keyword}{this}, SLOT(onClnLoaded()));}
+\DoxyCodeLine{00689     assert(ret);}
+\DoxyCodeLine{00690 }
+\DoxyCodeLine{00691     m\_cameraTab-\/>setCurrentLevel(}
+\DoxyCodeLine{00692         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentLevel()-\/>getLevel());}
+\DoxyCodeLine{00693 }
+\DoxyCodeLine{00694     updateGui(\textcolor{keyword}{false});}
+\DoxyCodeLine{00695     onImageSwitched();}
+\DoxyCodeLine{00696     onClnLoaded();}
+\DoxyCodeLine{00697 }
+\DoxyCodeLine{00698     \textcolor{keywordflow}{if} (m\_swatchAct-\/>isChecked()) enableSwatch(\textcolor{keyword}{true});  \textcolor{comment}{// attach swatch}}
+\DoxyCodeLine{00699   \}}
+\DoxyCodeLine{00700 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_settings_acb2e4b9414a52873149b0df4628758a8}\label{class_cleanup_settings_acb2e4b9414a52873149b0df4628758a8}} 
+\index{CleanupSettings@{CleanupSettings}!updateGui@{updateGui}}
+\index{updateGui@{updateGui}!CleanupSettings@{CleanupSettings}}
+\doxysubsubsection{\texorpdfstring{updateGui}{updateGui}}
+{\footnotesize\ttfamily void Cleanup\+Settings\+::update\+Gui (\begin{DoxyParamCaption}\item[{bool}]{post\+Process\+Previews }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00737                                                      \{}
+\DoxyCodeLine{00738   \mbox{\hyperlink{class_cleanup_parameters}{CleanupParameters}} *params =}
+\DoxyCodeLine{00739       CleanupSettingsModel::instance()-\/>getCurrentParameters();}
+\DoxyCodeLine{00740 }
+\DoxyCodeLine{00741   m\_cleanupTab-\/>updateGui(params, \&m\_backupParams);}
+\DoxyCodeLine{00742   m\_processingTab-\/>updateGui(params, \&m\_backupParams);}
+\DoxyCodeLine{00743   m\_cameraTab-\/>updateGui(params, \&m\_backupParams);}
+\DoxyCodeLine{00744 }
+\DoxyCodeLine{00745   m\_backupParams.assign(params, \textcolor{keyword}{false});}
+\DoxyCodeLine{00746 }
+\DoxyCodeLine{00747   m\_opacityAct-\/>setChecked(params-\/>m\_transparencyCheckEnabled);}
+\DoxyCodeLine{00748   \textcolor{keywordflow}{if} (params-\/>m\_lineProcessingMode == lpNone) \{}
+\DoxyCodeLine{00749     m\_swatch-\/>setRaster(\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}(), \mbox{\hyperlink{class_t_affine}{TAffine}}(), \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}());}
+\DoxyCodeLine{00750     m\_swatchAct-\/>setChecked(\textcolor{keyword}{false});}
+\DoxyCodeLine{00751   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (needsPostProcess)}
+\DoxyCodeLine{00752     postProcess();}
+\DoxyCodeLine{00753 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_settings_a6535bb98229c397cfaf6d150a3ca4671}\label{class_cleanup_settings_a6535bb98229c397cfaf6d150a3ca4671}} 
+\index{CleanupSettings@{CleanupSettings}!windowTitleChanged@{windowTitleChanged}}
+\index{windowTitleChanged@{windowTitleChanged}!CleanupSettings@{CleanupSettings}}
+\doxysubsubsection{\texorpdfstring{windowTitleChanged}{windowTitleChanged}}
+{\footnotesize\ttfamily void Cleanup\+Settings\+::window\+Title\+Changed (\begin{DoxyParamCaption}\item[{const QString \&}]{title }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+
+
+Signals a change of the window title. 
+
+The window title may change to reflect updates of the underlying cleanup settings model. ~\newline
+ 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanupsettingspopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanupsettingspopup.\+cpp\end{DoxyCompactItemize}

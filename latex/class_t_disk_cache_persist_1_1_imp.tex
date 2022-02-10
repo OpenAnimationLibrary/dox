@@ -1,0 +1,166 @@
+\hypertarget{class_t_disk_cache_persist_1_1_imp}{}\doxysection{TDisk\+Cache\+Persist\+::Imp Class Reference}
+\label{class_t_disk_cache_persist_1_1_imp}\index{TDiskCachePersist::Imp@{TDiskCachePersist::Imp}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_disk_cache_persist_1_1_imp_af410c6aef26fd4c5da93c78206cd607c}{Imp}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&fp)
+\item 
+bool \mbox{\hyperlink{class_t_disk_cache_persist_1_1_imp_a6056fe4a1853b5059310629bc2ccb20f}{put}} (int frame, UCHAR $\ast$data, TUINT32 data\+Size)
+\item 
+UCHAR $\ast$ \mbox{\hyperlink{class_t_disk_cache_persist_1_1_imp_a2c6a8148562dde36ea9a0bbe52cd20bc}{get}} (int pos, TUINT32 $\ast$size)
+\item 
+\mbox{\Hypertarget{class_t_disk_cache_persist_1_1_imp_aa9ad0d04e02c74532c338c0723b6713f}\label{class_t_disk_cache_persist_1_1_imp_aa9ad0d04e02c74532c338c0723b6713f}} 
+void {\bfseries open\+File} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&fp, TINT64 file\+Size)
+\item 
+void \mbox{\hyperlink{class_t_disk_cache_persist_1_1_imp_a9cb38c4ba62288cc809e08c3c509c8e9}{set\+Current\+View}} (int frame)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_imp_p_d}{Imp\+PD}} $\ast$ \mbox{\hyperlink{class_t_disk_cache_persist_1_1_imp_a433f964e7c7ed2d4db2d33bcf8b2a516}{m\+\_\+imp\+PD}}
+\item 
+int \mbox{\hyperlink{class_t_disk_cache_persist_1_1_imp_a558322bdf1095544ac808e9069b2363e}{m\+\_\+low\+Frame}}
+\item 
+int \mbox{\hyperlink{class_t_disk_cache_persist_1_1_imp_ae844b1ba282df802d1b9aaaa6da25ef5}{m\+\_\+hi\+Frame}}
+\item 
+\mbox{\hyperlink{class_t_thread_1_1_mutex}{TThread\+::\+Mutex}} \mbox{\hyperlink{class_t_disk_cache_persist_1_1_imp_a3b666565ce73965a4623cc01931d2bea}{m\+\_\+mutex}}
+\item 
+bool \mbox{\hyperlink{class_t_disk_cache_persist_1_1_imp_adc2c11cff56054a7a85eed8ff6c8409f}{m\+\_\+force}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_disk_cache_persist_1_1_imp_af410c6aef26fd4c5da93c78206cd607c}\label{class_t_disk_cache_persist_1_1_imp_af410c6aef26fd4c5da93c78206cd607c}} 
+\index{TDiskCachePersist::Imp@{TDiskCachePersist::Imp}!Imp@{Imp}}
+\index{Imp@{Imp}!TDiskCachePersist::Imp@{TDiskCachePersist::Imp}}
+\doxysubsubsection{\texorpdfstring{Imp()}{Imp()}}
+{\footnotesize\ttfamily TDisk\+Cache\+Persist\+::\+Imp\+::\+Imp (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{fp }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00253                                              : m\_impPD(0) \{}
+\DoxyCodeLine{00254 \textcolor{preprocessor}{\#ifdef WIN32}}
+\DoxyCodeLine{00255   m\_impPD = \textcolor{keyword}{new} ImpPDW(fp);}
+\DoxyCodeLine{00256 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00257   m\_impPD = \textcolor{keyword}{new} \mbox{\hyperlink{class_imp_p_d_x}{ImpPDX}}(fp);}
+\DoxyCodeLine{00258 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00259   m\_impPD-\/>m\_currentFileSize = \mbox{\hyperlink{class_t_file_status}{TFileStatus}}(fp).doesExist()}
+\DoxyCodeLine{00260                                    ? \mbox{\hyperlink{class_t_file_status}{TFileStatus}}(fp).getSize()}
+\DoxyCodeLine{00261                                    : 0;  \textcolor{comment}{// per gli arrotondamenti...}}
+\DoxyCodeLine{00262 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_disk_cache_persist_1_1_imp_a839fd393584f380a5c717126b261d680}\label{class_t_disk_cache_persist_1_1_imp_a839fd393584f380a5c717126b261d680}} 
+\index{TDiskCachePersist::Imp@{TDiskCachePersist::Imp}!````~Imp@{$\sim$Imp}}
+\index{````~Imp@{$\sim$Imp}!TDiskCachePersist::Imp@{TDiskCachePersist::Imp}}
+\doxysubsubsection{\texorpdfstring{$\sim$Imp()}{~Imp()}}
+{\footnotesize\ttfamily TDisk\+Cache\+Persist\+::\+Imp\+::$\sim$\+Imp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00266 \{ \textcolor{keyword}{delete} m\_impPD; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_disk_cache_persist_1_1_imp_a2c6a8148562dde36ea9a0bbe52cd20bc}\label{class_t_disk_cache_persist_1_1_imp_a2c6a8148562dde36ea9a0bbe52cd20bc}} 
+\index{TDiskCachePersist::Imp@{TDiskCachePersist::Imp}!get@{get}}
+\index{get@{get}!TDiskCachePersist::Imp@{TDiskCachePersist::Imp}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily UCHAR $\ast$ TDisk\+Cache\+Persist\+::\+Imp\+::get (\begin{DoxyParamCaption}\item[{int}]{pos,  }\item[{TUINT32 $\ast$}]{size }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00502                                                        \{}
+\DoxyCodeLine{00503   UCHAR *ret = \textcolor{keyword}{new} UCHAR[TINT32(m\_impPD-\/>m\_chunkSize)];}
+\DoxyCodeLine{00504 }
+\DoxyCodeLine{00505   TThread::ScopedLock sl(m\_mutex);}
+\DoxyCodeLine{00506   setCurrentView(pos);}
+\DoxyCodeLine{00507   ULONGLONG offset = (pos -\/ m\_lowFrame) * m\_impPD-\/>m\_chunkSize;}
+\DoxyCodeLine{00508   UCHAR *src =}
+\DoxyCodeLine{00509       (UCHAR *)m\_impPD-\/>m\_fileMapAddress + offset + m\_impPD-\/>m\_mapOffset;}
+\DoxyCodeLine{00510   memcpy(ret, src, TINT32(m\_impPD-\/>m\_chunkSize));}
+\DoxyCodeLine{00511   *size = TUINT32(m\_impPD-\/>m\_chunkSize);}
+\DoxyCodeLine{00512   \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{00513 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_disk_cache_persist_1_1_imp_a6056fe4a1853b5059310629bc2ccb20f}\label{class_t_disk_cache_persist_1_1_imp_a6056fe4a1853b5059310629bc2ccb20f}} 
+\index{TDiskCachePersist::Imp@{TDiskCachePersist::Imp}!put@{put}}
+\index{put@{put}!TDiskCachePersist::Imp@{TDiskCachePersist::Imp}}
+\doxysubsubsection{\texorpdfstring{put()}{put()}}
+{\footnotesize\ttfamily bool TDisk\+Cache\+Persist\+::\+Imp\+::put (\begin{DoxyParamCaption}\item[{int}]{frame,  }\item[{UCHAR $\ast$}]{data,  }\item[{TUINT32}]{data\+Size }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00488                                                                        \{}
+\DoxyCodeLine{00489   \textcolor{keywordflow}{if} (dataSize != m\_impPD-\/>m\_chunkSize) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00490 }
+\DoxyCodeLine{00491   TThread::ScopedLock sl(m\_mutex);}
+\DoxyCodeLine{00492 }
+\DoxyCodeLine{00493   setCurrentView(frame);}
+\DoxyCodeLine{00494   ULONGLONG offset = (frame -\/ m\_lowFrame) * m\_impPD-\/>m\_chunkSize;}
+\DoxyCodeLine{00495   UCHAR *dst       = (UCHAR *)m\_impPD-\/>m\_fileMapAddress + offset;}
+\DoxyCodeLine{00496   memcpy(dst + m\_impPD-\/>m\_mapOffset, data, dataSize);}
+\DoxyCodeLine{00497   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00498 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_disk_cache_persist_1_1_imp_a9cb38c4ba62288cc809e08c3c509c8e9}\label{class_t_disk_cache_persist_1_1_imp_a9cb38c4ba62288cc809e08c3c509c8e9}} 
+\index{TDiskCachePersist::Imp@{TDiskCachePersist::Imp}!setCurrentView@{setCurrentView}}
+\index{setCurrentView@{setCurrentView}!TDiskCachePersist::Imp@{TDiskCachePersist::Imp}}
+\doxysubsubsection{\texorpdfstring{setCurrentView()}{setCurrentView()}}
+{\footnotesize\ttfamily void TDisk\+Cache\+Persist\+::\+Imp\+::set\+Current\+View (\begin{DoxyParamCaption}\item[{int}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00081                                  \{}
+\DoxyCodeLine{00082     \textcolor{keywordflow}{if} (!m\_force \&\& ((m\_lowFrame <= frame) \&\& (frame < m\_hiFrame)))}
+\DoxyCodeLine{00083       \textcolor{keywordflow}{return};  \textcolor{comment}{// la vista corrente gia' copre il frame}}
+\DoxyCodeLine{00084     m\_force = \textcolor{keyword}{false};}
+\DoxyCodeLine{00085     m\_impPD-\/>setCurrentView(frame, m\_lowFrame, m\_hiFrame);}
+\DoxyCodeLine{00086   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_disk_cache_persist_1_1_imp_adc2c11cff56054a7a85eed8ff6c8409f}\label{class_t_disk_cache_persist_1_1_imp_adc2c11cff56054a7a85eed8ff6c8409f}} 
+\index{TDiskCachePersist::Imp@{TDiskCachePersist::Imp}!m\_force@{m\_force}}
+\index{m\_force@{m\_force}!TDiskCachePersist::Imp@{TDiskCachePersist::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_force}{m\_force}}
+{\footnotesize\ttfamily bool TDisk\+Cache\+Persist\+::\+Imp\+::m\+\_\+force}
+
+\mbox{\Hypertarget{class_t_disk_cache_persist_1_1_imp_ae844b1ba282df802d1b9aaaa6da25ef5}\label{class_t_disk_cache_persist_1_1_imp_ae844b1ba282df802d1b9aaaa6da25ef5}} 
+\index{TDiskCachePersist::Imp@{TDiskCachePersist::Imp}!m\_hiFrame@{m\_hiFrame}}
+\index{m\_hiFrame@{m\_hiFrame}!TDiskCachePersist::Imp@{TDiskCachePersist::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_hiFrame}{m\_hiFrame}}
+{\footnotesize\ttfamily int TDisk\+Cache\+Persist\+::\+Imp\+::m\+\_\+hi\+Frame}
+
+\mbox{\Hypertarget{class_t_disk_cache_persist_1_1_imp_a433f964e7c7ed2d4db2d33bcf8b2a516}\label{class_t_disk_cache_persist_1_1_imp_a433f964e7c7ed2d4db2d33bcf8b2a516}} 
+\index{TDiskCachePersist::Imp@{TDiskCachePersist::Imp}!m\_impPD@{m\_impPD}}
+\index{m\_impPD@{m\_impPD}!TDiskCachePersist::Imp@{TDiskCachePersist::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_impPD}{m\_impPD}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_imp_p_d}{Imp\+PD}}$\ast$ TDisk\+Cache\+Persist\+::\+Imp\+::m\+\_\+imp\+PD}
+
+\mbox{\Hypertarget{class_t_disk_cache_persist_1_1_imp_a558322bdf1095544ac808e9069b2363e}\label{class_t_disk_cache_persist_1_1_imp_a558322bdf1095544ac808e9069b2363e}} 
+\index{TDiskCachePersist::Imp@{TDiskCachePersist::Imp}!m\_lowFrame@{m\_lowFrame}}
+\index{m\_lowFrame@{m\_lowFrame}!TDiskCachePersist::Imp@{TDiskCachePersist::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_lowFrame}{m\_lowFrame}}
+{\footnotesize\ttfamily int TDisk\+Cache\+Persist\+::\+Imp\+::m\+\_\+low\+Frame}
+
+\mbox{\Hypertarget{class_t_disk_cache_persist_1_1_imp_a3b666565ce73965a4623cc01931d2bea}\label{class_t_disk_cache_persist_1_1_imp_a3b666565ce73965a4623cc01931d2bea}} 
+\index{TDiskCachePersist::Imp@{TDiskCachePersist::Imp}!m\_mutex@{m\_mutex}}
+\index{m\_mutex@{m\_mutex}!TDiskCachePersist::Imp@{TDiskCachePersist::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_mutex}{m\_mutex}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_thread_1_1_mutex}{TThread\+::\+Mutex}} TDisk\+Cache\+Persist\+::\+Imp\+::m\+\_\+mutex}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/trasterimage/tcachedlevel.\+cpp\end{DoxyCompactItemize}

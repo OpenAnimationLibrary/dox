@@ -1,0 +1,217 @@
+\hypertarget{class_custom_style_manager_1_1_style_loader_task}{}\doxysection{Custom\+Style\+Manager\+::Style\+Loader\+Task Class Reference}
+\label{class_custom_style_manager_1_1_style_loader_task}\index{CustomStyleManager::StyleLoaderTask@{CustomStyleManager::StyleLoaderTask}}
+Inheritance diagram for Custom\+Style\+Manager\+::Style\+Loader\+Task\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_custom_style_manager_1_1_style_loader_task}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_custom_style_manager_1_1_style_loader_task_a4dfc211d909e7254d03d37ccb330d024}{Style\+Loader\+Task}} (\mbox{\hyperlink{class_custom_style_manager}{Custom\+Style\+Manager}} $\ast$manager, const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&fp)
+\item 
+void \mbox{\hyperlink{class_custom_style_manager_1_1_style_loader_task_acb5dbd32cf6c8716d982fa273a78271b}{run}} () override
+\begin{DoxyCompactList}\small\item\em The central code of the task that is executed by a worker thread. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_custom_style_manager_1_1_style_loader_task_a5873b829af2c6fef514221fe0789768a}{on\+Finished}} (\mbox{\hyperlink{class_t_smart_pointer_t}{TThread\+::\+RunnableP}} sender) override
+\begin{DoxyCompactList}\small\item\em The analogous of \mbox{\hyperlink{class_t_thread_1_1_runnable_a0857d4a039557f2853a12203ea854f01}{on\+Started()}} for the \mbox{\hyperlink{class_t_thread_1_1_runnable_a77da4aa600bdb892b55312efcd6e3a21}{finished()}} signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_custom_style_manager_1_1_style_loader_task_a4dfc211d909e7254d03d37ccb330d024}\label{class_custom_style_manager_1_1_style_loader_task_a4dfc211d909e7254d03d37ccb330d024}} 
+\index{CustomStyleManager::StyleLoaderTask@{CustomStyleManager::StyleLoaderTask}!StyleLoaderTask@{StyleLoaderTask}}
+\index{StyleLoaderTask@{StyleLoaderTask}!CustomStyleManager::StyleLoaderTask@{CustomStyleManager::StyleLoaderTask}}
+\doxysubsubsection{\texorpdfstring{StyleLoaderTask()}{StyleLoaderTask()}}
+{\footnotesize\ttfamily Custom\+Style\+Manager\+::\+Style\+Loader\+Task\+::\+Style\+Loader\+Task (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_custom_style_manager}{Custom\+Style\+Manager}} $\ast$}]{manager,  }\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{fp }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073     : m\_manager(manager), m\_fp(fp) \{}
+\DoxyCodeLine{00074   connect(\textcolor{keyword}{this}, SIGNAL(\mbox{\hyperlink{class_t_thread_1_1_runnable_a77da4aa600bdb892b55312efcd6e3a21}{finished}}(\mbox{\hyperlink{class_t_smart_pointer_t}{TThread::RunnableP}})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00075           SLOT(\mbox{\hyperlink{class_custom_style_manager_1_1_style_loader_task_a5873b829af2c6fef514221fe0789768a}{onFinished}}(\mbox{\hyperlink{class_t_smart_pointer_t}{TThread::RunnableP}})));}
+\DoxyCodeLine{00076 }
+\DoxyCodeLine{00077   \textcolor{keywordflow}{if} (QThread::currentThread() == qGuiApp-\/>thread()) \{}
+\DoxyCodeLine{00078     m\_offScreenSurface.reset(\textcolor{keyword}{new} QOffscreenSurface());}
+\DoxyCodeLine{00079     m\_offScreenSurface-\/>setFormat(QSurfaceFormat::defaultFormat());}
+\DoxyCodeLine{00080     m\_offScreenSurface-\/>create();}
+\DoxyCodeLine{00081   \}}
+\DoxyCodeLine{00082 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_custom_style_manager_1_1_style_loader_task_a5873b829af2c6fef514221fe0789768a}\label{class_custom_style_manager_1_1_style_loader_task_a5873b829af2c6fef514221fe0789768a}} 
+\index{CustomStyleManager::StyleLoaderTask@{CustomStyleManager::StyleLoaderTask}!onFinished@{onFinished}}
+\index{onFinished@{onFinished}!CustomStyleManager::StyleLoaderTask@{CustomStyleManager::StyleLoaderTask}}
+\doxysubsubsection{\texorpdfstring{onFinished()}{onFinished()}}
+{\footnotesize\ttfamily void Custom\+Style\+Manager\+::\+Style\+Loader\+Task\+::on\+Finished (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{TThread\+::\+RunnableP}}}]{sender }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The analogous of \mbox{\hyperlink{class_t_thread_1_1_runnable_a0857d4a039557f2853a12203ea854f01}{on\+Started()}} for the \mbox{\hyperlink{class_t_thread_1_1_runnable_a77da4aa600bdb892b55312efcd6e3a21}{finished()}} signal. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_thread_1_1_runnable_ae08796496a74b40c4e1940e386f7926f}{TThread\+::\+Runnable}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00207                              \{}
+\DoxyCodeLine{00208   \textcolor{comment}{// On the main thread...}}
+\DoxyCodeLine{00209   \textcolor{keywordflow}{if} (m\_data.m\_image)  \textcolor{comment}{// Everything went ok}}
+\DoxyCodeLine{00210   \{}
+\DoxyCodeLine{00211     m\_manager-\/>m\_patterns.push\_back(m\_data);}
+\DoxyCodeLine{00212     emit m\_manager-\/>patternAdded();}
+\DoxyCodeLine{00213   \}}
+\DoxyCodeLine{00214 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_custom_style_manager_1_1_style_loader_task_acb5dbd32cf6c8716d982fa273a78271b}\label{class_custom_style_manager_1_1_style_loader_task_acb5dbd32cf6c8716d982fa273a78271b}} 
+\index{CustomStyleManager::StyleLoaderTask@{CustomStyleManager::StyleLoaderTask}!run@{run}}
+\index{run@{run}!CustomStyleManager::StyleLoaderTask@{CustomStyleManager::StyleLoaderTask}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Custom\+Style\+Manager\+::\+Style\+Loader\+Task\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The central code of the task that is executed by a worker thread. 
+
+
+
+Implements \mbox{\hyperlink{class_t_thread_1_1_runnable_ad3b8ee5e7b375bd169f7382fa26b00ef}{TThread\+::\+Runnable}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086                                             \{}
+\DoxyCodeLine{00087   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00088     \textcolor{comment}{// Fetch the level}}
+\DoxyCodeLine{00089     \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}} lr(m\_fp);}
+\DoxyCodeLine{00090     \mbox{\hyperlink{class_t_level_p}{TLevelP}} level = lr-\/>loadInfo();}
+\DoxyCodeLine{00091     \textcolor{keywordflow}{if} (!level || level-\/>getFrameCount() == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{00093     \textcolor{comment}{// Fetch the image of the first frame in the level}}
+\DoxyCodeLine{00094     TLevel::Iterator frameIt = level-\/>begin();}
+\DoxyCodeLine{00095     \textcolor{keywordflow}{if} (frameIt == level-\/>end()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00096     \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} img = lr-\/>getFrameReader(frameIt-\/>first)-\/>load();}
+\DoxyCodeLine{00097 }
+\DoxyCodeLine{00098     \textcolor{comment}{// Process the image}}
+\DoxyCodeLine{00099     \textcolor{keyword}{const} QSize \&qChipSize = m\_manager-\/>getChipSize();}
+\DoxyCodeLine{00100     \mbox{\hyperlink{class_t_dimension_t}{TDimension}} chipSize(qChipSize.width(), qChipSize.height());}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102     \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vimg = img;}
+\DoxyCodeLine{00103     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} rimg = img;}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105     \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras;}
+\DoxyCodeLine{00106 }
+\DoxyCodeLine{00107     QImage *image = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00109     \textcolor{keywordflow}{if} (vimg) \{}
+\DoxyCodeLine{00110       assert(level-\/>getPalette());}
+\DoxyCodeLine{00111       \mbox{\hyperlink{class_t_palette}{TPalette}} *vPalette = level-\/>getPalette();}
+\DoxyCodeLine{00112       assert(vPalette);}
+\DoxyCodeLine{00113       vimg-\/>setPalette(vPalette);}
+\DoxyCodeLine{00114 }
+\DoxyCodeLine{00115 \textcolor{preprocessor}{\#ifdef LINUX}}
+\DoxyCodeLine{00116       \mbox{\hyperlink{class_t_offline_g_l}{TOfflineGL}} *glContext = 0;}
+\DoxyCodeLine{00117       glContext             = TOfflineGL::getStock(chipSize);}
+\DoxyCodeLine{00118       glContext-\/>clear(TPixel32::White);}
+\DoxyCodeLine{00119 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00120       QOpenGLContext *glContext = \textcolor{keyword}{new} QOpenGLContext();}
+\DoxyCodeLine{00121       \textcolor{keywordflow}{if} (QOpenGLContext::currentContext())}
+\DoxyCodeLine{00122         glContext-\/>setShareContext(QOpenGLContext::currentContext());}
+\DoxyCodeLine{00123       glContext-\/>setFormat(QSurfaceFormat::defaultFormat());}
+\DoxyCodeLine{00124       glContext-\/>create();}
+\DoxyCodeLine{00125       glContext-\/>makeCurrent(m\_offScreenSurface.get());}
+\DoxyCodeLine{00126       \textcolor{comment}{// attaching stencil buffer here as some styles use it}}
+\DoxyCodeLine{00127       QOpenGLFramebufferObject fb(}
+\DoxyCodeLine{00128           chipSize.lx, chipSize.ly,}
+\DoxyCodeLine{00129           QOpenGLFramebufferObject::CombinedDepthStencil);}
+\DoxyCodeLine{00130 }
+\DoxyCodeLine{00131       fb.bind();}
+\DoxyCodeLine{00132       \textcolor{comment}{// Draw}}
+\DoxyCodeLine{00133       glViewport(0, 0, chipSize.lx, chipSize.ly);}
+\DoxyCodeLine{00134       glClearColor(1.0, 1.0, 1.0, 1.0);  \textcolor{comment}{// clear with white color}}
+\DoxyCodeLine{00135       glClear(GL\_COLOR\_BUFFER\_BIT);}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137       glMatrixMode(GL\_PROJECTION);}
+\DoxyCodeLine{00138       glLoadIdentity();}
+\DoxyCodeLine{00139       gluOrtho2D(0, chipSize.lx, 0, chipSize.ly);}
+\DoxyCodeLine{00140 }
+\DoxyCodeLine{00141       glMatrixMode(GL\_MODELVIEW);}
+\DoxyCodeLine{00142       glLoadIdentity();}
+\DoxyCodeLine{00143 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145       \mbox{\hyperlink{class_t_rect_t}{TRectD}} bbox = img-\/>\mbox{\hyperlink{class_t_image_ac6a21b84486dec0c86b5b0b3f34be0ef}{getBBox}}();}
+\DoxyCodeLine{00146       \textcolor{keywordtype}{double} scx  = 0.8 * chipSize.lx / bbox.getLx();}
+\DoxyCodeLine{00147       \textcolor{keywordtype}{double} scy  = 0.8 * chipSize.ly / bbox.getLy();}
+\DoxyCodeLine{00148       \textcolor{keywordtype}{double} sc   = std::min(scx, scy);}
+\DoxyCodeLine{00149       \textcolor{keywordtype}{double} dx   = 0.5 * chipSize.lx;}
+\DoxyCodeLine{00150       \textcolor{keywordtype}{double} dy   = 0.5 * chipSize.ly;}
+\DoxyCodeLine{00151 }
+\DoxyCodeLine{00152       \mbox{\hyperlink{class_t_affine}{TAffine}} aff =}
+\DoxyCodeLine{00153           \mbox{\hyperlink{class_t_translation}{TTranslation}}(dx, dy) * \mbox{\hyperlink{class_t_scale}{TScale}}(sc) *}
+\DoxyCodeLine{00154           \mbox{\hyperlink{class_t_translation}{TTranslation}}(-\/0.5 * (bbox.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} + bbox.x1), -\/0.5 * (bbox.y0 + bbox.y1));}
+\DoxyCodeLine{00155       \mbox{\hyperlink{class_t_vector_render_data}{TVectorRenderData}} rd(aff, chipSize, vPalette, 0, \textcolor{keyword}{true});}
+\DoxyCodeLine{00156 }
+\DoxyCodeLine{00157 \textcolor{preprocessor}{\#ifdef LINUX}}
+\DoxyCodeLine{00158       glContext-\/>draw(img, rd);}
+\DoxyCodeLine{00159       \textcolor{comment}{// No need to clone! The received raster already is a copy of the}}
+\DoxyCodeLine{00160       \textcolor{comment}{// context's buffer}}
+\DoxyCodeLine{00161       ras = glContext-\/>getRaster();  \textcolor{comment}{//-\/>clone();}}
+\DoxyCodeLine{00162 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00163       tglDraw(rd, vimg.getPointer());}
+\DoxyCodeLine{00164 }
+\DoxyCodeLine{00165       image = \textcolor{keyword}{new} QImage(fb.toImage().scaled(QSize(chipSize.lx, chipSize.ly),}
+\DoxyCodeLine{00166                                              Qt::IgnoreAspectRatio,}
+\DoxyCodeLine{00167                                              Qt::SmoothTransformation));}
+\DoxyCodeLine{00168       fb.release();}
+\DoxyCodeLine{00169       glContext-\/>deleteLater();}
+\DoxyCodeLine{00170 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00171     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (rimg) \{}
+\DoxyCodeLine{00172       \mbox{\hyperlink{class_t_dimension_t}{TDimension}} size = rimg-\/>getRaster()-\/>getSize();}
+\DoxyCodeLine{00173       \textcolor{keywordflow}{if} (size == chipSize)}
+\DoxyCodeLine{00174         ras = rimg-\/>getRaster()-\/>clone();  \textcolor{comment}{// Yep, this may be necessary}}
+\DoxyCodeLine{00175       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00176         \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} rout(chipSize);}
+\DoxyCodeLine{00177 }
+\DoxyCodeLine{00178         \mbox{\hyperlink{namespace_t_rop_a5e39bc748039afe42001ba44f2d2a073}{TRop::resample}}(rout, rimg-\/>getRaster(),}
+\DoxyCodeLine{00179                        \mbox{\hyperlink{class_t_scale}{TScale}}((\textcolor{keywordtype}{double})chipSize.lx / size.lx,}
+\DoxyCodeLine{00180                               (\textcolor{keywordtype}{double})chipSize.ly / size.ly));}
+\DoxyCodeLine{00181 }
+\DoxyCodeLine{00182         \mbox{\hyperlink{namespace_t_rop_a789f797a79d572d97182478cc9826c8a}{TRop::addBackground}}(rout, TPixel::White);}
+\DoxyCodeLine{00183         ras = rout;}
+\DoxyCodeLine{00184       \}}
+\DoxyCodeLine{00185 \textcolor{preprocessor}{\#ifndef LINUX}}
+\DoxyCodeLine{00186       image = \textcolor{keyword}{new} QImage(chipSize.lx, chipSize.ly, QImage::Format\_RGB32);}
+\DoxyCodeLine{00187       convertRaster32ToImage(ras, image);}
+\DoxyCodeLine{00188 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00189     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00190       assert(!\textcolor{stringliteral}{"{}unsupported type for custom styles!"{}});}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192 \textcolor{preprocessor}{\#ifdef LINUX}}
+\DoxyCodeLine{00193     image = \textcolor{keyword}{new} QImage(chipSize.lx, chipSize.ly, QImage::Format\_RGB32);}
+\DoxyCodeLine{00194     convertRaster32ToImage(ras, image);}
+\DoxyCodeLine{00195 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00196 }
+\DoxyCodeLine{00197     m\_data.m\_patternName = m\_fp.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}();}
+\DoxyCodeLine{00198     m\_data.m\_isVector    = (m\_fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}pli"{}} || m\_fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}svg"{}});}
+\DoxyCodeLine{00199     m\_data.m\_image       = image;}
+\DoxyCodeLine{00200   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00201   \}}
+\DoxyCodeLine{00202 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00387}{TRop\+::add\+Background()}}, \mbox{\hyperlink{class_t_image_ac6a21b84486dec0c86b5b0b3f34be0ef}{TImage\+::get\+BBox()}}, \mbox{\hyperlink{l04648}{TRop\+::resample()}}, and \mbox{\hyperlink{l00557}{TRect\+T$<$ T $>$\+::x0}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/stylemanager.\+cpp\end{DoxyCompactItemize}

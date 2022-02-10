@@ -1,0 +1,221 @@
+\hypertarget{class_area_filler}{}\doxysection{Area\+Filler Class Reference}
+\label{class_area_filler}\index{AreaFiller@{AreaFiller}}
+
+
+{\ttfamily \#include $<$fill.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_area_filler_a656329ffd038285beb10898f52987347}{Area\+Filler}} (const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}} \&ras)
+\item 
+bool \mbox{\hyperlink{class_area_filler_a1983efa1aa8d315119e0e62924bcf471}{rect\+Fill}} (const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&rect, int color, bool only\+Unfilled, bool fill\+Paints, bool fill\+Inks)
+\item 
+void \mbox{\hyperlink{class_area_filler_adf8328680724a2da5fa98c8dcfc571e1}{stroke\+Fill}} (\mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$s, int color, bool only\+Unfilled, bool fill\+Paints, bool fill\+Inks)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The class \mbox{\hyperlink{class_area_filler}{Area\+Filler}} allows to fill a raster area, delimited by rect or spline.
+
+The class provides two methods\+: one to fill a rect, \mbox{\hyperlink{class_area_filler_a1983efa1aa8d315119e0e62924bcf471}{rect\+Fill()}}, one to fill a spline, defined by {\bfseries{\mbox{\hyperlink{class_t_stroke}{TStroke}}}}, \mbox{\hyperlink{class_area_filler_adf8328680724a2da5fa98c8dcfc571e1}{stroke\+Fill()}}, in a raster {\bfseries{TRaster\+CM32P}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_area_filler_a656329ffd038285beb10898f52987347}\label{class_area_filler_a656329ffd038285beb10898f52987347}} 
+\index{AreaFiller@{AreaFiller}!AreaFiller@{AreaFiller}}
+\index{AreaFiller@{AreaFiller}!AreaFiller@{AreaFiller}}
+\doxysubsubsection{\texorpdfstring{AreaFiller()}{AreaFiller()}}
+{\footnotesize\ttfamily Area\+Filler\+::\+Area\+Filler (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}} \&}]{ras }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00121     : m\_ras(ras)}
+\DoxyCodeLine{00122     , m\_bounds(ras-\/>getBounds())}
+\DoxyCodeLine{00123     , m\_pixels(ras-\/>pixels())}
+\DoxyCodeLine{00124     , m\_wrap(ras-\/>getWrap())}
+\DoxyCodeLine{00125     , m\_color(0) \{}
+\DoxyCodeLine{00126   m\_ras-\/>lock();}
+\DoxyCodeLine{00127 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_area_filler_a9b3b6434da992f67f7dbe1ca22b5ffb3}\label{class_area_filler_a9b3b6434da992f67f7dbe1ca22b5ffb3}} 
+\index{AreaFiller@{AreaFiller}!````~AreaFiller@{$\sim$AreaFiller}}
+\index{````~AreaFiller@{$\sim$AreaFiller}!AreaFiller@{AreaFiller}}
+\doxysubsubsection{\texorpdfstring{$\sim$AreaFiller()}{~AreaFiller()}}
+{\footnotesize\ttfamily Area\+Filler\+::$\sim$\+Area\+Filler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00131 \{ m\_ras-\/>unlock(); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_area_filler_a1983efa1aa8d315119e0e62924bcf471}\label{class_area_filler_a1983efa1aa8d315119e0e62924bcf471}} 
+\index{AreaFiller@{AreaFiller}!rectFill@{rectFill}}
+\index{rectFill@{rectFill}!AreaFiller@{AreaFiller}}
+\doxysubsubsection{\texorpdfstring{rectFill()}{rectFill()}}
+{\footnotesize\ttfamily bool Area\+Filler\+::rect\+Fill (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&}]{rect,  }\item[{int}]{color,  }\item[{bool}]{only\+Unfilled,  }\item[{bool}]{fill\+Paints,  }\item[{bool}]{fill\+Inks }\end{DoxyParamCaption})}
+
+Fill {\bfseries{rect}} in raster with {\bfseries{color}}. ~\newline
+ If {\bfseries{fill\+Paints}} is false fill only ink in rect; else if {\bfseries{fill\+Inks}} is false fill only paint delimited by ink; else fill ink and paint in rect. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00162                                                           \{}
+\DoxyCodeLine{00163   \textcolor{comment}{// Viene trattato il caso fillInks}}
+\DoxyCodeLine{00164   \textcolor{comment}{/*-\/ FillInkのみの場合 -\/*/}}
+\DoxyCodeLine{00165   \textcolor{keywordflow}{if} (!fillPaints) \{}
+\DoxyCodeLine{00166     assert(fillInks);}
+\DoxyCodeLine{00167     assert(m\_ras-\/>getBounds().contains(rect));}
+\DoxyCodeLine{00168     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = rect.y0; y <= rect.y1; y++) \{}
+\DoxyCodeLine{00169       \mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}} *pix = m\_ras-\/>pixels(y) + rect.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}};}
+\DoxyCodeLine{00170       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = rect.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}; x <= rect.x1; x++, pix++) pix-\/>setInk(color);}
+\DoxyCodeLine{00171     \}}
+\DoxyCodeLine{00172     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00173   \}}
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00175   \mbox{\hyperlink{class_t_rect_t}{TRect}} r = m\_bounds * rect;}
+\DoxyCodeLine{00176 }
+\DoxyCodeLine{00177   \textcolor{keywordtype}{int} dx = r.x1 -\/ r.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}};}
+\DoxyCodeLine{00178   \textcolor{keywordtype}{int} dy = (r.y1 -\/ r.y0) * m\_wrap;}
+\DoxyCodeLine{00179   \textcolor{keywordflow}{if} (dx < 2 || dy < 2)  \textcolor{comment}{// rect degenere(area contenuta nulla), skippo.}}
+\DoxyCodeLine{00180     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00181 }
+\DoxyCodeLine{00182   std::vector<int> frameSeed(2 * (r.getLx() + r.getLy() -\/ 2));}
+\DoxyCodeLine{00183 }
+\DoxyCodeLine{00184   \textcolor{keywordtype}{int} x, y, count1, count2;}
+\DoxyCodeLine{00185   \textcolor{comment}{/*-\/ ptrをRect範囲のスタート地点に移動 -\/*/}}
+\DoxyCodeLine{00186   Pixel *ptr = m\_pixels + r.y0 * m\_wrap + r.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}};}
+\DoxyCodeLine{00187   count1     = 0;}
+\DoxyCodeLine{00188   count2     = r.y1 -\/ r.y0 + 1;}
+\DoxyCodeLine{00189 }
+\DoxyCodeLine{00190   \textcolor{comment}{// Se il rettangolo non contiene il bordo del raster e se tutti i pixels}}
+\DoxyCodeLine{00191   \textcolor{comment}{// contenuti nel rettangolo sono pure paint non deve fare nulla!}}
+\DoxyCodeLine{00192   \textcolor{keywordflow}{if} (!rect.contains(m\_bounds) \&\& areRectPixelsPurePaint(m\_pixels, r, m\_wrap))}
+\DoxyCodeLine{00193     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00194 }
+\DoxyCodeLine{00195   \textcolor{comment}{// Viene riempito frameSeed con tutti i paint delle varie aree del rettangolo}}
+\DoxyCodeLine{00196   \textcolor{comment}{// di contorno.}}
+\DoxyCodeLine{00197   \textcolor{comment}{// Viene verificato se i pixels del rettangolo sono tutti pure paint.}}
+\DoxyCodeLine{00198   \textcolor{comment}{/*-\/ 輪郭のPaintのIDをframeseed内に格納 -\/*/}}
+\DoxyCodeLine{00199   \textcolor{keywordflow}{for} (y = r.y0; y <= r.y1; y++, ptr += m\_wrap, count1++, count2++) \{}
+\DoxyCodeLine{00200     \textcolor{keywordflow}{if} (r.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} > 0) frameSeed[count1] = ptr-\/>getPaint();}
+\DoxyCodeLine{00201     \textcolor{keywordflow}{if} (r.x1 < m\_ras-\/>getLx() -\/ 1) frameSeed[count2] = (ptr + dx)-\/>getPaint();}
+\DoxyCodeLine{00202   \}}
+\DoxyCodeLine{00203   ptr    = m\_pixels + r.y0 * m\_wrap + r.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} + 1;}
+\DoxyCodeLine{00204   count1 = count2;}
+\DoxyCodeLine{00205   count2 = count1 + r.x1 -\/ r.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} -\/ 1;}
+\DoxyCodeLine{00206   \textcolor{keywordflow}{for} (x = r.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} + 1; x < r.x1; x++, ptr++, count1++, count2++) \{}
+\DoxyCodeLine{00207     \textcolor{keywordflow}{if} (r.y0 > 0) frameSeed[count1] = ptr-\/>getPaint();}
+\DoxyCodeLine{00208     \textcolor{keywordflow}{if} (r.y1 < m\_ras-\/>getLy() -\/ 1) frameSeed[count2] = (ptr + dy)-\/>getPaint();}
+\DoxyCodeLine{00209   \}}
+\DoxyCodeLine{00210   assert(count2 == 2 * (r.getLx() + r.getLy() -\/ 2));}
+\DoxyCodeLine{00211 }
+\DoxyCodeLine{00212   \textcolor{comment}{// Viene fillato l'interno e il bordo del rettangolo rect con color}}
+\DoxyCodeLine{00213   Pixel *pix = m\_pixels + r.y0 * m\_wrap + r.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}};}
+\DoxyCodeLine{00214   \textcolor{keywordflow}{if} (onlyUnfilled)}
+\DoxyCodeLine{00215     \textcolor{keywordflow}{for} (y = r.y0; y <= r.y1; y++, pix += m\_wrap -\/ dx -\/ 1) \{}
+\DoxyCodeLine{00216       \textcolor{keywordflow}{for} (x = r.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}; x <= r.x1; x++, pix++) \{}
+\DoxyCodeLine{00217         \textcolor{keywordflow}{if} (pix-\/>getPaint() == 0)  \textcolor{comment}{// BackgroundStyle}}
+\DoxyCodeLine{00218           pix-\/>setPaint(color);}
+\DoxyCodeLine{00219         \textcolor{keywordflow}{if} (fillInks) pix-\/>setInk(color);}
+\DoxyCodeLine{00220       \}}
+\DoxyCodeLine{00221     \}}
+\DoxyCodeLine{00222   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00223     \textcolor{keywordflow}{for} (y = r.y0; y <= r.y1; y++, pix += m\_wrap -\/ dx -\/ 1) \{}
+\DoxyCodeLine{00224       \textcolor{keywordflow}{for} (x = r.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}; x <= r.x1; x++, pix++) \{}
+\DoxyCodeLine{00225         pix-\/>setPaint(color);}
+\DoxyCodeLine{00226         \textcolor{keywordflow}{if} (fillInks) pix-\/>setInk(color);}
+\DoxyCodeLine{00227       \}}
+\DoxyCodeLine{00228     \}}
+\DoxyCodeLine{00229 }
+\DoxyCodeLine{00230   \textcolor{comment}{// Vengono fillati i pixel del rettangolo con i paint (mantenuti in frameSeed)}}
+\DoxyCodeLine{00231   \textcolor{comment}{// che}}
+\DoxyCodeLine{00232   \textcolor{comment}{// c'erano prima di fillare l'intero rettangolo, in questo modo si riportano}}
+\DoxyCodeLine{00233   \textcolor{comment}{// al colore originale le aree che non sono chiuse e non dovevano essere}}
+\DoxyCodeLine{00234   \textcolor{comment}{// fillate.}}
+\DoxyCodeLine{00235   count1 = 0;}
+\DoxyCodeLine{00236   \mbox{\hyperlink{class_fill_parameters}{FillParameters}} params;}
+\DoxyCodeLine{00237   \textcolor{comment}{// in order to make the paint to protlude behind the line}}
+\DoxyCodeLine{00238   params.m\_prevailing = \textcolor{keyword}{false};}
+\DoxyCodeLine{00239   \textcolor{keywordflow}{if} (r.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} > 0)}
+\DoxyCodeLine{00240     \textcolor{keywordflow}{for} (y = r.y0; y <= r.y1; y++) \{}
+\DoxyCodeLine{00241       params.m\_p       = \mbox{\hyperlink{class_t_point_t}{TPoint}}(r.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}, y);}
+\DoxyCodeLine{00242       params.m\_styleId = frameSeed[count1++];}
+\DoxyCodeLine{00243       fill(m\_ras, params);}
+\DoxyCodeLine{00244     \}}
+\DoxyCodeLine{00245   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00246     count1 += r.y1 -\/ r.y0 + 1;}
+\DoxyCodeLine{00247 }
+\DoxyCodeLine{00248   \textcolor{keywordflow}{if} (r.x1 < m\_ras-\/>getLx() -\/ 1)}
+\DoxyCodeLine{00249     \textcolor{keywordflow}{for} (y = r.y0; y <= r.y1; y++) \{}
+\DoxyCodeLine{00250       params.m\_p       = \mbox{\hyperlink{class_t_point_t}{TPoint}}(r.x1, y);}
+\DoxyCodeLine{00251       params.m\_styleId = frameSeed[count1++];}
+\DoxyCodeLine{00252       fill(m\_ras, params);}
+\DoxyCodeLine{00253     \}}
+\DoxyCodeLine{00254   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00255     count1 += r.y1 -\/ r.y0 + 1;}
+\DoxyCodeLine{00256 }
+\DoxyCodeLine{00257   \textcolor{keywordflow}{if} (r.y0 > 0)}
+\DoxyCodeLine{00258     \textcolor{keywordflow}{for} (x = r.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} + 1; x < r.x1; x++) \{}
+\DoxyCodeLine{00259       params.m\_p       = \mbox{\hyperlink{class_t_point_t}{TPoint}}(x, r.y0);}
+\DoxyCodeLine{00260       params.m\_styleId = frameSeed[count1++];}
+\DoxyCodeLine{00261       fill(m\_ras, params);}
+\DoxyCodeLine{00262     \}}
+\DoxyCodeLine{00263   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00264     count1 += r.x1 -\/ r.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} -\/ 1;}
+\DoxyCodeLine{00265 }
+\DoxyCodeLine{00266   \textcolor{keywordflow}{if} (r.y1 < m\_ras-\/>getLy() -\/ 1)}
+\DoxyCodeLine{00267     \textcolor{keywordflow}{for} (x = r.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} + 1; x < r.x1; x++) \{}
+\DoxyCodeLine{00268       params.m\_p       = \mbox{\hyperlink{class_t_point_t}{TPoint}}(x, r.y1);}
+\DoxyCodeLine{00269       params.m\_styleId = frameSeed[count1++];}
+\DoxyCodeLine{00270       fill(m\_ras, params);}
+\DoxyCodeLine{00271     \}}
+\DoxyCodeLine{00272   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00273 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00557}{TRect\+T$<$ T $>$\+::x0}}.
+
+\mbox{\Hypertarget{class_area_filler_adf8328680724a2da5fa98c8dcfc571e1}\label{class_area_filler_adf8328680724a2da5fa98c8dcfc571e1}} 
+\index{AreaFiller@{AreaFiller}!strokeFill@{strokeFill}}
+\index{strokeFill@{strokeFill}!AreaFiller@{AreaFiller}}
+\doxysubsubsection{\texorpdfstring{strokeFill()}{strokeFill()}}
+{\footnotesize\ttfamily void Area\+Filler\+::stroke\+Fill (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$}]{s,  }\item[{int}]{color,  }\item[{bool}]{only\+Unfilled,  }\item[{bool}]{fill\+Paints,  }\item[{bool}]{fill\+Inks }\end{DoxyParamCaption})}
+
+Fill the raster region contained in spline {\bfseries{s}} with {\bfseries{color}}. ~\newline
+ If {\bfseries{fill\+Paints}} is false fill only ink in region contained in spline; else if {\bfseries{fill\+Inks}} is false fill only paint delimited by ink; else fill ink and paint in region contained in spline. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00278                                                             \{}
+\DoxyCodeLine{00279   stroke-\/>transform(\mbox{\hyperlink{class_t_translation}{TTranslation}}(convert(m\_ras-\/>getCenter())));}
+\DoxyCodeLine{00280   m\_ras-\/>lock();}
+\DoxyCodeLine{00281 }
+\DoxyCodeLine{00282   std::vector<std::pair<TPoint, int>> seeds;}
+\DoxyCodeLine{00283   computeSeeds(m\_ras, stroke, seeds);}
+\DoxyCodeLine{00284 }
+\DoxyCodeLine{00285   \mbox{\hyperlink{class_t_vector_image}{TVectorImage}} app;}
+\DoxyCodeLine{00286   app.\mbox{\hyperlink{class_t_vector_image_ae79fbf2aec0f00876382f920227bfa05}{addStroke}}(stroke);}
+\DoxyCodeLine{00287   app.findRegions();}
+\DoxyCodeLine{00288   \textcolor{keywordflow}{for} (UINT i = 0; i < app.\mbox{\hyperlink{class_t_vector_image_a12e56e674828c172749d5bc1855bc977}{getRegionCount}}(); i++)}
+\DoxyCodeLine{00289     fillArea(m\_ras, app.\mbox{\hyperlink{class_t_vector_image_a17f9e44c72c82c54d0cf9fefed85e12f}{getRegion}}(i), colorId, onlyUnfilled, fillPaints,}
+\DoxyCodeLine{00290              fillInks);}
+\DoxyCodeLine{00291   app.\mbox{\hyperlink{class_t_vector_image_a33a9f3cddc17630c35c8bf62e9989cc2}{removeStroke}}(0);}
+\DoxyCodeLine{00292 }
+\DoxyCodeLine{00293   stroke-\/>\mbox{\hyperlink{class_t_stroke_a919f059066dc8dcabeb57ece1775d590}{transform}}(\mbox{\hyperlink{class_t_translation}{TTranslation}}(convert(-\/m\_ras-\/>getCenter())));}
+\DoxyCodeLine{00294   restoreColors(m\_ras, seeds);}
+\DoxyCodeLine{00295   m\_ras-\/>unlock();}
+\DoxyCodeLine{00296 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00150}{TVector\+Image\+::add\+Stroke()}}, \mbox{\hyperlink{l00406}{TVector\+Image\+::get\+Region()}}, \mbox{\hyperlink{l00399}{TVector\+Image\+::get\+Region\+Count()}}, \mbox{\hyperlink{l00274}{TVector\+Image\+::remove\+Stroke()}}, and \mbox{\hyperlink{l02292}{TStroke\+::transform()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/fill.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/fillutil.\+cpp\end{DoxyCompactItemize}

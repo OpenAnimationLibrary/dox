@@ -1,0 +1,87 @@
+\hypertarget{classmosaic_1_1_mask_cell_builder}{}\doxysection{mosaic\+::Mask\+Cell\+Builder\texorpdfstring{$<$}{<} PIXEL, GRAY \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classmosaic_1_1_mask_cell_builder}\index{mosaic::MaskCellBuilder$<$ PIXEL, GRAY $>$@{mosaic::MaskCellBuilder$<$ PIXEL, GRAY $>$}}
+Inheritance diagram for mosaic\+::Mask\+Cell\+Builder\texorpdfstring{$<$}{<} PIXEL, GRAY \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classmosaic_1_1_mask_cell_builder}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmosaic_1_1_mask_cell_builder_a2a21ab68fc65189ad76313f2ecc12be6}{Mask\+Cell\+Builder}} (int cell\+Lx, int cell\+Ly, double radius, int wrap)
+\item 
+void \mbox{\hyperlink{classmosaic_1_1_mask_cell_builder_a4a40d1f3675becccec8c2e1557fae493}{do\+Cell}} (PIXEL $\ast$cell\+Buffer, const PIXEL \&cell\+Color, const PIXEL \&bg\+Color, int x0, int y0, int x1, int y1) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_raster_p_t}{TRaster\+PT}}$<$ GRAY $>$ \mbox{\hyperlink{classmosaic_1_1_mask_cell_builder_ab9488cd96cd0c643ffacb2db7506eb71}{m\+\_\+mask}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename PIXEL, typename GRAY$>$\newline
+class mosaic\+::\+Mask\+Cell\+Builder$<$ PIXEL, GRAY $>$}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmosaic_1_1_mask_cell_builder_a2a21ab68fc65189ad76313f2ecc12be6}\label{classmosaic_1_1_mask_cell_builder_a2a21ab68fc65189ad76313f2ecc12be6}} 
+\index{mosaic::MaskCellBuilder$<$ PIXEL, GRAY $>$@{mosaic::MaskCellBuilder$<$ PIXEL, GRAY $>$}!MaskCellBuilder@{MaskCellBuilder}}
+\index{MaskCellBuilder@{MaskCellBuilder}!mosaic::MaskCellBuilder$<$ PIXEL, GRAY $>$@{mosaic::MaskCellBuilder$<$ PIXEL, GRAY $>$}}
+\doxysubsubsection{\texorpdfstring{MaskCellBuilder()}{MaskCellBuilder()}}
+{\footnotesize\ttfamily template$<$typename PIXEL , typename GRAY $>$ \\
+\mbox{\hyperlink{classmosaic_1_1_mask_cell_builder}{mosaic\+::\+Mask\+Cell\+Builder}}$<$ PIXEL, GRAY $>$\+::\+Mask\+Cell\+Builder (\begin{DoxyParamCaption}\item[{int}]{cell\+Lx,  }\item[{int}]{cell\+Ly,  }\item[{double}]{radius,  }\item[{int}]{wrap }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086       : CellBuilder<PIXEL>(cellLx, cellLy, radius, wrap) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmosaic_1_1_mask_cell_builder_a4a40d1f3675becccec8c2e1557fae493}\label{classmosaic_1_1_mask_cell_builder_a4a40d1f3675becccec8c2e1557fae493}} 
+\index{mosaic::MaskCellBuilder$<$ PIXEL, GRAY $>$@{mosaic::MaskCellBuilder$<$ PIXEL, GRAY $>$}!doCell@{doCell}}
+\index{doCell@{doCell}!mosaic::MaskCellBuilder$<$ PIXEL, GRAY $>$@{mosaic::MaskCellBuilder$<$ PIXEL, GRAY $>$}}
+\doxysubsubsection{\texorpdfstring{doCell()}{doCell()}}
+{\footnotesize\ttfamily template$<$typename PIXEL , typename GRAY $>$ \\
+void \mbox{\hyperlink{classmosaic_1_1_mask_cell_builder}{mosaic\+::\+Mask\+Cell\+Builder}}$<$ PIXEL, GRAY $>$\+::do\+Cell (\begin{DoxyParamCaption}\item[{PIXEL $\ast$}]{cell\+Buffer,  }\item[{const PIXEL \&}]{cell\+Color,  }\item[{const PIXEL \&}]{bg\+Color,  }\item[{int}]{x0,  }\item[{int}]{y0,  }\item[{int}]{x1,  }\item[{int}]{y1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classmosaic_1_1_cell_builder}{mosaic\+::\+Cell\+Builder$<$ PIXEL $>$}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00089                                                        \{}
+\DoxyCodeLine{00090     \textcolor{comment}{// Apply the mask to the cell. 0 pixels are bgColored, GRAY::maxChannelValue}}
+\DoxyCodeLine{00091     \textcolor{comment}{// ones are cellColored.}}
+\DoxyCodeLine{00092     PIXEL *pix, *line    = cellBuffer, *lineEnd;}
+\DoxyCodeLine{00093     GRAY *grPix, *grLine = m\_mask-\/>pixels(y0) + x0, *grLineEnd;}
+\DoxyCodeLine{00094     \textcolor{keywordtype}{int} x, y, grWrap = m\_mask-\/>getWrap(), lx = x1 -\/ x0;}
+\DoxyCodeLine{00095     \textcolor{keywordflow}{for} (y = y0; y < y1; ++y, line += this-\/>m\_wrap, grLine += grWrap) \{}
+\DoxyCodeLine{00096       lineEnd   = line + lx;}
+\DoxyCodeLine{00097       grLineEnd = grLine + lx;}
+\DoxyCodeLine{00098       \textcolor{keywordflow}{for} (x = x0, pix = line, grPix = grLine; x < x1; ++x, ++pix, ++grPix)}
+\DoxyCodeLine{00099         *pix = blend(bgColor, cellColor,}
+\DoxyCodeLine{00100                      grPix-\/>value / (\textcolor{keywordtype}{double})GRAY::maxChannelValue);}
+\DoxyCodeLine{00101     \}}
+\DoxyCodeLine{00102   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classmosaic_1_1_mask_cell_builder_ab9488cd96cd0c643ffacb2db7506eb71}\label{classmosaic_1_1_mask_cell_builder_ab9488cd96cd0c643ffacb2db7506eb71}} 
+\index{mosaic::MaskCellBuilder$<$ PIXEL, GRAY $>$@{mosaic::MaskCellBuilder$<$ PIXEL, GRAY $>$}!m\_mask@{m\_mask}}
+\index{m\_mask@{m\_mask}!mosaic::MaskCellBuilder$<$ PIXEL, GRAY $>$@{mosaic::MaskCellBuilder$<$ PIXEL, GRAY $>$}}
+\doxysubsubsection{\texorpdfstring{m\_mask}{m\_mask}}
+{\footnotesize\ttfamily template$<$typename PIXEL , typename GRAY $>$ \\
+\mbox{\hyperlink{class_t_raster_p_t}{TRaster\+PT}}$<$GRAY$>$ \mbox{\hyperlink{classmosaic_1_1_mask_cell_builder}{mosaic\+::\+Mask\+Cell\+Builder}}$<$ PIXEL, GRAY $>$\+::m\+\_\+mask\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/mosaicfx.\+cpp\end{DoxyCompactItemize}

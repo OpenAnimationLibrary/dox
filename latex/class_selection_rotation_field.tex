@@ -1,0 +1,117 @@
+\hypertarget{class_selection_rotation_field}{}\doxysection{Selection\+Rotation\+Field Class Reference}
+\label{class_selection_rotation_field}\index{SelectionRotationField@{SelectionRotationField}}
+Inheritance diagram for Selection\+Rotation\+Field\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_selection_rotation_field}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_selection_rotation_field_aed5cd94e07389f46baa5f8882d5595ca}{Selection\+Rotation\+Field}} (\mbox{\hyperlink{class_selection_tool}{Selection\+Tool}} $\ast$tool, QString name)
+\item 
+void \mbox{\hyperlink{class_selection_rotation_field_a547a4e87e6df506424e00ada9a32d878}{update\+Status}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_selection_rotation_field_a9b6c7ff5bc0cb94c8d6c67862864acc3}{on\+Change}} (\mbox{\hyperlink{class_t_measured_value}{TMeasured\+Value}} $\ast$fld, bool add\+To\+Undo=true)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_selection_rotation_field_aed5cd94e07389f46baa5f8882d5595ca}\label{class_selection_rotation_field_aed5cd94e07389f46baa5f8882d5595ca}} 
+\index{SelectionRotationField@{SelectionRotationField}!SelectionRotationField@{SelectionRotationField}}
+\index{SelectionRotationField@{SelectionRotationField}!SelectionRotationField@{SelectionRotationField}}
+\doxysubsubsection{\texorpdfstring{SelectionRotationField()}{SelectionRotationField()}}
+{\footnotesize\ttfamily Selection\+Rotation\+Field\+::\+Selection\+Rotation\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_selection_tool}{Selection\+Tool}} $\ast$}]{tool,  }\item[{QString}]{name }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01331     : \mbox{\hyperlink{class_measured_value_field}{MeasuredValueField}}(0, name), m\_tool(tool) \{}
+\DoxyCodeLine{01332   \textcolor{keywordtype}{bool} ret = connect(\textcolor{keyword}{this}, SIGNAL(measuredValueChanged(\mbox{\hyperlink{class_t_measured_value}{TMeasuredValue}} *, \textcolor{keywordtype}{bool})),}
+\DoxyCodeLine{01333                      SLOT(onChange(\mbox{\hyperlink{class_t_measured_value}{TMeasuredValue}} *, \textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{01334   assert(ret);}
+\DoxyCodeLine{01335   setMeasure(\textcolor{stringliteral}{"{}angle"{}});}
+\DoxyCodeLine{01336   updateStatus();}
+\DoxyCodeLine{01337 }
+\DoxyCodeLine{01338   setMaximumWidth(getMaximumWidthForSelectionToolField(\textcolor{keyword}{this}));}
+\DoxyCodeLine{01339 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_rotation_field_a65dd589a154ca7b7d9a8993dd0c9d11a}\label{class_selection_rotation_field_a65dd589a154ca7b7d9a8993dd0c9d11a}} 
+\index{SelectionRotationField@{SelectionRotationField}!````~SelectionRotationField@{$\sim$SelectionRotationField}}
+\index{````~SelectionRotationField@{$\sim$SelectionRotationField}!SelectionRotationField@{SelectionRotationField}}
+\doxysubsubsection{\texorpdfstring{$\sim$SelectionRotationField()}{~SelectionRotationField()}}
+{\footnotesize\ttfamily Selection\+Rotation\+Field\+::$\sim$\+Selection\+Rotation\+Field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00519 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_selection_rotation_field_a9b6c7ff5bc0cb94c8d6c67862864acc3}\label{class_selection_rotation_field_a9b6c7ff5bc0cb94c8d6c67862864acc3}} 
+\index{SelectionRotationField@{SelectionRotationField}!onChange@{onChange}}
+\index{onChange@{onChange}!SelectionRotationField@{SelectionRotationField}}
+\doxysubsubsection{\texorpdfstring{onChange}{onChange}}
+{\footnotesize\ttfamily void Selection\+Rotation\+Field\+::on\+Change (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_measured_value}{TMeasured\+Value}} $\ast$}]{fld,  }\item[{bool}]{add\+To\+Undo = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01343                                                                          \{}
+\DoxyCodeLine{01344   \textcolor{keywordflow}{if} (!m\_tool || !m\_tool-\/>isEnabled() ||}
+\DoxyCodeLine{01345       (m\_tool-\/>isSelectionEmpty() \&\& !m\_tool-\/>isLevelType()))}
+\DoxyCodeLine{01346     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01347 }
+\DoxyCodeLine{01348   \mbox{\hyperlink{class_drag_selection_tool_1_1_drag_tool}{DragSelectionTool::DragTool}} *rotationTool = createNewRotationTool(m\_tool);}
+\DoxyCodeLine{01349 }
+\DoxyCodeLine{01350   \mbox{\hyperlink{struct_drag_selection_tool_1_1_deform_values}{DragSelectionTool::DeformValues}} \&deformValues = m\_tool-\/>m\_deformValues;}
+\DoxyCodeLine{01351   \textcolor{keywordtype}{double} p                                      = getValue();}
+\DoxyCodeLine{01352 }
+\DoxyCodeLine{01353   \mbox{\hyperlink{class_t_affine}{TAffine}} aff =}
+\DoxyCodeLine{01354       \mbox{\hyperlink{class_t_rotation}{TRotation}}(m\_tool-\/>getCenter(), p -\/ deformValues.m\_rotationAngle);}
+\DoxyCodeLine{01355 }
+\DoxyCodeLine{01356   deformValues.m\_rotationAngle = p;  \textcolor{comment}{// Instruction order is relevant here}}
+\DoxyCodeLine{01357   rotationTool-\/>transform(aff, p -\/ deformValues.m\_rotationAngle);  \textcolor{comment}{//}}
+\DoxyCodeLine{01358 }
+\DoxyCodeLine{01359   \textcolor{keywordflow}{if} (!m\_tool-\/>isLevelType() \&\& addToUndo) rotationTool-\/>addTransformUndo();}
+\DoxyCodeLine{01360 }
+\DoxyCodeLine{01361   setCursorPosition(0);}
+\DoxyCodeLine{01362 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_rotation_field_a547a4e87e6df506424e00ada9a32d878}\label{class_selection_rotation_field_a547a4e87e6df506424e00ada9a32d878}} 
+\index{SelectionRotationField@{SelectionRotationField}!updateStatus@{updateStatus}}
+\index{updateStatus@{updateStatus}!SelectionRotationField@{SelectionRotationField}}
+\doxysubsubsection{\texorpdfstring{updateStatus()}{updateStatus()}}
+{\footnotesize\ttfamily void Selection\+Rotation\+Field\+::update\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01366                                           \{}
+\DoxyCodeLine{01367   \textcolor{keywordflow}{if} (!m\_tool || !m\_tool-\/>isSelectionEditable() ||}
+\DoxyCodeLine{01368       (m\_tool-\/>isSelectionEmpty() \&\& !m\_tool-\/>isLevelType())) \{}
+\DoxyCodeLine{01369     setValue(0);}
+\DoxyCodeLine{01370     setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{01371     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01372   \}}
+\DoxyCodeLine{01373   setDisabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{01374   setValue(m\_tool-\/>m\_deformValues.m\_rotationAngle);}
+\DoxyCodeLine{01375   setCursorPosition(0);}
+\DoxyCodeLine{01376 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptionscontrols.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptionscontrols.\+cpp\end{DoxyCompactItemize}

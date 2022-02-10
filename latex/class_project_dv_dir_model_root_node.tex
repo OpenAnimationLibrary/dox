@@ -1,0 +1,91 @@
+\hypertarget{class_project_dv_dir_model_root_node}{}\doxysection{Project\+Dv\+Dir\+Model\+Root\+Node Class Reference}
+\label{class_project_dv_dir_model_root_node}\index{ProjectDvDirModelRootNode@{ProjectDvDirModelRootNode}}
+Inheritance diagram for Project\+Dv\+Dir\+Model\+Root\+Node\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_project_dv_dir_model_root_node}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_project_dv_dir_model_root_node_a056f0ec40de10d987e35cf754e36c03b}{refresh\+Children}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_project_dv_dir_model_root_node_ae2220be5c2f7a6c350c2d977d69dda0c}\label{class_project_dv_dir_model_root_node_ae2220be5c2f7a6c350c2d977d69dda0c}} 
+\index{ProjectDvDirModelRootNode@{ProjectDvDirModelRootNode}!ProjectDvDirModelRootNode@{ProjectDvDirModelRootNode}}
+\index{ProjectDvDirModelRootNode@{ProjectDvDirModelRootNode}!ProjectDvDirModelRootNode@{ProjectDvDirModelRootNode}}
+\doxysubsubsection{\texorpdfstring{ProjectDvDirModelRootNode()}{ProjectDvDirModelRootNode()}}
+{\footnotesize\ttfamily Project\+Dv\+Dir\+Model\+Root\+Node\+::\+Project\+Dv\+Dir\+Model\+Root\+Node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00089     : \mbox{\hyperlink{class_dv_dir_model_node}{DvDirModelNode}}(0, L\textcolor{stringliteral}{"{}Root"{}}) \{}
+\DoxyCodeLine{00090   m\_nodeType = \textcolor{stringliteral}{"{}Root"{}};}
+\DoxyCodeLine{00091 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_project_dv_dir_model_root_node_a056f0ec40de10d987e35cf754e36c03b}\label{class_project_dv_dir_model_root_node_a056f0ec40de10d987e35cf754e36c03b}} 
+\index{ProjectDvDirModelRootNode@{ProjectDvDirModelRootNode}!refreshChildren@{refreshChildren}}
+\index{refreshChildren@{refreshChildren}!ProjectDvDirModelRootNode@{ProjectDvDirModelRootNode}}
+\doxysubsubsection{\texorpdfstring{refreshChildren()}{refreshChildren()}}
+{\footnotesize\ttfamily void Project\+Dv\+Dir\+Model\+Root\+Node\+::refresh\+Children (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_dv_dir_model_node}{Dv\+Dir\+Model\+Node}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00095                                                 \{}
+\DoxyCodeLine{00096   m\_childrenValid = \textcolor{keyword}{true};}
+\DoxyCodeLine{00097   \textcolor{keywordflow}{if} (m\_children.empty()) \{}
+\DoxyCodeLine{00098     \mbox{\hyperlink{class_t_project_manager}{TProjectManager}} *pm = \mbox{\hyperlink{class_t_project_manager_a150ca0d6e2eb171b8117b0c5f03dbfad}{TProjectManager::instance}}();}
+\DoxyCodeLine{00099     std::vector<TFilePath> projectRoots;}
+\DoxyCodeLine{00100     pm-\/>getProjectRoots(projectRoots);}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00103     \textcolor{keywordflow}{for} (i = 0; i < (int)projectRoots.size(); i++) \{}
+\DoxyCodeLine{00104       \mbox{\hyperlink{class_t_file_path}{TFilePath}} projectRoot = projectRoots[i];}
+\DoxyCodeLine{00105       std::wstring rootDir  = projectRoot.getWideString();}
+\DoxyCodeLine{00106       \mbox{\hyperlink{class_project_dv_dir_model_special_file_folder_node}{ProjectDvDirModelSpecialFileFolderNode}} *projectRootNode =}
+\DoxyCodeLine{00107           \textcolor{keyword}{new} \mbox{\hyperlink{class_project_dv_dir_model_special_file_folder_node}{ProjectDvDirModelSpecialFileFolderNode}}(}
+\DoxyCodeLine{00108               \textcolor{keyword}{this}, L\textcolor{stringliteral}{"{}Project root ("{}} + rootDir + L\textcolor{stringliteral}{"{})"{}}, projectRoot);}
+\DoxyCodeLine{00109       projectRootNode-\/>setPixmap(}
+\DoxyCodeLine{00110           svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}actions/18/folder\_project\_root.svg"{}})));}
+\DoxyCodeLine{00111       addChild(projectRootNode);}
+\DoxyCodeLine{00112     \}}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114     \textcolor{comment}{// SVN Repository}}
+\DoxyCodeLine{00115     QList<SVNRepository> repositories =}
+\DoxyCodeLine{00116         VersionControl::instance()-\/>getRepositories();}
+\DoxyCodeLine{00117     \textcolor{keywordtype}{int} count = repositories.size();}
+\DoxyCodeLine{00118     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; i++) \{}
+\DoxyCodeLine{00119       \mbox{\hyperlink{struct_s_v_n_repository}{SVNRepository}} repo = repositories.at(i);}
+\DoxyCodeLine{00120 }
+\DoxyCodeLine{00121       \mbox{\hyperlink{class_project_dv_dir_model_special_file_folder_node}{ProjectDvDirModelSpecialFileFolderNode}} *node =}
+\DoxyCodeLine{00122           \textcolor{keyword}{new} \mbox{\hyperlink{class_project_dv_dir_model_special_file_folder_node}{ProjectDvDirModelSpecialFileFolderNode}}(}
+\DoxyCodeLine{00123               \textcolor{keyword}{this}, repo.m\_name.toStdWString(),}
+\DoxyCodeLine{00124               \mbox{\hyperlink{class_t_file_path}{TFilePath}}(repo.m\_localPath.toStdWString()));}
+\DoxyCodeLine{00125       node-\/>setPixmap(svgToPixmap(\textcolor{stringliteral}{"{}:Resources/vcroot.svg"{}}));}
+\DoxyCodeLine{00126       addChild(node);}
+\DoxyCodeLine{00127     \}}
+\DoxyCodeLine{00128   \}}
+\DoxyCodeLine{00129 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/projectpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/projectpopup.\+cpp\end{DoxyCompactItemize}

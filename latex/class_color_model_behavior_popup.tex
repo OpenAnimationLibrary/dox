@@ -1,0 +1,298 @@
+\hypertarget{class_color_model_behavior_popup}{}\doxysection{Color\+Model\+Behavior\+Popup Class Reference}
+\label{class_color_model_behavior_popup}\index{ColorModelBehaviorPopup@{ColorModelBehaviorPopup}}
+Inheritance diagram for Color\+Model\+Behavior\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_color_model_behavior_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_color_model_behavior_popup_a0bb1d987d89532e1719d375ba2f785e2}{on\+Pick\+Color\+Combo\+Activated}} (int)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_color_model_behavior_popup_acf26f7b981ff6f912172dbda0ed0810d}{Color\+Model\+Behavior\+Popup}} (const std\+::set$<$ \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} $>$ \&paths, QWidget $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_color_model_behavior_popup_a9e2a5d73efc077b251e04097091cf738}{get\+Loading\+Configuration}} (\mbox{\hyperlink{struct_palette_cmd_1_1_color_model_loading_configuration}{Palette\+Cmd\+::\+Color\+Model\+Loading\+Configuration}} \&config)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_color_model_behavior_popup_acf26f7b981ff6f912172dbda0ed0810d}\label{class_color_model_behavior_popup_acf26f7b981ff6f912172dbda0ed0810d}} 
+\index{ColorModelBehaviorPopup@{ColorModelBehaviorPopup}!ColorModelBehaviorPopup@{ColorModelBehaviorPopup}}
+\index{ColorModelBehaviorPopup@{ColorModelBehaviorPopup}!ColorModelBehaviorPopup@{ColorModelBehaviorPopup}}
+\doxysubsubsection{\texorpdfstring{ColorModelBehaviorPopup()}{ColorModelBehaviorPopup()}}
+{\footnotesize\ttfamily Color\+Model\+Behavior\+Popup\+::\+Color\+Model\+Behavior\+Popup (\begin{DoxyParamCaption}\item[{const std\+::set$<$ \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} $>$ \&}]{paths,  }\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033     : Dialog(parent, \textcolor{keyword}{true}, \textcolor{keyword}{true}) \{}
+\DoxyCodeLine{00034   setWindowTitle(tr(\textcolor{stringliteral}{"{}Select the Palette Operation"{}}));}
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{00036   \textcolor{comment}{// check if the paths contain standard raster image (i.e. without palette)}}
+\DoxyCodeLine{00037   \textcolor{comment}{// N.B. note that paths must contain only one path for now}}
+\DoxyCodeLine{00038   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} itr = paths.begin(); itr != paths.end(); ++itr) \{}
+\DoxyCodeLine{00039     std::string type((*itr).getType());}
+\DoxyCodeLine{00040     \textcolor{keywordflow}{if} (type != \textcolor{stringliteral}{"{}tlv"{}} \&\& type != \textcolor{stringliteral}{"{}pli"{}}) \{}
+\DoxyCodeLine{00041       m\_hasRasterImage = \textcolor{keyword}{true};}
+\DoxyCodeLine{00042       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00043     \}}
+\DoxyCodeLine{00044   \}}
+\DoxyCodeLine{00045   m\_buttonGroup = \textcolor{keyword}{new} QButtonGroup(\textcolor{keyword}{this});}
+\DoxyCodeLine{00046   QRadioButton* keepColorModelPltButton =}
+\DoxyCodeLine{00047       \textcolor{keyword}{new} QRadioButton(tr(\textcolor{stringliteral}{"{}Overwrite the destination palette."{}}));}
+\DoxyCodeLine{00048   QRadioButton* replaceColorModelPltButton = \textcolor{keyword}{new} QRadioButton(}
+\DoxyCodeLine{00049       tr(\textcolor{stringliteral}{"{}Keep the destination palette and apply it to the color model."{}}));}
+\DoxyCodeLine{00050 }
+\DoxyCodeLine{00051   m\_buttonGroup-\/>addButton(keepColorModelPltButton);}
+\DoxyCodeLine{00052   m\_buttonGroup-\/>addButton(replaceColorModelPltButton);}
+\DoxyCodeLine{00053   m\_buttonGroup-\/>setId(keepColorModelPltButton, PaletteCmd::KeepColorModelPlt);}
+\DoxyCodeLine{00054   m\_buttonGroup-\/>setId(replaceColorModelPltButton,}
+\DoxyCodeLine{00055                        PaletteCmd::ReplaceColorModelPlt);}
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00057   QLabel* label =}
+\DoxyCodeLine{00058       \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}The color model palette is different from the destination "{}}}
+\DoxyCodeLine{00059                     \textcolor{stringliteral}{"{}palette.\(\backslash\)nWhat do you want to do? "{}}));}
+\DoxyCodeLine{00060   label-\/>setAlignment(Qt::AlignLeft);}
+\DoxyCodeLine{00061   m\_topLayout-\/>addWidget(label);}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063   QGroupBox* paletteBox   = \textcolor{keyword}{new} QGroupBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00064   QVBoxLayout* paletteLay = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00065   paletteLay-\/>setMargin(15);}
+\DoxyCodeLine{00066   paletteLay-\/>setSpacing(15);}
+\DoxyCodeLine{00067 }
+\DoxyCodeLine{00068   paletteLay-\/>addWidget(keepColorModelPltButton);}
+\DoxyCodeLine{00069   paletteLay-\/>addWidget(replaceColorModelPltButton);}
+\DoxyCodeLine{00070 }
+\DoxyCodeLine{00071   paletteBox-\/>setLayout(paletteLay);}
+\DoxyCodeLine{00072   m\_topLayout-\/>addWidget(paletteBox);}
+\DoxyCodeLine{00073 }
+\DoxyCodeLine{00074   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00075 }
+\DoxyCodeLine{00076   QGroupBox* pickColorBox = NULL;}
+\DoxyCodeLine{00077 }
+\DoxyCodeLine{00078   \textcolor{keywordflow}{if} (m\_hasRasterImage) \{}
+\DoxyCodeLine{00079     QRadioButton* addColorModelPltButton = \textcolor{keyword}{new} QRadioButton(}
+\DoxyCodeLine{00080         tr(\textcolor{stringliteral}{"{}Add color model's palette to the destination palette."{}}));}
+\DoxyCodeLine{00081     m\_buttonGroup-\/>addButton(addColorModelPltButton);}
+\DoxyCodeLine{00082     m\_buttonGroup-\/>setId(addColorModelPltButton, PaletteCmd::AddColorModelPlt);}
+\DoxyCodeLine{00083     paletteLay-\/>addWidget(addColorModelPltButton);}
+\DoxyCodeLine{00084 }
+\DoxyCodeLine{00085     \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00086     m\_topLayout-\/>addSpacing(10);}
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088     pickColorBox = \textcolor{keyword}{new} QGroupBox(tr(\textcolor{stringliteral}{"{}Picking Colors from Raster Image"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090     m\_pickColorCombo         = \textcolor{keyword}{new} QComboBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00091     m\_colorChipBehaviorFrame = \textcolor{keyword}{new} QFrame(\textcolor{keyword}{this});}
+\DoxyCodeLine{00092     m\_colorChipGridColor =}
+\DoxyCodeLine{00093         \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_color_field}{DVGui::ColorField}}(\textcolor{keyword}{this}, \textcolor{keyword}{false}, TPixel32::Magenta, 40, \textcolor{keyword}{false});}
+\DoxyCodeLine{00094     m\_colorChipGridLineWidth = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_line_edit}{DVGui::IntLineEdit}}(\textcolor{keyword}{this}, 2, 1, 20);}
+\DoxyCodeLine{00095     m\_colorChipOrder         = \textcolor{keyword}{new} QButtonGroup(\textcolor{keyword}{this});}
+\DoxyCodeLine{00096 }
+\DoxyCodeLine{00097     QPushButton* upperLeftOrderBtn =}
+\DoxyCodeLine{00098         \textcolor{keyword}{new} QPushButton(createQIcon(\textcolor{stringliteral}{"{}colorchiporder\_upleft"{}}, \textcolor{keyword}{true}), \textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{00099     QPushButton* lowerLeftOrderBtn =}
+\DoxyCodeLine{00100         \textcolor{keyword}{new} QPushButton(createQIcon(\textcolor{stringliteral}{"{}colorchiporder\_lowleft"{}}, \textcolor{keyword}{true}), \textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{00101     QPushButton* leftUpperOrderBtn =}
+\DoxyCodeLine{00102         \textcolor{keyword}{new} QPushButton(createQIcon(\textcolor{stringliteral}{"{}colorchiporder\_leftup"{}}, \textcolor{keyword}{true}), \textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{00103 }
+\DoxyCodeLine{00104     QStringList paletteTypes;}
+\DoxyCodeLine{00105     paletteTypes << tr(\textcolor{stringliteral}{"{}Pick Every Colors as Different Styles"{}})}
+\DoxyCodeLine{00106                  << tr(\textcolor{stringliteral}{"{}Integrate Similar Colors as One Style"{}})}
+\DoxyCodeLine{00107                  << tr(\textcolor{stringliteral}{"{}Pick Colors in Color Chip Grid"{}});}
+\DoxyCodeLine{00108     m\_pickColorCombo-\/>addItems(paletteTypes);}
+\DoxyCodeLine{00109 }
+\DoxyCodeLine{00110     upperLeftOrderBtn-\/>setCheckable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00111     lowerLeftOrderBtn-\/>setCheckable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00112     leftUpperOrderBtn-\/>setCheckable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00113     upperLeftOrderBtn-\/>setIconSize(QSize(48, 42));}
+\DoxyCodeLine{00114     lowerLeftOrderBtn-\/>setIconSize(QSize(48, 42));}
+\DoxyCodeLine{00115     leftUpperOrderBtn-\/>setIconSize(QSize(48, 42));}
+\DoxyCodeLine{00116     upperLeftOrderBtn-\/>setFixedSize(QSize(54, 48));}
+\DoxyCodeLine{00117     lowerLeftOrderBtn-\/>setFixedSize(QSize(54, 48));}
+\DoxyCodeLine{00118     leftUpperOrderBtn-\/>setFixedSize(QSize(54, 48));}
+\DoxyCodeLine{00119     upperLeftOrderBtn-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Horizontal -\/ Top to bottom"{}}));}
+\DoxyCodeLine{00120     lowerLeftOrderBtn-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Horizontal -\/ Bottom to top"{}}));}
+\DoxyCodeLine{00121     leftUpperOrderBtn-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Vertical -\/ Left to right"{}}));}
+\DoxyCodeLine{00122     upperLeftOrderBtn-\/>setObjectName(\textcolor{stringliteral}{"{}MatchLineButton"{}});}
+\DoxyCodeLine{00123     lowerLeftOrderBtn-\/>setObjectName(\textcolor{stringliteral}{"{}MatchLineButton"{}});}
+\DoxyCodeLine{00124     leftUpperOrderBtn-\/>setObjectName(\textcolor{stringliteral}{"{}MatchLineButton"{}});}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126     m\_colorChipOrder-\/>addButton(upperLeftOrderBtn);}
+\DoxyCodeLine{00127     m\_colorChipOrder-\/>addButton(lowerLeftOrderBtn);}
+\DoxyCodeLine{00128     m\_colorChipOrder-\/>addButton(leftUpperOrderBtn);}
+\DoxyCodeLine{00129     m\_colorChipOrder-\/>setId(upperLeftOrderBtn, PaletteCmd::UpperLeft);}
+\DoxyCodeLine{00130     m\_colorChipOrder-\/>setId(lowerLeftOrderBtn, PaletteCmd::LowerLeft);}
+\DoxyCodeLine{00131     m\_colorChipOrder-\/>setId(leftUpperOrderBtn, PaletteCmd::LeftUpper);}
+\DoxyCodeLine{00132     m\_colorChipOrder-\/>setExclusive(\textcolor{keyword}{true});}
+\DoxyCodeLine{00133 }
+\DoxyCodeLine{00134     QGridLayout* pickColorLay = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00135     pickColorLay-\/>setMargin(10);}
+\DoxyCodeLine{00136     pickColorLay-\/>setHorizontalSpacing(5);}
+\DoxyCodeLine{00137     pickColorLay-\/>setVerticalSpacing(10);}
+\DoxyCodeLine{00138     \{}
+\DoxyCodeLine{00139       pickColorLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Pick Type:"{}}), \textcolor{keyword}{this}), 0, 0,}
+\DoxyCodeLine{00140                               Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00141       pickColorLay-\/>addWidget(m\_pickColorCombo, 0, 1, Qt::AlignLeft);}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143       QGridLayout* colorChipGridLay = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00144       colorChipGridLay-\/>setMargin(0);}
+\DoxyCodeLine{00145       colorChipGridLay-\/>setHorizontalSpacing(5);}
+\DoxyCodeLine{00146       colorChipGridLay-\/>setVerticalSpacing(10);}
+\DoxyCodeLine{00147       \{}
+\DoxyCodeLine{00148         colorChipGridLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Grid Line Color:"{}}), \textcolor{keyword}{this}), 0,}
+\DoxyCodeLine{00149                                     0, Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00150         colorChipGridLay-\/>addWidget(m\_colorChipGridColor, 0, 1, Qt::AlignLeft);}
+\DoxyCodeLine{00151 }
+\DoxyCodeLine{00152         colorChipGridLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Grid Line Width:"{}}), \textcolor{keyword}{this}), 1,}
+\DoxyCodeLine{00153                                     0, Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00154         colorChipGridLay-\/>addWidget(m\_colorChipGridLineWidth, 1, 1,}
+\DoxyCodeLine{00155                                     Qt::AlignLeft);}
+\DoxyCodeLine{00156 }
+\DoxyCodeLine{00157         colorChipGridLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Chip Order:"{}}), \textcolor{keyword}{this}), 2, 0,}
+\DoxyCodeLine{00158                                     Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00159         QHBoxLayout* orderLay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00160         orderLay-\/>setMargin(0);}
+\DoxyCodeLine{00161         orderLay-\/>setSpacing(0);}
+\DoxyCodeLine{00162         \{}
+\DoxyCodeLine{00163           orderLay-\/>addWidget(upperLeftOrderBtn, 0);}
+\DoxyCodeLine{00164           orderLay-\/>addWidget(lowerLeftOrderBtn, 0);}
+\DoxyCodeLine{00165           orderLay-\/>addWidget(leftUpperOrderBtn, 0);}
+\DoxyCodeLine{00166         \}}
+\DoxyCodeLine{00167         colorChipGridLay-\/>addLayout(orderLay, 2, 1, Qt::AlignLeft);}
+\DoxyCodeLine{00168       \}}
+\DoxyCodeLine{00169       colorChipGridLay-\/>setColumnStretch(0, 0);}
+\DoxyCodeLine{00170       colorChipGridLay-\/>setColumnStretch(1, 1);}
+\DoxyCodeLine{00171       m\_colorChipBehaviorFrame-\/>setLayout(colorChipGridLay);}
+\DoxyCodeLine{00172 }
+\DoxyCodeLine{00173       pickColorLay-\/>addWidget(m\_colorChipBehaviorFrame, 1, 0, 1, 2);}
+\DoxyCodeLine{00174     \}}
+\DoxyCodeLine{00175     pickColorLay-\/>setColumnStretch(0, 0);}
+\DoxyCodeLine{00176     pickColorLay-\/>setColumnStretch(1, 1);}
+\DoxyCodeLine{00177     pickColorBox-\/>setLayout(pickColorLay);}
+\DoxyCodeLine{00178     m\_topLayout-\/>addWidget(pickColorBox);}
+\DoxyCodeLine{00179 }
+\DoxyCodeLine{00180     ret = ret \&\& connect(m\_pickColorCombo, SIGNAL(currentIndexChanged(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00181                          \textcolor{keyword}{this}, SLOT(onPickColorComboActivated(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00182     ret = ret \&\& connect(replaceColorModelPltButton, SIGNAL(toggled(\textcolor{keywordtype}{bool})),}
+\DoxyCodeLine{00183                          pickColorBox, SLOT(setDisabled(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00184   \}}
+\DoxyCodeLine{00185 }
+\DoxyCodeLine{00186   QPushButton* applyButton = \textcolor{keyword}{new} QPushButton(QObject::tr(\textcolor{stringliteral}{"{}Apply"{}}));}
+\DoxyCodeLine{00187   ret = ret \&\& connect(applyButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(accept()));}
+\DoxyCodeLine{00188   QPushButton* cancelButton = \textcolor{keyword}{new} QPushButton(QObject::tr(\textcolor{stringliteral}{"{}Cancel"{}}));}
+\DoxyCodeLine{00189   ret = ret \&\& connect(cancelButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(reject()));}
+\DoxyCodeLine{00190   assert(ret);}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(applyButton, cancelButton);}
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00194   \textcolor{comment}{// obtain initial values from env}}
+\DoxyCodeLine{00195   QAbstractButton* button =}
+\DoxyCodeLine{00196       m\_buttonGroup-\/>button(ColorModelBehavior\_PaletteOperation);}
+\DoxyCodeLine{00197   \textcolor{keywordflow}{if} (button)}
+\DoxyCodeLine{00198     button-\/>setChecked(\textcolor{keyword}{true});}
+\DoxyCodeLine{00199   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00200     keepColorModelPltButton-\/>setChecked(\textcolor{keyword}{true});}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202   \textcolor{keywordflow}{if} (m\_hasRasterImage) \{}
+\DoxyCodeLine{00203     m\_pickColorCombo-\/>setCurrentIndex(ColorModelBehavior\_RasterImagePickType);}
+\DoxyCodeLine{00204     QColor chipGridColor(}
+\DoxyCodeLine{00205         QString::fromStdString(ColorModelBehavior\_ChipGridColor));}
+\DoxyCodeLine{00206     m\_colorChipGridColor-\/>setColor(TPixel32(}
+\DoxyCodeLine{00207         chipGridColor.red(), chipGridColor.green(), chipGridColor.blue()));}
+\DoxyCodeLine{00208     m\_colorChipGridLineWidth-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_line_edit_ac16f2b6d59faec8c3f73944f01e46f53}{setValue}}(ColorModelBehavior\_ChipGridLineWidth);}
+\DoxyCodeLine{00209     button = m\_colorChipOrder-\/>button(ColorModelBehavior\_ChipOrder);}
+\DoxyCodeLine{00210     \textcolor{keywordflow}{if} (button) button-\/>setChecked(\textcolor{keyword}{true});}
+\DoxyCodeLine{00211     onPickColorComboActivated(ColorModelBehavior\_RasterImagePickType);}
+\DoxyCodeLine{00212     pickColorBox-\/>setDisabled(ColorModelBehavior\_PaletteOperation == 1);}
+\DoxyCodeLine{00213   \}}
+\DoxyCodeLine{00214 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_color_model_behavior_popup_aca52e79d8114578e08009951c25c3829}\label{class_color_model_behavior_popup_aca52e79d8114578e08009951c25c3829}} 
+\index{ColorModelBehaviorPopup@{ColorModelBehaviorPopup}!````~ColorModelBehaviorPopup@{$\sim$ColorModelBehaviorPopup}}
+\index{````~ColorModelBehaviorPopup@{$\sim$ColorModelBehaviorPopup}!ColorModelBehaviorPopup@{ColorModelBehaviorPopup}}
+\doxysubsubsection{\texorpdfstring{$\sim$ColorModelBehaviorPopup()}{~ColorModelBehaviorPopup()}}
+{\footnotesize\ttfamily Color\+Model\+Behavior\+Popup\+::$\sim$\+Color\+Model\+Behavior\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00246                                                   \{}
+\DoxyCodeLine{00247   \textcolor{keywordtype}{int} \textcolor{keywordtype}{id} = m\_buttonGroup-\/>checkedId();}
+\DoxyCodeLine{00248   \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id} != -\/1) ColorModelBehavior\_PaletteOperation = id;}
+\DoxyCodeLine{00249 }
+\DoxyCodeLine{00250   \textcolor{keywordflow}{if} (!m\_hasRasterImage) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00251 }
+\DoxyCodeLine{00252   ColorModelBehavior\_RasterImagePickType = m\_pickColorCombo-\/>currentIndex();}
+\DoxyCodeLine{00253 }
+\DoxyCodeLine{00254   TPixel32 gridColor = m\_colorChipGridColor-\/>\mbox{\hyperlink{class_d_v_gui_1_1_color_field_a6955ee5be0a395075590a99bc9262fe1}{getColor}}();}
+\DoxyCodeLine{00255   ColorModelBehavior\_ChipGridColor =}
+\DoxyCodeLine{00256       QColor(gridColor.r, gridColor.g, gridColor.b)}
+\DoxyCodeLine{00257           .name(QColor::HexRgb)}
+\DoxyCodeLine{00258           .toStdString();}
+\DoxyCodeLine{00259 }
+\DoxyCodeLine{00260   ColorModelBehavior\_ChipGridLineWidth = m\_colorChipGridLineWidth-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_line_edit_a77019c5d6bce534fdd1931136a6efe95}{getValue}}();}
+\DoxyCodeLine{00261 }
+\DoxyCodeLine{00262   \textcolor{keywordtype}{id}                                         = m\_colorChipOrder-\/>checkedId();}
+\DoxyCodeLine{00263   \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id} != -\/1) ColorModelBehavior\_ChipOrder = id;}
+\DoxyCodeLine{00264 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_color_model_behavior_popup_a9e2a5d73efc077b251e04097091cf738}\label{class_color_model_behavior_popup_a9e2a5d73efc077b251e04097091cf738}} 
+\index{ColorModelBehaviorPopup@{ColorModelBehaviorPopup}!getLoadingConfiguration@{getLoadingConfiguration}}
+\index{getLoadingConfiguration@{getLoadingConfiguration}!ColorModelBehaviorPopup@{ColorModelBehaviorPopup}}
+\doxysubsubsection{\texorpdfstring{getLoadingConfiguration()}{getLoadingConfiguration()}}
+{\footnotesize\ttfamily void Color\+Model\+Behavior\+Popup\+::get\+Loading\+Configuration (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_palette_cmd_1_1_color_model_loading_configuration}{Palette\+Cmd\+::\+Color\+Model\+Loading\+Configuration}} \&}]{config }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00219                                                       \{}
+\DoxyCodeLine{00220   config.behavior = \textcolor{keyword}{static\_cast<}PaletteCmd::ColorModelPltBehavior\textcolor{keyword}{>}(}
+\DoxyCodeLine{00221       m\_buttonGroup-\/>checkedId());}
+\DoxyCodeLine{00222 }
+\DoxyCodeLine{00223   \textcolor{keywordflow}{if} (m\_colorChipOrder)}
+\DoxyCodeLine{00224     config.colorChipOrder =}
+\DoxyCodeLine{00225         \textcolor{keyword}{static\_cast<}PaletteCmd::ColorChipOrder\textcolor{keyword}{>}(m\_colorChipOrder-\/>checkedId());}
+\DoxyCodeLine{00226 }
+\DoxyCodeLine{00227   \textcolor{keywordflow}{if} (m\_pickColorCombo)}
+\DoxyCodeLine{00228     config.rasterPickType = \textcolor{keyword}{static\_cast<}PaletteCmd::ColorModelRasterPickType\textcolor{keyword}{>}(}
+\DoxyCodeLine{00229         m\_pickColorCombo-\/>currentIndex());}
+\DoxyCodeLine{00230 }
+\DoxyCodeLine{00231   \textcolor{keywordflow}{if} (m\_colorChipGridColor) config.gridColor = m\_colorChipGridColor-\/>\mbox{\hyperlink{class_d_v_gui_1_1_color_field_a6955ee5be0a395075590a99bc9262fe1}{getColor}}();}
+\DoxyCodeLine{00232 }
+\DoxyCodeLine{00233   \textcolor{keywordflow}{if} (m\_colorChipGridLineWidth)}
+\DoxyCodeLine{00234     config.gridLineWidth = m\_colorChipGridLineWidth-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_line_edit_a77019c5d6bce534fdd1931136a6efe95}{getValue}}();}
+\DoxyCodeLine{00235 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_color_model_behavior_popup_a0bb1d987d89532e1719d375ba2f785e2}\label{class_color_model_behavior_popup_a0bb1d987d89532e1719d375ba2f785e2}} 
+\index{ColorModelBehaviorPopup@{ColorModelBehaviorPopup}!onPickColorComboActivated@{onPickColorComboActivated}}
+\index{onPickColorComboActivated@{onPickColorComboActivated}!ColorModelBehaviorPopup@{ColorModelBehaviorPopup}}
+\doxysubsubsection{\texorpdfstring{onPickColorComboActivated}{onPickColorComboActivated}}
+{\footnotesize\ttfamily void Color\+Model\+Behavior\+Popup\+::on\+Pick\+Color\+Combo\+Activated (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00239                                                                  \{}
+\DoxyCodeLine{00240   \textcolor{keywordflow}{if} (!m\_colorChipBehaviorFrame) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00241   m\_colorChipBehaviorFrame-\/>setEnabled(index == 2);}
+\DoxyCodeLine{00242 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/colormodelbehaviorpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/colormodelbehaviorpopup.\+cpp\end{DoxyCompactItemize}

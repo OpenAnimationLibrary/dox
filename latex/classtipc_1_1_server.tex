@@ -1,0 +1,197 @@
+\hypertarget{classtipc_1_1_server}{}\doxysection{tipc\+::Server Class Reference}
+\label{classtipc_1_1_server}\index{tipc::Server@{tipc::Server}}
+
+
+{\ttfamily \#include $<$tipcsrv.\+h$>$}
+
+Inheritance diagram for tipc\+::Server\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtipc_1_1_server}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classtipc_1_1_server_a4389317268a1a30a6ad18028a5054895}{on\+New\+Connection}} ()
+\item 
+void \mbox{\hyperlink{classtipc_1_1_server_abdc655fa7983f262d310a7d615bae7a5}{on\+Error}} (QLocal\+Socket\+::\+Local\+Socket\+Error)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classtipc_1_1_server_a2c0797be8f3e662143af3777c746370e}{add\+Parser}} (\mbox{\hyperlink{classtipc_1_1_message_parser}{Message\+Parser}} $\ast$parser)
+\item 
+void \mbox{\hyperlink{classtipc_1_1_server_ad4d7595aea65c358e7dbf6e983cda3a4}{remove\+Parser}} (QString header)
+\item 
+void \mbox{\hyperlink{classtipc_1_1_server_a931dd6155681015c4f64653f4a99ea46}{dispatch\+Socket}} (QLocal\+Socket $\ast$socket)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classtipc_1_1_server}{tipc\+::\+Server}} class is the base server class for inter-\/process communication in Toonz-\/related applications.
+
+A \mbox{\hyperlink{classtipc_1_1_server}{tipc\+::\+Server}} is a specialized QLocal\+Server which stores header/message-\/callback associations to perform message parsing. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtipc_1_1_server_abee76ea64103fb9031f29d4895cf32d7}\label{classtipc_1_1_server_abee76ea64103fb9031f29d4895cf32d7}} 
+\index{tipc::Server@{tipc::Server}!Server@{Server}}
+\index{Server@{Server}!tipc::Server@{tipc::Server}}
+\doxysubsubsection{\texorpdfstring{Server()}{Server()}}
+{\footnotesize\ttfamily tipc\+::\+Server\+::\+Server (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053                    : m\_lock(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00054   connect(\textcolor{keyword}{this}, SIGNAL(newConnection()), \textcolor{keyword}{this}, SLOT(\mbox{\hyperlink{classtipc_1_1_server_a4389317268a1a30a6ad18028a5054895}{onNewConnection}}()));}
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056   \textcolor{comment}{// Add default parsers}}
+\DoxyCodeLine{00057   addParser(\textcolor{keyword}{new} DefaultMessageParser<SHMEM\_REQUEST>);}
+\DoxyCodeLine{00058   addParser(\textcolor{keyword}{new} DefaultMessageParser<SHMEM\_RELEASE>);}
+\DoxyCodeLine{00059   addParser(\textcolor{keyword}{new} DefaultMessageParser<TMPFILE\_REQUEST>);}
+\DoxyCodeLine{00060   addParser(\textcolor{keyword}{new} DefaultMessageParser<TMPFILE\_RELEASE>);}
+\DoxyCodeLine{00061   addParser(\textcolor{keyword}{new} DefaultMessageParser<QUIT\_ON\_ERROR>);}
+\DoxyCodeLine{00062 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtipc_1_1_server_a4b43253db3b7fa22a255ea11e055d906}\label{classtipc_1_1_server_a4b43253db3b7fa22a255ea11e055d906}} 
+\index{tipc::Server@{tipc::Server}!````~Server@{$\sim$Server}}
+\index{````~Server@{$\sim$Server}!tipc::Server@{tipc::Server}}
+\doxysubsubsection{\texorpdfstring{$\sim$Server()}{~Server()}}
+{\footnotesize\ttfamily tipc\+::\+Server\+::$\sim$\+Server (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00066                     \{}
+\DoxyCodeLine{00067   \textcolor{comment}{// Release parsers}}
+\DoxyCodeLine{00068   QHash<QString, MessageParser *>::iterator it;}
+\DoxyCodeLine{00069   \textcolor{keywordflow}{for} (it = m\_parsers.begin(); it != m\_parsers.end(); ++it) \textcolor{keyword}{delete} it.value();}
+\DoxyCodeLine{00070 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtipc_1_1_server_a2c0797be8f3e662143af3777c746370e}\label{classtipc_1_1_server_a2c0797be8f3e662143af3777c746370e}} 
+\index{tipc::Server@{tipc::Server}!addParser@{addParser}}
+\index{addParser@{addParser}!tipc::Server@{tipc::Server}}
+\doxysubsubsection{\texorpdfstring{addParser()}{addParser()}}
+{\footnotesize\ttfamily void tipc\+::\+Server\+::add\+Parser (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtipc_1_1_message_parser}{Message\+Parser}} $\ast$}]{parser }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00074                                                 \{}
+\DoxyCodeLine{00075   m\_parsers.insert(parser-\/>header(), parser);}
+\DoxyCodeLine{00076 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtipc_1_1_server_a931dd6155681015c4f64653f4a99ea46}\label{classtipc_1_1_server_a931dd6155681015c4f64653f4a99ea46}} 
+\index{tipc::Server@{tipc::Server}!dispatchSocket@{dispatchSocket}}
+\index{dispatchSocket@{dispatchSocket}!tipc::Server@{tipc::Server}}
+\doxysubsubsection{\texorpdfstring{dispatchSocket()}{dispatchSocket()}}
+{\footnotesize\ttfamily void tipc\+::\+Server\+::dispatch\+Socket (\begin{DoxyParamCaption}\item[{QLocal\+Socket $\ast$}]{socket }\end{DoxyParamCaption})}
+
+Generic dispatcher function for socket messages. Acceptable socket messages are composed of a header and a body part. The header part, containing an explanation of the message\textquotesingle{}s body, is the first line of the message, and is expected to be at max 1024 chars long. Depending on the header content, the rest of the message is read in specialized message handler functions. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00114                                                     \{}
+\DoxyCodeLine{00115   \textcolor{comment}{// The lock is established when a message is currently being processed.}}
+\DoxyCodeLine{00116   \textcolor{comment}{// Returning if the lock is set avoids having recursive message processing;}}
+\DoxyCodeLine{00117   \textcolor{comment}{// which is possible if a parser expects further message packets.}}
+\DoxyCodeLine{00118   \textcolor{keywordflow}{if} (m\_lock) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00119 }
+\DoxyCodeLine{00120   \mbox{\hyperlink{classtipc_1_1_stream}{tipc::Stream}} stream(socket);}
+\DoxyCodeLine{00121   QString header;}
+\DoxyCodeLine{00122 }
+\DoxyCodeLine{00123   \textcolor{keywordflow}{while} (socket-\/>bytesAvailable() > 0) \{}
+\DoxyCodeLine{00124     \textcolor{keywordflow}{if} (!stream.messageReady()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126     Message msg;}
+\DoxyCodeLine{00127 }
+\DoxyCodeLine{00128     stream >> msg;}
+\DoxyCodeLine{00129     msg >> header;}
+\DoxyCodeLine{00130     assert(!header.isEmpty());}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132     tipc\_debug(qDebug() << header << endl);}
+\DoxyCodeLine{00133 }
+\DoxyCodeLine{00134     QHash<QString, MessageParser *>::iterator it = m\_parsers.find(header);}
+\DoxyCodeLine{00135     \textcolor{keywordflow}{if} (it == m\_parsers.end()) \{}
+\DoxyCodeLine{00136       tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}Error: Unrecognized command"{}} << endl);}
+\DoxyCodeLine{00137       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00138     \}}
+\DoxyCodeLine{00139 }
+\DoxyCodeLine{00140     m\_lock = \textcolor{keyword}{true};}
+\DoxyCodeLine{00141 }
+\DoxyCodeLine{00142     MessageParser *parser = it.value();}
+\DoxyCodeLine{00143     parser-\/>m\_socket      = socket;}
+\DoxyCodeLine{00144     parser-\/>m\_stream      = \&stream;}
+\DoxyCodeLine{00145     parser-\/>operator()(msg);}
+\DoxyCodeLine{00146 }
+\DoxyCodeLine{00147     m\_lock = \textcolor{keyword}{false};}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149     \textcolor{comment}{// The Message has been read and processed. Send the reply.}}
+\DoxyCodeLine{00150     \textcolor{keywordflow}{if} (msg.ba().size() > 0) stream << msg;}
+\DoxyCodeLine{00151   \}}
+\DoxyCodeLine{00152 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtipc_1_1_server_abdc655fa7983f262d310a7d615bae7a5}\label{classtipc_1_1_server_abdc655fa7983f262d310a7d615bae7a5}} 
+\index{tipc::Server@{tipc::Server}!onError@{onError}}
+\index{onError@{onError}!tipc::Server@{tipc::Server}}
+\doxysubsubsection{\texorpdfstring{onError}{onError}}
+{\footnotesize\ttfamily void tipc\+::\+Server\+::on\+Error (\begin{DoxyParamCaption}\item[{QLocal\+Socket\+::\+Local\+Socket\+Error}]{error }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00108                                                            \{}
+\DoxyCodeLine{00109   tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}Server error \#"{}} << error << \textcolor{stringliteral}{"{}: "{}} << errorString());}
+\DoxyCodeLine{00110 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtipc_1_1_server_a4389317268a1a30a6ad18028a5054895}\label{classtipc_1_1_server_a4389317268a1a30a6ad18028a5054895}} 
+\index{tipc::Server@{tipc::Server}!onNewConnection@{onNewConnection}}
+\index{onNewConnection@{onNewConnection}!tipc::Server@{tipc::Server}}
+\doxysubsubsection{\texorpdfstring{onNewConnection}{onNewConnection}}
+{\footnotesize\ttfamily void tipc\+::\+Server\+::on\+New\+Connection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+Receives a client connection to the server and prepares a socket for the connection. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087                                  \{}
+\DoxyCodeLine{00088   tipc\_debug(qDebug(\textcolor{stringliteral}{"{}new connection"{}}));}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090   \textcolor{comment}{// Accept the connection}}
+\DoxyCodeLine{00091   QLocalSocket *socket = nextPendingConnection();}
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{00093   \textcolor{comment}{// Allocate a controller for the socket}}
+\DoxyCodeLine{00094   SocketController *controller = \textcolor{keyword}{new} SocketController;}
+\DoxyCodeLine{00095   controller-\/>m\_server         = \textcolor{keyword}{this};}
+\DoxyCodeLine{00096   controller-\/>m\_socket         = socket;}
+\DoxyCodeLine{00097 }
+\DoxyCodeLine{00098   \textcolor{comment}{// Connect the controller to the socket's signals}}
+\DoxyCodeLine{00099   connect(socket, SIGNAL(readyRead()), controller, SLOT(onReadyRead()));}
+\DoxyCodeLine{00100   connect(socket, SIGNAL(disconnected()), controller, SLOT(onDisconnected()));}
+\DoxyCodeLine{00101   connect(socket, SIGNAL(disconnected()), socket, SLOT(deleteLater()));}
+\DoxyCodeLine{00102   connect(socket, SIGNAL(error(QLocalSocket::LocalSocketError)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00103           SLOT(onError(QLocalSocket::LocalSocketError)));}
+\DoxyCodeLine{00104 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtipc_1_1_server_ad4d7595aea65c358e7dbf6e983cda3a4}\label{classtipc_1_1_server_ad4d7595aea65c358e7dbf6e983cda3a4}} 
+\index{tipc::Server@{tipc::Server}!removeParser@{removeParser}}
+\index{removeParser@{removeParser}!tipc::Server@{tipc::Server}}
+\doxysubsubsection{\texorpdfstring{removeParser()}{removeParser()}}
+{\footnotesize\ttfamily void tipc\+::\+Server\+::remove\+Parser (\begin{DoxyParamCaption}\item[{QString}]{header }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080                                             \{}
+\DoxyCodeLine{00081   MessageParser *parser = m\_parsers.take(header);}
+\DoxyCodeLine{00082   \textcolor{keywordflow}{if} (parser) \textcolor{keyword}{delete} parser;}
+\DoxyCodeLine{00083 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tipcsrv.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tipc/tipcsrv.\+cpp\end{DoxyCompactItemize}

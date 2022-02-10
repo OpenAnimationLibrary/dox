@@ -1,0 +1,111 @@
+\hypertarget{class_load_task_popup}{}\doxysection{Load\+Task\+Popup Class Reference}
+\label{class_load_task_popup}\index{LoadTaskPopup@{LoadTaskPopup}}
+Inheritance diagram for Load\+Task\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_load_task_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_load_task_popup_a75b24671819f462aef919bbf1aef319a}{execute}} () override
+\item 
+void \mbox{\hyperlink{class_load_task_popup_aa051f9c5febf8c7d9637e7bd372d0158}{open}} (bool is\+Render\+Task)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_load_task_popup_aa446b25c13bbf25f7cd1aa2130a83e05}\label{class_load_task_popup_aa446b25c13bbf25f7cd1aa2130a83e05}} 
+\index{LoadTaskPopup@{LoadTaskPopup}!LoadTaskPopup@{LoadTaskPopup}}
+\index{LoadTaskPopup@{LoadTaskPopup}!LoadTaskPopup@{LoadTaskPopup}}
+\doxysubsubsection{\texorpdfstring{LoadTaskPopup()}{LoadTaskPopup()}}
+{\footnotesize\ttfamily Load\+Task\+Popup\+::\+Load\+Task\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075                              : \mbox{\hyperlink{class_file_browser_popup}{FileBrowserPopup}}(\textcolor{stringliteral}{"{}"{}}), m\_isRenderTask(\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{00076   addFilterType(\textcolor{stringliteral}{"{}tnz"{}});}
+\DoxyCodeLine{00077   setOkText(tr(\textcolor{stringliteral}{"{}Add"{}}));}
+\DoxyCodeLine{00078 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_load_task_popup_a75b24671819f462aef919bbf1aef319a}\label{class_load_task_popup_a75b24671819f462aef919bbf1aef319a}} 
+\index{LoadTaskPopup@{LoadTaskPopup}!execute@{execute}}
+\index{execute@{execute}!LoadTaskPopup@{LoadTaskPopup}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily bool Load\+Task\+Popup\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Performs some action on m\+\_\+paths and returns whether the action was successful (accepted) -\/ in which case the popup closes. 
+
+Implements \mbox{\hyperlink{class_file_browser_popup_a8158b9b8756ac5dfa893b78cdc2fd9af}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00093                             \{}
+\DoxyCodeLine{00094   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.empty()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_file_path}{TFilePath}} \&fp = *\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.begin();}
+\DoxyCodeLine{00097 }
+\DoxyCodeLine{00098   \textcolor{keywordflow}{if} (!TSystem::doesExistFileOrLevel(fp)) \{}
+\DoxyCodeLine{00099     DVGui::error(toQString(fp) + tr(\textcolor{stringliteral}{"{} does not exist."{}}));}
+\DoxyCodeLine{00100     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00101   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_isRenderTask \&\& fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() != \textcolor{stringliteral}{"{}tnz"{}}) \{}
+\DoxyCodeLine{00102     DVGui::error(toQString(fp) +}
+\DoxyCodeLine{00103                  tr(\textcolor{stringliteral}{"{} you can load only TNZ files for render task."{}}));}
+\DoxyCodeLine{00104     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00105   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!m\_isRenderTask \&\& fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() != \textcolor{stringliteral}{"{}tnz"{}} \&\&}
+\DoxyCodeLine{00106              fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() != \textcolor{stringliteral}{"{}cln"{}}) \{}
+\DoxyCodeLine{00107     DVGui::error(toQString(fp) +}
+\DoxyCodeLine{00108                  tr(\textcolor{stringliteral}{"{} you can load only TNZ or CLN files for cleanup task."{}}));}
+\DoxyCodeLine{00109     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00110   \}}
+\DoxyCodeLine{00111 }
+\DoxyCodeLine{00112   \textcolor{keywordflow}{if} (m\_isRenderTask)}
+\DoxyCodeLine{00113     BatchesController::instance()-\/>addComposerTask(fp);}
+\DoxyCodeLine{00114   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00115     BatchesController::instance()-\/>addCleanupTask(fp);}
+\DoxyCodeLine{00116 }
+\DoxyCodeLine{00117   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00118 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00225}{TFile\+Path\+::get\+Type()}}, and \mbox{\hyperlink{l00090}{File\+Browser\+Popup\+::m\+\_\+selected\+Paths}}.
+
+\mbox{\Hypertarget{class_load_task_popup_aa051f9c5febf8c7d9637e7bd372d0158}\label{class_load_task_popup_aa051f9c5febf8c7d9637e7bd372d0158}} 
+\index{LoadTaskPopup@{LoadTaskPopup}!open@{open}}
+\index{open@{open}!LoadTaskPopup@{LoadTaskPopup}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily void Load\+Task\+Popup\+::open (\begin{DoxyParamCaption}\item[{bool}]{is\+Render\+Task }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080                                           \{}
+\DoxyCodeLine{00081   m\_isRenderTask = isRenderTask;}
+\DoxyCodeLine{00082   setWindowTitle(isRenderTask ? tr(\textcolor{stringliteral}{"{}Add Render Task to Batch List"{}})}
+\DoxyCodeLine{00083                               : tr(\textcolor{stringliteral}{"{}Add Cleanup Task to Batch List"{}}));}
+\DoxyCodeLine{00084 }
+\DoxyCodeLine{00085   \textcolor{keywordflow}{if} (isRenderTask)}
+\DoxyCodeLine{00086     removeFilterType(\textcolor{stringliteral}{"{}cln"{}});}
+\DoxyCodeLine{00087   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00088     addFilterType(\textcolor{stringliteral}{"{}cln"{}});}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090   exec();}
+\DoxyCodeLine{00091 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/batches.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/batches.\+cpp\end{DoxyCompactItemize}

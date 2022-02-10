@@ -1,0 +1,83 @@
+\hypertarget{class_drag_selection_tool_1_1_free_deform}{}\doxysection{Drag\+Selection\+Tool\+::Free\+Deform Class Reference}
+\label{class_drag_selection_tool_1_1_free_deform}\index{DragSelectionTool::FreeDeform@{DragSelectionTool::FreeDeform}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_drag_selection_tool_1_1_free_deform_a4d53d6d7d184d202f104f4f1c8fe4ec6}{Free\+Deform}} (\mbox{\hyperlink{class_drag_selection_tool_1_1_deform_tool}{Deform\+Tool}} $\ast$deform\+Tool)
+\item 
+void \mbox{\hyperlink{class_drag_selection_tool_1_1_free_deform_a17ea67124dbe064495872b8cbbd4dd3e}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e)
+\item 
+void \mbox{\hyperlink{class_drag_selection_tool_1_1_free_deform_aaedef914fa7b562276f0383ee0da335e}{left\+Button\+Up}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_drag_selection_tool_1_1_free_deform_a4d53d6d7d184d202f104f4f1c8fe4ec6}\label{class_drag_selection_tool_1_1_free_deform_a4d53d6d7d184d202f104f4f1c8fe4ec6}} 
+\index{DragSelectionTool::FreeDeform@{DragSelectionTool::FreeDeform}!FreeDeform@{FreeDeform}}
+\index{FreeDeform@{FreeDeform}!DragSelectionTool::FreeDeform@{DragSelectionTool::FreeDeform}}
+\doxysubsubsection{\texorpdfstring{FreeDeform()}{FreeDeform()}}
+{\footnotesize\ttfamily Drag\+Selection\+Tool\+::\+Free\+Deform\+::\+Free\+Deform (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_drag_selection_tool_1_1_deform_tool}{Deform\+Tool}} $\ast$}]{deform\+Tool }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00475     : m\_deformTool(deformTool) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_drag_selection_tool_1_1_free_deform_a17ea67124dbe064495872b8cbbd4dd3e}\label{class_drag_selection_tool_1_1_free_deform_a17ea67124dbe064495872b8cbbd4dd3e}} 
+\index{DragSelectionTool::FreeDeform@{DragSelectionTool::FreeDeform}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!DragSelectionTool::FreeDeform@{DragSelectionTool::FreeDeform}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Drag\+Selection\+Tool\+::\+Free\+Deform\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00480                                                                          \{}
+\DoxyCodeLine{00481   \mbox{\hyperlink{class_selection_tool}{SelectionTool}} *tool = m\_deformTool-\/>getTool();}
+\DoxyCodeLine{00482   \mbox{\hyperlink{class_t_point_t}{TPointD}} delta       = pos -\/ m\_deformTool-\/>getCurPos();}
+\DoxyCodeLine{00483   \textcolor{keywordtype}{double} pixelSize    = tool-\/>getPixelSize();}
+\DoxyCodeLine{00484   \textcolor{keywordtype}{bool} isFastDragging = norm2(delta) > 9.0 * pixelSize * pixelSize;}
+\DoxyCodeLine{00485 }
+\DoxyCodeLine{00486   \mbox{\hyperlink{class_t_point_t}{TPointD}} center     = tool-\/>getCenter();}
+\DoxyCodeLine{00487   \textcolor{keywordtype}{int} index          = tool-\/>getSelectedPoint();}
+\DoxyCodeLine{00488   \mbox{\hyperlink{class_drag_selection_tool_1_1_four_points}{FourPoints}} bbox    = tool-\/>getBBox();}
+\DoxyCodeLine{00489   \mbox{\hyperlink{class_drag_selection_tool_1_1_four_points}{FourPoints}} newBbox = bbox;}
+\DoxyCodeLine{00490   \textcolor{keywordflow}{if} (index < 4)}
+\DoxyCodeLine{00491     bbox.\mbox{\hyperlink{class_drag_selection_tool_1_1_four_points_a687f8601ad1d19e625424fef263c7b50}{setPoint}}(index, bbox.\mbox{\hyperlink{class_drag_selection_tool_1_1_four_points_a6ee06390172fb31fa17e80273c947f4c}{getPoint}}(index) + delta);}
+\DoxyCodeLine{00492   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00493     \textcolor{keywordtype}{int} beforeIndex = m\_deformTool-\/>\mbox{\hyperlink{class_drag_selection_tool_1_1_deform_tool_adada477f3f2f940c7d3e3afbf52f078b}{getBeforeVertexIndex}}(index);}
+\DoxyCodeLine{00494     bbox.\mbox{\hyperlink{class_drag_selection_tool_1_1_four_points_a687f8601ad1d19e625424fef263c7b50}{setPoint}}(beforeIndex, bbox.\mbox{\hyperlink{class_drag_selection_tool_1_1_four_points_a6ee06390172fb31fa17e80273c947f4c}{getPoint}}(beforeIndex) + delta);}
+\DoxyCodeLine{00495     bbox.\mbox{\hyperlink{class_drag_selection_tool_1_1_four_points_a687f8601ad1d19e625424fef263c7b50}{setPoint}}(index, bbox.\mbox{\hyperlink{class_drag_selection_tool_1_1_four_points_a6ee06390172fb31fa17e80273c947f4c}{getPoint}}(index) + delta);}
+\DoxyCodeLine{00496     \textcolor{keywordtype}{int} nextIndex = m\_deformTool-\/>\mbox{\hyperlink{class_drag_selection_tool_1_1_deform_tool_a6490738faac80b56fe70aa31f649de51}{getNextVertexIndex}}(index);}
+\DoxyCodeLine{00497     bbox.\mbox{\hyperlink{class_drag_selection_tool_1_1_four_points_a687f8601ad1d19e625424fef263c7b50}{setPoint}}(nextIndex, bbox.\mbox{\hyperlink{class_drag_selection_tool_1_1_four_points_a6ee06390172fb31fa17e80273c947f4c}{getPoint}}(nextIndex) + delta);}
+\DoxyCodeLine{00498   \}}
+\DoxyCodeLine{00499   tool-\/>setBBox(bbox);}
+\DoxyCodeLine{00500   m\_deformTool-\/>setCurPos(pos);}
+\DoxyCodeLine{00501   m\_deformTool-\/>applyTransform(bbox, isFastDragging);}
+\DoxyCodeLine{00502 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_drag_selection_tool_1_1_free_deform_aaedef914fa7b562276f0383ee0da335e}\label{class_drag_selection_tool_1_1_free_deform_aaedef914fa7b562276f0383ee0da335e}} 
+\index{DragSelectionTool::FreeDeform@{DragSelectionTool::FreeDeform}!leftButtonUp@{leftButtonUp}}
+\index{leftButtonUp@{leftButtonUp}!DragSelectionTool::FreeDeform@{DragSelectionTool::FreeDeform}}
+\doxysubsubsection{\texorpdfstring{leftButtonUp()}{leftButtonUp()}}
+{\footnotesize\ttfamily void Drag\+Selection\+Tool\+::\+Free\+Deform\+::left\+Button\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00506                                                \{}
+\DoxyCodeLine{00507   m\_deformTool-\/>applyTransform(m\_deformTool-\/>getTool()-\/>getBBox());}
+\DoxyCodeLine{00508 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/selectiontool.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/selectiontool.\+cpp\end{DoxyCompactItemize}

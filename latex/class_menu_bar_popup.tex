@@ -1,0 +1,134 @@
+\hypertarget{class_menu_bar_popup}{}\doxysection{Menu\+Bar\+Popup Class Reference}
+\label{class_menu_bar_popup}\index{MenuBarPopup@{MenuBarPopup}}
+Inheritance diagram for Menu\+Bar\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_menu_bar_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_menu_bar_popup_aabeb94c9eb0c9acbbdf62377e1187fc5}{Menu\+Bar\+Popup}} (\mbox{\hyperlink{class_room}{Room}} $\ast$room)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_menu_bar_popup_a9be2b63d806aa63f6cc2b719be26fd7a}{on\+Ok\+Pressed}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_menu_bar_popup_aabeb94c9eb0c9acbbdf62377e1187fc5}\label{class_menu_bar_popup_aabeb94c9eb0c9acbbdf62377e1187fc5}} 
+\index{MenuBarPopup@{MenuBarPopup}!MenuBarPopup@{MenuBarPopup}}
+\index{MenuBarPopup@{MenuBarPopup}!MenuBarPopup@{MenuBarPopup}}
+\doxysubsubsection{\texorpdfstring{MenuBarPopup()}{MenuBarPopup()}}
+{\footnotesize\ttfamily Menu\+Bar\+Popup\+::\+Menu\+Bar\+Popup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_room}{Room}} $\ast$}]{room }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00462     : Dialog(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false},}
+\DoxyCodeLine{00463              \textcolor{stringliteral}{"{}CustomizeMenuBar"{}}) \{}
+\DoxyCodeLine{00464   setWindowTitle(tr(\textcolor{stringliteral}{"{}Customize Menu Bar of Room \(\backslash\)"{}\%1\(\backslash\)"{}"{}}).arg(room-\/>getName()));}
+\DoxyCodeLine{00465 }
+\DoxyCodeLine{00466   \textcolor{comment}{/*-\/ get menubar setting file path -\/*/}}
+\DoxyCodeLine{00467   std::string mbFileName = room-\/>getPath().\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}() + \textcolor{stringliteral}{"{}\_menubar.xml"{}};}
+\DoxyCodeLine{00468   \mbox{\hyperlink{class_t_file_path}{TFilePath}} mbPath       = ToonzFolder::getMyRoomsDir() + mbFileName;}
+\DoxyCodeLine{00469 }
+\DoxyCodeLine{00470   m\_commandListTree = \textcolor{keyword}{new} \mbox{\hyperlink{class_command_list_tree}{CommandListTree}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00471   m\_menuBarTree     = \textcolor{keyword}{new} \mbox{\hyperlink{class_menu_bar_tree}{MenuBarTree}}(mbPath, \textcolor{keyword}{this});}
+\DoxyCodeLine{00472 }
+\DoxyCodeLine{00473   QPushButton* okBtn     = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}OK"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00474   QPushButton* cancelBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cancel"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00475 }
+\DoxyCodeLine{00476   okBtn-\/>setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{00477   cancelBtn-\/>setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{00478 }
+\DoxyCodeLine{00479   QLabel* menuBarLabel =}
+\DoxyCodeLine{00480       \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}\%1 Menu Bar"{}}).arg(room-\/>getName()), \textcolor{keyword}{this});}
+\DoxyCodeLine{00481   QLabel* menuItemListLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Menu Items"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00482 }
+\DoxyCodeLine{00483   QFont f(\textcolor{stringliteral}{"{}Arial"{}}, 15, QFont::Bold);}
+\DoxyCodeLine{00484   menuBarLabel-\/>setFont(f);}
+\DoxyCodeLine{00485   menuItemListLabel-\/>setFont(f);}
+\DoxyCodeLine{00486 }
+\DoxyCodeLine{00487   QLabel* noticeLabel = \textcolor{keyword}{new} QLabel(}
+\DoxyCodeLine{00488       tr(\textcolor{stringliteral}{"{}N.B. If you put unique title to submenu, it may not be translated to "{}}}
+\DoxyCodeLine{00489          \textcolor{stringliteral}{"{}another language.\(\backslash\)nN.B. Duplicated commands will be ignored. Only "{}}}
+\DoxyCodeLine{00490          \textcolor{stringliteral}{"{}the last one will appear in the menu bar."{}}),}
+\DoxyCodeLine{00491       \textcolor{keyword}{this});}
+\DoxyCodeLine{00492   QFont nf(\textcolor{stringliteral}{"{}Arial"{}}, 9, QFont::Normal);}
+\DoxyCodeLine{00493   nf.setItalic(\textcolor{keyword}{true});}
+\DoxyCodeLine{00494   noticeLabel-\/>setFont(nf);}
+\DoxyCodeLine{00495 }
+\DoxyCodeLine{00496   \textcolor{comment}{//-\/-\/-\/ layout}}
+\DoxyCodeLine{00497   QVBoxLayout* mainLay = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00498   m\_topLayout-\/>setMargin(0);}
+\DoxyCodeLine{00499   m\_topLayout-\/>setSpacing(0);}
+\DoxyCodeLine{00500   \{}
+\DoxyCodeLine{00501     QGridLayout* mainUILay = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00502     mainUILay-\/>setMargin(5);}
+\DoxyCodeLine{00503     mainUILay-\/>setHorizontalSpacing(8);}
+\DoxyCodeLine{00504     mainUILay-\/>setVerticalSpacing(5);}
+\DoxyCodeLine{00505     \{}
+\DoxyCodeLine{00506       mainUILay-\/>addWidget(menuBarLabel, 0, 0);}
+\DoxyCodeLine{00507       mainUILay-\/>addWidget(menuItemListLabel, 0, 1);}
+\DoxyCodeLine{00508       mainUILay-\/>addWidget(m\_menuBarTree, 1, 0);}
+\DoxyCodeLine{00509       mainUILay-\/>addWidget(m\_commandListTree, 1, 1);}
+\DoxyCodeLine{00510 }
+\DoxyCodeLine{00511       mainUILay-\/>addWidget(noticeLabel, 2, 0, 1, 2);}
+\DoxyCodeLine{00512     \}}
+\DoxyCodeLine{00513     mainUILay-\/>setRowStretch(0, 0);}
+\DoxyCodeLine{00514     mainUILay-\/>setRowStretch(1, 1);}
+\DoxyCodeLine{00515     mainUILay-\/>setRowStretch(2, 0);}
+\DoxyCodeLine{00516     mainUILay-\/>setColumnStretch(0, 1);}
+\DoxyCodeLine{00517     mainUILay-\/>setColumnStretch(1, 1);}
+\DoxyCodeLine{00518 }
+\DoxyCodeLine{00519     m\_topLayout-\/>addLayout(mainUILay, 1);}
+\DoxyCodeLine{00520   \}}
+\DoxyCodeLine{00521 }
+\DoxyCodeLine{00522   m\_buttonLayout-\/>setMargin(0);}
+\DoxyCodeLine{00523   m\_buttonLayout-\/>setSpacing(30);}
+\DoxyCodeLine{00524   \{}
+\DoxyCodeLine{00525     m\_buttonLayout-\/>addStretch(1);}
+\DoxyCodeLine{00526     m\_buttonLayout-\/>addWidget(okBtn, 0);}
+\DoxyCodeLine{00527     m\_buttonLayout-\/>addWidget(cancelBtn, 0);}
+\DoxyCodeLine{00528     m\_buttonLayout-\/>addStretch(1);}
+\DoxyCodeLine{00529   \}}
+\DoxyCodeLine{00530 }
+\DoxyCodeLine{00531   \textcolor{comment}{//-\/-\/-\/ signal/slot connections}}
+\DoxyCodeLine{00532 }
+\DoxyCodeLine{00533   \textcolor{keywordtype}{bool} ret = connect(okBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onOkPressed()));}
+\DoxyCodeLine{00534   ret      = ret \&\& connect(cancelBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(reject()));}
+\DoxyCodeLine{00535   assert(ret);}
+\DoxyCodeLine{00536 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_menu_bar_popup_a9be2b63d806aa63f6cc2b719be26fd7a}\label{class_menu_bar_popup_a9be2b63d806aa63f6cc2b719be26fd7a}} 
+\index{MenuBarPopup@{MenuBarPopup}!onOkPressed@{onOkPressed}}
+\index{onOkPressed@{onOkPressed}!MenuBarPopup@{MenuBarPopup}}
+\doxysubsubsection{\texorpdfstring{onOkPressed}{onOkPressed}}
+{\footnotesize\ttfamily void Menu\+Bar\+Popup\+::on\+Ok\+Pressed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00540                                \{}
+\DoxyCodeLine{00541   m\_menuBarTree-\/>saveMenuTree();}
+\DoxyCodeLine{00542 }
+\DoxyCodeLine{00543   accept();}
+\DoxyCodeLine{00544 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/menubarpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/menubarpopup.\+cpp\end{DoxyCompactItemize}

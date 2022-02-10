@@ -1,0 +1,286 @@
+\hypertarget{class_level_extender_tool}{}\doxysection{Level\+Extender\+Tool Class Reference}
+\label{class_level_extender_tool}\index{LevelExtenderTool@{LevelExtenderTool}}
+Inheritance diagram for Level\+Extender\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_level_extender_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_level_extender_tool_a77dc1ddc5b13874d575f63989277cabb}{Level\+Extender\+Tool}} (\mbox{\hyperlink{class_xsheet_viewer}{Xsheet\+Viewer}} $\ast$viewer, bool insert=true, bool invert=false)
+\item 
+void \mbox{\hyperlink{class_level_extender_tool_a55a608f7ec8934929850fcb6272f71c5}{on\+Click}} (const \mbox{\hyperlink{class_cell_position}{Cell\+Position}} \&pos) override
+\item 
+void \mbox{\hyperlink{class_level_extender_tool_a118b8a5aa998f7be82566d06db8180b0}{on\+Drag}} (const \mbox{\hyperlink{class_cell_position}{Cell\+Position}} \&pos) override
+\item 
+void \mbox{\hyperlink{class_level_extender_tool_a1d202b892b94a23f3f5a7ff04708bb19}{on\+Cell\+Change}} (int row, int col)
+\item 
+void \mbox{\hyperlink{class_level_extender_tool_aa5a2dc340feb40fcd8cc7466a091e604}{on\+Cell\+Change\+Invert}} (int row, int col)
+\item 
+void \mbox{\hyperlink{class_level_extender_tool_a47f94f68542f95d66fee0468744603d7}{on\+Release}} (const \mbox{\hyperlink{class_cell_position}{Cell\+Position}} \&pos) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_level_extender_tool_a77dc1ddc5b13874d575f63989277cabb}\label{class_level_extender_tool_a77dc1ddc5b13874d575f63989277cabb}} 
+\index{LevelExtenderTool@{LevelExtenderTool}!LevelExtenderTool@{LevelExtenderTool}}
+\index{LevelExtenderTool@{LevelExtenderTool}!LevelExtenderTool@{LevelExtenderTool}}
+\doxysubsubsection{\texorpdfstring{LevelExtenderTool()}{LevelExtenderTool()}}
+{\footnotesize\ttfamily Level\+Extender\+Tool\+::\+Level\+Extender\+Tool (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_xsheet_viewer}{Xsheet\+Viewer}} $\ast$}]{viewer,  }\item[{bool}]{insert = {\ttfamily true},  }\item[{bool}]{invert = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00654       : \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{XsheetGUI::DragTool}}(viewer)}
+\DoxyCodeLine{00655       , m\_colCount(0)}
+\DoxyCodeLine{00656       , m\_undo(0)}
+\DoxyCodeLine{00657       , m\_insert(insert)}
+\DoxyCodeLine{00658       , m\_invert(invert) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_level_extender_tool_a1d202b892b94a23f3f5a7ff04708bb19}\label{class_level_extender_tool_a1d202b892b94a23f3f5a7ff04708bb19}} 
+\index{LevelExtenderTool@{LevelExtenderTool}!onCellChange@{onCellChange}}
+\index{onCellChange@{onCellChange}!LevelExtenderTool@{LevelExtenderTool}}
+\doxysubsubsection{\texorpdfstring{onCellChange()}{onCellChange()}}
+{\footnotesize\ttfamily void Level\+Extender\+Tool\+::on\+Cell\+Change (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00707                                       \{}
+\DoxyCodeLine{00708     \textcolor{keywordflow}{if} (m\_colCount <= 0 || m\_rowCount <= 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00709     \textcolor{keywordflow}{if} (row <= m\_r0) row = m\_r0 + 1;}
+\DoxyCodeLine{00710     \textcolor{keywordtype}{int} r1 = row -\/ 1;  \textcolor{comment}{// r1 e' la riga inferiore della nuova selezione}}
+\DoxyCodeLine{00711     \textcolor{keywordflow}{if} (r1 < m\_r0) r1 = m\_r0;}
+\DoxyCodeLine{00712     \textcolor{keywordtype}{int} dr = r1 -\/ m\_r1;}
+\DoxyCodeLine{00713     \textcolor{keywordflow}{if} (dr == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00714     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = getViewer()-\/>getXsheet();}
+\DoxyCodeLine{00715     \textcolor{comment}{// shrink}}
+\DoxyCodeLine{00716     \textcolor{keywordflow}{if} (dr < 0) \{}
+\DoxyCodeLine{00717       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < m\_colCount; c++) \{}
+\DoxyCodeLine{00718         \textcolor{comment}{// Se e' una colonna sound l'extender non deve fare nulla.}}
+\DoxyCodeLine{00719         \mbox{\hyperlink{class_t_xsh_column}{TXshColumn}} *column = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a3e1a216c019a0ebdf73d95acac95d8d0}{getColumn}}(m\_c0 + c);}
+\DoxyCodeLine{00720         \textcolor{keywordflow}{if} (column \&\& column-\/>getSoundColumn()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00721         \textcolor{keywordflow}{if} (m\_insert)}
+\DoxyCodeLine{00722           xsh-\/>\mbox{\hyperlink{class_t_xsheet_a5eb63e3947f59d2c57c0b0f4b9cad519}{removeCells}}(row, m\_c0 + c, -\/dr);}
+\DoxyCodeLine{00723         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00724           \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} r = row; r <= m\_r1; r++)}
+\DoxyCodeLine{00725             xsh-\/>setCell(r, m\_c0 + c, \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}}());}
+\DoxyCodeLine{00726         \}}
+\DoxyCodeLine{00727       \}}
+\DoxyCodeLine{00728     \}}
+\DoxyCodeLine{00729     \textcolor{comment}{// extend}}
+\DoxyCodeLine{00730     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00731       \textcolor{comment}{// check how many vacant rows}}
+\DoxyCodeLine{00732       \textcolor{keywordflow}{if} (!m\_insert) \{}
+\DoxyCodeLine{00733         \textcolor{keywordtype}{int} tmp\_dr;}
+\DoxyCodeLine{00734         \textcolor{keywordtype}{bool} found = \textcolor{keyword}{false};}
+\DoxyCodeLine{00735         \textcolor{keywordflow}{for} (tmp\_dr = 1; tmp\_dr <= dr; tmp\_dr++) \{}
+\DoxyCodeLine{00736           \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < m\_colCount; c++) \{}
+\DoxyCodeLine{00737             \mbox{\hyperlink{class_t_xsh_column}{TXshColumn}} *column = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a3e1a216c019a0ebdf73d95acac95d8d0}{getColumn}}(m\_c0 + c);}
+\DoxyCodeLine{00738             \textcolor{keywordflow}{if} (!column || column-\/>getSoundColumn()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00739             \textcolor{keywordflow}{if} (!column-\/>isCellEmpty(m\_r1 + tmp\_dr)) \{}
+\DoxyCodeLine{00740               found = \textcolor{keyword}{true};}
+\DoxyCodeLine{00741               \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00742             \}}
+\DoxyCodeLine{00743           \}}
+\DoxyCodeLine{00744           \textcolor{keywordflow}{if} (found) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00745         \}}
+\DoxyCodeLine{00746         \textcolor{keywordflow}{if} (tmp\_dr == 1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00747         dr = tmp\_dr -\/ 1;}
+\DoxyCodeLine{00748         r1 = m\_r1 + dr;}
+\DoxyCodeLine{00749       \}}
+\DoxyCodeLine{00750 }
+\DoxyCodeLine{00751       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < m\_colCount; c++) \{}
+\DoxyCodeLine{00752         \textcolor{comment}{// Se e' una colonna sound l'extender non deve fare nulla.}}
+\DoxyCodeLine{00753         \mbox{\hyperlink{class_t_xsh_column}{TXshColumn}} *column = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a3e1a216c019a0ebdf73d95acac95d8d0}{getColumn}}(m\_c0 + c);}
+\DoxyCodeLine{00754         \textcolor{keywordflow}{if} (column \&\& column-\/>getSoundColumn()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00755         \textcolor{keywordflow}{if} (m\_insert) xsh-\/>\mbox{\hyperlink{class_t_xsheet_abd28bd6d7b54d51bc066279ae4d1d94e}{insertCells}}(m\_r1 + 1, m\_c0 + c, dr);}
+\DoxyCodeLine{00756         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} r = m\_r1 + 1; r <= r1; r++)}
+\DoxyCodeLine{00757           xsh-\/>setCell(r, m\_c0 + c, m\_columns[c].generate(r));}
+\DoxyCodeLine{00758       \}}
+\DoxyCodeLine{00759     \}}
+\DoxyCodeLine{00760     m\_r1 = r1;}
+\DoxyCodeLine{00761     getViewer()-\/>getCellSelection()-\/>\mbox{\hyperlink{class_t_cell_selection_ac081c8305a9b9269fbf82eb0c9e06bc3}{selectCells}}(m\_r0, m\_c0, m\_r1,}
+\DoxyCodeLine{00762                                                  m\_c0 + m\_colCount -\/ 1);}
+\DoxyCodeLine{00763   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_extender_tool_aa5a2dc340feb40fcd8cc7466a091e604}\label{class_level_extender_tool_aa5a2dc340feb40fcd8cc7466a091e604}} 
+\index{LevelExtenderTool@{LevelExtenderTool}!onCellChangeInvert@{onCellChangeInvert}}
+\index{onCellChangeInvert@{onCellChangeInvert}!LevelExtenderTool@{LevelExtenderTool}}
+\doxysubsubsection{\texorpdfstring{onCellChangeInvert()}{onCellChangeInvert()}}
+{\footnotesize\ttfamily void Level\+Extender\+Tool\+::on\+Cell\+Change\+Invert (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00766                                             \{}
+\DoxyCodeLine{00767     \textcolor{keywordflow}{if} (m\_colCount <= 0 || m\_rowCount <= 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00768     \textcolor{keywordflow}{if} (row >= m\_r1) row = m\_r1 -\/ 1;}
+\DoxyCodeLine{00769     \textcolor{keywordtype}{int} r0 = row + 1;}
+\DoxyCodeLine{00770     \textcolor{keywordflow}{if} (r0 > m\_r1) r0 = m\_r1;}
+\DoxyCodeLine{00771 }
+\DoxyCodeLine{00772     \textcolor{keywordflow}{if} (r0 < 0) r0 = 0;}
+\DoxyCodeLine{00773 }
+\DoxyCodeLine{00774     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = getViewer()-\/>getXsheet();}
+\DoxyCodeLine{00775     \textcolor{comment}{// check how many vacant rows}}
+\DoxyCodeLine{00776     \textcolor{keywordtype}{int} emptyRow;}
+\DoxyCodeLine{00777     \textcolor{keywordflow}{for} (emptyRow = m\_r0 -\/ 1; emptyRow >= 0; emptyRow-\/-\/) \{}
+\DoxyCodeLine{00778       \textcolor{keywordtype}{bool} found = \textcolor{keyword}{false};}
+\DoxyCodeLine{00779       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < m\_colCount; c++) \{}
+\DoxyCodeLine{00780         \mbox{\hyperlink{class_t_xsh_column}{TXshColumn}} *column = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a3e1a216c019a0ebdf73d95acac95d8d0}{getColumn}}(m\_c0 + c);}
+\DoxyCodeLine{00781         \textcolor{keywordflow}{if} (!column || column-\/>getSoundColumn()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00782         \textcolor{keywordflow}{if} (!column-\/>isCellEmpty(emptyRow)) \{}
+\DoxyCodeLine{00783           emptyRow += 1;}
+\DoxyCodeLine{00784           found = \textcolor{keyword}{true};}
+\DoxyCodeLine{00785           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00786         \}}
+\DoxyCodeLine{00787       \}}
+\DoxyCodeLine{00788       \textcolor{keywordflow}{if} (found) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00789     \}}
+\DoxyCodeLine{00790 }
+\DoxyCodeLine{00791     \textcolor{comment}{// upper-\/directional tab can extend cells only in the mpty area}}
+\DoxyCodeLine{00792     \textcolor{keywordflow}{if} (r0 < emptyRow) r0 = emptyRow;}
+\DoxyCodeLine{00793 }
+\DoxyCodeLine{00794     \textcolor{keywordtype}{int} dr = r0 -\/ m\_r0;}
+\DoxyCodeLine{00795     \textcolor{keywordflow}{if} (dr == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00796 }
+\DoxyCodeLine{00797     \textcolor{comment}{// shrink}}
+\DoxyCodeLine{00798     \textcolor{keywordflow}{if} (dr > 0) \{}
+\DoxyCodeLine{00799       \textcolor{comment}{// clear cells}}
+\DoxyCodeLine{00800       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < m\_colCount; c++) \{}
+\DoxyCodeLine{00801         \mbox{\hyperlink{class_t_xsh_column}{TXshColumn}} *column = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a3e1a216c019a0ebdf73d95acac95d8d0}{getColumn}}(m\_c0 + c);}
+\DoxyCodeLine{00802         \textcolor{keywordflow}{if} (!column || column-\/>getSoundColumn()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00803         xsh-\/>\mbox{\hyperlink{class_t_xsheet_a28381fbf27f33822b68cf66f689266da}{clearCells}}(m\_r0, m\_c0 + c, dr);}
+\DoxyCodeLine{00804       \}}
+\DoxyCodeLine{00805     \}}
+\DoxyCodeLine{00806     \textcolor{comment}{// extend}}
+\DoxyCodeLine{00807     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00808       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < m\_colCount; c++) \{}
+\DoxyCodeLine{00809         \mbox{\hyperlink{class_t_xsh_column}{TXshColumn}} *column = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a3e1a216c019a0ebdf73d95acac95d8d0}{getColumn}}(m\_c0 + c);}
+\DoxyCodeLine{00810         \textcolor{keywordflow}{if} (!column || column-\/>getSoundColumn()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00811         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} r = r0; r <= m\_r0 -\/ 1; r++) \{}
+\DoxyCodeLine{00812           xsh-\/>setCell(r, m\_c0 + c, m\_columns[c].generate(r));}
+\DoxyCodeLine{00813         \}}
+\DoxyCodeLine{00814       \}}
+\DoxyCodeLine{00815     \}}
+\DoxyCodeLine{00816     m\_r0 = r0;}
+\DoxyCodeLine{00817     getViewer()-\/>getCellSelection()-\/>\mbox{\hyperlink{class_t_cell_selection_ac081c8305a9b9269fbf82eb0c9e06bc3}{selectCells}}(m\_r0, m\_c0, m\_r1,}
+\DoxyCodeLine{00818                                                  m\_c0 + m\_colCount -\/ 1);}
+\DoxyCodeLine{00819   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_extender_tool_a55a608f7ec8934929850fcb6272f71c5}\label{class_level_extender_tool_a55a608f7ec8934929850fcb6272f71c5}} 
+\index{LevelExtenderTool@{LevelExtenderTool}!onClick@{onClick}}
+\index{onClick@{onClick}!LevelExtenderTool@{LevelExtenderTool}}
+\doxysubsubsection{\texorpdfstring{onClick()}{onClick()}}
+{\footnotesize\ttfamily void Level\+Extender\+Tool\+::on\+Click (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_cell_position}{Cell\+Position}} \&}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{Xsheet\+GUI\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00661                                                  \{}
+\DoxyCodeLine{00662     \textcolor{keywordtype}{int} row = pos.frame(), col = pos.layer();}
+\DoxyCodeLine{00663     \textcolor{keywordtype}{int} r0, c0, r1, c1;}
+\DoxyCodeLine{00664     getViewer()-\/>getCellSelection()-\/>getSelectedCells(r0, c0, r1, c1);}
+\DoxyCodeLine{00665     \textcolor{keywordflow}{if} (m\_invert)}
+\DoxyCodeLine{00666       assert(r0 == row + 1);}
+\DoxyCodeLine{00667     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00668       assert(r1 == row -\/ 1);}
+\DoxyCodeLine{00669     m\_c0       = c0;}
+\DoxyCodeLine{00670     m\_r0       = r0;}
+\DoxyCodeLine{00671     m\_r1       = r1;}
+\DoxyCodeLine{00672     m\_colCount = c1 -\/ c0 + 1;}
+\DoxyCodeLine{00673     m\_rowCount = r1 -\/ r0 + 1;}
+\DoxyCodeLine{00674     \textcolor{keywordflow}{if} (m\_colCount <= 0 || m\_rowCount <= 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00675 }
+\DoxyCodeLine{00676     \textcolor{comment}{// if m\_insert is false but there are no empty rows under the tab,}}
+\DoxyCodeLine{00677     \textcolor{comment}{// then switch m\_insert to true so that the operation works anyway}}
+\DoxyCodeLine{00678     \textcolor{keywordflow}{if} (!m\_insert \&\& !m\_invert) \{}
+\DoxyCodeLine{00679       \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = getViewer()-\/>getXsheet();}
+\DoxyCodeLine{00680       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = c0; c <= c1; c++) \{}
+\DoxyCodeLine{00681         \mbox{\hyperlink{class_t_xsh_column}{TXshColumn}} *column = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a3e1a216c019a0ebdf73d95acac95d8d0}{getColumn}}(c);}
+\DoxyCodeLine{00682         \textcolor{keywordflow}{if} (!column || column-\/>getSoundColumn()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00683         \textcolor{keywordflow}{if} (!column-\/>isCellEmpty(r1 + 1)) \{}
+\DoxyCodeLine{00684           m\_insert = \textcolor{keyword}{true};  \textcolor{comment}{// switch the behavior}}
+\DoxyCodeLine{00685           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00686         \}}
+\DoxyCodeLine{00687       \}}
+\DoxyCodeLine{00688     \}}
+\DoxyCodeLine{00689 }
+\DoxyCodeLine{00690     m\_columns.reserve(m\_colCount);}
+\DoxyCodeLine{00691     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = getViewer()-\/>getXsheet();}
+\DoxyCodeLine{00692     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = c0; c <= c1; c++)}
+\DoxyCodeLine{00693       m\_columns.push\_back(CellBuilder(xsh, r0, c, m\_rowCount, m\_invert));}
+\DoxyCodeLine{00694     m\_undo = \textcolor{keyword}{new} LevelExtenderUndo(m\_insert, m\_invert);}
+\DoxyCodeLine{00695     m\_undo-\/>setCells(xsh, r0, c0, m\_rowCount, m\_colCount);}
+\DoxyCodeLine{00696   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_extender_tool_a118b8a5aa998f7be82566d06db8180b0}\label{class_level_extender_tool_a118b8a5aa998f7be82566d06db8180b0}} 
+\index{LevelExtenderTool@{LevelExtenderTool}!onDrag@{onDrag}}
+\index{onDrag@{onDrag}!LevelExtenderTool@{LevelExtenderTool}}
+\doxysubsubsection{\texorpdfstring{onDrag()}{onDrag()}}
+{\footnotesize\ttfamily void Level\+Extender\+Tool\+::on\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_cell_position}{Cell\+Position}} \&}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{Xsheet\+GUI\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00698                                                 \{}
+\DoxyCodeLine{00699     \textcolor{keywordtype}{int} row = pos.frame(), col = pos.layer();}
+\DoxyCodeLine{00700     \textcolor{keywordflow}{if} (!m\_invert)}
+\DoxyCodeLine{00701       onCellChange(row, col);}
+\DoxyCodeLine{00702     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00703       onCellChangeInvert(row, col);}
+\DoxyCodeLine{00704     \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool_ac2e0a67ad6ccbcc326cd0ebf27385b49}{refreshCellsArea}}();}
+\DoxyCodeLine{00705   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_extender_tool_a47f94f68542f95d66fee0468744603d7}\label{class_level_extender_tool_a47f94f68542f95d66fee0468744603d7}} 
+\index{LevelExtenderTool@{LevelExtenderTool}!onRelease@{onRelease}}
+\index{onRelease@{onRelease}!LevelExtenderTool@{LevelExtenderTool}}
+\doxysubsubsection{\texorpdfstring{onRelease()}{onRelease()}}
+{\footnotesize\ttfamily void Level\+Extender\+Tool\+::on\+Release (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_cell_position}{Cell\+Position}} \&}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{Xsheet\+GUI\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00821                                                    \{}
+\DoxyCodeLine{00822     \textcolor{keywordtype}{int} row = pos.frame(), col = pos.layer();}
+\DoxyCodeLine{00823     \textcolor{keywordtype}{int} delta = m\_r1 -\/ (m\_r0 + m\_rowCount -\/ 1);}
+\DoxyCodeLine{00824     \textcolor{keywordflow}{if} (delta == 0)}
+\DoxyCodeLine{00825       \textcolor{keyword}{delete} m\_undo;}
+\DoxyCodeLine{00826     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00827       \textcolor{keywordflow}{if} (delta > 0)}
+\DoxyCodeLine{00828         m\_undo-\/>setCells(getViewer()-\/>getXsheet(), m\_r0, m\_c0, m\_r1 -\/ m\_r0 + 1,}
+\DoxyCodeLine{00829                          m\_colCount);}
+\DoxyCodeLine{00830       m\_undo-\/>setDeltaRow(delta);}
+\DoxyCodeLine{00831       TUndoManager::manager()-\/>add(m\_undo);}
+\DoxyCodeLine{00832       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{00833       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00834     \}}
+\DoxyCodeLine{00835     m\_undo = 0;}
+\DoxyCodeLine{00836   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xsheetdragtool.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,311 @@
+\hypertarget{classino__median__filter}{}\doxysection{ino\+\_\+median\+\_\+filter Class Reference}
+\label{classino__median__filter}\index{ino\_median\_filter@{ino\_median\_filter}}
+Inheritance diagram for ino\+\_\+median\+\_\+filter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{classino__median__filter}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classino__median__filter_ad1f146d6bc39c170079b2da402370c29}{do\+Get\+BBox}} (double frame, \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&b\+Box, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&info) override
+\item 
+bool \mbox{\hyperlink{classino__median__filter_aff97c006f8caaaf04b2b33e63d42c762}{can\+Handle}} (const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&rend\+\_\+sets, double frame) override
+\item 
+int \mbox{\hyperlink{classino__median__filter_a02ffc2e25babe652e0a2c5393777890e}{get\+Memory\+Requirement}} (const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&rect, double frame, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&info) override
+\item 
+void \mbox{\hyperlink{classino__median__filter_acb9f8ca8cd98a89c521336c26ea2c6eb}{do\+Compute}} (\mbox{\hyperlink{class_t_tile}{TTile}} \&tile, double frame, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&rend\+\_\+sets) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classino__median__filter_ac21c6169f9c88822a2df5b18629d49c7}\label{classino__median__filter_ac21c6169f9c88822a2df5b18629d49c7}} 
+\index{ino\_median\_filter@{ino\_median\_filter}!ino\_median\_filter@{ino\_median\_filter}}
+\index{ino\_median\_filter@{ino\_median\_filter}!ino\_median\_filter@{ino\_median\_filter}}
+\doxysubsubsection{\texorpdfstring{ino\_median\_filter()}{ino\_median\_filter()}}
+{\footnotesize\ttfamily ino\+\_\+median\+\_\+filter\+::ino\+\_\+median\+\_\+filter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019       : m\_radius(1.7)}
+\DoxyCodeLine{00020       , m\_channel(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_enum_param}{TIntEnumParam}}(0, \textcolor{stringliteral}{"{}Red"{}}))}
+\DoxyCodeLine{00021       , m\_ref\_mode(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_enum_param}{TIntEnumParam}}(0, \textcolor{stringliteral}{"{}Red"{}})) \{}
+\DoxyCodeLine{00022     \mbox{\hyperlink{class_t_fx_af0ccf8d65934ed9f7a62d3b45ee5f2b6}{addInputPort}}(\textcolor{stringliteral}{"{}Source"{}}, this-\/>m\_input);}
+\DoxyCodeLine{00023     \mbox{\hyperlink{class_t_fx_af0ccf8d65934ed9f7a62d3b45ee5f2b6}{addInputPort}}(\textcolor{stringliteral}{"{}Reference"{}}, this-\/>m\_refer);}
+\DoxyCodeLine{00024 }
+\DoxyCodeLine{00025     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}radius"{}}, this-\/>m\_radius);}
+\DoxyCodeLine{00026     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}channel"{}}, this-\/>m\_channel);}
+\DoxyCodeLine{00027     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}reference"{}}, this-\/>m\_ref\_mode);}
+\DoxyCodeLine{00028 }
+\DoxyCodeLine{00029     this-\/>m\_radius-\/>setValueRange(0, 1000.0);}
+\DoxyCodeLine{00030     this-\/>m\_channel-\/>addItem(1, \textcolor{stringliteral}{"{}Green"{}});}
+\DoxyCodeLine{00031     this-\/>m\_channel-\/>addItem(2, \textcolor{stringliteral}{"{}Blue"{}});}
+\DoxyCodeLine{00032     this-\/>m\_channel-\/>addItem(3, \textcolor{stringliteral}{"{}Alpha"{}});}
+\DoxyCodeLine{00033     this-\/>m\_channel-\/>addItem(4, \textcolor{stringliteral}{"{}All"{}});}
+\DoxyCodeLine{00034 }
+\DoxyCodeLine{00035     this-\/>m\_ref\_mode-\/>addItem(1, \textcolor{stringliteral}{"{}Green"{}});}
+\DoxyCodeLine{00036     this-\/>m\_ref\_mode-\/>addItem(2, \textcolor{stringliteral}{"{}Blue"{}});}
+\DoxyCodeLine{00037     this-\/>m\_ref\_mode-\/>addItem(3, \textcolor{stringliteral}{"{}Alpha"{}});}
+\DoxyCodeLine{00038     this-\/>m\_ref\_mode-\/>addItem(4, \textcolor{stringliteral}{"{}Luminance"{}});}
+\DoxyCodeLine{00039     this-\/>m\_ref\_mode-\/>addItem(-\/1, \textcolor{stringliteral}{"{}Nothing"{}});}
+\DoxyCodeLine{00040   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classino__median__filter_aff97c006f8caaaf04b2b33e63d42c762}\label{classino__median__filter_aff97c006f8caaaf04b2b33e63d42c762}} 
+\index{ino\_median\_filter@{ino\_median\_filter}!canHandle@{canHandle}}
+\index{canHandle@{canHandle}!ino\_median\_filter@{ino\_median\_filter}}
+\doxysubsubsection{\texorpdfstring{canHandle()}{canHandle()}}
+{\footnotesize\ttfamily bool ino\+\_\+median\+\_\+filter\+::can\+Handle (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{rend\+\_\+sets,  }\item[{double}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055                                                                           \{}
+\DoxyCodeLine{00056     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00057   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classino__median__filter_acb9f8ca8cd98a89c521336c26ea2c6eb}\label{classino__median__filter_acb9f8ca8cd98a89c521336c26ea2c6eb}} 
+\index{ino\_median\_filter@{ino\_median\_filter}!doCompute@{doCompute}}
+\index{doCompute@{doCompute}!ino\_median\_filter@{ino\_median\_filter}}
+\doxysubsubsection{\texorpdfstring{doCompute()}{doCompute()}}
+{\footnotesize\ttfamily void ino\+\_\+median\+\_\+filter\+::do\+Compute (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_tile}{TTile}} \&}]{tile,  }\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{rend\+\_\+sets }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00111                                                                     \{}
+\DoxyCodeLine{00112   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ 接続していなければ処理しない -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{00113   \textcolor{keywordflow}{if} (!this-\/>m\_input.isConnected()) \{}
+\DoxyCodeLine{00114     tile.getRaster()-\/>clear(); \textcolor{comment}{/* 塗りつぶしクリア */}}
+\DoxyCodeLine{00115     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00116   \}}
+\DoxyCodeLine{00117 }
+\DoxyCodeLine{00118   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ サポートしていないPixelタイプはエラーを投げる -\/-\/-\/ */}}
+\DoxyCodeLine{00119   \textcolor{keywordflow}{if} (!((\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}})tile.getRaster()) \&\& !((\mbox{\hyperlink{class_t_raster_p_t}{TRaster64P}})tile.getRaster())) \{}
+\DoxyCodeLine{00120     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_rop_exception}{TRopException}}(\textcolor{stringliteral}{"{}unsupported input pixel type"{}});}
+\DoxyCodeLine{00121   \}}
+\DoxyCodeLine{00122 }
+\DoxyCodeLine{00123   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ Pixel単位で動作パラメータを得る -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{00124   \textcolor{comment}{/* 動作パラメータを得る */}}
+\DoxyCodeLine{00125   \textcolor{keyword}{const} \textcolor{keywordtype}{double} radius  = this-\/>m\_radius-\/>getValue(frame);}
+\DoxyCodeLine{00126   \textcolor{keyword}{const} \textcolor{keywordtype}{int} channel    = this-\/>m\_channel-\/>getValue();}
+\DoxyCodeLine{00127   \textcolor{keyword}{const} \textcolor{keywordtype}{int} refer\_mode = this-\/>m\_ref\_mode-\/>getValue();}
+\DoxyCodeLine{00128 }
+\DoxyCodeLine{00129   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ 参照マージン含めた画像生成 -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{00130   \textcolor{comment}{/* Rendering画像のBBox値 -\/-\/> Pixel単位のdouble値 */}}
+\DoxyCodeLine{00131   \textcolor{comment}{/*    typedef TRectT<double> TRectD;}}
+\DoxyCodeLine{00132 \textcolor{comment}{          inline TRectT<double>::TRectT(}}
+\DoxyCodeLine{00133 \textcolor{comment}{                  const TPointT<double> \&bottomLeft}}
+\DoxyCodeLine{00134 \textcolor{comment}{                  , const TDimensionT<double> \&d}}
+\DoxyCodeLine{00135 \textcolor{comment}{          ) : x0(bottomLeft.x)}}
+\DoxyCodeLine{00136 \textcolor{comment}{                  , y0(bottomLeft.y)}}
+\DoxyCodeLine{00137 \textcolor{comment}{                  , x1(bottomLeft.x+d.lx)}}
+\DoxyCodeLine{00138 \textcolor{comment}{                  , y1(bottomLeft.y+d.ly)}}
+\DoxyCodeLine{00139 \textcolor{comment}{          \{\}}}
+\DoxyCodeLine{00140 \textcolor{comment}{  */}}
+\DoxyCodeLine{00141   \mbox{\hyperlink{class_t_rect_t}{TRectD}} enlarge\_rect =}
+\DoxyCodeLine{00142       \mbox{\hyperlink{class_t_rect_t}{TRectD}}(tile.m\_pos \textcolor{comment}{/* TPointD */}}
+\DoxyCodeLine{00143              ,}
+\DoxyCodeLine{00144              \mbox{\hyperlink{class_t_dimension_t}{TDimensionD}}(\textcolor{comment}{/* int -\/-\/> doubleにしてセット */}}
+\DoxyCodeLine{00145                          tile.getRaster()-\/>getLx(), tile.getRaster()-\/>getLy()));}
+\DoxyCodeLine{00146   \textcolor{comment}{/* BBoxの拡大 Pixel単位 */}}
+\DoxyCodeLine{00147   \textcolor{keyword}{const} \textcolor{keywordtype}{int} enlarge\_pixel = (int)(ceil(radius) + 0.5);}
+\DoxyCodeLine{00148   enlarge\_rect            = enlarge\_rect.enlarge(enlarge\_pixel);}
+\DoxyCodeLine{00149 }
+\DoxyCodeLine{00150   \textcolor{comment}{/*    void TRasterFx::allocateAndCompute(}}
+\DoxyCodeLine{00151 \textcolor{comment}{                  TTile \&tile,}}
+\DoxyCodeLine{00152 \textcolor{comment}{                  const TPointD \&pos, const TDimension \&size,}}
+\DoxyCodeLine{00153 \textcolor{comment}{                  const TRasterP \&templateRas, double frame,}}
+\DoxyCodeLine{00154 \textcolor{comment}{                  const TRenderSettings \&info}}
+\DoxyCodeLine{00155 \textcolor{comment}{          ) \{}}
+\DoxyCodeLine{00156 \textcolor{comment}{                  if (templateRas) \{}}
+\DoxyCodeLine{00157 \textcolor{comment}{          tile.getRaster() = templateRas-\/>create(size.lx, size.ly);}}
+\DoxyCodeLine{00158 \textcolor{comment}{                  \} else \{}}
+\DoxyCodeLine{00159 \textcolor{comment}{          tile.getRaster() = TRaster32P(size.lx, size.ly);}}
+\DoxyCodeLine{00160 \textcolor{comment}{                  \}}}
+\DoxyCodeLine{00161 \textcolor{comment}{          tile.m\_pos = pos;}}
+\DoxyCodeLine{00162 \textcolor{comment}{                  compute(tile, frame, info);}}
+\DoxyCodeLine{00163 \textcolor{comment}{          \}}}
+\DoxyCodeLine{00164 \textcolor{comment}{  */}}
+\DoxyCodeLine{00165   \mbox{\hyperlink{class_t_tile}{TTile}} enlarge\_tile;}
+\DoxyCodeLine{00166   this-\/>m\_input-\/>allocateAndCompute(}
+\DoxyCodeLine{00167       enlarge\_tile, enlarge\_rect.getP00(),}
+\DoxyCodeLine{00168       \mbox{\hyperlink{class_t_dimension_t}{TDimensionI}}(\textcolor{comment}{/* Pixel単位のdouble -\/> intにしてセット */}}
+\DoxyCodeLine{00169                   (\textcolor{keywordtype}{int})(enlarge\_rect.getLx() + 0.5),}
+\DoxyCodeLine{00170                   (\textcolor{keywordtype}{int})(enlarge\_rect.getLy() + 0.5)),}
+\DoxyCodeLine{00171       tile.getRaster(), frame, rend\_sets);}
+\DoxyCodeLine{00172 }
+\DoxyCodeLine{00173   \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/ 参照画像生成 -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00174   \mbox{\hyperlink{class_t_tile}{TTile}} refer\_tile;}
+\DoxyCodeLine{00175   \textcolor{keywordtype}{bool} refer\_sw = \textcolor{keyword}{false};}
+\DoxyCodeLine{00176   \textcolor{keywordflow}{if} (this-\/>m\_refer.isConnected()) \{}
+\DoxyCodeLine{00177     refer\_sw = \textcolor{keyword}{true};}
+\DoxyCodeLine{00178     this-\/>m\_refer-\/>allocateAndCompute(}
+\DoxyCodeLine{00179         refer\_tile, enlarge\_tile.m\_pos,}
+\DoxyCodeLine{00180         \mbox{\hyperlink{class_t_dimension_t}{TDimensionI}}(\textcolor{comment}{/* Pixel単位 */}}
+\DoxyCodeLine{00181                     enlarge\_tile.getRaster()-\/>getLx(),}
+\DoxyCodeLine{00182                     enlarge\_tile.getRaster()-\/>getLy()),}
+\DoxyCodeLine{00183         enlarge\_tile.getRaster(), frame, rend\_sets);}
+\DoxyCodeLine{00184   \}}
+\DoxyCodeLine{00185   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ 保存すべき画像メモリを塗りつぶしクリア -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{00186   tile.getRaster()-\/>clear(); \textcolor{comment}{/* 塗りつぶしクリア */}}
+\DoxyCodeLine{00187 }
+\DoxyCodeLine{00188   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ (app\_begin)log記憶 -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{00189   \textcolor{keyword}{const} \textcolor{keywordtype}{bool} log\_sw = ino::log\_enable\_sw();}
+\DoxyCodeLine{00190 }
+\DoxyCodeLine{00191   \textcolor{keywordflow}{if} (log\_sw) \{}
+\DoxyCodeLine{00192     std::ostringstream os;}
+\DoxyCodeLine{00193     os << \textcolor{stringliteral}{"{}params"{}}}
+\DoxyCodeLine{00194        << \textcolor{stringliteral}{"{}  radius "{}} << radius << \textcolor{stringliteral}{"{}  channel "{}} << channel << \textcolor{stringliteral}{"{}  refer\_mode "{}}}
+\DoxyCodeLine{00195        << refer\_mode << \textcolor{stringliteral}{"{}   tile w "{}} << tile.getRaster()-\/>getLx() << \textcolor{stringliteral}{"{}  h "{}}}
+\DoxyCodeLine{00196        << tile.getRaster()-\/>getLy() << \textcolor{stringliteral}{"{}  pixbits "{}}}
+\DoxyCodeLine{00197        << ino::pixel\_bits(tile.getRaster()) << \textcolor{stringliteral}{"{}   frame "{}} << frame}
+\DoxyCodeLine{00198        << \textcolor{stringliteral}{"{}   rand\_sets affine\_det "{}} << rend\_sets.\mbox{\hyperlink{class_t_render_settings_a1250181bf3fe8e05db005d5faa76b3ea}{m\_affine}}.det()}
+\DoxyCodeLine{00199        << \textcolor{stringliteral}{"{}  shrink x "{}} << rend\_sets.\mbox{\hyperlink{class_t_render_settings_a52dd41881bbf6aaf953fe300be2e233e}{m\_shrinkX}} << \textcolor{stringliteral}{"{}  y "{}} << rend\_sets.\mbox{\hyperlink{class_t_render_settings_ae1882f584ce9ffad12ce6bf9ff23814c}{m\_shrinkY}};}
+\DoxyCodeLine{00200     \textcolor{keywordflow}{if} (refer\_sw) \{}
+\DoxyCodeLine{00201       os << \textcolor{stringliteral}{"{}  refer\_tile.m\_pos "{}} << refer\_tile.m\_pos << \textcolor{stringliteral}{"{}  refer\_tile\_getLx "{}}}
+\DoxyCodeLine{00202          << refer\_tile.getRaster()-\/>getLx() << \textcolor{stringliteral}{"{}  y "{}}}
+\DoxyCodeLine{00203          << refer\_tile.getRaster()-\/>getLy();}
+\DoxyCodeLine{00204     \}}
+\DoxyCodeLine{00205   \}}
+\DoxyCodeLine{00206   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ fx処理 -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{00207   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00208     tile.getRaster()-\/>lock();}
+\DoxyCodeLine{00209     enlarge\_tile.getRaster()-\/>lock();}
+\DoxyCodeLine{00210     \textcolor{keywordflow}{if} (refer\_tile.getRaster() != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{00211       refer\_tile.getRaster()-\/>lock();}
+\DoxyCodeLine{00212     \}}
+\DoxyCodeLine{00213     fx\_(enlarge\_tile.getRaster()  \textcolor{comment}{// in with margin}}
+\DoxyCodeLine{00214         ,}
+\DoxyCodeLine{00215         enlarge\_pixel  \textcolor{comment}{// margin}}
+\DoxyCodeLine{00216         ,}
+\DoxyCodeLine{00217         tile.getRaster()  \textcolor{comment}{// out with no margin}}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219         ,}
+\DoxyCodeLine{00220         refer\_tile.getRaster(), refer\_mode}
+\DoxyCodeLine{00221 }
+\DoxyCodeLine{00222         ,}
+\DoxyCodeLine{00223         radius, channel);}
+\DoxyCodeLine{00224     \textcolor{keywordflow}{if} (refer\_tile.getRaster() != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{00225       refer\_tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00226     \}}
+\DoxyCodeLine{00227     enlarge\_tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00228     tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00229   \}}
+\DoxyCodeLine{00230   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ error処理 -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{00231   \textcolor{keywordflow}{catch} (std::bad\_alloc \&e) \{}
+\DoxyCodeLine{00232     \textcolor{keywordflow}{if} (refer\_tile.getRaster() != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{00233       refer\_tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00234     \}}
+\DoxyCodeLine{00235     enlarge\_tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00236     tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00237     \textcolor{keywordflow}{if} (log\_sw) \{}
+\DoxyCodeLine{00238       std::string str(\textcolor{stringliteral}{"{}std::bad\_alloc <"{}});}
+\DoxyCodeLine{00239       str += e.what();}
+\DoxyCodeLine{00240       str += \textcolor{charliteral}{'>'};}
+\DoxyCodeLine{00241     \}}
+\DoxyCodeLine{00242     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00243   \} \textcolor{keywordflow}{catch} (std::exception \&e) \{}
+\DoxyCodeLine{00244     \textcolor{keywordflow}{if} (refer\_tile.getRaster() != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{00245       refer\_tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00246     \}}
+\DoxyCodeLine{00247     enlarge\_tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00248     tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00249     \textcolor{keywordflow}{if} (log\_sw) \{}
+\DoxyCodeLine{00250       std::string str(\textcolor{stringliteral}{"{}exception <"{}});}
+\DoxyCodeLine{00251       str += e.what();}
+\DoxyCodeLine{00252       str += \textcolor{charliteral}{'>'};}
+\DoxyCodeLine{00253     \}}
+\DoxyCodeLine{00254     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00255   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00256     \textcolor{keywordflow}{if} (refer\_tile.getRaster() != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{00257       refer\_tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00258     \}}
+\DoxyCodeLine{00259     enlarge\_tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00260     tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00261     \textcolor{keywordflow}{if} (log\_sw) \{}
+\DoxyCodeLine{00262       std::string str(\textcolor{stringliteral}{"{}other exception"{}});}
+\DoxyCodeLine{00263     \}}
+\DoxyCodeLine{00264     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00265   \}}
+\DoxyCodeLine{00266 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classino__median__filter_ad1f146d6bc39c170079b2da402370c29}\label{classino__median__filter_ad1f146d6bc39c170079b2da402370c29}} 
+\index{ino\_median\_filter@{ino\_median\_filter}!doGetBBox@{doGetBBox}}
+\index{doGetBBox@{doGetBBox}!ino\_median\_filter@{ino\_median\_filter}}
+\doxysubsubsection{\texorpdfstring{doGetBBox()}{doGetBBox()}}
+{\footnotesize\ttfamily bool ino\+\_\+median\+\_\+filter\+::do\+Get\+BBox (\begin{DoxyParamCaption}\item[{double}]{frame,  }\item[{\mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{b\+Box,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00042                                                        \{}
+\DoxyCodeLine{00043     \textcolor{keywordflow}{if} (this-\/>m\_input.isConnected()) \{}
+\DoxyCodeLine{00044       \textcolor{keyword}{const} \textcolor{keywordtype}{bool} ret      = this-\/>m\_input-\/>doGetBBox(frame, bBox, info);}
+\DoxyCodeLine{00045       \textcolor{keyword}{const} \textcolor{keywordtype}{double} margin = ceil(this-\/>m\_radius-\/>getValue(frame));}
+\DoxyCodeLine{00046       \textcolor{keywordflow}{if} (0.0 < margin) \{}
+\DoxyCodeLine{00047         bBox = bBox.enlarge(margin);}
+\DoxyCodeLine{00048       \}}
+\DoxyCodeLine{00049       \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{00050     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00051       bBox = \mbox{\hyperlink{class_t_rect_t}{TRectD}}();}
+\DoxyCodeLine{00052       \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00053     \}}
+\DoxyCodeLine{00054   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classino__median__filter_a02ffc2e25babe652e0a2c5393777890e}\label{classino__median__filter_a02ffc2e25babe652e0a2c5393777890e}} 
+\index{ino\_median\_filter@{ino\_median\_filter}!getMemoryRequirement@{getMemoryRequirement}}
+\index{getMemoryRequirement@{getMemoryRequirement}!ino\_median\_filter@{ino\_median\_filter}}
+\doxysubsubsection{\texorpdfstring{getMemoryRequirement()}{getMemoryRequirement()}}
+{\footnotesize\ttfamily int ino\+\_\+median\+\_\+filter\+::get\+Memory\+Requirement (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{rect,  }\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Specifies the approximate size (in Mega\+Bytes) of the maximum allocation instance that this fx will need to perform in order to render the passed input. This method should be reimplemented in order to make the Toonz rendering process aware of the use of big raster memory chunks, at least. Observe that the passed tile geometry is implicitly {\itshape  already allocated \texorpdfstring{$<$}{<}\textbackslash{}i\texorpdfstring{$>$}{>} for the fx output. ~\newline
+The default implementation returns 0, assuming that the passed implicit memory size is passed below in node computation without further allocation of resources. Fxs can reimplement this to -\/1 to explicitly disable the Toonz\textquotesingle{}s smart memory handling. ~\newline
+ ~\newline
+\begin{DoxyNote}{Note}
+The rendering process ensures that the passed render settings are {\itshape handled} by the fx before this function is invoked -\/ do not waste code for it. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_t_raster_fx_a909a7afa779121b6caef5093da6447b0}{TRaster\+Fx\+::memory\+Size}} and TRaster\+Fx\+::can\+Handle methods. 
+\end{DoxySeeAlso}
+}
+
+Reimplemented from \mbox{\hyperlink{class_t_raster_fx_af8eb991c9756f4fb2e48d9f96cbacfba}{TRaster\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059                                                                  \{}
+\DoxyCodeLine{00060     \textcolor{keyword}{const} \textcolor{keywordtype}{double} radius = this-\/>m\_radius-\/>getValue(frame);}
+\DoxyCodeLine{00061     \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_raster_fx_a909a7afa779121b6caef5093da6447b0}{TRasterFx::memorySize}}(rect.enlarge(ceil(radius) + 0.5), info.m\_bpp);}
+\DoxyCodeLine{00062   \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00560}{TRaster\+Fx\+::memory\+Size()}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/ino\+\_\+median\+\_\+filter.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,71 @@
+\hypertarget{class_load_recent_flipbook_images_command_handler}{}\doxysection{Load\+Recent\+Flipbook\+Images\+Command\+Handler Class Reference}
+\label{class_load_recent_flipbook_images_command_handler}\index{LoadRecentFlipbookImagesCommandHandler@{LoadRecentFlipbookImagesCommandHandler}}
+Inheritance diagram for Load\+Recent\+Flipbook\+Images\+Command\+Handler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_load_recent_flipbook_images_command_handler}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_load_recent_flipbook_images_command_handler_aee4ca2b22399868d68390a5e1de28a92}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+load image from history 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_load_recent_flipbook_images_command_handler_a49393b8850edf42d684c14a7d88f92d5}\label{class_load_recent_flipbook_images_command_handler_a49393b8850edf42d684c14a7d88f92d5}} 
+\index{LoadRecentFlipbookImagesCommandHandler@{LoadRecentFlipbookImagesCommandHandler}!LoadRecentFlipbookImagesCommandHandler@{LoadRecentFlipbookImagesCommandHandler}}
+\index{LoadRecentFlipbookImagesCommandHandler@{LoadRecentFlipbookImagesCommandHandler}!LoadRecentFlipbookImagesCommandHandler@{LoadRecentFlipbookImagesCommandHandler}}
+\doxysubsubsection{\texorpdfstring{LoadRecentFlipbookImagesCommandHandler()}{LoadRecentFlipbookImagesCommandHandler()}}
+{\footnotesize\ttfamily Load\+Recent\+Flipbook\+Images\+Command\+Handler\+::\+Load\+Recent\+Flipbook\+Images\+Command\+Handler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01643       : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(MI\_LoadRecentImage) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_load_recent_flipbook_images_command_handler_aee4ca2b22399868d68390a5e1de28a92}\label{class_load_recent_flipbook_images_command_handler_aee4ca2b22399868d68390a5e1de28a92}} 
+\index{LoadRecentFlipbookImagesCommandHandler@{LoadRecentFlipbookImagesCommandHandler}!execute@{execute}}
+\index{execute@{execute}!LoadRecentFlipbookImagesCommandHandler@{LoadRecentFlipbookImagesCommandHandler}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Load\+Recent\+Flipbook\+Images\+Command\+Handler\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01644                           \{}
+\DoxyCodeLine{01645     QAction *act = CommandManager::instance()-\/>getAction(MI\_LoadRecentImage);}
+\DoxyCodeLine{01646 }
+\DoxyCodeLine{01647     \textcolor{comment}{/*-\/-\/-\/ 右クリックで呼ばれないとここにWidgetが入らない -\/-\/-\/*/}}
+\DoxyCodeLine{01648     \mbox{\hyperlink{class_flip_book}{FlipBook}} *flip = qobject\_cast<FlipBook *>(act-\/>parentWidget());}
+\DoxyCodeLine{01649     \textcolor{keywordflow}{if} (!flip) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01650 }
+\DoxyCodeLine{01651     \mbox{\hyperlink{class_d_v_menu_action}{DVMenuAction}} *menu = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_d_v_menu_action}{DVMenuAction}} *\textcolor{keyword}{>}(act-\/>menu());}
+\DoxyCodeLine{01652     \textcolor{keywordtype}{int} index          = menu-\/>getTriggeredActionIndex();}
+\DoxyCodeLine{01653     QString path =}
+\DoxyCodeLine{01654         RecentFiles::instance()-\/>getFilePath(index, RecentFiles::Flip);}
+\DoxyCodeLine{01655 }
+\DoxyCodeLine{01656     \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp(path.toStdWString());}
+\DoxyCodeLine{01657 }
+\DoxyCodeLine{01658     \textcolor{comment}{/*-\/-\/-\/ shrinkは1でロードする -\/-\/-\/*/}}
+\DoxyCodeLine{01659     ::viewFile(fp, -\/1, -\/1, -\/1, 1, 0, flip, \textcolor{keyword}{false});}
+\DoxyCodeLine{01660 }
+\DoxyCodeLine{01661     RecentFiles::instance()-\/>moveFilePath(index, 0, RecentFiles::Flip);}
+\DoxyCodeLine{01662   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/imageviewer.\+cpp\end{DoxyCompactItemize}

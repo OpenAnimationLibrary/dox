@@ -1,0 +1,266 @@
+\hypertarget{class_my_scanner_listener}{}\doxysection{My\+Scanner\+Listener Class Reference}
+\label{class_my_scanner_listener}\index{MyScannerListener@{MyScannerListener}}
+Inheritance diagram for My\+Scanner\+Listener\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_my_scanner_listener}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_my_scanner_listener_a91a595739e6d01faf5fbd33575a41edd}{My\+Scanner\+Listener}} (const \mbox{\hyperlink{class_scan_list}{Scan\+List}} \&scan\+List)
+\item 
+void \mbox{\hyperlink{class_my_scanner_listener_a01f3d74ce49e4450753785df9f77b366}{on\+Image}} (const \mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&) override
+\item 
+void \mbox{\hyperlink{class_my_scanner_listener_a21ae27a645716166d001b35b5950f2ef}{on\+Error}} () override
+\item 
+void \mbox{\hyperlink{class_my_scanner_listener_ad7482d50ebc185e545ba0291f6317450}{on\+Next\+Paper}} () override
+\item 
+void \mbox{\hyperlink{class_my_scanner_listener_a3b4f0514e4945d66f7d667cce6d08b59}{on\+Automatically\+Next\+Paper}} () override
+\item 
+bool \mbox{\hyperlink{class_my_scanner_listener_a956aab9b18ffbc32c021abedd0177e13}{is\+Canceled}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_my_scanner_listener_a65c0537e1484bb140e369bac756b62e7}{cancel\+Button\+Pressed}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_my_scanner_listener_a91a595739e6d01faf5fbd33575a41edd}\label{class_my_scanner_listener_a91a595739e6d01faf5fbd33575a41edd}} 
+\index{MyScannerListener@{MyScannerListener}!MyScannerListener@{MyScannerListener}}
+\index{MyScannerListener@{MyScannerListener}!MyScannerListener@{MyScannerListener}}
+\doxysubsubsection{\texorpdfstring{MyScannerListener()}{MyScannerListener()}}
+{\footnotesize\ttfamily My\+Scanner\+Listener\+::\+My\+Scanner\+Listener (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_scan_list}{Scan\+List}} \&}]{scan\+List }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00649     : m\_scanList(scanList)}
+\DoxyCodeLine{00650     , m\_current(0)}
+\DoxyCodeLine{00651     , m\_inc(+1)}
+\DoxyCodeLine{00652     , m\_isCanceled(\textcolor{keyword}{false})}
+\DoxyCodeLine{00653     , m\_progressDialog(0) \{}
+\DoxyCodeLine{00654   \mbox{\hyperlink{class_t_scanner_parameters}{TScannerParameters}} *parameters = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00655                                        -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00656                                        -\/>getScene()}
+\DoxyCodeLine{00657                                        -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00658                                        -\/>\mbox{\hyperlink{class_t_scene_properties_a2e4fb1abfbf34970a670e16e15ac5ed6}{getScanParameters}}();}
+\DoxyCodeLine{00659 }
+\DoxyCodeLine{00660   m\_isPreview = parameters-\/>isPreview();}
+\DoxyCodeLine{00661   \textcolor{keywordflow}{if} (m\_isPreview) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00662   \textcolor{keywordflow}{if} (parameters-\/>isPaperFeederEnabled()) \{}
+\DoxyCodeLine{00663     \textcolor{keywordtype}{int} frameCount         = m\_scanList.getFrameCount();}
+\DoxyCodeLine{00664     \mbox{\hyperlink{class_scan_list_frame}{ScanListFrame}} frame    = m\_scanList.getFrame(m\_current);}
+\DoxyCodeLine{00665     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *newXl = frame.getLevel();}
+\DoxyCodeLine{00666     \mbox{\hyperlink{class_t_file_path}{TFilePath}} levelName(newXl-\/>\mbox{\hyperlink{class_t_xsh_level_a3a59fb1bd3261baee4e889a9edbf0ae8}{getName}}());}
+\DoxyCodeLine{00667     QString imageName =}
+\DoxyCodeLine{00668         toQString(levelName.withFrame(frame.getFrameId())) + QString(\textcolor{stringliteral}{"{}.tif"{}});}
+\DoxyCodeLine{00669     QString text = tr(\textcolor{stringliteral}{"{}Scanning in progress: "{}}) + imageName + \textcolor{stringliteral}{"{} 1/"{}} +}
+\DoxyCodeLine{00670                    QString::number(frameCount);}
+\DoxyCodeLine{00671     m\_progressDialog =}
+\DoxyCodeLine{00672         \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_progress_dialog}{DVGui::ProgressDialog}}(text, QObject::tr(\textcolor{stringliteral}{"{}Cancel"{}}), 0, frameCount);}
+\DoxyCodeLine{00673     connect(m\_progressDialog, SIGNAL(canceled()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00674             SLOT(cancelButtonPressed()));}
+\DoxyCodeLine{00675     m\_progressDialog-\/>setWindowModality(Qt::WindowModal);}
+\DoxyCodeLine{00676     m\_progressDialog-\/>show();}
+\DoxyCodeLine{00677   \}}
+\DoxyCodeLine{00678   \textcolor{keywordflow}{if} (parameters-\/>isReverseOrder()) \{}
+\DoxyCodeLine{00679     m\_current = m\_scanList.getFrameCount() -\/ 1;}
+\DoxyCodeLine{00680     m\_inc     = -\/1;}
+\DoxyCodeLine{00681   \}}
+\DoxyCodeLine{00682 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_my_scanner_listener_a65c0537e1484bb140e369bac756b62e7}\label{class_my_scanner_listener_a65c0537e1484bb140e369bac756b62e7}} 
+\index{MyScannerListener@{MyScannerListener}!cancelButtonPressed@{cancelButtonPressed}}
+\index{cancelButtonPressed@{cancelButtonPressed}!MyScannerListener@{MyScannerListener}}
+\doxysubsubsection{\texorpdfstring{cancelButtonPressed}{cancelButtonPressed}}
+{\footnotesize\ttfamily void My\+Scanner\+Listener\+::cancel\+Button\+Pressed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00796                                             \{}
+\DoxyCodeLine{00797   assert(!!m\_progressDialog);}
+\DoxyCodeLine{00798   m\_isCanceled = \textcolor{keyword}{true};}
+\DoxyCodeLine{00799 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_scanner_listener_a956aab9b18ffbc32c021abedd0177e13}\label{class_my_scanner_listener_a956aab9b18ffbc32c021abedd0177e13}} 
+\index{MyScannerListener@{MyScannerListener}!isCanceled@{isCanceled}}
+\index{isCanceled@{isCanceled}!MyScannerListener@{MyScannerListener}}
+\doxysubsubsection{\texorpdfstring{isCanceled()}{isCanceled()}}
+{\footnotesize\ttfamily bool My\+Scanner\+Listener\+::is\+Canceled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_scanner_listener}{TScanner\+Listener}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00792 \{ \textcolor{keywordflow}{return} m\_isCanceled; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_scanner_listener_a3b4f0514e4945d66f7d667cce6d08b59}\label{class_my_scanner_listener_a3b4f0514e4945d66f7d667cce6d08b59}} 
+\index{MyScannerListener@{MyScannerListener}!onAutomaticallyNextPaper@{onAutomaticallyNextPaper}}
+\index{onAutomaticallyNextPaper@{onAutomaticallyNextPaper}!MyScannerListener@{MyScannerListener}}
+\doxysubsubsection{\texorpdfstring{onAutomaticallyNextPaper()}{onAutomaticallyNextPaper()}}
+{\footnotesize\ttfamily void My\+Scanner\+Listener\+::on\+Automatically\+Next\+Paper (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_scanner_listener}{TScanner\+Listener}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00771                                                  \{}
+\DoxyCodeLine{00772   assert(!m\_isPreview);}
+\DoxyCodeLine{00773   assert(!!m\_progressDialog);}
+\DoxyCodeLine{00774   \textcolor{keywordtype}{int} frameCount = m\_scanList.getFrameCount();}
+\DoxyCodeLine{00775   \textcolor{keywordtype}{int} step       = m\_inc == -\/1 ? frameCount -\/ m\_current -\/ 1 : m\_current;}
+\DoxyCodeLine{00776   \textcolor{keywordflow}{if} (step < frameCount) \{}
+\DoxyCodeLine{00777     \mbox{\hyperlink{class_scan_list_frame}{ScanListFrame}} frame    = m\_scanList.getFrame(m\_current);}
+\DoxyCodeLine{00778     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *newXl = frame.getLevel();}
+\DoxyCodeLine{00779     \mbox{\hyperlink{class_t_file_path}{TFilePath}} levelName(newXl-\/>\mbox{\hyperlink{class_t_xsh_level_a3a59fb1bd3261baee4e889a9edbf0ae8}{getName}}());}
+\DoxyCodeLine{00780     QString imageName =}
+\DoxyCodeLine{00781         toQString(levelName.withFrame(frame.getFrameId())) + QString(\textcolor{stringliteral}{"{}.tif"{}});}
+\DoxyCodeLine{00782     m\_progressDialog-\/>setLabelText(tr(\textcolor{stringliteral}{"{}Scanning in progress: "{}}) + imageName +}
+\DoxyCodeLine{00783                                    QString::number(m\_current + 1) + \textcolor{stringliteral}{"{} /"{}} +}
+\DoxyCodeLine{00784                                    QString::number(frameCount));}
+\DoxyCodeLine{00785   \}}
+\DoxyCodeLine{00786   m\_progressDialog-\/>setValue(step);}
+\DoxyCodeLine{00787   \textcolor{keywordflow}{if} (m\_progressDialog \&\& (step == frameCount)) m\_progressDialog-\/>hide();}
+\DoxyCodeLine{00788 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_scanner_listener_a21ae27a645716166d001b35b5950f2ef}\label{class_my_scanner_listener_a21ae27a645716166d001b35b5950f2ef}} 
+\index{MyScannerListener@{MyScannerListener}!onError@{onError}}
+\index{onError@{onError}!MyScannerListener@{MyScannerListener}}
+\doxysubsubsection{\texorpdfstring{onError()}{onError()}}
+{\footnotesize\ttfamily void My\+Scanner\+Listener\+::on\+Error (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_scanner_listener}{TScanner\+Listener}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00746                                 \{}
+\DoxyCodeLine{00747   \textcolor{keywordflow}{if} (m\_progressDialog) m\_progressDialog-\/>hide();}
+\DoxyCodeLine{00748   DVGui::warning(tr(\textcolor{stringliteral}{"{}There was an error during the scanning process."{}}));}
+\DoxyCodeLine{00749 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_scanner_listener_a01f3d74ce49e4450753785df9f77b366}\label{class_my_scanner_listener_a01f3d74ce49e4450753785df9f77b366}} 
+\index{MyScannerListener@{MyScannerListener}!onImage@{onImage}}
+\index{onImage@{onImage}!MyScannerListener@{MyScannerListener}}
+\doxysubsubsection{\texorpdfstring{onImage()}{onImage()}}
+{\footnotesize\ttfamily void My\+Scanner\+Listener\+::on\+Image (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&}]{ras\+Img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_scanner_listener}{TScanner\+Listener}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00686                                                            \{}
+\DoxyCodeLine{00687   \textcolor{keywordflow}{if} (!rasImg || !rasImg-\/>getRaster()) \{}
+\DoxyCodeLine{00688     DVGui::warning(tr(\textcolor{stringliteral}{"{}The pixel type is not supported."{}}));}
+\DoxyCodeLine{00689     m\_current += m\_inc;}
+\DoxyCodeLine{00690     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00691   \}}
+\DoxyCodeLine{00692   \textcolor{keywordflow}{if} (!m\_isPreview \&\&}
+\DoxyCodeLine{00693       (m\_current < 0 || m\_current >= m\_scanList.getFrameCount())) \{}
+\DoxyCodeLine{00694     DVGui::warning(tr(\textcolor{stringliteral}{"{}The scanning process is completed."{}}));}
+\DoxyCodeLine{00695     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00696   \}}
+\DoxyCodeLine{00697   \textcolor{keywordflow}{if} (m\_isPreview) \{}
+\DoxyCodeLine{00698     TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a124eae4cf370288f42c22b3477cb5163}{add}}((std::string) \textcolor{stringliteral}{"{}setScanCropboxId"{}},}
+\DoxyCodeLine{00699                                  rasImg.getPointer());}
+\DoxyCodeLine{00700   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00701 \textcolor{preprocessor}{\#ifdef LINETEST}}
+\DoxyCodeLine{00702     \textcolor{comment}{// Autocenter}}
+\DoxyCodeLine{00703     \mbox{\hyperlink{class_cleanup_parameters}{CleanupParameters}} *cp = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00704                                 -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00705                                 -\/>getScene()}
+\DoxyCodeLine{00706                                 -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00707                                 -\/>\mbox{\hyperlink{class_t_scene_properties_a84e6735bb0b0ea5054b9592c9612aff9}{getCleanupParameters}}();}
+\DoxyCodeLine{00708     \textcolor{keywordflow}{if} (cp-\/>m\_autocenterType != AUTOCENTER\_NONE) \{}
+\DoxyCodeLine{00709       \textcolor{keywordtype}{bool} autocentered;}
+\DoxyCodeLine{00710       \mbox{\hyperlink{class_t_cleanupper}{TCleanupper}} *cl = TCleanupper::instance();}
+\DoxyCodeLine{00711       cl-\/>setParameters(cp);}
+\DoxyCodeLine{00712       \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} outImg = cl-\/>autocenterOnly(rasImg, \textcolor{keyword}{false}, autocentered);}
+\DoxyCodeLine{00713       \textcolor{keywordflow}{if} (!autocentered)}
+\DoxyCodeLine{00714         DVGui::warning(}
+\DoxyCodeLine{00715             QObject::tr(\textcolor{stringliteral}{"{}The autocentering failed on the current drawing."{}}));}
+\DoxyCodeLine{00716       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00717         rasImg-\/>setRaster(outImg-\/>getRaster());}
+\DoxyCodeLine{00718     \}}
+\DoxyCodeLine{00719     makeTransparent(rasImg-\/>getRaster());}
+\DoxyCodeLine{00720 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00721     \mbox{\hyperlink{class_t_scanner_parameters}{TScannerParameters}} *params = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00722                                      -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00723                                      -\/>getScene()}
+\DoxyCodeLine{00724                                      -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00725                                      -\/>\mbox{\hyperlink{class_t_scene_properties_a2e4fb1abfbf34970a670e16e15ac5ed6}{getScanParameters}}();}
+\DoxyCodeLine{00726 }
+\DoxyCodeLine{00727     \mbox{\hyperlink{class_scan_list_frame}{ScanListFrame}} frame = m\_scanList.getFrame(m\_current);}
+\DoxyCodeLine{00728     \textcolor{keywordtype}{bool} isBW           = \textcolor{keyword}{false};}
+\DoxyCodeLine{00729     \textcolor{keywordflow}{if} (params-\/>getScanType() == TScannerParameters::BW) \{}
+\DoxyCodeLine{00730       isBW = \textcolor{keyword}{true};}
+\DoxyCodeLine{00731       rasImg-\/>setScanBWFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{00732       Tiio::Writer::setBlackAndWhiteThreshold(params-\/>m\_threshold.m\_value);}
+\DoxyCodeLine{00733     \}}
+\DoxyCodeLine{00734     frame.setRasterImage(rasImg, isBW);}
+\DoxyCodeLine{00735 }
+\DoxyCodeLine{00736     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>setFid(frame.getFrameId());}
+\DoxyCodeLine{00737     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>notifyCastChange();}
+\DoxyCodeLine{00738     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>notifyLevelChange();}
+\DoxyCodeLine{00739 }
+\DoxyCodeLine{00740     m\_current += m\_inc;}
+\DoxyCodeLine{00741   \}}
+\DoxyCodeLine{00742 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_scanner_listener_ad7482d50ebc185e545ba0291f6317450}\label{class_my_scanner_listener_ad7482d50ebc185e545ba0291f6317450}} 
+\index{MyScannerListener@{MyScannerListener}!onNextPaper@{onNextPaper}}
+\index{onNextPaper@{onNextPaper}!MyScannerListener@{MyScannerListener}}
+\doxysubsubsection{\texorpdfstring{onNextPaper()}{onNextPaper()}}
+{\footnotesize\ttfamily void My\+Scanner\+Listener\+::on\+Next\+Paper (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_scanner_listener}{TScanner\+Listener}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00753                                     \{}
+\DoxyCodeLine{00754   assert(!m\_isPreview);}
+\DoxyCodeLine{00755   \textcolor{keywordflow}{if} (TScanner::instance()-\/>m\_isTwain)}
+\DoxyCodeLine{00756     DVGui::info(}
+\DoxyCodeLine{00757         tr(\textcolor{stringliteral}{"{}Please, place the next paper drawing on the scanner flatbed, then "{}}}
+\DoxyCodeLine{00758            \textcolor{stringliteral}{"{}select the relevant command in the TWAIN interface."{}}));}
+\DoxyCodeLine{00759   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00760     QString question(}
+\DoxyCodeLine{00761         tr(\textcolor{stringliteral}{"{}Please, place the next paper drawing on the scanner flatbed, then "{}}}
+\DoxyCodeLine{00762            \textcolor{stringliteral}{"{}click the Scan button."{}}));}
+\DoxyCodeLine{00763     \textcolor{keywordtype}{int} ret =}
+\DoxyCodeLine{00764         DVGui::MsgBox(question, QObject::tr(\textcolor{stringliteral}{"{}Scan"{}}), QObject::tr(\textcolor{stringliteral}{"{}Cancel"{}}), 0);}
+\DoxyCodeLine{00765     \textcolor{keywordflow}{if} (ret == 2 || ret == 0) m\_isCanceled = \textcolor{keyword}{true};}
+\DoxyCodeLine{00766   \}}
+\DoxyCodeLine{00767 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/scanpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/scanpopup.\+cpp\end{DoxyCompactItemize}

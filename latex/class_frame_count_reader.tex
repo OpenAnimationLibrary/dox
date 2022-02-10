@@ -1,0 +1,125 @@
+\hypertarget{class_frame_count_reader}{}\doxysection{Frame\+Count\+Reader Class Reference}
+\label{class_frame_count_reader}\index{FrameCountReader@{FrameCountReader}}
+
+
+{\ttfamily \#include $<$filebrowser.\+h$>$}
+
+Inheritance diagram for Frame\+Count\+Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_frame_count_reader}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_frame_count_reader_a31b020dca3e2fe0d24143e60ac603b1a}\label{class_frame_count_reader_a31b020dca3e2fe0d24143e60ac603b1a}} 
+void {\bfseries calculated\+Frame\+Count} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_frame_count_reader_a55c395b06dbf5b86988a0ba3457336e0}{get\+Frame\+Count}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path)
+\item 
+void \mbox{\hyperlink{class_frame_count_reader_aa330693f35d9b337880fff6dd06fba46}{stop\+Reading}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_frame_count_reader}{Frame\+Count\+Reader}} is the class responsible for calculation of levels\textquotesingle{} frame counts in the file browser. Since on many file formats this requires to open the level file and scan each frame (MOV-\/like), and on some machine configurations such a task can be time consuming, we dedicate a separate thread for it -\/ just like the icon generator does. Calculated frame counts are also stored for quick lookup once they have been calculated the first time. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_frame_count_reader_a227da81d445c7707d7ae640377fb39a4}\label{class_frame_count_reader_a227da81d445c7707d7ae640377fb39a4}} 
+\index{FrameCountReader@{FrameCountReader}!FrameCountReader@{FrameCountReader}}
+\index{FrameCountReader@{FrameCountReader}!FrameCountReader@{FrameCountReader}}
+\doxysubsubsection{\texorpdfstring{FrameCountReader()}{FrameCountReader()}}
+{\footnotesize\ttfamily Frame\+Count\+Reader\+::\+Frame\+Count\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02307                                    : m\_executor() \{}
+\DoxyCodeLine{02308   m\_executor.\mbox{\hyperlink{class_t_thread_1_1_executor_a85231531a2fa273db401f090c9aba4ea}{setMaxActiveTasks}}(2);}
+\DoxyCodeLine{02309 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_frame_count_reader_a9bdca3edad5002642be223490743236f}\label{class_frame_count_reader_a9bdca3edad5002642be223490743236f}} 
+\index{FrameCountReader@{FrameCountReader}!````~FrameCountReader@{$\sim$FrameCountReader}}
+\index{````~FrameCountReader@{$\sim$FrameCountReader}!FrameCountReader@{FrameCountReader}}
+\doxysubsubsection{\texorpdfstring{$\sim$FrameCountReader()}{~FrameCountReader()}}
+{\footnotesize\ttfamily Frame\+Count\+Reader\+::$\sim$\+Frame\+Count\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02313 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_frame_count_reader_a55c395b06dbf5b86988a0ba3457336e0}\label{class_frame_count_reader_a55c395b06dbf5b86988a0ba3457336e0}} 
+\index{FrameCountReader@{FrameCountReader}!getFrameCount@{getFrameCount}}
+\index{getFrameCount@{getFrameCount}!FrameCountReader@{FrameCountReader}}
+\doxysubsubsection{\texorpdfstring{getFrameCount()}{getFrameCount()}}
+{\footnotesize\ttfamily int Frame\+Count\+Reader\+::get\+Frame\+Count (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02317                                                        \{}
+\DoxyCodeLine{02318   QDateTime modifiedDate =}
+\DoxyCodeLine{02319       QFileInfo(QString::fromStdWString(fp.getWideString())).lastModified();}
+\DoxyCodeLine{02320   std::map<TFilePath, FCData>::iterator it;}
+\DoxyCodeLine{02321 }
+\DoxyCodeLine{02322   \{}
+\DoxyCodeLine{02323     \textcolor{comment}{// Access the static map to find an occurrence of the path.}}
+\DoxyCodeLine{02324     QMutexLocker locker(\&frameCountMapMutex);}
+\DoxyCodeLine{02325     it = frameCountMap.find(fp);}
+\DoxyCodeLine{02326 }
+\DoxyCodeLine{02327     \textcolor{keywordflow}{if} (it != frameCountMap.end()) \{}
+\DoxyCodeLine{02328       \textcolor{keywordflow}{if} (it-\/>second.m\_frameCount > 0 \&\& it-\/>second.m\_date == modifiedDate) \{}
+\DoxyCodeLine{02329         \textcolor{comment}{// Found an unmodified occurrence with correctly calculated frame count}}
+\DoxyCodeLine{02330         \textcolor{keywordflow}{return} it-\/>second.m\_frameCount;}
+\DoxyCodeLine{02331       \}}
+\DoxyCodeLine{02332     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{02333       \textcolor{comment}{// First time this frame count is calculated -\/ initialize FC data}}
+\DoxyCodeLine{02334       frameCountMap[fp] = \mbox{\hyperlink{struct_f_c_data}{FCData}}(modifiedDate);}
+\DoxyCodeLine{02335       \textcolor{keywordflow}{goto} calculateTask;}
+\DoxyCodeLine{02336     \}}
+\DoxyCodeLine{02337 }
+\DoxyCodeLine{02338     \textcolor{keywordflow}{if} ((modifiedDate == it-\/>second.m\_date) \&\&}
+\DoxyCodeLine{02339         (it-\/>second.m\_underProgress || it-\/>second.m\_retryCount < 0))}
+\DoxyCodeLine{02340       \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{02341   \}}
+\DoxyCodeLine{02342 }
+\DoxyCodeLine{02343 calculateTask:}
+\DoxyCodeLine{02344 }
+\DoxyCodeLine{02345   \textcolor{comment}{// Now, we have to calculate the frame count; first, create a frame count}}
+\DoxyCodeLine{02346   \textcolor{comment}{// calculation task and submit it.}}
+\DoxyCodeLine{02347   \mbox{\hyperlink{class_frame_count_task}{FrameCountTask}} *task = \textcolor{keyword}{new} \mbox{\hyperlink{class_frame_count_task}{FrameCountTask}}(fp, modifiedDate);}
+\DoxyCodeLine{02348   connect(task, SIGNAL(finished(\mbox{\hyperlink{class_t_smart_pointer_t}{TThread::RunnableP}})), \textcolor{keyword}{this},}
+\DoxyCodeLine{02349           SIGNAL(calculatedFrameCount()));}
+\DoxyCodeLine{02350   connect(task, SIGNAL(exception(\mbox{\hyperlink{class_t_smart_pointer_t}{TThread::RunnableP}})), \textcolor{keyword}{this},}
+\DoxyCodeLine{02351           SIGNAL(calculatedFrameCount()));}
+\DoxyCodeLine{02352 }
+\DoxyCodeLine{02353   m\_executor.\mbox{\hyperlink{class_t_thread_1_1_executor_af31c8db8ac72df4c342e7769e95e2135}{addTask}}(task);}
+\DoxyCodeLine{02354 }
+\DoxyCodeLine{02355   \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{// FrameCount has not yet been calculated}}
+\DoxyCodeLine{02356 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_frame_count_reader_aa330693f35d9b337880fff6dd06fba46}\label{class_frame_count_reader_aa330693f35d9b337880fff6dd06fba46}} 
+\index{FrameCountReader@{FrameCountReader}!stopReading@{stopReading}}
+\index{stopReading@{stopReading}!FrameCountReader@{FrameCountReader}}
+\doxysubsubsection{\texorpdfstring{stopReading()}{stopReading()}}
+{\footnotesize\ttfamily void Frame\+Count\+Reader\+::stop\+Reading (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02360 \{ m\_executor.\mbox{\hyperlink{class_t_thread_1_1_executor_a3ebba69410a233ff1e5774d7e4d1246f}{cancelAll}}(); \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowser.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowser.\+cpp\end{DoxyCompactItemize}

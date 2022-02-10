@@ -1,0 +1,465 @@
+\hypertarget{class_t_big_memory_manager}{}\doxysection{TBig\+Memory\+Manager Class Reference}
+\label{class_t_big_memory_manager}\index{TBigMemoryManager@{TBigMemoryManager}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_t_big_memory_manager_aca817cb8f5c5fe6cbf3378139f97549a}{init}} (TUINT32 sizein\+Kb)
+\item 
+bool \mbox{\hyperlink{class_t_big_memory_manager_a641b078ca6e64e409157b6a3ffb5e4f9}{put\+Raster}} (\mbox{\hyperlink{class_t_raster}{TRaster}} $\ast$ras, bool can\+Put\+On\+Disk=true)
+\item 
+bool \mbox{\hyperlink{class_t_big_memory_manager_a12db4d9a02f726d3b92891656f5283ec}{release\+Raster}} (\mbox{\hyperlink{class_t_raster}{TRaster}} $\ast$ras)
+\item 
+\mbox{\Hypertarget{class_t_big_memory_manager_a0a9034ad74f3078091a09aef56e58179}\label{class_t_big_memory_manager_a0a9034ad74f3078091a09aef56e58179}} 
+void {\bfseries lock} (UCHAR $\ast$buffer)
+\item 
+\mbox{\Hypertarget{class_t_big_memory_manager_a2e89e35c4e5170457235a4286e0b895b}\label{class_t_big_memory_manager_a2e89e35c4e5170457235a4286e0b895b}} 
+void {\bfseries unlock} (UCHAR $\ast$buffer)
+\item 
+UCHAR $\ast$ \mbox{\hyperlink{class_t_big_memory_manager_a6e1ee06f6f2d1d72c3dc65e4d5764ae4}{get\+Buffer}} (UINT size)
+\item 
+bool \mbox{\hyperlink{class_t_big_memory_manager_a4560904b6b8c1abe790b99115ae7f3b2}{is\+Active}} () const
+\item 
+TUINT32 \mbox{\hyperlink{class_t_big_memory_manager_a193589477badce5aa27cf85f9764e4cd}{get\+Available\+Memoryin\+Kb}} () const
+\item 
+\mbox{\Hypertarget{class_t_big_memory_manager_a92fa2dfb8385d57cc9ee10186953fb60}\label{class_t_big_memory_manager_a92fa2dfb8385d57cc9ee10186953fb60}} 
+void {\bfseries get\+Raster\+Info} (int \&raster\+Count, TUINT32 \&tot\+Raster\+Mem\+In\+Kb, int \&not\+Cached\+Raster\+Count, TUINT32 \&not\+Cached\+Raster\+Mem\+In\+Kb)
+\item 
+int \mbox{\hyperlink{class_t_big_memory_manager_a3733c587c257b9376defdb344ce5986c}{get\+Allocation\+Peak}} ()
+\item 
+int \mbox{\hyperlink{class_t_big_memory_manager_adec767e76ab9c769c7cd4b2227383c52}{get\+Allocation\+Mean}} ()
+\item 
+void \mbox{\hyperlink{class_t_big_memory_manager_ab123d1608997eecbae709b8745051e7e}{set\+Run\+Out\+Of\+Contiguous\+Memory\+Handler}} (void($\ast$callback)(unsigned long size))
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_big_memory_manager}{TBig\+Memory\+Manager}} $\ast$ \mbox{\hyperlink{class_t_big_memory_manager_abdd8c3527429c38fd7650f3594973191}{instance}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_t_big_memory_manager_ac5dbb96d9987ed719a32ac9e391026fe}{TRaster}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_big_memory_manager_a299074b1af06cb0dd3440a5ddc6e427e}\label{class_t_big_memory_manager_a299074b1af06cb0dd3440a5ddc6e427e}} 
+\index{TBigMemoryManager@{TBigMemoryManager}!TBigMemoryManager@{TBigMemoryManager}}
+\index{TBigMemoryManager@{TBigMemoryManager}!TBigMemoryManager@{TBigMemoryManager}}
+\doxysubsubsection{\texorpdfstring{TBigMemoryManager()}{TBigMemoryManager()}}
+{\footnotesize\ttfamily TBig\+Memory\+Manager\+::\+TBig\+Memory\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00118     : m\_chunks()}
+\DoxyCodeLine{00119     , m\_theMemory(0)}
+\DoxyCodeLine{00120     , m\_availableMemory(0)}
+\DoxyCodeLine{00121     , m\_allocatedMemory(0)}
+\DoxyCodeLine{00122 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00123     , m\_totRasterMemInKb(0)}
+\DoxyCodeLine{00124 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00125 \{}
+\DoxyCodeLine{00126 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_big_memory_manager_adec767e76ab9c769c7cd4b2227383c52}\label{class_t_big_memory_manager_adec767e76ab9c769c7cd4b2227383c52}} 
+\index{TBigMemoryManager@{TBigMemoryManager}!getAllocationMean@{getAllocationMean}}
+\index{getAllocationMean@{getAllocationMean}!TBigMemoryManager@{TBigMemoryManager}}
+\doxysubsubsection{\texorpdfstring{getAllocationMean()}{getAllocationMean()}}
+{\footnotesize\ttfamily int TBig\+Memory\+Manager\+::get\+Allocation\+Mean (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Returns the {\bfseries{mean}} size, in KB, of the allocated rasters in current Toonz session. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075                                          \{}
+\DoxyCodeLine{00076   \textcolor{keywordflow}{return} allocationSumKB / allocationCount;}
+\DoxyCodeLine{00077 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_big_memory_manager_a3733c587c257b9376defdb344ce5986c}\label{class_t_big_memory_manager_a3733c587c257b9376defdb344ce5986c}} 
+\index{TBigMemoryManager@{TBigMemoryManager}!getAllocationPeak@{getAllocationPeak}}
+\index{getAllocationPeak@{getAllocationPeak}!TBigMemoryManager@{TBigMemoryManager}}
+\doxysubsubsection{\texorpdfstring{getAllocationPeak()}{getAllocationPeak()}}
+{\footnotesize\ttfamily int TBig\+Memory\+Manager\+::get\+Allocation\+Peak (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Returns the {\bfseries{peak}} size, in KB, of the allocated rasters in current Toonz session. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00069 \{ \textcolor{keywordflow}{return} allocationPeakKB; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_big_memory_manager_a193589477badce5aa27cf85f9764e4cd}\label{class_t_big_memory_manager_a193589477badce5aa27cf85f9764e4cd}} 
+\index{TBigMemoryManager@{TBigMemoryManager}!getAvailableMemoryinKb@{getAvailableMemoryinKb}}
+\index{getAvailableMemoryinKb@{getAvailableMemoryinKb}!TBigMemoryManager@{TBigMemoryManager}}
+\doxysubsubsection{\texorpdfstring{getAvailableMemoryinKb()}{getAvailableMemoryinKb()}}
+{\footnotesize\ttfamily TUINT32 TBig\+Memory\+Manager\+::get\+Available\+Memoryin\+Kb (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00048                                          \{}
+\DoxyCodeLine{00049     assert(m\_theMemory != 0);}
+\DoxyCodeLine{00050     \textcolor{keywordflow}{return} m\_availableMemory >> 10;}
+\DoxyCodeLine{00051   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_big_memory_manager_a6e1ee06f6f2d1d72c3dc65e4d5764ae4}\label{class_t_big_memory_manager_a6e1ee06f6f2d1d72c3dc65e4d5764ae4}} 
+\index{TBigMemoryManager@{TBigMemoryManager}!getBuffer@{getBuffer}}
+\index{getBuffer@{getBuffer}!TBigMemoryManager@{TBigMemoryManager}}
+\doxysubsubsection{\texorpdfstring{getBuffer()}{getBuffer()}}
+{\footnotesize\ttfamily UCHAR $\ast$ TBig\+Memory\+Manager\+::get\+Buffer (\begin{DoxyParamCaption}\item[{UINT}]{size }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00195                                              \{}
+\DoxyCodeLine{00196   \textcolor{keywordflow}{if} (m\_theMemory == 0) \textcolor{keywordflow}{return} (UCHAR *)calloc(size, 1);}
+\DoxyCodeLine{00197 }
+\DoxyCodeLine{00198   std::map<UCHAR *, Chunkinfo>::iterator it = m\_chunks.begin();}
+\DoxyCodeLine{00199   UCHAR *buffer     = m\_theMemory;}
+\DoxyCodeLine{00200   TUINT32 chunkSize = 0;}
+\DoxyCodeLine{00201   UCHAR *address    = 0;}
+\DoxyCodeLine{00202   \textcolor{keywordflow}{while} (it != m\_chunks.end()) \{}
+\DoxyCodeLine{00203     \textcolor{comment}{/*if (it-\/>second.m\_putInNormalMemory)}}
+\DoxyCodeLine{00204 \textcolor{comment}{\{it++; continue;\}*/}}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206     \textcolor{keywordflow}{if} ((TUINT32)((it-\/>first) -\/ (buffer + chunkSize)) >= size) \{}
+\DoxyCodeLine{00207       address = buffer + chunkSize;}
+\DoxyCodeLine{00208       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00209     \}}
+\DoxyCodeLine{00210 }
+\DoxyCodeLine{00211     buffer    = it-\/>first;}
+\DoxyCodeLine{00212     chunkSize = it-\/>second.m\_size;}
+\DoxyCodeLine{00213     it++;}
+\DoxyCodeLine{00214   \}}
+\DoxyCodeLine{00215   \textcolor{keywordflow}{if} (address) memset(address, 0x00, size);}
+\DoxyCodeLine{00216   \textcolor{keywordflow}{return} address;}
+\DoxyCodeLine{00217 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_big_memory_manager_aca817cb8f5c5fe6cbf3378139f97549a}\label{class_t_big_memory_manager_aca817cb8f5c5fe6cbf3378139f97549a}} 
+\index{TBigMemoryManager@{TBigMemoryManager}!init@{init}}
+\index{init@{init}!TBigMemoryManager@{TBigMemoryManager}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily bool TBig\+Memory\+Manager\+::init (\begin{DoxyParamCaption}\item[{TUINT32}]{sizein\+Kb }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00130                                              \{}
+\DoxyCodeLine{00131   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00133   \textcolor{keywordflow}{if} (sizeinKb == 0) \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135   \textcolor{keywordflow}{if} (sizeinKb >= 2 * 1024 * 1024) \{}
+\DoxyCodeLine{00136     \textcolor{comment}{//  MessageBox( NULL, "{}TRONCO!!!"{}, "{}Warning"{}, MB\_OK);}}
+\DoxyCodeLine{00137     sizeinKb = (TUINT32)(1.8 * 1024 * 1024);}
+\DoxyCodeLine{00138   \}}
+\DoxyCodeLine{00139 }
+\DoxyCodeLine{00140   m\_availableMemory = sizeinKb * 1024;}
+\DoxyCodeLine{00141 }
+\DoxyCodeLine{00142   m\_theMemory       = allocate(m\_availableMemory);}
+\DoxyCodeLine{00143   m\_allocatedMemory = m\_availableMemory;}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145   \textcolor{keywordflow}{if} (!m\_theMemory) \{}
+\DoxyCodeLine{00146     \textcolor{comment}{//  MessageBox( NULL, "{}Ouch!can't allocate Big Chunk!"{}, "{}Warning"{}, MB\_OK);}}
+\DoxyCodeLine{00147     m\_theMemory       = 0;}
+\DoxyCodeLine{00148     m\_availableMemory = 0;}
+\DoxyCodeLine{00149     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00150   \}}
+\DoxyCodeLine{00151   \textcolor{comment}{// char str[1024];}}
+\DoxyCodeLine{00152   \textcolor{comment}{// sprintf\_s(str, "{}chiesto \%d MB, allocato un big chunk di \%d MB"{},}}
+\DoxyCodeLine{00153   \textcolor{comment}{// sizeinKb/1024, m\_availableMemory/(1024*1024));}}
+\DoxyCodeLine{00154   \textcolor{comment}{// MessageBox( NULL, str, "{}Warning"{}, MB\_OK);}}
+\DoxyCodeLine{00155 }
+\DoxyCodeLine{00156   m\_chunks[m\_theMemory + m\_availableMemory] = \mbox{\hyperlink{class_chunkinfo}{Chunkinfo}}(0, 0);}
+\DoxyCodeLine{00157   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00158 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_big_memory_manager_abdd8c3527429c38fd7650f3594973191}\label{class_t_big_memory_manager_abdd8c3527429c38fd7650f3594973191}} 
+\index{TBigMemoryManager@{TBigMemoryManager}!instance@{instance}}
+\index{instance@{instance}!TBigMemoryManager@{TBigMemoryManager}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_big_memory_manager}{TBig\+Memory\+Manager}} $\ast$ TBig\+Memory\+Manager\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00081                                                \{}
+\DoxyCodeLine{00082   \textcolor{keyword}{static} \mbox{\hyperlink{class_t_big_memory_manager}{TBigMemoryManager}} *theManager = 0;}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084   \textcolor{keywordflow}{if} (theManager) \textcolor{keywordflow}{return} theManager;}
+\DoxyCodeLine{00085 }
+\DoxyCodeLine{00086   \textcolor{keywordflow}{return} theManager = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_big_memory_manager}{TBigMemoryManager}}();}
+\DoxyCodeLine{00087 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_big_memory_manager_a4560904b6b8c1abe790b99115ae7f3b2}\label{class_t_big_memory_manager_a4560904b6b8c1abe790b99115ae7f3b2}} 
+\index{TBigMemoryManager@{TBigMemoryManager}!isActive@{isActive}}
+\index{isActive@{isActive}!TBigMemoryManager@{TBigMemoryManager}}
+\doxysubsubsection{\texorpdfstring{isActive()}{isActive()}}
+{\footnotesize\ttfamily bool TBig\+Memory\+Manager\+::is\+Active (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046 \{ \textcolor{keywordflow}{return} m\_theMemory != 0; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_big_memory_manager_a641b078ca6e64e409157b6a3ffb5e4f9}\label{class_t_big_memory_manager_a641b078ca6e64e409157b6a3ffb5e4f9}} 
+\index{TBigMemoryManager@{TBigMemoryManager}!putRaster@{putRaster}}
+\index{putRaster@{putRaster}!TBigMemoryManager@{TBigMemoryManager}}
+\doxysubsubsection{\texorpdfstring{putRaster()}{putRaster()}}
+{\footnotesize\ttfamily bool TBig\+Memory\+Manager\+::put\+Raster (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_raster}{TRaster}} $\ast$}]{ras,  }\item[{bool}]{can\+Put\+On\+Disk = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00248                                                                  \{}
+\DoxyCodeLine{00249   \textcolor{keywordflow}{if} (!ras-\/>m\_parent \&\& ras-\/>m\_buffer) \{}
+\DoxyCodeLine{00250 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00251     \textcolor{keywordflow}{if} (ras-\/>m\_bufferOwner) Rasters.insert(ras);}
+\DoxyCodeLine{00252 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00253     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00254   \}}
+\DoxyCodeLine{00255 }
+\DoxyCodeLine{00256 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00257   checkConsistency();}
+\DoxyCodeLine{00258 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00259 }
+\DoxyCodeLine{00260   TUINT32 size = ras-\/>getLx() * ras-\/>getLy() * ras-\/>getPixelSize();}
+\DoxyCodeLine{00261 }
+\DoxyCodeLine{00262   \textcolor{keywordflow}{if} (size == 0) \{}
+\DoxyCodeLine{00263     ras-\/>m\_buffer = 0;}
+\DoxyCodeLine{00264     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00265   \}}
+\DoxyCodeLine{00266 }
+\DoxyCodeLine{00267   \textcolor{keywordflow}{if} (m\_theMemory == 0)  \textcolor{comment}{// il bigmemorymanager e' inattivo}}
+\DoxyCodeLine{00268   \{}
+\DoxyCodeLine{00269     \textcolor{keywordflow}{if} (!ras-\/>m\_parent) \{}
+\DoxyCodeLine{00270       \textcolor{keywordtype}{int} sizeKB       = size >> 10;}
+\DoxyCodeLine{00271       allocationPeakKB = std::max(allocationPeakKB, sizeKB);}
+\DoxyCodeLine{00272       allocationSumKB += sizeKB;}
+\DoxyCodeLine{00273       allocationCount++;}
+\DoxyCodeLine{00274     \}}
+\DoxyCodeLine{00275 }
+\DoxyCodeLine{00276     \textcolor{keywordflow}{if} (!ras-\/>m\_parent \&\& !(ras-\/>m\_buffer = (UCHAR *)calloc(size, 1))) \{}
+\DoxyCodeLine{00277       \textcolor{comment}{// MessageBox( NULL, "{}Ouch!can't allocate!"{}, "{}Warning"{}, MB\_OK);}}
+\DoxyCodeLine{00278       \textcolor{comment}{// non c'e' memoria; provo a comprimere}}
+\DoxyCodeLine{00279       \textcolor{comment}{/*TImageCache::instance()-\/>doCompress(); }}
+\DoxyCodeLine{00280 \textcolor{comment}{    if (!(ras-\/>m\_buffer = (UCHAR *)malloc(size)))*/}  \textcolor{comment}{// andata male pure cosi';}}
+\DoxyCodeLine{00281                                                      \textcolor{comment}{// metto tutto su disco}}
+\DoxyCodeLine{00282       \textcolor{comment}{// TImageCache::instance()-\/>outputMap(size, "{}C:\(\backslash\)\(\backslash\)logCacheFailure"{});}}
+\DoxyCodeLine{00283       TINT64 availMemInKb = TSystem::getFreeMemorySize(\textcolor{keyword}{true});}
+\DoxyCodeLine{00284       \textcolor{keywordflow}{if} (availMemInKb > (size >> 10)) \{}
+\DoxyCodeLine{00285         \textcolor{comment}{// char str[1024];}}
+\DoxyCodeLine{00286         \textcolor{comment}{// sprintf\_s(str, "{}Non alloco, ma : memoria (KB) richiesta : \%d -\/}}
+\DoxyCodeLine{00287         \textcolor{comment}{// memoria disponibile : \%d"{}, size>>10, availMemInKb);}}
+\DoxyCodeLine{00288         \textcolor{comment}{// MessageBox( NULL, (LPCSTR)str, (LPCSTR)"{}Segmentation!"{}, MB\_OK);}}
+\DoxyCodeLine{00289       \}}
+\DoxyCodeLine{00290       ras-\/>m\_buffer = TImageCache::instance()-\/>compressAndMalloc(size);}
+\DoxyCodeLine{00291 }
+\DoxyCodeLine{00292       \textcolor{keywordflow}{if} (!ras-\/>m\_buffer) \{}
+\DoxyCodeLine{00293         \textcolor{comment}{// char str[1024];}}
+\DoxyCodeLine{00294         \textcolor{comment}{// sprintf\_s(str, "{}E' andata male: faccio il log della cache."{});}}
+\DoxyCodeLine{00295         \textcolor{comment}{// MessageBox( NULL, (LPCSTR)str, (LPCSTR)"{}Segmentation!"{}, MB\_OK);}}
+\DoxyCodeLine{00296         TImageCache::instance()-\/>outputMap(size, \textcolor{stringliteral}{"{}C:\(\backslash\)\(\backslash\)logCacheTotalFailure"{}});}
+\DoxyCodeLine{00297       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00298 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00299         m\_totRasterMemInKb += size >> 10;}
+\DoxyCodeLine{00300         Rasters.insert(ras);}
+\DoxyCodeLine{00301 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00302       \}}
+\DoxyCodeLine{00303       \textcolor{keywordflow}{return} ras-\/>m\_buffer != 0;}
+\DoxyCodeLine{00304     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00305       \textcolor{keywordflow}{if} (!ras-\/>m\_parent) \{}
+\DoxyCodeLine{00306 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00307         m\_totRasterMemInKb += size >> 10;}
+\DoxyCodeLine{00308         Rasters.insert(ras);}
+\DoxyCodeLine{00309 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00310       \}}
+\DoxyCodeLine{00311       \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00312     \}}
+\DoxyCodeLine{00313   \}}
+\DoxyCodeLine{00314 }
+\DoxyCodeLine{00315   \textcolor{comment}{// il bigmemorymanager e' attivo}}
+\DoxyCodeLine{00316   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00317 }
+\DoxyCodeLine{00318   \textcolor{comment}{/*}}
+\DoxyCodeLine{00319 \textcolor{comment}{if (m\_availableMemory<size \&\& !ras-\/>m\_parent)}}
+\DoxyCodeLine{00320 \textcolor{comment}{\{}}
+\DoxyCodeLine{00321 \textcolor{comment}{TImageCache::instance()-\/>compressAndMalloc(size);}}
+\DoxyCodeLine{00322 \textcolor{comment}{if (m\_availableMemory>=size)}}
+\DoxyCodeLine{00323 \textcolor{comment}{return TBigMemoryManager::instance()-\/>putRaster(ras);}}
+\DoxyCodeLine{00324 \textcolor{comment}{else}}
+\DoxyCodeLine{00325 \textcolor{comment}{return (ras-\/>m\_buffer = (UCHAR *)malloc(size))!=0;}}
+\DoxyCodeLine{00326 \textcolor{comment}{}}
+\DoxyCodeLine{00327 \textcolor{comment}{}}
+\DoxyCodeLine{00328 \textcolor{comment}{\}*/}}
+\DoxyCodeLine{00329 }
+\DoxyCodeLine{00330   \textcolor{keywordflow}{if} (ras-\/>m\_parent) \{}
+\DoxyCodeLine{00331     std::map<UCHAR *, Chunkinfo>::iterator it =}
+\DoxyCodeLine{00332         m\_chunks.find(ras-\/>m\_parent-\/>m\_buffer);}
+\DoxyCodeLine{00333 }
+\DoxyCodeLine{00334     \textcolor{keywordflow}{if} (it != m\_chunks.end()) \{}
+\DoxyCodeLine{00335 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00336 \textcolor{comment}{// assert(!it-\/>second.m\_rasters.empty());}}
+\DoxyCodeLine{00337 \textcolor{comment}{// for (UINT i=0; i<it-\/>second.m\_rasters.size(); i++)}}
+\DoxyCodeLine{00338 \textcolor{comment}{//  assert (it-\/>second.m\_rasters[i]!=ras);}}
+\DoxyCodeLine{00339 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00340 }
+\DoxyCodeLine{00341       it-\/>second.m\_rasters.push\_back(ras);}
+\DoxyCodeLine{00342     \}}
+\DoxyCodeLine{00343 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00344     checkConsistency();}
+\DoxyCodeLine{00345 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00346     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00347   \}}
+\DoxyCodeLine{00348 }
+\DoxyCodeLine{00349   UCHAR *address = 0;}
+\DoxyCodeLine{00350   \textcolor{keywordtype}{bool} remapped  = \textcolor{keyword}{false};}
+\DoxyCodeLine{00351 }
+\DoxyCodeLine{00352   assert(m\_chunks.size() > 0);}
+\DoxyCodeLine{00353 }
+\DoxyCodeLine{00354   \textcolor{comment}{/*if (m\_chunks.size()==1) //c'e' solo l'elemento che marca la fine del}}
+\DoxyCodeLine{00355 \textcolor{comment}{bufferone}}
+\DoxyCodeLine{00356 \textcolor{comment}{\{}}
+\DoxyCodeLine{00357 \textcolor{comment}{if ((TUINT32)(m\_chunks.begin()-\/>first-\/m\_theMemory)>=size)}}
+\DoxyCodeLine{00358 \textcolor{comment}{address = m\_theMemory;}}
+\DoxyCodeLine{00359 \textcolor{comment}{\}}}
+\DoxyCodeLine{00360 \textcolor{comment}{else}}
+\DoxyCodeLine{00361 \textcolor{comment}{\{*/}}
+\DoxyCodeLine{00362 }
+\DoxyCodeLine{00363   address = getBuffer(size);}
+\DoxyCodeLine{00364 }
+\DoxyCodeLine{00365 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00366   checkConsistency();}
+\DoxyCodeLine{00367 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00368 }
+\DoxyCodeLine{00369   \textcolor{keywordflow}{if} (address == 0 \&\& m\_availableMemory >= size) \{}
+\DoxyCodeLine{00370     address  = remap(size);}
+\DoxyCodeLine{00371     remapped = \textcolor{keyword}{true};}
+\DoxyCodeLine{00372 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00373     checkConsistency();}
+\DoxyCodeLine{00374 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00375   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (address == 0) \{}
+\DoxyCodeLine{00376     printLog(size);}
+\DoxyCodeLine{00377     \textcolor{comment}{// assert(!"{}la bigmemory e' piena...scritto log"{});}}
+\DoxyCodeLine{00378   \}}
+\DoxyCodeLine{00379   \textcolor{comment}{//\}}}
+\DoxyCodeLine{00380   \textcolor{keywordflow}{if} (address == 0) \{}
+\DoxyCodeLine{00381     \textcolor{keywordflow}{if} (canPutOnDisk)}
+\DoxyCodeLine{00382       address = TImageCache::instance()-\/>compressAndMalloc(size);}
+\DoxyCodeLine{00383     \textcolor{keywordflow}{if} (address == 0) \textcolor{keywordflow}{return} (ras-\/>m\_buffer = (UCHAR *)calloc(size, 1)) != 0;}
+\DoxyCodeLine{00384   \}}
+\DoxyCodeLine{00385 }
+\DoxyCodeLine{00386   \textcolor{comment}{// assert(address);}}
+\DoxyCodeLine{00387 }
+\DoxyCodeLine{00388   ras-\/>m\_buffer     = address;}
+\DoxyCodeLine{00389   m\_chunks[address] = \mbox{\hyperlink{class_chunkinfo}{Chunkinfo}}(size, ras);}
+\DoxyCodeLine{00390   assert(m\_availableMemory >= size);}
+\DoxyCodeLine{00391   m\_availableMemory -\/= size;}
+\DoxyCodeLine{00392 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00393   checkConsistency();}
+\DoxyCodeLine{00394 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00395   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00396 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_big_memory_manager_a12db4d9a02f726d3b92891656f5283ec}\label{class_t_big_memory_manager_a12db4d9a02f726d3b92891656f5283ec}} 
+\index{TBigMemoryManager@{TBigMemoryManager}!releaseRaster@{releaseRaster}}
+\index{releaseRaster@{releaseRaster}!TBigMemoryManager@{TBigMemoryManager}}
+\doxysubsubsection{\texorpdfstring{releaseRaster()}{releaseRaster()}}
+{\footnotesize\ttfamily bool TBig\+Memory\+Manager\+::release\+Raster (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_raster}{TRaster}} $\ast$}]{ras }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00434                                                   \{}
+\DoxyCodeLine{00435   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00436   UCHAR *buffer = (ras-\/>m\_parent) ? (ras-\/>m\_parent-\/>m\_buffer) : (ras-\/>m\_buffer);}
+\DoxyCodeLine{00437   std::map<UCHAR *, Chunkinfo>::iterator it = m\_chunks.find(buffer);}
+\DoxyCodeLine{00438 }
+\DoxyCodeLine{00439   \textcolor{keywordflow}{if} (m\_theMemory == 0 || it == m\_chunks.end()) \{}
+\DoxyCodeLine{00440     assert(buffer);}
+\DoxyCodeLine{00441     \textcolor{keywordflow}{if} (!ras-\/>m\_parent \&\& ras-\/>m\_bufferOwner) \{}
+\DoxyCodeLine{00442       free(buffer);}
+\DoxyCodeLine{00443 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00444       m\_totRasterMemInKb -\/=}
+\DoxyCodeLine{00445           (ras-\/>getPixelSize() * ras-\/>getLx() * ras-\/>getLy()) >> 10;}
+\DoxyCodeLine{00446       Rasters.erase(ras);}
+\DoxyCodeLine{00447 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00448     \}}
+\DoxyCodeLine{00449 }
+\DoxyCodeLine{00450     \textcolor{comment}{// assert(findRaster(ras)==0);}}
+\DoxyCodeLine{00451 }
+\DoxyCodeLine{00452     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00453   \}}
+\DoxyCodeLine{00454 }
+\DoxyCodeLine{00455   assert(ras-\/>m\_lockCount == 0);}
+\DoxyCodeLine{00456 }
+\DoxyCodeLine{00457   \textcolor{keywordflow}{if} (it-\/>second.m\_rasters.size() >}
+\DoxyCodeLine{00458       1)  \textcolor{comment}{// non e' il solo raster ad usare il buffer; non libero}}
+\DoxyCodeLine{00459   \{}
+\DoxyCodeLine{00460     std::vector<TRaster *>::iterator it2 = it-\/>second.m\_rasters.begin();}
+\DoxyCodeLine{00461     \textcolor{keywordflow}{for} (; it2 != it-\/>second.m\_rasters.end(); ++it2) \{}
+\DoxyCodeLine{00462       \textcolor{keywordflow}{if} (ras == *it2) \{}
+\DoxyCodeLine{00463         it-\/>second.m\_rasters.erase(it2);}
+\DoxyCodeLine{00464 }
+\DoxyCodeLine{00465 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00466 \textcolor{comment}{// assert(!it-\/>second.m\_rasters.empty());}}
+\DoxyCodeLine{00467 \textcolor{comment}{// assert(findRaster(ras)==0);}}
+\DoxyCodeLine{00468 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00469 }
+\DoxyCodeLine{00470         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00471       \}}
+\DoxyCodeLine{00472     \}}
+\DoxyCodeLine{00473     assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{00474     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00475   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ras-\/>m\_bufferOwner)  \textcolor{comment}{// libero!}}
+\DoxyCodeLine{00476   \{}
+\DoxyCodeLine{00477 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00478     checkConsistency();}
+\DoxyCodeLine{00479 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00480     \textcolor{comment}{/*if (it-\/>second.m\_putInNormalMemory \&\& ras-\/>m\_bufferOwner)}}
+\DoxyCodeLine{00481 \textcolor{comment}{    free(it-\/>first);}}
+\DoxyCodeLine{00482 \textcolor{comment}{else */}}
+\DoxyCodeLine{00483     m\_availableMemory += it-\/>second.m\_size;}
+\DoxyCodeLine{00484     m\_chunks.erase(it);}
+\DoxyCodeLine{00485   \}}
+\DoxyCodeLine{00486 }
+\DoxyCodeLine{00487 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00488   \textcolor{comment}{// assert(findRaster(ras)==0);}}
+\DoxyCodeLine{00489   checkConsistency();}
+\DoxyCodeLine{00490 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00491 }
+\DoxyCodeLine{00492   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00493 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_big_memory_manager_ab123d1608997eecbae709b8745051e7e}\label{class_t_big_memory_manager_ab123d1608997eecbae709b8745051e7e}} 
+\index{TBigMemoryManager@{TBigMemoryManager}!setRunOutOfContiguousMemoryHandler@{setRunOutOfContiguousMemoryHandler}}
+\index{setRunOutOfContiguousMemoryHandler@{setRunOutOfContiguousMemoryHandler}!TBigMemoryManager@{TBigMemoryManager}}
+\doxysubsubsection{\texorpdfstring{setRunOutOfContiguousMemoryHandler()}{setRunOutOfContiguousMemoryHandler()}}
+{\footnotesize\ttfamily void TBig\+Memory\+Manager\+::set\+Run\+Out\+Of\+Contiguous\+Memory\+Handler (\begin{DoxyParamCaption}\item[{void($\ast$)(unsigned long size)}]{callback }\end{DoxyParamCaption})}
+
+Sets the global callback handler for the \textquotesingle{}Run out of contiguous memory\textquotesingle{} event The callback receives the size (in bytes) of the raster which caused the problem. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053                                      \{}
+\DoxyCodeLine{00054   m\_runOutCallback = callback;}
+\DoxyCodeLine{00055 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_t_big_memory_manager_ac5dbb96d9987ed719a32ac9e391026fe}\label{class_t_big_memory_manager_ac5dbb96d9987ed719a32ac9e391026fe}} 
+\index{TBigMemoryManager@{TBigMemoryManager}!TRaster@{TRaster}}
+\index{TRaster@{TRaster}!TBigMemoryManager@{TBigMemoryManager}}
+\doxysubsubsection{\texorpdfstring{TRaster}{TRaster}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{class_t_raster}{TRaster}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tbigmemorymanager.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tsystem/tbigmemorymanager.\+cpp\end{DoxyCompactItemize}

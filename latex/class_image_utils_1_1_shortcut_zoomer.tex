@@ -1,0 +1,335 @@
+\hypertarget{class_image_utils_1_1_shortcut_zoomer}{}\doxysection{Image\+Utils\+::Shortcut\+Zoomer Class Reference}
+\label{class_image_utils_1_1_shortcut_zoomer}\index{ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}}
+
+
+The \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer}{Shortcut\+Zoomer}} abstract base class is used by viewer widget to access shortcut-\/related commands.  
+
+
+
+
+{\ttfamily \#include $<$imageutils.\+h$>$}
+
+Inheritance diagram for Image\+Utils\+::Shortcut\+Zoomer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_image_utils_1_1_shortcut_zoomer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_a13c123f02b63c88bdadea0859299200d}{Shortcut\+Zoomer}} (QWidget $\ast$viewer\+Widget)
+\begin{DoxyCompactList}\small\item\em Constructs on the specified viewer widget. \end{DoxyCompactList}\item 
+QWidget $\ast$ \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_ac9cd194f0c1845ecd420424e0e35a5ed}{get\+Widget}} ()
+\begin{DoxyCompactList}\small\item\em Returns the processed viewer widget. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_af4c8d5f4f02819a1c4fd65696aa50701}{exec}} (QKey\+Event $\ast$event)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_a3d3567973d10406b7534fa6fdc9c7c8a}{zoom}} (bool zoomin, bool reset\+View)=0
+\begin{DoxyCompactList}\small\item\em Handler for zoom commands. Required. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_a6bcf61b504dd12087d52a34cc3f64756}{fit}} ()
+\begin{DoxyCompactList}\small\item\em Handler for \textquotesingle{}fit to image\textquotesingle{} commands. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_aca886190bdbede2986c56183c4b7bd08}{set\+Actual\+Pixel\+Size}} ()
+\begin{DoxyCompactList}\small\item\em Handler for \textquotesingle{}use actual pixel size\textquotesingle{} commands. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_acbe0b2204d4fca4d9ca50bbf64331564}{set\+FlipX}} ()
+\begin{DoxyCompactList}\small\item\em Handler for \textquotesingle{}flip viewer vertically\textquotesingle{} commands. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_aac75d2100db627f95647961adda46d74}{set\+FlipY}} ()
+\begin{DoxyCompactList}\small\item\em Handler for \textquotesingle{}flip viewer horizontally\textquotesingle{} commands. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_a0bc457afc571675e69c9fbd2ae13b0a7}{reset\+Zoom}} ()
+\begin{DoxyCompactList}\small\item\em Handler for \textquotesingle{}reset zoom\textquotesingle{} commands. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_aa44bcc038e7f4731e13d37c85ce83e24}{reset\+Rotation}} ()
+\begin{DoxyCompactList}\small\item\em Handler for \textquotesingle{}reset rotation\textquotesingle{} commands. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_a02ba99a42c2441a0af31ee01746e65a0}{reset\+Position}} ()
+\begin{DoxyCompactList}\small\item\em Handler for \textquotesingle{}reset position\textquotesingle{} commands. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_a21b6aad90441a10a439673b3b1b07244}{toggle\+Full\+Screen}} (bool quit=false)
+\begin{DoxyCompactList}\small\item\em Handler for \textquotesingle{}toggle fullscreen\textquotesingle{} commands. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer}{Shortcut\+Zoomer}} abstract base class is used by viewer widget to access shortcut-\/related commands. 
+
+This class is a wrapper for shortcuts established by the \mbox{\hyperlink{class_command_manager}{Command\+Manager}} interface.
+
+Subclass it defining the required view commands, then implement a {\ttfamily key\+Press\+Event()} event handler in the viewer widget you want\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void} MyViewer::keyPressEvent(QKeyEvent* ke)}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{  \textcolor{keywordflow}{if}(\mbox{\hyperlink{class_viewer_zoomer}{ViewerZoomer}}(\textcolor{keyword}{this}).\mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_af4c8d5f4f02819a1c4fd65696aa50701}{exec}}(event))}
+\DoxyCodeLine{    \textcolor{keywordflow}{return};}
+\DoxyCodeLine{}
+\DoxyCodeLine{  \textcolor{keywordflow}{return} MyViewerBase::keyPressEvent(ke);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\begin{DoxyWarning}{Warning}
+Use the \mbox{\hyperlink{class_image_utils_1_1_full_screen_widget}{Full\+Screen\+Widget}} class to wrap a viewer class that needs to go fullscreen. 
+\end{DoxyWarning}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_image_utils_1_1_shortcut_zoomer_a13c123f02b63c88bdadea0859299200d}\label{class_image_utils_1_1_shortcut_zoomer_a13c123f02b63c88bdadea0859299200d}} 
+\index{ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}!ShortcutZoomer@{ShortcutZoomer}}
+\index{ShortcutZoomer@{ShortcutZoomer}!ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}}
+\doxysubsubsection{\texorpdfstring{ShortcutZoomer()}{ShortcutZoomer()}}
+{\footnotesize\ttfamily Image\+Utils\+::\+Shortcut\+Zoomer\+::\+Shortcut\+Zoomer (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{viewer\+Widget }\end{DoxyParamCaption})}
+
+
+
+Constructs on the specified viewer widget. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00841     : m\_widget(zoomingWidget) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_image_utils_1_1_shortcut_zoomer_af4c8d5f4f02819a1c4fd65696aa50701}\label{class_image_utils_1_1_shortcut_zoomer_af4c8d5f4f02819a1c4fd65696aa50701}} 
+\index{ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}!exec@{exec}}
+\index{exec@{exec}!ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}}
+\doxysubsubsection{\texorpdfstring{exec()}{exec()}}
+{\footnotesize\ttfamily bool Image\+Utils\+::\+Shortcut\+Zoomer\+::exec (\begin{DoxyParamCaption}\item[{QKey\+Event $\ast$}]{event }\end{DoxyParamCaption})}
+
+Processes a key event for shortcuts related to viewer commands. \begin{DoxyReturn}{Returns}
+Whether a shortcut was recognized. 
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00845                                           \{}
+\DoxyCodeLine{00846   \textcolor{keywordtype}{int} zoomInKey, zoomOutKey, viewResetKey, zoomFitKey, showHideFullScreenKey,}
+\DoxyCodeLine{00847       actualPixelSize, flipX, flipY, zoomReset, rotateReset, positionReset;}
+\DoxyCodeLine{00848   getViewerShortcuts(zoomInKey, zoomOutKey, viewResetKey, zoomFitKey,}
+\DoxyCodeLine{00849                      showHideFullScreenKey, actualPixelSize, flipX, flipY,}
+\DoxyCodeLine{00850                      zoomReset, rotateReset, positionReset);}
+\DoxyCodeLine{00851 }
+\DoxyCodeLine{00852   \textcolor{keywordtype}{int} key = \textcolor{keyword}{event}-\/>key();}
+\DoxyCodeLine{00853   \textcolor{keywordflow}{if} (key == Qt::Key\_Control || key == Qt::Key\_Shift || key == Qt::Key\_Alt)}
+\DoxyCodeLine{00854     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00855 }
+\DoxyCodeLine{00856   key = key | \textcolor{keyword}{event}-\/>modifiers() \&}
+\DoxyCodeLine{00857                   (\string~0xf0000000);  \textcolor{comment}{// Ignore if the key is a numpad key}}
+\DoxyCodeLine{00858 }
+\DoxyCodeLine{00859   \textcolor{keywordflow}{return} (key == showHideFullScreenKey)}
+\DoxyCodeLine{00860              ? \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_a21b6aad90441a10a439673b3b1b07244}{toggleFullScreen}}()}
+\DoxyCodeLine{00861              : (key == Qt::Key\_Escape)}
+\DoxyCodeLine{00862                    ? \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_a21b6aad90441a10a439673b3b1b07244}{toggleFullScreen}}(true)}
+\DoxyCodeLine{00863                    : (key == actualPixelSize)}
+\DoxyCodeLine{00864                          ? \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_aca886190bdbede2986c56183c4b7bd08}{setActualPixelSize}}()}
+\DoxyCodeLine{00865                          : (key == zoomFitKey)}
+\DoxyCodeLine{00866                                ? \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_a6bcf61b504dd12087d52a34cc3f64756}{fit}}()}
+\DoxyCodeLine{00867                                : (key == zoomInKey || key == zoomOutKey ||}
+\DoxyCodeLine{00868                                   key == viewResetKey)}
+\DoxyCodeLine{00869                                      ? \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_a3d3567973d10406b7534fa6fdc9c7c8a}{zoom}}(key == zoomInKey,}
+\DoxyCodeLine{00870                                             key == viewResetKey)}
+\DoxyCodeLine{00871                                      : (key == flipX)}
+\DoxyCodeLine{00872                                            ? \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_acbe0b2204d4fca4d9ca50bbf64331564}{setFlipX}}()}
+\DoxyCodeLine{00873                                            : (key == flipY)}
+\DoxyCodeLine{00874                                                  ? \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_aac75d2100db627f95647961adda46d74}{setFlipY}}()}
+\DoxyCodeLine{00875                                                  : (key == zoomReset)}
+\DoxyCodeLine{00876                                                        ? \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_a0bc457afc571675e69c9fbd2ae13b0a7}{resetZoom}}()}
+\DoxyCodeLine{00877                                                        : (key == rotateReset)}
+\DoxyCodeLine{00878                                                              ? \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_aa44bcc038e7f4731e13d37c85ce83e24}{resetRotation}}()}
+\DoxyCodeLine{00879                                                              : (key ==}
+\DoxyCodeLine{00880                                                                 positionReset)}
+\DoxyCodeLine{00881                                                                    ? \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_a02ba99a42c2441a0af31ee01746e65a0}{resetPosition}}()}
+\DoxyCodeLine{00882                                                                    : false;}
+\DoxyCodeLine{00883   ;}
+\DoxyCodeLine{00884 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00226}{fit()}}, \mbox{\hyperlink{l00244}{reset\+Position()}}, \mbox{\hyperlink{l00241}{reset\+Rotation()}}, \mbox{\hyperlink{l00238}{reset\+Zoom()}}, \mbox{\hyperlink{l00229}{set\+Actual\+Pixel\+Size()}}, \mbox{\hyperlink{l00232}{set\+Flip\+X()}}, \mbox{\hyperlink{l00235}{set\+Flip\+Y()}}, \mbox{\hyperlink{l00247}{toggle\+Full\+Screen()}}, and \mbox{\hyperlink{class_image_utils_1_1_shortcut_zoomer_a3d3567973d10406b7534fa6fdc9c7c8a}{zoom()}}.
+
+\mbox{\Hypertarget{class_image_utils_1_1_shortcut_zoomer_a6bcf61b504dd12087d52a34cc3f64756}\label{class_image_utils_1_1_shortcut_zoomer_a6bcf61b504dd12087d52a34cc3f64756}} 
+\index{ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}!fit@{fit}}
+\index{fit@{fit}!ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}}
+\doxysubsubsection{\texorpdfstring{fit()}{fit()}}
+{\footnotesize\ttfamily virtual bool Image\+Utils\+::\+Shortcut\+Zoomer\+::fit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Handler for \textquotesingle{}fit to image\textquotesingle{} commands. 
+
+
+
+Reimplemented in \mbox{\hyperlink{class_viewer_zoomer_ad8eb8028560bf77b5e2c24c076d91c71}{Viewer\+Zoomer}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00845}{exec()}}.
+
+\mbox{\Hypertarget{class_image_utils_1_1_shortcut_zoomer_ac9cd194f0c1845ecd420424e0e35a5ed}\label{class_image_utils_1_1_shortcut_zoomer_ac9cd194f0c1845ecd420424e0e35a5ed}} 
+\index{ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}!getWidget@{getWidget}}
+\index{getWidget@{getWidget}!ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}}
+\doxysubsubsection{\texorpdfstring{getWidget()}{getWidget()}}
+{\footnotesize\ttfamily QWidget $\ast$ Image\+Utils\+::\+Shortcut\+Zoomer\+::get\+Widget (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the processed viewer widget. 
+
+\mbox{\Hypertarget{class_image_utils_1_1_shortcut_zoomer_a02ba99a42c2441a0af31ee01746e65a0}\label{class_image_utils_1_1_shortcut_zoomer_a02ba99a42c2441a0af31ee01746e65a0}} 
+\index{ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}!resetPosition@{resetPosition}}
+\index{resetPosition@{resetPosition}!ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}}
+\doxysubsubsection{\texorpdfstring{resetPosition()}{resetPosition()}}
+{\footnotesize\ttfamily virtual bool Image\+Utils\+::\+Shortcut\+Zoomer\+::reset\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Handler for \textquotesingle{}reset position\textquotesingle{} commands. 
+
+
+
+Reimplemented in \mbox{\hyperlink{class_viewer_zoomer_a2afffc91ea9d76f32e57415df6acaba3}{Viewer\+Zoomer}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00845}{exec()}}.
+
+\mbox{\Hypertarget{class_image_utils_1_1_shortcut_zoomer_aa44bcc038e7f4731e13d37c85ce83e24}\label{class_image_utils_1_1_shortcut_zoomer_aa44bcc038e7f4731e13d37c85ce83e24}} 
+\index{ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}!resetRotation@{resetRotation}}
+\index{resetRotation@{resetRotation}!ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}}
+\doxysubsubsection{\texorpdfstring{resetRotation()}{resetRotation()}}
+{\footnotesize\ttfamily virtual bool Image\+Utils\+::\+Shortcut\+Zoomer\+::reset\+Rotation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Handler for \textquotesingle{}reset rotation\textquotesingle{} commands. 
+
+
+
+Reimplemented in \mbox{\hyperlink{class_viewer_zoomer_a0626616a880acaa0cad61fed543f8c2e}{Viewer\+Zoomer}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00845}{exec()}}.
+
+\mbox{\Hypertarget{class_image_utils_1_1_shortcut_zoomer_a0bc457afc571675e69c9fbd2ae13b0a7}\label{class_image_utils_1_1_shortcut_zoomer_a0bc457afc571675e69c9fbd2ae13b0a7}} 
+\index{ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}!resetZoom@{resetZoom}}
+\index{resetZoom@{resetZoom}!ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}}
+\doxysubsubsection{\texorpdfstring{resetZoom()}{resetZoom()}}
+{\footnotesize\ttfamily virtual bool Image\+Utils\+::\+Shortcut\+Zoomer\+::reset\+Zoom (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Handler for \textquotesingle{}reset zoom\textquotesingle{} commands. 
+
+
+
+Reimplemented in \mbox{\hyperlink{class_viewer_zoomer_a6e1e6bbb83977822baf54c8c273bbac8}{Viewer\+Zoomer}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00845}{exec()}}.
+
+\mbox{\Hypertarget{class_image_utils_1_1_shortcut_zoomer_aca886190bdbede2986c56183c4b7bd08}\label{class_image_utils_1_1_shortcut_zoomer_aca886190bdbede2986c56183c4b7bd08}} 
+\index{ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}!setActualPixelSize@{setActualPixelSize}}
+\index{setActualPixelSize@{setActualPixelSize}!ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}}
+\doxysubsubsection{\texorpdfstring{setActualPixelSize()}{setActualPixelSize()}}
+{\footnotesize\ttfamily virtual bool Image\+Utils\+::\+Shortcut\+Zoomer\+::set\+Actual\+Pixel\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Handler for \textquotesingle{}use actual pixel size\textquotesingle{} commands. 
+
+
+
+Reimplemented in \mbox{\hyperlink{class_viewer_zoomer_a706534a792c082a3d4dee0dab0f36607}{Viewer\+Zoomer}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00845}{exec()}}.
+
+\mbox{\Hypertarget{class_image_utils_1_1_shortcut_zoomer_acbe0b2204d4fca4d9ca50bbf64331564}\label{class_image_utils_1_1_shortcut_zoomer_acbe0b2204d4fca4d9ca50bbf64331564}} 
+\index{ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}!setFlipX@{setFlipX}}
+\index{setFlipX@{setFlipX}!ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}}
+\doxysubsubsection{\texorpdfstring{setFlipX()}{setFlipX()}}
+{\footnotesize\ttfamily virtual bool Image\+Utils\+::\+Shortcut\+Zoomer\+::set\+FlipX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Handler for \textquotesingle{}flip viewer vertically\textquotesingle{} commands. 
+
+
+
+Reimplemented in \mbox{\hyperlink{class_viewer_zoomer_a61da4103cc9a296d9073cd42704d82e7}{Viewer\+Zoomer}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00845}{exec()}}.
+
+\mbox{\Hypertarget{class_image_utils_1_1_shortcut_zoomer_aac75d2100db627f95647961adda46d74}\label{class_image_utils_1_1_shortcut_zoomer_aac75d2100db627f95647961adda46d74}} 
+\index{ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}!setFlipY@{setFlipY}}
+\index{setFlipY@{setFlipY}!ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}}
+\doxysubsubsection{\texorpdfstring{setFlipY()}{setFlipY()}}
+{\footnotesize\ttfamily virtual bool Image\+Utils\+::\+Shortcut\+Zoomer\+::set\+FlipY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Handler for \textquotesingle{}flip viewer horizontally\textquotesingle{} commands. 
+
+
+
+Reimplemented in \mbox{\hyperlink{class_viewer_zoomer_ae311780cf209d51933ee358e2b222ab0}{Viewer\+Zoomer}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00845}{exec()}}.
+
+\mbox{\Hypertarget{class_image_utils_1_1_shortcut_zoomer_a21b6aad90441a10a439673b3b1b07244}\label{class_image_utils_1_1_shortcut_zoomer_a21b6aad90441a10a439673b3b1b07244}} 
+\index{ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}!toggleFullScreen@{toggleFullScreen}}
+\index{toggleFullScreen@{toggleFullScreen}!ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}}
+\doxysubsubsection{\texorpdfstring{toggleFullScreen()}{toggleFullScreen()}}
+{\footnotesize\ttfamily virtual bool Image\+Utils\+::\+Shortcut\+Zoomer\+::toggle\+Full\+Screen (\begin{DoxyParamCaption}\item[{bool}]{quit = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Handler for \textquotesingle{}toggle fullscreen\textquotesingle{} commands. 
+
+
+
+Reimplemented in \mbox{\hyperlink{class_viewer_zoomer_a7d13e414990d1439439fa013ea64dbbc}{Viewer\+Zoomer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00249   \{}
+\DoxyCodeLine{00250     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00251   \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l00845}{exec()}}.
+
+\mbox{\Hypertarget{class_image_utils_1_1_shortcut_zoomer_a3d3567973d10406b7534fa6fdc9c7c8a}\label{class_image_utils_1_1_shortcut_zoomer_a3d3567973d10406b7534fa6fdc9c7c8a}} 
+\index{ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}!zoom@{zoom}}
+\index{zoom@{zoom}!ImageUtils::ShortcutZoomer@{ImageUtils::ShortcutZoomer}}
+\doxysubsubsection{\texorpdfstring{zoom()}{zoom()}}
+{\footnotesize\ttfamily virtual bool Image\+Utils\+::\+Shortcut\+Zoomer\+::zoom (\begin{DoxyParamCaption}\item[{bool}]{zoomin,  }\item[{bool}]{reset\+View }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Handler for zoom commands. Required. 
+
+
+
+Implemented in \mbox{\hyperlink{class_viewer_zoomer_a05af59a60ab398b997e2949e64f60a54}{Viewer\+Zoomer}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00845}{exec()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/imageutils.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/imageutils.\+cpp\end{DoxyCompactItemize}

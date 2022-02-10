@@ -1,0 +1,88 @@
+\hypertarget{class_merge_columns_command}{}\doxysection{Merge\+Columns\+Command Class Reference}
+\label{class_merge_columns_command}\index{MergeColumnsCommand@{MergeColumnsCommand}}
+Inheritance diagram for Merge\+Columns\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_merge_columns_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_merge_columns_command_afa688f48607c3331fa3ab43224b658da}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_merge_columns_command_a4458f9c84aa593f07f680892b7b9ec53}\label{class_merge_columns_command_a4458f9c84aa593f07f680892b7b9ec53}} 
+\index{MergeColumnsCommand@{MergeColumnsCommand}!MergeColumnsCommand@{MergeColumnsCommand}}
+\index{MergeColumnsCommand@{MergeColumnsCommand}!MergeColumnsCommand@{MergeColumnsCommand}}
+\doxysubsubsection{\texorpdfstring{MergeColumnsCommand()}{MergeColumnsCommand()}}
+{\footnotesize\ttfamily Merge\+Columns\+Command\+::\+Merge\+Columns\+Command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00118 : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(MI\_MergeColumns) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_merge_columns_command_afa688f48607c3331fa3ab43224b658da}\label{class_merge_columns_command_afa688f48607c3331fa3ab43224b658da}} 
+\index{MergeColumnsCommand@{MergeColumnsCommand}!execute@{execute}}
+\index{execute@{execute}!MergeColumnsCommand@{MergeColumnsCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Merge\+Columns\+Command\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00120                           \{}
+\DoxyCodeLine{00121     \mbox{\hyperlink{class_t_column_selection}{TColumnSelection}} *selection =}
+\DoxyCodeLine{00122         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_column_selection}{TColumnSelection}} *\textcolor{keyword}{>}(TSelection::getCurrent());}
+\DoxyCodeLine{00123 }
+\DoxyCodeLine{00124     std::set<int> indices =}
+\DoxyCodeLine{00125         selection ? selection-\/>getIndices() : std::set<int>();}
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127     \textcolor{keywordflow}{if} (indices.empty()) \{}
+\DoxyCodeLine{00128       DVGui::warning(QObject::tr(}
+\DoxyCodeLine{00129           \textcolor{stringliteral}{"{}It is not possible to execute the merge column command because "{}}}
+\DoxyCodeLine{00130           \textcolor{stringliteral}{"{}no column was selected."{}}));}
+\DoxyCodeLine{00131       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00132     \}}
+\DoxyCodeLine{00133 }
+\DoxyCodeLine{00134     \textcolor{keywordflow}{if} (indices.size() == 1) \{}
+\DoxyCodeLine{00135       DVGui::warning(QObject::tr(}
+\DoxyCodeLine{00136           \textcolor{stringliteral}{"{}It is not possible to execute the merge column command because "{}}}
+\DoxyCodeLine{00137           \textcolor{stringliteral}{"{}only one columns is selected."{}}));}
+\DoxyCodeLine{00138       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00139     \}}
+\DoxyCodeLine{00140 }
+\DoxyCodeLine{00141     \textcolor{keywordtype}{bool} groupLevels = \textcolor{keyword}{true};}
+\DoxyCodeLine{00142     \textcolor{keywordflow}{if} (isVectorColumn(indices)) \{}
+\DoxyCodeLine{00143       \textcolor{keywordtype}{int} opt = DVGui::MsgBox(QObject::tr(\textcolor{stringliteral}{"{}Group strokes by vector levels?"{}}),}
+\DoxyCodeLine{00144                               QObject::tr(\textcolor{stringliteral}{"{}Yes"{}}), QObject::tr(\textcolor{stringliteral}{"{}No"{}}),}
+\DoxyCodeLine{00145                               QObject::tr(\textcolor{stringliteral}{"{}Cancel"{}}));}
+\DoxyCodeLine{00146       \textcolor{keywordflow}{if} (opt == 0 || opt == 3)}
+\DoxyCodeLine{00147         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00148       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00149         groupLevels = (opt == 1);}
+\DoxyCodeLine{00150       \};}
+\DoxyCodeLine{00151     \}}
+\DoxyCodeLine{00152 }
+\DoxyCodeLine{00153     mergeColumns(indices, groupLevels);}
+\DoxyCodeLine{00154     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00155   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/matchlinecommand.\+cpp\end{DoxyCompactItemize}

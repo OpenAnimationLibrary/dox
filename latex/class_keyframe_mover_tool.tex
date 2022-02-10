@@ -1,0 +1,248 @@
+\hypertarget{class_keyframe_mover_tool}{}\doxysection{Keyframe\+Mover\+Tool Class Reference}
+\label{class_keyframe_mover_tool}\index{KeyframeMoverTool@{KeyframeMoverTool}}
+Inheritance diagram for Keyframe\+Mover\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_keyframe_mover_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_keyframe_mover_tool_a9e74d65d062cc18e162f68fbfc7bb223}{Keyframe\+Mover\+Tool}} (\mbox{\hyperlink{class_xsheet_viewer}{Xsheet\+Viewer}} $\ast$viewer, bool just\+Movement=false)
+\item 
+bool \mbox{\hyperlink{class_keyframe_mover_tool_a515d0548a6bdf602db6eb694cbc98dc6}{can\+Move}} (const \mbox{\hyperlink{class_t_point_t}{TPoint}} \&pos)
+\item 
+void \mbox{\hyperlink{class_keyframe_mover_tool_a04fe20a3a8bd88703fa2d3d09f958e9d}{on\+Cell\+Change}} (int row, int col)
+\item 
+void \mbox{\hyperlink{class_keyframe_mover_tool_a6b4983a38ce8260bd1008c1667762beb}{on\+Click}} (const QMouse\+Event $\ast$event) override
+\item 
+void \mbox{\hyperlink{class_keyframe_mover_tool_a8633347972f523dbcf5c04377cb3ad24}{on\+Drag}} (const QMouse\+Event $\ast$event) override
+\item 
+void \mbox{\hyperlink{class_keyframe_mover_tool_a78da91d47e920d392b8782a89f482418}{on\+Release}} (const \mbox{\hyperlink{class_cell_position}{Cell\+Position}} \&pos) override
+\item 
+void \mbox{\hyperlink{class_keyframe_mover_tool_a9bd1cb158ab90b03c88b8a49d70c2b45}{draw\+Cells\+Area}} (QPainter \&p) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_keyframe_mover_tool_a9e74d65d062cc18e162f68fbfc7bb223}\label{class_keyframe_mover_tool_a9e74d65d062cc18e162f68fbfc7bb223}} 
+\index{KeyframeMoverTool@{KeyframeMoverTool}!KeyframeMoverTool@{KeyframeMoverTool}}
+\index{KeyframeMoverTool@{KeyframeMoverTool}!KeyframeMoverTool@{KeyframeMoverTool}}
+\doxysubsubsection{\texorpdfstring{KeyframeMoverTool()}{KeyframeMoverTool()}}
+{\footnotesize\ttfamily Keyframe\+Mover\+Tool\+::\+Keyframe\+Mover\+Tool (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_xsheet_viewer}{Xsheet\+Viewer}} $\ast$}]{viewer,  }\item[{bool}]{just\+Movement = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00273     : \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{XsheetGUI::DragTool}}(viewer)}
+\DoxyCodeLine{00274     , m\_startSelection()}
+\DoxyCodeLine{00275     , m\_offset(0)}
+\DoxyCodeLine{00276     , m\_firstRow(0)}
+\DoxyCodeLine{00277     , m\_selecting(\textcolor{keyword}{false})}
+\DoxyCodeLine{00278     , m\_startPos()}
+\DoxyCodeLine{00279     , m\_curPos()}
+\DoxyCodeLine{00280     , m\_firstKeyframeMovement(\textcolor{keyword}{false})}
+\DoxyCodeLine{00281     , m\_justMovement(justMovement) \{}
+\DoxyCodeLine{00282   m\_mover    = \textcolor{keyword}{new} \mbox{\hyperlink{class_keyframe_mover}{KeyframeMover}}();}
+\DoxyCodeLine{00283   m\_firstCol = Preferences::instance()-\/>isXsheetCameraColumnVisible() ? -\/1 : 0;}
+\DoxyCodeLine{00284 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_keyframe_mover_tool_a515d0548a6bdf602db6eb694cbc98dc6}\label{class_keyframe_mover_tool_a515d0548a6bdf602db6eb694cbc98dc6}} 
+\index{KeyframeMoverTool@{KeyframeMoverTool}!canMove@{canMove}}
+\index{canMove@{canMove}!KeyframeMoverTool@{KeyframeMoverTool}}
+\doxysubsubsection{\texorpdfstring{canMove()}{canMove()}}
+{\footnotesize\ttfamily bool Keyframe\+Mover\+Tool\+::can\+Move (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPoint}} \&}]{pos }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00377                                                  \{}
+\DoxyCodeLine{00378   \textcolor{keyword}{const} \mbox{\hyperlink{class_orientation}{Orientation}} *o = getViewer()-\/>orientation();}
+\DoxyCodeLine{00379   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh         = getViewer()-\/>getXsheet();}
+\DoxyCodeLine{00380 }
+\DoxyCodeLine{00381   \mbox{\hyperlink{class_t_point_t}{TPoint}} usePos = pos;}
+\DoxyCodeLine{00382   \textcolor{keywordflow}{if} (!o-\/>isVerticalTimeline()) \{}
+\DoxyCodeLine{00383     usePos.x = pos.y;}
+\DoxyCodeLine{00384     usePos.y = pos.x;}
+\DoxyCodeLine{00385   \}}
+\DoxyCodeLine{00386 }
+\DoxyCodeLine{00387   \textcolor{keywordflow}{if} (usePos.x < 0) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00388 }
+\DoxyCodeLine{00389   \textcolor{keywordtype}{int} col      = usePos.x;}
+\DoxyCodeLine{00390   \textcolor{keywordtype}{int} startCol = getViewer()-\/>xyToPosition(m\_startPos).layer();}
+\DoxyCodeLine{00391   \textcolor{keywordflow}{if} (col != startCol) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00392 }
+\DoxyCodeLine{00393   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00394 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframe_mover_tool_a9bd1cb158ab90b03c88b8a49d70c2b45}\label{class_keyframe_mover_tool_a9bd1cb158ab90b03c88b8a49d70c2b45}} 
+\index{KeyframeMoverTool@{KeyframeMoverTool}!drawCellsArea@{drawCellsArea}}
+\index{drawCellsArea@{drawCellsArea}!KeyframeMoverTool@{KeyframeMoverTool}}
+\doxysubsubsection{\texorpdfstring{drawCellsArea()}{drawCellsArea()}}
+{\footnotesize\ttfamily void Keyframe\+Mover\+Tool\+::draw\+Cells\+Area (\begin{DoxyParamCaption}\item[{QPainter \&}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{Xsheet\+GUI\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00492                                                  \{}
+\DoxyCodeLine{00493   \textcolor{keywordflow}{if} (!m\_selecting) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00494   QPen pen(Qt::DashLine);}
+\DoxyCodeLine{00495   pen.setColor(Qt::black);}
+\DoxyCodeLine{00496   p.setPen(pen);}
+\DoxyCodeLine{00497   \textcolor{keywordtype}{double} endRectPosX = m\_curPos.x -\/ m\_startPos.x;}
+\DoxyCodeLine{00498   \textcolor{keywordtype}{double} endRectPosY = m\_curPos.y -\/ m\_startPos.y;}
+\DoxyCodeLine{00499   p.drawRect(m\_startPos.x, m\_startPos.y, endRectPosX, endRectPosY);}
+\DoxyCodeLine{00500 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframe_mover_tool_a04fe20a3a8bd88703fa2d3d09f958e9d}\label{class_keyframe_mover_tool_a04fe20a3a8bd88703fa2d3d09f958e9d}} 
+\index{KeyframeMoverTool@{KeyframeMoverTool}!onCellChange@{onCellChange}}
+\index{onCellChange@{onCellChange}!KeyframeMoverTool@{KeyframeMoverTool}}
+\doxysubsubsection{\texorpdfstring{onCellChange()}{onCellChange()}}
+{\footnotesize\ttfamily void Keyframe\+Mover\+Tool\+::on\+Cell\+Change (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00398                                                      \{}
+\DoxyCodeLine{00399   \textcolor{keywordtype}{int} lastRow  = getSelection()-\/>getFirstRow() + m\_offset;}
+\DoxyCodeLine{00400   \textcolor{keywordtype}{int} firstRow = m\_startSelection.getFirstRow() + m\_offset;}
+\DoxyCodeLine{00401   \textcolor{keywordtype}{int} dr       = row -\/ lastRow;}
+\DoxyCodeLine{00402   \textcolor{keywordtype}{int} dfr      = row -\/ firstRow;}
+\DoxyCodeLine{00403   \textcolor{keywordtype}{int} d = (m\_mover-\/>getQualifiers() \& KeyframeMover::eMoveKeyframes) ? dr : dfr;}
+\DoxyCodeLine{00404   std::set<TKeyframeSelection::Position> newPositions;}
+\DoxyCodeLine{00405   \textcolor{keywordtype}{bool} ret = m\_mover-\/>moveKeyframes(d, newPositions, getSelection());}
+\DoxyCodeLine{00406   \textcolor{keywordflow}{if} (!ret) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00407   getSelection()-\/>m\_positions.clear();}
+\DoxyCodeLine{00408   getSelection()-\/>m\_positions.swap(newPositions);}
+\DoxyCodeLine{00409 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframe_mover_tool_a6b4983a38ce8260bd1008c1667762beb}\label{class_keyframe_mover_tool_a6b4983a38ce8260bd1008c1667762beb}} 
+\index{KeyframeMoverTool@{KeyframeMoverTool}!onClick@{onClick}}
+\index{onClick@{onClick}!KeyframeMoverTool@{KeyframeMoverTool}}
+\doxysubsubsection{\texorpdfstring{onClick()}{onClick()}}
+{\footnotesize\ttfamily void Keyframe\+Mover\+Tool\+::on\+Click (\begin{DoxyParamCaption}\item[{const QMouse\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{Xsheet\+GUI\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00413                                                         \{}
+\DoxyCodeLine{00414   m\_firstKeyframeMovement   = \textcolor{keyword}{true};}
+\DoxyCodeLine{00415   m\_selecting               = \textcolor{keyword}{false};}
+\DoxyCodeLine{00416   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsheet           = getViewer()-\/>getXsheet();}
+\DoxyCodeLine{00417   \mbox{\hyperlink{class_cell_position}{CellPosition}} cellPosition = getViewer()-\/>xyToPosition(event-\/>pos());}
+\DoxyCodeLine{00418   \textcolor{keywordtype}{int} row                   = cellPosition.frame();}
+\DoxyCodeLine{00419   \textcolor{keywordtype}{int} col                   = cellPosition.layer();}
+\DoxyCodeLine{00420   m\_firstRow                = row;}
+\DoxyCodeLine{00421   m\_firstCol                = col;}
+\DoxyCodeLine{00422   \textcolor{keywordtype}{bool} isSelected           = getSelection()-\/>isSelected(row, col);}
+\DoxyCodeLine{00423   \textcolor{keywordflow}{if} (!m\_justMovement) \{}
+\DoxyCodeLine{00424     \textcolor{keywordflow}{if} (event-\/>modifiers() \& Qt::ControlModifier)}
+\DoxyCodeLine{00425       ctrlSelect(row, col);}
+\DoxyCodeLine{00426     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (event-\/>modifiers() \& Qt::ShiftModifier)}
+\DoxyCodeLine{00427       shiftSelect(row, col);}
+\DoxyCodeLine{00428     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!isSelected) \{}
+\DoxyCodeLine{00429       getSelection()-\/>selectNone();}
+\DoxyCodeLine{00430       getSelection()-\/>select(row, col);}
+\DoxyCodeLine{00431       m\_selecting = \textcolor{keyword}{true};}
+\DoxyCodeLine{00432     \}}
+\DoxyCodeLine{00433     getSelection()-\/>makeCurrent();}
+\DoxyCodeLine{00434   \}}
+\DoxyCodeLine{00435   \textcolor{keywordflow}{if} (!getSelection()-\/>isEmpty())}
+\DoxyCodeLine{00436     m\_offset       = row -\/ getSelection()-\/>getFirstRow();}
+\DoxyCodeLine{00437   m\_startSelection = *getSelection();}
+\DoxyCodeLine{00438   getViewer()-\/>update();}
+\DoxyCodeLine{00439   m\_startPos = \mbox{\hyperlink{class_t_point_t}{TPointD}}(event-\/>pos().x(), event-\/>pos().y());}
+\DoxyCodeLine{00440   m\_curPos   = m\_startPos;}
+\DoxyCodeLine{00441 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframe_mover_tool_a8633347972f523dbcf5c04377cb3ad24}\label{class_keyframe_mover_tool_a8633347972f523dbcf5c04377cb3ad24}} 
+\index{KeyframeMoverTool@{KeyframeMoverTool}!onDrag@{onDrag}}
+\index{onDrag@{onDrag}!KeyframeMoverTool@{KeyframeMoverTool}}
+\doxysubsubsection{\texorpdfstring{onDrag()}{onDrag()}}
+{\footnotesize\ttfamily void Keyframe\+Mover\+Tool\+::on\+Drag (\begin{DoxyParamCaption}\item[{const QMouse\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{Xsheet\+GUI\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00445                                                    \{}
+\DoxyCodeLine{00446   \textcolor{keywordtype}{int} x                     = e-\/>pos().x();}
+\DoxyCodeLine{00447   \textcolor{keywordtype}{int} y                     = e-\/>pos().y();}
+\DoxyCodeLine{00448   m\_curPos                  = \mbox{\hyperlink{class_t_point_t}{TPointD}}(x, y);}
+\DoxyCodeLine{00449   \mbox{\hyperlink{class_cell_position}{CellPosition}} cellPosition = getViewer()-\/>xyToPosition(e-\/>pos());}
+\DoxyCodeLine{00450   \textcolor{keywordtype}{int} row                   = cellPosition.frame();}
+\DoxyCodeLine{00451   \textcolor{keywordtype}{int} col                   = cellPosition.layer();}
+\DoxyCodeLine{00452   \textcolor{keywordflow}{if} (m\_selecting)}
+\DoxyCodeLine{00453     rectSelect(row, col);}
+\DoxyCodeLine{00454   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00455     \textcolor{keywordflow}{if} (m\_firstKeyframeMovement) \{}
+\DoxyCodeLine{00456       \textcolor{keywordtype}{int} qualifiers = 0;}
+\DoxyCodeLine{00457       \textcolor{keywordflow}{if} (e-\/>modifiers() \& Qt::ControlModifier)}
+\DoxyCodeLine{00458         qualifiers |= KeyframeMover::eCopyKeyframes;}
+\DoxyCodeLine{00459       \textcolor{keywordflow}{if} (e-\/>modifiers() \& Qt::ShiftModifier)}
+\DoxyCodeLine{00460         qualifiers |= KeyframeMover::eInsertKeyframes;}
+\DoxyCodeLine{00461       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (e-\/>modifiers() \& Qt::AltModifier)}
+\DoxyCodeLine{00462         qualifiers |= KeyframeMover::eOverwriteKeyframes;}
+\DoxyCodeLine{00463       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00464         qualifiers |= KeyframeMover::eMoveKeyframes;}
+\DoxyCodeLine{00465       m\_mover-\/>start(getSelection(), qualifiers);}
+\DoxyCodeLine{00466     \}}
+\DoxyCodeLine{00467     m\_firstKeyframeMovement = \textcolor{keyword}{false};}
+\DoxyCodeLine{00468     onCellChange(row, col);}
+\DoxyCodeLine{00469     \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool_ac2e0a67ad6ccbcc326cd0ebf27385b49}{refreshCellsArea}}();}
+\DoxyCodeLine{00470   \}}
+\DoxyCodeLine{00471 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframe_mover_tool_a78da91d47e920d392b8782a89f482418}\label{class_keyframe_mover_tool_a78da91d47e920d392b8782a89f482418}} 
+\index{KeyframeMoverTool@{KeyframeMoverTool}!onRelease@{onRelease}}
+\index{onRelease@{onRelease}!KeyframeMoverTool@{KeyframeMoverTool}}
+\doxysubsubsection{\texorpdfstring{onRelease()}{onRelease()}}
+{\footnotesize\ttfamily void Keyframe\+Mover\+Tool\+::on\+Release (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_cell_position}{Cell\+Position}} \&}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{Xsheet\+GUI\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00475                                                          \{}
+\DoxyCodeLine{00476   \textcolor{keywordflow}{if} (m\_selecting) \{}
+\DoxyCodeLine{00477     m\_selecting = \textcolor{keyword}{false};}
+\DoxyCodeLine{00478     getViewer()-\/>updateCells();}
+\DoxyCodeLine{00479     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00480   \}}
+\DoxyCodeLine{00481   m\_offset = 0;}
+\DoxyCodeLine{00482   \textcolor{keywordtype}{int} dr   = getSelection()-\/>getFirstRow() -\/ m\_startSelection.getFirstRow();}
+\DoxyCodeLine{00483   \textcolor{keywordflow}{if} (dr) \{}
+\DoxyCodeLine{00484     TUndoManager::manager()-\/>add(\textcolor{keyword}{new} UndoMoveKeyFrame(dr, m\_mover));}
+\DoxyCodeLine{00485     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{00486     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00487   \}}
+\DoxyCodeLine{00488 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/keyframemover.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/keyframemover.\+cpp\end{DoxyCompactItemize}

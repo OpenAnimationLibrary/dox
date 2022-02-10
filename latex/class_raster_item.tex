@@ -1,0 +1,96 @@
+\hypertarget{class_raster_item}{}\doxysection{Raster\+Item Class Reference}
+\label{class_raster_item}\index{RasterItem@{RasterItem}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_raster_item_afdde953105c381bd081966c82c1da9e1}{Raster\+Item}} (const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&size, int bpp, bool busy\+Flag)
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \mbox{\hyperlink{class_raster_item_a126cab1f746e876d6808381f95241750}{get\+Raster}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_raster_item_a3d2a9cf4e5a4c98041ef97d1b900e7bb}{m\+\_\+bpp}}
+\item 
+bool \mbox{\hyperlink{class_raster_item_a4db153bbdcccd58ca245072c0544e072}{m\+\_\+busy}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_raster_item}{Raster\+Item}} class represents a reusable output raster for rendering purposes. Raster\+Items are used as \mbox{\hyperlink{class_t_renderer}{TRenderer}}\textquotesingle{}s output rasters in order to avoid the overhead of allocating one raster for each rendered frame. Each frame-\/rendering task will lock a \mbox{\hyperlink{class_raster_item}{Raster\+Item}} as preallocated output before starting the render, therefore changing the {\bfseries{Raster\+Item\+::m\+\_\+busy}} attribute accordingly. As each frame is rendered on a separate thread, the number of Raster\+Items that \mbox{\hyperlink{class_t_renderer}{TRenderer}} will allocate depends on the number of rendering threads specified to it.\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_raster_pool}{Raster\+Pool}}, \mbox{\hyperlink{class_t_renderer}{TRenderer}} classes 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_raster_item_afdde953105c381bd081966c82c1da9e1}\label{class_raster_item_afdde953105c381bd081966c82c1da9e1}} 
+\index{RasterItem@{RasterItem}!RasterItem@{RasterItem}}
+\index{RasterItem@{RasterItem}!RasterItem@{RasterItem}}
+\doxysubsubsection{\texorpdfstring{RasterItem()}{RasterItem()}}
+{\footnotesize\ttfamily Raster\+Item\+::\+Raster\+Item (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&}]{size,  }\item[{int}]{bpp,  }\item[{bool}]{busy\+Flag }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00125       : m\_rasterId(\textcolor{stringliteral}{"{}"{}}), m\_bpp(bpp), m\_busy(busyFlag) \{}
+\DoxyCodeLine{00126     \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} raster;}
+\DoxyCodeLine{00127     \textcolor{keywordflow}{if} (bpp == 32)}
+\DoxyCodeLine{00128       raster = \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}(size);}
+\DoxyCodeLine{00129     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (bpp == 64)}
+\DoxyCodeLine{00130       raster = \mbox{\hyperlink{class_t_raster_p_t}{TRaster64P}}(size);}
+\DoxyCodeLine{00131     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00132       assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{00133 }
+\DoxyCodeLine{00134     m\_rasterId = TImageCache::instance()-\/>getUniqueId();}
+\DoxyCodeLine{00135     TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a124eae4cf370288f42c22b3477cb5163}{add}}(m\_rasterId, \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}(raster));}
+\DoxyCodeLine{00136   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_raster_item_a62e0c5dd6104c99cf4169fbf973fa8f2}\label{class_raster_item_a62e0c5dd6104c99cf4169fbf973fa8f2}} 
+\index{RasterItem@{RasterItem}!````~RasterItem@{$\sim$RasterItem}}
+\index{````~RasterItem@{$\sim$RasterItem}!RasterItem@{RasterItem}}
+\doxysubsubsection{\texorpdfstring{$\sim$RasterItem()}{~RasterItem()}}
+{\footnotesize\ttfamily Raster\+Item\+::$\sim$\+Raster\+Item (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00140 \{ TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a57d63227dfe2532b0aed22c47113be66}{remove}}(m\_rasterId); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_raster_item_a126cab1f746e876d6808381f95241750}\label{class_raster_item_a126cab1f746e876d6808381f95241750}} 
+\index{RasterItem@{RasterItem}!getRaster@{getRaster}}
+\index{getRaster@{getRaster}!RasterItem@{RasterItem}}
+\doxysubsubsection{\texorpdfstring{getRaster()}{getRaster()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} Raster\+Item\+::get\+Raster (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00144                              \{}
+\DoxyCodeLine{00145     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} rimg =}
+\DoxyCodeLine{00146         (\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}})TImageCache::instance()-\/>get(m\_rasterId, \textcolor{keyword}{true});}
+\DoxyCodeLine{00147     \textcolor{keywordflow}{return} rimg ? rimg-\/>getRaster() : \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}();}
+\DoxyCodeLine{00148   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_raster_item_a3d2a9cf4e5a4c98041ef97d1b900e7bb}\label{class_raster_item_a3d2a9cf4e5a4c98041ef97d1b900e7bb}} 
+\index{RasterItem@{RasterItem}!m\_bpp@{m\_bpp}}
+\index{m\_bpp@{m\_bpp}!RasterItem@{RasterItem}}
+\doxysubsubsection{\texorpdfstring{m\_bpp}{m\_bpp}}
+{\footnotesize\ttfamily int Raster\+Item\+::m\+\_\+bpp}
+
+\mbox{\Hypertarget{class_raster_item_a4db153bbdcccd58ca245072c0544e072}\label{class_raster_item_a4db153bbdcccd58ca245072c0544e072}} 
+\index{RasterItem@{RasterItem}!m\_busy@{m\_busy}}
+\index{m\_busy@{m\_busy}!RasterItem@{RasterItem}}
+\doxysubsubsection{\texorpdfstring{m\_busy}{m\_busy}}
+{\footnotesize\ttfamily bool Raster\+Item\+::m\+\_\+busy}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tfx/trenderer.\+cpp\end{DoxyCompactItemize}

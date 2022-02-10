@@ -1,0 +1,251 @@
+\hypertarget{class_t_level_reader_tzl}{}\doxysection{TLevel\+Reader\+Tzl Class Reference}
+\label{class_t_level_reader_tzl}\index{TLevelReaderTzl@{TLevelReaderTzl}}
+
+
+{\ttfamily \#include $<$tiio\+\_\+tzl.\+h$>$}
+
+Inheritance diagram for TLevel\+Reader\+Tzl\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_t_level_reader_tzl}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_level_reader_tzl_a71d2463fd073a8ac7c82d91a3455ecd2}{TLevel\+Reader\+Tzl}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path)
+\item 
+void \mbox{\hyperlink{class_t_level_reader_tzl_a98fbd6d5df52d856d05af48a6d0e26c0}{do\+Read\+Palette}} (bool do\+Read\+It) override
+\item 
+\mbox{\hyperlink{class_t_level_p}{TLevelP}} \mbox{\hyperlink{class_t_level_reader_tzl_aa2c865dfe633951551bf82ee6d1b366a}{load\+Info}} () override
+\item 
+\mbox{\hyperlink{class_t_image_reader_p}{TImage\+ReaderP}} \mbox{\hyperlink{class_t_level_reader_tzl_abdebfb6d08eeaa9154517687b2113c1d}{get\+Frame\+Reader}} (\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} fid) override
+\item 
+QString \mbox{\hyperlink{class_t_level_reader_tzl_a5a8c515f825754e641b60e6153111b62}{get\+Creator}} () override
+\item 
+int \mbox{\hyperlink{class_t_level_reader_tzl_acb31349b8b5559d0ddc9d39f057d659c}{get\+Version}} ()
+\item 
+bool \mbox{\hyperlink{class_t_level_reader_tzl_a34eaa9554fc3130630c26216310f48f6}{get\+Icon\+Size}} (\mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&icon\+Size)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}} $\ast$ \mbox{\hyperlink{class_t_level_reader_tzl_abb4097aca9fc9bcd2b88fc00ba15866f}{create}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&f)
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_t_level_reader_tzl_ad38a7a7bd10157513ecae0bd3991f5bc}{TImage\+Reader\+Tzl}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_t_level_reader_tzl}{TLevel\+Reader\+Tzl}}\+: 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_level_reader_tzl_a71d2463fd073a8ac7c82d91a3455ecd2}\label{class_t_level_reader_tzl_a71d2463fd073a8ac7c82d91a3455ecd2}} 
+\index{TLevelReaderTzl@{TLevelReaderTzl}!TLevelReaderTzl@{TLevelReaderTzl}}
+\index{TLevelReaderTzl@{TLevelReaderTzl}!TLevelReaderTzl@{TLevelReaderTzl}}
+\doxysubsubsection{\texorpdfstring{TLevelReaderTzl()}{TLevelReaderTzl()}}
+{\footnotesize\ttfamily TLevel\+Reader\+Tzl\+::\+TLevel\+Reader\+Tzl (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01483     : \mbox{\hyperlink{class_t_level_reader}{TLevelReader}}(path)}
+\DoxyCodeLine{01484     , m\_chan(0)}
+\DoxyCodeLine{01485     , m\_res(0, 0)}
+\DoxyCodeLine{01486     , m\_xDpi(0)}
+\DoxyCodeLine{01487     , m\_yDpi(0)}
+\DoxyCodeLine{01488     , m\_version(0)}
+\DoxyCodeLine{01489     , m\_frameOffsTable()}
+\DoxyCodeLine{01490     , m\_iconOffsTable()}
+\DoxyCodeLine{01491     , m\_level()}
+\DoxyCodeLine{01492     , m\_readPalette(\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{01493   m\_chan = fopen(path, \textcolor{stringliteral}{"{}rb"{}});}
+\DoxyCodeLine{01494 }
+\DoxyCodeLine{01495   \textcolor{keywordflow}{if} (!m\_chan) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01496 }
+\DoxyCodeLine{01497   \textcolor{keywordflow}{if} (!readHeaderAndOffsets(m\_chan, m\_frameOffsTable, m\_iconOffsTable, m\_res,}
+\DoxyCodeLine{01498                             m\_version, m\_creator, 0, 0, 0, m\_level))}
+\DoxyCodeLine{01499     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01500 }
+\DoxyCodeLine{01501   \mbox{\hyperlink{class_t_file_path}{TFilePath}} historyFp = path.withNoFrame().\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(\textcolor{stringliteral}{"{}hst"{}});}
+\DoxyCodeLine{01502   FILE *historyChan   = fopen(historyFp, \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{01503   \textcolor{keywordflow}{if} (historyChan) \{}
+\DoxyCodeLine{01504     \textcolor{comment}{// read the whole file into historyData string}}
+\DoxyCodeLine{01505     fseek(historyChan, 0, SEEK\_END);}
+\DoxyCodeLine{01506     \textcolor{keywordtype}{long} lSize = ftell(historyChan);}
+\DoxyCodeLine{01507     rewind(historyChan);}
+\DoxyCodeLine{01508     std::string historyData(lSize, \textcolor{charliteral}{'\(\backslash\)0'});}
+\DoxyCodeLine{01509     fread(\&historyData[0], 1, lSize, historyChan);}
+\DoxyCodeLine{01510     fclose(historyChan);}
+\DoxyCodeLine{01511 }
+\DoxyCodeLine{01512     \textcolor{keywordflow}{if} (!m\_contentHistory) m\_contentHistory = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_content_history}{TContentHistory}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{01513     m\_contentHistory-\/>\mbox{\hyperlink{class_t_content_history_afda3bf173b9a7ae3191b93158ad49fbb}{deserialize}}(QString::fromStdString(historyData));}
+\DoxyCodeLine{01514   \}}
+\DoxyCodeLine{01515 }
+\DoxyCodeLine{01516   \textcolor{comment}{// UCHAR *imgBuff = new UCHAR[imgBuffSize];}}
+\DoxyCodeLine{01517 }
+\DoxyCodeLine{01518   \textcolor{comment}{// fclose(m\_chan);}}
+\DoxyCodeLine{01519   \textcolor{comment}{// m\_chan = 0;}}
+\DoxyCodeLine{01520 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_tzl_a8b8c5c2c5a0d5ae8685b636bee7b47d6}\label{class_t_level_reader_tzl_a8b8c5c2c5a0d5ae8685b636bee7b47d6}} 
+\index{TLevelReaderTzl@{TLevelReaderTzl}!````~TLevelReaderTzl@{$\sim$TLevelReaderTzl}}
+\index{````~TLevelReaderTzl@{$\sim$TLevelReaderTzl}!TLevelReaderTzl@{TLevelReaderTzl}}
+\doxysubsubsection{\texorpdfstring{$\sim$TLevelReaderTzl()}{~TLevelReaderTzl()}}
+{\footnotesize\ttfamily TLevel\+Reader\+Tzl\+::$\sim$\+TLevel\+Reader\+Tzl (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01528                                   \{}
+\DoxyCodeLine{01529   \textcolor{keywordflow}{if} (m\_chan) fclose(m\_chan);}
+\DoxyCodeLine{01530   m\_chan = 0;}
+\DoxyCodeLine{01531 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_level_reader_tzl_abb4097aca9fc9bcd2b88fc00ba15866f}\label{class_t_level_reader_tzl_abb4097aca9fc9bcd2b88fc00ba15866f}} 
+\index{TLevelReaderTzl@{TLevelReaderTzl}!create@{create}}
+\index{create@{create}!TLevelReaderTzl@{TLevelReaderTzl}}
+\doxysubsubsection{\texorpdfstring{create()}{create()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}} $\ast$ TLevel\+Reader\+Tzl\+::create (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00179                                                   \{}
+\DoxyCodeLine{00180     \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_t_level_reader_tzl}{TLevelReaderTzl}}(f);}
+\DoxyCodeLine{00181   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_tzl_a98fbd6d5df52d856d05af48a6d0e26c0}\label{class_t_level_reader_tzl_a98fbd6d5df52d856d05af48a6d0e26c0}} 
+\index{TLevelReaderTzl@{TLevelReaderTzl}!doReadPalette@{doReadPalette}}
+\index{doReadPalette@{doReadPalette}!TLevelReaderTzl@{TLevelReaderTzl}}
+\doxysubsubsection{\texorpdfstring{doReadPalette()}{doReadPalette()}}
+{\footnotesize\ttfamily void TLevel\+Reader\+Tzl\+::do\+Read\+Palette (\begin{DoxyParamCaption}\item[{bool}]{do\+Read\+It }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01524 \{ m\_readPalette = doReadIt; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_tzl_a5a8c515f825754e641b60e6153111b62}\label{class_t_level_reader_tzl_a5a8c515f825754e641b60e6153111b62}} 
+\index{TLevelReaderTzl@{TLevelReaderTzl}!getCreator@{getCreator}}
+\index{getCreator@{getCreator}!TLevelReaderTzl@{TLevelReaderTzl}}
+\doxysubsubsection{\texorpdfstring{getCreator()}{getCreator()}}
+{\footnotesize\ttfamily QString TLevel\+Reader\+Tzl\+::get\+Creator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01549                                     \{}
+\DoxyCodeLine{01550   \textcolor{keywordflow}{if} (m\_version < 14) \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{01551   \textcolor{keywordflow}{return} m\_creator;}
+\DoxyCodeLine{01552 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_tzl_abdebfb6d08eeaa9154517687b2113c1d}\label{class_t_level_reader_tzl_abdebfb6d08eeaa9154517687b2113c1d}} 
+\index{TLevelReaderTzl@{TLevelReaderTzl}!getFrameReader@{getFrameReader}}
+\index{getFrameReader@{getFrameReader}!TLevelReaderTzl@{TLevelReaderTzl}}
+\doxysubsubsection{\texorpdfstring{getFrameReader()}{getFrameReader()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_image_reader_p}{TImage\+ReaderP}} TLevel\+Reader\+Tzl\+::get\+Frame\+Reader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}}}]{fid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Return an image with Reader information 
+
+Reimplemented from \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01542                                                           \{}
+\DoxyCodeLine{01543   \textcolor{keywordflow}{if} (m\_level \&\& m\_level-\/>getPalette() == 0 \&\& m\_readPalette) readPalette();}
+\DoxyCodeLine{01544 }
+\DoxyCodeLine{01545   \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_t_image_reader_tzl}{TImageReaderTzl}}(getFilePath(), fid, \textcolor{keyword}{this});}
+\DoxyCodeLine{01546 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_tzl_a34eaa9554fc3130630c26216310f48f6}\label{class_t_level_reader_tzl_a34eaa9554fc3130630c26216310f48f6}} 
+\index{TLevelReaderTzl@{TLevelReaderTzl}!getIconSize@{getIconSize}}
+\index{getIconSize@{getIconSize}!TLevelReaderTzl@{TLevelReaderTzl}}
+\doxysubsubsection{\texorpdfstring{getIconSize()}{getIconSize()}}
+{\footnotesize\ttfamily bool TLevel\+Reader\+Tzl\+::get\+Icon\+Size (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&}]{icon\+Size }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}         Get the iconSize in the file. Return TRUE if icon exists,
+\end{DoxyVerb}
+ return FALSE if it not exists. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01555                                                       \{}
+\DoxyCodeLine{01556   \textcolor{keywordflow}{if} (m\_iconOffsTable.empty()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01557   \textcolor{keywordflow}{if} (m\_version < 13) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01558   assert(m\_chan);}
+\DoxyCodeLine{01559   TINT32 currentPos         = ftell(m\_chan);}
+\DoxyCodeLine{01560   TzlOffsetMap::iterator it = m\_iconOffsTable.begin();}
+\DoxyCodeLine{01561   TINT32 offs               = it-\/>second.m\_offs;}
+\DoxyCodeLine{01562 }
+\DoxyCodeLine{01563   fseek(m\_chan, offs, SEEK\_SET);}
+\DoxyCodeLine{01564   TINT32 iconLx = 0, iconLy = 0;}
+\DoxyCodeLine{01565   \textcolor{comment}{// leggo la dimensione delle iconcine nel file}}
+\DoxyCodeLine{01566   fread(\&iconLx, \textcolor{keyword}{sizeof}(TINT32), 1, m\_chan);}
+\DoxyCodeLine{01567   fread(\&iconLy, \textcolor{keyword}{sizeof}(TINT32), 1, m\_chan);}
+\DoxyCodeLine{01568   assert(iconLx > 0 \&\& iconLy > 0);}
+\DoxyCodeLine{01569   \textcolor{comment}{// ritorno alla posizione corrente}}
+\DoxyCodeLine{01570   fseek(m\_chan, currentPos, SEEK\_SET);}
+\DoxyCodeLine{01571   iconSize = \mbox{\hyperlink{class_t_dimension_t}{TDimension}}(iconLx, iconLy);}
+\DoxyCodeLine{01572   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{01573 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_tzl_acb31349b8b5559d0ddc9d39f057d659c}\label{class_t_level_reader_tzl_acb31349b8b5559d0ddc9d39f057d659c}} 
+\index{TLevelReaderTzl@{TLevelReaderTzl}!getVersion@{getVersion}}
+\index{getVersion@{getVersion}!TLevelReaderTzl@{TLevelReaderTzl}}
+\doxysubsubsection{\texorpdfstring{getVersion()}{getVersion()}}
+{\footnotesize\ttfamily int TLevel\+Reader\+Tzl\+::get\+Version (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return TLV version 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00158 \{ \textcolor{keywordflow}{return} m\_version; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_tzl_aa2c865dfe633951551bf82ee6d1b366a}\label{class_t_level_reader_tzl_aa2c865dfe633951551bf82ee6d1b366a}} 
+\index{TLevelReaderTzl@{TLevelReaderTzl}!loadInfo@{loadInfo}}
+\index{loadInfo@{loadInfo}!TLevelReaderTzl@{TLevelReaderTzl}}
+\doxysubsubsection{\texorpdfstring{loadInfo()}{loadInfo()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_level_p}{TLevelP}} TLevel\+Reader\+Tzl\+::load\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Return info about current tzl 
+
+Reimplemented from \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01535                                   \{}
+\DoxyCodeLine{01536   \textcolor{keywordflow}{if} (m\_level \&\& m\_level-\/>getPalette() == 0 \&\& m\_readPalette) readPalette();}
+\DoxyCodeLine{01537   \textcolor{keywordflow}{return} m\_level;}
+\DoxyCodeLine{01538 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_t_level_reader_tzl_ad38a7a7bd10157513ecae0bd3991f5bc}\label{class_t_level_reader_tzl_ad38a7a7bd10157513ecae0bd3991f5bc}} 
+\index{TLevelReaderTzl@{TLevelReaderTzl}!TImageReaderTzl@{TImageReaderTzl}}
+\index{TImageReaderTzl@{TImageReaderTzl}!TLevelReaderTzl@{TLevelReaderTzl}}
+\doxysubsubsection{\texorpdfstring{TImageReaderTzl}{TImageReaderTzl}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{class_t_image_reader_tzl}{TImage\+Reader\+Tzl}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/tzl/tiio\+\_\+tzl.\+h\item 
+E\+:/opentoonz/toonz/sources/image/tzl/tiio\+\_\+tzl.\+cpp\end{DoxyCompactItemize}

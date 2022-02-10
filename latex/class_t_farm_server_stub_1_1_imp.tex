@@ -1,0 +1,133 @@
+\hypertarget{class_t_farm_server_stub_1_1_imp}{}\doxysection{TFarm\+Server\+Stub\+::Imp Class Reference}
+\label{class_t_farm_server_stub_1_1_imp}\index{TFarmServerStub::Imp@{TFarmServerStub::Imp}}
+Inheritance diagram for TFarm\+Server\+Stub\+::Imp\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_t_farm_server_stub_1_1_imp}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_farm_server_stub_1_1_imp_a602a2b3c89553036cf45d5afe938d52d}{Imp}} (\mbox{\hyperlink{class_t_farm_server}{TFarm\+Server}} $\ast$server, int port)
+\item 
+QString \mbox{\hyperlink{class_t_farm_server_stub_1_1_imp_ab12baf1e40c3ae7231e18cac9fce3a18}{execute}} (const std\+::vector$<$ QString $>$ \&argv) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_farm_server}{TFarm\+Server}} $\ast$ \mbox{\hyperlink{class_t_farm_server_stub_1_1_imp_ad846bb1a73de24472b95068228a1d265}{m\+\_\+server}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_farm_server_stub_1_1_imp_a602a2b3c89553036cf45d5afe938d52d}\label{class_t_farm_server_stub_1_1_imp_a602a2b3c89553036cf45d5afe938d52d}} 
+\index{TFarmServerStub::Imp@{TFarmServerStub::Imp}!Imp@{Imp}}
+\index{Imp@{Imp}!TFarmServerStub::Imp@{TFarmServerStub::Imp}}
+\doxysubsubsection{\texorpdfstring{Imp()}{Imp()}}
+{\footnotesize\ttfamily TFarm\+Server\+Stub\+::\+Imp\+::\+Imp (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_farm_server}{TFarm\+Server}} $\ast$}]{server,  }\item[{int}]{port }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00016                                      : \mbox{\hyperlink{class_t_farm_executor}{TFarmExecutor}}(port), m\_server(server) \{}
+\DoxyCodeLine{00017     assert(m\_server);}
+\DoxyCodeLine{00018   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_farm_server_stub_1_1_imp_ab12baf1e40c3ae7231e18cac9fce3a18}\label{class_t_farm_server_stub_1_1_imp_ab12baf1e40c3ae7231e18cac9fce3a18}} 
+\index{TFarmServerStub::Imp@{TFarmServerStub::Imp}!execute@{execute}}
+\index{execute@{execute}!TFarmServerStub::Imp@{TFarmServerStub::Imp}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily QString TFarm\+Server\+Stub\+::\+Imp\+::execute (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ QString $>$ \&}]{argv }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_farm_executor}{TFarm\+Executor}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028                                                                   \{}
+\DoxyCodeLine{00029 \textcolor{preprocessor}{\#ifdef DEBUG}}
+\DoxyCodeLine{00030   std::cout << \textcolor{stringliteral}{"{}executing "{}} << argv[0].c\_str() << endl;}
+\DoxyCodeLine{00031 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033   \textcolor{keywordflow}{if} (argv.size() > 0) \{}
+\DoxyCodeLine{00034 \textcolor{preprocessor}{\#ifdef DEBUG}}
+\DoxyCodeLine{00035     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)argv.size(); ++i) std::cout << argv[i] << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{00036 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00037 }
+\DoxyCodeLine{00038     \textcolor{keywordflow}{if} (argv[0] == \textcolor{stringliteral}{"{}addTask"{}} \&\& argv.size() == 3) \{}
+\DoxyCodeLine{00039       \textcolor{keywordtype}{int} ret = m\_server-\/>addTask(argv[1], argv[2]);}
+\DoxyCodeLine{00040       \textcolor{keywordflow}{return} QString::number(ret);}
+\DoxyCodeLine{00041     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (argv[0] == \textcolor{stringliteral}{"{}terminateTask"{}} \&\& argv.size() > 1) \{}
+\DoxyCodeLine{00042       \textcolor{keywordtype}{int} ret = m\_server-\/>terminateTask(argv[1]);}
+\DoxyCodeLine{00043       \textcolor{keywordflow}{return} QString::number(ret);}
+\DoxyCodeLine{00044     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (argv[0] == \textcolor{stringliteral}{"{}getTasks"{}}) \{}
+\DoxyCodeLine{00045       std::vector<QString> tasks;}
+\DoxyCodeLine{00046       \textcolor{keywordtype}{int} ret = m\_server-\/>getTasks(tasks);}
+\DoxyCodeLine{00047 }
+\DoxyCodeLine{00048       QString reply(QString::number(ret));}
+\DoxyCodeLine{00049       reply += \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{00050 }
+\DoxyCodeLine{00051       std::vector<QString>::iterator it = tasks.begin();}
+\DoxyCodeLine{00052       \textcolor{keywordflow}{for} (; it != tasks.end(); ++it) \{}
+\DoxyCodeLine{00053         reply += *it;}
+\DoxyCodeLine{00054         reply += \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{00055       \}}
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00057       \textcolor{keywordflow}{if} (!reply.isEmpty()) reply.remove(reply.length() -\/ 1, 1);}
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059       \textcolor{keywordflow}{return} reply;}
+\DoxyCodeLine{00060     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (argv[0] == \textcolor{stringliteral}{"{}queryHwInfo"{}}) \{}
+\DoxyCodeLine{00061       \mbox{\hyperlink{class_t_farm_server_1_1_hw_info}{TFarmServer::HwInfo}} hwInfo;}
+\DoxyCodeLine{00062       m\_server-\/>queryHwInfo(hwInfo);}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064       QString ret;}
+\DoxyCodeLine{00065       ret += QString::number((\textcolor{keywordtype}{int})hwInfo.m\_cpuCount);}
+\DoxyCodeLine{00066       ret += \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{00067       ret += QString::number((\textcolor{keywordtype}{int})(hwInfo.m\_totPhysMem / 1024));}
+\DoxyCodeLine{00068       ret += \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{00069       ret += QString::number((\textcolor{keywordtype}{int})(hwInfo.m\_availPhysMem / 1024));}
+\DoxyCodeLine{00070       ret += \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{00071       ret += QString::number((\textcolor{keywordtype}{int})(hwInfo.m\_totVirtMem / 1024));}
+\DoxyCodeLine{00072       ret += \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{00073       ret += QString::number((\textcolor{keywordtype}{int})(hwInfo.m\_availVirtMem / 1024));}
+\DoxyCodeLine{00074       ret += \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{00075       ret += QString::number(hwInfo.m\_type);}
+\DoxyCodeLine{00076       \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{00077     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (argv[0] == \textcolor{stringliteral}{"{}attachController"{}} \&\& argv.size() > 3) \{}
+\DoxyCodeLine{00078       \textcolor{keywordtype}{int} port = argv[3].toInt();}
+\DoxyCodeLine{00079       m\_server-\/>attachController(argv[1], argv[2], port);}
+\DoxyCodeLine{00080       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00081     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (argv[0] == \textcolor{stringliteral}{"{}detachController"{}} \&\& argv.size() > 3) \{}
+\DoxyCodeLine{00082       \textcolor{keywordtype}{int} port = argv[3].toInt();}
+\DoxyCodeLine{00083       m\_server-\/>detachController(argv[1], argv[2], port);}
+\DoxyCodeLine{00084       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00085     \}}
+\DoxyCodeLine{00086   \}}
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088   \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00089 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_farm_server_stub_1_1_imp_ad846bb1a73de24472b95068228a1d265}\label{class_t_farm_server_stub_1_1_imp_ad846bb1a73de24472b95068228a1d265}} 
+\index{TFarmServerStub::Imp@{TFarmServerStub::Imp}!m\_server@{m\_server}}
+\index{m\_server@{m\_server}!TFarmServerStub::Imp@{TFarmServerStub::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_server}{m\_server}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_farm_server}{TFarm\+Server}}$\ast$ TFarm\+Server\+Stub\+::\+Imp\+::m\+\_\+server}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tfarm/tfarmserverstub.\+cpp\end{DoxyCompactItemize}

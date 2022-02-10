@@ -1,0 +1,175 @@
+\hypertarget{class_my_paint_toonz_brush}{}\doxysection{My\+Paint\+Toonz\+Brush Class Reference}
+\label{class_my_paint_toonz_brush}\index{MyPaintToonzBrush@{MyPaintToonzBrush}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_my_paint_toonz_brush_aaa871e2e31cad4499865307a9bd55439}{My\+Paint\+Toonz\+Brush}} (const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&ras, \mbox{\hyperlink{class_raster_controller}{Raster\+Controller}} \&controller, const \mbox{\hyperlink{classmypaint_1_1_brush}{mypaint\+::\+Brush}} \&brush)
+\item 
+void \mbox{\hyperlink{class_my_paint_toonz_brush_abc235be4bddd582a1f9fd80d5cc88947}{begin\+Stroke}} ()
+\item 
+void \mbox{\hyperlink{class_my_paint_toonz_brush_a4244567c768aa64db9db545ee6a65d2d}{end\+Stroke}} ()
+\item 
+void \mbox{\hyperlink{class_my_paint_toonz_brush_a53495fb4f9991bf2334c7ba90b808e75}{stroke\+To}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p, double pressure, double dtime)
+\item 
+void \mbox{\hyperlink{class_my_paint_toonz_brush_abc8ea90acac975dc331cfc5272e0fc15}{update\+Drawing}} (const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}} ras\+CM, const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}} ras\+Backup\+CM, const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&bbox, int style\+Id, bool lock\+Alpha) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_my_paint_toonz_brush_aaa871e2e31cad4499865307a9bd55439}\label{class_my_paint_toonz_brush_aaa871e2e31cad4499865307a9bd55439}} 
+\index{MyPaintToonzBrush@{MyPaintToonzBrush}!MyPaintToonzBrush@{MyPaintToonzBrush}}
+\index{MyPaintToonzBrush@{MyPaintToonzBrush}!MyPaintToonzBrush@{MyPaintToonzBrush}}
+\doxysubsubsection{\texorpdfstring{MyPaintToonzBrush()}{MyPaintToonzBrush()}}
+{\footnotesize\ttfamily My\+Paint\+Toonz\+Brush\+::\+My\+Paint\+Toonz\+Brush (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&}]{ras,  }\item[{\mbox{\hyperlink{class_raster_controller}{Raster\+Controller}} \&}]{controller,  }\item[{const \mbox{\hyperlink{classmypaint_1_1_brush}{mypaint\+::\+Brush}} \&}]{brush }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00113     : m\_ras(ras)}
+\DoxyCodeLine{00114     , m\_mypaintSurface(m\_ras, controller)}
+\DoxyCodeLine{00115     , brush(brush)}
+\DoxyCodeLine{00116     , reset(\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{00117   \textcolor{comment}{// read brush antialiasing settings}}
+\DoxyCodeLine{00118   \textcolor{keywordtype}{float} aa = this-\/>brush.getBaseValue(MYPAINT\_BRUSH\_SETTING\_ANTI\_ALIASING);}
+\DoxyCodeLine{00119   m\_mypaintSurface.setAntialiasing(aa > 0.5f);}
+\DoxyCodeLine{00120 }
+\DoxyCodeLine{00121   \textcolor{comment}{// reset brush antialiasing to zero to avoid radius and hardness correction}}
+\DoxyCodeLine{00122   this-\/>brush.setBaseValue(MYPAINT\_BRUSH\_SETTING\_ANTI\_ALIASING, 0.f);}
+\DoxyCodeLine{00123   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < MYPAINT\_BRUSH\_INPUTS\_COUNT; ++i)}
+\DoxyCodeLine{00124     this-\/>brush.setMappingN(MYPAINT\_BRUSH\_SETTING\_ANTI\_ALIASING,}
+\DoxyCodeLine{00125                             (MyPaintBrushInput)i, 0);}
+\DoxyCodeLine{00126 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_my_paint_toonz_brush_abc235be4bddd582a1f9fd80d5cc88947}\label{class_my_paint_toonz_brush_abc235be4bddd582a1f9fd80d5cc88947}} 
+\index{MyPaintToonzBrush@{MyPaintToonzBrush}!beginStroke@{beginStroke}}
+\index{beginStroke@{beginStroke}!MyPaintToonzBrush@{MyPaintToonzBrush}}
+\doxysubsubsection{\texorpdfstring{beginStroke()}{beginStroke()}}
+{\footnotesize\ttfamily void My\+Paint\+Toonz\+Brush\+::begin\+Stroke (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00128                                     \{}
+\DoxyCodeLine{00129   brush.reset();}
+\DoxyCodeLine{00130   brush.newStroke();}
+\DoxyCodeLine{00131   reset = \textcolor{keyword}{true};}
+\DoxyCodeLine{00132 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_paint_toonz_brush_a4244567c768aa64db9db545ee6a65d2d}\label{class_my_paint_toonz_brush_a4244567c768aa64db9db545ee6a65d2d}} 
+\index{MyPaintToonzBrush@{MyPaintToonzBrush}!endStroke@{endStroke}}
+\index{endStroke@{endStroke}!MyPaintToonzBrush@{MyPaintToonzBrush}}
+\doxysubsubsection{\texorpdfstring{endStroke()}{endStroke()}}
+{\footnotesize\ttfamily void My\+Paint\+Toonz\+Brush\+::end\+Stroke (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00134                                   \{}
+\DoxyCodeLine{00135   \textcolor{keywordflow}{if} (!reset) \{}
+\DoxyCodeLine{00136     strokeTo(\mbox{\hyperlink{class_t_point_t}{TPointD}}(current.x, current.y), current.pressure, 0.f);}
+\DoxyCodeLine{00137     beginStroke();}
+\DoxyCodeLine{00138   \}}
+\DoxyCodeLine{00139 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_paint_toonz_brush_a53495fb4f9991bf2334c7ba90b808e75}\label{class_my_paint_toonz_brush_a53495fb4f9991bf2334c7ba90b808e75}} 
+\index{MyPaintToonzBrush@{MyPaintToonzBrush}!strokeTo@{strokeTo}}
+\index{strokeTo@{strokeTo}!MyPaintToonzBrush@{MyPaintToonzBrush}}
+\doxysubsubsection{\texorpdfstring{strokeTo()}{strokeTo()}}
+{\footnotesize\ttfamily void My\+Paint\+Toonz\+Brush\+::stroke\+To (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p,  }\item[{double}]{pressure,  }\item[{double}]{dtime }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00142                                                \{}
+\DoxyCodeLine{00143   Params next(point.x, point.y, pressure, 0.0);}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145   \textcolor{keywordflow}{if} (reset) \{}
+\DoxyCodeLine{00146     current  = next;}
+\DoxyCodeLine{00147     previous = current;}
+\DoxyCodeLine{00148     reset    = \textcolor{keyword}{false};}
+\DoxyCodeLine{00149     \textcolor{comment}{// we need to jump to initial point (heuristic)}}
+\DoxyCodeLine{00150     brush.setState(MYPAINT\_BRUSH\_STATE\_X, current.x);}
+\DoxyCodeLine{00151     brush.setState(MYPAINT\_BRUSH\_STATE\_Y, current.y);}
+\DoxyCodeLine{00152     brush.setState(MYPAINT\_BRUSH\_STATE\_ACTUAL\_X, current.x);}
+\DoxyCodeLine{00153     brush.setState(MYPAINT\_BRUSH\_STATE\_ACTUAL\_Y, current.y);}
+\DoxyCodeLine{00154     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00155   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00156     next.time = current.time + dtime;}
+\DoxyCodeLine{00157   \}}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159   \textcolor{comment}{// accuracy}}
+\DoxyCodeLine{00160   \textcolor{keyword}{const} \textcolor{keywordtype}{double} threshold    = 1.0;}
+\DoxyCodeLine{00161   \textcolor{keyword}{const} \textcolor{keywordtype}{double} thresholdSqr = threshold * threshold;}
+\DoxyCodeLine{00162   \textcolor{keyword}{const} \textcolor{keywordtype}{int} maxLevel        = 16;}
+\DoxyCodeLine{00163 }
+\DoxyCodeLine{00164   \textcolor{comment}{// set initial segment}}
+\DoxyCodeLine{00165   Segment stack[maxLevel + 1];}
+\DoxyCodeLine{00166   Params p0;}
+\DoxyCodeLine{00167   Segment *segment    = stack;}
+\DoxyCodeLine{00168   Segment *maxSegment = segment + maxLevel;}
+\DoxyCodeLine{00169   p0.setMedian(previous, current);}
+\DoxyCodeLine{00170   segment-\/>p1 = current;}
+\DoxyCodeLine{00171   segment-\/>p2.setMedian(current, next);}
+\DoxyCodeLine{00172 }
+\DoxyCodeLine{00173   \textcolor{comment}{// process}}
+\DoxyCodeLine{00174   \textcolor{keywordflow}{while} (\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{00175     \textcolor{keywordtype}{double} dx = segment-\/>p2.x -\/ p0.x;}
+\DoxyCodeLine{00176     \textcolor{keywordtype}{double} dy = segment-\/>p2.y -\/ p0.y;}
+\DoxyCodeLine{00177     \textcolor{keywordflow}{if} (dx * dx + dy * dy > thresholdSqr \&\& segment != maxSegment) \{}
+\DoxyCodeLine{00178       Segment *\mbox{\hyperlink{namespacetcg_1_1poly__ops_a0947d0d2f6953ac9ef649b7f26f55e36}{sub}} = segment + 1;}
+\DoxyCodeLine{00179       \mbox{\hyperlink{namespacetcg_1_1poly__ops_a0947d0d2f6953ac9ef649b7f26f55e36}{sub}}-\/>p1.setMedian(p0, segment-\/>p1);}
+\DoxyCodeLine{00180       segment-\/>p1.setMedian(segment-\/>p1, segment-\/>p2);}
+\DoxyCodeLine{00181       \mbox{\hyperlink{namespacetcg_1_1poly__ops_a0947d0d2f6953ac9ef649b7f26f55e36}{sub}}-\/>p2.setMedian(\mbox{\hyperlink{namespacetcg_1_1poly__ops_a0947d0d2f6953ac9ef649b7f26f55e36}{sub}}-\/>p1, segment-\/>p1);}
+\DoxyCodeLine{00182       segment = \mbox{\hyperlink{namespacetcg_1_1poly__ops_a0947d0d2f6953ac9ef649b7f26f55e36}{sub}};}
+\DoxyCodeLine{00183     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00184       brush.strokeTo(m\_mypaintSurface, segment-\/>p2.x, segment-\/>p2.y,}
+\DoxyCodeLine{00185                      segment-\/>p2.pressure, 0.f, 0.f,}
+\DoxyCodeLine{00186                      segment-\/>p2.time -\/ p0.time);}
+\DoxyCodeLine{00187       \textcolor{keywordflow}{if} (segment == stack) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00188       p0 = segment-\/>p2;}
+\DoxyCodeLine{00189       -\/-\/segment;}
+\DoxyCodeLine{00190     \}}
+\DoxyCodeLine{00191   \}}
+\DoxyCodeLine{00192 }
+\DoxyCodeLine{00193   \textcolor{comment}{// keep parameters for future interpolation}}
+\DoxyCodeLine{00194   previous = current;}
+\DoxyCodeLine{00195   current  = next;}
+\DoxyCodeLine{00196 }
+\DoxyCodeLine{00197   \textcolor{comment}{// shift time}}
+\DoxyCodeLine{00198   previous.time = 0.0;}
+\DoxyCodeLine{00199   current.time  = dtime;}
+\DoxyCodeLine{00200 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_paint_toonz_brush_abc8ea90acac975dc331cfc5272e0fc15}\label{class_my_paint_toonz_brush_abc8ea90acac975dc331cfc5272e0fc15}} 
+\index{MyPaintToonzBrush@{MyPaintToonzBrush}!updateDrawing@{updateDrawing}}
+\index{updateDrawing@{updateDrawing}!MyPaintToonzBrush@{MyPaintToonzBrush}}
+\doxysubsubsection{\texorpdfstring{updateDrawing()}{updateDrawing()}}
+{\footnotesize\ttfamily void My\+Paint\+Toonz\+Brush\+::update\+Drawing (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}}}]{ras\+CM,  }\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}}}]{ras\+Backup\+CM,  }\item[{const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&}]{bbox,  }\item[{int}]{style\+Id,  }\item[{bool}]{lock\+Alpha }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00207                                                             \{}
+\DoxyCodeLine{00208   \textcolor{keywordflow}{if} (!rasCM) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00209 }
+\DoxyCodeLine{00210   \mbox{\hyperlink{class_t_rect_t}{TRect}} rasRect    = rasCM-\/>getBounds();}
+\DoxyCodeLine{00211   \mbox{\hyperlink{class_t_rect_t}{TRect}} targetRect = bbox * rasRect;}
+\DoxyCodeLine{00212   \textcolor{keywordflow}{if} (targetRect.\mbox{\hyperlink{class_t_rect_t_a53ce09c6112f8a019b43ad82d721a93b}{isEmpty}}()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00213 }
+\DoxyCodeLine{00214   rasCM-\/>copy(rasBackupCM-\/>extract(targetRect), targetRect.getP00());}
+\DoxyCodeLine{00215   putOnRasterCM(rasCM-\/>extract(targetRect), m\_ras-\/>extract(targetRect), styleId,}
+\DoxyCodeLine{00216                 lockAlpha);}
+\DoxyCodeLine{00217 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/mypainttoonzbrush.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/mypainttoonzbrush.\+cpp\end{DoxyCompactItemize}

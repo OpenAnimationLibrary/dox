@@ -1,0 +1,239 @@
+\hypertarget{class_my_video_surface}{}\doxysection{My\+Video\+Surface Class Reference}
+\label{class_my_video_surface}\index{MyVideoSurface@{MyVideoSurface}}
+Inheritance diagram for My\+Video\+Surface\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_my_video_surface}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_my_video_surface_ab0ba39b5d627e899c1d485695c5f8f66}\label{class_my_video_surface_ab0ba39b5d627e899c1d485695c5f8f66}} 
+void {\bfseries frame\+Captured} (QImage \&image)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_my_video_surface_a4d909980d8991c5d5f722362f4799e6b}{My\+Video\+Surface}} (QWidget $\ast$widget, QObject $\ast$parent=0)
+\item 
+QList$<$ QVideo\+Frame\+::\+Pixel\+Format $>$ \mbox{\hyperlink{class_my_video_surface_a67aa3c6215098283529d91a07ac32812}{supported\+Pixel\+Formats}} (QAbstract\+Video\+Buffer\+::\+Handle\+Type handle\+Type=QAbstract\+Video\+Buffer\+::\+No\+Handle) const
+\item 
+bool \mbox{\hyperlink{class_my_video_surface_ade6e78f7bfb16e768fd1d7aca8fa8dea}{is\+Format\+Supported}} (const QVideo\+Surface\+Format \&format, QVideo\+Surface\+Format $\ast$similar) const
+\item 
+bool \mbox{\hyperlink{class_my_video_surface_ad24a95d0735ec397e71681652401c7cc}{start}} (const QVideo\+Surface\+Format \&format)
+\item 
+void \mbox{\hyperlink{class_my_video_surface_acd1360bc865edb4a53dc3cf87fac064e}{stop}} ()
+\item 
+bool \mbox{\hyperlink{class_my_video_surface_ad8f8e2283e850c94c2b675370d72718b}{present}} (const QVideo\+Frame \&frame)
+\item 
+QRect \mbox{\hyperlink{class_my_video_surface_a9e5c12ff237963e5c5343470bb65dd65}{video\+Rect}} () const
+\item 
+QRect \mbox{\hyperlink{class_my_video_surface_ab6d888fe67979ad8fe521a459db186ae}{source\+Rect}} () const
+\item 
+void \mbox{\hyperlink{class_my_video_surface_afa1615d55d25486eb2a98abe8d87b203}{update\+Video\+Rect}} ()
+\item 
+QTransform \mbox{\hyperlink{class_my_video_surface_aaead22fc147bbc96cd546cd8f7321ef8}{transform}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_my_video_surface_a4d909980d8991c5d5f722362f4799e6b}\label{class_my_video_surface_a4d909980d8991c5d5f722362f4799e6b}} 
+\index{MyVideoSurface@{MyVideoSurface}!MyVideoSurface@{MyVideoSurface}}
+\index{MyVideoSurface@{MyVideoSurface}!MyVideoSurface@{MyVideoSurface}}
+\doxysubsubsection{\texorpdfstring{MyVideoSurface()}{MyVideoSurface()}}
+{\footnotesize\ttfamily My\+Video\+Surface\+::\+My\+Video\+Surface (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{widget,  }\item[{QObject $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00502     : QAbstractVideoSurface(parent)}
+\DoxyCodeLine{00503     , m\_widget(widget)}
+\DoxyCodeLine{00504     , m\_imageFormat(QImage::Format\_Invalid) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_my_video_surface_ade6e78f7bfb16e768fd1d7aca8fa8dea}\label{class_my_video_surface_ade6e78f7bfb16e768fd1d7aca8fa8dea}} 
+\index{MyVideoSurface@{MyVideoSurface}!isFormatSupported@{isFormatSupported}}
+\index{isFormatSupported@{isFormatSupported}!MyVideoSurface@{MyVideoSurface}}
+\doxysubsubsection{\texorpdfstring{isFormatSupported()}{isFormatSupported()}}
+{\footnotesize\ttfamily bool My\+Video\+Surface\+::is\+Format\+Supported (\begin{DoxyParamCaption}\item[{const QVideo\+Surface\+Format \&}]{format,  }\item[{QVideo\+Surface\+Format $\ast$}]{similar }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00519                                                                            \{}
+\DoxyCodeLine{00520   Q\_UNUSED(similar);}
+\DoxyCodeLine{00521 }
+\DoxyCodeLine{00522   \textcolor{keyword}{const} QImage::Format imageFormat =}
+\DoxyCodeLine{00523       QVideoFrame::imageFormatFromPixelFormat(format.pixelFormat());}
+\DoxyCodeLine{00524   \textcolor{keyword}{const} QSize size = format.frameSize();}
+\DoxyCodeLine{00525 }
+\DoxyCodeLine{00526   \textcolor{keywordflow}{return} imageFormat != QImage::Format\_Invalid \&\& !size.isEmpty() \&\&}
+\DoxyCodeLine{00527          format.handleType() == QAbstractVideoBuffer::NoHandle;}
+\DoxyCodeLine{00528 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_video_surface_ad8f8e2283e850c94c2b675370d72718b}\label{class_my_video_surface_ad8f8e2283e850c94c2b675370d72718b}} 
+\index{MyVideoSurface@{MyVideoSurface}!present@{present}}
+\index{present@{present}!MyVideoSurface@{MyVideoSurface}}
+\doxysubsubsection{\texorpdfstring{present()}{present()}}
+{\footnotesize\ttfamily bool My\+Video\+Surface\+::present (\begin{DoxyParamCaption}\item[{const QVideo\+Frame \&}]{frame }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00565                                                      \{}
+\DoxyCodeLine{00566   \textcolor{keywordflow}{if} (surfaceFormat().pixelFormat() != frame.pixelFormat() ||}
+\DoxyCodeLine{00567       surfaceFormat().frameSize() != frame.size()) \{}
+\DoxyCodeLine{00568     setError(IncorrectFormatError);}
+\DoxyCodeLine{00569     stop();}
+\DoxyCodeLine{00570     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00571   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00572     m\_currentFrame = frame;}
+\DoxyCodeLine{00573 }
+\DoxyCodeLine{00574     \textcolor{keywordflow}{if} (m\_currentFrame.map(QAbstractVideoBuffer::ReadOnly)) \{}
+\DoxyCodeLine{00575       QImage image = QImage(m\_currentFrame.bits(), m\_currentFrame.width(),}
+\DoxyCodeLine{00576                             m\_currentFrame.height(),}
+\DoxyCodeLine{00577                             m\_currentFrame.bytesPerLine(), m\_imageFormat);}
+\DoxyCodeLine{00578       m\_currentFrame.unmap();}
+\DoxyCodeLine{00579       \textcolor{keywordflow}{if} (!image.isNull()) emit frameCaptured(image);}
+\DoxyCodeLine{00580     \}}
+\DoxyCodeLine{00581 }
+\DoxyCodeLine{00582     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00583   \}}
+\DoxyCodeLine{00584 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_video_surface_ab6d888fe67979ad8fe521a459db186ae}\label{class_my_video_surface_ab6d888fe67979ad8fe521a459db186ae}} 
+\index{MyVideoSurface@{MyVideoSurface}!sourceRect@{sourceRect}}
+\index{sourceRect@{sourceRect}!MyVideoSurface@{MyVideoSurface}}
+\doxysubsubsection{\texorpdfstring{sourceRect()}{sourceRect()}}
+{\footnotesize\ttfamily QRect My\+Video\+Surface\+::source\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086 \{ \textcolor{keywordflow}{return} m\_sourceRect; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_video_surface_ad24a95d0735ec397e71681652401c7cc}\label{class_my_video_surface_ad24a95d0735ec397e71681652401c7cc}} 
+\index{MyVideoSurface@{MyVideoSurface}!start@{start}}
+\index{start@{start}!MyVideoSurface@{MyVideoSurface}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily bool My\+Video\+Surface\+::start (\begin{DoxyParamCaption}\item[{const QVideo\+Surface\+Format \&}]{format }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00530                                                             \{}
+\DoxyCodeLine{00531   \textcolor{keyword}{const} QImage::Format imageFormat =}
+\DoxyCodeLine{00532       QVideoFrame::imageFormatFromPixelFormat(format.pixelFormat());}
+\DoxyCodeLine{00533   \textcolor{keyword}{const} QSize size = format.frameSize();}
+\DoxyCodeLine{00534 }
+\DoxyCodeLine{00535   \textcolor{keywordflow}{if} (imageFormat != QImage::Format\_Invalid \&\& !size.isEmpty()) \{}
+\DoxyCodeLine{00536     m\_imageFormat = imageFormat;}
+\DoxyCodeLine{00537     m\_imageSize   = size;}
+\DoxyCodeLine{00538     m\_sourceRect  = format.viewport();}
+\DoxyCodeLine{00539 }
+\DoxyCodeLine{00540     QAbstractVideoSurface::start(format);}
+\DoxyCodeLine{00541 }
+\DoxyCodeLine{00542     m\_widget-\/>updateGeometry();}
+\DoxyCodeLine{00543     updateVideoRect();}
+\DoxyCodeLine{00544 }
+\DoxyCodeLine{00545     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00546   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00547     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00548   \}}
+\DoxyCodeLine{00549 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_video_surface_acd1360bc865edb4a53dc3cf87fac064e}\label{class_my_video_surface_acd1360bc865edb4a53dc3cf87fac064e}} 
+\index{MyVideoSurface@{MyVideoSurface}!stop@{stop}}
+\index{stop@{stop}!MyVideoSurface@{MyVideoSurface}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void My\+Video\+Surface\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00586                           \{}
+\DoxyCodeLine{00587   m\_currentFrame = QVideoFrame();}
+\DoxyCodeLine{00588   m\_targetRect   = QRect();}
+\DoxyCodeLine{00589 }
+\DoxyCodeLine{00590   QAbstractVideoSurface::stop();}
+\DoxyCodeLine{00591 }
+\DoxyCodeLine{00592   m\_widget-\/>update();}
+\DoxyCodeLine{00593 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_video_surface_a67aa3c6215098283529d91a07ac32812}\label{class_my_video_surface_a67aa3c6215098283529d91a07ac32812}} 
+\index{MyVideoSurface@{MyVideoSurface}!supportedPixelFormats@{supportedPixelFormats}}
+\index{supportedPixelFormats@{supportedPixelFormats}!MyVideoSurface@{MyVideoSurface}}
+\doxysubsubsection{\texorpdfstring{supportedPixelFormats()}{supportedPixelFormats()}}
+{\footnotesize\ttfamily QList$<$ QVideo\+Frame\+::\+Pixel\+Format $>$ My\+Video\+Surface\+::supported\+Pixel\+Formats (\begin{DoxyParamCaption}\item[{QAbstract\+Video\+Buffer\+::\+Handle\+Type}]{handle\+Type = {\ttfamily QAbstractVideoBuffer\+:\+:NoHandle} }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00507                                                      \{}
+\DoxyCodeLine{00508   \textcolor{keywordflow}{if} (handleType == QAbstractVideoBuffer::NoHandle) \{}
+\DoxyCodeLine{00509     \textcolor{keywordflow}{return} QList<QVideoFrame::PixelFormat>()}
+\DoxyCodeLine{00510            << QVideoFrame::Format\_RGB32 << QVideoFrame::Format\_ARGB32}
+\DoxyCodeLine{00511            << QVideoFrame::Format\_ARGB32\_Premultiplied}
+\DoxyCodeLine{00512            << QVideoFrame::Format\_RGB565 << QVideoFrame::Format\_RGB555;}
+\DoxyCodeLine{00513   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00514     \textcolor{keywordflow}{return} QList<QVideoFrame::PixelFormat>();}
+\DoxyCodeLine{00515   \}}
+\DoxyCodeLine{00516 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_video_surface_aaead22fc147bbc96cd546cd8f7321ef8}\label{class_my_video_surface_aaead22fc147bbc96cd546cd8f7321ef8}} 
+\index{MyVideoSurface@{MyVideoSurface}!transform@{transform}}
+\index{transform@{transform}!MyVideoSurface@{MyVideoSurface}}
+\doxysubsubsection{\texorpdfstring{transform()}{transform()}}
+{\footnotesize\ttfamily QTransform My\+Video\+Surface\+::transform (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00089 \{ \textcolor{keywordflow}{return} m\_S2V\_Transform; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_video_surface_afa1615d55d25486eb2a98abe8d87b203}\label{class_my_video_surface_afa1615d55d25486eb2a98abe8d87b203}} 
+\index{MyVideoSurface@{MyVideoSurface}!updateVideoRect@{updateVideoRect}}
+\index{updateVideoRect@{updateVideoRect}!MyVideoSurface@{MyVideoSurface}}
+\doxysubsubsection{\texorpdfstring{updateVideoRect()}{updateVideoRect()}}
+{\footnotesize\ttfamily void My\+Video\+Surface\+::update\+Video\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00551                                      \{}
+\DoxyCodeLine{00552   QSize size = surfaceFormat().sizeHint();}
+\DoxyCodeLine{00553   size.scale(m\_widget-\/>size(), Qt::KeepAspectRatio);}
+\DoxyCodeLine{00554 }
+\DoxyCodeLine{00555   m\_targetRect = QRect(QPoint(0, 0), size);}
+\DoxyCodeLine{00556   m\_targetRect.moveCenter(m\_widget-\/>rect().center());}
+\DoxyCodeLine{00557 }
+\DoxyCodeLine{00558   \textcolor{keywordtype}{double} scale =}
+\DoxyCodeLine{00559       (double)m\_targetRect.width() / (double)surfaceFormat().sizeHint().width();}
+\DoxyCodeLine{00560   m\_S2V\_Transform =}
+\DoxyCodeLine{00561       QTransform::fromTranslate(m\_targetRect.left(), m\_targetRect.top())}
+\DoxyCodeLine{00562           .scale(scale, scale);}
+\DoxyCodeLine{00563 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_video_surface_a9e5c12ff237963e5c5343470bb65dd65}\label{class_my_video_surface_a9e5c12ff237963e5c5343470bb65dd65}} 
+\index{MyVideoSurface@{MyVideoSurface}!videoRect@{videoRect}}
+\index{videoRect@{videoRect}!MyVideoSurface@{MyVideoSurface}}
+\doxysubsubsection{\texorpdfstring{videoRect()}{videoRect()}}
+{\footnotesize\ttfamily QRect My\+Video\+Surface\+::video\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00085 \{ \textcolor{keywordflow}{return} m\_targetRect; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/penciltestpopup\+\_\+qt.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/penciltestpopup\+\_\+qt.\+cpp\end{DoxyCompactItemize}

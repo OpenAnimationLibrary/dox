@@ -1,0 +1,107 @@
+\hypertarget{class_point_param_field_undo}{}\doxysection{Point\+Param\+Field\+Undo Class Reference}
+\label{class_point_param_field_undo}\index{PointParamFieldUndo@{PointParamFieldUndo}}
+Inheritance diagram for Point\+Param\+Field\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_point_param_field_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_point_param_field_undo_a1b32ed6612b83a75e8c70438088b8d0d}{Point\+Param\+Field\+Undo}} (const TPoint\+ParamP param, QString name, int frame, \mbox{\hyperlink{class_t_fx_handle}{TFx\+Handle}} $\ast$fx\+Handle)
+\item 
+void \mbox{\hyperlink{class_point_param_field_undo_af04ee438fb5cc1232c84066cc69a7f39}{on\+Add}} () override
+\item 
+void \mbox{\hyperlink{class_point_param_field_undo_a018bede41448f4a4e67839e5c36f5650}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_point_param_field_undo_ae54f7fe5ec54301d5e148959397ad417}{redo}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_point_param_field}{Point\+Param\+Field}} Undo 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_point_param_field_undo_a1b32ed6612b83a75e8c70438088b8d0d}\label{class_point_param_field_undo_a1b32ed6612b83a75e8c70438088b8d0d}} 
+\index{PointParamFieldUndo@{PointParamFieldUndo}!PointParamFieldUndo@{PointParamFieldUndo}}
+\index{PointParamFieldUndo@{PointParamFieldUndo}!PointParamFieldUndo@{PointParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{PointParamFieldUndo()}{PointParamFieldUndo()}}
+{\footnotesize\ttfamily Point\+Param\+Field\+Undo\+::\+Point\+Param\+Field\+Undo (\begin{DoxyParamCaption}\item[{const TPoint\+ParamP}]{param,  }\item[{QString}]{name,  }\item[{int}]{frame,  }\item[{\mbox{\hyperlink{class_t_fx_handle}{TFx\+Handle}} $\ast$}]{fx\+Handle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00187       : \mbox{\hyperlink{class_animatable_fx_settings_undo}{AnimatableFxSettingsUndo}}(name, frame, fxHandle), m\_param(param) \{}
+\DoxyCodeLine{00188     m\_oldValue    = param-\/>getValue(frame);}
+\DoxyCodeLine{00189     m\_newValue    = m\_oldValue;}
+\DoxyCodeLine{00190     m\_wasKeyframe = m\_param-\/>isKeyframe(frame);}
+\DoxyCodeLine{00191   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_point_param_field_undo_af04ee438fb5cc1232c84066cc69a7f39}\label{class_point_param_field_undo_af04ee438fb5cc1232c84066cc69a7f39}} 
+\index{PointParamFieldUndo@{PointParamFieldUndo}!onAdd@{onAdd}}
+\index{onAdd@{onAdd}!PointParamFieldUndo@{PointParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{onAdd()}{onAdd()}}
+{\footnotesize\ttfamily void Point\+Param\+Field\+Undo\+::on\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00193 \{ m\_newValue = m\_param-\/>getValue(m\_frame); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_point_param_field_undo_ae54f7fe5ec54301d5e148959397ad417}\label{class_point_param_field_undo_ae54f7fe5ec54301d5e148959397ad417}} 
+\index{PointParamFieldUndo@{PointParamFieldUndo}!redo@{redo}}
+\index{redo@{redo}!PointParamFieldUndo@{PointParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Point\+Param\+Field\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00204                              \{}
+\DoxyCodeLine{00205     \textcolor{keywordflow}{if} (!m\_wasKeyframe)}
+\DoxyCodeLine{00206       m\_param-\/>setDefaultValue(m\_newValue);}
+\DoxyCodeLine{00207     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00208       m\_param-\/>setValue(m\_frame, m\_newValue);}
+\DoxyCodeLine{00209     \textcolor{keywordflow}{if} (m\_fxHandle) m\_fxHandle-\/>notifyFxChanged();}
+\DoxyCodeLine{00210   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_point_param_field_undo_a018bede41448f4a4e67839e5c36f5650}\label{class_point_param_field_undo_a018bede41448f4a4e67839e5c36f5650}} 
+\index{PointParamFieldUndo@{PointParamFieldUndo}!undo@{undo}}
+\index{undo@{undo}!PointParamFieldUndo@{PointParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Point\+Param\+Field\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00195                              \{}
+\DoxyCodeLine{00196     \textcolor{keywordflow}{if} (!m\_wasKeyframe)}
+\DoxyCodeLine{00197       m\_param-\/>setDefaultValue(m\_oldValue);}
+\DoxyCodeLine{00198     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00199       m\_param-\/>setValue(m\_frame, m\_oldValue);}
+\DoxyCodeLine{00200 }
+\DoxyCodeLine{00201     \textcolor{keywordflow}{if} (m\_fxHandle) m\_fxHandle-\/>notifyFxChanged();}
+\DoxyCodeLine{00202   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/paramfield.\+cpp\end{DoxyCompactItemize}

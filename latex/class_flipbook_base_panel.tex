@@ -1,0 +1,124 @@
+\hypertarget{class_flipbook_base_panel}{}\doxysection{Flipbook\+Base\+Panel Class Reference}
+\label{class_flipbook_base_panel}\index{FlipbookBasePanel@{FlipbookBasePanel}}
+Inheritance diagram for Flipbook\+Base\+Panel\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_flipbook_base_panel}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_flipbook_base_panel_a8198359124316d588e7f2a0c4305d397}{Flipbook\+Base\+Panel}} (QWidget $\ast$parent)
+\item 
+void \mbox{\hyperlink{class_flipbook_base_panel_ab03c329b86c98c8aef1bf84b308722e0}{zoom\+Contents\+And\+Fit\+Geometry}} (bool forward) override
+\item 
+void \mbox{\hyperlink{class_flipbook_base_panel_a3a593d9c9bc1359e0c09800571817a51}{set\+Flipbook}} (\mbox{\hyperlink{class_flip_book}{Flip\+Book}} $\ast$fb)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_flip_book}{Flip\+Book}} $\ast$ \mbox{\hyperlink{class_flipbook_base_panel_aca82ac31cd31708513f6be9e485327fe}{m\+\_\+flipbook}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flipbook_base_panel_a8198359124316d588e7f2a0c4305d397}\label{class_flipbook_base_panel_a8198359124316d588e7f2a0c4305d397}} 
+\index{FlipbookBasePanel@{FlipbookBasePanel}!FlipbookBasePanel@{FlipbookBasePanel}}
+\index{FlipbookBasePanel@{FlipbookBasePanel}!FlipbookBasePanel@{FlipbookBasePanel}}
+\doxysubsubsection{\texorpdfstring{FlipbookBasePanel()}{FlipbookBasePanel()}}
+{\footnotesize\ttfamily Flipbook\+Base\+Panel\+::\+Flipbook\+Base\+Panel (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00259 : \mbox{\hyperlink{class_t_panel}{TPanel}}(parent) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flipbook_base_panel_a3a593d9c9bc1359e0c09800571817a51}\label{class_flipbook_base_panel_a3a593d9c9bc1359e0c09800571817a51}} 
+\index{FlipbookBasePanel@{FlipbookBasePanel}!setFlipbook@{setFlipbook}}
+\index{setFlipbook@{setFlipbook}!FlipbookBasePanel@{FlipbookBasePanel}}
+\doxysubsubsection{\texorpdfstring{setFlipbook()}{setFlipbook()}}
+{\footnotesize\ttfamily void Flipbook\+Base\+Panel\+::set\+Flipbook (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_flip_book}{Flip\+Book}} $\ast$}]{fb }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00261 \{ m\_flipbook = fb; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_flipbook_base_panel_ab03c329b86c98c8aef1bf84b308722e0}\label{class_flipbook_base_panel_ab03c329b86c98c8aef1bf84b308722e0}} 
+\index{FlipbookBasePanel@{FlipbookBasePanel}!zoomContentsAndFitGeometry@{zoomContentsAndFitGeometry}}
+\index{zoomContentsAndFitGeometry@{zoomContentsAndFitGeometry}!FlipbookBasePanel@{FlipbookBasePanel}}
+\doxysubsubsection{\texorpdfstring{zoomContentsAndFitGeometry()}{zoomContentsAndFitGeometry()}}
+{\footnotesize\ttfamily void Flipbook\+Base\+Panel\+::zoom\+Contents\+And\+Fit\+Geometry (\begin{DoxyParamCaption}\item[{bool}]{forward }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_panel}{TPanel}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01043                                                                \{}
+\DoxyCodeLine{01044   \textcolor{keywordflow}{if} (!isFloating()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01045   \textcolor{keywordflow}{if} (!m\_flipbook-\/>getImageViewer()-\/>\mbox{\hyperlink{class_image_viewer_af80b9641df537a1bf3b0c98f2c431420}{getImage}}()) \{}
+\DoxyCodeLine{01046     TPanel::zoomContentsAndFitGeometry(forward);}
+\DoxyCodeLine{01047     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01048   \}}
+\DoxyCodeLine{01049   \textcolor{comment}{// resize the window leaving the top-\/left corner position unchanged}}
+\DoxyCodeLine{01050   \textcolor{comment}{// in order to gain consistency with Photoshop}}
+\DoxyCodeLine{01051   \textcolor{keyword}{auto} getScreen = [\&]() \{}
+\DoxyCodeLine{01052     QScreen *ret = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{01053     ret          = QGuiApplication::screenAt(geometry().topLeft());}
+\DoxyCodeLine{01054     \textcolor{keywordflow}{if} (ret) \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{01055     ret = QGuiApplication::screenAt(geometry().topRight());}
+\DoxyCodeLine{01056     \textcolor{keywordflow}{if} (ret) \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{01057     ret = QGuiApplication::screenAt(geometry().center());}
+\DoxyCodeLine{01058     \textcolor{keywordflow}{if} (ret) \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{01059     ret = QGuiApplication::screenAt(geometry().bottomLeft());}
+\DoxyCodeLine{01060     \textcolor{keywordflow}{if} (ret) \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{01061     ret = QGuiApplication::screenAt(geometry().bottomRight());}
+\DoxyCodeLine{01062     \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{01063   \};}
+\DoxyCodeLine{01064   \textcolor{comment}{// Get screen geometry}}
+\DoxyCodeLine{01065   QScreen *screen = getScreen();}
+\DoxyCodeLine{01066   \textcolor{keywordflow}{if} (!screen) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01067   QRect screenGeom  = screen-\/>availableGeometry();}
+\DoxyCodeLine{01068   QPoint oldTopLeft = geometry().topLeft();}
+\DoxyCodeLine{01069 }
+\DoxyCodeLine{01070   m\_flipbook-\/>zoomAndAdaptGeometry(forward);}
+\DoxyCodeLine{01071 }
+\DoxyCodeLine{01072   QRect newGeom(geometry());}
+\DoxyCodeLine{01073   newGeom.moveTopLeft(oldTopLeft);}
+\DoxyCodeLine{01074   \textcolor{keywordflow}{if} (newGeom.right() > screenGeom.right())}
+\DoxyCodeLine{01075     newGeom.moveRight(screenGeom.right());}
+\DoxyCodeLine{01076   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (newGeom.left() < screenGeom.left())}
+\DoxyCodeLine{01077     newGeom.moveLeft(screenGeom.left());}
+\DoxyCodeLine{01078   \textcolor{keywordflow}{if} (newGeom.bottom() > screenGeom.bottom())}
+\DoxyCodeLine{01079     newGeom.moveBottom(screenGeom.bottom());}
+\DoxyCodeLine{01080   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (newGeom.top() < screenGeom.top())}
+\DoxyCodeLine{01081     newGeom.moveTop(screenGeom.top());}
+\DoxyCodeLine{01082   setGeometry(newGeom);}
+\DoxyCodeLine{01083 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_flipbook_base_panel_aca82ac31cd31708513f6be9e485327fe}\label{class_flipbook_base_panel_aca82ac31cd31708513f6be9e485327fe}} 
+\index{FlipbookBasePanel@{FlipbookBasePanel}!m\_flipbook@{m\_flipbook}}
+\index{m\_flipbook@{m\_flipbook}!FlipbookBasePanel@{FlipbookBasePanel}}
+\doxysubsubsection{\texorpdfstring{m\_flipbook}{m\_flipbook}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_flip_book}{Flip\+Book}}$\ast$ Flipbook\+Base\+Panel\+::m\+\_\+flipbook\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/tpanels.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/tpanels.\+cpp\end{DoxyCompactItemize}

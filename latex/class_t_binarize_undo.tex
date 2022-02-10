@@ -1,0 +1,169 @@
+\hypertarget{class_t_binarize_undo}{}\doxysection{TBinarize\+Undo Class Reference}
+\label{class_t_binarize_undo}\index{TBinarizeUndo@{TBinarizeUndo}}
+Inheritance diagram for TBinarize\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_t_binarize_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_binarize_undo_aff7c9121c4a0941ecd208479ac833d1e}{TBinarize\+Undo}} (\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$sl, const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&fid, bool alpha\+Enabled)
+\item 
+\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$ \mbox{\hyperlink{class_t_binarize_undo_afe58cd48bb4e934e5a22ad8eefa847e1}{get\+Level}} () const
+\item 
+void \mbox{\hyperlink{class_t_binarize_undo_abb167771df451acae584b64875d930e4}{notify}} (\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$sl) const
+\item 
+void \mbox{\hyperlink{class_t_binarize_undo_a0a303d54c5368c1c09908f9055490873}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_t_binarize_undo_a21f33b002a1196491041f8f7c884d0c2}{redo}} () const override
+\item 
+int \mbox{\hyperlink{class_t_binarize_undo_ad599d4e54d3fca9fb6e735d01c4d922f}{get\+Size}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_binarize_undo_aff7c9121c4a0941ecd208479ac833d1e}\label{class_t_binarize_undo_aff7c9121c4a0941ecd208479ac833d1e}} 
+\index{TBinarizeUndo@{TBinarizeUndo}!TBinarizeUndo@{TBinarizeUndo}}
+\index{TBinarizeUndo@{TBinarizeUndo}!TBinarizeUndo@{TBinarizeUndo}}
+\doxysubsubsection{\texorpdfstring{TBinarizeUndo()}{TBinarizeUndo()}}
+{\footnotesize\ttfamily TBinarize\+Undo\+::\+TBinarize\+Undo (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{sl,  }\item[{const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&}]{fid,  }\item[{bool}]{alpha\+Enabled }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067       : m\_levelName(sl-\/>\mbox{\hyperlink{class_t_xsh_level_a3a59fb1bd3261baee4e889a9edbf0ae8}{getName}}()), m\_fid(fid), m\_alphaEnabled(alphaEnabled) \{}
+\DoxyCodeLine{00068     \textcolor{comment}{/* FIXME: clang}}
+\DoxyCodeLine{00069 \textcolor{comment}{     * でコンパイルできなかったのでキャストにしたがこのダウンキャスト本当に大丈夫か?}}
+\DoxyCodeLine{00070 \textcolor{comment}{     */}}
+\DoxyCodeLine{00071     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} ri = (\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}})sl-\/>getFrame(m\_fid, \textcolor{keyword}{false})-\/>\mbox{\hyperlink{class_t_image_a3632b96b398057030a4adfe6917d2e28}{cloneImage}}();}
+\DoxyCodeLine{00072     m\_rasId = QString(\textcolor{stringliteral}{"{}BinarizeUndo"{}}) + QString::number((uintptr\_t)\textcolor{keyword}{this});}
+\DoxyCodeLine{00073     TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a124eae4cf370288f42c22b3477cb5163}{add}}(m\_rasId, ri);}
+\DoxyCodeLine{00074     m\_rasSize = ri-\/>getRaster()-\/>getLx() * ri-\/>getRaster()-\/>getLy() * 4;}
+\DoxyCodeLine{00075   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_binarize_undo_a479c64bde57059203a7b1f0766df171f}\label{class_t_binarize_undo_a479c64bde57059203a7b1f0766df171f}} 
+\index{TBinarizeUndo@{TBinarizeUndo}!````~TBinarizeUndo@{$\sim$TBinarizeUndo}}
+\index{````~TBinarizeUndo@{$\sim$TBinarizeUndo}!TBinarizeUndo@{TBinarizeUndo}}
+\doxysubsubsection{\texorpdfstring{$\sim$TBinarizeUndo()}{~TBinarizeUndo()}}
+{\footnotesize\ttfamily TBinarize\+Undo\+::$\sim$\+TBinarize\+Undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00077 \{ TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a57d63227dfe2532b0aed22c47113be66}{remove}}(m\_rasId); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_binarize_undo_afe58cd48bb4e934e5a22ad8eefa847e1}\label{class_t_binarize_undo_afe58cd48bb4e934e5a22ad8eefa847e1}} 
+\index{TBinarizeUndo@{TBinarizeUndo}!getLevel@{getLevel}}
+\index{getLevel@{getLevel}!TBinarizeUndo@{TBinarizeUndo}}
+\doxysubsubsection{\texorpdfstring{getLevel()}{getLevel()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$ TBinarize\+Undo\+::get\+Level (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00079                                     \{}
+\DoxyCodeLine{00080     \mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *xshLevel = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00081                               -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00082                               -\/>getScene()}
+\DoxyCodeLine{00083                               -\/>\mbox{\hyperlink{class_toonz_scene_ac1a8bf0d2cec4f59c87b0001991264b5}{getLevelSet}}()}
+\DoxyCodeLine{00084                               -\/>getLevel(m\_levelName);}
+\DoxyCodeLine{00085     \textcolor{keywordflow}{return} xshLevel ? xshLevel-\/>\mbox{\hyperlink{class_t_xsh_level_a023065559cff76164ecb6344c586ba27}{getSimpleLevel}}() : 0;}
+\DoxyCodeLine{00086   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_binarize_undo_ad599d4e54d3fca9fb6e735d01c4d922f}\label{class_t_binarize_undo_ad599d4e54d3fca9fb6e735d01c4d922f}} 
+\index{TBinarizeUndo@{TBinarizeUndo}!getSize@{getSize}}
+\index{getSize@{getSize}!TBinarizeUndo@{TBinarizeUndo}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int TBinarize\+Undo\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00120 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(*this) + m\_rasSize; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_binarize_undo_abb167771df451acae584b64875d930e4}\label{class_t_binarize_undo_abb167771df451acae584b64875d930e4}} 
+\index{TBinarizeUndo@{TBinarizeUndo}!notify@{notify}}
+\index{notify@{notify}!TBinarizeUndo@{TBinarizeUndo}}
+\doxysubsubsection{\texorpdfstring{notify()}{notify()}}
+{\footnotesize\ttfamily void TBinarize\+Undo\+::notify (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{sl }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087                                          \{}
+\DoxyCodeLine{00088     sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a3c20a8d11037048322d2035b0f286209}{touchFrame}}(m\_fid);}
+\DoxyCodeLine{00089     IconGenerator::instance()-\/>invalidate(sl, m\_fid);}
+\DoxyCodeLine{00090     \textcolor{keywordflow}{if} (m\_isLastInBlock) \{}
+\DoxyCodeLine{00091       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>notifyLevelChange();}
+\DoxyCodeLine{00092       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00093     \}}
+\DoxyCodeLine{00094   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_binarize_undo_a21f33b002a1196491041f8f7c884d0c2}\label{class_t_binarize_undo_a21f33b002a1196491041f8f7c884d0c2}} 
+\index{TBinarizeUndo@{TBinarizeUndo}!redo@{redo}}
+\index{redo@{redo}!TBinarizeUndo@{TBinarizeUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void TBinarize\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107                              \{}
+\DoxyCodeLine{00108     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl = getLevel();}
+\DoxyCodeLine{00109     \textcolor{keywordflow}{if} (!sl) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00110     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} ri = sl-\/>getFrame(m\_fid, \textcolor{keyword}{true});}
+\DoxyCodeLine{00111     \textcolor{keywordflow}{if} (!ri) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00112     \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras = ri-\/>getRaster();}
+\DoxyCodeLine{00113     \textcolor{keywordflow}{if} (!ras) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00114     \mbox{\hyperlink{class_t_binarizer}{TBinarizer}} binarizer;}
+\DoxyCodeLine{00115     binarizer.enableAlpha(m\_alphaEnabled);}
+\DoxyCodeLine{00116     binarizer.process(ras);}
+\DoxyCodeLine{00117     notify(sl);}
+\DoxyCodeLine{00118   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_binarize_undo_a0a303d54c5368c1c09908f9055490873}\label{class_t_binarize_undo_a0a303d54c5368c1c09908f9055490873}} 
+\index{TBinarizeUndo@{TBinarizeUndo}!undo@{undo}}
+\index{undo@{undo}!TBinarizeUndo@{TBinarizeUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void TBinarize\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00096                              \{}
+\DoxyCodeLine{00097     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl = getLevel();}
+\DoxyCodeLine{00098     \textcolor{keywordflow}{if} (!sl) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00099     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} ri = sl-\/>getFrame(m\_fid, \textcolor{keyword}{true});}
+\DoxyCodeLine{00100     \textcolor{keywordflow}{if} (!ri) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} oldRaster = TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_aea3ac2752efd6fa9689f5a7c1e895e41}{get}}(m\_rasId, \textcolor{keyword}{false});}
+\DoxyCodeLine{00103     ri-\/>getRaster()-\/>copy(oldRaster-\/>getRaster());}
+\DoxyCodeLine{00104     notify(sl);}
+\DoxyCodeLine{00105   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/binarizepopup.\+cpp\end{DoxyCompactItemize}

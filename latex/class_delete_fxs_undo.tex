@@ -1,0 +1,188 @@
+\hypertarget{class_delete_fxs_undo}{}\doxysection{Delete\+Fxs\+Undo Class Reference}
+\label{class_delete_fxs_undo}\index{DeleteFxsUndo@{DeleteFxsUndo}}
+Inheritance diagram for Delete\+Fxs\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_delete_fxs_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_delete_fxs_undo_aa90ca4c4157039e68b8700c6d9916984}{Delete\+Fxs\+Undo}} (const QList$<$ \mbox{\hyperlink{class_t_fx}{TFx}} $\ast$ $>$ \&fxs)
+\item 
+void \mbox{\hyperlink{class_delete_fxs_undo_a5cc96538dea0ec29d3d68336360309c0}{on\+Add}} ()
+\item 
+void \mbox{\hyperlink{class_delete_fxs_undo_acaeb1f61ab5bf4c7e92c171618bb3899}{undo}} () const
+\item 
+void \mbox{\hyperlink{class_delete_fxs_undo_a3b1f5a427785b56df7fab4cc8c8a22f8}{redo}} () const
+\item 
+int \mbox{\hyperlink{class_delete_fxs_undo_a482f30c4530a01deb385137ba87334c4}{get\+Size}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_delete_fxs_undo_aa90ca4c4157039e68b8700c6d9916984}\label{class_delete_fxs_undo_aa90ca4c4157039e68b8700c6d9916984}} 
+\index{DeleteFxsUndo@{DeleteFxsUndo}!DeleteFxsUndo@{DeleteFxsUndo}}
+\index{DeleteFxsUndo@{DeleteFxsUndo}!DeleteFxsUndo@{DeleteFxsUndo}}
+\doxysubsubsection{\texorpdfstring{DeleteFxsUndo()}{DeleteFxsUndo()}}
+{\footnotesize\ttfamily Delete\+Fxs\+Undo\+::\+Delete\+Fxs\+Undo (\begin{DoxyParamCaption}\item[{const QList$<$ \mbox{\hyperlink{class_t_fx}{TFx}} $\ast$ $>$ \&}]{fxs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00034                                          \{}
+\DoxyCodeLine{00035     \mbox{\hyperlink{class_t_app}{TApp}} *app    = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00036     \mbox{\hyperlink{class_fx_dag}{FxDag}} *fxDag = app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet()-\/>\mbox{\hyperlink{class_t_xsheet_adc7c74cce346abf3699bb250eb17a9c2}{getFxDag}}();}
+\DoxyCodeLine{00037     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)fxs.size(); i++) \{}
+\DoxyCodeLine{00038       \mbox{\hyperlink{class_t_fx}{TFx}} *fx              = fxs[i];}
+\DoxyCodeLine{00039       \mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *zfx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *\textcolor{keyword}{>}(fx);}
+\DoxyCodeLine{00040       \textcolor{keywordflow}{if} (zfx) fx          = zfx-\/>getZeraryFx();}
+\DoxyCodeLine{00041       \mbox{\hyperlink{class_node}{Node}} node;}
+\DoxyCodeLine{00042       node.m\_fx              = fx;}
+\DoxyCodeLine{00043       node.m\_xsheetConnected = fxDag-\/>getTerminalFxs()-\/>containsFx(fx);}
+\DoxyCodeLine{00044       \textcolor{keywordtype}{int} j;}
+\DoxyCodeLine{00045       \textcolor{keywordflow}{for} (j = 0; j < fx-\/>getInputPortCount(); j++) \{}
+\DoxyCodeLine{00046         \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} inputFx(fx-\/>getInputPort(j)-\/>getFx());}
+\DoxyCodeLine{00047         \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00048         \textcolor{keywordflow}{if} (inputFx \&\&}
+\DoxyCodeLine{00049             !fxDag-\/>getTerminalFxs()-\/>containsFx(inputFx.getPointer())) \{}
+\DoxyCodeLine{00050           \textcolor{keywordflow}{for} (i = 0; i < (int)m\_inputConnectedToXsheet.size(); i++)}
+\DoxyCodeLine{00051             \textcolor{keywordflow}{if} (m\_inputConnectedToXsheet[i].getPointer() ==}
+\DoxyCodeLine{00052                 inputFx.getPointer())}
+\DoxyCodeLine{00053               \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00054           \textcolor{keywordflow}{if} (i == (\textcolor{keywordtype}{int})m\_inputConnectedToXsheet.size())}
+\DoxyCodeLine{00055             m\_inputConnectedToXsheet.push\_back(inputFx);}
+\DoxyCodeLine{00056         \}}
+\DoxyCodeLine{00057         node.m\_inputLinks.push\_back(inputFx);}
+\DoxyCodeLine{00058       \}}
+\DoxyCodeLine{00059       \textcolor{keywordflow}{for} (j = 0; j < fx-\/>getOutputConnectionCount(); j++) \{}
+\DoxyCodeLine{00060         \mbox{\hyperlink{class_t_fx_port}{TFxPort}} *port = fx-\/>getOutputConnection(j);}
+\DoxyCodeLine{00061         \mbox{\hyperlink{class_t_fx}{TFx}} *outFx    = port-\/>getOwnerFx();}
+\DoxyCodeLine{00062         \textcolor{keywordflow}{if} (outFx) \{}
+\DoxyCodeLine{00063           \textcolor{keywordtype}{int} k;}
+\DoxyCodeLine{00064           \textcolor{keywordflow}{for} (k = 0; k < outFx-\/>getInputPortCount(); k++)}
+\DoxyCodeLine{00065             \textcolor{keywordflow}{if} (outFx-\/>getInputPort(k)-\/>getFx() == fx) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00066           \textcolor{keywordflow}{if} (k < outFx-\/>getInputPortCount())}
+\DoxyCodeLine{00067             node.m\_outputLinks.push\_back(std::make\_pair(k, \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}}(outFx)));}
+\DoxyCodeLine{00068         \}}
+\DoxyCodeLine{00069       \}}
+\DoxyCodeLine{00070       m\_fxs.push\_back(node);}
+\DoxyCodeLine{00071     \}}
+\DoxyCodeLine{00072   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_delete_fxs_undo_a482f30c4530a01deb385137ba87334c4}\label{class_delete_fxs_undo_a482f30c4530a01deb385137ba87334c4}} 
+\index{DeleteFxsUndo@{DeleteFxsUndo}!getSize@{getSize}}
+\index{getSize@{getSize}!DeleteFxsUndo@{DeleteFxsUndo}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Delete\+Fxs\+Undo\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00119                       \{}
+\DoxyCodeLine{00120     \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(*this) + m\_fxs.size() * (\textcolor{keyword}{sizeof}(\mbox{\hyperlink{class_t_fx}{TFx}}) + 100);}
+\DoxyCodeLine{00121   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_delete_fxs_undo_a5cc96538dea0ec29d3d68336360309c0}\label{class_delete_fxs_undo_a5cc96538dea0ec29d3d68336360309c0}} 
+\index{DeleteFxsUndo@{DeleteFxsUndo}!onAdd@{onAdd}}
+\index{onAdd@{onAdd}!DeleteFxsUndo@{DeleteFxsUndo}}
+\doxysubsubsection{\texorpdfstring{onAdd()}{onAdd()}}
+{\footnotesize\ttfamily void Delete\+Fxs\+Undo\+::on\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00074                \{}
+\DoxyCodeLine{00075     \mbox{\hyperlink{class_fx_dag}{FxDag}} *fxDag =}
+\DoxyCodeLine{00076         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet()-\/>\mbox{\hyperlink{class_t_xsheet_adc7c74cce346abf3699bb250eb17a9c2}{getFxDag}}();}
+\DoxyCodeLine{00077     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00078     \textcolor{keywordflow}{for} (i = 0; i < (int)m\_inputConnectedToXsheet.size();) \{}
+\DoxyCodeLine{00079       \mbox{\hyperlink{class_t_fx}{TFx}} *inputFx = m\_inputConnectedToXsheet[i].getPointer();}
+\DoxyCodeLine{00080       \textcolor{keywordflow}{if} (!fxDag-\/>getTerminalFxs()-\/>containsFx(inputFx))}
+\DoxyCodeLine{00081         i++;}
+\DoxyCodeLine{00082       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00083         m\_inputConnectedToXsheet.erase(m\_inputConnectedToXsheet.begin() + i);}
+\DoxyCodeLine{00084     \}}
+\DoxyCodeLine{00085   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_delete_fxs_undo_a3b1f5a427785b56df7fab4cc8c8a22f8}\label{class_delete_fxs_undo_a3b1f5a427785b56df7fab4cc8c8a22f8}} 
+\index{DeleteFxsUndo@{DeleteFxsUndo}!redo@{redo}}
+\index{redo@{redo}!DeleteFxsUndo@{DeleteFxsUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Delete\+Fxs\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00112                     \{}
+\DoxyCodeLine{00113     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00114     \textcolor{keywordflow}{for} (i = 0; i < (int)m\_fxs.size(); i++) \{}
+\DoxyCodeLine{00115       TFxCommand::removeFx(m\_fxs[i].m\_fx.getPointer());}
+\DoxyCodeLine{00116     \}}
+\DoxyCodeLine{00117     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00118   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_delete_fxs_undo_acaeb1f61ab5bf4c7e92c171618bb3899}\label{class_delete_fxs_undo_acaeb1f61ab5bf4c7e92c171618bb3899}} 
+\index{DeleteFxsUndo@{DeleteFxsUndo}!undo@{undo}}
+\index{undo@{undo}!DeleteFxsUndo@{DeleteFxsUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Delete\+Fxs\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087                     \{}
+\DoxyCodeLine{00088     \mbox{\hyperlink{class_fx_dag}{FxDag}} *fxDag =}
+\DoxyCodeLine{00089         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet()-\/>\mbox{\hyperlink{class_t_xsheet_adc7c74cce346abf3699bb250eb17a9c2}{getFxDag}}();}
+\DoxyCodeLine{00090     \textcolor{keywordtype}{int} i, j;}
+\DoxyCodeLine{00091     \textcolor{keywordflow}{for} (i = 0; i < (int)m\_fxs.size(); i++) \{}
+\DoxyCodeLine{00092       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a1d1d4b484617e7a938040554beca6282}{getCurrentFx}}()-\/>setFx(m\_fxs[i].m\_fx.getPointer());}
+\DoxyCodeLine{00093       TFxCommand::addFx(m\_fxs[i].m\_fx.getPointer());}
+\DoxyCodeLine{00094     \}}
+\DoxyCodeLine{00095     \textcolor{keywordflow}{for} (i = 0; i < (int)m\_fxs.size(); i++) \{}
+\DoxyCodeLine{00096       \textcolor{keyword}{const} \mbox{\hyperlink{class_node}{Node}} \&node = m\_fxs[i];}
+\DoxyCodeLine{00097       \mbox{\hyperlink{class_t_fx}{TFx}} *fx          = node.m\_fx.getPointer();}
+\DoxyCodeLine{00098       \textcolor{keywordflow}{if} (node.m\_xsheetConnected) fxDag-\/>addToXsheet(fx);}
+\DoxyCodeLine{00099       \textcolor{keywordflow}{for} (j = 0; j < (int)node.m\_inputLinks.size(); j++)}
+\DoxyCodeLine{00100         fx-\/>getInputPort(j)-\/>setFx(node.m\_inputLinks[j].getPointer());}
+\DoxyCodeLine{00101       \textcolor{keywordflow}{for} (j = 0; j < (int)node.m\_outputLinks.size(); j++) \{}
+\DoxyCodeLine{00102         \mbox{\hyperlink{class_t_fx}{TFx}} *outFx = node.m\_outputLinks[j].second.getPointer();}
+\DoxyCodeLine{00103         outFx-\/>getInputPort(node.m\_outputLinks[j].first)-\/>setFx(fx);}
+\DoxyCodeLine{00104       \}}
+\DoxyCodeLine{00105     \}}
+\DoxyCodeLine{00106     \textcolor{keywordflow}{for} (i = 0; i < (int)m\_inputConnectedToXsheet.size(); i++) \{}
+\DoxyCodeLine{00107       \mbox{\hyperlink{class_t_fx}{TFx}} *inputFx = m\_inputConnectedToXsheet[i].getPointer();}
+\DoxyCodeLine{00108       fxDag-\/>getTerminalFxs()-\/>removeFx(inputFx);}
+\DoxyCodeLine{00109     \}}
+\DoxyCodeLine{00110     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00111   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/fxschematicnodeselection.\+cpp\end{DoxyCompactItemize}

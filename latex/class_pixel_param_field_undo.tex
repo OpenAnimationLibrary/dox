@@ -1,0 +1,109 @@
+\hypertarget{class_pixel_param_field_undo}{}\doxysection{Pixel\+Param\+Field\+Undo Class Reference}
+\label{class_pixel_param_field_undo}\index{PixelParamFieldUndo@{PixelParamFieldUndo}}
+Inheritance diagram for Pixel\+Param\+Field\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_pixel_param_field_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_pixel_param_field_undo_a02c0acb87c1d42e5e69924ef0c084d5b}{Pixel\+Param\+Field\+Undo}} (const TPixel\+ParamP param, QString name, int frame, \mbox{\hyperlink{class_t_fx_handle}{TFx\+Handle}} $\ast$fx\+Handle)
+\item 
+void \mbox{\hyperlink{class_pixel_param_field_undo_a473306627c1698dbea96f42451a229d6}{on\+Add}} () override
+\item 
+void \mbox{\hyperlink{class_pixel_param_field_undo_aa62994fcc9b67787e5ead8407d9f6858}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_pixel_param_field_undo_aa0cc2b3f55b6f900de39859ea5344a34}{redo}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_pixel_param_field}{Pixel\+Param\+Field}} Undo 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_pixel_param_field_undo_a02c0acb87c1d42e5e69924ef0c084d5b}\label{class_pixel_param_field_undo_a02c0acb87c1d42e5e69924ef0c084d5b}} 
+\index{PixelParamFieldUndo@{PixelParamFieldUndo}!PixelParamFieldUndo@{PixelParamFieldUndo}}
+\index{PixelParamFieldUndo@{PixelParamFieldUndo}!PixelParamFieldUndo@{PixelParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{PixelParamFieldUndo()}{PixelParamFieldUndo()}}
+{\footnotesize\ttfamily Pixel\+Param\+Field\+Undo\+::\+Pixel\+Param\+Field\+Undo (\begin{DoxyParamCaption}\item[{const TPixel\+ParamP}]{param,  }\item[{QString}]{name,  }\item[{int}]{frame,  }\item[{\mbox{\hyperlink{class_t_fx_handle}{TFx\+Handle}} $\ast$}]{fx\+Handle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00149       : \mbox{\hyperlink{class_animatable_fx_settings_undo}{AnimatableFxSettingsUndo}}(name, frame, fxHandle), m\_param(param) \{}
+\DoxyCodeLine{00150     m\_oldValue    = param-\/>getValue(frame);}
+\DoxyCodeLine{00151     m\_newValue    = m\_oldValue;}
+\DoxyCodeLine{00152     m\_wasKeyframe = m\_param-\/>isKeyframe(frame);}
+\DoxyCodeLine{00153   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_pixel_param_field_undo_a473306627c1698dbea96f42451a229d6}\label{class_pixel_param_field_undo_a473306627c1698dbea96f42451a229d6}} 
+\index{PixelParamFieldUndo@{PixelParamFieldUndo}!onAdd@{onAdd}}
+\index{onAdd@{onAdd}!PixelParamFieldUndo@{PixelParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{onAdd()}{onAdd()}}
+{\footnotesize\ttfamily void Pixel\+Param\+Field\+Undo\+::on\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00155 \{ m\_newValue = m\_param-\/>getValue(m\_frame); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_pixel_param_field_undo_aa0cc2b3f55b6f900de39859ea5344a34}\label{class_pixel_param_field_undo_aa0cc2b3f55b6f900de39859ea5344a34}} 
+\index{PixelParamFieldUndo@{PixelParamFieldUndo}!redo@{redo}}
+\index{redo@{redo}!PixelParamFieldUndo@{PixelParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Pixel\+Param\+Field\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00168                              \{}
+\DoxyCodeLine{00169     \textcolor{keywordflow}{if} (!m\_wasKeyframe)}
+\DoxyCodeLine{00170       m\_param-\/>setDefaultValue(m\_newValue);}
+\DoxyCodeLine{00171     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00172       m\_param-\/>setValue(m\_frame, m\_newValue);}
+\DoxyCodeLine{00173     \textcolor{keywordflow}{if} (m\_fxHandle) m\_fxHandle-\/>notifyFxChanged();}
+\DoxyCodeLine{00174   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_pixel_param_field_undo_aa62994fcc9b67787e5ead8407d9f6858}\label{class_pixel_param_field_undo_aa62994fcc9b67787e5ead8407d9f6858}} 
+\index{PixelParamFieldUndo@{PixelParamFieldUndo}!undo@{undo}}
+\index{undo@{undo}!PixelParamFieldUndo@{PixelParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Pixel\+Param\+Field\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00157                              \{}
+\DoxyCodeLine{00158     \textcolor{keywordflow}{if} (!m\_wasKeyframe)}
+\DoxyCodeLine{00159       m\_param-\/>setDefaultValue(m\_oldValue);}
+\DoxyCodeLine{00160     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00161       m\_param-\/>setValue(m\_frame, m\_oldValue);}
+\DoxyCodeLine{00162 }
+\DoxyCodeLine{00163     \textcolor{keywordflow}{if} (m\_fxHandle) \{}
+\DoxyCodeLine{00164       m\_fxHandle-\/>notifyFxChanged();}
+\DoxyCodeLine{00165     \}}
+\DoxyCodeLine{00166   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/paramfield.\+cpp\end{DoxyCompactItemize}

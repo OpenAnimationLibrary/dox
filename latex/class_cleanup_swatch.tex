@@ -1,0 +1,176 @@
+\hypertarget{class_cleanup_swatch}{}\doxysection{Cleanup\+Swatch Class Reference}
+\label{class_cleanup_swatch}\index{CleanupSwatch@{CleanupSwatch}}
+Inheritance diagram for Cleanup\+Swatch\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_cleanup_swatch}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_cleanup_swatch_a8ff185e72df8e3b464d53869f5db83f1}\label{class_cleanup_swatch_a8ff185e72df8e3b464d53869f5db83f1}} 
+void {\bfseries enabled} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_cleanup_swatch_a68fd5ae3e67fa20f060f267ba56dabcf}{Cleanup\+Swatch}} (QWidget $\ast$parent, int lx, int ly)
+\item 
+void \mbox{\hyperlink{class_cleanup_swatch_aea0b62223cd4e375420bd721d35710d9}{set\+Raster}} (\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras\+Left, const \mbox{\hyperlink{class_t_affine}{TAffine}} \&aff, \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras)
+\item 
+void \mbox{\hyperlink{class_cleanup_swatch_aec803cc04e5705cfaf7a7056482e38d1}{update\+Cleanupped}} ()
+\item 
+bool \mbox{\hyperlink{class_cleanup_swatch_adab78f6873c4f83107dff2a8f09f68ee}{is\+Enabled}} ()
+\item 
+void \mbox{\hyperlink{class_cleanup_swatch_a523ecde6f0fbc964f4f056f8955d5421}{enable}} (bool state)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_cleanup_swatch_af7e139e2e4edd09f8bb226cd6bf8b44e}{resize\+Event}} (QResize\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_cleanup_swatch_a68fd5ae3e67fa20f060f267ba56dabcf}\label{class_cleanup_swatch_a68fd5ae3e67fa20f060f267ba56dabcf}} 
+\index{CleanupSwatch@{CleanupSwatch}!CleanupSwatch@{CleanupSwatch}}
+\index{CleanupSwatch@{CleanupSwatch}!CleanupSwatch@{CleanupSwatch}}
+\doxysubsubsection{\texorpdfstring{CleanupSwatch()}{CleanupSwatch()}}
+{\footnotesize\ttfamily Cleanup\+Swatch\+::\+Cleanup\+Swatch (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{int}]{lx,  }\item[{int}]{ly }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00017     : QWidget(parent)}
+\DoxyCodeLine{00018     , m\_lx(lx)}
+\DoxyCodeLine{00019     , m\_ly(ly)}
+\DoxyCodeLine{00020     , m\_enabled(\textcolor{keyword}{false})}
+\DoxyCodeLine{00021     , m\_viewAff()}
+\DoxyCodeLine{00022 \textcolor{comment}{//, m\_lastRasCleanupped()}}
+\DoxyCodeLine{00023 \{}
+\DoxyCodeLine{00024   setStyleSheet(\textcolor{stringliteral}{"{}background: transparent"{}});}
+\DoxyCodeLine{00025   QHBoxLayout *layout = \textcolor{keyword}{new} QHBoxLayout(\textcolor{keyword}{this});}
+\DoxyCodeLine{00026   layout-\/>setMargin(0);}
+\DoxyCodeLine{00027   layout-\/>setSpacing(0);}
+\DoxyCodeLine{00028 }
+\DoxyCodeLine{00029   m\_leftSwatch = \textcolor{keyword}{new} CleanupSwatchArea(\textcolor{keyword}{this}, \textcolor{keyword}{true});}
+\DoxyCodeLine{00030 }
+\DoxyCodeLine{00031   layout-\/>addWidget(m\_leftSwatch);}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033   \mbox{\hyperlink{class_d_v_gui_1_1_separator}{DVGui::Separator}} *sep = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_separator}{DVGui::Separator}}();}
+\DoxyCodeLine{00034   sep-\/>setFixedWidth(1);}
+\DoxyCodeLine{00035   sep-\/>\mbox{\hyperlink{class_d_v_gui_1_1_separator_ae131da9f858f891a6fd9d67b82614251}{setOrientation}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{00036   layout-\/>addWidget(sep);}
+\DoxyCodeLine{00037 }
+\DoxyCodeLine{00038   m\_rightSwatch = \textcolor{keyword}{new} CleanupSwatchArea(\textcolor{keyword}{this}, \textcolor{keyword}{false});}
+\DoxyCodeLine{00039   layout-\/>addWidget(m\_rightSwatch);}
+\DoxyCodeLine{00040 }
+\DoxyCodeLine{00041   setLayout(layout);}
+\DoxyCodeLine{00042 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_cleanup_swatch_a523ecde6f0fbc964f4f056f8955d5421}\label{class_cleanup_swatch_a523ecde6f0fbc964f4f056f8955d5421}} 
+\index{CleanupSwatch@{CleanupSwatch}!enable@{enable}}
+\index{enable@{enable}!CleanupSwatch@{CleanupSwatch}}
+\doxysubsubsection{\texorpdfstring{enable()}{enable()}}
+{\footnotesize\ttfamily void Cleanup\+Swatch\+::enable (\begin{DoxyParamCaption}\item[{bool}]{state }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046                                      \{}
+\DoxyCodeLine{00047   m\_enabled = state;}
+\DoxyCodeLine{00048   \textcolor{keywordflow}{if} (!m\_enabled) \{}
+\DoxyCodeLine{00049     m\_resampledRaster = \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}();}
+\DoxyCodeLine{00050     \textcolor{comment}{// m\_lastRasCleanupped = TRasterP();}}
+\DoxyCodeLine{00051     m\_origRaster  = \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}();}
+\DoxyCodeLine{00052     m\_viewAff     = \mbox{\hyperlink{class_t_affine}{TAffine}}();}
+\DoxyCodeLine{00053     m\_resampleAff = \mbox{\hyperlink{class_t_affine}{TAffine}}();}
+\DoxyCodeLine{00054     m\_leftSwatch-\/>updateRaster();}
+\DoxyCodeLine{00055     m\_rightSwatch-\/>updateRaster();}
+\DoxyCodeLine{00056   \}}
+\DoxyCodeLine{00057 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_swatch_adab78f6873c4f83107dff2a8f09f68ee}\label{class_cleanup_swatch_adab78f6873c4f83107dff2a8f09f68ee}} 
+\index{CleanupSwatch@{CleanupSwatch}!isEnabled@{isEnabled}}
+\index{isEnabled@{isEnabled}!CleanupSwatch@{CleanupSwatch}}
+\doxysubsubsection{\texorpdfstring{isEnabled()}{isEnabled()}}
+{\footnotesize\ttfamily bool Cleanup\+Swatch\+::is\+Enabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00324 \{ \textcolor{keywordflow}{return} isVisible() \&\& m\_enabled; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_swatch_af7e139e2e4edd09f8bb226cd6bf8b44e}\label{class_cleanup_swatch_af7e139e2e4edd09f8bb226cd6bf8b44e}} 
+\index{CleanupSwatch@{CleanupSwatch}!resizeEvent@{resizeEvent}}
+\index{resizeEvent@{resizeEvent}!CleanupSwatch@{CleanupSwatch}}
+\doxysubsubsection{\texorpdfstring{resizeEvent()}{resizeEvent()}}
+{\footnotesize\ttfamily void Cleanup\+Swatch\+::resize\+Event (\begin{DoxyParamCaption}\item[{QResize\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00213                                                    \{}
+\DoxyCodeLine{00214   QSize s = m\_leftSwatch-\/>size();}
+\DoxyCodeLine{00215   m\_lx    = s.width();}
+\DoxyCodeLine{00216   m\_ly    = s.height();}
+\DoxyCodeLine{00217 }
+\DoxyCodeLine{00218   \textcolor{comment}{// m\_rightSwatch-\/>resize(m\_lx, m\_ly);}}
+\DoxyCodeLine{00219   m\_leftSwatch-\/>setMinimumHeight(0);}
+\DoxyCodeLine{00220   m\_rightSwatch-\/>setMinimumHeight(0);}
+\DoxyCodeLine{00221   m\_leftSwatch-\/>updateRaster();}
+\DoxyCodeLine{00222   m\_rightSwatch-\/>updateRaster();}
+\DoxyCodeLine{00223   \textcolor{comment}{// m\_rightSwatch-\/>updateRaster();}}
+\DoxyCodeLine{00224   QWidget::resizeEvent(event);}
+\DoxyCodeLine{00225   \textcolor{comment}{// update();}}
+\DoxyCodeLine{00226 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_swatch_aea0b62223cd4e375420bd721d35710d9}\label{class_cleanup_swatch_aea0b62223cd4e375420bd721d35710d9}} 
+\index{CleanupSwatch@{CleanupSwatch}!setRaster@{setRaster}}
+\index{setRaster@{setRaster}!CleanupSwatch@{CleanupSwatch}}
+\doxysubsubsection{\texorpdfstring{setRaster()}{setRaster()}}
+{\footnotesize\ttfamily void Cleanup\+Swatch\+::set\+Raster (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}}]{ras\+Left,  }\item[{const \mbox{\hyperlink{class_t_affine}{TAffine}} \&}]{aff,  }\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}}]{ras }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00328                                             \{}
+\DoxyCodeLine{00329   \textcolor{keywordflow}{if} (!isVisible()) \{}
+\DoxyCodeLine{00330     m\_resampledRaster = \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}();}
+\DoxyCodeLine{00331     m\_origRaster      = \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}();}
+\DoxyCodeLine{00332     \textcolor{comment}{// m\_lastRasCleanupped = TRasterP();}}
+\DoxyCodeLine{00333     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00334   \}}
+\DoxyCodeLine{00335 }
+\DoxyCodeLine{00336   m\_resampledRaster = ras;}
+\DoxyCodeLine{00337   m\_origRaster      = rasLeft;}
+\DoxyCodeLine{00338   m\_resampleAff     = aff;}
+\DoxyCodeLine{00339 }
+\DoxyCodeLine{00340   m\_leftSwatch-\/>updateRaster();}
+\DoxyCodeLine{00341   m\_rightSwatch-\/>updateRaster();}
+\DoxyCodeLine{00342 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_swatch_aec803cc04e5705cfaf7a7056482e38d1}\label{class_cleanup_swatch_aec803cc04e5705cfaf7a7056482e38d1}} 
+\index{CleanupSwatch@{CleanupSwatch}!updateCleanupped@{updateCleanupped}}
+\index{updateCleanupped@{updateCleanupped}!CleanupSwatch@{CleanupSwatch}}
+\doxysubsubsection{\texorpdfstring{updateCleanupped()}{updateCleanupped()}}
+{\footnotesize\ttfamily void Cleanup\+Swatch\+::update\+Cleanupped (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00346 \{ m\_rightSwatch-\/>updateRaster(); \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanupswatch.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanupswatch.\+cpp\end{DoxyCompactItemize}

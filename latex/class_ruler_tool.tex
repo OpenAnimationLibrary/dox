@@ -1,0 +1,462 @@
+\hypertarget{class_ruler_tool}{}\doxysection{Ruler\+Tool Class Reference}
+\label{class_ruler_tool}\index{RulerTool@{RulerTool}}
+Inheritance diagram for Ruler\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_ruler_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_ruler_tool_a17b0426c21cc030b2eaf2712addc9f1e}{set\+Tool\+Options\+Box}} (\mbox{\hyperlink{class_ruler_tool_options_box}{Ruler\+Tool\+Options\+Box}} $\ast$tool\+Options\+Box)
+\item 
+\mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296c}{Tool\+Type}} \mbox{\hyperlink{class_ruler_tool_a8802a4854de0501718bfdacb3e038320}{get\+Tool\+Type}} () const override
+\item 
+void \mbox{\hyperlink{class_ruler_tool_ad84e2b9274f466606cd0c3fc39f5ef48}{on\+Image\+Changed}} () override
+\begin{DoxyCompactList}\small\item\em Notifies changes in the image in use. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_ruler_tool_acfcc6322fd4ef6ddeae08857b424abc1}{draw}} () override
+\begin{DoxyCompactList}\small\item\em Draws the tool on the viewer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_ruler_tool_aec9d192dd16f2713c4e37b23db35432b}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_ruler_tool_a12093c5cd646c696c0d239a286977a57}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_ruler_tool_a4d27000e1daaf179531ce2e811115839}{left\+Button\+Up}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+void \mbox{\hyperlink{class_ruler_tool_ab7cbdbed8d3366755956d53b838333ea}{mouse\+Move}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_ruler_tool_ab91a0924ef79d5a2229d16ab16efa252}{on\+Activate}} () override
+\begin{DoxyCompactList}\small\item\em Callback invoked whenever the tool activates. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_ruler_tool_ae591687b70428e7f83c512efc5d21d54}{get\+Cursor\+Id}} () const override
+\begin{DoxyCompactList}\small\item\em Returns the type of cursor used by the tool. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_ruler_tool_af1ce469e920bea6da73d46e67edfe780}{update\+Tool\+Option}} ()
+\item 
+bool \mbox{\hyperlink{class_ruler_tool_a08a85f97615b823db54ba988caacb8de}{is\+Near\+Ruler}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_ruler_tool_abbae2b7e21d834452b5f0308475607bd}\label{class_ruler_tool_abbae2b7e21d834452b5f0308475607bd}} 
+\index{RulerTool@{RulerTool}!RulerTool@{RulerTool}}
+\index{RulerTool@{RulerTool}!RulerTool@{RulerTool}}
+\doxysubsubsection{\texorpdfstring{RulerTool()}{RulerTool()}}
+{\footnotesize\ttfamily Ruler\+Tool\+::\+Ruler\+Tool (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00024     : \mbox{\hyperlink{class_t_tool_a9c63ec35f606e755d0d036bf4fed62ab}{TTool}}(\textcolor{stringliteral}{"{}T\_Ruler"{}})}
+\DoxyCodeLine{00025     , m\_firstPos(TConst::nowhere)}
+\DoxyCodeLine{00026     , m\_secondPos(TConst::nowhere)}
+\DoxyCodeLine{00027     , m\_mousePos(TConst::nowhere)}
+\DoxyCodeLine{00028     , m\_dragMode(MakeNewRuler)}
+\DoxyCodeLine{00029     , m\_justClicked(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00030   bind(TTool::AllTargets);}
+\DoxyCodeLine{00031 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_ruler_tool_acfcc6322fd4ef6ddeae08857b424abc1}\label{class_ruler_tool_acfcc6322fd4ef6ddeae08857b424abc1}} 
+\index{RulerTool@{RulerTool}!draw@{draw}}
+\index{draw@{draw}!RulerTool@{RulerTool}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Ruler\+Tool\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Draws the tool on the viewer. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_a058bf656d73bf3cd63b9826cbaaf48e0}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053                      \{}
+\DoxyCodeLine{00054   \textcolor{comment}{/*-\/-\/-\/ 始点が設定されていたら、描画 -\/-\/-\/*/}}
+\DoxyCodeLine{00055   \textcolor{keywordflow}{if} (m\_firstPos != TConst::nowhere) \{}
+\DoxyCodeLine{00056     tglColor((m\_dragMode == MoveFirstPos) ? TPixel32(51, 204, 26)}
+\DoxyCodeLine{00057                                           : TPixel32::Red);}
+\DoxyCodeLine{00058     tglDrawCircle(m\_firstPos, 4);}
+\DoxyCodeLine{00059     tglDrawCircle(m\_firstPos, 2);}
+\DoxyCodeLine{00060     \textcolor{comment}{/*-\/-\/-\/ 終点が設定されていたら、その区間を描画 -\/-\/-\/*/}}
+\DoxyCodeLine{00061     \textcolor{keywordflow}{if} (m\_secondPos != TConst::nowhere) \{}
+\DoxyCodeLine{00062       tglColor((m\_dragMode == MoveRuler) ? TPixel32(51, 204, 26)}
+\DoxyCodeLine{00063                                          : TPixel32::Red);}
+\DoxyCodeLine{00064       glBegin(GL\_LINE\_STRIP);}
+\DoxyCodeLine{00065       tglVertex(m\_firstPos);}
+\DoxyCodeLine{00066       tglVertex(m\_secondPos);}
+\DoxyCodeLine{00067       glEnd();}
+\DoxyCodeLine{00068       tglColor((m\_dragMode == MoveSecondPos) ? TPixel32(51, 204, 26)}
+\DoxyCodeLine{00069                                              : TPixel32::Red);}
+\DoxyCodeLine{00070       tglDrawCircle(m\_secondPos, 4);}
+\DoxyCodeLine{00071     \}}
+\DoxyCodeLine{00072   \}}
+\DoxyCodeLine{00073 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_ruler_tool_ae591687b70428e7f83c512efc5d21d54}\label{class_ruler_tool_ae591687b70428e7f83c512efc5d21d54}} 
+\index{RulerTool@{RulerTool}!getCursorId@{getCursorId}}
+\index{getCursorId@{getCursorId}!RulerTool@{RulerTool}}
+\doxysubsubsection{\texorpdfstring{getCursorId()}{getCursorId()}}
+{\footnotesize\ttfamily int Ruler\+Tool\+::get\+Cursor\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns the type of cursor used by the tool. 
+
+\begin{DoxySeeAlso}{See also}
+For a list of cursor ids \mbox{\hyperlink{}{cursor.\+h}} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_a1768a57b8b6d1480618fd923fad15f1d}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00166                                  \{}
+\DoxyCodeLine{00167   \textcolor{keywordflow}{if} (m\_dragMode == MakeNewRuler)}
+\DoxyCodeLine{00168     \textcolor{keywordflow}{return} ToolCursor::RulerNewCursor;}
+\DoxyCodeLine{00169   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00170     \textcolor{keywordflow}{return} ToolCursor::RulerModifyCursor;}
+\DoxyCodeLine{00171 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_ruler_tool_a8802a4854de0501718bfdacb3e038320}\label{class_ruler_tool_a8802a4854de0501718bfdacb3e038320}} 
+\index{RulerTool@{RulerTool}!getToolType@{getToolType}}
+\index{getToolType@{getToolType}!RulerTool@{RulerTool}}
+\doxysubsubsection{\texorpdfstring{getToolType()}{getToolType()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296c}{Tool\+Type}} Ruler\+Tool\+::get\+Tool\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033 \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296caa8f6293eab5817f82f74f031c0724f28}{TTool::GenericTool}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_ruler_tool_a08a85f97615b823db54ba988caacb8de}\label{class_ruler_tool_a08a85f97615b823db54ba988caacb8de}} 
+\index{RulerTool@{RulerTool}!isNearRuler@{isNearRuler}}
+\index{isNearRuler@{isNearRuler}!RulerTool@{RulerTool}}
+\doxysubsubsection{\texorpdfstring{isNearRuler()}{isNearRuler()}}
+{\footnotesize\ttfamily bool Ruler\+Tool\+::is\+Near\+Ruler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+現在のマウス位置が\+Rulerに十分近ければ\+Trueを返す 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00262                             \{}
+\DoxyCodeLine{00263   \textcolor{keywordtype}{double} a, b, c;}
+\DoxyCodeLine{00264 }
+\DoxyCodeLine{00265   \mbox{\hyperlink{class_t_point_t}{TPointD}} vec = m\_secondPos -\/ m\_firstPos;}
+\DoxyCodeLine{00266 }
+\DoxyCodeLine{00267   a = -\/vec.y;}
+\DoxyCodeLine{00268   b = vec.x;}
+\DoxyCodeLine{00269   c = -\/a * m\_firstPos.x -\/ b * m\_firstPos.y;}
+\DoxyCodeLine{00270 }
+\DoxyCodeLine{00271   \textcolor{keywordtype}{double} k  = a * m\_mousePos.x + b * m\_mousePos.y + c;}
+\DoxyCodeLine{00272   \textcolor{keywordtype}{double} d2 = k * k / (a * a + b * b);}
+\DoxyCodeLine{00273 }
+\DoxyCodeLine{00274   \textcolor{comment}{/*-\/-\/ 距離が4より遠ければfalse -\/-\/*/}}
+\DoxyCodeLine{00275   \textcolor{keywordflow}{if} (d2 > 16) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00276 }
+\DoxyCodeLine{00277   \textcolor{comment}{/*-\/-\/}}
+\DoxyCodeLine{00278 \textcolor{comment}{   * 垂線の足がRuler上にあるかを判断。Rulerを対角線とするRectにマウス位置が収まるかどうか}}
+\DoxyCodeLine{00279 \textcolor{comment}{   * -\/-\/*/}}
+\DoxyCodeLine{00280   \mbox{\hyperlink{class_t_rect_t}{TRectD}} rect = \mbox{\hyperlink{class_t_rect_t}{TRectD}}(m\_firstPos, m\_secondPos).enlarge(4);}
+\DoxyCodeLine{00281   \textcolor{keywordflow}{return} rect.contains(m\_mousePos);}
+\DoxyCodeLine{00282 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_ruler_tool_aec9d192dd16f2713c4e37b23db35432b}\label{class_ruler_tool_aec9d192dd16f2713c4e37b23db35432b}} 
+\index{RulerTool@{RulerTool}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!RulerTool@{RulerTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Ruler\+Tool\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00077                                                                        \{}
+\DoxyCodeLine{00078   \textcolor{keywordflow}{if} (m\_dragMode == MakeNewRuler) m\_justClicked = \textcolor{keyword}{true};}
+\DoxyCodeLine{00079 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_ruler_tool_a12093c5cd646c696c0d239a286977a57}\label{class_ruler_tool_a12093c5cd646c696c0d239a286977a57}} 
+\index{RulerTool@{RulerTool}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!RulerTool@{RulerTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Ruler\+Tool\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00083                                                                        \{}
+\DoxyCodeLine{00084   \textcolor{comment}{/*-\/-\/ 最初のドラッグ -\/-\/*/}}
+\DoxyCodeLine{00085   \textcolor{keywordflow}{if} (m\_justClicked \&\& m\_dragMode == MakeNewRuler) \{}
+\DoxyCodeLine{00086     m\_firstPos    = m\_mousePos;}
+\DoxyCodeLine{00087     m\_justClicked = \textcolor{keyword}{false};}
+\DoxyCodeLine{00088   \}}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090   \textcolor{comment}{/*-\/-\/ ドラッグモードがMakeNewRuler/MoveSecondPosのとき、secondPosを更新 -\/-\/*/}}
+\DoxyCodeLine{00091   \textcolor{keywordflow}{if} (m\_dragMode == MakeNewRuler || m\_dragMode == MoveSecondPos) \{}
+\DoxyCodeLine{00092     \textcolor{comment}{/*-\/-\/ Shiftキーが押されていたら：0,45,90度に角度固定の直線を引く -\/-\/*/}}
+\DoxyCodeLine{00093     \textcolor{keywordflow}{if} (e.isShiftPressed())}
+\DoxyCodeLine{00094       m\_secondPos = getHVCoordinatedPos(pos, m\_firstPos);}
+\DoxyCodeLine{00095     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00096       m\_secondPos = pos;}
+\DoxyCodeLine{00097   \}}
+\DoxyCodeLine{00098 }
+\DoxyCodeLine{00099   \textcolor{comment}{/*-\/-\/ ドラッグモードがMoveFirstPosのとき、firstPosを更新 -\/-\/*/}}
+\DoxyCodeLine{00100   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_dragMode == MoveFirstPos) \{}
+\DoxyCodeLine{00101     \textcolor{comment}{/*-\/-\/ Shiftキーが押されていたら：0,45,90度に角度固定の直線を引く -\/-\/*/}}
+\DoxyCodeLine{00102     \textcolor{keywordflow}{if} (e.isShiftPressed())}
+\DoxyCodeLine{00103       m\_firstPos = getHVCoordinatedPos(pos, m\_secondPos);}
+\DoxyCodeLine{00104     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00105       m\_firstPos = pos;}
+\DoxyCodeLine{00106   \}}
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108   \textcolor{comment}{/*-\/-\/ Ruler全体を移動するモード -\/-\/*/}}
+\DoxyCodeLine{00109   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00110     \mbox{\hyperlink{class_t_point_t}{TPointD}} d = pos -\/ m\_mousePos;}
+\DoxyCodeLine{00111     m\_firstPos += d;}
+\DoxyCodeLine{00112     m\_secondPos += d;}
+\DoxyCodeLine{00113     \textcolor{comment}{/*-\/-\/ マウス位置を更新 -\/-\/*/}}
+\DoxyCodeLine{00114     m\_mousePos = pos;}
+\DoxyCodeLine{00115   \}}
+\DoxyCodeLine{00116 }
+\DoxyCodeLine{00117   updateToolOption(); \textcolor{comment}{/*-\/-\/ ToolOptionの表示を更新 -\/-\/*/}}
+\DoxyCodeLine{00118 }
+\DoxyCodeLine{00119   \mbox{\hyperlink{class_t_tool_a3e791336c642542c5648aa8ea86e2348}{invalidate}}();}
+\DoxyCodeLine{00120 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_ruler_tool_a4d27000e1daaf179531ce2e811115839}\label{class_ruler_tool_a4d27000e1daaf179531ce2e811115839}} 
+\index{RulerTool@{RulerTool}!leftButtonUp@{leftButtonUp}}
+\index{leftButtonUp@{leftButtonUp}!RulerTool@{RulerTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonUp()}{leftButtonUp()}}
+{\footnotesize\ttfamily void Ruler\+Tool\+::left\+Button\+Up (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00124                                                                      \{}
+\DoxyCodeLine{00125   m\_justClicked = \textcolor{keyword}{false};}
+\DoxyCodeLine{00126   \mbox{\hyperlink{class_t_tool_a3e791336c642542c5648aa8ea86e2348}{invalidate}}();}
+\DoxyCodeLine{00127 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_ruler_tool_ab7cbdbed8d3366755956d53b838333ea}\label{class_ruler_tool_ab7cbdbed8d3366755956d53b838333ea}} 
+\index{RulerTool@{RulerTool}!mouseMove@{mouseMove}}
+\index{mouseMove@{mouseMove}!RulerTool@{RulerTool}}
+\doxysubsubsection{\texorpdfstring{mouseMove()}{mouseMove()}}
+{\footnotesize\ttfamily void Ruler\+Tool\+::mouse\+Move (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00131                                                                   \{}
+\DoxyCodeLine{00132   \textcolor{comment}{/*-\/-\/ マウス位置を更新 -\/-\/*/}}
+\DoxyCodeLine{00133   m\_mousePos = pos;}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135   \textcolor{comment}{/*-\/-\/ マウスクリックしてたら無視 -\/-\/*/}}
+\DoxyCodeLine{00136   \textcolor{keywordflow}{if} (e.isLeftButtonPressed()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00138   \textcolor{comment}{/*-\/-\/}}
+\DoxyCodeLine{00139 \textcolor{comment}{   * マウスがRulerの端点/Rulerそのものに近い場合はドラッグモードを変更する。-\/-\/*/}}
+\DoxyCodeLine{00140   \textcolor{keywordflow}{if} (m\_firstPos != TConst::nowhere \&\& tdistance2(pos, m\_firstPos) < 16)}
+\DoxyCodeLine{00141     m\_dragMode = MoveFirstPos;}
+\DoxyCodeLine{00142   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_secondPos != TConst::nowhere \&\& tdistance2(pos, m\_secondPos) < 16)}
+\DoxyCodeLine{00143     m\_dragMode = MoveSecondPos;}
+\DoxyCodeLine{00144   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_ruler_tool_a08a85f97615b823db54ba988caacb8de}{isNearRuler}}())}
+\DoxyCodeLine{00145     m\_dragMode = MoveRuler;}
+\DoxyCodeLine{00146   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00147     m\_dragMode = MakeNewRuler;}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149   \mbox{\hyperlink{class_t_tool_a3e791336c642542c5648aa8ea86e2348}{invalidate}}();}
+\DoxyCodeLine{00150 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_ruler_tool_ab91a0924ef79d5a2229d16ab16efa252}\label{class_ruler_tool_ab91a0924ef79d5a2229d16ab16efa252}} 
+\index{RulerTool@{RulerTool}!onActivate@{onActivate}}
+\index{onActivate@{onActivate}!RulerTool@{RulerTool}}
+\doxysubsubsection{\texorpdfstring{onActivate()}{onActivate()}}
+{\footnotesize\ttfamily void Ruler\+Tool\+::on\+Activate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Callback invoked whenever the tool activates. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_ac286a2681633b4db6106596b4f54e53b}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00154                            \{}
+\DoxyCodeLine{00155   \textcolor{comment}{/*-\/-\/ 位置をリセット -\/-\/*/}}
+\DoxyCodeLine{00156   m\_firstPos  = TConst::nowhere;}
+\DoxyCodeLine{00157   m\_secondPos = TConst::nowhere;}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_toolOptionsBox.size(); i++) \{}
+\DoxyCodeLine{00160     m\_toolOptionsBox[i]-\/>resetValues();}
+\DoxyCodeLine{00161   \}}
+\DoxyCodeLine{00162 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_ruler_tool_ad84e2b9274f466606cd0c3fc39f5ef48}\label{class_ruler_tool_ad84e2b9274f466606cd0c3fc39f5ef48}} 
+\index{RulerTool@{RulerTool}!onImageChanged@{onImageChanged}}
+\index{onImageChanged@{onImageChanged}!RulerTool@{RulerTool}}
+\doxysubsubsection{\texorpdfstring{onImageChanged()}{onImageChanged()}}
+{\footnotesize\ttfamily void Ruler\+Tool\+::on\+Image\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Notifies changes in the image in use. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_aaf1e021290e74c1b085e4b095668e1ed}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041                                \{}
+\DoxyCodeLine{00042   \textcolor{comment}{/*-\/-\/位置をリセット-\/-\/*/}}
+\DoxyCodeLine{00043   m\_firstPos  = TConst::nowhere;}
+\DoxyCodeLine{00044   m\_secondPos = TConst::nowhere;}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_toolOptionsBox.size(); i++) \{}
+\DoxyCodeLine{00047     m\_toolOptionsBox[i]-\/>resetValues();}
+\DoxyCodeLine{00048   \}}
+\DoxyCodeLine{00049 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_ruler_tool_a17b0426c21cc030b2eaf2712addc9f1e}\label{class_ruler_tool_a17b0426c21cc030b2eaf2712addc9f1e}} 
+\index{RulerTool@{RulerTool}!setToolOptionsBox@{setToolOptionsBox}}
+\index{setToolOptionsBox@{setToolOptionsBox}!RulerTool@{RulerTool}}
+\doxysubsubsection{\texorpdfstring{setToolOptionsBox()}{setToolOptionsBox()}}
+{\footnotesize\ttfamily void Ruler\+Tool\+::set\+Tool\+Options\+Box (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_ruler_tool_options_box}{Ruler\+Tool\+Options\+Box}} $\ast$}]{tool\+Options\+Box }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035                                                                      \{}
+\DoxyCodeLine{00036   m\_toolOptionsBox.push\_back(toolOptionsBox);}
+\DoxyCodeLine{00037 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_ruler_tool_af1ce469e920bea6da73d46e67edfe780}\label{class_ruler_tool_af1ce469e920bea6da73d46e67edfe780}} 
+\index{RulerTool@{RulerTool}!updateToolOption@{updateToolOption}}
+\index{updateToolOption@{updateToolOption}!RulerTool@{RulerTool}}
+\doxysubsubsection{\texorpdfstring{updateToolOption()}{updateToolOption()}}
+{\footnotesize\ttfamily void Ruler\+Tool\+::update\+Tool\+Option (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00175                                  \{}
+\DoxyCodeLine{00176   \mbox{\hyperlink{class_t_application}{TTool::Application}} *app    = TTool::getApplication();}
+\DoxyCodeLine{00177   \mbox{\hyperlink{class_t_frame_handle}{TFrameHandle}} *currentFrame = app-\/>getCurrentFrame();}
+\DoxyCodeLine{00178 }
+\DoxyCodeLine{00179   \textcolor{keywordtype}{double} x, y, w, h, a, l;}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181   \textcolor{comment}{/*-\/-\/}}
+\DoxyCodeLine{00182 \textcolor{comment}{   * Level編集モードのとき、そのLevelのDPIに合わせてInchの値を得る。Pixelの値も出力する。}}
+\DoxyCodeLine{00183 \textcolor{comment}{   * -\/-\/*/}}
+\DoxyCodeLine{00184   \textcolor{keywordflow}{if} (currentFrame-\/>isEditingLevel()) \{}
+\DoxyCodeLine{00185     \mbox{\hyperlink{class_t_xsh_level_handle}{TXshLevelHandle}} *currentLevel = app-\/>getCurrentLevel();}
+\DoxyCodeLine{00186     \mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *xl                 = currentLevel-\/>getLevel();}
+\DoxyCodeLine{00187     \textcolor{keywordflow}{if} (xl) \{}
+\DoxyCodeLine{00188       \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl = xl-\/>\mbox{\hyperlink{class_t_xsh_level_a023065559cff76164ecb6344c586ba27}{getSimpleLevel}}();}
+\DoxyCodeLine{00189       \textcolor{keywordflow}{if} (sl) \{}
+\DoxyCodeLine{00190         \textcolor{keywordtype}{int} subsampling = sl-\/>getImageSubsampling(\mbox{\hyperlink{class_t_tool_ae7db6c4288b721fd95f283419883a4b2}{getCurrentFid}}());}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192         \mbox{\hyperlink{class_t_point_t}{TPointD}} dpiScale = getViewer()-\/>getDpiScale();}
+\DoxyCodeLine{00193         \mbox{\hyperlink{class_t_point_t}{TPointD}} pp1 =}
+\DoxyCodeLine{00194             \mbox{\hyperlink{class_t_point_t}{TPointD}}(m\_firstPos.x / dpiScale.x, m\_firstPos.y / dpiScale.y);}
+\DoxyCodeLine{00195         \mbox{\hyperlink{class_t_point_t}{TPointD}} pp2 =}
+\DoxyCodeLine{00196             \mbox{\hyperlink{class_t_point_t}{TPointD}}(m\_secondPos.x / dpiScale.x, m\_secondPos.y / dpiScale.y);}
+\DoxyCodeLine{00197 }
+\DoxyCodeLine{00198         \mbox{\hyperlink{class_t_point_t}{TPointD}} p1 = \mbox{\hyperlink{class_t_scale}{TScale}}(1.0 / subsampling) * pp1 + \mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/0.5, -\/0.5);}
+\DoxyCodeLine{00199         \mbox{\hyperlink{class_t_point_t}{TPointD}} p2 = \mbox{\hyperlink{class_t_scale}{TScale}}(1.0 / subsampling) * pp2 + \mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/0.5, -\/0.5);}
+\DoxyCodeLine{00200 }
+\DoxyCodeLine{00201         \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} image = \mbox{\hyperlink{class_t_tool_a947d2af39fd4df397577bbf8602abfd4}{getImage}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{00202 }
+\DoxyCodeLine{00203         \mbox{\hyperlink{class_t_point_t}{TPoint}} pix1, pix2;}
+\DoxyCodeLine{00204 }
+\DoxyCodeLine{00205         \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} ti  = image;}
+\DoxyCodeLine{00206         \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} ri = image;}
+\DoxyCodeLine{00207 }
+\DoxyCodeLine{00208         \textcolor{keywordflow}{if} (ti || ri) \{}
+\DoxyCodeLine{00209           \textcolor{keywordflow}{if} (ti) \{}
+\DoxyCodeLine{00210             \mbox{\hyperlink{class_t_dimension_t}{TDimension}} size = ti-\/>getSize();}
+\DoxyCodeLine{00211             pix1            = \mbox{\hyperlink{class_t_point_t}{TPoint}}(tround(0.5 * size.lx + p1.x),}
+\DoxyCodeLine{00212                           tround(0.5 * size.ly + p1.y));}
+\DoxyCodeLine{00213             pix2 = \mbox{\hyperlink{class_t_point_t}{TPoint}}(tround(0.5 * size.lx + p2.x),}
+\DoxyCodeLine{00214                           tround(0.5 * size.ly + p2.y));}
+\DoxyCodeLine{00215           \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ri) \{}
+\DoxyCodeLine{00216             \mbox{\hyperlink{class_t_dimension_t}{TDimension}} size = ri-\/>getRaster()-\/>getSize();}
+\DoxyCodeLine{00217             pix1            = \mbox{\hyperlink{class_t_point_t}{TPoint}}(tround(0.5 * size.lx + p1.x),}
+\DoxyCodeLine{00218                           tround(0.5 * size.ly + p1.y));}
+\DoxyCodeLine{00219             pix2 = \mbox{\hyperlink{class_t_point_t}{TPoint}}(tround(0.5 * size.lx + p2.x),}
+\DoxyCodeLine{00220                           tround(0.5 * size.ly + p2.y));}
+\DoxyCodeLine{00221           \}}
+\DoxyCodeLine{00222           \textcolor{keywordtype}{int} xPix, yPix, wPix, hPix;}
+\DoxyCodeLine{00223           \mbox{\hyperlink{class_t_point_t}{TPointD}} dpi = sl-\/>getDpi(\mbox{\hyperlink{class_t_tool_ae7db6c4288b721fd95f283419883a4b2}{getCurrentFid}}());}
+\DoxyCodeLine{00224           xPix        = pix1.x;}
+\DoxyCodeLine{00225           yPix        = pix1.y;}
+\DoxyCodeLine{00226           wPix        = pix2.x -\/ pix1.x;}
+\DoxyCodeLine{00227           hPix        = pix2.y -\/ pix1.y;}
+\DoxyCodeLine{00228 }
+\DoxyCodeLine{00229           x = (double)xPix / dpi.x;}
+\DoxyCodeLine{00230           y = (\textcolor{keywordtype}{double})yPix / dpi.y;}
+\DoxyCodeLine{00231           w = (double)wPix / dpi.x;}
+\DoxyCodeLine{00232           h = (\textcolor{keywordtype}{double})hPix / dpi.y;}
+\DoxyCodeLine{00233           a = atan2(h, w) * 180.0 / 3.14159264;}
+\DoxyCodeLine{00234           l = sqrt(w * w + h * h);}
+\DoxyCodeLine{00235 }
+\DoxyCodeLine{00236           \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_toolOptionsBox.size(); i++) \{}
+\DoxyCodeLine{00237             m\_toolOptionsBox[i]-\/>updateValues(\textcolor{keyword}{true}, x, y, w, h, a, l, xPix,}
+\DoxyCodeLine{00238                                               yPix, wPix, hPix);}
+\DoxyCodeLine{00239           \}}
+\DoxyCodeLine{00240           \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00241         \}}
+\DoxyCodeLine{00242       \}}
+\DoxyCodeLine{00243     \}}
+\DoxyCodeLine{00244   \}}
+\DoxyCodeLine{00245 }
+\DoxyCodeLine{00246   \textcolor{comment}{/*-\/-\/ シーン編集モードのとき、Stage::inchで割った値がInch値となる -\/-\/*/}}
+\DoxyCodeLine{00247   x = m\_firstPos.x / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}};}
+\DoxyCodeLine{00248   y = m\_firstPos.y / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}};}
+\DoxyCodeLine{00249   w = (m\_secondPos.x -\/ m\_firstPos.x) / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}};}
+\DoxyCodeLine{00250   h = (m\_secondPos.y -\/ m\_firstPos.y) / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}};}
+\DoxyCodeLine{00251   a = atan2(h, w) * 180.0 / 3.14159264;}
+\DoxyCodeLine{00252   l = sqrt(w * w + h * h);}
+\DoxyCodeLine{00253 }
+\DoxyCodeLine{00254   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_toolOptionsBox.size(); i++) \{}
+\DoxyCodeLine{00255     m\_toolOptionsBox[i]-\/>updateValues(\textcolor{keyword}{false}, x, y, w, h, a, l);}
+\DoxyCodeLine{00256   \}}
+\DoxyCodeLine{00257 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/rulertool.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/rulertool.\+cpp\end{DoxyCompactItemize}

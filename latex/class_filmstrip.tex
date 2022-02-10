@@ -1,0 +1,590 @@
+\hypertarget{class_filmstrip}{}\doxysection{Filmstrip Class Reference}
+\label{class_filmstrip}\index{Filmstrip@{Filmstrip}}
+Inheritance diagram for Filmstrip\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_filmstrip}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_filmstrip_a2c14f0d0eeb3de4e5a17a2b57bf8320e}{on\+Level\+Switched}} (\mbox{\hyperlink{class_t_xsh_level}{TXsh\+Level}} $\ast$old\+Level)
+\item 
+void \mbox{\hyperlink{class_filmstrip_a3d0b500a1fef9dafe9a2420bbd8eb18c}{on\+Slider\+Moved}} (int)
+\item 
+void \mbox{\hyperlink{class_filmstrip_a3dae123e49f52ea6d804e7dd67e77eb9}{on\+Level\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_filmstrip_a0df260ee9f9b64aa9909a3c6cb4bae00}{update\+Choose\+Level\+Combo\+Items}} ()
+\item 
+void \mbox{\hyperlink{class_filmstrip_a9b27a59305b4d03e37a427a4bf84ea4f}{on\+Choose\+Level\+Combo\+Changed}} (int index)
+\item 
+void \mbox{\hyperlink{class_filmstrip_a637f4ff75a1564c6976d8338fc541fe8}{on\+Frame\+Switched}} ()
+\item 
+void \mbox{\hyperlink{class_filmstrip_a58af0ae9002608c0bb854fa32c551ca3}{orientation\+Toggled}} (bool)
+\item 
+void \mbox{\hyperlink{class_filmstrip_a3d3ebe8c40da2d55d8d194ce3ddc59d1}{combo\+Box\+Toggled}} ()
+\item 
+void \mbox{\hyperlink{class_filmstrip_af9364e8e6723d85ffc6f875953ca2464}{navigator\+Toggled}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_filmstrip_aa9038721085e1091c0ba780a9cfaf926}{Filmstrip}} (QWidget $\ast$parent=0, Qt\+::\+WFlags flags=0)
+\item 
+virtual void \mbox{\hyperlink{class_filmstrip_aabeb1b85883cbc0962352b563ec9eee1}{save}} (QSettings \&settings) const override
+\item 
+virtual void \mbox{\hyperlink{class_filmstrip_afb323bebe6d9a5d100051897ffa7fe62}{load}} (QSettings \&settings) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_filmstrip_ab22df361d81014f0460b6e6d96ef3b58}{set\+Orientation}} (bool is\+Vertical)
+\item 
+void \mbox{\hyperlink{class_filmstrip_acd261f02b11da40618aee719e7e0bab2}{show\+Event}} (QShow\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_filmstrip_a095dd0d16d877a68cd9cd17faa75d7fd}{hide\+Event}} (QHide\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_filmstrip_a464ab5e646b344cccce86c16fe1cebca}{resize\+Event}} (QResize\+Event $\ast$) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_filmstrip_aa9038721085e1091c0ba780a9cfaf926}\label{class_filmstrip_aa9038721085e1091c0ba780a9cfaf926}} 
+\index{Filmstrip@{Filmstrip}!Filmstrip@{Filmstrip}}
+\index{Filmstrip@{Filmstrip}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{Filmstrip()}{Filmstrip()}}
+{\footnotesize\ttfamily Filmstrip\+::\+Filmstrip (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0},  }\item[{Qt\+::\+WFlags}]{flags = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01517     : QWidget(parent) \{}
+\DoxyCodeLine{01518   setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);}
+\DoxyCodeLine{01519 }
+\DoxyCodeLine{01520   m\_frameArea        = \textcolor{keyword}{new} QScrollArea(\textcolor{keyword}{this});}
+\DoxyCodeLine{01521   m\_chooseLevelCombo = \textcolor{keyword}{new} QComboBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{01522   m\_frames           = \textcolor{keyword}{new} \mbox{\hyperlink{class_filmstrip_frames}{FilmstripFrames}}(m\_frameArea);}
+\DoxyCodeLine{01523 }
+\DoxyCodeLine{01524   \textcolor{comment}{//-\/-\/-\/-\/}}
+\DoxyCodeLine{01525   m\_frames-\/>m\_isVertical = m\_isVertical;}
+\DoxyCodeLine{01526   m\_frameArea-\/>setObjectName(\textcolor{stringliteral}{"{}filmScrollArea"{}});}
+\DoxyCodeLine{01527   m\_frameArea-\/>setFrameStyle(QFrame::StyledPanel);}
+\DoxyCodeLine{01528   setOrientation(m\_isVertical);}
+\DoxyCodeLine{01529 }
+\DoxyCodeLine{01530   m\_frameArea-\/>setWidget(m\_frames);}
+\DoxyCodeLine{01531 }
+\DoxyCodeLine{01532   m\_chooseLevelCombo-\/>setMaxVisibleItems(50);}
+\DoxyCodeLine{01533   m\_chooseLevelCombo-\/>setObjectName(\textcolor{stringliteral}{"{}filmLevelCombo"{}});}
+\DoxyCodeLine{01534 }
+\DoxyCodeLine{01535   \textcolor{comment}{// layout}}
+\DoxyCodeLine{01536   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{01537   mainLayout-\/>setMargin(0);}
+\DoxyCodeLine{01538   mainLayout-\/>setSpacing(0);}
+\DoxyCodeLine{01539   \{}
+\DoxyCodeLine{01540     mainLayout-\/>addWidget(m\_chooseLevelCombo, 0);}
+\DoxyCodeLine{01541     mainLayout-\/>addWidget(m\_frameArea, 1);}
+\DoxyCodeLine{01542   \}}
+\DoxyCodeLine{01543   setLayout(mainLayout);}
+\DoxyCodeLine{01544 }
+\DoxyCodeLine{01545   setFocusProxy(m\_frames);}
+\DoxyCodeLine{01546 }
+\DoxyCodeLine{01547   \mbox{\hyperlink{class_filmstrip_a2c14f0d0eeb3de4e5a17a2b57bf8320e}{onLevelSwitched}}(0);}
+\DoxyCodeLine{01548 }
+\DoxyCodeLine{01549   \textcolor{comment}{// signal-\/slot connections}}
+\DoxyCodeLine{01550   \textcolor{comment}{// switch the current level when the current index of m\_chooseLevelCombo is}}
+\DoxyCodeLine{01551   \textcolor{comment}{// changed}}
+\DoxyCodeLine{01552   connect(m\_chooseLevelCombo, SIGNAL(activated(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01553           SLOT(\mbox{\hyperlink{class_filmstrip_a9b27a59305b4d03e37a427a4bf84ea4f}{onChooseLevelComboChanged}}(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{01554   connect(m\_frames, SIGNAL(orientationToggledSignal(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01555           SLOT(orientationToggled(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{01556   connect(m\_frames, SIGNAL(comboBoxToggledSignal()), \textcolor{keyword}{this},}
+\DoxyCodeLine{01557           SLOT(comboBoxToggled()));}
+\DoxyCodeLine{01558   connect(m\_frames, SIGNAL(navigatorToggledSignal()), \textcolor{keyword}{this},}
+\DoxyCodeLine{01559           SLOT(navigatorToggled()));}
+\DoxyCodeLine{01560   connect(m\_frames, SIGNAL(levelSelectedSignal(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01561           SLOT(\mbox{\hyperlink{class_filmstrip_a9b27a59305b4d03e37a427a4bf84ea4f}{onChooseLevelComboChanged}}(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{01562 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_filmstrip_ae5a2cd62bf92b79d73b5bfdfd4ab0566}\label{class_filmstrip_ae5a2cd62bf92b79d73b5bfdfd4ab0566}} 
+\index{Filmstrip@{Filmstrip}!````~Filmstrip@{$\sim$Filmstrip}}
+\index{````~Filmstrip@{$\sim$Filmstrip}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{$\sim$Filmstrip()}{~Filmstrip()}}
+{\footnotesize\ttfamily Filmstrip\+::$\sim$\+Filmstrip (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01713                       \{}
+\DoxyCodeLine{01714   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} level : m\_levels) level-\/>release();}
+\DoxyCodeLine{01715   m\_levels.clear();}
+\DoxyCodeLine{01716 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_filmstrip_a3d3ebe8c40da2d55d8d194ce3ddc59d1}\label{class_filmstrip_a3d3ebe8c40da2d55d8d194ce3ddc59d1}} 
+\index{Filmstrip@{Filmstrip}!comboBoxToggled@{comboBoxToggled}}
+\index{comboBoxToggled@{comboBoxToggled}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{comboBoxToggled}{comboBoxToggled}}
+{\footnotesize\ttfamily void Filmstrip\+::combo\+Box\+Toggled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01904                                 \{}
+\DoxyCodeLine{01905   \textcolor{keywordflow}{if} (m\_chooseLevelCombo-\/>isHidden())}
+\DoxyCodeLine{01906     m\_chooseLevelCombo-\/>show();}
+\DoxyCodeLine{01907   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01908     m\_chooseLevelCombo-\/>hide();}
+\DoxyCodeLine{01909   m\_showComboBox = !m\_chooseLevelCombo-\/>isHidden();}
+\DoxyCodeLine{01910   m\_frames-\/>setComboBox(m\_showComboBox);}
+\DoxyCodeLine{01911 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_filmstrip_a095dd0d16d877a68cd9cd17faa75d7fd}\label{class_filmstrip_a095dd0d16d877a68cd9cd17faa75d7fd}} 
+\index{Filmstrip@{Filmstrip}!hideEvent@{hideEvent}}
+\index{hideEvent@{hideEvent}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{hideEvent()}{hideEvent()}}
+{\footnotesize\ttfamily void Filmstrip\+::hide\+Event (\begin{DoxyParamCaption}\item[{QHide\+Event $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01761                                       \{}
+\DoxyCodeLine{01762   \mbox{\hyperlink{class_t_app}{TApp}} *app                    = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{01763   \mbox{\hyperlink{class_t_xsh_level_handle}{TXshLevelHandle}} *levelHandle = app-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}();}
+\DoxyCodeLine{01764   disconnect(levelHandle, SIGNAL(xshLevelSwitched(\mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *)), \textcolor{keyword}{this},}
+\DoxyCodeLine{01765              SLOT(\mbox{\hyperlink{class_filmstrip_a2c14f0d0eeb3de4e5a17a2b57bf8320e}{onLevelSwitched}}(\mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *)));}
+\DoxyCodeLine{01766   disconnect(levelHandle, SIGNAL(xshLevelChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{01767              SLOT(onLevelChanged()));}
+\DoxyCodeLine{01768   disconnect(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getPaletteController()-\/>getCurrentLevelPalette(),}
+\DoxyCodeLine{01769              SIGNAL(colorStyleChangedOnMouseRelease()), \textcolor{keyword}{this},}
+\DoxyCodeLine{01770              SLOT(onLevelChanged()));}
+\DoxyCodeLine{01771 }
+\DoxyCodeLine{01772   disconnect(levelHandle, SIGNAL(xshLevelTitleChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{01773              SLOT(onLevelChanged()));}
+\DoxyCodeLine{01774 }
+\DoxyCodeLine{01775   disconnect(m\_frameArea-\/>verticalScrollBar(), SIGNAL(valueChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01776              SLOT(onSliderMoved(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{01777 }
+\DoxyCodeLine{01778   \mbox{\hyperlink{class_t_scene_handle}{TSceneHandle}} *sceneHandle = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}();}
+\DoxyCodeLine{01779   disconnect(sceneHandle, SIGNAL(sceneSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{01780              SLOT(\mbox{\hyperlink{class_filmstrip_a0df260ee9f9b64aa9909a3c6cb4bae00}{updateChooseLevelComboItems}}()));}
+\DoxyCodeLine{01781   disconnect(sceneHandle, SIGNAL(castChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{01782              SLOT(\mbox{\hyperlink{class_filmstrip_a0df260ee9f9b64aa9909a3c6cb4bae00}{updateChooseLevelComboItems}}()));}
+\DoxyCodeLine{01783 }
+\DoxyCodeLine{01784   disconnect(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentXsheet(), SIGNAL(xsheetChanged()),}
+\DoxyCodeLine{01785              \textcolor{keyword}{this}, SLOT(\mbox{\hyperlink{class_filmstrip_a0df260ee9f9b64aa9909a3c6cb4bae00}{updateChooseLevelComboItems}}()));}
+\DoxyCodeLine{01786 }
+\DoxyCodeLine{01787   disconnect(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentFrame(), SIGNAL(frameSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{01788              SLOT(onFrameSwitched()));}
+\DoxyCodeLine{01789 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_filmstrip_afb323bebe6d9a5d100051897ffa7fe62}\label{class_filmstrip_afb323bebe6d9a5d100051897ffa7fe62}} 
+\index{Filmstrip@{Filmstrip}!load@{load}}
+\index{load@{load}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily void Filmstrip\+::load (\begin{DoxyParamCaption}\item[{QSettings \&}]{settings }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_save_load_q_settings}{Save\+Load\+QSettings}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01952                                         \{}
+\DoxyCodeLine{01953   UINT orientation = settings.value(\textcolor{stringliteral}{"{}vertical"{}}, 1).toUInt();}
+\DoxyCodeLine{01954   m\_isVertical     = orientation == 1;}
+\DoxyCodeLine{01955   setOrientation(m\_isVertical);}
+\DoxyCodeLine{01956 }
+\DoxyCodeLine{01957   UINT navigator  = settings.value(\textcolor{stringliteral}{"{}navigator"{}}, 1).toUInt();}
+\DoxyCodeLine{01958   m\_showNavigator = navigator == 1;}
+\DoxyCodeLine{01959   m\_frames-\/>setNavigator(m\_showNavigator);}
+\DoxyCodeLine{01960 }
+\DoxyCodeLine{01961   UINT showCombo = settings.value(\textcolor{stringliteral}{"{}showCombo"{}}, 1).toUInt();}
+\DoxyCodeLine{01962   m\_showComboBox = showCombo == 1;}
+\DoxyCodeLine{01963   \textcolor{keywordflow}{if} (showCombo == 1) \{}
+\DoxyCodeLine{01964     m\_chooseLevelCombo-\/>show();}
+\DoxyCodeLine{01965   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01966     m\_chooseLevelCombo-\/>hide();}
+\DoxyCodeLine{01967   \}}
+\DoxyCodeLine{01968   m\_frames-\/>setComboBox(m\_showComboBox);}
+\DoxyCodeLine{01969 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_filmstrip_af9364e8e6723d85ffc6f875953ca2464}\label{class_filmstrip_af9364e8e6723d85ffc6f875953ca2464}} 
+\index{Filmstrip@{Filmstrip}!navigatorToggled@{navigatorToggled}}
+\index{navigatorToggled@{navigatorToggled}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{navigatorToggled}{navigatorToggled}}
+{\footnotesize\ttfamily void Filmstrip\+::navigator\+Toggled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01915                                  \{}
+\DoxyCodeLine{01916   m\_showNavigator = !m\_showNavigator;}
+\DoxyCodeLine{01917   m\_frames-\/>setNavigator(m\_showNavigator);}
+\DoxyCodeLine{01918 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_filmstrip_a9b27a59305b4d03e37a427a4bf84ea4f}\label{class_filmstrip_a9b27a59305b4d03e37a427a4bf84ea4f}} 
+\index{Filmstrip@{Filmstrip}!onChooseLevelComboChanged@{onChooseLevelComboChanged}}
+\index{onChooseLevelComboChanged@{onChooseLevelComboChanged}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{onChooseLevelComboChanged}{onChooseLevelComboChanged}}
+{\footnotesize\ttfamily void Filmstrip\+::on\+Choose\+Level\+Combo\+Changed (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+switch the current level when the current index of m\+\_\+choose\+Level\+Combo is changed 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01568                                                    \{}
+\DoxyCodeLine{01569   \mbox{\hyperlink{class_t_app}{TApp}} *tapp = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{01570   \textcolor{comment}{// empty level}}
+\DoxyCodeLine{01571   \textcolor{keywordflow}{if} (index == m\_chooseLevelCombo-\/>findText(tr(\textcolor{stringliteral}{"{}-\/ No Current Level -\/"{}})))}
+\DoxyCodeLine{01572     tapp-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>setLevel(0);}
+\DoxyCodeLine{01573   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01574     std::vector<TFrameId> fids;}
+\DoxyCodeLine{01575     m\_levels[index]-\/>getFids(fids);}
+\DoxyCodeLine{01576     tapp-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>setFrameIds(fids);}
+\DoxyCodeLine{01577 }
+\DoxyCodeLine{01578     \textcolor{comment}{// retrieve to the current working frame of the level}}
+\DoxyCodeLine{01579     \mbox{\hyperlink{class_t_frame_id}{TFrameId}} WF;}
+\DoxyCodeLine{01580     std::map<TXshSimpleLevel *, TFrameId>::iterator WFit;}
+\DoxyCodeLine{01581     WFit = m\_workingFrames.find(m\_levels[index]);}
+\DoxyCodeLine{01582     \textcolor{keywordflow}{if} (WFit != m\_workingFrames.end())}
+\DoxyCodeLine{01583       WF = WFit-\/>second;}
+\DoxyCodeLine{01584     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01585       WF = fids[0];}
+\DoxyCodeLine{01586 }
+\DoxyCodeLine{01587     \textcolor{comment}{// this function emits xshLevelSwitched() signal and eventually calls}}
+\DoxyCodeLine{01588     \textcolor{comment}{// FlipConsole::UpdateRange}}
+\DoxyCodeLine{01589     \textcolor{comment}{// it may move the current frame so we need to keep the current frameId}}
+\DoxyCodeLine{01590     \textcolor{comment}{// before calling setLevel.}}
+\DoxyCodeLine{01591     tapp-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>setLevel(m\_levels[index]);}
+\DoxyCodeLine{01592 }
+\DoxyCodeLine{01593     \textcolor{keywordflow}{if} (tapp-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}()-\/>getSelection())}
+\DoxyCodeLine{01594       tapp-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}()-\/>getSelection()-\/>selectNone();}
+\DoxyCodeLine{01595 }
+\DoxyCodeLine{01596     \textcolor{comment}{// move to the current working frame}}
+\DoxyCodeLine{01597     tapp-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>setFid(WF);}
+\DoxyCodeLine{01598 }
+\DoxyCodeLine{01599     QApplication::setOverrideCursor(Qt::WaitCursor);}
+\DoxyCodeLine{01600 }
+\DoxyCodeLine{01601     invalidateIcons(m\_levels[index], fids);}
+\DoxyCodeLine{01602 }
+\DoxyCodeLine{01603     QApplication::restoreOverrideCursor();}
+\DoxyCodeLine{01604   \}}
+\DoxyCodeLine{01605 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00114}{TApp\+::get\+Current\+Frame()}}, \mbox{\hyperlink{l00122}{TApp\+::get\+Current\+Level()}}, \mbox{\hyperlink{l00134}{TApp\+::get\+Current\+Selection()}}, and \mbox{\hyperlink{l00215}{TApp\+::instance()}}.
+
+\mbox{\Hypertarget{class_filmstrip_a637f4ff75a1564c6976d8338fc541fe8}\label{class_filmstrip_a637f4ff75a1564c6976d8338fc541fe8}} 
+\index{Filmstrip@{Filmstrip}!onFrameSwitched@{onFrameSwitched}}
+\index{onFrameSwitched@{onFrameSwitched}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{onFrameSwitched}{onFrameSwitched}}
+{\footnotesize\ttfamily void Filmstrip\+::on\+Frame\+Switched (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01874                                 \{}
+\DoxyCodeLine{01875   \mbox{\hyperlink{class_t_frame_handle}{TFrameHandle}} *fh = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}();}
+\DoxyCodeLine{01876   \textcolor{keywordflow}{if} (!fh-\/>isEditingLevel()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01877 }
+\DoxyCodeLine{01878   \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *level = m\_frames-\/>getLevel();}
+\DoxyCodeLine{01879 }
+\DoxyCodeLine{01880   std::map<TXshSimpleLevel *, TFrameId>::iterator WFit;}
+\DoxyCodeLine{01881   WFit = m\_workingFrames.find(level);}
+\DoxyCodeLine{01882   \textcolor{keywordflow}{if} (WFit == m\_workingFrames.end()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01883 }
+\DoxyCodeLine{01884   WFit-\/>second = fh-\/>getFid();}
+\DoxyCodeLine{01885 }
+\DoxyCodeLine{01886   QString levelName = QString::fromStdWString(level-\/>\mbox{\hyperlink{class_t_xsh_level_a3a59fb1bd3261baee4e889a9edbf0ae8}{getName}}());}
+\DoxyCodeLine{01887   \textcolor{keywordflow}{if} (level-\/>\mbox{\hyperlink{class_t_xsh_simple_level_ad412dd5c3a6ae3ff20a480dc728b26d2}{getProperties}}()-\/>\mbox{\hyperlink{class_level_properties_a19cc395b0312bc880b1d765c93720967}{getDirtyFlag}}()) levelName += \textcolor{stringliteral}{"{} *"{}};}
+\DoxyCodeLine{01888   \textcolor{keywordflow}{if} (fh-\/>getFid().getNumber() >= 0)}
+\DoxyCodeLine{01889     levelName += QString(\textcolor{stringliteral}{"{}  [\#"{}}) + QString::number(fh-\/>getFid().getNumber()) +}
+\DoxyCodeLine{01890                  QString(\textcolor{stringliteral}{"{}]"{}});}
+\DoxyCodeLine{01891 }
+\DoxyCodeLine{01892   m\_chooseLevelCombo-\/>setItemText(m\_chooseLevelCombo-\/>currentIndex(),}
+\DoxyCodeLine{01893                                   levelName);}
+\DoxyCodeLine{01894 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_filmstrip_a3dae123e49f52ea6d804e7dd67e77eb9}\label{class_filmstrip_a3dae123e49f52ea6d804e7dd67e77eb9}} 
+\index{Filmstrip@{Filmstrip}!onLevelChanged@{onLevelChanged}}
+\index{onLevelChanged@{onLevelChanged}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{onLevelChanged}{onLevelChanged}}
+{\footnotesize\ttfamily void Filmstrip\+::on\+Level\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01807 \{ updateWindowTitle(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_filmstrip_a2c14f0d0eeb3de4e5a17a2b57bf8320e}\label{class_filmstrip_a2c14f0d0eeb3de4e5a17a2b57bf8320e}} 
+\index{Filmstrip@{Filmstrip}!onLevelSwitched@{onLevelSwitched}}
+\index{onLevelSwitched@{onLevelSwitched}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{onLevelSwitched}{onLevelSwitched}}
+{\footnotesize\ttfamily void Filmstrip\+::on\+Level\+Switched (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsh_level}{TXsh\+Level}} $\ast$}]{old\+Level }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+Aggiorna il \char`\"{}titolo\char`\"{} del widget e rinfresca la filmstrip se c\textquotesingle{}e\textquotesingle{} qualche \char`\"{}check\char`\"{} attivo. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01840                                                    \{}
+\DoxyCodeLine{01841   updateWindowTitle();}
+\DoxyCodeLine{01842 }
+\DoxyCodeLine{01843   \textcolor{keywordtype}{int} tc = ToonzCheck::instance()-\/>getChecks();}
+\DoxyCodeLine{01844   \textcolor{keywordflow}{if} (tc \& (\mbox{\hyperlink{class_toonz_check_add5b28b42f552cf90e3cfcde9e737876a7ad1deef6a508e60252b818c61ce83e9}{ToonzCheck::eInk}} | \mbox{\hyperlink{class_toonz_check_add5b28b42f552cf90e3cfcde9e737876a5a4df203cdba2a5eb6f7eba19f9ab62e}{ToonzCheck::ePaint}})) \{}
+\DoxyCodeLine{01845     \mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *sl = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>getLevel();}
+\DoxyCodeLine{01846     \textcolor{keywordflow}{if} (!sl) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01847     std::vector<TFrameId> fids;}
+\DoxyCodeLine{01848     sl-\/>getFids(fids);}
+\DoxyCodeLine{01849     removeIcons(sl, fids, \textcolor{keyword}{true});}
+\DoxyCodeLine{01850   \}}
+\DoxyCodeLine{01851   update();}
+\DoxyCodeLine{01852 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00045}{Toonz\+Check\+::e\+Ink}}, \mbox{\hyperlink{l00046}{Toonz\+Check\+::e\+Paint}}, \mbox{\hyperlink{l00122}{TApp\+::get\+Current\+Level()}}, and \mbox{\hyperlink{l00215}{TApp\+::instance()}}.
+
+\mbox{\Hypertarget{class_filmstrip_a3d0b500a1fef9dafe9a2420bbd8eb18c}\label{class_filmstrip_a3d0b500a1fef9dafe9a2420bbd8eb18c}} 
+\index{Filmstrip@{Filmstrip}!onSliderMoved@{onSliderMoved}}
+\index{onSliderMoved@{onSliderMoved}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{onSliderMoved}{onSliderMoved}}
+{\footnotesize\ttfamily void Filmstrip\+::on\+Slider\+Moved (\begin{DoxyParamCaption}\item[{int}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01856                                      \{}
+\DoxyCodeLine{01857   \textcolor{keywordtype}{int} oneFrameHeight = m\_frames-\/>getIconSize().height() + fs\_frameSpacing +}
+\DoxyCodeLine{01858                        fs\_iconMarginTop + fs\_iconMarginBottom;}
+\DoxyCodeLine{01859   \textcolor{keywordtype}{int} oneFrameWidth =}
+\DoxyCodeLine{01860       m\_frames-\/>getIconSize().width() + fs\_frameSpacing + fs\_iconMarginLR;}
+\DoxyCodeLine{01861   \textcolor{keywordflow}{if} (m\_isVertical) \{}
+\DoxyCodeLine{01862     \textcolor{keywordtype}{int} tmpVal =}
+\DoxyCodeLine{01863         (int)((\textcolor{keywordtype}{float})val / (float)oneFrameHeight + 0.5f) * oneFrameHeight;}
+\DoxyCodeLine{01864     m\_frameArea-\/>verticalScrollBar()-\/>setValue(tmpVal);}
+\DoxyCodeLine{01865   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01866     \textcolor{keywordtype}{int} tmpVal =}
+\DoxyCodeLine{01867         (int)((\textcolor{keywordtype}{float})val / (float)oneFrameWidth + 0.5f) * oneFrameWidth;}
+\DoxyCodeLine{01868     m\_frameArea-\/>horizontalScrollBar()-\/>setValue(tmpVal);}
+\DoxyCodeLine{01869   \}}
+\DoxyCodeLine{01870 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_filmstrip_a58af0ae9002608c0bb854fa32c551ca3}\label{class_filmstrip_a58af0ae9002608c0bb854fa32c551ca3}} 
+\index{Filmstrip@{Filmstrip}!orientationToggled@{orientationToggled}}
+\index{orientationToggled@{orientationToggled}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{orientationToggled}{orientationToggled}}
+{\footnotesize\ttfamily void Filmstrip\+::orientation\+Toggled (\begin{DoxyParamCaption}\item[{bool}]{is\+Vertical }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01898                                                   \{}
+\DoxyCodeLine{01899   setOrientation(isVertical);}
+\DoxyCodeLine{01900 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_filmstrip_a464ab5e646b344cccce86c16fe1cebca}\label{class_filmstrip_a464ab5e646b344cccce86c16fe1cebca}} 
+\index{Filmstrip@{Filmstrip}!resizeEvent@{resizeEvent}}
+\index{resizeEvent@{resizeEvent}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{resizeEvent()}{resizeEvent()}}
+{\footnotesize\ttfamily void Filmstrip\+::resize\+Event (\begin{DoxyParamCaption}\item[{QResize\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01793                                            \{}
+\DoxyCodeLine{01794   \textcolor{keywordflow}{if} (m\_isVertical) \{}
+\DoxyCodeLine{01795     m\_frames-\/>updateContentHeight();}
+\DoxyCodeLine{01796     m\_frameArea-\/>verticalScrollBar()-\/>setSingleStep(}
+\DoxyCodeLine{01797         m\_frames-\/>getOneFrameHeight());}
+\DoxyCodeLine{01798   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01799     m\_frames-\/>updateContentWidth();}
+\DoxyCodeLine{01800     m\_frameArea-\/>horizontalScrollBar()-\/>setSingleStep(}
+\DoxyCodeLine{01801         m\_frames-\/>getOneFrameWidth());}
+\DoxyCodeLine{01802   \}}
+\DoxyCodeLine{01803 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_filmstrip_aabeb1b85883cbc0962352b563ec9eee1}\label{class_filmstrip_aabeb1b85883cbc0962352b563ec9eee1}} 
+\index{Filmstrip@{Filmstrip}!save@{save}}
+\index{save@{save}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily void Filmstrip\+::save (\begin{DoxyParamCaption}\item[{QSettings \&}]{settings }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_save_load_q_settings}{Save\+Load\+QSettings}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01938                                               \{}
+\DoxyCodeLine{01939   UINT orientation = 0;}
+\DoxyCodeLine{01940   orientation      = m\_isVertical ? 1 : 0;}
+\DoxyCodeLine{01941   settings.setValue(\textcolor{stringliteral}{"{}vertical"{}}, orientation);}
+\DoxyCodeLine{01942 }
+\DoxyCodeLine{01943   UINT showCombo = 0;}
+\DoxyCodeLine{01944   showCombo      = m\_chooseLevelCombo-\/>isHidden() ? 0 : 1;}
+\DoxyCodeLine{01945   settings.setValue(\textcolor{stringliteral}{"{}showCombo"{}}, showCombo);}
+\DoxyCodeLine{01946 }
+\DoxyCodeLine{01947   UINT navigator = 0;}
+\DoxyCodeLine{01948   navigator      = m\_showNavigator ? 1 : 0;}
+\DoxyCodeLine{01949   settings.setValue(\textcolor{stringliteral}{"{}navigator"{}}, navigator);}
+\DoxyCodeLine{01950 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_filmstrip_ab22df361d81014f0460b6e6d96ef3b58}\label{class_filmstrip_ab22df361d81014f0460b6e6d96ef3b58}} 
+\index{Filmstrip@{Filmstrip}!setOrientation@{setOrientation}}
+\index{setOrientation@{setOrientation}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{setOrientation()}{setOrientation()}}
+{\footnotesize\ttfamily void Filmstrip\+::set\+Orientation (\begin{DoxyParamCaption}\item[{bool}]{is\+Vertical }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01922                                               \{}
+\DoxyCodeLine{01923   m\_isVertical = isVertical;}
+\DoxyCodeLine{01924   \textcolor{keywordflow}{if} (isVertical) \{}
+\DoxyCodeLine{01925     m\_frameArea-\/>setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);}
+\DoxyCodeLine{01926     m\_frameArea-\/>setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);}
+\DoxyCodeLine{01927     m\_frameArea-\/>verticalScrollBar()-\/>setObjectName(\textcolor{stringliteral}{"{}LevelStripScrollBar"{}});}
+\DoxyCodeLine{01928   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01929     m\_frameArea-\/>setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);}
+\DoxyCodeLine{01930     m\_frameArea-\/>setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);}
+\DoxyCodeLine{01931     m\_frameArea-\/>horizontalScrollBar()-\/>setObjectName(\textcolor{stringliteral}{"{}LevelStripScrollBar"{}});}
+\DoxyCodeLine{01932   \}}
+\DoxyCodeLine{01933   m\_frames-\/>setOrientation(m\_isVertical);}
+\DoxyCodeLine{01934   \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_panel}{TPanel}} *\textcolor{keyword}{>}(parentWidget())-\/>setCanFixWidth(m\_isVertical);}
+\DoxyCodeLine{01935 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_filmstrip_acd261f02b11da40618aee719e7e0bab2}\label{class_filmstrip_acd261f02b11da40618aee719e7e0bab2}} 
+\index{Filmstrip@{Filmstrip}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Filmstrip\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01720                                       \{}
+\DoxyCodeLine{01721   \mbox{\hyperlink{class_t_app}{TApp}} *app                    = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{01722   \mbox{\hyperlink{class_t_xsh_level_handle}{TXshLevelHandle}} *levelHandle = app-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}();}
+\DoxyCodeLine{01723   \textcolor{keywordtype}{bool} ret = connect(levelHandle, SIGNAL(xshLevelSwitched(\mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *)),}
+\DoxyCodeLine{01724                      SLOT(\mbox{\hyperlink{class_filmstrip_a2c14f0d0eeb3de4e5a17a2b57bf8320e}{onLevelSwitched}}(\mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *)));}
+\DoxyCodeLine{01725   ret      = ret \&\&}
+\DoxyCodeLine{01726         connect(levelHandle, SIGNAL(xshLevelChanged()), SLOT(onLevelChanged()));}
+\DoxyCodeLine{01727 }
+\DoxyCodeLine{01728   \textcolor{comment}{// updateWindowTitle is called in the onLevelChanged}}
+\DoxyCodeLine{01729   ret = ret \&\& connect(app-\/>getPaletteController()-\/>getCurrentLevelPalette(),}
+\DoxyCodeLine{01730                        SIGNAL(colorStyleChangedOnMouseRelease()),}
+\DoxyCodeLine{01731                        SLOT(onLevelChanged()));}
+\DoxyCodeLine{01732   ret = ret \&\& connect(levelHandle, SIGNAL(xshLevelTitleChanged()),}
+\DoxyCodeLine{01733                        SLOT(onLevelChanged()));}
+\DoxyCodeLine{01734 }
+\DoxyCodeLine{01735   ret =}
+\DoxyCodeLine{01736       ret \&\& connect(m\_frameArea-\/>verticalScrollBar(),}
+\DoxyCodeLine{01737                      SIGNAL(valueChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this}, SLOT(onSliderMoved(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{01738 }
+\DoxyCodeLine{01739   \mbox{\hyperlink{class_t_scene_handle}{TSceneHandle}} *sceneHandle = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}();}
+\DoxyCodeLine{01740   ret = ret \&\& connect(sceneHandle, SIGNAL(sceneSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{01741                        SLOT(\mbox{\hyperlink{class_filmstrip_a0df260ee9f9b64aa9909a3c6cb4bae00}{updateChooseLevelComboItems}}()));}
+\DoxyCodeLine{01742   ret = ret \&\& connect(sceneHandle, SIGNAL(castChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{01743                        SLOT(\mbox{\hyperlink{class_filmstrip_a0df260ee9f9b64aa9909a3c6cb4bae00}{updateChooseLevelComboItems}}()));}
+\DoxyCodeLine{01744 }
+\DoxyCodeLine{01745   ret = ret \&\&}
+\DoxyCodeLine{01746         connect(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentXsheet(), SIGNAL(xsheetChanged()),}
+\DoxyCodeLine{01747                 \textcolor{keyword}{this}, SLOT(\mbox{\hyperlink{class_filmstrip_a0df260ee9f9b64aa9909a3c6cb4bae00}{updateChooseLevelComboItems}}()));}
+\DoxyCodeLine{01748 }
+\DoxyCodeLine{01749   ret = ret \&\& connect(app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}(), SIGNAL(frameSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{01750                        SLOT(onFrameSwitched()));}
+\DoxyCodeLine{01751 }
+\DoxyCodeLine{01752   assert(ret);}
+\DoxyCodeLine{01753 }
+\DoxyCodeLine{01754   \mbox{\hyperlink{class_filmstrip_a0df260ee9f9b64aa9909a3c6cb4bae00}{updateChooseLevelComboItems}}();}
+\DoxyCodeLine{01755   onFrameSwitched();}
+\DoxyCodeLine{01756   \mbox{\hyperlink{class_filmstrip_a2c14f0d0eeb3de4e5a17a2b57bf8320e}{onLevelSwitched}}(0);}
+\DoxyCodeLine{01757 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_filmstrip_a0df260ee9f9b64aa9909a3c6cb4bae00}\label{class_filmstrip_a0df260ee9f9b64aa9909a3c6cb4bae00}} 
+\index{Filmstrip@{Filmstrip}!updateChooseLevelComboItems@{updateChooseLevelComboItems}}
+\index{updateChooseLevelComboItems@{updateChooseLevelComboItems}!Filmstrip@{Filmstrip}}
+\doxysubsubsection{\texorpdfstring{updateChooseLevelComboItems}{updateChooseLevelComboItems}}
+{\footnotesize\ttfamily void Filmstrip\+::update\+Choose\+Level\+Combo\+Items (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+update combo items when the contents of scene cast are changed 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01610                                             \{}
+\DoxyCodeLine{01611   \textcolor{comment}{// clear items}}
+\DoxyCodeLine{01612   m\_chooseLevelCombo-\/>clear();}
+\DoxyCodeLine{01613   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} oldLevel : m\_levels) oldLevel-\/>release();}
+\DoxyCodeLine{01614   m\_levels.clear();}
+\DoxyCodeLine{01615 }
+\DoxyCodeLine{01616   std::map<TXshSimpleLevel *, TFrameId> new\_workingFrames;}
+\DoxyCodeLine{01617 }
+\DoxyCodeLine{01618   \textcolor{comment}{// correct and register items}}
+\DoxyCodeLine{01619   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{01620   \textcolor{keywordflow}{if} (scene) \{}
+\DoxyCodeLine{01621     std::vector<TXshLevel *> levels;}
+\DoxyCodeLine{01622     scene-\/>\mbox{\hyperlink{class_toonz_scene_ac1a8bf0d2cec4f59c87b0001991264b5}{getLevelSet}}()-\/>listLevels(levels);}
+\DoxyCodeLine{01623     std::vector<TXshLevel *>::iterator it;}
+\DoxyCodeLine{01624 }
+\DoxyCodeLine{01625     \textcolor{keywordflow}{for} (it = levels.begin(); it != levels.end(); ++it) \{}
+\DoxyCodeLine{01626       \textcolor{comment}{// register only TLV and PLI}}
+\DoxyCodeLine{01627       \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl = (*it)-\/>\mbox{\hyperlink{class_t_xsh_simple_level_aac1fd1d3ecf0778b8ee139c9119fcdef}{getSimpleLevel}}();}
+\DoxyCodeLine{01628       \textcolor{keywordflow}{if} (sl) \{}
+\DoxyCodeLine{01629         \textcolor{comment}{// register only used level in xsheet}}
+\DoxyCodeLine{01630         \textcolor{keywordflow}{if} (!scene-\/>\mbox{\hyperlink{class_toonz_scene_aaffd562eebbd8faba4caeaed69bfcc18}{getTopXsheet}}()-\/>\mbox{\hyperlink{class_t_xsheet_a2fbaf0d4ff704a20a333f605609c64a1}{isLevelUsed}}(sl)) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01631 }
+\DoxyCodeLine{01632         sl-\/>addRef();}
+\DoxyCodeLine{01633         m\_levels.push\_back(sl);}
+\DoxyCodeLine{01634 }
+\DoxyCodeLine{01635         \textcolor{comment}{// create new m\_workingFrames map with the new levelset}}
+\DoxyCodeLine{01636         \mbox{\hyperlink{class_t_frame_id}{TFrameId}} fId;}
+\DoxyCodeLine{01637         std::map<TXshSimpleLevel *, TFrameId>::iterator WFit =}
+\DoxyCodeLine{01638             m\_workingFrames.find(sl);}
+\DoxyCodeLine{01639 }
+\DoxyCodeLine{01640         \textcolor{keywordflow}{if} (WFit != m\_workingFrames.end())}
+\DoxyCodeLine{01641           fId = WFit-\/>second;}
+\DoxyCodeLine{01642         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01643           fId = sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a18862340ce6e813778b40a7913b13252}{getFirstFid}}();}
+\DoxyCodeLine{01644 }
+\DoxyCodeLine{01645         new\_workingFrames.insert(std::make\_pair(sl, fId));}
+\DoxyCodeLine{01646 }
+\DoxyCodeLine{01647         QString levelName = QString::fromStdWString(sl-\/>\mbox{\hyperlink{class_t_xsh_level_a3a59fb1bd3261baee4e889a9edbf0ae8}{getName}}());}
+\DoxyCodeLine{01648         \textcolor{keywordflow}{if} (sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_ad412dd5c3a6ae3ff20a480dc728b26d2}{getProperties}}()-\/>\mbox{\hyperlink{class_level_properties_a19cc395b0312bc880b1d765c93720967}{getDirtyFlag}}()) levelName += \textcolor{stringliteral}{"{} *"{}};}
+\DoxyCodeLine{01649 }
+\DoxyCodeLine{01650         \textcolor{comment}{// append the current working frame number to the item name}}
+\DoxyCodeLine{01651         \textcolor{keywordflow}{if} (fId != sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a18862340ce6e813778b40a7913b13252}{getFirstFid}}() \&\& fId.getNumber() >= 0)}
+\DoxyCodeLine{01652           levelName +=}
+\DoxyCodeLine{01653               QString(\textcolor{stringliteral}{"{}  [\#"{}}) + QString::number(fId.getNumber()) + QString(\textcolor{stringliteral}{"{}]"{}});}
+\DoxyCodeLine{01654 }
+\DoxyCodeLine{01655         m\_chooseLevelCombo-\/>addItem(levelName);}
+\DoxyCodeLine{01656       \}}
+\DoxyCodeLine{01657     \}}
+\DoxyCodeLine{01658   \}}
+\DoxyCodeLine{01659 }
+\DoxyCodeLine{01660   \textcolor{keywordflow}{if} (m\_chooseLevelCombo-\/>count() == 0)}
+\DoxyCodeLine{01661     m\_chooseLevelCombo-\/>addItem(tr(\textcolor{stringliteral}{"{}-\/ No Current Level -\/"{}}));}
+\DoxyCodeLine{01662 }
+\DoxyCodeLine{01663   \textcolor{comment}{// swap the list}}
+\DoxyCodeLine{01664   m\_workingFrames.clear();}
+\DoxyCodeLine{01665   m\_workingFrames = new\_workingFrames;}
+\DoxyCodeLine{01666 }
+\DoxyCodeLine{01667   \textcolor{comment}{// synchronize the current index of combo to the current level}}
+\DoxyCodeLine{01668   updateCurrentLevelComboItem();}
+\DoxyCodeLine{01669 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00106}{TApp\+::get\+Current\+Scene()}}, \mbox{\hyperlink{l00086}{Level\+Properties\+::get\+Dirty\+Flag()}}, \mbox{\hyperlink{l00466}{TXsh\+Simple\+Level\+::get\+First\+Fid()}}, \mbox{\hyperlink{l00093}{Toonz\+Scene\+::get\+Level\+Set()}}, \mbox{\hyperlink{l00115}{TXsh\+Level\+::get\+Name()}}, \mbox{\hyperlink{l00109}{TXsh\+Simple\+Level\+::get\+Properties()}}, \mbox{\hyperlink{l00092}{TXsh\+Simple\+Level\+::get\+Simple\+Level()}}, \mbox{\hyperlink{l00961}{Toonz\+Scene\+::get\+Top\+Xsheet()}}, \mbox{\hyperlink{l00215}{TApp\+::instance()}}, and \mbox{\hyperlink{l00534}{TXsheet\+::is\+Level\+Used()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/filmstrip.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/filmstrip.\+cpp\end{DoxyCompactItemize}

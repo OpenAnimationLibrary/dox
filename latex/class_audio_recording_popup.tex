@@ -1,0 +1,424 @@
+\hypertarget{class_audio_recording_popup}{}\doxysection{Audio\+Recording\+Popup Class Reference}
+\label{class_audio_recording_popup}\index{AudioRecordingPopup@{AudioRecordingPopup}}
+Inheritance diagram for Audio\+Recording\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_audio_recording_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_audio_recording_popup_a5aa1c576d83e9d3b1253458c99b3f3ab}{show\+Event}} (QShow\+Event $\ast$event)
+\item 
+void \mbox{\hyperlink{class_audio_recording_popup_a6abe108ff228ae0b6b9a43236f659e65}{hide\+Event}} (QHide\+Event $\ast$event)
+\item 
+void \mbox{\hyperlink{class_audio_recording_popup_a0bb2456bd640b01e6aad82d8cfc6b3a6}{make\+Paths}} ()
+\item 
+void \mbox{\hyperlink{class_audio_recording_popup_a35be567f9f1291f58d8fca812aafb05b}{reset\+Everything}} ()
+\item 
+void \mbox{\hyperlink{class_audio_recording_popup_a3ecac45e9cce40a07560c2df416bdff9}{enumerate\+Audio\+Devices}} (const QString \&device\+Name)
+\item 
+void \mbox{\hyperlink{class_audio_recording_popup_aeeb82c5ab303505e54f88fb1b794a742}{reinit\+Audio\+Input}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_audio_recording_popup_a21bc47780ed4b847df80493b6061dea5}\label{class_audio_recording_popup_a21bc47780ed4b847df80493b6061dea5}} 
+\index{AudioRecordingPopup@{AudioRecordingPopup}!AudioRecordingPopup@{AudioRecordingPopup}}
+\index{AudioRecordingPopup@{AudioRecordingPopup}!AudioRecordingPopup@{AudioRecordingPopup}}
+\doxysubsubsection{\texorpdfstring{AudioRecordingPopup()}{AudioRecordingPopup()}}
+{\footnotesize\ttfamily Audio\+Recording\+Popup\+::\+Audio\+Recording\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057     : Dialog(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{false}, \textcolor{keyword}{true}, \textcolor{stringliteral}{"{}AudioRecording"{}}) \{}
+\DoxyCodeLine{00058   setWindowTitle(tr(\textcolor{stringliteral}{"{}Audio Recording"{}}));}
+\DoxyCodeLine{00059   m\_isPlaying            = \textcolor{keyword}{false};}
+\DoxyCodeLine{00060   m\_syncPlayback         = \textcolor{keyword}{true};}
+\DoxyCodeLine{00061   m\_currentFrame         = 0;}
+\DoxyCodeLine{00062   m\_recordButton         = \textcolor{keyword}{new} QPushButton(\textcolor{keyword}{this});}
+\DoxyCodeLine{00063   m\_playButton           = \textcolor{keyword}{new} QPushButton(\textcolor{keyword}{this});}
+\DoxyCodeLine{00064   m\_saveButton           = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Save and Insert"{}}));}
+\DoxyCodeLine{00065   m\_pauseRecordingButton = \textcolor{keyword}{new} QPushButton(\textcolor{keyword}{this});}
+\DoxyCodeLine{00066   m\_pausePlaybackButton  = \textcolor{keyword}{new} QPushButton(\textcolor{keyword}{this});}
+\DoxyCodeLine{00067   m\_refreshDevicesButton = \textcolor{keyword}{new} QPushButton(\textcolor{keyword}{this});}
+\DoxyCodeLine{00068   m\_duration           = \textcolor{keyword}{new} QLabel(\textcolor{stringliteral}{"{}00:00.000"{}});}
+\DoxyCodeLine{00069   m\_playDuration       = \textcolor{keyword}{new} QLabel(\textcolor{stringliteral}{"{}00:00.000"{}});}
+\DoxyCodeLine{00070   m\_deviceListCB       = \textcolor{keyword}{new} QComboBox();}
+\DoxyCodeLine{00071   m\_audioLevelsDisplay = \textcolor{keyword}{new} \mbox{\hyperlink{class_audio_levels_display}{AudioLevelsDisplay}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00072   m\_playXSheetCB       = \textcolor{keyword}{new} QCheckBox(tr(\textcolor{stringliteral}{"{}Sync with XSheet/Timeline"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00073   m\_timer              = \textcolor{keyword}{new} QElapsedTimer();}
+\DoxyCodeLine{00074   m\_recordedLevels     = QMap<qint64, double>();}
+\DoxyCodeLine{00075   m\_player             = \textcolor{keyword}{new} QMediaPlayer(\textcolor{keyword}{this});}
+\DoxyCodeLine{00076   m\_console            = FlipConsole::getCurrent();}
+\DoxyCodeLine{00077 }
+\DoxyCodeLine{00078   m\_labelDevice     = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Device: "{}}));}
+\DoxyCodeLine{00079   m\_labelSamplerate = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Sample rate: "{}}));}
+\DoxyCodeLine{00080   m\_labelSamplefmt  = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Sample format: "{}}));}
+\DoxyCodeLine{00081   m\_comboSamplerate = \textcolor{keyword}{new} QComboBox();}
+\DoxyCodeLine{00082   m\_comboSamplefmt  = \textcolor{keyword}{new} QComboBox();}
+\DoxyCodeLine{00083   m\_comboSamplerate-\/>addItem(tr(\textcolor{stringliteral}{"{}8000 Hz"{}}), QVariant::fromValue(8000));}
+\DoxyCodeLine{00084   m\_comboSamplerate-\/>addItem(tr(\textcolor{stringliteral}{"{}11025 Hz"{}}), QVariant::fromValue(11025));}
+\DoxyCodeLine{00085   m\_comboSamplerate-\/>addItem(tr(\textcolor{stringliteral}{"{}22050 Hz"{}}), QVariant::fromValue(22050));}
+\DoxyCodeLine{00086   m\_comboSamplerate-\/>addItem(tr(\textcolor{stringliteral}{"{}44100 Hz"{}}), QVariant::fromValue(44100));}
+\DoxyCodeLine{00087   m\_comboSamplerate-\/>addItem(tr(\textcolor{stringliteral}{"{}48000 Hz"{}}), QVariant::fromValue(48000));}
+\DoxyCodeLine{00088   m\_comboSamplerate-\/>addItem(tr(\textcolor{stringliteral}{"{}96000 Hz"{}}), QVariant::fromValue(96000));}
+\DoxyCodeLine{00089   m\_comboSamplerate-\/>setCurrentIndex(3);  \textcolor{comment}{// 44.1KHz}}
+\DoxyCodeLine{00090   m\_comboSamplefmt-\/>addItem(tr(\textcolor{stringliteral}{"{}Mono 8-\/Bits"{}}), QVariant::fromValue(9));}
+\DoxyCodeLine{00091   m\_comboSamplefmt-\/>addItem(tr(\textcolor{stringliteral}{"{}Stereo 8-\/Bits"{}}), QVariant::fromValue(10));}
+\DoxyCodeLine{00092   m\_comboSamplefmt-\/>addItem(tr(\textcolor{stringliteral}{"{}Mono 16-\/Bits"{}}), QVariant::fromValue(17));}
+\DoxyCodeLine{00093   m\_comboSamplefmt-\/>addItem(tr(\textcolor{stringliteral}{"{}Stereo 16-\/Bits"{}}), QVariant::fromValue(18));}
+\DoxyCodeLine{00094   m\_comboSamplefmt-\/>setCurrentIndex(2);  \textcolor{comment}{// Mono 16-\/Bits}}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096   m\_recordButton-\/>setMaximumWidth(32);}
+\DoxyCodeLine{00097   m\_playButton-\/>setMaximumWidth(32);}
+\DoxyCodeLine{00098   m\_pauseRecordingButton-\/>setMaximumWidth(32);}
+\DoxyCodeLine{00099   m\_pausePlaybackButton-\/>setMaximumWidth(32);}
+\DoxyCodeLine{00100   m\_refreshDevicesButton-\/>setMaximumWidth(25);}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102   QString playDisabled   = QString(\textcolor{stringliteral}{"{}:Resources/play\_disabled.svg"{}});}
+\DoxyCodeLine{00103   QString pauseDisabled  = QString(\textcolor{stringliteral}{"{}:Resources/pause\_disabled.svg"{}});}
+\DoxyCodeLine{00104   QString stopDisabled   = QString(\textcolor{stringliteral}{"{}:Resources/stop\_disabled.svg"{}});}
+\DoxyCodeLine{00105   QString recordDisabled = QString(\textcolor{stringliteral}{"{}:Resources/record\_disabled.svg"{}});}
+\DoxyCodeLine{00106   QString refreshDisabled = QString(\textcolor{stringliteral}{"{}:Resources/repeat\_icon.svg"{}});}
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108   m\_pauseIcon = createQIcon(\textcolor{stringliteral}{"{}pause"{}});}
+\DoxyCodeLine{00109   m\_pauseIcon.addFile(pauseDisabled, QSize(), QIcon::Disabled);}
+\DoxyCodeLine{00110   m\_playIcon = createQIcon(\textcolor{stringliteral}{"{}play"{}});}
+\DoxyCodeLine{00111   m\_playIcon.addFile(playDisabled, QSize(), QIcon::Disabled);}
+\DoxyCodeLine{00112   m\_recordIcon = createQIcon(\textcolor{stringliteral}{"{}record"{}});}
+\DoxyCodeLine{00113   m\_recordIcon.addFile(recordDisabled, QSize(), QIcon::Disabled);}
+\DoxyCodeLine{00114   m\_stopIcon = createQIcon(\textcolor{stringliteral}{"{}stop"{}});}
+\DoxyCodeLine{00115   m\_stopIcon.addFile(stopDisabled, QSize(), QIcon::Disabled);}
+\DoxyCodeLine{00116   m\_refreshIcon = createQIcon(\textcolor{stringliteral}{"{}repeat"{}});}
+\DoxyCodeLine{00117   m\_refreshIcon.addFile(refreshDisabled, QSize(), QIcon::Disabled);}
+\DoxyCodeLine{00118 }
+\DoxyCodeLine{00119   m\_pauseRecordingButton-\/>setIcon(m\_pauseIcon);}
+\DoxyCodeLine{00120   m\_pauseRecordingButton-\/>setIconSize(QSize(17, 17));}
+\DoxyCodeLine{00121   m\_playButton-\/>setIcon(m\_playIcon);}
+\DoxyCodeLine{00122   m\_playButton-\/>setIconSize(QSize(17, 17));}
+\DoxyCodeLine{00123   m\_recordButton-\/>setIcon(m\_recordIcon);}
+\DoxyCodeLine{00124   m\_recordButton-\/>setIconSize(QSize(17, 17));}
+\DoxyCodeLine{00125   m\_pausePlaybackButton-\/>setIcon(m\_pauseIcon);}
+\DoxyCodeLine{00126   m\_pausePlaybackButton-\/>setIconSize(QSize(17, 17));}
+\DoxyCodeLine{00127   m\_refreshDevicesButton-\/>setIcon(m\_refreshIcon);}
+\DoxyCodeLine{00128   m\_refreshDevicesButton-\/>setIconSize(QSize(17, 17));}
+\DoxyCodeLine{00129 }
+\DoxyCodeLine{00130   \textcolor{comment}{// Enumerate devices and initialize default device}}
+\DoxyCodeLine{00131   enumerateAudioDevices(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00132   QAudioDeviceInfo m\_audioDeviceInfo = QAudioDeviceInfo::defaultInputDevice();}
+\DoxyCodeLine{00133   QAudioFormat format;}
+\DoxyCodeLine{00134   format.setSampleRate(44100);}
+\DoxyCodeLine{00135   format.setChannelCount(1);}
+\DoxyCodeLine{00136   format.setSampleSize(16);}
+\DoxyCodeLine{00137   format.setSampleType(QAudioFormat::SignedInt);}
+\DoxyCodeLine{00138   format.setByteOrder(QAudioFormat::LittleEndian);}
+\DoxyCodeLine{00139   format.setCodec(\textcolor{stringliteral}{"{}audio/pcm"{}});}
+\DoxyCodeLine{00140   \textcolor{keywordflow}{if} (!m\_audioDeviceInfo.isFormatSupported(format)) \{}
+\DoxyCodeLine{00141     format = m\_audioDeviceInfo.nearestFormat(format);}
+\DoxyCodeLine{00142   \}}
+\DoxyCodeLine{00143   m\_audioInput = \textcolor{keyword}{new} QAudioInput(m\_audioDeviceInfo, format);}
+\DoxyCodeLine{00144   m\_audioWriterWAV = \textcolor{keyword}{new} \mbox{\hyperlink{class_audio_writer_w_a_v}{AudioWriterWAV}}(format);}
+\DoxyCodeLine{00145 }
+\DoxyCodeLine{00146   \textcolor{comment}{// Tool tips to provide additional info to the user}}
+\DoxyCodeLine{00147   m\_deviceListCB-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Audio input device to record"{}}));}
+\DoxyCodeLine{00148   m\_comboSamplerate-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Number of samples per second, 44.1KHz = CD Quality"{}}));}
+\DoxyCodeLine{00149   m\_comboSamplefmt-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Number of channels and bits per sample, 16-\/bits recommended"{}}));}
+\DoxyCodeLine{00150   m\_playXSheetCB-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Play animation from current frame while recording/playback"{}}));}
+\DoxyCodeLine{00151   m\_saveButton-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Save recording and insert into new column"{}}));}
+\DoxyCodeLine{00152   m\_refreshDevicesButton-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Refresh list of connected audio input devices"{}}));}
+\DoxyCodeLine{00153 }
+\DoxyCodeLine{00154   m\_topLayout-\/>setMargin(5);}
+\DoxyCodeLine{00155   m\_topLayout-\/>setSpacing(8);}
+\DoxyCodeLine{00156 }
+\DoxyCodeLine{00157   QVBoxLayout *mainLay = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00158   mainLay-\/>setSpacing(3);}
+\DoxyCodeLine{00159   mainLay-\/>setMargin(3);}
+\DoxyCodeLine{00160   \{}
+\DoxyCodeLine{00161     QGridLayout *recordGridLay = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00162     recordGridLay-\/>setHorizontalSpacing(2);}
+\DoxyCodeLine{00163     recordGridLay-\/>setVerticalSpacing(3);}
+\DoxyCodeLine{00164     \{}
+\DoxyCodeLine{00165       recordGridLay-\/>addWidget(m\_labelDevice, 0, 0, 1, 2, Qt::AlignRight);}
+\DoxyCodeLine{00166       recordGridLay-\/>addWidget(m\_deviceListCB, 0, 2, 1, 2, Qt::AlignLeft);}
+\DoxyCodeLine{00167 }
+\DoxyCodeLine{00168       recordGridLay-\/>addWidget(m\_labelSamplerate, 1, 0, 1, 2, Qt::AlignRight);}
+\DoxyCodeLine{00169       recordGridLay-\/>addWidget(m\_comboSamplerate, 1, 2, 1, 1, Qt::AlignLeft);}
+\DoxyCodeLine{00170       recordGridLay-\/>addWidget(m\_refreshDevicesButton, 1, 3, Qt::AlignRight);}
+\DoxyCodeLine{00171 }
+\DoxyCodeLine{00172       recordGridLay-\/>addWidget(m\_labelSamplefmt, 2, 0, 1, 2, Qt::AlignRight);}
+\DoxyCodeLine{00173       recordGridLay-\/>addWidget(m\_comboSamplefmt, 2, 2, 1, 2, Qt::AlignLeft);}
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00175       recordGridLay-\/>addWidget(m\_audioLevelsDisplay, 3, 0, 1, 4,}
+\DoxyCodeLine{00176                                Qt::AlignCenter);}
+\DoxyCodeLine{00177       recordGridLay-\/>addWidget(m\_playXSheetCB, 4, 0, 1, 5, Qt::AlignCenter);}
+\DoxyCodeLine{00178       QHBoxLayout *recordLay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00179       recordLay-\/>setSpacing(4);}
+\DoxyCodeLine{00180       recordLay-\/>setContentsMargins(0, 0, 0, 0);}
+\DoxyCodeLine{00181       \{}
+\DoxyCodeLine{00182         recordLay-\/>addStretch();}
+\DoxyCodeLine{00183         recordLay-\/>addWidget(m\_recordButton);}
+\DoxyCodeLine{00184         recordLay-\/>addWidget(m\_pauseRecordingButton);}
+\DoxyCodeLine{00185         recordLay-\/>addWidget(m\_duration);}
+\DoxyCodeLine{00186         recordLay-\/>addStretch();}
+\DoxyCodeLine{00187       \}}
+\DoxyCodeLine{00188       recordGridLay-\/>addLayout(recordLay, 5, 0, 1, 4, Qt::AlignCenter);}
+\DoxyCodeLine{00189       QHBoxLayout *playLay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00190       playLay-\/>setSpacing(4);}
+\DoxyCodeLine{00191       playLay-\/>setContentsMargins(0, 0, 0, 0);}
+\DoxyCodeLine{00192       \{}
+\DoxyCodeLine{00193         playLay-\/>addStretch();}
+\DoxyCodeLine{00194         playLay-\/>addWidget(m\_playButton);}
+\DoxyCodeLine{00195         playLay-\/>addWidget(m\_pausePlaybackButton);}
+\DoxyCodeLine{00196         playLay-\/>addWidget(m\_playDuration);}
+\DoxyCodeLine{00197         playLay-\/>addStretch();}
+\DoxyCodeLine{00198       \}}
+\DoxyCodeLine{00199       recordGridLay-\/>addLayout(playLay, 6, 0, 1, 4, Qt::AlignCenter);}
+\DoxyCodeLine{00200       recordGridLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{} "{}})), 7, 0, Qt::AlignCenter);}
+\DoxyCodeLine{00201       recordGridLay-\/>addWidget(m\_saveButton, 8, 0, 1, 4,}
+\DoxyCodeLine{00202                                Qt::AlignCenter | Qt::AlignVCenter);}
+\DoxyCodeLine{00203     \}}
+\DoxyCodeLine{00204     recordGridLay-\/>setColumnStretch(0, 0);}
+\DoxyCodeLine{00205     recordGridLay-\/>setColumnStretch(1, 0);}
+\DoxyCodeLine{00206     recordGridLay-\/>setColumnStretch(2, 0);}
+\DoxyCodeLine{00207     recordGridLay-\/>setColumnStretch(3, 0);}
+\DoxyCodeLine{00208     recordGridLay-\/>setColumnStretch(4, 0);}
+\DoxyCodeLine{00209     recordGridLay-\/>setColumnStretch(5, 0);}
+\DoxyCodeLine{00210 }
+\DoxyCodeLine{00211     mainLay-\/>addLayout(recordGridLay);}
+\DoxyCodeLine{00212   \}}
+\DoxyCodeLine{00213   m\_topLayout-\/>addLayout(mainLay, 0);}
+\DoxyCodeLine{00214 }
+\DoxyCodeLine{00215   makePaths();}
+\DoxyCodeLine{00216 }
+\DoxyCodeLine{00217   m\_playXSheetCB-\/>setChecked(\textcolor{keyword}{true});}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219   connect(m\_playXSheetCB, SIGNAL(stateChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00220           SLOT(onPlayXSheetCBChanged(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00221   connect(m\_saveButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onSaveButtonPressed()));}
+\DoxyCodeLine{00222   connect(m\_recordButton, SIGNAL(clicked()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00223           SLOT(onRecordButtonPressed()));}
+\DoxyCodeLine{00224   connect(m\_playButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onPlayButtonPressed()));}
+\DoxyCodeLine{00225   connect(m\_pauseRecordingButton, SIGNAL(clicked()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00226           SLOT(onPauseRecordingButtonPressed()));}
+\DoxyCodeLine{00227   connect(m\_pausePlaybackButton, SIGNAL(clicked()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00228           SLOT(onPausePlaybackButtonPressed()));}
+\DoxyCodeLine{00229   connect(m\_audioWriterWAV, SIGNAL(update(qint64)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00230           SLOT(updateRecordDuration(qint64)));}
+\DoxyCodeLine{00231   \textcolor{keywordflow}{if} (m\_console) connect(m\_console, SIGNAL(playStateChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00232           SLOT(onPlayStateChanged(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00233   connect(m\_deviceListCB, SIGNAL(currentTextChanged(\textcolor{keyword}{const} QString)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00234           SLOT(onInputDeviceChanged()));}
+\DoxyCodeLine{00235   connect(m\_refreshDevicesButton, SIGNAL(clicked()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00236           SLOT(onRefreshButtonPressed()));}
+\DoxyCodeLine{00237   connect(m\_comboSamplerate, SIGNAL(currentTextChanged(\textcolor{keyword}{const} QString)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00238           SLOT(onAudioSettingChanged()));}
+\DoxyCodeLine{00239   connect(m\_comboSamplefmt, SIGNAL(currentTextChanged(\textcolor{keyword}{const} QString)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00240           SLOT(onAudioSettingChanged()));}
+\DoxyCodeLine{00241 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_audio_recording_popup_a33c771a38ed0f70c5f06fae5d47adeda}\label{class_audio_recording_popup_a33c771a38ed0f70c5f06fae5d47adeda}} 
+\index{AudioRecordingPopup@{AudioRecordingPopup}!````~AudioRecordingPopup@{$\sim$AudioRecordingPopup}}
+\index{````~AudioRecordingPopup@{$\sim$AudioRecordingPopup}!AudioRecordingPopup@{AudioRecordingPopup}}
+\doxysubsubsection{\texorpdfstring{$\sim$AudioRecordingPopup()}{~AudioRecordingPopup()}}
+{\footnotesize\ttfamily Audio\+Recording\+Popup\+::$\sim$\+Audio\+Recording\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00245 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_audio_recording_popup_a3ecac45e9cce40a07560c2df416bdff9}\label{class_audio_recording_popup_a3ecac45e9cce40a07560c2df416bdff9}} 
+\index{AudioRecordingPopup@{AudioRecordingPopup}!enumerateAudioDevices@{enumerateAudioDevices}}
+\index{enumerateAudioDevices@{enumerateAudioDevices}!AudioRecordingPopup@{AudioRecordingPopup}}
+\doxysubsubsection{\texorpdfstring{enumerateAudioDevices()}{enumerateAudioDevices()}}
+{\footnotesize\ttfamily void Audio\+Recording\+Popup\+::enumerate\+Audio\+Devices (\begin{DoxyParamCaption}\item[{const QString \&}]{device\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00637                                                                                  \{}
+\DoxyCodeLine{00638   \textcolor{keyword}{const} QAudioDeviceInfo \&defaultDeviceInfo =}
+\DoxyCodeLine{00639       QAudioDeviceInfo::defaultInputDevice();}
+\DoxyCodeLine{00640 }
+\DoxyCodeLine{00641   m\_blockAudioSettings = \textcolor{keyword}{true};}
+\DoxyCodeLine{00642   m\_deviceListCB-\/>clear();}
+\DoxyCodeLine{00643   m\_deviceListCB-\/>addItem(defaultDeviceInfo.deviceName(),}
+\DoxyCodeLine{00644                           QVariant::fromValue(defaultDeviceInfo));}
+\DoxyCodeLine{00645 }
+\DoxyCodeLine{00646   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \&deviceInfo :}
+\DoxyCodeLine{00647        QAudioDeviceInfo::availableDevices(QAudio::AudioInput)) \{}
+\DoxyCodeLine{00648     \textcolor{keywordflow}{if} (deviceInfo != defaultDeviceInfo \&\&}
+\DoxyCodeLine{00649         m\_deviceListCB-\/>findText(deviceInfo.deviceName()) == -\/1) \{}
+\DoxyCodeLine{00650       m\_deviceListCB-\/>addItem(deviceInfo.deviceName(),}
+\DoxyCodeLine{00651                               QVariant::fromValue(deviceInfo));}
+\DoxyCodeLine{00652     \}}
+\DoxyCodeLine{00653   \}}
+\DoxyCodeLine{00654 }
+\DoxyCodeLine{00655   \textcolor{keywordtype}{int} deviceIndex = m\_deviceListCB-\/>findText(selectedDeviceName);}
+\DoxyCodeLine{00656   \textcolor{keywordflow}{if} (deviceIndex != -\/1) m\_deviceListCB-\/>setCurrentIndex(deviceIndex);}
+\DoxyCodeLine{00657   m\_blockAudioSettings = \textcolor{keyword}{false};}
+\DoxyCodeLine{00658 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_audio_recording_popup_a6abe108ff228ae0b6b9a43236f659e65}\label{class_audio_recording_popup_a6abe108ff228ae0b6b9a43236f659e65}} 
+\index{AudioRecordingPopup@{AudioRecordingPopup}!hideEvent@{hideEvent}}
+\index{hideEvent@{hideEvent}!AudioRecordingPopup@{AudioRecordingPopup}}
+\doxysubsubsection{\texorpdfstring{hideEvent()}{hideEvent()}}
+{\footnotesize\ttfamily void Audio\+Recording\+Popup\+::hide\+Event (\begin{DoxyParamCaption}\item[{QHide\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00615                                                      \{}
+\DoxyCodeLine{00616   \textcolor{keywordflow}{if} (m\_audioInput-\/>state() != QAudio::StoppedState) \{}
+\DoxyCodeLine{00617     m\_audioInput-\/>stop();}
+\DoxyCodeLine{00618     m\_audioWriterWAV-\/>stop();}
+\DoxyCodeLine{00619   \}}
+\DoxyCodeLine{00620   \textcolor{keywordflow}{if} (m\_player-\/>state() != QMediaPlayer::StoppedState) \{}
+\DoxyCodeLine{00621     m\_player-\/>stop();}
+\DoxyCodeLine{00622   \}}
+\DoxyCodeLine{00623   \textcolor{comment}{// make sure the file is freed before deleting}}
+\DoxyCodeLine{00624   \textcolor{keyword}{delete} m\_player;}
+\DoxyCodeLine{00625   m\_player = \textcolor{keyword}{new} QMediaPlayer(\textcolor{keyword}{this});}
+\DoxyCodeLine{00626   \textcolor{comment}{// this should only remove files that haven't been used in the scene}}
+\DoxyCodeLine{00627   \textcolor{comment}{// make paths checks to only create path names that don't exist yet.}}
+\DoxyCodeLine{00628   \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(\mbox{\hyperlink{class_t_file_path}{TFilePath}}(m\_filePath.getQString()))) \{}
+\DoxyCodeLine{00629     TSystem::removeFileOrLevel(\mbox{\hyperlink{class_t_file_path}{TFilePath}}(m\_filePath.getQString()));}
+\DoxyCodeLine{00630   \}}
+\DoxyCodeLine{00631   \textcolor{comment}{// Free up memory used in recording}}
+\DoxyCodeLine{00632   m\_recordedLevels.clear();}
+\DoxyCodeLine{00633 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_audio_recording_popup_a0bb2456bd640b01e6aad82d8cfc6b3a6}\label{class_audio_recording_popup_a0bb2456bd640b01e6aad82d8cfc6b3a6}} 
+\index{AudioRecordingPopup@{AudioRecordingPopup}!makePaths@{makePaths}}
+\index{makePaths@{makePaths}!AudioRecordingPopup@{AudioRecordingPopup}}
+\doxysubsubsection{\texorpdfstring{makePaths()}{makePaths()}}
+{\footnotesize\ttfamily void Audio\+Recording\+Popup\+::make\+Paths (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00554                                     \{}
+\DoxyCodeLine{00555   \mbox{\hyperlink{class_t_file_path}{TFilePath}} savePath =}
+\DoxyCodeLine{00556       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene()-\/>\mbox{\hyperlink{class_toonz_scene_a3f7940ad6794546ba923304231820f00}{getDefaultLevelPath}}(}
+\DoxyCodeLine{00557           TXshLevelType::SND\_XSHLEVEL);}
+\DoxyCodeLine{00558   savePath =}
+\DoxyCodeLine{00559       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene()-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(savePath);}
+\DoxyCodeLine{00560   savePath = savePath.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}();}
+\DoxyCodeLine{00561 }
+\DoxyCodeLine{00562   std::string strPath = savePath.getQString().toStdString();}
+\DoxyCodeLine{00563   \textcolor{keywordtype}{int} number          = 1;}
+\DoxyCodeLine{00564   \mbox{\hyperlink{class_t_file_path}{TFilePath}} finalPath =}
+\DoxyCodeLine{00565       savePath + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(\textcolor{stringliteral}{"{}recordedAudio"{}} + QString::number(number) + \textcolor{stringliteral}{"{}.wav"{}});}
+\DoxyCodeLine{00566   \textcolor{keywordflow}{while} (TSystem::doesExistFileOrLevel(finalPath)) \{}
+\DoxyCodeLine{00567     number++;}
+\DoxyCodeLine{00568     finalPath = savePath +}
+\DoxyCodeLine{00569                 \mbox{\hyperlink{class_t_file_path}{TFilePath}}(\textcolor{stringliteral}{"{}recordedAudio"{}} + QString::number(number) + \textcolor{stringliteral}{"{}.wav"{}});}
+\DoxyCodeLine{00570   \}}
+\DoxyCodeLine{00571   m\_filePath = finalPath;}
+\DoxyCodeLine{00572 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_audio_recording_popup_aeeb82c5ab303505e54f88fb1b794a742}\label{class_audio_recording_popup_aeeb82c5ab303505e54f88fb1b794a742}} 
+\index{AudioRecordingPopup@{AudioRecordingPopup}!reinitAudioInput@{reinitAudioInput}}
+\index{reinitAudioInput@{reinitAudioInput}!AudioRecordingPopup@{AudioRecordingPopup}}
+\doxysubsubsection{\texorpdfstring{reinitAudioInput()}{reinitAudioInput()}}
+{\footnotesize\ttfamily void Audio\+Recording\+Popup\+::reinit\+Audio\+Input (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00662                                            \{}
+\DoxyCodeLine{00663   \textcolor{keywordflow}{if} (m\_blockAudioSettings) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00664 }
+\DoxyCodeLine{00665   QAudioDeviceInfo m\_audioDeviceInfo =}
+\DoxyCodeLine{00666       m\_deviceListCB-\/>itemData(m\_deviceListCB-\/>currentIndex())}
+\DoxyCodeLine{00667           .value<QAudioDeviceInfo>();}
+\DoxyCodeLine{00668   \textcolor{keywordtype}{int} samplerate =}
+\DoxyCodeLine{00669       m\_comboSamplerate-\/>itemData(m\_comboSamplerate-\/>currentIndex())}
+\DoxyCodeLine{00670           .value<int>();}
+\DoxyCodeLine{00671   \textcolor{keywordtype}{int} sampletype =}
+\DoxyCodeLine{00672       m\_comboSamplefmt-\/>itemData(m\_comboSamplefmt-\/>currentIndex()).value<int>();}
+\DoxyCodeLine{00673   \textcolor{keywordtype}{int} bitdepth = sampletype \& 56;}
+\DoxyCodeLine{00674   \textcolor{keywordtype}{int} channels = sampletype \& 7;}
+\DoxyCodeLine{00675 }
+\DoxyCodeLine{00676   QAudioFormat format;}
+\DoxyCodeLine{00677   format.setSampleRate(samplerate);}
+\DoxyCodeLine{00678   format.setChannelCount(channels);}
+\DoxyCodeLine{00679   format.setSampleSize(bitdepth);}
+\DoxyCodeLine{00680   format.setSampleType(bitdepth == 8 ? QAudioFormat::UnSignedInt}
+\DoxyCodeLine{00681                                      : QAudioFormat::SignedInt);}
+\DoxyCodeLine{00682   format.setByteOrder(QAudioFormat::LittleEndian);}
+\DoxyCodeLine{00683   format.setCodec(\textcolor{stringliteral}{"{}audio/pcm"{}});}
+\DoxyCodeLine{00684   \textcolor{keywordflow}{if} (!m\_audioDeviceInfo.isFormatSupported(format)) \{}
+\DoxyCodeLine{00685     DVGui::warning(tr(}
+\DoxyCodeLine{00686         \textcolor{stringliteral}{"{}Audio format unsupported:\(\backslash\)nNearest format will be internally used."{}}));}
+\DoxyCodeLine{00687     format = m\_audioDeviceInfo.nearestFormat(format);}
+\DoxyCodeLine{00688   \}}
+\DoxyCodeLine{00689 }
+\DoxyCodeLine{00690   \textcolor{comment}{// Recreate input}}
+\DoxyCodeLine{00691   \textcolor{keyword}{delete} m\_audioInput;}
+\DoxyCodeLine{00692   m\_audioInput = \textcolor{keyword}{new} QAudioInput(m\_audioDeviceInfo, format);}
+\DoxyCodeLine{00693   m\_audioWriterWAV-\/>restart(format);}
+\DoxyCodeLine{00694 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_audio_recording_popup_a35be567f9f1291f58d8fca812aafb05b}\label{class_audio_recording_popup_a35be567f9f1291f58d8fca812aafb05b}} 
+\index{AudioRecordingPopup@{AudioRecordingPopup}!resetEverything@{resetEverything}}
+\index{resetEverything@{resetEverything}!AudioRecordingPopup@{AudioRecordingPopup}}
+\doxysubsubsection{\texorpdfstring{resetEverything()}{resetEverything()}}
+{\footnotesize\ttfamily void Audio\+Recording\+Popup\+::reset\+Everything (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00587                                           \{}
+\DoxyCodeLine{00588   m\_saveButton-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00589   m\_playButton-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00590   m\_recordButton-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00591   m\_recordButton-\/>setIcon(m\_recordIcon);}
+\DoxyCodeLine{00592   m\_playButton-\/>setIcon(m\_playIcon);}
+\DoxyCodeLine{00593   m\_pausePlaybackButton-\/>setIcon(m\_pauseIcon);}
+\DoxyCodeLine{00594   m\_pauseRecordingButton-\/>setIcon(m\_pauseIcon);}
+\DoxyCodeLine{00595   m\_pauseRecordingButton-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00596   m\_pausePlaybackButton-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00597   m\_deviceListCB-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00598   m\_refreshDevicesButton-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00599   m\_comboSamplerate-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00600   m\_comboSamplefmt-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00601   m\_recordedLevels.clear();}
+\DoxyCodeLine{00602   m\_duration-\/>setText(\textcolor{stringliteral}{"{}00:00.000"{}});}
+\DoxyCodeLine{00603   m\_playDuration-\/>setText(\textcolor{stringliteral}{"{}00:00.000"{}});}
+\DoxyCodeLine{00604   m\_audioLevelsDisplay-\/>setLevel(-\/1, -\/1);}
+\DoxyCodeLine{00605   \textcolor{keywordflow}{if} (!m\_console) \{}
+\DoxyCodeLine{00606     m\_console = FlipConsole::getCurrent();}
+\DoxyCodeLine{00607     \textcolor{keywordflow}{if} (m\_console)}
+\DoxyCodeLine{00608       connect(m\_console, SIGNAL(playStateChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00609               SLOT(onPlayStateChanged(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00610   \}}
+\DoxyCodeLine{00611 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_audio_recording_popup_a5aa1c576d83e9d3b1253458c99b3f3ab}\label{class_audio_recording_popup_a5aa1c576d83e9d3b1253458c99b3f3ab}} 
+\index{AudioRecordingPopup@{AudioRecordingPopup}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!AudioRecordingPopup@{AudioRecordingPopup}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Audio\+Recording\+Popup\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00583 \{ resetEverything(); \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/audiorecordingpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/audiorecordingpopup.\+cpp\end{DoxyCompactItemize}

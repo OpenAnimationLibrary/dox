@@ -1,0 +1,103 @@
+\hypertarget{class_pixel_evaluator}{}\doxysection{Pixel\+Evaluator\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_pixel_evaluator}\index{PixelEvaluator$<$ T $>$@{PixelEvaluator$<$ T $>$}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_pixel_evaluator_a522e3b2577257532a78854b92ed750a1}{Pixel\+Evaluator}} (const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+PT}}$<$ T $>$ \&ras, int threshold)
+\item 
+\mbox{\Hypertarget{class_pixel_evaluator_a4a304a9af8573010ea2b50b8752844fd}\label{class_pixel_evaluator_a4a304a9af8573010ea2b50b8752844fd}} 
+unsigned char {\bfseries get\+Black\+Or\+White} (int x, int y)
+\item 
+unsigned char \mbox{\hyperlink{class_pixel_evaluator_a0809dcbff0d7289ce8cf9f89265e892c}{get\+Black\+Or\+White}} (int x, int y)
+\item 
+unsigned char \mbox{\hyperlink{class_pixel_evaluator_a9697fe627d678f54dcee7c09c1731d84}{get\+Black\+Or\+White}} (int x, int y)
+\item 
+unsigned char \mbox{\hyperlink{class_pixel_evaluator_a3b38bdccfc80af727fe88950af5d7b93}{get\+Black\+Or\+White}} (int x, int y)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class Pixel\+Evaluator$<$ T $>$}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_pixel_evaluator_a522e3b2577257532a78854b92ed750a1}\label{class_pixel_evaluator_a522e3b2577257532a78854b92ed750a1}} 
+\index{PixelEvaluator$<$ T $>$@{PixelEvaluator$<$ T $>$}!PixelEvaluator@{PixelEvaluator}}
+\index{PixelEvaluator@{PixelEvaluator}!PixelEvaluator$<$ T $>$@{PixelEvaluator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{PixelEvaluator()}{PixelEvaluator()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_pixel_evaluator}{Pixel\+Evaluator}}$<$ T $>$\mbox{\hyperlink{class_pixel_evaluator}{\+::\+Pixel\+Evaluator}} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+PT}}$<$ T $>$ \&}]{ras,  }\item[{int}]{threshold }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00119       : m\_ras(ras), m\_threshold(threshold) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_pixel_evaluator_a0809dcbff0d7289ce8cf9f89265e892c}\label{class_pixel_evaluator_a0809dcbff0d7289ce8cf9f89265e892c}} 
+\index{PixelEvaluator$<$ T $>$@{PixelEvaluator$<$ T $>$}!getBlackOrWhite@{getBlackOrWhite}}
+\index{getBlackOrWhite@{getBlackOrWhite}!PixelEvaluator$<$ T $>$@{PixelEvaluator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getBlackOrWhite()}{getBlackOrWhite()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily unsigned char \mbox{\hyperlink{class_pixel_evaluator}{Pixel\+Evaluator}}$<$ TPixel32 $>$\+::get\+Black\+Or\+White (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00127                                                                            \{}
+\DoxyCodeLine{00128   \textcolor{comment}{// return ras-\/>pixels(y)[x].r + 2 * ras-\/>pixels(y)[x].g + ras-\/>pixels(y)[x].b}}
+\DoxyCodeLine{00129   \textcolor{comment}{// <}}
+\DoxyCodeLine{00130   \textcolor{comment}{//   threshold * (ras-\/>pixels(y)[x].m / 255.0);}}
+\DoxyCodeLine{00131   \textcolor{comment}{// NOTE: Green is considered twice brighter than red or blue channel.}}
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00133   \textcolor{comment}{// Using Value of HSV color model}}
+\DoxyCodeLine{00134   \textcolor{keywordflow}{return} std::max(m\_ras-\/>pixels(y)[x].r,}
+\DoxyCodeLine{00135                   std::max(m\_ras-\/>pixels(y)[x].g, m\_ras-\/>pixels(y)[x].b)) <}
+\DoxyCodeLine{00136          m\_threshold * (m\_ras-\/>pixels(y)[x].m / 255.0);}
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00138   \textcolor{comment}{// Using Lightness of HSV color model}}
+\DoxyCodeLine{00139   \textcolor{comment}{// return (max(ras-\/>pixels(y)[x].r, max(ras-\/>pixels(y)[x].g,}}
+\DoxyCodeLine{00140   \textcolor{comment}{// ras-\/>pixels(y)[x].b)) +}}
+\DoxyCodeLine{00141   \textcolor{comment}{//       min(ras-\/>pixels(y)[x].r, min(ras-\/>pixels(y)[x].g,}}
+\DoxyCodeLine{00142   \textcolor{comment}{//       ras-\/>pixels(y)[x].b))) / 2.0 <}}
+\DoxyCodeLine{00143   \textcolor{comment}{//  threshold * (ras-\/>pixels(y)[x].m / 255.0);}}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145   \textcolor{comment}{// Using (relative) Luminance}}
+\DoxyCodeLine{00146   \textcolor{comment}{// return 0.2126 * ras-\/>pixels(y)[x].r + 0.7152 * ras-\/>pixels(y)[x].g + 0.0722}}
+\DoxyCodeLine{00147   \textcolor{comment}{// * ras-\/>pixels(y)[x].b <}}
+\DoxyCodeLine{00148   \textcolor{comment}{//  threshold * (ras-\/>pixels(y)[x].m / 255.0);}}
+\DoxyCodeLine{00149 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_pixel_evaluator_a9697fe627d678f54dcee7c09c1731d84}\label{class_pixel_evaluator_a9697fe627d678f54dcee7c09c1731d84}} 
+\index{PixelEvaluator$<$ T $>$@{PixelEvaluator$<$ T $>$}!getBlackOrWhite@{getBlackOrWhite}}
+\index{getBlackOrWhite@{getBlackOrWhite}!PixelEvaluator$<$ T $>$@{PixelEvaluator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getBlackOrWhite()}{getBlackOrWhite()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily unsigned char \mbox{\hyperlink{class_pixel_evaluator}{Pixel\+Evaluator}}$<$ \mbox{\hyperlink{class_t_pixel_g_r8}{TPixel\+GR8}} $>$\+::get\+Black\+Or\+White (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00152                                                                             \{}
+\DoxyCodeLine{00153   \textcolor{keywordflow}{return} m\_ras-\/>pixels(y)[x].value < m\_threshold;}
+\DoxyCodeLine{00154 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_pixel_evaluator_a3b38bdccfc80af727fe88950af5d7b93}\label{class_pixel_evaluator_a3b38bdccfc80af727fe88950af5d7b93}} 
+\index{PixelEvaluator$<$ T $>$@{PixelEvaluator$<$ T $>$}!getBlackOrWhite@{getBlackOrWhite}}
+\index{getBlackOrWhite@{getBlackOrWhite}!PixelEvaluator$<$ T $>$@{PixelEvaluator$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getBlackOrWhite()}{getBlackOrWhite()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily unsigned char \mbox{\hyperlink{class_pixel_evaluator}{Pixel\+Evaluator}}$<$ \mbox{\hyperlink{class_t_pixel_c_m32}{TPixel\+CM32}} $>$\+::get\+Black\+Or\+White (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00157                                                                              \{}
+\DoxyCodeLine{00158   \textcolor{keywordflow}{return} m\_ras-\/>pixels(y)[x].getTone() < m\_threshold;}
+\DoxyCodeLine{00159 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tcenterlinepolygonizer.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,187 @@
+\hypertarget{class_replace_parent_directory_popup}{}\doxysection{Replace\+Parent\+Directory\+Popup Class Reference}
+\label{class_replace_parent_directory_popup}\index{ReplaceParentDirectoryPopup@{ReplaceParentDirectoryPopup}}
+
+
+{\ttfamily \#include $<$filebrowserpopup.\+h$>$}
+
+Inheritance diagram for Replace\+Parent\+Directory\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_replace_parent_directory_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_replace_parent_directory_popup_a363dd38fdbb484645d9292444cba033d}{Replace\+Parent\+Directory\+Popup}} ()
+\item 
+bool \mbox{\hyperlink{class_replace_parent_directory_popup_ab5e1f128443a97c6874e1f8aa797c966}{execute}} () override
+\item 
+void \mbox{\hyperlink{class_replace_parent_directory_popup_a9ac439c1b12baa089b6c5c8da99a86b2}{init\+Folder}} () override
+\item 
+void \mbox{\hyperlink{class_replace_parent_directory_popup_afba01491aa3578403a5a17abedafc0ce}{set\+Range}} (\mbox{\hyperlink{class_t_cell_selection_1_1_range}{TCell\+Selection\+::\+Range}} \&range, std\+::set$<$ int $>$ \&column\+Range, bool \&replace\+Cells)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+replace the parent folder path of the levels in the selected cells 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_replace_parent_directory_popup_a363dd38fdbb484645d9292444cba033d}\label{class_replace_parent_directory_popup_a363dd38fdbb484645d9292444cba033d}} 
+\index{ReplaceParentDirectoryPopup@{ReplaceParentDirectoryPopup}!ReplaceParentDirectoryPopup@{ReplaceParentDirectoryPopup}}
+\index{ReplaceParentDirectoryPopup@{ReplaceParentDirectoryPopup}!ReplaceParentDirectoryPopup@{ReplaceParentDirectoryPopup}}
+\doxysubsubsection{\texorpdfstring{ReplaceParentDirectoryPopup()}{ReplaceParentDirectoryPopup()}}
+{\footnotesize\ttfamily Replace\+Parent\+Directory\+Popup\+::\+Replace\+Parent\+Directory\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+replace the parent folder path of the levels in the selected cells 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02063     : \mbox{\hyperlink{class_file_browser_popup}{FileBrowserPopup}}(tr(\textcolor{stringliteral}{"{}Replace Parent Directory"{}})) \{}
+\DoxyCodeLine{02064   setOkText(tr(\textcolor{stringliteral}{"{}Replace"{}}));}
+\DoxyCodeLine{02065   setFileMode(\textcolor{keyword}{true});  \textcolor{comment}{// isDirectoryOnly}}
+\DoxyCodeLine{02066 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_replace_parent_directory_popup_ab5e1f128443a97c6874e1f8aa797c966}\label{class_replace_parent_directory_popup_ab5e1f128443a97c6874e1f8aa797c966}} 
+\index{ReplaceParentDirectoryPopup@{ReplaceParentDirectoryPopup}!execute@{execute}}
+\index{execute@{execute}!ReplaceParentDirectoryPopup@{ReplaceParentDirectoryPopup}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily bool Replace\+Parent\+Directory\+Popup\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Performs some action on m\+\_\+paths and returns whether the action was successful (accepted) -\/ in which case the popup closes. 
+
+Implements \mbox{\hyperlink{class_file_browser_popup_a8158b9b8756ac5dfa893b78cdc2fd9af}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02076                                           \{}
+\DoxyCodeLine{02077   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.empty()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{02078 }
+\DoxyCodeLine{02079   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_file_path}{TFilePath}} \&fp = *\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.begin();}
+\DoxyCodeLine{02080 }
+\DoxyCodeLine{02081   \textcolor{comment}{// make the level list in the selected cells}}
+\DoxyCodeLine{02082   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{02083   std::vector<TXshLevel *> levelsToBeReplaced;}
+\DoxyCodeLine{02084 }
+\DoxyCodeLine{02085   \textcolor{keywordflow}{if} (m\_replaceCells) \{}
+\DoxyCodeLine{02086     \textcolor{keywordtype}{int} r, c;}
+\DoxyCodeLine{02087     \textcolor{keywordflow}{for} (c = m\_range.m\_c0; c <= m\_range.m\_c1; c++) \{}
+\DoxyCodeLine{02088       \textcolor{keywordflow}{for} (r = m\_range.m\_r0; r <= m\_range.m\_r1; r++) \{}
+\DoxyCodeLine{02089         \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r, c);}
+\DoxyCodeLine{02090         \textcolor{keywordflow}{if} (cell.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}() ||}
+\DoxyCodeLine{02091             !cell.m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a023065559cff76164ecb6344c586ba27}{getSimpleLevel}}())  \textcolor{comment}{// TLV and PLI only}}
+\DoxyCodeLine{02092           \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{02093         levelsToBeReplaced.push\_back(cell.m\_level.getPointer());}
+\DoxyCodeLine{02094       \}}
+\DoxyCodeLine{02095     \}}
+\DoxyCodeLine{02096   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{02097     \textcolor{comment}{// calculate scene length}}
+\DoxyCodeLine{02098     \textcolor{keywordtype}{int} frameLength           = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a12a62da7dc04395088112e492d73374f}{getFrameCount}}();}
+\DoxyCodeLine{02099     std::set<int>::iterator i = m\_columnRange.begin();}
+\DoxyCodeLine{02100     \textcolor{keywordflow}{while} (i != m\_columnRange.end()) \{}
+\DoxyCodeLine{02101       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} r = 0; r < frameLength; r++) \{}
+\DoxyCodeLine{02102         \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r, *i);}
+\DoxyCodeLine{02103         \textcolor{keywordflow}{if} (!cell.m\_level.getPointer()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{02104         levelsToBeReplaced.push\_back(cell.m\_level.getPointer());}
+\DoxyCodeLine{02105       \}}
+\DoxyCodeLine{02106       i++;}
+\DoxyCodeLine{02107     \}}
+\DoxyCodeLine{02108   \}}
+\DoxyCodeLine{02109 }
+\DoxyCodeLine{02110   \textcolor{comment}{// avoid level duplication}}
+\DoxyCodeLine{02111   std::sort(levelsToBeReplaced.begin(), levelsToBeReplaced.end());}
+\DoxyCodeLine{02112   levelsToBeReplaced.erase(}
+\DoxyCodeLine{02113       std::unique(levelsToBeReplaced.begin(), levelsToBeReplaced.end()),}
+\DoxyCodeLine{02114       levelsToBeReplaced.end());}
+\DoxyCodeLine{02115 }
+\DoxyCodeLine{02116   \textcolor{keywordflow}{if} (levelsToBeReplaced.empty()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{02117 }
+\DoxyCodeLine{02118   \textcolor{comment}{// check if the file exists. If exists, load it and store them in the map}}
+\DoxyCodeLine{02119   \textcolor{comment}{// rewrite the path in the level settings}}
+\DoxyCodeLine{02120   \textcolor{keywordtype}{bool} somethingChanged                 = \textcolor{keyword}{false};}
+\DoxyCodeLine{02121   std::vector<TXshLevel *>::iterator it = levelsToBeReplaced.begin();}
+\DoxyCodeLine{02122   \textcolor{keywordflow}{for} (; it != levelsToBeReplaced.end(); it++) \{}
+\DoxyCodeLine{02123     \mbox{\hyperlink{class_t_file_path}{TFilePath}} orgPath = (*it)-\/>getPath();}
+\DoxyCodeLine{02124     \textcolor{keywordflow}{if} (orgPath.isEmpty()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{02125 }
+\DoxyCodeLine{02126     \mbox{\hyperlink{class_t_file_path}{TFilePath}} newPath = orgPath.\mbox{\hyperlink{class_t_file_path_a09d12d68c4264183e0268dde6f592b2e}{withParentDir}}(fp);}
+\DoxyCodeLine{02127 }
+\DoxyCodeLine{02128     \textcolor{keywordflow}{if} (orgPath == newPath) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{02129 }
+\DoxyCodeLine{02130     \textcolor{comment}{// If the file exists}}
+\DoxyCodeLine{02131     \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(newPath)) \{}
+\DoxyCodeLine{02132       \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl = (*it)-\/>\mbox{\hyperlink{class_t_xsh_simple_level_aac1fd1d3ecf0778b8ee139c9119fcdef}{getSimpleLevel}}();}
+\DoxyCodeLine{02133       \textcolor{keywordflow}{if} (!sl) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{02134 }
+\DoxyCodeLine{02135       \textcolor{comment}{// replace the file with aliases, if possible}}
+\DoxyCodeLine{02136       newPath = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene()-\/>\mbox{\hyperlink{class_toonz_scene_abb12422205be4336c3dee1aa5fbdc5e5}{codeFilePath}}(}
+\DoxyCodeLine{02137           newPath);}
+\DoxyCodeLine{02138 }
+\DoxyCodeLine{02139       sl-\/>setPath(newPath);}
+\DoxyCodeLine{02140       sl-\/>invalidateFrames();}
+\DoxyCodeLine{02141       std::vector<TFrameId> frames;}
+\DoxyCodeLine{02142       sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a567daee4ca12a0e92445bcf98a6541f1}{getFids}}(frames);}
+\DoxyCodeLine{02143       std::vector<TFrameId>::iterator f\_it = frames.begin();}
+\DoxyCodeLine{02144       \textcolor{keywordflow}{for} (; f\_it != frames.end(); f\_it++)}
+\DoxyCodeLine{02145         IconGenerator::instance()-\/>invalidate(sl, *f\_it);}
+\DoxyCodeLine{02146 }
+\DoxyCodeLine{02147       somethingChanged = \textcolor{keyword}{true};}
+\DoxyCodeLine{02148     \}}
+\DoxyCodeLine{02149   \}}
+\DoxyCodeLine{02150 }
+\DoxyCodeLine{02151   \textcolor{keywordflow}{if} (!somethingChanged) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{02152 }
+\DoxyCodeLine{02153   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>notifyLevelChange();}
+\DoxyCodeLine{02154   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>notifySceneChanged();}
+\DoxyCodeLine{02155   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{02156 }
+\DoxyCodeLine{02157   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{02158 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01328}{Toonz\+Scene\+::code\+File\+Path()}}, \mbox{\hyperlink{l00233}{TXsheet\+::get\+Cell()}}, \mbox{\hyperlink{l00122}{TApp\+::get\+Current\+Level()}}, \mbox{\hyperlink{l00106}{TApp\+::get\+Current\+Scene()}}, \mbox{\hyperlink{l00110}{TApp\+::get\+Current\+Xsheet()}}, \mbox{\hyperlink{l00448}{TXsh\+Simple\+Level\+::get\+Fids()}}, \mbox{\hyperlink{l00229}{TXsheet\+::get\+Frame\+Count()}}, \mbox{\hyperlink{l00095}{TXsh\+Level\+::get\+Simple\+Level()}}, \mbox{\hyperlink{l00092}{TXsh\+Simple\+Level\+::get\+Simple\+Level()}}, \mbox{\hyperlink{l00215}{TApp\+::instance()}}, \mbox{\hyperlink{l00078}{TXsh\+Cell\+::is\+Empty()}}, \mbox{\hyperlink{l00090}{File\+Browser\+Popup\+::m\+\_\+selected\+Paths}}, and \mbox{\hyperlink{l00853}{TFile\+Path\+::with\+Parent\+Dir()}}.
+
+\mbox{\Hypertarget{class_replace_parent_directory_popup_a9ac439c1b12baa089b6c5c8da99a86b2}\label{class_replace_parent_directory_popup_a9ac439c1b12baa089b6c5c8da99a86b2}} 
+\index{ReplaceParentDirectoryPopup@{ReplaceParentDirectoryPopup}!initFolder@{initFolder}}
+\index{initFolder@{initFolder}!ReplaceParentDirectoryPopup@{ReplaceParentDirectoryPopup}}
+\doxysubsubsection{\texorpdfstring{initFolder()}{initFolder()}}
+{\footnotesize\ttfamily void Replace\+Parent\+Directory\+Popup\+::init\+Folder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_file_browser_popup}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02160                                              \{}
+\DoxyCodeLine{02161   setFolder(}
+\DoxyCodeLine{02162       \mbox{\hyperlink{class_t_project_manager_a150ca0d6e2eb171b8117b0c5f03dbfad}{TProjectManager::instance}}()-\/>getCurrentProjectPath().getParentDir());}
+\DoxyCodeLine{02163 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_replace_parent_directory_popup_afba01491aa3578403a5a17abedafc0ce}\label{class_replace_parent_directory_popup_afba01491aa3578403a5a17abedafc0ce}} 
+\index{ReplaceParentDirectoryPopup@{ReplaceParentDirectoryPopup}!setRange@{setRange}}
+\index{setRange@{setRange}!ReplaceParentDirectoryPopup@{ReplaceParentDirectoryPopup}}
+\doxysubsubsection{\texorpdfstring{setRange()}{setRange()}}
+{\footnotesize\ttfamily void Replace\+Parent\+Directory\+Popup\+::set\+Range (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_cell_selection_1_1_range}{TCell\+Selection\+::\+Range}} \&}]{range,  }\item[{std\+::set$<$ int $>$ \&}]{column\+Range,  }\item[{bool \&}]{replace\+Cells }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02070                                                                \{}
+\DoxyCodeLine{02071   m\_range        = range;}
+\DoxyCodeLine{02072   m\_columnRange  = columnRange;}
+\DoxyCodeLine{02073   m\_replaceCells = replaceCells;}
+\DoxyCodeLine{02074 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowserpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowserpopup.\+cpp\end{DoxyCompactItemize}

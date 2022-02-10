@@ -1,0 +1,190 @@
+\hypertarget{class_export_x_d_t_s_command}{}\doxysection{Export\+XDTSCommand Class Reference}
+\label{class_export_x_d_t_s_command}\index{ExportXDTSCommand@{ExportXDTSCommand}}
+Inheritance diagram for Export\+XDTSCommand\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_export_x_d_t_s_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_export_x_d_t_s_command_a2e38cf3345bbb5cd69976729f9923cdf}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_export_x_d_t_s_command_a571d53a3a584282ce7cac86211c043a1}\label{class_export_x_d_t_s_command_a571d53a3a584282ce7cac86211c043a1}} 
+\index{ExportXDTSCommand@{ExportXDTSCommand}!ExportXDTSCommand@{ExportXDTSCommand}}
+\index{ExportXDTSCommand@{ExportXDTSCommand}!ExportXDTSCommand@{ExportXDTSCommand}}
+\doxysubsubsection{\texorpdfstring{ExportXDTSCommand()}{ExportXDTSCommand()}}
+{\footnotesize\ttfamily Export\+XDTSCommand\+::\+Export\+XDTSCommand (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00613 : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(MI\_ExportXDTS) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_export_x_d_t_s_command_a2e38cf3345bbb5cd69976729f9923cdf}\label{class_export_x_d_t_s_command_a2e38cf3345bbb5cd69976729f9923cdf}} 
+\index{ExportXDTSCommand@{ExportXDTSCommand}!execute@{execute}}
+\index{execute@{execute}!ExportXDTSCommand@{ExportXDTSCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Export\+XDTSCommand\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00617                                 \{}
+\DoxyCodeLine{00618   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00619   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsheet   = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00620   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp      = scene-\/>\mbox{\hyperlink{class_toonz_scene_ad42b52b671b094f66e003c4b7ebefd45}{getScenePath}}().\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(\textcolor{stringliteral}{"{}xdts"{}});}
+\DoxyCodeLine{00621 }
+\DoxyCodeLine{00622   \textcolor{comment}{// if the current xsheet is top xsheet in the scene and the output}}
+\DoxyCodeLine{00623   \textcolor{comment}{// frame range is specified, set the "{}to"{} frame value as duration}}
+\DoxyCodeLine{00624   \textcolor{keywordtype}{int} duration;}
+\DoxyCodeLine{00625   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}} *oprop = scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}();}
+\DoxyCodeLine{00626   \textcolor{keywordtype}{int} from, to, step;}
+\DoxyCodeLine{00627   \textcolor{keywordflow}{if} (scene-\/>\mbox{\hyperlink{class_toonz_scene_aaffd562eebbd8faba4caeaed69bfcc18}{getTopXsheet}}() == xsheet \&\& oprop-\/>\mbox{\hyperlink{class_t_output_properties_aae127cbd8b19eaed0b0fbaf589349176}{getRange}}(from, to, step))}
+\DoxyCodeLine{00628     duration = to + 1;}
+\DoxyCodeLine{00629   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00630     duration = xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a12a62da7dc04395088112e492d73374f}{getFrameCount}}();}
+\DoxyCodeLine{00631 }
+\DoxyCodeLine{00632   \{}
+\DoxyCodeLine{00633     \_tick1Id         = -\/1;}
+\DoxyCodeLine{00634     \_tick2Id         = -\/1;}
+\DoxyCodeLine{00635     \_exportAllColumn = \textcolor{keyword}{true};}
+\DoxyCodeLine{00636     \mbox{\hyperlink{class_xdts_io_1_1_xdts_data}{XdtsData}} pre\_xdtsData;}
+\DoxyCodeLine{00637     pre\_xdtsData.build(xsheet, QString::fromStdString(fp.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}()), duration);}
+\DoxyCodeLine{00638     \textcolor{keywordflow}{if} (pre\_xdtsData.isEmpty()) \{}
+\DoxyCodeLine{00639       DVGui::error(QObject::tr(\textcolor{stringliteral}{"{}No columns can be exported."{}}));}
+\DoxyCodeLine{00640       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00641     \}}
+\DoxyCodeLine{00642   \}}
+\DoxyCodeLine{00643 }
+\DoxyCodeLine{00644   \textcolor{keyword}{static} \mbox{\hyperlink{class_generic_save_file_popup}{GenericSaveFilePopup}} *savePopup = 0;}
+\DoxyCodeLine{00645   \textcolor{keyword}{static} QComboBox *tick1Id              = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00646   \textcolor{keyword}{static} QComboBox *tick2Id              = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00647   \textcolor{keyword}{static} QComboBox *targetColumnCombo    = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00648 }
+\DoxyCodeLine{00649   \textcolor{keyword}{auto} refreshCellMarkComboItems = [](QComboBox *combo) \{}
+\DoxyCodeLine{00650     \textcolor{keywordtype}{int} current = -\/1;}
+\DoxyCodeLine{00651     \textcolor{keywordflow}{if} (combo-\/>count()) current = combo-\/>currentData().toInt();}
+\DoxyCodeLine{00652 }
+\DoxyCodeLine{00653     combo-\/>clear();}
+\DoxyCodeLine{00654     QList<TSceneProperties::CellMark> marks = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00655                                                   -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00656                                                   -\/>getScene()}
+\DoxyCodeLine{00657                                                   -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00658                                                   -\/>getCellMarks();}
+\DoxyCodeLine{00659     combo-\/>addItem(tr(\textcolor{stringliteral}{"{}None"{}}), -\/1);}
+\DoxyCodeLine{00660     \textcolor{keywordtype}{int} curId = 0;}
+\DoxyCodeLine{00661     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} mark : marks) \{}
+\DoxyCodeLine{00662       QString label = QString(\textcolor{stringliteral}{"{}\%1: \%2"{}}).arg(curId).arg(mark.name);}
+\DoxyCodeLine{00663       combo-\/>addItem(getColorChipIcon(mark.color), label, curId);}
+\DoxyCodeLine{00664       curId++;}
+\DoxyCodeLine{00665     \}}
+\DoxyCodeLine{00666     \textcolor{keywordflow}{if} (current >= 0) combo-\/>setCurrentIndex(combo-\/>findData(current));}
+\DoxyCodeLine{00667   \};}
+\DoxyCodeLine{00668 }
+\DoxyCodeLine{00669   \textcolor{keywordflow}{if} (!savePopup) \{}
+\DoxyCodeLine{00670     \textcolor{comment}{// create custom widget}}
+\DoxyCodeLine{00671     QWidget *custonWidget = \textcolor{keyword}{new} QWidget();}
+\DoxyCodeLine{00672     tick1Id               = \textcolor{keyword}{new} QComboBox();}
+\DoxyCodeLine{00673     tick2Id               = \textcolor{keyword}{new} QComboBox();}
+\DoxyCodeLine{00674     refreshCellMarkComboItems(tick1Id);}
+\DoxyCodeLine{00675     refreshCellMarkComboItems(tick2Id);}
+\DoxyCodeLine{00676     tick1Id-\/>setCurrentIndex(tick1Id-\/>findData(0));}
+\DoxyCodeLine{00677     tick2Id-\/>setCurrentIndex(tick2Id-\/>findData(1));}
+\DoxyCodeLine{00678     targetColumnCombo = \textcolor{keyword}{new} QComboBox();}
+\DoxyCodeLine{00679     targetColumnCombo-\/>addItem(tr(\textcolor{stringliteral}{"{}All columns"{}}), \textcolor{keyword}{true});}
+\DoxyCodeLine{00680     targetColumnCombo-\/>addItem(tr(\textcolor{stringliteral}{"{}Only active columns"{}}), \textcolor{keyword}{false});}
+\DoxyCodeLine{00681     targetColumnCombo-\/>setCurrentIndex(targetColumnCombo-\/>findData(\textcolor{keyword}{true}));}
+\DoxyCodeLine{00682 }
+\DoxyCodeLine{00683     QGridLayout *customLay = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00684     customLay-\/>setMargin(0);}
+\DoxyCodeLine{00685     customLay-\/>setSpacing(10);}
+\DoxyCodeLine{00686     \{}
+\DoxyCodeLine{00687       customLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Inbetween symbol mark"{}})), 0, 0,}
+\DoxyCodeLine{00688                            Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00689       customLay-\/>addWidget(tick1Id, 0, 1);}
+\DoxyCodeLine{00690       customLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Reverse sheet symbol mark"{}})), 1, 0,}
+\DoxyCodeLine{00691                            Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00692       customLay-\/>addWidget(tick2Id, 1, 1);}
+\DoxyCodeLine{00693       customLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Target column"{}})), 2, 0,}
+\DoxyCodeLine{00694                            Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00695       customLay-\/>addWidget(targetColumnCombo, 2, 1);}
+\DoxyCodeLine{00696     \}}
+\DoxyCodeLine{00697     customLay-\/>setColumnStretch(0, 1);}
+\DoxyCodeLine{00698     custonWidget-\/>setLayout(customLay);}
+\DoxyCodeLine{00699 }
+\DoxyCodeLine{00700     savePopup = \textcolor{keyword}{new} \mbox{\hyperlink{class_generic_save_file_popup}{GenericSaveFilePopup}}(}
+\DoxyCodeLine{00701         QObject::tr(\textcolor{stringliteral}{"{}Export Exchange Digital Time Sheet (XDTS)"{}}), custonWidget);}
+\DoxyCodeLine{00702     savePopup-\/>addFilterType(\textcolor{stringliteral}{"{}xdts"{}});}
+\DoxyCodeLine{00703   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00704     refreshCellMarkComboItems(tick1Id);}
+\DoxyCodeLine{00705     refreshCellMarkComboItems(tick2Id);}
+\DoxyCodeLine{00706   \}}
+\DoxyCodeLine{00707   \textcolor{keywordflow}{if} (!scene-\/>\mbox{\hyperlink{class_toonz_scene_a53cbaf09f551658479eb743e153ab6bc}{isUntitled}}())}
+\DoxyCodeLine{00708     savePopup-\/>setFolder(fp.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}());}
+\DoxyCodeLine{00709   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00710     savePopup-\/>setFolder(}
+\DoxyCodeLine{00711         \mbox{\hyperlink{class_t_project_manager_a150ca0d6e2eb171b8117b0c5f03dbfad}{TProjectManager::instance}}()-\/>getCurrentProject()-\/>getScenesPath());}
+\DoxyCodeLine{00712   savePopup-\/>setFilename(fp.\mbox{\hyperlink{class_t_file_path_ac17d65d827432f0fae28fed699bf4afa}{withoutParentDir}}());}
+\DoxyCodeLine{00713   fp = savePopup-\/>\mbox{\hyperlink{class_generic_save_file_popup_a60a6017d0e411695c066c478b4974745}{getPath}}();}
+\DoxyCodeLine{00714   \textcolor{keywordflow}{if} (fp.isEmpty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00715 }
+\DoxyCodeLine{00716   QFile saveFile(fp.getQString());}
+\DoxyCodeLine{00717 }
+\DoxyCodeLine{00718   \textcolor{keywordflow}{if} (!saveFile.open(QIODevice::WriteOnly)) \{}
+\DoxyCodeLine{00719     qWarning(\textcolor{stringliteral}{"{}Couldn't open save file."{}});}
+\DoxyCodeLine{00720     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00721   \}}
+\DoxyCodeLine{00722 }
+\DoxyCodeLine{00723   \_tick1Id         = tick1Id-\/>currentData().toInt();}
+\DoxyCodeLine{00724   \_tick2Id         = tick2Id-\/>currentData().toInt();}
+\DoxyCodeLine{00725   \_exportAllColumn = targetColumnCombo-\/>currentData().toBool();}
+\DoxyCodeLine{00726   \mbox{\hyperlink{class_xdts_io_1_1_xdts_data}{XdtsData}} xdtsData;}
+\DoxyCodeLine{00727   xdtsData.build(xsheet, QString::fromStdString(fp.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}()), duration);}
+\DoxyCodeLine{00728   \textcolor{keywordflow}{if} (xdtsData.isEmpty()) \{}
+\DoxyCodeLine{00729     DVGui::error(QObject::tr(\textcolor{stringliteral}{"{}No columns can be exported."{}}));}
+\DoxyCodeLine{00730     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00731   \}}
+\DoxyCodeLine{00732 }
+\DoxyCodeLine{00733   QJsonObject xdtsObject;}
+\DoxyCodeLine{00734   xdtsData.write(xdtsObject);}
+\DoxyCodeLine{00735   QJsonDocument saveDoc(xdtsObject);}
+\DoxyCodeLine{00736   QByteArray jsonByteArrayData = saveDoc.toJson();}
+\DoxyCodeLine{00737   jsonByteArrayData.prepend(identifierStr + \textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{00738   saveFile.write(jsonByteArrayData);}
+\DoxyCodeLine{00739 }
+\DoxyCodeLine{00740   QString str = QObject::tr(\textcolor{stringliteral}{"{}The file \%1 has been exported successfully."{}})}
+\DoxyCodeLine{00741                     .arg(QString::fromStdString(fp.\mbox{\hyperlink{class_t_file_path_a9b256108e6e5ff99f3ba828d4cdbd7ee}{getLevelName}}()));}
+\DoxyCodeLine{00742 }
+\DoxyCodeLine{00743   std::vector<QString> buttons = \{QObject::tr(\textcolor{stringliteral}{"{}OK"{}}),}
+\DoxyCodeLine{00744                                   QObject::tr(\textcolor{stringliteral}{"{}Open containing folder"{}})\};}
+\DoxyCodeLine{00745   \textcolor{keywordtype}{int} ret = DVGui::MsgBox(DVGui::INFORMATION, str, buttons);}
+\DoxyCodeLine{00746 }
+\DoxyCodeLine{00747   \textcolor{keywordflow}{if} (ret == 2) \{}
+\DoxyCodeLine{00748     \mbox{\hyperlink{class_t_file_path}{TFilePath}} folderPath = fp.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}();}
+\DoxyCodeLine{00749     \textcolor{keywordflow}{if} (TSystem::isUNC(folderPath))}
+\DoxyCodeLine{00750       QDesktopServices::openUrl(QUrl(folderPath.getQString()));}
+\DoxyCodeLine{00751     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00752       QDesktopServices::openUrl(QUrl::fromLocalFile(folderPath.getQString()));}
+\DoxyCodeLine{00753   \}}
+\DoxyCodeLine{00754 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xdtsio.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,200 @@
+\hypertarget{class_command_bar_tree}{}\doxysection{Command\+Bar\+Tree Class Reference}
+\label{class_command_bar_tree}\index{CommandBarTree@{CommandBarTree}}
+Inheritance diagram for Command\+Bar\+Tree\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_command_bar_tree}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_command_bar_tree_aadcc8020e5792e05b57a143a4e250fce}{Command\+Bar\+Tree}} (\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, QWidget $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_command_bar_tree_acd79bc3b62c23bc6042db79e00ad311a}{save\+Menu\+Tree}} (\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_command_bar_tree_a7d9a3b42782ee578158e267f6bfbc3b2}{remove\+Item}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_command_bar_tree_a141a16b7ce2ca3d8e9522de90353f8e5}{drop\+Mime\+Data}} (QTree\+Widget\+Item $\ast$parent, int index, const QMime\+Data $\ast$data, Qt\+::\+Drop\+Action action) override
+\item 
+QString\+List \mbox{\hyperlink{class_command_bar_tree_a60995ad684ae7b2325911a2a10733e01}{mime\+Types}} () const override
+\item 
+void \mbox{\hyperlink{class_command_bar_tree_a6459ffdec269c9d8dba0071fec6dad92}{context\+Menu\+Event}} (QContext\+Menu\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_command_bar_tree_aadcc8020e5792e05b57a143a4e250fce}\label{class_command_bar_tree_aadcc8020e5792e05b57a143a4e250fce}} 
+\index{CommandBarTree@{CommandBarTree}!CommandBarTree@{CommandBarTree}}
+\index{CommandBarTree@{CommandBarTree}!CommandBarTree@{CommandBarTree}}
+\doxysubsubsection{\texorpdfstring{CommandBarTree()}{CommandBarTree()}}
+{\footnotesize\ttfamily Command\+Bar\+Tree\+::\+Command\+Bar\+Tree (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00078     : QTreeWidget(parent) \{}
+\DoxyCodeLine{00079   setObjectName(\textcolor{stringliteral}{"{}SolidLineFrame"{}});}
+\DoxyCodeLine{00080   setAlternatingRowColors(\textcolor{keyword}{true});}
+\DoxyCodeLine{00081   setDragEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00082   setDropIndicatorShown(\textcolor{keyword}{true});}
+\DoxyCodeLine{00083   setDefaultDropAction(Qt::MoveAction);}
+\DoxyCodeLine{00084   setDragDropMode(QAbstractItemView::DragDrop);}
+\DoxyCodeLine{00085   setIconSize(QSize(21, 17));}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087   setColumnCount(1);}
+\DoxyCodeLine{00088   header()-\/>close();}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090   \textcolor{comment}{/*-\/ Load path if it does exist. If not, then load from the template. -\/*/}}
+\DoxyCodeLine{00091   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp;}
+\DoxyCodeLine{00092   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(path).isWritable())}
+\DoxyCodeLine{00093     fp = path;}
+\DoxyCodeLine{00094   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00095     \textcolor{keywordflow}{if} (path.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}() == \textcolor{stringliteral}{"{}xsheettoolbar"{}}) \{}
+\DoxyCodeLine{00096       fp = ToonzFolder::getTemplateModuleDir() + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(\textcolor{stringliteral}{"{}xsheettoolbar.xml"{}});}
+\DoxyCodeLine{00097     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00098       fp = ToonzFolder::getTemplateModuleDir() + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(\textcolor{stringliteral}{"{}commandbar.xml"{}});}
+\DoxyCodeLine{00099     \}}
+\DoxyCodeLine{00100   \}}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102   loadMenuTree(fp);}
+\DoxyCodeLine{00103 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_command_bar_tree_a6459ffdec269c9d8dba0071fec6dad92}\label{class_command_bar_tree_a6459ffdec269c9d8dba0071fec6dad92}} 
+\index{CommandBarTree@{CommandBarTree}!contextMenuEvent@{contextMenuEvent}}
+\index{contextMenuEvent@{contextMenuEvent}!CommandBarTree@{CommandBarTree}}
+\doxysubsubsection{\texorpdfstring{contextMenuEvent()}{contextMenuEvent()}}
+{\footnotesize\ttfamily void Command\+Bar\+Tree\+::context\+Menu\+Event (\begin{DoxyParamCaption}\item[{QContext\+Menu\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00253                                                               \{}
+\DoxyCodeLine{00254   QTreeWidgetItem* item = itemAt(event-\/>pos());}
+\DoxyCodeLine{00255   \textcolor{keywordflow}{if} (item != currentItem()) setCurrentItem(item);}
+\DoxyCodeLine{00256   QMenu* menu = \textcolor{keyword}{new} QMenu(\textcolor{keyword}{this});}
+\DoxyCodeLine{00257   QAction* action;}
+\DoxyCodeLine{00258 }
+\DoxyCodeLine{00259   \textcolor{keywordflow}{if} (item) \{}
+\DoxyCodeLine{00260     action = menu-\/>addAction(tr(\textcolor{stringliteral}{"{}Remove \(\backslash\)"{}\%1\(\backslash\)"{}"{}}).arg(item-\/>text(0)));}
+\DoxyCodeLine{00261     connect(action, SIGNAL(triggered()), \textcolor{keyword}{this}, SLOT(removeItem()));}
+\DoxyCodeLine{00262   \}}
+\DoxyCodeLine{00263 }
+\DoxyCodeLine{00264   menu-\/>exec(event-\/>globalPos());}
+\DoxyCodeLine{00265   \textcolor{keyword}{delete} menu;}
+\DoxyCodeLine{00266 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_command_bar_tree_a141a16b7ce2ca3d8e9522de90353f8e5}\label{class_command_bar_tree_a141a16b7ce2ca3d8e9522de90353f8e5}} 
+\index{CommandBarTree@{CommandBarTree}!dropMimeData@{dropMimeData}}
+\index{dropMimeData@{dropMimeData}!CommandBarTree@{CommandBarTree}}
+\doxysubsubsection{\texorpdfstring{dropMimeData()}{dropMimeData()}}
+{\footnotesize\ttfamily bool Command\+Bar\+Tree\+::drop\+Mime\+Data (\begin{DoxyParamCaption}\item[{QTree\+Widget\+Item $\ast$}]{parent,  }\item[{int}]{index,  }\item[{const QMime\+Data $\ast$}]{data,  }\item[{Qt\+::\+Drop\+Action}]{action }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00219                                                        \{}
+\DoxyCodeLine{00220   \textcolor{keywordflow}{if} (data-\/>hasText()) \{}
+\DoxyCodeLine{00221     QString txt = data-\/>text();}
+\DoxyCodeLine{00222     QTreeWidgetItem* item;}
+\DoxyCodeLine{00223     \textcolor{keywordflow}{if} (txt == \textcolor{stringliteral}{"{}separator"{}})}
+\DoxyCodeLine{00224       item = \textcolor{keyword}{new} \mbox{\hyperlink{class_command_bar_separator_item}{CommandBarSeparatorItem}}(0);}
+\DoxyCodeLine{00225     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00226       QAction* act =}
+\DoxyCodeLine{00227           CommandManager::instance()-\/>getAction(txt.toStdString().c\_str());}
+\DoxyCodeLine{00228       \textcolor{keywordflow}{if} (!act) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00229       item = \textcolor{keyword}{new} \mbox{\hyperlink{class_command_bar_command_item}{CommandBarCommandItem}}(0, act);}
+\DoxyCodeLine{00230     \}}
+\DoxyCodeLine{00231 }
+\DoxyCodeLine{00232     \textcolor{keywordflow}{if} (parent)}
+\DoxyCodeLine{00233       parent-\/>insertChild(index, item);}
+\DoxyCodeLine{00234     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00235       insertTopLevelItem(index, item);}
+\DoxyCodeLine{00236 }
+\DoxyCodeLine{00237     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00238   \}}
+\DoxyCodeLine{00239 }
+\DoxyCodeLine{00240   \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00241 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_command_bar_tree_a60995ad684ae7b2325911a2a10733e01}\label{class_command_bar_tree_a60995ad684ae7b2325911a2a10733e01}} 
+\index{CommandBarTree@{CommandBarTree}!mimeTypes@{mimeTypes}}
+\index{mimeTypes@{mimeTypes}!CommandBarTree@{CommandBarTree}}
+\doxysubsubsection{\texorpdfstring{mimeTypes()}{mimeTypes()}}
+{\footnotesize\ttfamily QString\+List Command\+Bar\+Tree\+::mime\+Types (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00245                                             \{}
+\DoxyCodeLine{00246   QStringList qstrList;}
+\DoxyCodeLine{00247   qstrList.append(\textcolor{stringliteral}{"{}text/plain"{}});}
+\DoxyCodeLine{00248   \textcolor{keywordflow}{return} qstrList;}
+\DoxyCodeLine{00249 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_command_bar_tree_a7d9a3b42782ee578158e267f6bfbc3b2}\label{class_command_bar_tree_a7d9a3b42782ee578158e267f6bfbc3b2}} 
+\index{CommandBarTree@{CommandBarTree}!removeItem@{removeItem}}
+\index{removeItem@{removeItem}!CommandBarTree@{CommandBarTree}}
+\doxysubsubsection{\texorpdfstring{removeItem}{removeItem}}
+{\footnotesize\ttfamily void Command\+Bar\+Tree\+::remove\+Item (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00270                                 \{}
+\DoxyCodeLine{00271   QTreeWidgetItem* item = currentItem();}
+\DoxyCodeLine{00272   \textcolor{keywordflow}{if} (!item) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00273 }
+\DoxyCodeLine{00274   \textcolor{keywordflow}{if} (indexOfTopLevelItem(item) >= 0)}
+\DoxyCodeLine{00275     takeTopLevelItem(indexOfTopLevelItem(item));}
+\DoxyCodeLine{00276   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00277     item-\/>parent()-\/>removeChild(item);}
+\DoxyCodeLine{00278 }
+\DoxyCodeLine{00279   \textcolor{keyword}{delete} item;}
+\DoxyCodeLine{00280 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_command_bar_tree_acd79bc3b62c23bc6042db79e00ad311a}\label{class_command_bar_tree_acd79bc3b62c23bc6042db79e00ad311a}} 
+\index{CommandBarTree@{CommandBarTree}!saveMenuTree@{saveMenuTree}}
+\index{saveMenuTree@{saveMenuTree}!CommandBarTree@{CommandBarTree}}
+\doxysubsubsection{\texorpdfstring{saveMenuTree()}{saveMenuTree()}}
+{\footnotesize\ttfamily void Command\+Bar\+Tree\+::save\+Menu\+Tree (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00177                                                  \{}
+\DoxyCodeLine{00178   QFile file(toQString(path));}
+\DoxyCodeLine{00179   \textcolor{keywordflow}{if} (!file.open(QFile::WriteOnly | QFile::Text)) \{}
+\DoxyCodeLine{00180     qDebug() << \textcolor{stringliteral}{"{}Cannot read file"{}} << file.errorString();}
+\DoxyCodeLine{00181     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00182   \}}
+\DoxyCodeLine{00183 }
+\DoxyCodeLine{00184   QXmlStreamWriter writer(\&file);}
+\DoxyCodeLine{00185   writer.setAutoFormatting(\textcolor{keyword}{true});}
+\DoxyCodeLine{00186   writer.writeStartDocument();}
+\DoxyCodeLine{00187 }
+\DoxyCodeLine{00188   writer.writeStartElement(\textcolor{stringliteral}{"{}commandbar"{}});}
+\DoxyCodeLine{00189   \{ saveMenuRecursive(writer, invisibleRootItem()); \}}
+\DoxyCodeLine{00190   writer.writeEndElement();}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192   writer.writeEndDocument();}
+\DoxyCodeLine{00193 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/commandbarpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/commandbarpopup.\+cpp\end{DoxyCompactItemize}

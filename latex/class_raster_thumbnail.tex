@@ -1,0 +1,161 @@
+\hypertarget{class_raster_thumbnail}{}\doxysection{Raster\+Thumbnail Class Reference}
+\label{class_raster_thumbnail}\index{RasterThumbnail@{RasterThumbnail}}
+Inheritance diagram for Raster\+Thumbnail\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_raster_thumbnail}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_raster_thumbnail_af9912808d32131e3feee862981cf034c}{Raster\+Thumbnail}} (const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&size, const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&fp)
+\item 
+void \mbox{\hyperlink{class_raster_thumbnail_a72707a474064c10c7d7ba21870b7b16f}{load\+Icon}} ()
+\item 
+void \mbox{\hyperlink{class_raster_thumbnail_a9114add00d7496737e088c682d8d2f31}{load\+Frame}} (int index)
+\item 
+void \mbox{\hyperlink{class_raster_thumbnail_a36fa06952f7085b4a86bbd5dfc759894}{set\+Playing}} (bool on)
+\item 
+Type \mbox{\hyperlink{class_raster_thumbnail_a2d1d56d26514e5bce2ce5206252a1b82}{get\+Type}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_raster_thumbnail_af9912808d32131e3feee862981cf034c}\label{class_raster_thumbnail_af9912808d32131e3feee862981cf034c}} 
+\index{RasterThumbnail@{RasterThumbnail}!RasterThumbnail@{RasterThumbnail}}
+\index{RasterThumbnail@{RasterThumbnail}!RasterThumbnail@{RasterThumbnail}}
+\doxysubsubsection{\texorpdfstring{RasterThumbnail()}{RasterThumbnail()}}
+{\footnotesize\ttfamily Raster\+Thumbnail\+::\+Raster\+Thumbnail (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&}]{size,  }\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{fp }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00190     : \mbox{\hyperlink{class_file_thumbnail}{FileThumbnail}}(size, fp), m\_lr() \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_raster_thumbnail_a2d1d56d26514e5bce2ce5206252a1b82}\label{class_raster_thumbnail_a2d1d56d26514e5bce2ce5206252a1b82}} 
+\index{RasterThumbnail@{RasterThumbnail}!getType@{getType}}
+\index{getType@{getType}!RasterThumbnail@{RasterThumbnail}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily Type Raster\+Thumbnail\+::get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_thumbnail}{Thumbnail}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00179 \{ \textcolor{keywordflow}{return} LEVEL; \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_raster_thumbnail_a9114add00d7496737e088c682d8d2f31}\label{class_raster_thumbnail_a9114add00d7496737e088c682d8d2f31}} 
+\index{RasterThumbnail@{RasterThumbnail}!loadFrame@{loadFrame}}
+\index{loadFrame@{loadFrame}!RasterThumbnail@{RasterThumbnail}}
+\doxysubsubsection{\texorpdfstring{loadFrame()}{loadFrame()}}
+{\footnotesize\ttfamily void Raster\+Thumbnail\+::load\+Frame (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_thumbnail}{Thumbnail}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00222                                          \{}
+\DoxyCodeLine{00223   assert(0 <= index \&\& index < (\textcolor{keywordtype}{int})m\_frames.size());}
+\DoxyCodeLine{00224   \textcolor{keywordflow}{if} (!m\_lr) \{}
+\DoxyCodeLine{00225     assert(m\_playing);}
+\DoxyCodeLine{00226     m\_lr = \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}}(m\_filepath);}
+\DoxyCodeLine{00227     m\_lr-\/>loadInfo();}
+\DoxyCodeLine{00228   \}}
+\DoxyCodeLine{00229   \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} ri   = m\_lr-\/>getFrameReader(m\_frames[index]-\/>m\_fid)-\/>load();}
+\DoxyCodeLine{00230   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&raster = m\_frames[index]-\/>m\_raster;}
+\DoxyCodeLine{00231   raster             = \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}(m\_size);}
+\DoxyCodeLine{00232   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} inputRaster;}
+\DoxyCodeLine{00233   \textcolor{keywordflow}{if} (ri) inputRaster = ri-\/>getRaster();}
+\DoxyCodeLine{00234   \textcolor{keywordflow}{if} (inputRaster) \{}
+\DoxyCodeLine{00235     raster-\/>fill(TPixel32::White);}
+\DoxyCodeLine{00236     \textcolor{keywordtype}{double} sx = (double)(raster-\/>getLx()) / (\textcolor{keywordtype}{double})(inputRaster-\/>getLx());}
+\DoxyCodeLine{00237     \textcolor{keywordtype}{double} sy = (double)(raster-\/>getLy()) / (\textcolor{keywordtype}{double})(inputRaster-\/>getLy());}
+\DoxyCodeLine{00238     \textcolor{keywordtype}{double} sc = tmin(sx, sy);}
+\DoxyCodeLine{00239 }
+\DoxyCodeLine{00240     \mbox{\hyperlink{class_t_affine}{TAffine}} aff =}
+\DoxyCodeLine{00241         \mbox{\hyperlink{class_t_scale}{TScale}}(sc).\mbox{\hyperlink{class_t_affine_a5c556c5952cff649a61add494ff3423c}{place}}(inputRaster-\/>getCenterD(), raster-\/>getCenterD());}
+\DoxyCodeLine{00242     \mbox{\hyperlink{namespace_t_rop_a5e39bc748039afe42001ba44f2d2a073}{TRop::resample}}(raster, inputRaster, aff);}
+\DoxyCodeLine{00243   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00244     raster-\/>fill(TPixel32(255, 0, 0));}
+\DoxyCodeLine{00245   \}}
+\DoxyCodeLine{00246 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_raster_thumbnail_a72707a474064c10c7d7ba21870b7b16f}\label{class_raster_thumbnail_a72707a474064c10c7d7ba21870b7b16f}} 
+\index{RasterThumbnail@{RasterThumbnail}!loadIcon@{loadIcon}}
+\index{loadIcon@{loadIcon}!RasterThumbnail@{RasterThumbnail}}
+\doxysubsubsection{\texorpdfstring{loadIcon()}{loadIcon()}}
+{\footnotesize\ttfamily void Raster\+Thumbnail\+::load\+Icon (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_thumbnail}{Thumbnail}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00194                                \{}
+\DoxyCodeLine{00195   clearPointerContainer(m\_frames);}
+\DoxyCodeLine{00196   m\_lr = \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}}(m\_filepath);}
+\DoxyCodeLine{00197   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00198     \mbox{\hyperlink{class_t_level_p}{TLevelP}} level = m\_lr-\/>loadInfo();}
+\DoxyCodeLine{00199     \textcolor{keywordflow}{if} (level \&\& level-\/>getFrameCount() != 0) \{}
+\DoxyCodeLine{00200       \textcolor{keywordflow}{for} (TLevel::Iterator it = level-\/>begin(); it != level-\/>end(); ++it)}
+\DoxyCodeLine{00201         addFrame(it-\/>first);}
+\DoxyCodeLine{00202       loadFrame(0);}
+\DoxyCodeLine{00203 }
+\DoxyCodeLine{00204       m\_raster = m\_frames[0]-\/>m\_raster;}
+\DoxyCodeLine{00205     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00206       m\_raster = \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}(m\_size);}
+\DoxyCodeLine{00207       m\_raster-\/>fill(TPixel32::Red);}
+\DoxyCodeLine{00208     \}}
+\DoxyCodeLine{00209   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{00210     TMessage::error(toString(e.getMessage()));}
+\DoxyCodeLine{00211 }
+\DoxyCodeLine{00212     m\_raster = \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}(m\_size);}
+\DoxyCodeLine{00213     m\_raster-\/>fill(TPixel32::Red);}
+\DoxyCodeLine{00214   \}}
+\DoxyCodeLine{00215 }
+\DoxyCodeLine{00216   m\_lr         = \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}}();}
+\DoxyCodeLine{00217   m\_iconLoaded = \textcolor{keyword}{true};}
+\DoxyCodeLine{00218 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_raster_thumbnail_a36fa06952f7085b4a86bbd5dfc759894}\label{class_raster_thumbnail_a36fa06952f7085b4a86bbd5dfc759894}} 
+\index{RasterThumbnail@{RasterThumbnail}!setPlaying@{setPlaying}}
+\index{setPlaying@{setPlaying}!RasterThumbnail@{RasterThumbnail}}
+\doxysubsubsection{\texorpdfstring{setPlaying()}{setPlaying()}}
+{\footnotesize\ttfamily void Raster\+Thumbnail\+::set\+Playing (\begin{DoxyParamCaption}\item[{bool}]{on }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_thumbnail}{Thumbnail}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00250                                         \{}
+\DoxyCodeLine{00251   \textcolor{keywordflow}{if} (m\_playing == on) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00252   m\_playing = on;}
+\DoxyCodeLine{00253   \textcolor{keywordflow}{if} (!m\_playing) \{}
+\DoxyCodeLine{00254     m\_lr = \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}}();}
+\DoxyCodeLine{00255   \}}
+\DoxyCodeLine{00256 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tfarmclient/thumbnail.\+cpp\end{DoxyCompactItemize}

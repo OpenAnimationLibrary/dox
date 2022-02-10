@@ -1,0 +1,683 @@
+\hypertarget{class_t_cleanupper}{}\doxysection{TCleanupper Class Reference}
+\label{class_t_cleanupper}\index{TCleanupper@{TCleanupper}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_cleanupper_a7afda6937483bcb5d1bd9bf49027f77e}{set\+Parameters}} (\mbox{\hyperlink{class_cleanup_parameters}{Cleanup\+Parameters}} $\ast$parameters)
+\item 
+const \mbox{\hyperlink{class_cleanup_parameters}{Cleanup\+Parameters}} $\ast$ \mbox{\hyperlink{class_t_cleanupper_abdfcdaef6f3474154d37009bd591d025}{get\+Parameters}} () const
+\item 
+\mbox{\hyperlink{class_t_palette}{TPalette}} $\ast$ \mbox{\hyperlink{class_t_cleanupper_a6e3f7f11265e1795ae483b83723bbe61}{create\+Toonz\+Palette\+From\+Cleanup\+Palette}} ()
+\item 
+bool \mbox{\hyperlink{class_t_cleanupper_a5dd5cf19cf779bf28f6f38b5726c41aa}{get\+Resample\+Values}} (const \mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&image, \mbox{\hyperlink{class_t_affine}{TAffine}} \&aff, double \&blur, \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&out\+Dim, \mbox{\hyperlink{class_t_point_t}{TPointD}} \&out\+Dpi, bool is\+Camera\+Test, bool \&is\+Same\+Dpi)
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \mbox{\hyperlink{class_t_cleanupper_aad8d5b16ed828e2c5e88f8325f682d8d}{process\+Colors}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&r)
+\item 
+\mbox{\hyperlink{class_cleanup_preprocessed_image}{Cleanup\+Preprocessed\+Image}} $\ast$ \mbox{\hyperlink{class_t_cleanupper_a7b60b8f19f61d642b5a8ab2ad78ab339}{process}} (\mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&image, bool first\+\_\+image, \mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&only\+Resampled\+Image, bool is\+Camera\+Test=false, bool return\+Resampled=false, bool only\+For\+Swatch=false, \mbox{\hyperlink{class_t_affine}{TAffine}} $\ast$aff=0, \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} template\+For\+Resampled=0)
+\item 
+void \mbox{\hyperlink{class_t_cleanupper_a5ec364b20ffceb8f1a80960faa0f2e1e}{finalize}} (const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&dst, \mbox{\hyperlink{class_cleanup_preprocessed_image}{Cleanup\+Preprocessed\+Image}} $\ast$src)
+\item 
+\mbox{\hyperlink{class_t_toonz_image_p}{TToonz\+ImageP}} \mbox{\hyperlink{class_t_cleanupper_a43d12a9a1c27b9e2ba71ef5ee29fa84f}{finalize}} (\mbox{\hyperlink{class_cleanup_preprocessed_image}{Cleanup\+Preprocessed\+Image}} $\ast$src, bool is\+Cleanupper=false)
+\item 
+\mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \mbox{\hyperlink{class_t_cleanupper_a0e0104e2db5f92de58219940c4524d7f}{autocenter\+Only}} (const \mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&image, bool is\+Camera\+Test, bool \&autocentered)
+\item 
+\mbox{\hyperlink{class_t_point_t}{TPointD}} \mbox{\hyperlink{class_t_cleanupper_aee1c249a36f2c03a7ff4c0cfa1318358}{get\+Source\+Dpi}} () const
+\item 
+void \mbox{\hyperlink{class_t_cleanupper_a89549457e197e1c8bf0286c6b3cba558}{set\+Source\+Dpi}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&dpi)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_cleanupper}{TCleanupper}} $\ast$ \mbox{\hyperlink{class_t_cleanupper_a585b143db23a9f1300f918df4a45a971}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_cleanupper_a0e0104e2db5f92de58219940c4524d7f}\label{class_t_cleanupper_a0e0104e2db5f92de58219940c4524d7f}} 
+\index{TCleanupper@{TCleanupper}!autocenterOnly@{autocenterOnly}}
+\index{autocenterOnly@{autocenterOnly}!TCleanupper@{TCleanupper}}
+\doxysubsubsection{\texorpdfstring{autocenterOnly()}{autocenterOnly()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} TCleanupper\+::autocenter\+Only (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&}]{image,  }\item[{bool}]{is\+Camera\+Test,  }\item[{bool \&}]{autocentered }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00786                                                               \{}
+\DoxyCodeLine{00787   \textcolor{keywordtype}{double} xDpi, yDpi;}
+\DoxyCodeLine{00788   \textcolor{comment}{// double inlx, inly, zoom\_factor, max\_blur;}}
+\DoxyCodeLine{00789   \textcolor{keywordtype}{double} skew = 0, angle = 0,}
+\DoxyCodeLine{00790          dist = 0 \textcolor{comment}{/*lq\_nozoom, lp\_nozoom,, cx, cy, scalex, scaley*/};}
+\DoxyCodeLine{00791   \textcolor{keywordtype}{double} cxin, cyin, cpout, cqout;}
+\DoxyCodeLine{00792   \textcolor{keywordtype}{int} rasterIsSavebox = \textcolor{keyword}{true};}
+\DoxyCodeLine{00793   \mbox{\hyperlink{class_t_affine}{TAffine}} aff, preAff, inv;}
+\DoxyCodeLine{00794   \textcolor{keywordtype}{int} rasterLx, finalLx, rasterLy, finalLy;}
+\DoxyCodeLine{00795 }
+\DoxyCodeLine{00796   rasterLx = finalLx = image-\/>getRaster()-\/>getLx();}
+\DoxyCodeLine{00797   rasterLy = finalLy = image-\/>getRaster()-\/>getLy();}
+\DoxyCodeLine{00798 }
+\DoxyCodeLine{00799   \mbox{\hyperlink{class_t_rect_t}{TRect}} saveBox = image-\/>getSavebox();}
+\DoxyCodeLine{00800   \textcolor{keywordflow}{if} ((saveBox == \mbox{\hyperlink{class_t_rect_t}{TRect}}()) \&\&}
+\DoxyCodeLine{00801       ((saveBox.getLx() > 0 \&\& saveBox.getLx() < rasterLx) ||}
+\DoxyCodeLine{00802        (saveBox.getLy() > 0 \&\& saveBox.getLy() < rasterLy)))}
+\DoxyCodeLine{00803     rasterIsSavebox = \textcolor{keyword}{false};}
+\DoxyCodeLine{00804 }
+\DoxyCodeLine{00805   \textcolor{keywordtype}{int} rotate = m\_parameters-\/>m\_rotate;}
+\DoxyCodeLine{00806 }
+\DoxyCodeLine{00807   image-\/>getDpi(xDpi, yDpi);}
+\DoxyCodeLine{00808 }
+\DoxyCodeLine{00809   \textcolor{keywordflow}{if} (!xDpi)  \textcolor{comment}{// using 65.0 as default DPI}}
+\DoxyCodeLine{00810     xDpi = (yDpi ? yDpi : 65);}
+\DoxyCodeLine{00811 }
+\DoxyCodeLine{00812   \textcolor{keywordflow}{if} (!yDpi) yDpi = (xDpi ? xDpi : 65);}
+\DoxyCodeLine{00813 }
+\DoxyCodeLine{00814   \textcolor{keywordflow}{if} (rasterIsSavebox) \{}
+\DoxyCodeLine{00815     cxin = -\/saveBox.getP00().x + (saveBox.getLx() -\/ 1) / 2.0;}
+\DoxyCodeLine{00816     cyin = -\/saveBox.getP00().y + (saveBox.getLy() -\/ 1) / 2.0;}
+\DoxyCodeLine{00817   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00818     cxin = (rasterLx -\/ 1) / 2.0;}
+\DoxyCodeLine{00819     cyin = (rasterLy -\/ 1) / 2.0;}
+\DoxyCodeLine{00820   \}}
+\DoxyCodeLine{00821 }
+\DoxyCodeLine{00822   cpout = (rasterLx -\/ 1) / 2.0;}
+\DoxyCodeLine{00823   cqout = (rasterLy -\/ 1) / 2.0;}
+\DoxyCodeLine{00824 }
+\DoxyCodeLine{00825   \textcolor{keywordflow}{if} (m\_parameters-\/>m\_autocenterType != AUTOCENTER\_NONE)}
+\DoxyCodeLine{00826     autocentered = doAutocenter(angle, skew, cxin, cyin, cqout, cpout, xDpi,}
+\DoxyCodeLine{00827                                 yDpi, rasterIsSavebox, saveBox, image, 1.0);}
+\DoxyCodeLine{00828   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00829     autocentered = \textcolor{keyword}{true};}
+\DoxyCodeLine{00830 }
+\DoxyCodeLine{00831   \textcolor{keywordflow}{if} (m\_parameters-\/>m\_autocenterType == AUTOCENTER\_CTR \&\& skew) \{}
+\DoxyCodeLine{00832     aff.a11 = cos(skew * M\_PI\_180);}
+\DoxyCodeLine{00833     aff.a21 = sin(skew * M\_PI\_180);}
+\DoxyCodeLine{00834   \}}
+\DoxyCodeLine{00835 }
+\DoxyCodeLine{00836   aff = aff * \mbox{\hyperlink{class_t_rotation}{TRotation}}(angle);}
+\DoxyCodeLine{00837 }
+\DoxyCodeLine{00838   aff = aff.\mbox{\hyperlink{class_t_affine_a5c556c5952cff649a61add494ff3423c}{place}}(cxin, cyin, cpout, cqout);}
+\DoxyCodeLine{00839 }
+\DoxyCodeLine{00840   \textcolor{keywordflow}{if} (rotate != 0 \&\& rotate != 180) std::swap(finalLx, finalLy);}
+\DoxyCodeLine{00841 }
+\DoxyCodeLine{00842   \mbox{\hyperlink{class_t_point_t}{TPointD}} pin  = \mbox{\hyperlink{class_t_point_t}{TPointD}}((rasterLx -\/ 1) / 2.0, (rasterLy -\/ 1) / 2.0);}
+\DoxyCodeLine{00843   \mbox{\hyperlink{class_t_point_t}{TPointD}} pout = \mbox{\hyperlink{class_t_point_t}{TPointD}}((finalLx -\/ 1) / 2.0, (finalLy -\/ 1) / 2.0);}
+\DoxyCodeLine{00844 }
+\DoxyCodeLine{00845   \textcolor{keywordflow}{if} (rotate != 0) aff = \mbox{\hyperlink{class_t_rotation}{TRotation}}(-\/(\textcolor{keywordtype}{double})rotate).\mbox{\hyperlink{class_t_affine_a5c556c5952cff649a61add494ff3423c}{place}}(pin, pout) * aff;}
+\DoxyCodeLine{00846 }
+\DoxyCodeLine{00847   \textcolor{keywordflow}{if} (m\_parameters-\/>m\_flipx || m\_parameters-\/>m\_flipy)}
+\DoxyCodeLine{00848     aff = \mbox{\hyperlink{class_t_scale}{TScale}}(m\_parameters-\/>m\_flipx ? -\/1 : 1, m\_parameters-\/>m\_flipy ? -\/1 : 1)}
+\DoxyCodeLine{00849               .\mbox{\hyperlink{class_t_affine_a5c556c5952cff649a61add494ff3423c}{place}}(pout, pout) *}
+\DoxyCodeLine{00850           aff;}
+\DoxyCodeLine{00851 }
+\DoxyCodeLine{00852   \textcolor{keywordflow}{if} (!isCameraTest)}
+\DoxyCodeLine{00853     aff = \mbox{\hyperlink{class_t_translation}{TTranslation}}(m\_parameters-\/>m\_offx * xDpi / 2,}
+\DoxyCodeLine{00854                        m\_parameters-\/>m\_offy * yDpi / 2) *}
+\DoxyCodeLine{00855           aff;}
+\DoxyCodeLine{00856 }
+\DoxyCodeLine{00857   \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} tmpRas;}
+\DoxyCodeLine{00858   \mbox{\hyperlink{class_t_point_t}{TPoint}} dp;}
+\DoxyCodeLine{00859   \textcolor{keywordflow}{if} (isCameraTest)  \textcolor{comment}{// in cameratest, I don't want to crop the image to be}}
+\DoxyCodeLine{00860                      \textcolor{comment}{// shown.}}
+\DoxyCodeLine{00861   \textcolor{comment}{// so, I resample without cropping, and I compute the offset needed to have it}}
+\DoxyCodeLine{00862   \textcolor{comment}{// autocentered.}}
+\DoxyCodeLine{00863   \textcolor{comment}{// That offset is stored in the RasterImage(setOffset below) and then used}}
+\DoxyCodeLine{00864   \textcolor{comment}{// when displaying the image in camerastand (in method}}
+\DoxyCodeLine{00865   \textcolor{comment}{// RasterPainter::onRasterImage)}}
+\DoxyCodeLine{00866   \{}
+\DoxyCodeLine{00867     \textcolor{comment}{// TPointD srcActualCenter = aff.inv()*TPointD(finalLx/2.0, finalLy/2.0);//}}
+\DoxyCodeLine{00868     \textcolor{comment}{// the autocenter position in the source image}}
+\DoxyCodeLine{00869     \textcolor{comment}{// TPointD srcCenter = imageToResample-\/>getRaster()-\/>getCenterD();*/}}
+\DoxyCodeLine{00870     \mbox{\hyperlink{class_t_point_t}{TPointD}} dstActualCenter = \mbox{\hyperlink{class_t_point_t}{TPointD}}(finalLx / 2.0, finalLy / 2.0);}
+\DoxyCodeLine{00871     \mbox{\hyperlink{class_t_point_t}{TPointD}} dstCenter       = aff * image-\/>getRaster()-\/>getCenterD();}
+\DoxyCodeLine{00872 }
+\DoxyCodeLine{00873     dp = convert(}
+\DoxyCodeLine{00874         dstCenter -\/}
+\DoxyCodeLine{00875         dstActualCenter);  \textcolor{comment}{// the amount to be offset in the destination image.}}
+\DoxyCodeLine{00876 }
+\DoxyCodeLine{00877     \mbox{\hyperlink{class_t_rect_t}{TRect}} r = convert(aff * convert(image-\/>getRaster()-\/>getBounds()));}
+\DoxyCodeLine{00878     aff     = (\mbox{\hyperlink{class_t_translation}{TTranslation}}(convert(-\/r.getP00())) * aff);}
+\DoxyCodeLine{00879     \textcolor{comment}{// aff = aff.place(srcActualCenter, dstActualCenter);}}
+\DoxyCodeLine{00880     tmpRas = image-\/>getRaster()-\/>create(r.getLx(), r.getLy());}
+\DoxyCodeLine{00881 }
+\DoxyCodeLine{00882   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00883     tmpRas = image-\/>getRaster()-\/>create(finalLx, finalLy);}
+\DoxyCodeLine{00884 }
+\DoxyCodeLine{00885   \mbox{\hyperlink{namespace_t_rop_a5e39bc748039afe42001ba44f2d2a073}{TRop::resample}}(tmpRas, image-\/>getRaster(), aff);}
+\DoxyCodeLine{00886   \textcolor{comment}{// TImageWriter::save(TFilePath("{}C:\(\backslash\)\(\backslash\)temp\(\backslash\)\(\backslash\)incleanup.tif"{}), imageToResample);}}
+\DoxyCodeLine{00887   \textcolor{comment}{// TImageWriter::save(TFilePath("{}C:\(\backslash\)\(\backslash\)temp\(\backslash\)\(\backslash\)outcleanup.tif"{}), tmp\_ras);}}
+\DoxyCodeLine{00888 }
+\DoxyCodeLine{00889   \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} \textcolor{keyword}{final}(tmpRas);}
+\DoxyCodeLine{00890   \textcolor{keyword}{final}-\/>setOffset(dp);}
+\DoxyCodeLine{00891 }
+\DoxyCodeLine{00892   \textcolor{keyword}{final}-\/>setDpi(xDpi, yDpi);}
+\DoxyCodeLine{00893   \textcolor{comment}{// final-\/>sethPos(finalHPos);}}
+\DoxyCodeLine{00894 }
+\DoxyCodeLine{00895   \textcolor{keywordflow}{return} \textcolor{keyword}{final};}
+\DoxyCodeLine{00896 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_cleanupper_a6e3f7f11265e1795ae483b83723bbe61}\label{class_t_cleanupper_a6e3f7f11265e1795ae483b83723bbe61}} 
+\index{TCleanupper@{TCleanupper}!createToonzPaletteFromCleanupPalette@{createToonzPaletteFromCleanupPalette}}
+\index{createToonzPaletteFromCleanupPalette@{createToonzPaletteFromCleanupPalette}!TCleanupper@{TCleanupper}}
+\doxysubsubsection{\texorpdfstring{createToonzPaletteFromCleanupPalette()}{createToonzPaletteFromCleanupPalette()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_palette}{TPalette}} $\ast$ TCleanupper\+::create\+Toonz\+Palette\+From\+Cleanup\+Palette (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00333                                                             \{}
+\DoxyCodeLine{00334   \mbox{\hyperlink{class_t_palette}{TPalette}} *cleanupPalette = m\_parameters-\/>m\_cleanupPalette.getPointer();}
+\DoxyCodeLine{00335   \textcolor{keywordflow}{return} createToonzPalette(cleanupPalette, 1);}
+\DoxyCodeLine{00336 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_cleanupper_a43d12a9a1c27b9e2ba71ef5ee29fa84f}\label{class_t_cleanupper_a43d12a9a1c27b9e2ba71ef5ee29fa84f}} 
+\index{TCleanupper@{TCleanupper}!finalize@{finalize}}
+\index{finalize@{finalize}!TCleanupper@{TCleanupper}}
+\doxysubsubsection{\texorpdfstring{finalize()}{finalize()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_toonz_image_p}{TToonz\+ImageP}} TCleanupper\+::finalize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_cleanup_preprocessed_image}{Cleanup\+Preprocessed\+Image}} $\ast$}]{src,  }\item[{bool}]{is\+Cleanupper = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01159                                                       \{}
+\DoxyCodeLine{01160   \textcolor{keywordflow}{if} (src-\/>m\_wasFromGR8)}
+\DoxyCodeLine{01161     \textcolor{keywordflow}{return} doPostProcessingGR8(src);}
+\DoxyCodeLine{01162   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01163     \textcolor{keywordflow}{return} doPostProcessingColor(src-\/>getImg(), isCleanupper);}
+\DoxyCodeLine{01164 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_cleanupper_a5ec364b20ffceb8f1a80960faa0f2e1e}\label{class_t_cleanupper_a5ec364b20ffceb8f1a80960faa0f2e1e}} 
+\index{TCleanupper@{TCleanupper}!finalize@{finalize}}
+\index{finalize@{finalize}!TCleanupper@{TCleanupper}}
+\doxysubsubsection{\texorpdfstring{finalize()}{finalize()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void TCleanupper\+::finalize (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&}]{dst,  }\item[{\mbox{\hyperlink{class_cleanup_preprocessed_image}{Cleanup\+Preprocessed\+Image}} $\ast$}]{src }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01147                                                              \{}
+\DoxyCodeLine{01148   \textcolor{keywordflow}{if} (!outRas) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01149 }
+\DoxyCodeLine{01150   \textcolor{keywordflow}{if} (srcImg-\/>m\_wasFromGR8)}
+\DoxyCodeLine{01151     doPostProcessingGR8(outRas, srcImg);}
+\DoxyCodeLine{01152   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01153     doPostProcessingColor(outRas, srcImg);}
+\DoxyCodeLine{01154 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_cleanupper_abdfcdaef6f3474154d37009bd591d025}\label{class_t_cleanupper_abdfcdaef6f3474154d37009bd591d025}} 
+\index{TCleanupper@{TCleanupper}!getParameters@{getParameters}}
+\index{getParameters@{getParameters}!TCleanupper@{TCleanupper}}
+\doxysubsubsection{\texorpdfstring{getParameters()}{getParameters()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_cleanup_parameters}{Cleanup\+Parameters}} $\ast$ TCleanupper\+::get\+Parameters (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00071 \{ \textcolor{keywordflow}{return} m\_parameters; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_cleanupper_a5dd5cf19cf779bf28f6f38b5726c41aa}\label{class_t_cleanupper_a5dd5cf19cf779bf28f6f38b5726c41aa}} 
+\index{TCleanupper@{TCleanupper}!getResampleValues@{getResampleValues}}
+\index{getResampleValues@{getResampleValues}!TCleanupper@{TCleanupper}}
+\doxysubsubsection{\texorpdfstring{getResampleValues()}{getResampleValues()}}
+{\footnotesize\ttfamily bool TCleanupper\+::get\+Resample\+Values (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&}]{image,  }\item[{\mbox{\hyperlink{class_t_affine}{TAffine}} \&}]{aff,  }\item[{double \&}]{blur,  }\item[{\mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&}]{out\+Dim,  }\item[{\mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{out\+Dpi,  }\item[{bool}]{is\+Camera\+Test,  }\item[{bool \&}]{is\+Same\+Dpi }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00397                                                      \{}
+\DoxyCodeLine{00398   \textcolor{keywordtype}{double} outlp, outlq;}
+\DoxyCodeLine{00399   \textcolor{keywordtype}{double} scalex, scaley;}
+\DoxyCodeLine{00400   \textcolor{keywordtype}{double} cxin, cyin, cpout, cqout;}
+\DoxyCodeLine{00401   \textcolor{keywordtype}{double} max\_blur;}
+\DoxyCodeLine{00402   \mbox{\hyperlink{class_t_point_t}{TPointD}} dpi;}
+\DoxyCodeLine{00403 }
+\DoxyCodeLine{00404   \textcolor{comment}{// Locking the input image to be cleanupped}}
+\DoxyCodeLine{00405   image-\/>getRaster()-\/>lock();}
+\DoxyCodeLine{00406 }
+\DoxyCodeLine{00407   \textcolor{comment}{// Retrieve image infos}}
+\DoxyCodeLine{00408   \textcolor{keywordtype}{int} rasterLx = image-\/>getRaster()-\/>getLx();}
+\DoxyCodeLine{00409   \textcolor{keywordtype}{int} rasterLy = image-\/>getRaster()-\/>getLy();}
+\DoxyCodeLine{00410 }
+\DoxyCodeLine{00411   \textcolor{comment}{/*-\/-\/-\/入力画像サイズとSaveBoxのサイズが一致しているか？の判定-\/-\/-\/*/}}
+\DoxyCodeLine{00412   \mbox{\hyperlink{class_t_rect_t}{TRect}} saveBox          = image-\/>getSavebox();}
+\DoxyCodeLine{00413   \textcolor{keywordtype}{bool} raster\_is\_savebox = \textcolor{keyword}{true};}
+\DoxyCodeLine{00414   \textcolor{keywordflow}{if} (saveBox == \mbox{\hyperlink{class_t_rect_t}{TRect}}() \&\&}
+\DoxyCodeLine{00415       ((saveBox.getLx() > 0 \&\& saveBox.getLx() < rasterLx) ||}
+\DoxyCodeLine{00416        (saveBox.getLy() > 0 \&\& saveBox.getLy() < rasterLy)))}
+\DoxyCodeLine{00417     raster\_is\_savebox = \textcolor{keyword}{false};}
+\DoxyCodeLine{00418 }
+\DoxyCodeLine{00419   \textcolor{comment}{// Use the same source dpi throughout the level}}
+\DoxyCodeLine{00420   dpi = getSourceDpi();}
+\DoxyCodeLine{00421   \textcolor{keywordflow}{if} (dpi == \mbox{\hyperlink{class_t_point_t}{TPointD}}())}
+\DoxyCodeLine{00422     dpi.x = dpi.y = 65.0;  \textcolor{comment}{// using 65.0 as default DPI //??????WHY}}
+\DoxyCodeLine{00423   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!dpi.x)}
+\DoxyCodeLine{00424     dpi.x = dpi.y;}
+\DoxyCodeLine{00425   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!dpi.y)}
+\DoxyCodeLine{00426     dpi.y = dpi.x;}
+\DoxyCodeLine{00427 }
+\DoxyCodeLine{00428   \textcolor{comment}{// Retrieve some cleanup parameters}}
+\DoxyCodeLine{00429   \textcolor{keywordtype}{int} rotate = m\_parameters-\/>m\_rotate;}
+\DoxyCodeLine{00430 }
+\DoxyCodeLine{00431   \textcolor{comment}{// Build scaling/dpi data}}
+\DoxyCodeLine{00432   \{}
+\DoxyCodeLine{00433     m\_parameters-\/>getOutputImageInfo(outDim, outDpi.x, outDpi.y);}
+\DoxyCodeLine{00434 }
+\DoxyCodeLine{00435     \textcolor{comment}{// input -\/> output scale factor}}
+\DoxyCodeLine{00436     scalex = outDpi.x / dpi.x;}
+\DoxyCodeLine{00437     scaley = outDpi.y / dpi.y;}
+\DoxyCodeLine{00438 }
+\DoxyCodeLine{00439     outlp = outDim.lx;}
+\DoxyCodeLine{00440     outlq = outDim.ly;}
+\DoxyCodeLine{00441   \}}
+\DoxyCodeLine{00442 }
+\DoxyCodeLine{00443   \textcolor{comment}{/*-\/-\/-\/}}
+\DoxyCodeLine{00444 \textcolor{comment}{   * 拡大／縮小をしていない場合（DPIが変わらない場合）、NearestNeighborでリサンプリングする。-\/-\/-\/*/}}
+\DoxyCodeLine{00445   isSameDpi = areAlmostEqual(outDpi.x, dpi.x, 0.1) \&\&}
+\DoxyCodeLine{00446               areAlmostEqual(outDpi.y, dpi.y, 0.1);}
+\DoxyCodeLine{00447 }
+\DoxyCodeLine{00448   \textcolor{comment}{// Retrieve input center}}
+\DoxyCodeLine{00449   \textcolor{keywordflow}{if} (raster\_is\_savebox) \{}
+\DoxyCodeLine{00450     cxin = -\/saveBox.getP00().x + (saveBox.getLx() -\/ 1) / 2.0;}
+\DoxyCodeLine{00451     cyin = -\/saveBox.getP00().y + (saveBox.getLy() -\/ 1) / 2.0;}
+\DoxyCodeLine{00452   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00453     cxin = (rasterLx -\/ 1) / 2.0;}
+\DoxyCodeLine{00454     cyin = (rasterLy -\/ 1) / 2.0;}
+\DoxyCodeLine{00455   \}}
+\DoxyCodeLine{00456 }
+\DoxyCodeLine{00457   \textcolor{comment}{// Retrieve output center}}
+\DoxyCodeLine{00458   cpout = (outlp -\/ 1) / 2.0;}
+\DoxyCodeLine{00459   cqout = (outlq -\/ 1) / 2.0;}
+\DoxyCodeLine{00460   \textcolor{comment}{// Perform autocenter if any is found}}
+\DoxyCodeLine{00461   \textcolor{keywordtype}{double} angle = 0.0;}
+\DoxyCodeLine{00462   \textcolor{keywordtype}{double} skew  = 0.0;}
+\DoxyCodeLine{00463   \mbox{\hyperlink{class_t_affine}{TAffine}} pre\_aff;}
+\DoxyCodeLine{00464   image-\/>getRaster()-\/>lock();}
+\DoxyCodeLine{00465 }
+\DoxyCodeLine{00466   \textcolor{keywordtype}{bool} autocentered =}
+\DoxyCodeLine{00467       doAutocenter(angle, skew, cxin, cyin, cqout, cpout, dpi.x, dpi.y,}
+\DoxyCodeLine{00468                    raster\_is\_savebox, saveBox, image, scalex);}
+\DoxyCodeLine{00469   image-\/>getRaster()-\/>unlock();}
+\DoxyCodeLine{00470 }
+\DoxyCodeLine{00471   \textcolor{comment}{// Build the image transform as deduced by the autocenter}}
+\DoxyCodeLine{00472   \textcolor{keywordflow}{if} (m\_parameters-\/>m\_autocenterType == AUTOCENTER\_CTR \&\& skew) \{}
+\DoxyCodeLine{00473     pre\_aff.a11 = cos(skew * M\_PI\_180);}
+\DoxyCodeLine{00474     pre\_aff.a21 = sin(skew * M\_PI\_180);}
+\DoxyCodeLine{00475   \}}
+\DoxyCodeLine{00476 }
+\DoxyCodeLine{00477   aff = (\mbox{\hyperlink{class_t_scale}{TScale}}(scalex, scaley) * pre\_aff) * \mbox{\hyperlink{class_t_rotation}{TRotation}}(angle);}
+\DoxyCodeLine{00478   aff = aff.\mbox{\hyperlink{class_t_affine_a5c556c5952cff649a61add494ff3423c}{place}}(cxin, cyin, cpout, cqout);}
+\DoxyCodeLine{00479 }
+\DoxyCodeLine{00480   \textcolor{comment}{// Apply eventual additional user-\/defined transforms}}
+\DoxyCodeLine{00481   \mbox{\hyperlink{class_t_point_t}{TPointD}} pout = \mbox{\hyperlink{class_t_point_t}{TPointD}}((outlp -\/ 1) / 2.0, (outlq -\/ 1) / 2.0);}
+\DoxyCodeLine{00482 }
+\DoxyCodeLine{00483   \textcolor{keywordflow}{if} (m\_parameters-\/>m\_rotate != 0)}
+\DoxyCodeLine{00484     aff = \mbox{\hyperlink{class_t_rotation}{TRotation}}(-\/(\textcolor{keywordtype}{double})m\_parameters-\/>m\_rotate).\mbox{\hyperlink{class_t_affine_a5c556c5952cff649a61add494ff3423c}{place}}(pout, pout) * aff;}
+\DoxyCodeLine{00485 }
+\DoxyCodeLine{00486   \textcolor{keywordflow}{if} (m\_parameters-\/>m\_flipx || m\_parameters-\/>m\_flipy)}
+\DoxyCodeLine{00487     aff = \mbox{\hyperlink{class_t_scale}{TScale}}(m\_parameters-\/>m\_flipx ? -\/1 : 1, m\_parameters-\/>m\_flipy ? -\/1 : 1)}
+\DoxyCodeLine{00488               .\mbox{\hyperlink{class_t_affine_a5c556c5952cff649a61add494ff3423c}{place}}(pout, pout) *}
+\DoxyCodeLine{00489           aff;}
+\DoxyCodeLine{00490 }
+\DoxyCodeLine{00491   \textcolor{keywordflow}{if} (!isCameraTest)}
+\DoxyCodeLine{00492     aff = \mbox{\hyperlink{class_t_translation}{TTranslation}}(m\_parameters-\/>m\_offx * outDpi.x / 2,}
+\DoxyCodeLine{00493                        m\_parameters-\/>m\_offy * outDpi.y / 2) *}
+\DoxyCodeLine{00494           aff;}
+\DoxyCodeLine{00495 }
+\DoxyCodeLine{00496   max\_blur = 20.0 * sqrt(fabs(scalex \textcolor{comment}{/*** * oversample\_factor ***/}));}
+\DoxyCodeLine{00497   blur     = pow(max\_blur, (100 -\/ m\_parameters-\/>m\_sharpness) / (100 -\/ 1));}
+\DoxyCodeLine{00498   \textcolor{keywordflow}{return} autocentered;}
+\DoxyCodeLine{00499 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_cleanupper_aee1c249a36f2c03a7ff4c0cfa1318358}\label{class_t_cleanupper_aee1c249a36f2c03a7ff4c0cfa1318358}} 
+\index{TCleanupper@{TCleanupper}!getSourceDpi@{getSourceDpi}}
+\index{getSourceDpi@{getSourceDpi}!TCleanupper@{TCleanupper}}
+\doxysubsubsection{\texorpdfstring{getSourceDpi()}{getSourceDpi()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_point_t}{TPointD}} TCleanupper\+::get\+Source\+Dpi (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00105 \{ \textcolor{keywordflow}{return} m\_sourceDpi; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_cleanupper_a585b143db23a9f1300f918df4a45a971}\label{class_t_cleanupper_a585b143db23a9f1300f918df4a45a971}} 
+\index{TCleanupper@{TCleanupper}!instance@{instance}}
+\index{instance@{instance}!TCleanupper@{TCleanupper}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_cleanupper}{TCleanupper}} $\ast$ TCleanupper\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00320                                    \{}
+\DoxyCodeLine{00321   \textcolor{keyword}{static} \mbox{\hyperlink{class_t_cleanupper}{TCleanupper}} theCleanupper;}
+\DoxyCodeLine{00322   \textcolor{keywordflow}{return} \&theCleanupper;}
+\DoxyCodeLine{00323 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_cleanupper_a7b60b8f19f61d642b5a8ab2ad78ab339}\label{class_t_cleanupper_a7b60b8f19f61d642b5a8ab2ad78ab339}} 
+\index{TCleanupper@{TCleanupper}!process@{process}}
+\index{process@{process}!TCleanupper@{TCleanupper}}
+\doxysubsubsection{\texorpdfstring{process()}{process()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_cleanup_preprocessed_image}{Cleanup\+Preprocessed\+Image}} $\ast$ TCleanupper\+::process (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&}]{image,  }\item[{bool}]{first\+\_\+image,  }\item[{\mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&}]{only\+Resampled\+Image,  }\item[{bool}]{is\+Camera\+Test = {\ttfamily false},  }\item[{bool}]{return\+Resampled = {\ttfamily false},  }\item[{bool}]{only\+For\+Swatch = {\ttfamily false},  }\item[{\mbox{\hyperlink{class_t_affine}{TAffine}} $\ast$}]{aff = {\ttfamily 0},  }\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}}]{template\+For\+Resampled = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+The main cleanup method. \begin{DoxyWarning}{Warning}
+The input image reference is internally released at the most appropriate time, to unlock a possibly useful memory block. 
+\end{DoxyWarning}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00572                                                          \{}
+\DoxyCodeLine{00573   \mbox{\hyperlink{class_t_affine}{TAffine}} aff;}
+\DoxyCodeLine{00574   \textcolor{keywordtype}{double} blur;}
+\DoxyCodeLine{00575   \mbox{\hyperlink{class_t_dimension_t}{TDimension}} outDim(0, 0);}
+\DoxyCodeLine{00576   \mbox{\hyperlink{class_t_point_t}{TPointD}} outDpi;}
+\DoxyCodeLine{00577 }
+\DoxyCodeLine{00578   \textcolor{keywordtype}{bool} isSameDpi    = \textcolor{keyword}{false};}
+\DoxyCodeLine{00579   \textcolor{keywordtype}{bool} autocentered = getResampleValues(image, aff, blur, outDim, outDpi,}
+\DoxyCodeLine{00580                                         isCameraTest, isSameDpi);}
+\DoxyCodeLine{00581   \textcolor{keywordflow}{if} (m\_parameters-\/>m\_autocenterType != AUTOCENTER\_NONE \&\& !autocentered)}
+\DoxyCodeLine{00582     DVGui::warning(}
+\DoxyCodeLine{00583         QObject::tr(\textcolor{stringliteral}{"{}The autocentering failed on the current drawing."{}}));}
+\DoxyCodeLine{00584 }
+\DoxyCodeLine{00585   \textcolor{keywordtype}{bool} fromGr8 = (bool)\mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}}(image-\/>getRaster());}
+\DoxyCodeLine{00586   \textcolor{keywordtype}{bool} toGr8   = (m\_parameters-\/>m\_lineProcessingMode == lpGrey);}
+\DoxyCodeLine{00587 }
+\DoxyCodeLine{00588   \textcolor{comment}{// If necessary, perform auto-\/adjust}}
+\DoxyCodeLine{00589   \textcolor{keywordflow}{if} (!isCameraTest \&\& m\_parameters-\/>m\_lineProcessingMode != lpNone \&\& toGr8 \&\&}
+\DoxyCodeLine{00590       m\_parameters-\/>m\_autoAdjustMode != AUTO\_ADJ\_NONE \&\& !onlyForSwatch) \{}
+\DoxyCodeLine{00591     \textcolor{keyword}{static} \textcolor{keywordtype}{int} ref\_cum[256];}
+\DoxyCodeLine{00592     UCHAR lut[256];}
+\DoxyCodeLine{00593     \textcolor{keywordtype}{int} cum[256];}
+\DoxyCodeLine{00594     \textcolor{keywordtype}{double} x0\_src\_f, y0\_src\_f, x1\_src\_f, y1\_src\_f;}
+\DoxyCodeLine{00595     \textcolor{keywordtype}{int} x0\_src, y0\_src, x1\_src, y1\_src;}
+\DoxyCodeLine{00596 }
+\DoxyCodeLine{00597     \textcolor{comment}{// cleanup\_message("{}Autoadjusting... \(\backslash\)n"{});}}
+\DoxyCodeLine{00598 }
+\DoxyCodeLine{00599     \mbox{\hyperlink{class_t_affine}{TAffine}} inv = aff.\mbox{\hyperlink{class_t_affine_a570529b96b1ec5abc711aaa9aac09ff9}{inv}}();}
+\DoxyCodeLine{00600 }
+\DoxyCodeLine{00601     x0\_src\_f = affMV1(inv, 0, 0);}
+\DoxyCodeLine{00602     y0\_src\_f = affMV2(inv, 0, 0);}
+\DoxyCodeLine{00603     x1\_src\_f = affMV1(inv, outDim.lx -\/ 1, outDim.ly -\/ 1);}
+\DoxyCodeLine{00604     y1\_src\_f = affMV2(inv, outDim.lx -\/ 1, outDim.ly -\/ 1);}
+\DoxyCodeLine{00605 }
+\DoxyCodeLine{00606     x0\_src = tround(x0\_src\_f);}
+\DoxyCodeLine{00607     y0\_src = tround(y0\_src\_f);}
+\DoxyCodeLine{00608     x1\_src = tround(x1\_src\_f);}
+\DoxyCodeLine{00609     y1\_src = tround(y1\_src\_f);}
+\DoxyCodeLine{00610 }
+\DoxyCodeLine{00611     set\_autoadjust\_window(x0\_src, y0\_src, x1\_src, y1\_src);}
+\DoxyCodeLine{00612 }
+\DoxyCodeLine{00613     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}}(image-\/>getRaster())) \{}
+\DoxyCodeLine{00614       \textcolor{comment}{// Auto-\/adjusting a 32-\/bit image. This means that a white background must}}
+\DoxyCodeLine{00615       \textcolor{comment}{// be introduced first.}}
+\DoxyCodeLine{00616       \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras32(image-\/>getRaster()-\/>clone());}
+\DoxyCodeLine{00617       \mbox{\hyperlink{namespace_t_rop_a789f797a79d572d97182478cc9826c8a}{TRop::addBackground}}(ras32, TPixel32::White);}
+\DoxyCodeLine{00618       image = \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}(ras32);  \textcolor{comment}{// old image is released here}}
+\DoxyCodeLine{00619       ras32 = \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}();}
+\DoxyCodeLine{00620 }
+\DoxyCodeLine{00621       \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}} rgr(image-\/>getRaster()-\/>getSize());}
+\DoxyCodeLine{00622       \mbox{\hyperlink{namespace_t_rop_a229eb7fd85c23c325ea4ba55478d5712}{TRop::copy}}(rgr, image-\/>getRaster());}
+\DoxyCodeLine{00623 }
+\DoxyCodeLine{00624       \textcolor{comment}{// This is now legit. It was NOT before the clone, since the original}}
+\DoxyCodeLine{00625       \textcolor{comment}{// could be cached.}}
+\DoxyCodeLine{00626       image-\/>setRaster(rgr);}
+\DoxyCodeLine{00627     \}}
+\DoxyCodeLine{00628     \textcolor{keywordflow}{switch} (m\_parameters-\/>m\_autoAdjustMode) \{}
+\DoxyCodeLine{00629     \textcolor{keywordflow}{case} AUTO\_ADJ\_HISTOGRAM:}
+\DoxyCodeLine{00630       \textcolor{keywordflow}{if} (first\_image) \{}
+\DoxyCodeLine{00631         build\_gr\_cum(image, ref\_cum);}
+\DoxyCodeLine{00632       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00633         build\_gr\_cum(image, cum);}
+\DoxyCodeLine{00634         build\_gr\_lut(ref\_cum, cum, lut);}
+\DoxyCodeLine{00635         apply\_lut(image, lut);}
+\DoxyCodeLine{00636       \}}
+\DoxyCodeLine{00637       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00638 }
+\DoxyCodeLine{00639     \textcolor{keywordflow}{case} AUTO\_ADJ\_HISTO\_L:}
+\DoxyCodeLine{00640       histo\_l\_algo(image, first\_image);}
+\DoxyCodeLine{00641       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00642 }
+\DoxyCodeLine{00643     \textcolor{keywordflow}{case} AUTO\_ADJ\_BLACK\_EQ:}
+\DoxyCodeLine{00644       black\_eq\_algo(image);}
+\DoxyCodeLine{00645       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00646 }
+\DoxyCodeLine{00647     \textcolor{keywordflow}{case} AUTO\_ADJ\_NONE:}
+\DoxyCodeLine{00648     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00649       assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{00650       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00651     \}}
+\DoxyCodeLine{00652   \}}
+\DoxyCodeLine{00653 }
+\DoxyCodeLine{00654   fromGr8 = (bool)\mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}}(}
+\DoxyCodeLine{00655       image-\/>getRaster());  \textcolor{comment}{// may have changed type due to auto-\/adjust}}
+\DoxyCodeLine{00656 }
+\DoxyCodeLine{00657   assert(returnResampled ||}
+\DoxyCodeLine{00658          !onlyForSwatch);  \textcolor{comment}{// if onlyForSwatch, then returnResampled}}
+\DoxyCodeLine{00659 }
+\DoxyCodeLine{00660   \textcolor{comment}{// Allocate output colormap raster}}
+\DoxyCodeLine{00661   \mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}} finalRas;}
+\DoxyCodeLine{00662   \textcolor{keywordflow}{if} (!onlyForSwatch) \{}
+\DoxyCodeLine{00663     finalRas = \mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}}(outDim);}
+\DoxyCodeLine{00664     \textcolor{keywordflow}{if} (!finalRas) \{}
+\DoxyCodeLine{00665       TImageCache::instance()-\/>outputMap(outDim.lx * outDim.ly * 4,}
+\DoxyCodeLine{00666                                          \textcolor{stringliteral}{"{}C:\(\backslash\)\(\backslash\)cachelog"{}});}
+\DoxyCodeLine{00667       assert(!\textcolor{stringliteral}{"{}failed finalRas allocation!"{}});}
+\DoxyCodeLine{00668       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00669     \}}
+\DoxyCodeLine{00670   \}}
+\DoxyCodeLine{00671 }
+\DoxyCodeLine{00672   \textcolor{comment}{// In case the input raster was a greymap, we cannot reutilize finalRas's}}
+\DoxyCodeLine{00673   \textcolor{comment}{// buffer to transform the final}}
+\DoxyCodeLine{00674   \textcolor{comment}{// fullcolor pixels to colormap pixels directly (1 32-\/bit pixel would hold 4}}
+\DoxyCodeLine{00675   \textcolor{comment}{// 8-\/bit pixels) -\/ therefore,}}
+\DoxyCodeLine{00676   \textcolor{comment}{// a secondary greymap is allocated.}}
+\DoxyCodeLine{00677 }
+\DoxyCodeLine{00678   \textcolor{comment}{// NOTE: This should be considered obsolete? By using TRop::resample(}}
+\DoxyCodeLine{00679   \textcolor{comment}{// <TRaster32P\& instance> , ...) we}}
+\DoxyCodeLine{00680   \textcolor{comment}{// should get the same effect!!}}
+\DoxyCodeLine{00681 }
+\DoxyCodeLine{00682   \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} tmp\_ras;}
+\DoxyCodeLine{00683 }
+\DoxyCodeLine{00684   \textcolor{keywordflow}{if} (returnResampled || (fromGr8 \&\& toGr8)) \{}
+\DoxyCodeLine{00685     \textcolor{keywordflow}{if} (templateForResampled)}
+\DoxyCodeLine{00686       tmp\_ras = templateForResampled-\/>create(outDim.lx, outDim.ly);}
+\DoxyCodeLine{00687     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (fromGr8 \&\& toGr8)}
+\DoxyCodeLine{00688       tmp\_ras = \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}}(outDim);}
+\DoxyCodeLine{00689     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00690       tmp\_ras = \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}(outDim);}
+\DoxyCodeLine{00691 }
+\DoxyCodeLine{00692     \textcolor{keywordflow}{if} (!tmp\_ras) \{}
+\DoxyCodeLine{00693       TImageCache::instance()-\/>outputMap(outDim.lx * outDim.ly * 4,}
+\DoxyCodeLine{00694                                          \textcolor{stringliteral}{"{}C:\(\backslash\)\(\backslash\)cachelog"{}});}
+\DoxyCodeLine{00695       assert(!\textcolor{stringliteral}{"{}failed tmp\_ras allocation!"{}});}
+\DoxyCodeLine{00696       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00697     \}}
+\DoxyCodeLine{00698   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00699     \textcolor{comment}{// if finalRas is allocated, and the intermediate raster has to be 32-\/bit,}}
+\DoxyCodeLine{00700     \textcolor{comment}{// we can perform pixel}}
+\DoxyCodeLine{00701     \textcolor{comment}{// conversion directly on the same output buffer}}
+\DoxyCodeLine{00702     tmp\_ras = \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}(outDim.lx, outDim.ly, outDim.lx,}
+\DoxyCodeLine{00703                          (TPixel32 *)finalRas-\/>getRawData());}
+\DoxyCodeLine{00704 }
+\DoxyCodeLine{00705   \mbox{\hyperlink{namespace_t_rop_a2780cb0189f5717b67b6aca3f5471168}{TRop::ResampleFilterType}} flt\_type;}
+\DoxyCodeLine{00706   \textcolor{keywordflow}{if} (isSameDpi)}
+\DoxyCodeLine{00707     flt\_type = \mbox{\hyperlink{namespace_t_rop_a2780cb0189f5717b67b6aca3f5471168a92694e20fb1c18f7987cda447d4553ff}{TRop::ClosestPixel}};  \textcolor{comment}{// NearestNeighbor}}
+\DoxyCodeLine{00708   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isCameraTest)}
+\DoxyCodeLine{00709     flt\_type = \mbox{\hyperlink{namespace_t_rop_a2780cb0189f5717b67b6aca3f5471168af59a8bad64d2b117020f864efd67b2b5}{TRop::Triangle}};}
+\DoxyCodeLine{00710   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00711     flt\_type = \mbox{\hyperlink{namespace_t_rop_a2780cb0189f5717b67b6aca3f5471168a8142bce9410b8ca2682b7f41d0fe1cda}{TRop::Hann2}};}
+\DoxyCodeLine{00712   \mbox{\hyperlink{namespace_t_rop_a5e39bc748039afe42001ba44f2d2a073}{TRop::resample}}(tmp\_ras, image-\/>getRaster(), aff, flt\_type, blur);}
+\DoxyCodeLine{00713 }
+\DoxyCodeLine{00714   \textcolor{keywordflow}{if} ((\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}})tmp\_ras \&\& !templateForResampled)}
+\DoxyCodeLine{00715     \textcolor{comment}{// Add white background to deal with semitransparent pixels}}
+\DoxyCodeLine{00716     \mbox{\hyperlink{namespace_t_rop_a789f797a79d572d97182478cc9826c8a}{TRop::addBackground}}(tmp\_ras, TPixel32::White);}
+\DoxyCodeLine{00717 }
+\DoxyCodeLine{00718   \textcolor{keywordflow}{if} (resampleAff) *resampleAff = aff;}
+\DoxyCodeLine{00719 }
+\DoxyCodeLine{00720   image-\/>getRaster()-\/>unlock();}
+\DoxyCodeLine{00721   image = \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}();}
+\DoxyCodeLine{00722 }
+\DoxyCodeLine{00723   \textcolor{keywordflow}{if} (returnResampled) \{}
+\DoxyCodeLine{00724     onlyResampledImage = \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}(tmp\_ras);}
+\DoxyCodeLine{00725     onlyResampledImage-\/>setDpi(outDpi.x, outDpi.y);}
+\DoxyCodeLine{00726   \}}
+\DoxyCodeLine{00727 }
+\DoxyCodeLine{00728   \textcolor{keywordflow}{if} (onlyForSwatch) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00729 }
+\DoxyCodeLine{00730   assert(finalRas);}
+\DoxyCodeLine{00731 }
+\DoxyCodeLine{00732   \textcolor{comment}{// Copy current cleanup palette to parameters' colors}}
+\DoxyCodeLine{00733   m\_parameters-\/>m\_colors.update(m\_parameters-\/>m\_cleanupPalette.getPointer(),}
+\DoxyCodeLine{00734                                 m\_parameters-\/>m\_noAntialias);}
+\DoxyCodeLine{00735 }
+\DoxyCodeLine{00736   \textcolor{keywordflow}{if} (toGr8) \{}
+\DoxyCodeLine{00737     \textcolor{comment}{// No (color) processing. Not even thresholding. This just means that all}}
+\DoxyCodeLine{00738     \textcolor{comment}{// the important}}
+\DoxyCodeLine{00739     \textcolor{comment}{// stuff here is made in the brightness/contrast stage...}}
+\DoxyCodeLine{00740 }
+\DoxyCodeLine{00741     \textcolor{comment}{// NOTE: Most of the color processing should be DISABLED in this case!!}}
+\DoxyCodeLine{00742 }
+\DoxyCodeLine{00743     tmp\_ras-\/>lock();}
+\DoxyCodeLine{00744     finalRas-\/>lock();}
+\DoxyCodeLine{00745     assert(tmp\_ras-\/>getSize() == finalRas-\/>getSize());}
+\DoxyCodeLine{00746     assert(tmp\_ras-\/>getLx() == tmp\_ras-\/>\mbox{\hyperlink{class_t_raster_a760946b6cb48d7414f90cd421078912c}{getWrap}}());}
+\DoxyCodeLine{00747     assert(finalRas-\/>getLx() == finalRas-\/>getWrap());}
+\DoxyCodeLine{00748 }
+\DoxyCodeLine{00749     \textcolor{keywordtype}{int} pixCount = outDim.lx * outDim.ly;}
+\DoxyCodeLine{00750 }
+\DoxyCodeLine{00751     \textcolor{keywordflow}{if} (fromGr8) \{}
+\DoxyCodeLine{00752       UCHAR *rowin    = tmp\_ras-\/>\mbox{\hyperlink{class_t_raster_a5ce02b7e8a5b8b594863aa272d8dcdbc}{getRawData}}();}
+\DoxyCodeLine{00753       TUINT32 *rowout = \textcolor{keyword}{reinterpret\_cast<}TUINT32 *\textcolor{keyword}{>}(finalRas-\/>getRawData());}
+\DoxyCodeLine{00754       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < pixCount; i++)}
+\DoxyCodeLine{00755         *rowout++ = *rowin++;  \textcolor{comment}{// Direct copy for now... :(}}
+\DoxyCodeLine{00756     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00757       TPixel32 *rowin = \textcolor{keyword}{reinterpret\_cast<}TPixel32 *\textcolor{keyword}{>}(tmp\_ras-\/>\mbox{\hyperlink{class_t_raster_a5ce02b7e8a5b8b594863aa272d8dcdbc}{getRawData}}());}
+\DoxyCodeLine{00758       TUINT32 *rowout = \textcolor{keyword}{reinterpret\_cast<}TUINT32 *\textcolor{keyword}{>}(finalRas-\/>getRawData());}
+\DoxyCodeLine{00759       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < pixCount; i++)}
+\DoxyCodeLine{00760         *rowout++ = \mbox{\hyperlink{class_t_pixel_g_r8_aa60eac9adab1b27ada505bffd6301e51}{TPixelGR8::from}}(*rowin++).value;}
+\DoxyCodeLine{00761     \}}
+\DoxyCodeLine{00762 }
+\DoxyCodeLine{00763     tmp\_ras-\/>unlock();}
+\DoxyCodeLine{00764     finalRas-\/>unlock();}
+\DoxyCodeLine{00765   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00766     \textcolor{comment}{// WARNING: finalRas and tmp\_ras may share the SAME buffer!}}
+\DoxyCodeLine{00767     assert(\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}(tmp\_ras));}
+\DoxyCodeLine{00768     preprocessColors(finalRas, tmp\_ras, m\_parameters-\/>m\_colors);}
+\DoxyCodeLine{00769   \}}
+\DoxyCodeLine{00770 }
+\DoxyCodeLine{00771   \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} \textcolor{keyword}{final};}
+\DoxyCodeLine{00772   \textcolor{keyword}{final} = \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}}(finalRas, finalRas-\/>getBounds());}
+\DoxyCodeLine{00773   \textcolor{keyword}{final}-\/>setDpi(outDpi.x, outDpi.y);}
+\DoxyCodeLine{00774 }
+\DoxyCodeLine{00775   \mbox{\hyperlink{class_cleanup_preprocessed_image}{CleanupPreprocessedImage}} *cpi =}
+\DoxyCodeLine{00776       \textcolor{keyword}{new} \mbox{\hyperlink{class_cleanup_preprocessed_image}{CleanupPreprocessedImage}}(m\_parameters, \textcolor{keyword}{final}, toGr8);}
+\DoxyCodeLine{00777   cpi-\/>m\_autocentered = autocentered;}
+\DoxyCodeLine{00778   cpi-\/>m\_appliedAff   = aff;}
+\DoxyCodeLine{00779   \textcolor{keywordflow}{return} cpi;}
+\DoxyCodeLine{00780 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00387}{TRop\+::add\+Background()}}, \mbox{\hyperlink{l00081}{TRop\+::\+Closest\+Pixel}}, \mbox{\hyperlink{l00093}{TRop\+::copy()}}, \mbox{\hyperlink{class_t_pixel_g_r8_aa60eac9adab1b27ada505bffd6301e51}{TPixel\+GR8\+::from()}}, \mbox{\hyperlink{l00158}{TRaster\+::get\+Raw\+Data()}}, \mbox{\hyperlink{l00121}{TRaster\+::get\+Wrap()}}, \mbox{\hyperlink{l00067}{TRop\+::\+Hann2}}, \mbox{\hyperlink{l00055}{TAffine\+::inv()}}, \mbox{\hyperlink{l04648}{TRop\+::resample()}}, and \mbox{\hyperlink{l00057}{TRop\+::\+Triangle}}.
+
+\mbox{\Hypertarget{class_t_cleanupper_aad8d5b16ed828e2c5e88f8325f682d8d}\label{class_t_cleanupper_aad8d5b16ed828e2c5e88f8325f682d8d}} 
+\index{TCleanupper@{TCleanupper}!processColors@{processColors}}
+\index{processColors@{processColors}!TCleanupper@{TCleanupper}}
+\doxysubsubsection{\texorpdfstring{processColors()}{processColors()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} TCleanupper\+::process\+Colors (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&}]{r }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00505                                                        \{}
+\DoxyCodeLine{00506   \textcolor{keywordflow}{if} (m\_parameters-\/>m\_lineProcessingMode == lpNone) \textcolor{keywordflow}{return} rin;}
+\DoxyCodeLine{00507 }
+\DoxyCodeLine{00508   \mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}} rcm = \mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}}(rin-\/>getSize());}
+\DoxyCodeLine{00509   \textcolor{keywordflow}{if} (!rcm) \{}
+\DoxyCodeLine{00510     assert(!\textcolor{stringliteral}{"{}failed finalRas allocation!"{}});}
+\DoxyCodeLine{00511     \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}}();}
+\DoxyCodeLine{00512   \}}
+\DoxyCodeLine{00513 }
+\DoxyCodeLine{00514   \textcolor{comment}{// Copy current cleanup palette to parameters' colors}}
+\DoxyCodeLine{00515   m\_parameters-\/>m\_colors.update(m\_parameters-\/>m\_cleanupPalette.getPointer(),}
+\DoxyCodeLine{00516                                 m\_parameters-\/>m\_noAntialias);}
+\DoxyCodeLine{00517 }
+\DoxyCodeLine{00518   \textcolor{keywordtype}{bool} toGr8 = (m\_parameters-\/>m\_lineProcessingMode == lpGrey);}
+\DoxyCodeLine{00519   \textcolor{keywordflow}{if} (toGr8) \{}
+\DoxyCodeLine{00520     \textcolor{comment}{// No (color) processing. Not even thresholding. This just means that all}}
+\DoxyCodeLine{00521     \textcolor{comment}{// the important}}
+\DoxyCodeLine{00522     \textcolor{comment}{// stuff here is made in the brightness/contrast stage...}}
+\DoxyCodeLine{00523 }
+\DoxyCodeLine{00524     \textcolor{comment}{// NOTE: Most of the color processing should be DISABLED in this case!!}}
+\DoxyCodeLine{00525 }
+\DoxyCodeLine{00526     \textcolor{comment}{// finalRas-\/>clear();}}
+\DoxyCodeLine{00527     rin-\/>lock();}
+\DoxyCodeLine{00528     rcm-\/>lock();}
+\DoxyCodeLine{00529 }
+\DoxyCodeLine{00530     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}}(rin)) \{}
+\DoxyCodeLine{00531       UCHAR *rowin    = rin-\/>getRawData();}
+\DoxyCodeLine{00532       TUINT32 *rowout = \textcolor{keyword}{reinterpret\_cast<}TUINT32 *\textcolor{keyword}{>}(rcm-\/>getRawData());}
+\DoxyCodeLine{00533       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < rin-\/>getLy(); i++) \{}
+\DoxyCodeLine{00534         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < rin-\/>getLx(); j++)}
+\DoxyCodeLine{00535           *rowout++ = *rowin++;  \textcolor{comment}{// Direct copy for now... :(}}
+\DoxyCodeLine{00536         rowin += rin-\/>getWrap() -\/ rin-\/>getLx();}
+\DoxyCodeLine{00537         rowout += rcm-\/>getWrap() -\/ rcm-\/>getLx();}
+\DoxyCodeLine{00538       \}}
+\DoxyCodeLine{00539     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00540       TPixel32 *rowin = \textcolor{keyword}{reinterpret\_cast<}TPixel32 *\textcolor{keyword}{>}(rin-\/>getRawData());}
+\DoxyCodeLine{00541       TUINT32 *rowout = \textcolor{keyword}{reinterpret\_cast<}TUINT32 *\textcolor{keyword}{>}(rcm-\/>getRawData());}
+\DoxyCodeLine{00542       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < rin-\/>getLy(); i++) \{}
+\DoxyCodeLine{00543         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < rin-\/>getLx(); j++)}
+\DoxyCodeLine{00544           *rowout++ = \mbox{\hyperlink{class_t_pixel_g_r8_aa60eac9adab1b27ada505bffd6301e51}{TPixelGR8::from}}(*rowin++).value;}
+\DoxyCodeLine{00545         rowin += rin-\/>getWrap() -\/ rin-\/>getLx();}
+\DoxyCodeLine{00546         rowout += rcm-\/>getWrap() -\/ rcm-\/>getLx();}
+\DoxyCodeLine{00547       \}}
+\DoxyCodeLine{00548     \}}
+\DoxyCodeLine{00549 }
+\DoxyCodeLine{00550     rin-\/>unlock();}
+\DoxyCodeLine{00551     rcm-\/>unlock();}
+\DoxyCodeLine{00552   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00553     assert(\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}(rin));}
+\DoxyCodeLine{00554     preprocessColors(rcm, rin, m\_parameters-\/>m\_colors);}
+\DoxyCodeLine{00555   \}}
+\DoxyCodeLine{00556 }
+\DoxyCodeLine{00557   \textcolor{comment}{// outImg-\/>setDpi(outDpi.x, outDpi.y);}}
+\DoxyCodeLine{00558   \mbox{\hyperlink{class_cleanup_preprocessed_image}{CleanupPreprocessedImage}} cpi(m\_parameters,}
+\DoxyCodeLine{00559                                \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}}(rcm, rcm-\/>getBounds()), toGr8);}
+\DoxyCodeLine{00560   cpi.m\_autocentered = \textcolor{keyword}{true};}
+\DoxyCodeLine{00561 }
+\DoxyCodeLine{00562   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} rout = \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}(rin-\/>getSize());}
+\DoxyCodeLine{00563   finalize(rout, \&cpi);}
+\DoxyCodeLine{00564   \textcolor{keywordflow}{return} rout;}
+\DoxyCodeLine{00565 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_cleanupper_a7afda6937483bcb5d1bd9bf49027f77e}\label{class_t_cleanupper_a7afda6937483bcb5d1bd9bf49027f77e}} 
+\index{TCleanupper@{TCleanupper}!setParameters@{setParameters}}
+\index{setParameters@{setParameters}!TCleanupper@{TCleanupper}}
+\doxysubsubsection{\texorpdfstring{setParameters()}{setParameters()}}
+{\footnotesize\ttfamily void TCleanupper\+::set\+Parameters (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_cleanup_parameters}{Cleanup\+Parameters}} $\ast$}]{parameters }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00327                                                              \{}
+\DoxyCodeLine{00328   m\_parameters = parameters;}
+\DoxyCodeLine{00329 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_cleanupper_a89549457e197e1c8bf0286c6b3cba558}\label{class_t_cleanupper_a89549457e197e1c8bf0286c6b3cba558}} 
+\index{TCleanupper@{TCleanupper}!setSourceDpi@{setSourceDpi}}
+\index{setSourceDpi@{setSourceDpi}!TCleanupper@{TCleanupper}}
+\doxysubsubsection{\texorpdfstring{setSourceDpi()}{setSourceDpi()}}
+{\footnotesize\ttfamily void TCleanupper\+::set\+Source\+Dpi (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{dpi }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00106 \{ m\_sourceDpi = dpi; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/tcleanupper.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tcleanupper.\+cpp\end{DoxyCompactItemize}

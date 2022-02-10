@@ -1,0 +1,161 @@
+\hypertarget{class_history}{}\doxysection{History Class Reference}
+\label{class_history}\index{History@{History}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_history_1_1_day}{Day}}
+\item 
+class \mbox{\hyperlink{class_history_1_1_item}{Item}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_history_ae578129dd265f6c9bf5900eab560a84b}{get\+Day\+Count}} () const
+\item 
+const \mbox{\hyperlink{class_history_1_1_day}{Day}} $\ast$ \mbox{\hyperlink{class_history_ab0f80a83d30f4877ddcba1661e1fdd7d}{get\+Day}} (int i) const
+\item 
+const \mbox{\hyperlink{class_history_1_1_day}{Day}} $\ast$ \mbox{\hyperlink{class_history_a6f35d01502aeb59be31d12c8a255eec2}{get\+Day}} (const QDate \&time) const
+\item 
+const \mbox{\hyperlink{class_history_1_1_day}{Day}} $\ast$ \mbox{\hyperlink{class_history_ab2750d1b24b05d962a963905efd905f3}{get\+Day}} (std\+::string date\+String) const
+\item 
+void \mbox{\hyperlink{class_history_a91036bad3fd92f09e894ef6e3ee3a1c7}{add\+Item}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&fp)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_history}{History}} $\ast$ \mbox{\hyperlink{class_history_a9c39e5ecf714ccaa48695bdf066ec843}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_history_a5b00b64a1ddee04e60d5a3b517fd6d4c}\label{class_history_a5b00b64a1ddee04e60d5a3b517fd6d4c}} 
+\index{History@{History}!````~History@{$\sim$History}}
+\index{````~History@{$\sim$History}!History@{History}}
+\doxysubsubsection{\texorpdfstring{$\sim$History()}{~History()}}
+{\footnotesize\ttfamily History\+::$\sim$\+History (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00037 \{ clearPointerContainer(m\_days); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_history_a91036bad3fd92f09e894ef6e3ee3a1c7}\label{class_history_a91036bad3fd92f09e894ef6e3ee3a1c7}} 
+\index{History@{History}!addItem@{addItem}}
+\index{addItem@{addItem}!History@{History}}
+\doxysubsubsection{\texorpdfstring{addItem()}{addItem()}}
+{\footnotesize\ttfamily void History\+::add\+Item (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{fp }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039                                          \{}
+\DoxyCodeLine{00040   \textcolor{keywordtype}{bool} changed = \textcolor{keyword}{false};}
+\DoxyCodeLine{00041   QDate now    = QDate::currentDate();}
+\DoxyCodeLine{00042   Day *day     = 0;}
+\DoxyCodeLine{00043   \textcolor{keywordtype}{int} i        = 0;}
+\DoxyCodeLine{00044   \textcolor{keywordflow}{for} (; i < (int)m\_days.size(); i++)}
+\DoxyCodeLine{00045     \textcolor{keywordflow}{if} (now == m\_days[i]-\/>m\_timeStamp) \{}
+\DoxyCodeLine{00046       day = m\_days[i];}
+\DoxyCodeLine{00047       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00048     \}}
+\DoxyCodeLine{00049   \textcolor{keywordflow}{if} (i == (\textcolor{keywordtype}{int})m\_days.size()) \{}
+\DoxyCodeLine{00050     changed = \textcolor{keyword}{true};}
+\DoxyCodeLine{00051     m\_days.push\_back(\textcolor{keyword}{new} Day(now));}
+\DoxyCodeLine{00052     day = m\_days.back();}
+\DoxyCodeLine{00053     \textcolor{keywordflow}{if} (m\_days.size() > 7) \{}
+\DoxyCodeLine{00054       \textcolor{keyword}{delete} m\_days[0];}
+\DoxyCodeLine{00055       m\_days.erase(m\_days.begin());}
+\DoxyCodeLine{00056     \}}
+\DoxyCodeLine{00057   \}}
+\DoxyCodeLine{00058   assert(day);}
+\DoxyCodeLine{00059   Item fpItem(fp);}
+\DoxyCodeLine{00060   std::set<Item>::iterator j = day-\/>m\_items.find(fpItem);}
+\DoxyCodeLine{00061   \textcolor{keywordflow}{if} (j == day-\/>m\_items.end()) \{}
+\DoxyCodeLine{00062     day-\/>m\_items.insert(fpItem);}
+\DoxyCodeLine{00063     changed = \textcolor{keyword}{true};}
+\DoxyCodeLine{00064   \}}
+\DoxyCodeLine{00065   \textcolor{keywordflow}{if} (changed) save();}
+\DoxyCodeLine{00066 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_history_a6f35d01502aeb59be31d12c8a255eec2}\label{class_history_a6f35d01502aeb59be31d12c8a255eec2}} 
+\index{History@{History}!getDay@{getDay}}
+\index{getDay@{getDay}!History@{History}}
+\doxysubsubsection{\texorpdfstring{getDay()}{getDay()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_history_1_1_day}{History\+::\+Day}} $\ast$ History\+::get\+Day (\begin{DoxyParamCaption}\item[{const QDate \&}]{time }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00079                                                          \{}
+\DoxyCodeLine{00080   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_days.size(); i++)}
+\DoxyCodeLine{00081     \textcolor{keywordflow}{if} (m\_days[i]-\/>m\_timeStamp == time) \textcolor{keywordflow}{return} m\_days[i];}
+\DoxyCodeLine{00082   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00083 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_history_ab0f80a83d30f4877ddcba1661e1fdd7d}\label{class_history_ab0f80a83d30f4877ddcba1661e1fdd7d}} 
+\index{History@{History}!getDay@{getDay}}
+\index{getDay@{getDay}!History@{History}}
+\doxysubsubsection{\texorpdfstring{getDay()}{getDay()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_history_1_1_day}{History\+::\+Day}} $\ast$ History\+::get\+Day (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073                                              \{}
+\DoxyCodeLine{00074   assert(0 <= i \&\& i < (\textcolor{keywordtype}{int})m\_days.size());}
+\DoxyCodeLine{00075   assert(m\_days[i]);}
+\DoxyCodeLine{00076   \textcolor{keywordflow}{return} m\_days[i];}
+\DoxyCodeLine{00077 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_history_ab2750d1b24b05d962a963905efd905f3}\label{class_history_ab2750d1b24b05d962a963905efd905f3}} 
+\index{History@{History}!getDay@{getDay}}
+\index{getDay@{getDay}!History@{History}}
+\doxysubsubsection{\texorpdfstring{getDay()}{getDay()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_history_1_1_day}{History\+::\+Day}} $\ast$ History\+::get\+Day (\begin{DoxyParamCaption}\item[{std\+::string}]{date\+String }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00085                                                             \{}
+\DoxyCodeLine{00086   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_days.size(); i++)}
+\DoxyCodeLine{00087     \textcolor{keywordflow}{if} (m\_days[i]-\/>getDate() == dateString) \textcolor{keywordflow}{return} m\_days[i];}
+\DoxyCodeLine{00088   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00089 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_history_ae578129dd265f6c9bf5900eab560a84b}\label{class_history_ae578129dd265f6c9bf5900eab560a84b}} 
+\index{History@{History}!getDayCount@{getDayCount}}
+\index{getDayCount@{getDayCount}!History@{History}}
+\doxysubsubsection{\texorpdfstring{getDayCount()}{getDayCount()}}
+{\footnotesize\ttfamily int History\+::get\+Day\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035 \{ \textcolor{keywordflow}{return} m\_days.size(); \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_history_a9c39e5ecf714ccaa48695bdf066ec843}\label{class_history_a9c39e5ecf714ccaa48695bdf066ec843}} 
+\index{History@{History}!instance@{instance}}
+\index{instance@{instance}!History@{History}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_history}{History}} $\ast$ History\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068                            \{}
+\DoxyCodeLine{00069   \textcolor{keyword}{static} \mbox{\hyperlink{class_history}{History}} theHistory;}
+\DoxyCodeLine{00070   \textcolor{keywordflow}{return} \&theHistory;}
+\DoxyCodeLine{00071 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/history.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/history.\+cpp\end{DoxyCompactItemize}

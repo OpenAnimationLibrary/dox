@@ -1,0 +1,143 @@
+\hypertarget{class_dock_separator}{}\doxysection{Dock\+Separator Class Reference}
+\label{class_dock_separator}\index{DockSeparator@{DockSeparator}}
+
+
+{\ttfamily \#include $<$docklayout.\+h$>$}
+
+Inheritance diagram for Dock\+Separator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_dock_separator}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_dock_separator_a5efc5f2fa137761f211d2464f2ad5fa1}{Dock\+Separator}} (\mbox{\hyperlink{class_dock_layout}{Dock\+Layout}} $\ast$owner, bool orientation, \mbox{\hyperlink{class_region}{Region}} $\ast$parent\+Region)
+\item 
+bool \mbox{\hyperlink{class_dock_separator_af382e5c2772df26234c75f13bc32f859}{get\+Orientation}} () const
+\item 
+\mbox{\hyperlink{class_region}{Region}} $\ast$ \mbox{\hyperlink{class_dock_separator_a77fc0bdc90d19ea3d7196345a2e74f4f}{get\+Parent\+Region}} () const
+\item 
+int \mbox{\hyperlink{class_dock_separator_aec9163af57167571db858c94339588fc}{get\+Index}} () const
+\item 
+\mbox{\Hypertarget{class_dock_separator_a27325c95643126c82e2f1951fb609e85}\label{class_dock_separator_a27325c95643126c82e2f1951fb609e85}} 
+void {\bfseries shift} (int dx)
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_dock_separator_a189a4c9496cb75dc33ec320df2485db5}{Dock\+Layout}}
+\item 
+class \mbox{\hyperlink{class_dock_separator_aae6f9325706131f3b6fb8accb1508d76}{Region}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Separators are interposition widgets among docked Dock\+Widgets of a \mbox{\hyperlink{class_dock_layout}{Dock\+Layout}}.
+
+A \mbox{\hyperlink{class_dock_separator}{Dock\+Separator}} has the role of separating sister Regions; it is always owned by a parent \mbox{\hyperlink{class_region}{Region}} and inherits its subdivision (here separation) direction. It also provides basical interaction with the user, allowing itself to be shifted along separation direction until geometric constraints are met. \mbox{\hyperlink{class_dock_separator}{Dock\+Separator}} class can be inherited to build custom separators -\/ in that case, a heir of \mbox{\hyperlink{class_dock_deco_allocator}{Dock\+Deco\+Allocator}} class allocating the new separator class must be assigned to the \mbox{\hyperlink{class_dock_layout}{Dock\+Layout}}. It is also possible to specify the Separators\textquotesingle{} thickness used in a \mbox{\hyperlink{class_dock_layout}{Dock\+Layout}} through the QLayout\+::set\+Spacing(int) method.
+
+{\bfseries{NOTE\+:}} Observe that Separators\textquotesingle{} geometry is owned by the \mbox{\hyperlink{class_dock_layout}{Dock\+Layout}} to which it belongs; it is discouraged (but not forbidden) to manually modify it. You may, for example, modify the geometry of a \mbox{\hyperlink{class_dock_separator}{Dock\+Separator}} when dragging a dock widget over it. In any case, the layout will automatically regenerate Separators\textquotesingle{} geometry at each update of the layout.
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_dock_layout}{Dock\+Layout}} and \mbox{\hyperlink{class_dock_widget}{Dock\+Widget}} classes. 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_dock_separator_a5efc5f2fa137761f211d2464f2ad5fa1}\label{class_dock_separator_a5efc5f2fa137761f211d2464f2ad5fa1}} 
+\index{DockSeparator@{DockSeparator}!DockSeparator@{DockSeparator}}
+\index{DockSeparator@{DockSeparator}!DockSeparator@{DockSeparator}}
+\doxysubsubsection{\texorpdfstring{DockSeparator()}{DockSeparator()}}
+{\footnotesize\ttfamily Dock\+Separator\+::\+Dock\+Separator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_dock_layout}{Dock\+Layout}} $\ast$}]{owner,  }\item[{bool}]{orientation,  }\item[{\mbox{\hyperlink{class_region}{Region}} $\ast$}]{parent\+Region }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00759     : QWidget(owner-\/>parentWidget())}
+\DoxyCodeLine{00760     , m\_owner(owner)}
+\DoxyCodeLine{00761     , m\_orientation(orientation)}
+\DoxyCodeLine{00762     , m\_parentRegion(parentRegion)}
+\DoxyCodeLine{00763     , m\_pressed(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00764   setObjectName(\textcolor{stringliteral}{"{}DockSeparator"{}});}
+\DoxyCodeLine{00765   setWindowFlags(Qt::SubWindow);}
+\DoxyCodeLine{00766   setAutoFillBackground(\textcolor{keyword}{false});}
+\DoxyCodeLine{00767 }
+\DoxyCodeLine{00768   \textcolor{comment}{// Set appropriate widget cursor}}
+\DoxyCodeLine{00769   \textcolor{keywordflow}{if} (m\_orientation == Region::horizontal)}
+\DoxyCodeLine{00770     setCursor(Qt::SplitHCursor);}
+\DoxyCodeLine{00771   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00772     setCursor(Qt::SplitVCursor);}
+\DoxyCodeLine{00773 }
+\DoxyCodeLine{00774   show();}
+\DoxyCodeLine{00775 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_dock_separator_adcf7451f8f3db962963ce128ac255a7a}\label{class_dock_separator_adcf7451f8f3db962963ce128ac255a7a}} 
+\index{DockSeparator@{DockSeparator}!````~DockSeparator@{$\sim$DockSeparator}}
+\index{````~DockSeparator@{$\sim$DockSeparator}!DockSeparator@{DockSeparator}}
+\doxysubsubsection{\texorpdfstring{$\sim$DockSeparator()}{~DockSeparator()}}
+{\footnotesize\ttfamily virtual Dock\+Separator\+::$\sim$\+Dock\+Separator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00361 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_dock_separator_aec9163af57167571db858c94339588fc}\label{class_dock_separator_aec9163af57167571db858c94339588fc}} 
+\index{DockSeparator@{DockSeparator}!getIndex@{getIndex}}
+\index{getIndex@{getIndex}!DockSeparator@{DockSeparator}}
+\doxysubsubsection{\texorpdfstring{getIndex()}{getIndex()}}
+{\footnotesize\ttfamily int Dock\+Separator\+::get\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00366 \{ \textcolor{keywordflow}{return} m\_index; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_dock_separator_af382e5c2772df26234c75f13bc32f859}\label{class_dock_separator_af382e5c2772df26234c75f13bc32f859}} 
+\index{DockSeparator@{DockSeparator}!getOrientation@{getOrientation}}
+\index{getOrientation@{getOrientation}!DockSeparator@{DockSeparator}}
+\doxysubsubsection{\texorpdfstring{getOrientation()}{getOrientation()}}
+{\footnotesize\ttfamily bool Dock\+Separator\+::get\+Orientation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00364 \{ \textcolor{keywordflow}{return} m\_orientation; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_dock_separator_a77fc0bdc90d19ea3d7196345a2e74f4f}\label{class_dock_separator_a77fc0bdc90d19ea3d7196345a2e74f4f}} 
+\index{DockSeparator@{DockSeparator}!getParentRegion@{getParentRegion}}
+\index{getParentRegion@{getParentRegion}!DockSeparator@{DockSeparator}}
+\doxysubsubsection{\texorpdfstring{getParentRegion()}{getParentRegion()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_region}{Region}} $\ast$ Dock\+Separator\+::get\+Parent\+Region (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00365 \{ \textcolor{keywordflow}{return} m\_parentRegion; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_dock_separator_a189a4c9496cb75dc33ec320df2485db5}\label{class_dock_separator_a189a4c9496cb75dc33ec320df2485db5}} 
+\index{DockSeparator@{DockSeparator}!DockLayout@{DockLayout}}
+\index{DockLayout@{DockLayout}!DockSeparator@{DockSeparator}}
+\doxysubsubsection{\texorpdfstring{DockLayout}{DockLayout}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{class_dock_layout}{Dock\+Layout}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+\mbox{\Hypertarget{class_dock_separator_aae6f9325706131f3b6fb8accb1508d76}\label{class_dock_separator_aae6f9325706131f3b6fb8accb1508d76}} 
+\index{DockSeparator@{DockSeparator}!Region@{Region}}
+\index{Region@{Region}!DockSeparator@{DockSeparator}}
+\doxysubsubsection{\texorpdfstring{Region}{Region}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{class_region}{Region}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/docklayout.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/dockwidget.\+cpp\end{DoxyCompactItemize}

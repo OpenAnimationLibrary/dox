@@ -1,0 +1,112 @@
+\hypertarget{class_ink_segmenter}{}\doxysection{Ink\+Segmenter Class Reference}
+\label{class_ink_segmenter}\index{InkSegmenter@{InkSegmenter}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_ink_segmenter_a11df4e2e2ec77eb8d50133a1193415ee}{Ink\+Segmenter}} (const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}} \&r, float grow\+Factor, \mbox{\hyperlink{class_t_tile_saver_c_m32}{TTile\+Saver\+CM32}} $\ast$saver)
+\item 
+bool \mbox{\hyperlink{class_ink_segmenter_ade92cf394c3319684f3e4a8110344609}{compute}} (const \mbox{\hyperlink{class_t_point_t}{TPoint}} \&pin, int ink, bool is\+Selective)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_ink_segmenter_a11df4e2e2ec77eb8d50133a1193415ee}\label{class_ink_segmenter_a11df4e2e2ec77eb8d50133a1193415ee}} 
+\index{InkSegmenter@{InkSegmenter}!InkSegmenter@{InkSegmenter}}
+\index{InkSegmenter@{InkSegmenter}!InkSegmenter@{InkSegmenter}}
+\doxysubsubsection{\texorpdfstring{InkSegmenter()}{InkSegmenter()}}
+{\footnotesize\ttfamily Ink\+Segmenter\+::\+Ink\+Segmenter (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}} \&}]{r,  }\item[{float}]{grow\+Factor,  }\item[{\mbox{\hyperlink{class_t_tile_saver_c_m32}{TTile\+Saver\+CM32}} $\ast$}]{saver }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00395       : m\_r(r)}
+\DoxyCodeLine{00396       , m\_lx(r-\/>getLx())}
+\DoxyCodeLine{00397       , m\_ly(r-\/>getLy())}
+\DoxyCodeLine{00398       , m\_wrap(r-\/>getWrap())}
+\DoxyCodeLine{00399       , m\_buf((\mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}} *)r-\/>getRawData())}
+\DoxyCodeLine{00400       , m\_bBox(r-\/>getBounds())}
+\DoxyCodeLine{00401       , m\_saver(saver)}
+\DoxyCodeLine{00402       , m\_growFactor(growFactor) \{}
+\DoxyCodeLine{00403     m\_displaceVector[0] = -\/m\_wrap -\/ 1;}
+\DoxyCodeLine{00404     m\_displaceVector[1] = -\/m\_wrap;}
+\DoxyCodeLine{00405     m\_displaceVector[2] = -\/m\_wrap + 1;}
+\DoxyCodeLine{00406     m\_displaceVector[3] = -\/1;}
+\DoxyCodeLine{00407     m\_displaceVector[4] = +1;}
+\DoxyCodeLine{00408     m\_displaceVector[5] = m\_wrap -\/ 1;}
+\DoxyCodeLine{00409     m\_displaceVector[6] = m\_wrap;}
+\DoxyCodeLine{00410     m\_displaceVector[7] = m\_wrap + 1;}
+\DoxyCodeLine{00411   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_ink_segmenter_ade92cf394c3319684f3e4a8110344609}\label{class_ink_segmenter_ade92cf394c3319684f3e4a8110344609}} 
+\index{InkSegmenter@{InkSegmenter}!compute@{compute}}
+\index{compute@{compute}!InkSegmenter@{InkSegmenter}}
+\doxysubsubsection{\texorpdfstring{compute()}{compute()}}
+{\footnotesize\ttfamily bool Ink\+Segmenter\+::compute (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPoint}} \&}]{pin,  }\item[{int}]{ink,  }\item[{bool}]{is\+Selective }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00415                                                              \{}
+\DoxyCodeLine{00416     \mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}} *pix;}
+\DoxyCodeLine{00417     \textcolor{keywordtype}{int} distance;}
+\DoxyCodeLine{00418     \mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}} *master;}
+\DoxyCodeLine{00419     \mbox{\hyperlink{class_t_point_t}{TPoint}} mp, sp;}
+\DoxyCodeLine{00420     \mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}} *slave;}
+\DoxyCodeLine{00421     \mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}} *d11, *d12, *d21, *d22;}
+\DoxyCodeLine{00422     \mbox{\hyperlink{class_t_point_t}{TPoint}} d1p1, d1p2, d2p1, d2p2;}
+\DoxyCodeLine{00423     \mbox{\hyperlink{class_t_point_t}{TPoint}} p = pin;}
+\DoxyCodeLine{00424 }
+\DoxyCodeLine{00425     \textcolor{keywordflow}{if} (!m\_bBox.contains(p)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00426 }
+\DoxyCodeLine{00427     \textcolor{keywordflow}{if} ((m\_buf + p.y * m\_wrap + p.x)-\/>isPurePaint() \&\&}
+\DoxyCodeLine{00428         ((p = nearestInk(p, 2)) == \mbox{\hyperlink{class_t_point_t}{TPoint}}(-\/1, -\/1)))}
+\DoxyCodeLine{00429       \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00430 }
+\DoxyCodeLine{00431     pix = m\_buf + p.y * m\_wrap + p.x;}
+\DoxyCodeLine{00432 }
+\DoxyCodeLine{00433     \textcolor{comment}{/*-\/-\/ 同じインクの場合はreturn -\/-\/*/}}
+\DoxyCodeLine{00434     \textcolor{keywordflow}{if} (pix-\/>getInk() == ink) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00435 }
+\DoxyCodeLine{00436     \textcolor{keywordflow}{if} (!ConnectionTable[neighboursCode(pix, p)]) \{}
+\DoxyCodeLine{00437       master = slave = pix;}
+\DoxyCodeLine{00438       mp = sp  = p;}
+\DoxyCodeLine{00439       distance = 0;}
+\DoxyCodeLine{00440     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00441       distance = findTwinPoints(pix, p, master, mp, slave, sp);}
+\DoxyCodeLine{00442 }
+\DoxyCodeLine{00443     \textcolor{keywordflow}{if} (distance == -\/1) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00444 }
+\DoxyCodeLine{00445     \textcolor{keywordflow}{if} (!findDam(master, mp, slave, sp, distance, d11, d1p1, d12, d1p2))}
+\DoxyCodeLine{00446       d11 = d12 = d21 = d22 = 0;}
+\DoxyCodeLine{00447     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00448       findDamRev(master, mp, slave, sp, distance, d21, d2p1, d22, d2p2);}
+\DoxyCodeLine{00449 }
+\DoxyCodeLine{00450     \textcolor{comment}{// vector<pair<TPixelCM32*, int> > oldInks;}}
+\DoxyCodeLine{00451 }
+\DoxyCodeLine{00452     drawSegment(d1p1, d1p2, damInk, m\_saver);}
+\DoxyCodeLine{00453     drawSegment(d2p1, d2p2, damInk, m\_saver);}
+\DoxyCodeLine{00454 }
+\DoxyCodeLine{00455     inkSegmentFill(p, ink, isSelective, m\_saver);}
+\DoxyCodeLine{00456 }
+\DoxyCodeLine{00457     \textcolor{comment}{// UINT i;}}
+\DoxyCodeLine{00458 }
+\DoxyCodeLine{00459     drawSegment(d1p1, d1p2, ink, m\_saver);}
+\DoxyCodeLine{00460     drawSegment(d2p1, d2p2, ink, m\_saver);}
+\DoxyCodeLine{00461 }
+\DoxyCodeLine{00462     \textcolor{comment}{/*  for (i=0; i<oldInks.size(); i++)}}
+\DoxyCodeLine{00463 \textcolor{comment}{    (oldInks[i].first)-\/>setInk(ink);*/}}
+\DoxyCodeLine{00464 }
+\DoxyCodeLine{00465     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00466   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/fillutil.\+cpp\end{DoxyCompactItemize}

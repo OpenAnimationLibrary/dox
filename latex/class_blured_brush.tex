@@ -1,0 +1,331 @@
+\hypertarget{class_blured_brush}{}\doxysection{Blured\+Brush Class Reference}
+\label{class_blured_brush}\index{BluredBrush@{BluredBrush}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_blured_brush_a4fd7053a6994351091aa58f8b28b0a49}{Blured\+Brush}} (const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&ras, int size, const QRadial\+Gradient \&gradient, bool do\+Dynamic\+Opacity)
+\item 
+void \mbox{\hyperlink{class_blured_brush_ae70010abd97eb8de59285169563d9387}{add\+Point}} (const \mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} \&p, double opacity)
+\item 
+void \mbox{\hyperlink{class_blured_brush_aee1baee2f7fc5e65c1f32a7549230d14}{add\+Arc}} (const \mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} \&pa, const \mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} \&pb, const \mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} \&pc, double opacityA, double opacityC)
+\item 
+\mbox{\hyperlink{class_t_rect_t}{TRect}} \mbox{\hyperlink{class_blured_brush_ae02d735d718ffa93ad3604888600463c}{get\+Bound\+From\+Points}} (const std\+::vector$<$ \mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} $>$ \&points) const
+\item 
+void \mbox{\hyperlink{class_blured_brush_a31fccd519dfb3bc063bccb6473292493}{update\+Drawing}} (const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}} ras\+CM, const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}} ras\+Backup\+CM, const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&bbox, int style\+Id, int draw\+Order\+Mode, bool lock\+Alpha) const
+\item 
+void \mbox{\hyperlink{class_blured_brush_a709316ebf36981cd70650e59b748a381}{erase\+Drawing}} (const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}} ras\+CM, const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}} ras\+Backup\+CM, const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&bbox, bool selective, int selected\+Style\+Id, const std\+::wstring \&mode) const
+\item 
+void \mbox{\hyperlink{class_blured_brush_aee3f2487431e31023231423abfbee250}{set\+Above\+Style\+Ids}} (QSet$<$ int $>$ \&ids)
+\item 
+void \mbox{\hyperlink{class_blured_brush_a43419288deb3a79283feabe10dbae67e}{update\+Drawing}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras, const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras\+Backup, const TPixel32 \&color, const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&bbox, double opacity) const
+\item 
+void \mbox{\hyperlink{class_blured_brush_abbc5d9e8a7d7bd5dc7b1f4de96d1cc46}{erase\+Drawing}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras, const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras\+Backup, const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&bbox, double opacity) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_blured_brush_a4fd7053a6994351091aa58f8b28b0a49}\label{class_blured_brush_a4fd7053a6994351091aa58f8b28b0a49}} 
+\index{BluredBrush@{BluredBrush}!BluredBrush@{BluredBrush}}
+\index{BluredBrush@{BluredBrush}!BluredBrush@{BluredBrush}}
+\doxysubsubsection{\texorpdfstring{BluredBrush()}{BluredBrush()}}
+{\footnotesize\ttfamily Blured\+Brush\+::\+Blured\+Brush (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&}]{ras,  }\item[{int}]{size,  }\item[{const QRadial\+Gradient \&}]{gradient,  }\item[{bool}]{do\+Dynamic\+Opacity }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00178     : m\_ras(ras)}
+\DoxyCodeLine{00179     , m\_size(size)}
+\DoxyCodeLine{00180     , m\_lastPoint(0, 0)}
+\DoxyCodeLine{00181     , m\_oldOpacity(0)}
+\DoxyCodeLine{00182     , m\_enableDynamicOpacity(doDynamicOpacity) \{}
+\DoxyCodeLine{00183   m\_rasImage = rasterToQImage(m\_ras, \textcolor{keyword}{false});}
+\DoxyCodeLine{00184   m\_gradient = gradient;}
+\DoxyCodeLine{00185 }
+\DoxyCodeLine{00186   \textcolor{keywordflow}{if} (colorTable.size() == 0) \{}
+\DoxyCodeLine{00187     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00188     \textcolor{keywordflow}{for} (i = 0; i < 256; i++) colorTable.append(QColor(i, i, i).rgb());}
+\DoxyCodeLine{00189   \}}
+\DoxyCodeLine{00190 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_blured_brush_a2ff637d9d362a8980d887318c2996ee0}\label{class_blured_brush_a2ff637d9d362a8980d887318c2996ee0}} 
+\index{BluredBrush@{BluredBrush}!````~BluredBrush@{$\sim$BluredBrush}}
+\index{````~BluredBrush@{$\sim$BluredBrush}!BluredBrush@{BluredBrush}}
+\doxysubsubsection{\texorpdfstring{$\sim$BluredBrush()}{~BluredBrush()}}
+{\footnotesize\ttfamily Blured\+Brush\+::$\sim$\+Blured\+Brush (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00194 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_blured_brush_aee1baee2f7fc5e65c1f32a7549230d14}\label{class_blured_brush_aee1baee2f7fc5e65c1f32a7549230d14}} 
+\index{BluredBrush@{BluredBrush}!addArc@{addArc}}
+\index{addArc@{addArc}!BluredBrush@{BluredBrush}}
+\doxysubsubsection{\texorpdfstring{addArc()}{addArc()}}
+{\footnotesize\ttfamily void Blured\+Brush\+::add\+Arc (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} \&}]{pa,  }\item[{const \mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} \&}]{pb,  }\item[{const \mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} \&}]{pc,  }\item[{double}]{opacityA,  }\item[{double}]{opacityC }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00222                                           \{}
+\DoxyCodeLine{00223   QPainter painter(\&m\_rasImage);}
+\DoxyCodeLine{00224   painter.setRenderHint(QPainter::Antialiasing);}
+\DoxyCodeLine{00225   painter.setPen(Qt::NoPen);}
+\DoxyCodeLine{00226   \textcolor{comment}{// painter.setBrush(m\_gradient);}}
+\DoxyCodeLine{00227 }
+\DoxyCodeLine{00228   \mbox{\hyperlink{class_t_thick_quadratic}{TThickQuadratic}} q(pa, pb, pc);}
+\DoxyCodeLine{00229   \textcolor{keywordtype}{double} brushRadius = m\_size * 0.5;}
+\DoxyCodeLine{00230   \textcolor{keywordtype}{double} t           = 0;}
+\DoxyCodeLine{00231   \textcolor{keywordflow}{while} (t <= 1) \{}
+\DoxyCodeLine{00232     t = getNextPadPosition(q, t);}
+\DoxyCodeLine{00233     \textcolor{keywordflow}{if} (t > 1) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00234     \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} point  = q.getThickPoint(t);}
+\DoxyCodeLine{00235     \textcolor{keywordtype}{double} radius      = point.thick * 0.5;}
+\DoxyCodeLine{00236     \textcolor{keywordtype}{double} scaleFactor = radius / brushRadius;}
+\DoxyCodeLine{00237 }
+\DoxyCodeLine{00238     painter.setMatrix(QMatrix(scaleFactor, 0.0, 0.0, scaleFactor,}
+\DoxyCodeLine{00239                               point.x -\/ radius, point.y -\/ radius),}
+\DoxyCodeLine{00240                       \textcolor{keyword}{false});}
+\DoxyCodeLine{00241     \textcolor{keywordflow}{if} (m\_enableDynamicOpacity) \{}
+\DoxyCodeLine{00242       \textcolor{keywordtype}{double} opacity = opacityA + ((opacityC -\/ opacityA) * t);}
+\DoxyCodeLine{00243       \textcolor{keywordflow}{if} (fabs(opacity -\/ m\_oldOpacity) > 0.01)}
+\DoxyCodeLine{00244         opacity =}
+\DoxyCodeLine{00245             opacity > m\_oldOpacity ? m\_oldOpacity + 0.01 : m\_oldOpacity -\/ 0.01;}
+\DoxyCodeLine{00246       painter.setOpacity(opacity);}
+\DoxyCodeLine{00247       painter.setCompositionMode(QPainter::CompositionMode\_DestinationAtop);}
+\DoxyCodeLine{00248       m\_oldOpacity = opacity;}
+\DoxyCodeLine{00249       painter.setBrush(QColor(0, 0, 0, 255));}
+\DoxyCodeLine{00250     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00251       painter.setBrush(m\_gradient);}
+\DoxyCodeLine{00252     painter.drawEllipse(0, 0, m\_size, m\_size);}
+\DoxyCodeLine{00253 }
+\DoxyCodeLine{00254     m\_lastPoint = point;}
+\DoxyCodeLine{00255   \}}
+\DoxyCodeLine{00256   painter.end();}
+\DoxyCodeLine{00257 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_blured_brush_ae70010abd97eb8de59285169563d9387}\label{class_blured_brush_ae70010abd97eb8de59285169563d9387}} 
+\index{BluredBrush@{BluredBrush}!addPoint@{addPoint}}
+\index{addPoint@{addPoint}!BluredBrush@{BluredBrush}}
+\doxysubsubsection{\texorpdfstring{addPoint()}{addPoint()}}
+{\footnotesize\ttfamily void Blured\+Brush\+::add\+Point (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} \&}]{p,  }\item[{double}]{opacity }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00198                                                                \{}
+\DoxyCodeLine{00199   \textcolor{keywordtype}{double} radius      = p.thick * 0.5;}
+\DoxyCodeLine{00200   \textcolor{keywordtype}{double} brushRadius = m\_size * 0.5;}
+\DoxyCodeLine{00201   \textcolor{keywordtype}{double} scaleFactor = radius / brushRadius;}
+\DoxyCodeLine{00202 }
+\DoxyCodeLine{00203   QPainter painter(\&m\_rasImage);}
+\DoxyCodeLine{00204   painter.setRenderHint(QPainter::Antialiasing);}
+\DoxyCodeLine{00205   painter.setPen(Qt::NoPen);}
+\DoxyCodeLine{00206   painter.setBrush(m\_gradient);}
+\DoxyCodeLine{00207   painter.setMatrix(}
+\DoxyCodeLine{00208       QMatrix(scaleFactor, 0.0, 0.0, scaleFactor, p.x -\/ radius, p.y -\/ radius),}
+\DoxyCodeLine{00209       \textcolor{keyword}{false});}
+\DoxyCodeLine{00210   \textcolor{keywordflow}{if} (m\_enableDynamicOpacity) painter.setOpacity(opacity);}
+\DoxyCodeLine{00211   painter.drawEllipse(0, 0, m\_size, m\_size);}
+\DoxyCodeLine{00212   painter.end();}
+\DoxyCodeLine{00213 }
+\DoxyCodeLine{00214   m\_lastPoint  = p;}
+\DoxyCodeLine{00215   m\_oldOpacity = opacity;}
+\DoxyCodeLine{00216 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_blured_brush_a709316ebf36981cd70650e59b748a381}\label{class_blured_brush_a709316ebf36981cd70650e59b748a381}} 
+\index{BluredBrush@{BluredBrush}!eraseDrawing@{eraseDrawing}}
+\index{eraseDrawing@{eraseDrawing}!BluredBrush@{BluredBrush}}
+\doxysubsubsection{\texorpdfstring{eraseDrawing()}{eraseDrawing()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Blured\+Brush\+::erase\+Drawing (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}}}]{ras\+CM,  }\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}}}]{ras\+Backup\+CM,  }\item[{const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&}]{bbox,  }\item[{bool}]{selective,  }\item[{int}]{selected\+Style\+Id,  }\item[{const std\+::wstring \&}]{mode }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00405                                                              \{}
+\DoxyCodeLine{00406   \textcolor{keywordflow}{if} (!rasCM) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00407 }
+\DoxyCodeLine{00408   \mbox{\hyperlink{class_t_rect_t}{TRect}} rasRect    = rasCM-\/>getBounds();}
+\DoxyCodeLine{00409   \mbox{\hyperlink{class_t_rect_t}{TRect}} targetRect = bbox * rasRect;}
+\DoxyCodeLine{00410   \textcolor{keywordflow}{if} (targetRect.\mbox{\hyperlink{class_t_rect_t_a53ce09c6112f8a019b43ad82d721a93b}{isEmpty}}()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00411 }
+\DoxyCodeLine{00412   rasCM-\/>extract(targetRect)-\/>copy(rasBackupCM-\/>extract(targetRect));}
+\DoxyCodeLine{00413   eraseFromRasterCM(rasCM-\/>extract(targetRect), m\_ras-\/>extract(targetRect),}
+\DoxyCodeLine{00414                     selective, selectedStyleId, mode);}
+\DoxyCodeLine{00415 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_blured_brush_abbc5d9e8a7d7bd5dc7b1f4de96d1cc46}\label{class_blured_brush_abbc5d9e8a7d7bd5dc7b1f4de96d1cc46}} 
+\index{BluredBrush@{BluredBrush}!eraseDrawing@{eraseDrawing}}
+\index{eraseDrawing@{eraseDrawing}!BluredBrush@{BluredBrush}}
+\doxysubsubsection{\texorpdfstring{eraseDrawing()}{eraseDrawing()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Blured\+Brush\+::erase\+Drawing (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}}]{ras,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}}]{ras\+Backup,  }\item[{const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&}]{bbox,  }\item[{double}]{opacity }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00339                                                                         \{}
+\DoxyCodeLine{00340   \textcolor{keywordflow}{if} (!ras) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00341 }
+\DoxyCodeLine{00342   \mbox{\hyperlink{class_t_rect_t}{TRect}} rasRect    = ras-\/>getBounds();}
+\DoxyCodeLine{00343   \mbox{\hyperlink{class_t_rect_t}{TRect}} targetRect = bbox * rasRect;}
+\DoxyCodeLine{00344   \textcolor{keywordflow}{if} (targetRect.\mbox{\hyperlink{class_t_rect_t_a53ce09c6112f8a019b43ad82d721a93b}{isEmpty}}()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00345   QRect qTargetRect(targetRect.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}, targetRect.y0, targetRect.getLx(),}
+\DoxyCodeLine{00346                     targetRect.getLy());}
+\DoxyCodeLine{00347   \textcolor{keywordflow}{if} (ras-\/>getPixelSize() == 4) \{}
+\DoxyCodeLine{00348     QImage image = rasterToQImage(ras, \textcolor{keyword}{true});}
+\DoxyCodeLine{00349     QPainter p(\&image);}
+\DoxyCodeLine{00350     p.setClipRect(qTargetRect);}
+\DoxyCodeLine{00351     p.setCompositionMode(QPainter::CompositionMode\_Source);}
+\DoxyCodeLine{00352     p.drawImage(qTargetRect, rasterToQImage(rasBackup, \textcolor{keyword}{true}), qTargetRect);}
+\DoxyCodeLine{00353     p.setCompositionMode(QPainter::CompositionMode\_DestinationOut);}
+\DoxyCodeLine{00354     p.setOpacity(opacity);}
+\DoxyCodeLine{00355     p.drawImage(qTargetRect, m\_rasImage, qTargetRect);}
+\DoxyCodeLine{00356     p.end();}
+\DoxyCodeLine{00357   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ras-\/>getPixelSize() != 4) \{}
+\DoxyCodeLine{00358     QImage targetImage = rasterToQImage(rasBackup).copy(qTargetRect);}
+\DoxyCodeLine{00359     targetImage        = targetImage.convertToFormat(}
+\DoxyCodeLine{00360         QImage::Format\_ARGB32\_Premultiplied, colorTable);}
+\DoxyCodeLine{00361 }
+\DoxyCodeLine{00362     QImage app(qTargetRect.size(), QImage::Format\_ARGB32\_Premultiplied);}
+\DoxyCodeLine{00363     QPainter p2(\&app);}
+\DoxyCodeLine{00364     p2.setBrush(QColor(255, 255, 255));}
+\DoxyCodeLine{00365     p2.drawRect(app.rect().adjusted(-\/1, -\/1, 0, 0));}
+\DoxyCodeLine{00366     p2.setCompositionMode(QPainter::CompositionMode\_DestinationIn);}
+\DoxyCodeLine{00367     p2.drawImage(QPoint(), m\_rasImage, qTargetRect);}
+\DoxyCodeLine{00368     p2.end();}
+\DoxyCodeLine{00369 }
+\DoxyCodeLine{00370     QPainter p(\&targetImage);}
+\DoxyCodeLine{00371     p.setOpacity(opacity);}
+\DoxyCodeLine{00372     p.drawImage(QPoint(), app, app.rect());}
+\DoxyCodeLine{00373     p.end();}
+\DoxyCodeLine{00374     targetImage =}
+\DoxyCodeLine{00375         targetImage.convertToFormat(QImage::Format\_Indexed8, colorTable);}
+\DoxyCodeLine{00376 }
+\DoxyCodeLine{00377     \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}} targetRas = rasterFromQImage(targetImage);}
+\DoxyCodeLine{00378     ras-\/>copy(targetRas, targetRect.getP00());}
+\DoxyCodeLine{00379   \}}
+\DoxyCodeLine{00380 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_blured_brush_ae02d735d718ffa93ad3604888600463c}\label{class_blured_brush_ae02d735d718ffa93ad3604888600463c}} 
+\index{BluredBrush@{BluredBrush}!getBoundFromPoints@{getBoundFromPoints}}
+\index{getBoundFromPoints@{getBoundFromPoints}!BluredBrush@{BluredBrush}}
+\doxysubsubsection{\texorpdfstring{getBoundFromPoints()}{getBoundFromPoints()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_rect_t}{TRect}} Blured\+Brush\+::get\+Bound\+From\+Points (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} $>$ \&}]{points }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00420                                                 \{}
+\DoxyCodeLine{00421   assert(points.size() <= 3);}
+\DoxyCodeLine{00422   \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} p = points[0];}
+\DoxyCodeLine{00423   \textcolor{keywordtype}{double} radius = p.thick * 0.5;}
+\DoxyCodeLine{00424   \mbox{\hyperlink{class_t_rect_t}{TRectD}} rectD(p -\/ \mbox{\hyperlink{class_t_point_t}{TPointD}}(radius, radius), p + \mbox{\hyperlink{class_t_point_t}{TPointD}}(radius, radius));}
+\DoxyCodeLine{00425   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00426   \textcolor{keywordflow}{for} (i = 1; i < (int)points.size(); i++) \{}
+\DoxyCodeLine{00427     p      = points[i];}
+\DoxyCodeLine{00428     radius = p.thick * 0.5;}
+\DoxyCodeLine{00429     rectD  = rectD +}
+\DoxyCodeLine{00430             \mbox{\hyperlink{class_t_rect_t}{TRectD}}(p -\/ \mbox{\hyperlink{class_t_point_t}{TPointD}}(radius, radius), p + \mbox{\hyperlink{class_t_point_t}{TPointD}}(radius, radius));}
+\DoxyCodeLine{00431   \}}
+\DoxyCodeLine{00432   \mbox{\hyperlink{class_t_rect_t}{TRect}} rect(tfloor(rectD.x0), tfloor(rectD.y0), tceil(rectD.x1),}
+\DoxyCodeLine{00433              tceil(rectD.y1));}
+\DoxyCodeLine{00434   \textcolor{keywordflow}{return} rect;}
+\DoxyCodeLine{00435 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_blured_brush_aee3f2487431e31023231423abfbee250}\label{class_blured_brush_aee3f2487431e31023231423abfbee250}} 
+\index{BluredBrush@{BluredBrush}!setAboveStyleIds@{setAboveStyleIds}}
+\index{setAboveStyleIds@{setAboveStyleIds}!BluredBrush@{BluredBrush}}
+\doxysubsubsection{\texorpdfstring{setAboveStyleIds()}{setAboveStyleIds()}}
+{\footnotesize\ttfamily void Blured\+Brush\+::set\+Above\+Style\+Ids (\begin{DoxyParamCaption}\item[{QSet$<$ int $>$ \&}]{ids }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00049 \{ m\_aboveStyleIds = ids; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_blured_brush_a31fccd519dfb3bc063bccb6473292493}\label{class_blured_brush_a31fccd519dfb3bc063bccb6473292493}} 
+\index{BluredBrush@{BluredBrush}!updateDrawing@{updateDrawing}}
+\index{updateDrawing@{updateDrawing}!BluredBrush@{BluredBrush}}
+\doxysubsubsection{\texorpdfstring{updateDrawing()}{updateDrawing()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Blured\+Brush\+::update\+Drawing (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}}}]{ras\+CM,  }\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}}}]{ras\+Backup\+CM,  }\item[{const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&}]{bbox,  }\item[{int}]{style\+Id,  }\item[{int}]{draw\+Order\+Mode,  }\item[{bool}]{lock\+Alpha }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00387                                                                          \{}
+\DoxyCodeLine{00388   \textcolor{keywordflow}{if} (!rasCM) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00389 }
+\DoxyCodeLine{00390   \mbox{\hyperlink{class_t_rect_t}{TRect}} rasRect    = rasCM-\/>getBounds();}
+\DoxyCodeLine{00391   \mbox{\hyperlink{class_t_rect_t}{TRect}} targetRect = bbox * rasRect;}
+\DoxyCodeLine{00392   \textcolor{keywordflow}{if} (targetRect.\mbox{\hyperlink{class_t_rect_t_a53ce09c6112f8a019b43ad82d721a93b}{isEmpty}}()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00393 }
+\DoxyCodeLine{00394   rasCM-\/>copy(rasBackupCM-\/>extract(targetRect), targetRect.getP00());}
+\DoxyCodeLine{00395   putOnRasterCM(rasCM-\/>extract(targetRect), m\_ras-\/>extract(targetRect), styleId,}
+\DoxyCodeLine{00396                 drawOrderMode, lockAlpha, m\_aboveStyleIds);}
+\DoxyCodeLine{00397 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_blured_brush_a43419288deb3a79283feabe10dbae67e}\label{class_blured_brush_a43419288deb3a79283feabe10dbae67e}} 
+\index{BluredBrush@{BluredBrush}!updateDrawing@{updateDrawing}}
+\index{updateDrawing@{updateDrawing}!BluredBrush@{BluredBrush}}
+\doxysubsubsection{\texorpdfstring{updateDrawing()}{updateDrawing()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Blured\+Brush\+::update\+Drawing (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}}]{ras,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}}]{ras\+Backup,  }\item[{const TPixel32 \&}]{color,  }\item[{const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&}]{bbox,  }\item[{double}]{opacity }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00292                                                       \{}
+\DoxyCodeLine{00293   \mbox{\hyperlink{class_t_rect_t}{TRect}} rasRect    = ras-\/>getBounds();}
+\DoxyCodeLine{00294   \mbox{\hyperlink{class_t_rect_t}{TRect}} targetRect = bbox * rasRect;}
+\DoxyCodeLine{00295   \textcolor{keywordflow}{if} (targetRect.\mbox{\hyperlink{class_t_rect_t_a53ce09c6112f8a019b43ad82d721a93b}{isEmpty}}()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00296   QImage image = rasterToQImage(ras, \textcolor{keyword}{true});}
+\DoxyCodeLine{00297   QRect qTargetRect(targetRect.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}, targetRect.y0, targetRect.getLx(),}
+\DoxyCodeLine{00298                     targetRect.getLy());}
+\DoxyCodeLine{00299 }
+\DoxyCodeLine{00300   QImage app(qTargetRect.size(), QImage::Format\_ARGB32\_Premultiplied);}
+\DoxyCodeLine{00301   QPainter p2(\&app);}
+\DoxyCodeLine{00302   p2.setBrush(QColor(color.r, color.g, color.b));}
+\DoxyCodeLine{00303   p2.drawRect(app.rect().adjusted(-\/1, -\/1, 0, 0));}
+\DoxyCodeLine{00304   p2.setCompositionMode(QPainter::CompositionMode\_DestinationIn);}
+\DoxyCodeLine{00305   p2.drawImage(QPoint(), m\_rasImage, qTargetRect);}
+\DoxyCodeLine{00306   p2.end();}
+\DoxyCodeLine{00307 }
+\DoxyCodeLine{00308   \textcolor{keywordflow}{if} (ras-\/>getPixelSize() == 4) \{}
+\DoxyCodeLine{00309     QPainter p(\&image);}
+\DoxyCodeLine{00310     p.setClipRect(qTargetRect);}
+\DoxyCodeLine{00311     p.setCompositionMode(QPainter::CompositionMode\_Source);}
+\DoxyCodeLine{00312     p.drawImage(qTargetRect, rasterToQImage(rasBackup, \textcolor{keyword}{true}), qTargetRect);}
+\DoxyCodeLine{00313     p.end();}
+\DoxyCodeLine{00314 }
+\DoxyCodeLine{00315     p.begin(\&image);}
+\DoxyCodeLine{00316     p.setOpacity(m\_enableDynamicOpacity ? 1 : opacity);}
+\DoxyCodeLine{00317     p.drawImage(qTargetRect, app, app.rect());}
+\DoxyCodeLine{00318     p.end();}
+\DoxyCodeLine{00319   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00320     QImage targetImage = rasterToQImage(rasBackup).copy(qTargetRect);}
+\DoxyCodeLine{00321     targetImage        = targetImage.convertToFormat(}
+\DoxyCodeLine{00322         QImage::Format\_ARGB32\_Premultiplied, colorTable);}
+\DoxyCodeLine{00323 }
+\DoxyCodeLine{00324     QPainter p(\&targetImage);}
+\DoxyCodeLine{00325     p.setOpacity(m\_enableDynamicOpacity ? 1 : opacity);}
+\DoxyCodeLine{00326     p.drawImage(QPoint(), app, app.rect());}
+\DoxyCodeLine{00327     p.end();}
+\DoxyCodeLine{00328     targetImage =}
+\DoxyCodeLine{00329         targetImage.convertToFormat(QImage::Format\_Indexed8, colorTable);}
+\DoxyCodeLine{00330 }
+\DoxyCodeLine{00331     \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}} targetRas = rasterFromQImage(targetImage);}
+\DoxyCodeLine{00332     ras-\/>copy(targetRas, targetRect.getP00());}
+\DoxyCodeLine{00333   \}}
+\DoxyCodeLine{00334 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/bluredbrush.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/bluredbrush.\+cpp\end{DoxyCompactItemize}

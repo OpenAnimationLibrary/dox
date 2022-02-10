@@ -1,0 +1,198 @@
+\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md10}{}\doxysection{Required software}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md10}
+Building Open\+Toonz from source requires the following dependencies\+:
+\begin{DoxyItemize}
+\item Git
+\item GCC or Clang
+\item CMake (3.\+4.\+1 or newer).
+\item Qt5 (5.\+9 or newer)
+\item Boost (1.\+55 or newer)
+\item Lib\+PNG
+\item Super\+LU
+\item Lzo2
+\item Free\+Type
+\item Lib\+My\+Paint (1.\+3 or newer)
+\item Jpeg-\/\+Turbo (1.\+4 or newer)
+\item Open\+CV 3.\+2 or newer
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md11}{}\doxysubsection{Installing Dependencies on Debian / Ubuntu}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md11}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$sudo apt-\/get install build-\/essential git cmake pkg-\/config libboost-\/all-\/dev qt5-\/default qtbase5-\/dev libqt5svg5-\/dev qtscript5-\/dev qttools5-\/dev qttools5-\/dev-\/tools libqt5opengl5-\/dev qtmultimedia5-\/dev libqt5multimedia5-\/plugins libqt5serialport5-\/dev libsuperlu-\/dev }
+\DoxyCodeLine{liblz4-\/dev libusb-\/1.0-\/0-\/dev liblzo2-\/dev libpng-\/dev libjpeg-\/dev libglew-\/dev freeglut3-\/dev libfreetype6-\/dev libjson-\/c-\/dev qtwayland5 libmypaint-\/dev libopencv-\/dev libturbojpeg-\/dev}
+
+\end{DoxyCode}
+
+
+For newest versions of OS you may install libmypaint from repository and don\textquotesingle{}t need to build it from source\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ sudo apt-\/get install libmypaint-\/dev}
+
+\end{DoxyCode}
+
+
+Notes\+:
+\begin{DoxyItemize}
+\item It\textquotesingle{}s possible we also need {\ttfamily libgsl2} (or maybe {\ttfamily libopenblas-\/dev})
+\item We may also need {\ttfamily libegl1-\/mesa-\/dev libgles2-\/mesa-\/dev libglib2.\+0-\/dev liblzma-\/dev}
+\item For Qt, My\+Paint and Open\+CV, you can alternatively build and install from source.
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md12}{}\doxysubsection{Installing Dependencies on Fedora}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md12}
+(it may include some useless packages)
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ sudo dnf install gcc gcc-\/c++ automake git cmake boost boost-\/devel SuperLU SuperLU-\/devel lz4-\/devel lzma libusb-\/devel lzo-\/devel libjpeg-\/turbo-\/devel libGLEW glew-\/devel freeglut-\/devel freeglut freetype-\/devel libpng-\/devel qt5-\/qtbase-\/devel qt5-\/qtsvg qt5-\/qtsvg-\/devel qt5-\/qtscript qt5-\/qtscript-\/devel qt5-\/qttools qt5-\/qttools-\/devel qt5-\/qtmultimedia-\/devel blas blas-\/devel json-\/c-\/devel libtool intltool make qt5-\/qtmultimedia}
+
+\end{DoxyCode}
+
+
+For newest versions of OS you may install libmypaint from repository and don\textquotesingle{}t need to build it from source\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ sudo dnf install libmypaint-\/devel}
+
+\end{DoxyCode}
+\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md13}{}\doxysubsection{Installing Dependencies on Arch\+Linux}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md13}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ sudo pacman -\/S base-\/devel git cmake boost boost-\/libs qt5-\/base qt5-\/svg qt5-\/script qt5-\/tools qt5-\/multimedia lz4 libusb lzo libjpeg-\/turbo glew freeglut freetype2}
+\DoxyCodeLine{\$ sudo pacman -\/S blas cblas}
+
+\end{DoxyCode}
+ From AUR, using eg. yaourt\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ yaourt -\/S superlu libmypaint}
+
+\end{DoxyCode}
+
+
+Notes\+:
+\begin{DoxyItemize}
+\item Arch\+Linux has {\ttfamily blas} split into {\ttfamily blas} and {\ttfamily cblas}.
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md14}{}\doxysubsection{Installing Dependencies on open\+SUSE}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md14}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ zypper in boost-\/devel cmake freeglut-\/devel freetype2-\/devel gcc-\/c++ glew-\/devel libQt5OpenGL-\/devel libjpeg-\/devel liblz4-\/devel libpng16-\/compat-\/devel libqt5-\/linguist-\/devel libqt5-\/qtbase-\/devel libqt5-\/qtmultimedia-\/devel libqt5-\/qtscript-\/devel libqt5-\/qtsvg-\/devel libtiff-\/devel libusb-\/devel lzo-\/devel openblas-\/devel pkgconfig sed superlu-\/devel zlib-\/devel json-\/c-\/devel libqt5-\/qtmultimedia}
+
+\end{DoxyCode}
+
+
+For newest versions of OS you may install libmypaint from repository and don\textquotesingle{}t need to build it from source\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ zypper install libmypaint-\/devel}
+
+\end{DoxyCode}
+\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md15}{}\doxysection{Build libmypaint dependency}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md15}
+If your linux distributions does not have libmypaint package, then build it from the source\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ git clone https://github.com/mypaint/libmypaint.git -\/b v1.3.0}
+\DoxyCodeLine{\$ cd libmypaint}
+\DoxyCodeLine{\$ ./autogen.sh}
+\DoxyCodeLine{\$ ./configure}
+\DoxyCodeLine{\$ make}
+\DoxyCodeLine{\$ sudo make install}
+\DoxyCodeLine{\$ sudo ldconfig}
+\DoxyCodeLine{\$ cd ..}
+
+\end{DoxyCode}
+\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md16}{}\doxysection{Build instructions}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md16}
+\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md17}{}\doxysubsection{Cloning the GIT Tree}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md17}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ git clone https://github.com/opentoonz/opentoonz}
+
+\end{DoxyCode}
+\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md18}{}\doxysubsection{Copying the \textquotesingle{}stuff\textquotesingle{} Directory}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md18}
+TODO\+: some parts should really be installed in \$prefix/ instead... and some other in various cache or user-\/local places. cf. \href{https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html}{\texttt{ https\+://specifications.\+freedesktop.\+org/basedir-\/spec/basedir-\/spec-\/latest.\+html}} Until then we just follow the Win32/\+OSX layout.
+
+The {\ttfamily $\sim$/.config/\+Open\+Toonz/} directory contains your settings, work and other files.
+
+Initialize this path with the following commands\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ mkdir -\/p \$HOME/.config/OpenToonz}
+\DoxyCodeLine{\$ cp -\/r opentoonz/stuff \$HOME/.config/OpenToonz/}
+
+\end{DoxyCode}
+
+
+{\itshape Currently this is required to run Open\+Toonz.}\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md19}{}\doxysubsection{Building Lib\+TIFF}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md19}
+TODO\+: make sure we can use the system libtiff instead and remove this section. Features from the modified libtiff are needed currently, so this isn\textquotesingle{}t a simple switch.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ cd opentoonz/thirdparty/tiff-\/4.0.3}
+\DoxyCodeLine{\$ ./configure -\/-\/with-\/pic -\/-\/disable-\/jbig}
+\DoxyCodeLine{\$ make -\/j\$(nproc)}
+\DoxyCodeLine{\$ cd ../../}
+
+\end{DoxyCode}
+\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md20}{}\doxysubsection{Building Open\+Toonz}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md20}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ cd toonz}
+\DoxyCodeLine{\$ mkdir build}
+\DoxyCodeLine{\$ cd build}
+\DoxyCodeLine{\$ cmake ../sources}
+\DoxyCodeLine{\$ make -\/j\$(nproc)}
+
+\end{DoxyCode}
+
+
+The build takes a lot of time, be patient. CMake may not pick up all the required dependencies. On Fedora 30, it can be helpful to use 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$cmake ../sources/ -\/DSUPERLU\_INCLUDE\_DIR=/usr/include/SuperLU}
+
+\end{DoxyCode}
+ instead of just 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$cmake ../sources/}
+
+\end{DoxyCode}
+\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md21}{}\doxysubsection{Troubleshooting Build Errors}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md21}
+If something doesn\textquotesingle{}t compile or link, please run {\ttfamily make} this way to help spot the problem\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ LANG=C make VERBOSE=1}
+
+\end{DoxyCode}
+\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md22}{}\doxysubsubsection{Debug Build}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md22}
+If you need to debug the application, you should be able to use {\ttfamily cmake -\/DCMAKE\+\_\+\+BUILD\+\_\+\+TYPE=Debug}.\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md23}{}\doxysubsection{Running Open\+Toonz}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md23}
+You can now run the application\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ LD\_LIBRARY\_PATH=./lib/opentoonz:\$LD\_LIBRARY\_PATH}
+\DoxyCodeLine{\$ ./bin/OpenToonz}
+
+\end{DoxyCode}
+\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md24}{}\doxysubsection{Performing a System Installation}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md24}
+The steps above show how to run Open\+Toonz from the build directory, however you may wish to install Open\+Toonz onto your system.
+
+Open\+Toonz will install to {\ttfamily /opt/opentoonz} by default, to do this run\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ sudo make install}
+
+\end{DoxyCode}
+
+
+Then you can launch Open\+Toonz by running {\ttfamily /opt/opentoonz/bin/opentoonz}.
+
+You can change the installation path by modifying the {\ttfamily CMAKE\+\_\+\+INSTALL\+\_\+\+PREFIX} CMake variable.
+
+\DoxyHorRuler{0}
+\hypertarget{md__e__opentoonz_doc_how_to_build_linux_autotoc_md26}{}\doxysection{Linux Package Definitions}\label{md__e__opentoonz_doc_how_to_build_linux_autotoc_md26}
+It may be helpful to use existing packages as a reference when creating a package for your own distribution.
+
+
+\begin{DoxyItemize}
+\item Arch\+Linux (AUR)\+: \href{https://aur.archlinux.org/packages/opentoonz-git/}{\texttt{ https\+://aur.\+archlinux.\+org/packages/opentoonz-\/git/}}
+\item App-\/\+Image (Portable)\+: \href{https://github.com/morevnaproject/morevna-builds}{\texttt{ https\+://github.\+com/morevnaproject/morevna-\/builds}} 
+\end{DoxyItemize}

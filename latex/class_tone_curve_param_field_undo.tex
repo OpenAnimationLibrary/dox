@@ -1,0 +1,107 @@
+\hypertarget{class_tone_curve_param_field_undo}{}\doxysection{Tone\+Curve\+Param\+Field\+Undo Class Reference}
+\label{class_tone_curve_param_field_undo}\index{ToneCurveParamFieldUndo@{ToneCurveParamFieldUndo}}
+Inheritance diagram for Tone\+Curve\+Param\+Field\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_tone_curve_param_field_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_tone_curve_param_field_undo_a6c9e71acb528d7329243a9654baa5be1}{Tone\+Curve\+Param\+Field\+Undo}} (const \mbox{\hyperlink{class_t_tone_curve_param_p}{TTone\+Curve\+ParamP}} param, QString name, int frame, \mbox{\hyperlink{class_t_fx_handle}{TFx\+Handle}} $\ast$fx\+Handle)
+\item 
+void \mbox{\hyperlink{class_tone_curve_param_field_undo_a9be8f4f56c30cd12d9f2223d90408108}{on\+Add}} () override
+\item 
+void \mbox{\hyperlink{class_tone_curve_param_field_undo_a20e387cee6da3c054e19aaa38d56095b}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_tone_curve_param_field_undo_a3cc1f5c6907e5c6ab2ead0442cee14f7}{redo}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_tone_curve_param_field}{Tone\+Curve\+Param\+Field}} Undo 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_tone_curve_param_field_undo_a6c9e71acb528d7329243a9654baa5be1}\label{class_tone_curve_param_field_undo_a6c9e71acb528d7329243a9654baa5be1}} 
+\index{ToneCurveParamFieldUndo@{ToneCurveParamFieldUndo}!ToneCurveParamFieldUndo@{ToneCurveParamFieldUndo}}
+\index{ToneCurveParamFieldUndo@{ToneCurveParamFieldUndo}!ToneCurveParamFieldUndo@{ToneCurveParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{ToneCurveParamFieldUndo()}{ToneCurveParamFieldUndo()}}
+{\footnotesize\ttfamily Tone\+Curve\+Param\+Field\+Undo\+::\+Tone\+Curve\+Param\+Field\+Undo (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_tone_curve_param_p}{TTone\+Curve\+ParamP}}}]{param,  }\item[{QString}]{name,  }\item[{int}]{frame,  }\item[{\mbox{\hyperlink{class_t_fx_handle}{TFx\+Handle}} $\ast$}]{fx\+Handle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00494       : \mbox{\hyperlink{class_animatable_fx_settings_undo}{AnimatableFxSettingsUndo}}(name, frame, fxHandle), m\_param(param) \{}
+\DoxyCodeLine{00495     m\_oldPoints   = param-\/>getValue(frame);}
+\DoxyCodeLine{00496     m\_newPoints   = m\_oldPoints;}
+\DoxyCodeLine{00497     m\_wasKeyframe = m\_param-\/>isKeyframe(frame);}
+\DoxyCodeLine{00498   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tone_curve_param_field_undo_a9be8f4f56c30cd12d9f2223d90408108}\label{class_tone_curve_param_field_undo_a9be8f4f56c30cd12d9f2223d90408108}} 
+\index{ToneCurveParamFieldUndo@{ToneCurveParamFieldUndo}!onAdd@{onAdd}}
+\index{onAdd@{onAdd}!ToneCurveParamFieldUndo@{ToneCurveParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{onAdd()}{onAdd()}}
+{\footnotesize\ttfamily void Tone\+Curve\+Param\+Field\+Undo\+::on\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00500 \{ m\_newPoints = m\_param-\/>getValue(m\_frame); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tone_curve_param_field_undo_a3cc1f5c6907e5c6ab2ead0442cee14f7}\label{class_tone_curve_param_field_undo_a3cc1f5c6907e5c6ab2ead0442cee14f7}} 
+\index{ToneCurveParamFieldUndo@{ToneCurveParamFieldUndo}!redo@{redo}}
+\index{redo@{redo}!ToneCurveParamFieldUndo@{ToneCurveParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Tone\+Curve\+Param\+Field\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00511                              \{}
+\DoxyCodeLine{00512     \textcolor{keywordflow}{if} (!m\_wasKeyframe)}
+\DoxyCodeLine{00513       m\_param-\/>setDefaultValue(m\_newPoints);}
+\DoxyCodeLine{00514     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00515       m\_param-\/>setValue(m\_frame, m\_newPoints);}
+\DoxyCodeLine{00516     \textcolor{keywordflow}{if} (m\_fxHandle) m\_fxHandle-\/>notifyFxChanged();}
+\DoxyCodeLine{00517   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tone_curve_param_field_undo_a20e387cee6da3c054e19aaa38d56095b}\label{class_tone_curve_param_field_undo_a20e387cee6da3c054e19aaa38d56095b}} 
+\index{ToneCurveParamFieldUndo@{ToneCurveParamFieldUndo}!undo@{undo}}
+\index{undo@{undo}!ToneCurveParamFieldUndo@{ToneCurveParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Tone\+Curve\+Param\+Field\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00502                              \{}
+\DoxyCodeLine{00503     \textcolor{keywordflow}{if} (!m\_wasKeyframe)}
+\DoxyCodeLine{00504       m\_param-\/>setDefaultValue(m\_oldPoints);}
+\DoxyCodeLine{00505     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00506       m\_param-\/>setValue(m\_frame, m\_oldPoints);}
+\DoxyCodeLine{00507 }
+\DoxyCodeLine{00508     \textcolor{keywordflow}{if} (m\_fxHandle) m\_fxHandle-\/>notifyFxChanged();}
+\DoxyCodeLine{00509   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/paramfield.\+cpp\end{DoxyCompactItemize}

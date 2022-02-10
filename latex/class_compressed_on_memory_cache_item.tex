@@ -1,0 +1,160 @@
+\hypertarget{class_compressed_on_memory_cache_item}{}\doxysection{Compressed\+On\+Memory\+Cache\+Item Class Reference}
+\label{class_compressed_on_memory_cache_item}\index{CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}}
+Inheritance diagram for Compressed\+On\+Memory\+Cache\+Item\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_compressed_on_memory_cache_item}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_compressed_on_memory_cache_item_a66d047203ce5f6fdc3577b3186ef7428}{Compressed\+On\+Memory\+Cache\+Item}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&img)
+\item 
+\mbox{\hyperlink{class_compressed_on_memory_cache_item_a9404f367a0df6d426af036374d206f62}{Compressed\+On\+Memory\+Cache\+Item}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&compressed\+Ras, \mbox{\hyperlink{class_image_builder}{Image\+Builder}} $\ast$builder, \mbox{\hyperlink{class_image_info}{Image\+Info}} $\ast$info)
+\item 
+TUINT32 \mbox{\hyperlink{class_compressed_on_memory_cache_item_ab0e710365c90300dde0bb8dde5f3ff3f}{get\+Size}} () const override
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \mbox{\hyperlink{class_compressed_on_memory_cache_item_afa1a6c81727bae90bd6926a25662e707}{get\+Image}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \mbox{\hyperlink{class_compressed_on_memory_cache_item_a1df1a03ed2c05ad466ea93b141e47172}{m\+\_\+compressed\+Ras}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_compressed_on_memory_cache_item_a66d047203ce5f6fdc3577b3186ef7428}\label{class_compressed_on_memory_cache_item_a66d047203ce5f6fdc3577b3186ef7428}} 
+\index{CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}!CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}}
+\index{CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}!CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}}
+\doxysubsubsection{\texorpdfstring{CompressedOnMemoryCacheItem()}{CompressedOnMemoryCacheItem()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Compressed\+On\+Memory\+Cache\+Item\+::\+Compressed\+On\+Memory\+Cache\+Item (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&}]{img }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00397     : m\_compressedRas() \{}
+\DoxyCodeLine{00398   \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} ri = img;}
+\DoxyCodeLine{00399   \textcolor{keywordflow}{if} (ri) \{}
+\DoxyCodeLine{00400     m\_imageInfo     = \textcolor{keyword}{new} \mbox{\hyperlink{class_raster_image_info}{RasterImageInfo}}(ri);}
+\DoxyCodeLine{00401     m\_builder       = \textcolor{keyword}{new} \mbox{\hyperlink{class_raster_image_builder}{RasterImageBuilder}}();}
+\DoxyCodeLine{00402     TINT32 buffSize = 0;}
+\DoxyCodeLine{00403     m\_compressedRas =}
+\DoxyCodeLine{00404         TheCodec::instance()-\/>compress(ri-\/>getRaster(), 1, buffSize);}
+\DoxyCodeLine{00405   \}}
+\DoxyCodeLine{00406 \textcolor{preprocessor}{\#ifndef TNZCORE\_LIGHT}}
+\DoxyCodeLine{00407   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00408     \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} ti = img;}
+\DoxyCodeLine{00409     \textcolor{keywordflow}{if} (ti) \{}
+\DoxyCodeLine{00410       m\_imageInfo          = \textcolor{keyword}{new} \mbox{\hyperlink{class_toonz_image_info}{ToonzImageInfo}}(ti);}
+\DoxyCodeLine{00411       m\_builder            = \textcolor{keyword}{new} \mbox{\hyperlink{class_toonz_image_builder}{ToonzImageBuilder}}();}
+\DoxyCodeLine{00412       \mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}} rasCM32 = ti-\/>getRaster();}
+\DoxyCodeLine{00413       TINT32 buffSize      = 0;}
+\DoxyCodeLine{00414       m\_compressedRas = TheCodec::instance()-\/>compress(rasCM32, 1, buffSize);}
+\DoxyCodeLine{00415     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00416       assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{00417   \}}
+\DoxyCodeLine{00418 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00419   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00420     assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{00421 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00422 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_compressed_on_memory_cache_item_a9404f367a0df6d426af036374d206f62}\label{class_compressed_on_memory_cache_item_a9404f367a0df6d426af036374d206f62}} 
+\index{CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}!CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}}
+\index{CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}!CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}}
+\doxysubsubsection{\texorpdfstring{CompressedOnMemoryCacheItem()}{CompressedOnMemoryCacheItem()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Compressed\+On\+Memory\+Cache\+Item\+::\+Compressed\+On\+Memory\+Cache\+Item (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&}]{compressed\+Ras,  }\item[{\mbox{\hyperlink{class_image_builder}{Image\+Builder}} $\ast$}]{builder,  }\item[{\mbox{\hyperlink{class_image_info}{Image\+Info}} $\ast$}]{info }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00429     : \mbox{\hyperlink{class_cache_item}{CacheItem}}(builder, info), m\_compressedRas(ras) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_compressed_on_memory_cache_item_afc6d3b7796b8c07909f287a6c0dac131}\label{class_compressed_on_memory_cache_item_afc6d3b7796b8c07909f287a6c0dac131}} 
+\index{CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}!````~CompressedOnMemoryCacheItem@{$\sim$CompressedOnMemoryCacheItem}}
+\index{````~CompressedOnMemoryCacheItem@{$\sim$CompressedOnMemoryCacheItem}!CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}}
+\doxysubsubsection{\texorpdfstring{$\sim$CompressedOnMemoryCacheItem()}{~CompressedOnMemoryCacheItem()}}
+{\footnotesize\ttfamily Compressed\+On\+Memory\+Cache\+Item\+::$\sim$\+Compressed\+On\+Memory\+Cache\+Item (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00433                                                           \{}
+\DoxyCodeLine{00434   \textcolor{keyword}{delete} m\_imageInfo;}
+\DoxyCodeLine{00435 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_compressed_on_memory_cache_item_afa1a6c81727bae90bd6926a25662e707}\label{class_compressed_on_memory_cache_item_afa1a6c81727bae90bd6926a25662e707}} 
+\index{CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}!getImage@{getImage}}
+\index{getImage@{getImage}!CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}}
+\doxysubsubsection{\texorpdfstring{getImage()}{getImage()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} Compressed\+On\+Memory\+Cache\+Item\+::get\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_cache_item}{Cache\+Item}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00448                                                     \{}
+\DoxyCodeLine{00449   assert(m\_compressedRas);}
+\DoxyCodeLine{00450 }
+\DoxyCodeLine{00451   \textcolor{comment}{// PER IL MOMENTO DISCRIMINO: DA ELIMINARE}}
+\DoxyCodeLine{00452   \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras;}
+\DoxyCodeLine{00453 }
+\DoxyCodeLine{00454   TheCodec::instance()-\/>decompress(m\_compressedRas, ras);}
+\DoxyCodeLine{00455 \textcolor{preprocessor}{\#ifdef \_DEBUGTOONZ}}
+\DoxyCodeLine{00456   ras-\/>m\_cashed = \textcolor{keyword}{true};}
+\DoxyCodeLine{00457 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00458 \textcolor{preprocessor}{\#ifndef TNZCORE\_LIGHT}}
+\DoxyCodeLine{00459   \mbox{\hyperlink{class_toonz_image_builder}{ToonzImageBuilder}} *tibuilder = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_toonz_image_builder}{ToonzImageBuilder}} *\textcolor{keyword}{>}(m\_builder);}
+\DoxyCodeLine{00460   \textcolor{keywordflow}{if} (tibuilder)}
+\DoxyCodeLine{00461     \textcolor{keywordflow}{return} tibuilder-\/>build(m\_imageInfo, ras);}
+\DoxyCodeLine{00462   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00463 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00464     \textcolor{keywordflow}{return} m\_builder-\/>build(m\_imageInfo, ras);}
+\DoxyCodeLine{00465 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_compressed_on_memory_cache_item_ab0e710365c90300dde0bb8dde5f3ff3f}\label{class_compressed_on_memory_cache_item_ab0e710365c90300dde0bb8dde5f3ff3f}} 
+\index{CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}!getSize@{getSize}}
+\index{getSize@{getSize}!CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily TUINT32 Compressed\+On\+Memory\+Cache\+Item\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_cache_item}{Cache\+Item}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00439                                                    \{}
+\DoxyCodeLine{00440   \textcolor{keywordflow}{if} (m\_compressedRas)}
+\DoxyCodeLine{00441     \textcolor{keywordflow}{return} m\_compressedRas-\/>getLx();}
+\DoxyCodeLine{00442   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00443     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00444 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_compressed_on_memory_cache_item_a1df1a03ed2c05ad466ea93b141e47172}\label{class_compressed_on_memory_cache_item_a1df1a03ed2c05ad466ea93b141e47172}} 
+\index{CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}!m\_compressedRas@{m\_compressedRas}}
+\index{m\_compressedRas@{m\_compressedRas}!CompressedOnMemoryCacheItem@{CompressedOnMemoryCacheItem}}
+\doxysubsubsection{\texorpdfstring{m\_compressedRas}{m\_compressedRas}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} Compressed\+On\+Memory\+Cache\+Item\+::m\+\_\+compressed\+Ras}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tcache/timagecache.\+cpp\end{DoxyCompactItemize}

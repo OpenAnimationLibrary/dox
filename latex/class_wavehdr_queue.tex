@@ -1,0 +1,416 @@
+\hypertarget{class_wavehdr_queue}{}\doxysection{Wavehdr\+Queue Class Reference}
+\label{class_wavehdr_queue}\index{WavehdrQueue@{WavehdrQueue}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_wavehdr_queue_a558e990c54b24e4694cd150370d0c738}{Wavehdr\+Queue}} (\mbox{\hyperlink{class_t_sound_output_device_imp}{TSound\+Output\+Device\+Imp}} $\ast$dev\+Imp, int slot\+Count)
+\item 
+void \mbox{\hyperlink{class_wavehdr_queue_ac1a0d40b905a8b678959f907715037aa}{put}} (\mbox{\hyperlink{class_t_smart_pointer_t}{TSound\+TrackP}} \&sub\+Track)
+\item 
+WAVEHDR $\ast$ \mbox{\hyperlink{class_wavehdr_queue_a48bb58d861d153e6ee83c083abfb0156}{get}} ()
+\item 
+bool \mbox{\hyperlink{class_wavehdr_queue_a46365e5e172a1150032c2a8850c81599}{pop\+Front}} (int count)
+\item 
+void \mbox{\hyperlink{class_wavehdr_queue_af217870cce20b77ff697abb5c120d630}{push\+Back}} (WAVEHDR $\ast$whdr, \mbox{\hyperlink{class_t_smart_pointer_t}{TSound\+TrackP}} st)
+\item 
+int \mbox{\hyperlink{class_wavehdr_queue_a36acfb9373d12d01628b7a05771a292b}{size}} ()
+\item 
+void \mbox{\hyperlink{class_wavehdr_queue_a5e5b2b8616a67c7cd2c8670312af472d}{clear}} ()
+\item 
+bool \mbox{\hyperlink{class_wavehdr_queue_a84ea17364cc4c3aeacdf40a30f52d7fe}{is\+All\+Queued\+Items\+Played}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_wavehdr_queue_a558e990c54b24e4694cd150370d0c738}\label{class_wavehdr_queue_a558e990c54b24e4694cd150370d0c738}} 
+\index{WavehdrQueue@{WavehdrQueue}!WavehdrQueue@{WavehdrQueue}}
+\index{WavehdrQueue@{WavehdrQueue}!WavehdrQueue@{WavehdrQueue}}
+\doxysubsubsection{\texorpdfstring{WavehdrQueue()}{WavehdrQueue()}}
+{\footnotesize\ttfamily Wavehdr\+Queue\+::\+Wavehdr\+Queue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_sound_output_device_imp}{TSound\+Output\+Device\+Imp}} $\ast$}]{dev\+Imp,  }\item[{int}]{slot\+Count }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00111       : m\_devImp(devImp)}
+\DoxyCodeLine{00112       , m\_items()}
+\DoxyCodeLine{00113       , m\_queuedItems()}
+\DoxyCodeLine{00114       , m\_slotCount(slotCount)}
+\DoxyCodeLine{00115       , m\_mutex()}
+\DoxyCodeLine{00116       , m\_lastOffset(0) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_wavehdr_queue_a931765b69dda3ef6d3c180c90d6540ad}\label{class_wavehdr_queue_a931765b69dda3ef6d3c180c90d6540ad}} 
+\index{WavehdrQueue@{WavehdrQueue}!````~WavehdrQueue@{$\sim$WavehdrQueue}}
+\index{````~WavehdrQueue@{$\sim$WavehdrQueue}!WavehdrQueue@{WavehdrQueue}}
+\doxysubsubsection{\texorpdfstring{$\sim$WavehdrQueue()}{~WavehdrQueue()}}
+{\footnotesize\ttfamily Wavehdr\+Queue\+::$\sim$\+Wavehdr\+Queue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00118 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_wavehdr_queue_a5e5b2b8616a67c7cd2c8670312af472d}\label{class_wavehdr_queue_a5e5b2b8616a67c7cd2c8670312af472d}} 
+\index{WavehdrQueue@{WavehdrQueue}!clear@{clear}}
+\index{clear@{clear}!WavehdrQueue@{WavehdrQueue}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void Wavehdr\+Queue\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00439                          \{}
+\DoxyCodeLine{00440   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00441   m\_items.clear();}
+\DoxyCodeLine{00442   m\_lastTrack = \mbox{\hyperlink{class_t_smart_pointer_t}{TSoundTrackP}}();}
+\DoxyCodeLine{00443   std::list<WAVEHDR *>::iterator it;}
+\DoxyCodeLine{00444   \textcolor{keywordflow}{for} (it = m\_queuedItems.begin(); it != m\_queuedItems.end(); it++) \{}
+\DoxyCodeLine{00445     WAVEHDR *wvhdr = *it;}
+\DoxyCodeLine{00446     \textcolor{keyword}{delete}[] wvhdr-\/>lpData;}
+\DoxyCodeLine{00447     \textcolor{keyword}{delete} wvhdr;}
+\DoxyCodeLine{00448   \}}
+\DoxyCodeLine{00449   m\_queuedItems.clear();}
+\DoxyCodeLine{00450 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_wavehdr_queue_a48bb58d861d153e6ee83c083abfb0156}\label{class_wavehdr_queue_a48bb58d861d153e6ee83c083abfb0156}} 
+\index{WavehdrQueue@{WavehdrQueue}!get@{get}}
+\index{get@{get}!WavehdrQueue@{WavehdrQueue}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily WAVEHDR $\ast$ Wavehdr\+Queue\+::get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00379                            \{}
+\DoxyCodeLine{00380   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00381   \textcolor{keywordflow}{if} (m\_items.size() == 0) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00382 }
+\DoxyCodeLine{00383   WAVEHDR *whdr = m\_items.front().first;}
+\DoxyCodeLine{00384   assert(whdr-\/>dwFlags \& WHDR\_PREPARED);}
+\DoxyCodeLine{00385 }
+\DoxyCodeLine{00386   pushBack(whdr, m\_items.front().second);}
+\DoxyCodeLine{00387   getAmplitude(m\_lastOffset, m\_items.front().second,}
+\DoxyCodeLine{00388                m\_items.front().second-\/>getSampleCount() -\/ 1L);}
+\DoxyCodeLine{00389   m\_items.pop\_front();}
+\DoxyCodeLine{00390 }
+\DoxyCodeLine{00391   \textcolor{keywordflow}{return} whdr;}
+\DoxyCodeLine{00392 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_wavehdr_queue_a84ea17364cc4c3aeacdf40a30f52d7fe}\label{class_wavehdr_queue_a84ea17364cc4c3aeacdf40a30f52d7fe}} 
+\index{WavehdrQueue@{WavehdrQueue}!isAllQueuedItemsPlayed@{isAllQueuedItemsPlayed}}
+\index{isAllQueuedItemsPlayed@{isAllQueuedItemsPlayed}!WavehdrQueue@{WavehdrQueue}}
+\doxysubsubsection{\texorpdfstring{isAllQueuedItemsPlayed()}{isAllQueuedItemsPlayed()}}
+{\footnotesize\ttfamily bool Wavehdr\+Queue\+::is\+All\+Queued\+Items\+Played (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00454                                           \{}
+\DoxyCodeLine{00455   std::list<WAVEHDR *>::iterator it;}
+\DoxyCodeLine{00456   \textcolor{keywordtype}{bool} finished = \textcolor{keyword}{true};}
+\DoxyCodeLine{00457   \textcolor{keywordflow}{for} (it = m\_queuedItems.begin(); it != m\_queuedItems.end(); it++) \{}
+\DoxyCodeLine{00458     WAVEHDR *wvhdr = *it;}
+\DoxyCodeLine{00459     finished       = finished \&\& (wvhdr-\/>dwFlags \& WHDR\_DONE);}
+\DoxyCodeLine{00460   \}}
+\DoxyCodeLine{00461   \textcolor{keywordflow}{return} finished;}
+\DoxyCodeLine{00462 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_wavehdr_queue_a46365e5e172a1150032c2a8850c81599}\label{class_wavehdr_queue_a46365e5e172a1150032c2a8850c81599}} 
+\index{WavehdrQueue@{WavehdrQueue}!popFront@{popFront}}
+\index{popFront@{popFront}!WavehdrQueue@{WavehdrQueue}}
+\doxysubsubsection{\texorpdfstring{popFront()}{popFront()}}
+{\footnotesize\ttfamily bool Wavehdr\+Queue\+::pop\+Front (\begin{DoxyParamCaption}\item[{int}]{count }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00397                                      \{}
+\DoxyCodeLine{00398   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00399   \textcolor{comment}{// assert(m\_queuedItems.size() > 0);}}
+\DoxyCodeLine{00400   \textcolor{keywordflow}{if} (m\_queuedItems.size() <= 0) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00401   WAVEHDR *whdr = m\_queuedItems.front();}
+\DoxyCodeLine{00402   \textcolor{comment}{// controllo introdotto pr via che su win2k si perde alcune}}
+\DoxyCodeLine{00403   \textcolor{comment}{// notifiche di WHDR\_DONE}}
+\DoxyCodeLine{00404   \textcolor{keywordflow}{while} ((DWORD)count > whdr-\/>dwUser) \{}
+\DoxyCodeLine{00405     MMRESULT ret =}
+\DoxyCodeLine{00406         waveOutUnprepareHeader(m\_devImp-\/>m\_wout, whdr, \textcolor{keyword}{sizeof}(WAVEHDR));}
+\DoxyCodeLine{00407     \textcolor{keywordflow}{if} (ret == MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00408       m\_queuedItems.pop\_front();}
+\DoxyCodeLine{00409       \textcolor{keyword}{delete}[] whdr-\/>lpData;}
+\DoxyCodeLine{00410       \textcolor{keyword}{delete} whdr;}
+\DoxyCodeLine{00411       whdr = m\_queuedItems.front();}
+\DoxyCodeLine{00412     \}}
+\DoxyCodeLine{00413   \}}
+\DoxyCodeLine{00414   assert(whdr-\/>dwFlags \& WHDR\_DONE);}
+\DoxyCodeLine{00415   m\_queuedItems.pop\_front();}
+\DoxyCodeLine{00416   \textcolor{keyword}{delete}[] whdr-\/>lpData;}
+\DoxyCodeLine{00417   \textcolor{keyword}{delete} whdr;}
+\DoxyCodeLine{00418   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00419 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_wavehdr_queue_af217870cce20b77ff697abb5c120d630}\label{class_wavehdr_queue_af217870cce20b77ff697abb5c120d630}} 
+\index{WavehdrQueue@{WavehdrQueue}!pushBack@{pushBack}}
+\index{pushBack@{pushBack}!WavehdrQueue@{WavehdrQueue}}
+\doxysubsubsection{\texorpdfstring{pushBack()}{pushBack()}}
+{\footnotesize\ttfamily void Wavehdr\+Queue\+::push\+Back (\begin{DoxyParamCaption}\item[{WAVEHDR $\ast$}]{whdr,  }\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{TSound\+TrackP}}}]{st }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00423                                                           \{}
+\DoxyCodeLine{00424   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00425   m\_queuedItems.push\_back(whdr);}
+\DoxyCodeLine{00426   m\_lastTrack = st;}
+\DoxyCodeLine{00427 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_wavehdr_queue_ac1a0d40b905a8b678959f907715037aa}\label{class_wavehdr_queue_ac1a0d40b905a8b678959f907715037aa}} 
+\index{WavehdrQueue@{WavehdrQueue}!put@{put}}
+\index{put@{put}!WavehdrQueue@{WavehdrQueue}}
+\doxysubsubsection{\texorpdfstring{put()}{put()}}
+{\footnotesize\ttfamily void Wavehdr\+Queue\+::put (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{TSound\+TrackP}} \&}]{sub\+Track }\end{DoxyParamCaption})}
+
+devo fare ilcross fade
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00163                                              \{}
+\DoxyCodeLine{00164   assert(subTrack-\/>\mbox{\hyperlink{class_t_sound_track_ae47a8e255a18ddbc83d31b6c0c834e68}{getRawData}}());}
+\DoxyCodeLine{00165   \textcolor{keyword}{static} ULONG count = 1;}
+\DoxyCodeLine{00166 }
+\DoxyCodeLine{00167   \textcolor{comment}{// codice messo per tab: facendo il play al rilascio del mouse e su piu'}}
+\DoxyCodeLine{00168   \textcolor{comment}{// colonne in cui le traccie potrebbe avere diversi formati siccome qui in}}
+\DoxyCodeLine{00169   \textcolor{comment}{// alcune situazioni si fa subito waveOutWrite c'e' bisogno di controllare}}
+\DoxyCodeLine{00170   \textcolor{comment}{// se il formato con cui e' stato aperto in precedenza il device e' uguale}}
+\DoxyCodeLine{00171   \textcolor{comment}{// a quello della traccia}}
+\DoxyCodeLine{00172   \textcolor{keywordflow}{if} (m\_devImp-\/>m\_wout \&\& m\_devImp-\/>m\_currentFormat != subTrack-\/>\mbox{\hyperlink{class_t_sound_track_aa58db0cee313f7174bc023e295b701a9}{getFormat}}()) \{}
+\DoxyCodeLine{00173     m\_devImp-\/>doCloseDevice();}
+\DoxyCodeLine{00174     TSystem::sleep(300);}
+\DoxyCodeLine{00175     m\_devImp-\/>doOpenDevice(subTrack-\/>\mbox{\hyperlink{class_t_sound_track_aa58db0cee313f7174bc023e295b701a9}{getFormat}}());}
+\DoxyCodeLine{00176   \}}
+\DoxyCodeLine{00177 }
+\DoxyCodeLine{00178   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00179   \textcolor{keywordflow}{if} (!m\_devImp-\/>m\_scrubbing) \{}
+\DoxyCodeLine{00180     WAVEHDR *whdr2 = 0;}
+\DoxyCodeLine{00181 }
+\DoxyCodeLine{00182     \textcolor{comment}{// traccia}}
+\DoxyCodeLine{00183     whdr2 = prepareWaveHeader(m\_devImp-\/>m\_wout, subTrack, count);}
+\DoxyCodeLine{00184     getAmplitude(m\_lastOffset, subTrack, subTrack-\/>getSampleCount() -\/ 1L);}
+\DoxyCodeLine{00185 }
+\DoxyCodeLine{00186     MMRESULT ret = MMSYSERR\_NOERROR;}
+\DoxyCodeLine{00187 }
+\DoxyCodeLine{00188     \textcolor{keywordflow}{if} (whdr2 \&\& whdr2-\/>dwFlags \& WHDR\_PREPARED) \{}
+\DoxyCodeLine{00189       ret = waveOutWrite(m\_devImp-\/>m\_wout, whdr2, \textcolor{keyword}{sizeof}(WAVEHDR));}
+\DoxyCodeLine{00190       \textcolor{keywordflow}{if} (ret == MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00191         pushBack(whdr2, subTrack);}
+\DoxyCodeLine{00192         getAmplitude(m\_lastOffset, subTrack, subTrack-\/>getSampleCount() -\/ 1L);}
+\DoxyCodeLine{00193         TThread::MutexLocker sl(\&m\_devImp-\/>m\_mutex);}
+\DoxyCodeLine{00194         m\_devImp-\/>m\_isPlaying = \textcolor{keyword}{true};}
+\DoxyCodeLine{00195         m\_devImp-\/>m\_stopped   = \textcolor{keyword}{false};}
+\DoxyCodeLine{00196       \}}
+\DoxyCodeLine{00197     \}}
+\DoxyCodeLine{00198     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00199   \}}
+\DoxyCodeLine{00200 }
+\DoxyCodeLine{00201   \textcolor{keywordflow}{if} (m\_queuedItems.size() == 0) \{}
+\DoxyCodeLine{00202     WAVEHDR *whdr1 = 0;}
+\DoxyCodeLine{00203     WAVEHDR *whdr2 = 0;}
+\DoxyCodeLine{00204     WAVEHDR *whdr3 = 0;}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206     MMRESULT ret;}
+\DoxyCodeLine{00207     \mbox{\hyperlink{class_t_smart_pointer_t}{TSoundTrackP}} riseTrack, decayTrack;}
+\DoxyCodeLine{00208     \textcolor{keywordtype}{int} sampleSize = subTrack-\/>getSampleSize();}
+\DoxyCodeLine{00209 }
+\DoxyCodeLine{00210     \textcolor{comment}{// cresce}}
+\DoxyCodeLine{00211     riseTrack = \mbox{\hyperlink{namespace_t_sop_ac9ebd8c1a287f4394b022b63d8b563f6}{TSop::fadeIn}}(subTrack, 0.9);}
+\DoxyCodeLine{00212     whdr1     = prepareWaveHeader(m\_devImp-\/>m\_wout, riseTrack, count);}
+\DoxyCodeLine{00213 }
+\DoxyCodeLine{00214     \textcolor{comment}{// traccia}}
+\DoxyCodeLine{00215     whdr2 = prepareWaveHeader(m\_devImp-\/>m\_wout, subTrack, count);}
+\DoxyCodeLine{00216 }
+\DoxyCodeLine{00217     getAmplitude(m\_lastOffset, subTrack, subTrack-\/>getSampleCount() -\/ 1L);}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219     \textcolor{comment}{// decresce}}
+\DoxyCodeLine{00220     decayTrack = 0;}
+\DoxyCodeLine{00221     \textcolor{keywordflow}{if} (m\_lastOffset) \{}
+\DoxyCodeLine{00222       decayTrack = \mbox{\hyperlink{namespace_t_sop_a54cc1d9c1e1406b1e0db8e29628acf48}{TSop::fadeOut}}(subTrack, 0.9);}
+\DoxyCodeLine{00223       whdr3      = prepareWaveHeader(m\_devImp-\/>m\_wout, decayTrack, count);}
+\DoxyCodeLine{00224     \}}
+\DoxyCodeLine{00225 }
+\DoxyCodeLine{00226     \textcolor{keywordflow}{if} (whdr1 \&\& (whdr1-\/>dwFlags \& WHDR\_PREPARED)) \{}
+\DoxyCodeLine{00227       ret = waveOutWrite(m\_devImp-\/>m\_wout, whdr1, \textcolor{keyword}{sizeof}(WAVEHDR));}
+\DoxyCodeLine{00228       \textcolor{keywordflow}{if} (ret == MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00229         pushBack(whdr1, riseTrack);}
+\DoxyCodeLine{00230         getAmplitude(m\_lastOffset, riseTrack, riseTrack-\/>getSampleCount() -\/ 1L);}
+\DoxyCodeLine{00231       \}}
+\DoxyCodeLine{00232     \}}
+\DoxyCodeLine{00233     \textcolor{keywordflow}{if} (whdr2 \&\& (whdr2-\/>dwFlags \& WHDR\_PREPARED)) \{}
+\DoxyCodeLine{00234       ret = waveOutWrite(m\_devImp-\/>m\_wout, whdr2, \textcolor{keyword}{sizeof}(WAVEHDR));}
+\DoxyCodeLine{00235       \textcolor{keywordflow}{if} (ret == MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00236         pushBack(whdr2, subTrack);}
+\DoxyCodeLine{00237         getAmplitude(m\_lastOffset, subTrack, subTrack-\/>getSampleCount() -\/ 1L);}
+\DoxyCodeLine{00238         TThread::MutexLocker sl(\&m\_devImp-\/>m\_mutex);}
+\DoxyCodeLine{00239         m\_devImp-\/>m\_isPlaying = \textcolor{keyword}{true};}
+\DoxyCodeLine{00240         m\_devImp-\/>m\_stopped   = \textcolor{keyword}{false};}
+\DoxyCodeLine{00241       \}}
+\DoxyCodeLine{00242     \}}
+\DoxyCodeLine{00243     \textcolor{keywordflow}{if} (whdr3 \&\& (whdr3-\/>dwFlags \& WHDR\_PREPARED)) \{}
+\DoxyCodeLine{00244       ret = waveOutWrite(m\_devImp-\/>m\_wout, whdr3, \textcolor{keyword}{sizeof}(WAVEHDR));}
+\DoxyCodeLine{00245       \textcolor{keywordflow}{if} (ret == MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00246         pushBack(whdr3, decayTrack);}
+\DoxyCodeLine{00247         \textcolor{keywordflow}{if} (decayTrack-\/>\mbox{\hyperlink{class_t_sound_track_a4c990666e5bd98da0da09eeb5b4f13dd}{isSampleSigned}}())}
+\DoxyCodeLine{00248           m\_lastOffset = 0;}
+\DoxyCodeLine{00249         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00250           m\_lastOffset = 127;}
+\DoxyCodeLine{00251       \}}
+\DoxyCodeLine{00252     \}}
+\DoxyCodeLine{00253     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00254   \}}
+\DoxyCodeLine{00255 }
+\DoxyCodeLine{00256   \textcolor{keywordflow}{if} (m\_queuedItems.size() < 10) \{}
+\DoxyCodeLine{00257     WAVEHDR *whdr1 = 0;}
+\DoxyCodeLine{00258     WAVEHDR *whdr2 = 0;}
+\DoxyCodeLine{00259     WAVEHDR *whdr  = \textcolor{keyword}{new} WAVEHDR;}
+\DoxyCodeLine{00260     memset(whdr, 0, \textcolor{keyword}{sizeof}(WAVEHDR));}
+\DoxyCodeLine{00261     whdr-\/>dwBufferLength =}
+\DoxyCodeLine{00262         subTrack-\/>getSampleSize() * subTrack-\/>getSampleCount();}
+\DoxyCodeLine{00263     whdr-\/>lpData  = \textcolor{keyword}{new} \textcolor{keywordtype}{char}[whdr-\/>dwBufferLength];}
+\DoxyCodeLine{00264     whdr-\/>dwFlags = 0;}
+\DoxyCodeLine{00265     memcpy(whdr-\/>lpData, subTrack-\/>\mbox{\hyperlink{class_t_sound_track_ae47a8e255a18ddbc83d31b6c0c834e68}{getRawData}}(), whdr-\/>dwBufferLength);}
+\DoxyCodeLine{00266     \textcolor{keywordtype}{int} sampleSize         = subTrack-\/>getSampleSize();}
+\DoxyCodeLine{00267     \mbox{\hyperlink{class_t_smart_pointer_t}{TSoundTrackP}} riseTrack = 0;}
+\DoxyCodeLine{00268 }
+\DoxyCodeLine{00269     \textcolor{keywordflow}{if} (m\_lastOffset)  }
+\DoxyCodeLine{00270     \{}
+\DoxyCodeLine{00271       \textcolor{keywordtype}{int} offset;}
+\DoxyCodeLine{00272       getAmplitude(offset, subTrack, 0L);}
+\DoxyCodeLine{00273 }
+\DoxyCodeLine{00274       offset = m\_lastOffset -\/ offset;}
+\DoxyCodeLine{00275       \textcolor{keywordflow}{if} (offset) \{}
+\DoxyCodeLine{00276         \mbox{\hyperlink{class_t_smart_pointer_t}{TSoundTrackP}} st = \mbox{\hyperlink{namespace_t_sop_aa5f4234db8d5d3414e67102d71382572}{TSop::crossFade}}(m\_lastTrack, subTrack, 0.3);}
+\DoxyCodeLine{00277         memcpy(whdr-\/>lpData, st-\/>\mbox{\hyperlink{class_t_sound_track_ae47a8e255a18ddbc83d31b6c0c834e68}{getRawData}}(),}
+\DoxyCodeLine{00278                st-\/>getSampleCount() * sampleSize);}
+\DoxyCodeLine{00279       \}}
+\DoxyCodeLine{00280     \} \textcolor{keywordflow}{else}  \textcolor{comment}{// e' zero ma ne metto uno che cresce faccio il fadeIn}}
+\DoxyCodeLine{00281     \{}
+\DoxyCodeLine{00282       riseTrack = \mbox{\hyperlink{namespace_t_sop_ac9ebd8c1a287f4394b022b63d8b563f6}{TSop::fadeIn}}(subTrack, 0.3);}
+\DoxyCodeLine{00283       whdr1     = prepareWaveHeader(m\_devImp-\/>m\_wout, riseTrack, count);}
+\DoxyCodeLine{00284     \}}
+\DoxyCodeLine{00285 }
+\DoxyCodeLine{00286     whdr-\/>dwUser = count;}
+\DoxyCodeLine{00287     ++count;}
+\DoxyCodeLine{00288     MMRESULT ret =}
+\DoxyCodeLine{00289         waveOutPrepareHeader(m\_devImp-\/>m\_wout, whdr, \textcolor{keyword}{sizeof}(WAVEHDR));}
+\DoxyCodeLine{00290     \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00291       \textcolor{keyword}{delete}[] whdr-\/>lpData;}
+\DoxyCodeLine{00292       \textcolor{keyword}{delete} whdr;}
+\DoxyCodeLine{00293       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00294     \}}
+\DoxyCodeLine{00295 }
+\DoxyCodeLine{00296     getAmplitude(m\_lastOffset, subTrack, subTrack-\/>getSampleCount() -\/ 1L);}
+\DoxyCodeLine{00297 }
+\DoxyCodeLine{00298     \mbox{\hyperlink{class_t_smart_pointer_t}{TSoundTrackP}} decayTrack = 0;}
+\DoxyCodeLine{00299     \textcolor{keywordflow}{if} (m\_queuedItems.size() <= 7) \{}
+\DoxyCodeLine{00300       \textcolor{keywordflow}{if} (m\_lastOffset)  \textcolor{comment}{// devo fare il fadeOut}}
+\DoxyCodeLine{00301       \{}
+\DoxyCodeLine{00302         decayTrack = \mbox{\hyperlink{namespace_t_sop_a54cc1d9c1e1406b1e0db8e29628acf48}{TSop::fadeOut}}(subTrack, 0.3);}
+\DoxyCodeLine{00303         whdr2      = prepareWaveHeader(m\_devImp-\/>m\_wout, decayTrack, count);}
+\DoxyCodeLine{00304       \}}
+\DoxyCodeLine{00305     \}}
+\DoxyCodeLine{00306 }
+\DoxyCodeLine{00307     \textcolor{keywordflow}{if} (whdr1 \&\& whdr1-\/>dwFlags \& WHDR\_PREPARED) \{}
+\DoxyCodeLine{00308       ret = waveOutWrite(m\_devImp-\/>m\_wout, whdr1, \textcolor{keyword}{sizeof}(WAVEHDR));}
+\DoxyCodeLine{00309       \textcolor{keywordflow}{if} (ret == MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00310         pushBack(whdr1, riseTrack);}
+\DoxyCodeLine{00311         getAmplitude(m\_lastOffset, riseTrack, riseTrack-\/>getSampleCount() -\/ 1L);}
+\DoxyCodeLine{00312       \}}
+\DoxyCodeLine{00313     \}}
+\DoxyCodeLine{00314 }
+\DoxyCodeLine{00315     \textcolor{keywordflow}{if} (whdr \&\& whdr-\/>dwFlags \& WHDR\_PREPARED) \{}
+\DoxyCodeLine{00316       ret = waveOutWrite(m\_devImp-\/>m\_wout, whdr, \textcolor{keyword}{sizeof}(WAVEHDR));}
+\DoxyCodeLine{00317       \textcolor{keywordflow}{if} (ret == MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00318         pushBack(whdr, subTrack);}
+\DoxyCodeLine{00319         getAmplitude(m\_lastOffset, subTrack, subTrack-\/>getSampleCount() -\/ 1L);}
+\DoxyCodeLine{00320         \{}
+\DoxyCodeLine{00321           TThread::MutexLocker sl(\&m\_devImp-\/>m\_mutex);}
+\DoxyCodeLine{00322           m\_devImp-\/>m\_isPlaying = \textcolor{keyword}{true};}
+\DoxyCodeLine{00323           m\_devImp-\/>m\_stopped   = \textcolor{keyword}{false};}
+\DoxyCodeLine{00324         \}}
+\DoxyCodeLine{00325       \}}
+\DoxyCodeLine{00326     \}}
+\DoxyCodeLine{00327 }
+\DoxyCodeLine{00328     \textcolor{keywordflow}{if} (whdr2 \&\& whdr2-\/>dwFlags \& WHDR\_PREPARED) \{}
+\DoxyCodeLine{00329       ret = waveOutWrite(m\_devImp-\/>m\_wout, whdr2, \textcolor{keyword}{sizeof}(WAVEHDR));}
+\DoxyCodeLine{00330       \textcolor{keywordflow}{if} (ret == MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00331         pushBack(whdr2, decayTrack);}
+\DoxyCodeLine{00332         \textcolor{keywordflow}{if} (decayTrack-\/>\mbox{\hyperlink{class_t_sound_track_a4c990666e5bd98da0da09eeb5b4f13dd}{isSampleSigned}}())}
+\DoxyCodeLine{00333           m\_lastOffset = 0;}
+\DoxyCodeLine{00334         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00335           m\_lastOffset = 127;}
+\DoxyCodeLine{00336       \}}
+\DoxyCodeLine{00337     \}}
+\DoxyCodeLine{00338     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00339   \}}
+\DoxyCodeLine{00340 }
+\DoxyCodeLine{00341   \textcolor{keywordflow}{if} ((\textcolor{keywordtype}{int})m\_items.size() == m\_slotCount) \{}
+\DoxyCodeLine{00342     WAVEHDR *item = m\_items.front().first;}
+\DoxyCodeLine{00343     MMRESULT ret =}
+\DoxyCodeLine{00344         waveOutUnprepareHeader(m\_devImp-\/>m\_wout, item, \textcolor{keyword}{sizeof}(WAVEHDR));}
+\DoxyCodeLine{00345 }
+\DoxyCodeLine{00346     \textcolor{keywordflow}{if} (ret == MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00347       \textcolor{keyword}{delete}[] item-\/>lpData;}
+\DoxyCodeLine{00348       \textcolor{keyword}{delete} item;}
+\DoxyCodeLine{00349     \}}
+\DoxyCodeLine{00350 }
+\DoxyCodeLine{00351     m\_items.pop\_front();}
+\DoxyCodeLine{00352 }
+\DoxyCodeLine{00353     \textcolor{keywordflow}{if} (m\_queuedItems.size() != 0) \{}
+\DoxyCodeLine{00354       WAVEHDR *item  = m\_items.front().first;}
+\DoxyCodeLine{00355       \textcolor{keywordtype}{int} sampleSize = m\_items.front().second-\/>getSampleSize();}
+\DoxyCodeLine{00356       \textcolor{keywordtype}{int} offset;}
+\DoxyCodeLine{00357       getAmplitude(offset, m\_items.front().second, 0L);}
+\DoxyCodeLine{00358 }
+\DoxyCodeLine{00359       offset = m\_lastOffset -\/ offset;}
+\DoxyCodeLine{00360       \textcolor{keywordflow}{if} (offset) \{}
+\DoxyCodeLine{00361         \mbox{\hyperlink{class_t_smart_pointer_t}{TSoundTrackP}} st =}
+\DoxyCodeLine{00362             \mbox{\hyperlink{namespace_t_sop_aa5f4234db8d5d3414e67102d71382572}{TSop::crossFade}}(m\_lastTrack, m\_items.front().second, 0.3);}
+\DoxyCodeLine{00363         memcpy(item-\/>lpData, st-\/>\mbox{\hyperlink{class_t_sound_track_ae47a8e255a18ddbc83d31b6c0c834e68}{getRawData}}(),}
+\DoxyCodeLine{00364                st-\/>getSampleCount() * sampleSize);}
+\DoxyCodeLine{00365       \}}
+\DoxyCodeLine{00366     \}}
+\DoxyCodeLine{00367   \}}
+\DoxyCodeLine{00368 }
+\DoxyCodeLine{00369   WAVEHDR *whdr = prepareWaveHeader(m\_devImp-\/>m\_wout, subTrack, count);}
+\DoxyCodeLine{00370 }
+\DoxyCodeLine{00371   assert(whdr \&\& whdr-\/>dwFlags \& WHDR\_PREPARED);}
+\DoxyCodeLine{00372   m\_items.push\_back(std::make\_pair(whdr, subTrack));}
+\DoxyCodeLine{00373   assert((\textcolor{keywordtype}{int})m\_items.size() <= m\_slotCount);}
+\DoxyCodeLine{00374 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01710}{TSop\+::cross\+Fade()}}, \mbox{\hyperlink{l01431}{TSop\+::fade\+In()}}, \mbox{\hyperlink{l01553}{TSop\+::fade\+Out()}}, \mbox{\hyperlink{l00250}{TSound\+Track\+::get\+Format()}}, \mbox{\hyperlink{l00150}{TSound\+Track\+::get\+Raw\+Data()}}, and \mbox{\hyperlink{class_t_sound_track_a4c990666e5bd98da0da09eeb5b4f13dd}{TSound\+Track\+::is\+Sample\+Signed()}}.
+
+\mbox{\Hypertarget{class_wavehdr_queue_a36acfb9373d12d01628b7a05771a292b}\label{class_wavehdr_queue_a36acfb9373d12d01628b7a05771a292b}} 
+\index{WavehdrQueue@{WavehdrQueue}!size@{size}}
+\index{size@{size}!WavehdrQueue@{WavehdrQueue}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily int Wavehdr\+Queue\+::size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00431                        \{}
+\DoxyCodeLine{00432   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00433   \textcolor{keywordtype}{int} size = m\_queuedItems.size();}
+\DoxyCodeLine{00434   \textcolor{keywordflow}{return} size;}
+\DoxyCodeLine{00435 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tsound/tsound\+\_\+nt.\+cpp\end{DoxyCompactItemize}

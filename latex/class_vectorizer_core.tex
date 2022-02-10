@@ -1,0 +1,190 @@
+\hypertarget{class_vectorizer_core}{}\doxysection{Vectorizer\+Core Class Reference}
+\label{class_vectorizer_core}\index{VectorizerCore@{VectorizerCore}}
+
+
+{\ttfamily \#include $<$tcenterlinevectorizer.\+h$>$}
+
+Inheritance diagram for Vectorizer\+Core\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_vectorizer_core}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_vectorizer_core_a43bc2b277c95d1b922daf6dd4ffe9c51}\label{class_vectorizer_core_a43bc2b277c95d1b922daf6dd4ffe9c51}} 
+void {\bfseries partial\+Done} (int, int)
+\begin{DoxyCompactList}\small\item\em Partial progress {\bfseries{par1}} of overall {\bfseries{par2}} is notified. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \mbox{\hyperlink{class_vectorizer_core_ac12b78770400b604498680eff445f244}{vectorize}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&image, const \mbox{\hyperlink{class_vectorizer_configuration}{Vectorizer\+Configuration}} \&c, \mbox{\hyperlink{class_t_palette}{TPalette}} $\ast$palette)
+\item 
+bool \mbox{\hyperlink{class_vectorizer_core_ab0c21a714383ca694c972e95a52c6cd6}{is\+Canceled}} ()
+\begin{DoxyCompactList}\small\item\em Returns true if vectorization was aborted at user\textquotesingle{}s request. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_vectorizer_core_a87bfff539c47551a3e918eec1619bfef}{set\+Overall\+Partials}} (int total)
+\item 
+void \mbox{\hyperlink{class_vectorizer_core_a70838d2b02480f386b2ef737c2c21ce4}{emit\+Partial\+Done}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_vectorizer_core_aa413ce50c059b64baf8442a58113c95b}{on\+Cancel}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Contains specific vectorization methods and deals with partial progress notifications (using Qt signals).
+
+\mbox{\hyperlink{class_vectorizer_core}{Vectorizer\+Core}} class is the lowest layer of a vectorization process, it provides vectorization of a single input raster image by calling the {\bfseries{vectorize}} method.
+
+It can also deal notifications about its progress status, and is receptive to user cancels.
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_vectorizer_popup}{Vectorizer\+Popup}}, \mbox{\hyperlink{class_vectorizer}{Vectorizer}}, \mbox{\hyperlink{class_vectorizer_configuration}{Vectorizer\+Configuration}} classes. 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_vectorizer_core_a7065f43483109a87da73554c0b01aeb7}\label{class_vectorizer_core_a7065f43483109a87da73554c0b01aeb7}} 
+\index{VectorizerCore@{VectorizerCore}!VectorizerCore@{VectorizerCore}}
+\index{VectorizerCore@{VectorizerCore}!VectorizerCore@{VectorizerCore}}
+\doxysubsubsection{\texorpdfstring{VectorizerCore()}{VectorizerCore()}}
+{\footnotesize\ttfamily Vectorizer\+Core\+::\+Vectorizer\+Core (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046 : m\_currPartial(0), m\_isCanceled(\textcolor{keyword}{false}) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vectorizer_core_a778ac837b5b79c27d5feb4f7851d380d}\label{class_vectorizer_core_a778ac837b5b79c27d5feb4f7851d380d}} 
+\index{VectorizerCore@{VectorizerCore}!````~VectorizerCore@{$\sim$VectorizerCore}}
+\index{````~VectorizerCore@{$\sim$VectorizerCore}!VectorizerCore@{VectorizerCore}}
+\doxysubsubsection{\texorpdfstring{$\sim$VectorizerCore()}{~VectorizerCore()}}
+{\footnotesize\ttfamily Vectorizer\+Core\+::$\sim$\+Vectorizer\+Core (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00047 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_vectorizer_core_a70838d2b02480f386b2ef737c2c21ce4}\label{class_vectorizer_core_a70838d2b02480f386b2ef737c2c21ce4}} 
+\index{VectorizerCore@{VectorizerCore}!emitPartialDone@{emitPartialDone}}
+\index{emitPartialDone@{emitPartialDone}!VectorizerCore@{VectorizerCore}}
+\doxysubsubsection{\texorpdfstring{emitPartialDone()}{emitPartialDone()}}
+{\footnotesize\ttfamily void Vectorizer\+Core\+::emit\+Partial\+Done (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+{\bfseries{}}({\bfseries{Internal}} {\bfseries{use}} {\bfseries{only}}) Emits partial progress signal and updates partial progresses internal count. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01653                                          \{}
+\DoxyCodeLine{01654   emit \mbox{\hyperlink{class_vectorizer_core_a43bc2b277c95d1b922daf6dd4ffe9c51}{partialDone}}(m\_currPartial++, m\_totalPartials);}
+\DoxyCodeLine{01655 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{class_vectorizer_core_a43bc2b277c95d1b922daf6dd4ffe9c51}{partial\+Done()}}.
+
+\mbox{\Hypertarget{class_vectorizer_core_ab0c21a714383ca694c972e95a52c6cd6}\label{class_vectorizer_core_ab0c21a714383ca694c972e95a52c6cd6}} 
+\index{VectorizerCore@{VectorizerCore}!isCanceled@{isCanceled}}
+\index{isCanceled@{isCanceled}!VectorizerCore@{VectorizerCore}}
+\doxysubsubsection{\texorpdfstring{isCanceled()}{isCanceled()}}
+{\footnotesize\ttfamily bool Vectorizer\+Core\+::is\+Canceled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns true if vectorization was aborted at user\textquotesingle{}s request. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059 \{ \textcolor{keywordflow}{return} m\_isCanceled; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vectorizer_core_aa413ce50c059b64baf8442a58113c95b}\label{class_vectorizer_core_aa413ce50c059b64baf8442a58113c95b}} 
+\index{VectorizerCore@{VectorizerCore}!onCancel@{onCancel}}
+\index{onCancel@{onCancel}!VectorizerCore@{VectorizerCore}}
+\doxysubsubsection{\texorpdfstring{onCancel}{onCancel}}
+{\footnotesize\ttfamily void Vectorizer\+Core\+::on\+Cancel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [slot]}}
+
+Receives a user cancel signal and attempts an early exit from vectorization process. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00118 \{ m\_isCanceled = \textcolor{keyword}{true}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vectorizer_core_a87bfff539c47551a3e918eec1619bfef}\label{class_vectorizer_core_a87bfff539c47551a3e918eec1619bfef}} 
+\index{VectorizerCore@{VectorizerCore}!setOverallPartials@{setOverallPartials}}
+\index{setOverallPartials@{setOverallPartials}!VectorizerCore@{VectorizerCore}}
+\doxysubsubsection{\texorpdfstring{setOverallPartials()}{setOverallPartials()}}
+{\footnotesize\ttfamily void Vectorizer\+Core\+::set\+Overall\+Partials (\begin{DoxyParamCaption}\item[{int}]{total }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+{\bfseries{}}({\bfseries{Internal}} {\bfseries{use}} {\bfseries{only}}) Sets the maximum number of partial notifications. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00063 \{ m\_totalPartials = total; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vectorizer_core_ac12b78770400b604498680eff445f244}\label{class_vectorizer_core_ac12b78770400b604498680eff445f244}} 
+\index{VectorizerCore@{VectorizerCore}!vectorize@{vectorize}}
+\index{vectorize@{vectorize}!VectorizerCore@{VectorizerCore}}
+\doxysubsubsection{\texorpdfstring{vectorize()}{vectorize()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} Vectorizer\+Core\+::vectorize (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&}]{image,  }\item[{const \mbox{\hyperlink{class_vectorizer_configuration}{Vectorizer\+Configuration}} \&}]{c,  }\item[{\mbox{\hyperlink{class_t_palette}{TPalette}} $\ast$}]{palette }\end{DoxyParamCaption})}
+
+Calls the appropriate technique to convert {\bfseries{image}} to vectors depending on {\bfseries{c}}. Also provides post-\/processing operations such as regions computing and painting (using colors found in {\bfseries{palette}}). Returns the {\bfseries{\mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}}}} converted image. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01614                                                        \{}
+\DoxyCodeLine{01615   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi;}
+\DoxyCodeLine{01616 }
+\DoxyCodeLine{01617   \textcolor{keywordflow}{if} (c.\mbox{\hyperlink{class_vectorizer_configuration_a6ee6131c24f5486a887e91791d084a6c}{m\_outline}})}
+\DoxyCodeLine{01618     vi = newOutlineVectorize(}
+\DoxyCodeLine{01619         img, \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const }\mbox{\hyperlink{class_new_outline_configuration}{NewOutlineConfiguration}} \&\textcolor{keyword}{>}(c), plt);}
+\DoxyCodeLine{01620   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01621     \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} img2(img);}
+\DoxyCodeLine{01622     vi = centerlineVectorize(}
+\DoxyCodeLine{01623         img2, \textcolor{keyword}{static\_cast<}\textcolor{keyword}{const }\mbox{\hyperlink{class_centerline_configuration}{CenterlineConfiguration}} \&\textcolor{keyword}{>}(c), plt);}
+\DoxyCodeLine{01624 }
+\DoxyCodeLine{01625     \textcolor{keywordflow}{if} (vi) \{}
+\DoxyCodeLine{01626       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)vi-\/>getStrokeCount(); ++i) \{}
+\DoxyCodeLine{01627         \mbox{\hyperlink{class_t_stroke}{TStroke}} *stroke = vi-\/>getStroke(i);}
+\DoxyCodeLine{01628 }
+\DoxyCodeLine{01629         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < stroke-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}(); ++j) \{}
+\DoxyCodeLine{01630           \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} p = stroke-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(j);}
+\DoxyCodeLine{01631           p             = \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(c.\mbox{\hyperlink{class_vectorizer_configuration_a35f1f35835fee0dfe6aaf83fa9ea1489}{m\_affine}} * p, c.\mbox{\hyperlink{class_vectorizer_configuration_a3af044b6f16e74b4b03ce0dccf76b9bc}{m\_thickScale}} * p.thick);}
+\DoxyCodeLine{01632 }
+\DoxyCodeLine{01633           stroke-\/>\mbox{\hyperlink{class_t_stroke_abc4f174af1e2712c400ae63e005aac18}{setControlPoint}}(j, p);}
+\DoxyCodeLine{01634         \}}
+\DoxyCodeLine{01635       \}}
+\DoxyCodeLine{01636 }
+\DoxyCodeLine{01637       applyFillColors(vi, img2, plt, c);}
+\DoxyCodeLine{01638     \}}
+\DoxyCodeLine{01639   \}}
+\DoxyCodeLine{01640   \textcolor{comment}{// align boundary strokes direction}}
+\DoxyCodeLine{01641   \textcolor{keywordflow}{if} (c.m\_alignBoundaryStrokesDirection) \{}
+\DoxyCodeLine{01642     alignBoundariesDirection(vi);}
+\DoxyCodeLine{01643     vi-\/>validateRegions(\textcolor{keyword}{false});}
+\DoxyCodeLine{01644     vi-\/>findRegions();}
+\DoxyCodeLine{01645     \textcolor{keywordflow}{if} (c.\mbox{\hyperlink{class_vectorizer_configuration_a7986237762ccb55c79ce6fd35e879152}{m\_leaveUnpainted}}) removeFillColors(vi);}
+\DoxyCodeLine{01646   \}}
+\DoxyCodeLine{01647 }
+\DoxyCodeLine{01648   \textcolor{keywordflow}{return} vi;}
+\DoxyCodeLine{01649 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01352}{TStroke\+::get\+Control\+Point()}}, \mbox{\hyperlink{l01849}{TStroke\+::get\+Control\+Point\+Count()}}, \mbox{\hyperlink{l00061}{Vectorizer\+Configuration\+::m\+\_\+affine}}, \mbox{\hyperlink{l00058}{Vectorizer\+Configuration\+::m\+\_\+leave\+Unpainted}}, \mbox{\hyperlink{l00052}{Vectorizer\+Configuration\+::m\+\_\+outline}}, \mbox{\hyperlink{l00062}{Vectorizer\+Configuration\+::m\+\_\+thick\+Scale}}, and \mbox{\hyperlink{l01427}{TStroke\+::set\+Control\+Point()}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00252}{Vectorization\+Swatch\+Task\+::run()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/tcenterlinevectorizer.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tcenterlinevectorizer.\+cpp\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tnewoutlinevectorize.\+cpp\item 
+E\+:/opentoonz/toonz/sources/toonzlib/toutlinevectorizer.\+cpp\end{DoxyCompactItemize}

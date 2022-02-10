@@ -1,0 +1,252 @@
+\hypertarget{class_vector_free_deformer}{}\doxysection{Vector\+Free\+Deformer Class Reference}
+\label{class_vector_free_deformer}\index{VectorFreeDeformer@{VectorFreeDeformer}}
+Inheritance diagram for Vector\+Free\+Deformer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_vector_free_deformer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_vector_free_deformer_aab287782c3a991822e427ccbb46b35a7}{Vector\+Free\+Deformer}} (\mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} vi, std\+::set$<$ int $>$ stroke\+Indexes)
+\item 
+void \mbox{\hyperlink{class_vector_free_deformer_a5fc2a0d3dfc2a5018e291cb5a973f062}{set\+Preserve\+Thickness}} (bool preserve\+Thickness)
+\item 
+void \mbox{\hyperlink{class_vector_free_deformer_adb1aafea83fdad3402f8169a6d629fc0}{set\+Compute\+Region}} (bool compute\+Region)
+\item 
+void \mbox{\hyperlink{class_vector_free_deformer_abc816a7c6844e781f9d927242b5a8e51}{set\+Flip}} (bool flip)
+\item 
+\mbox{\hyperlink{class_t_point_t}{TPointD}} \mbox{\hyperlink{class_vector_free_deformer_a37b664d93857784e204fd9d42c167211}{get\+Point}} (int index) const
+\item 
+void \mbox{\hyperlink{class_vector_free_deformer_aadb715dcc40f11ad2811b8ad20337c7b}{set\+Point}} (int index, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p) override
+\item 
+void \mbox{\hyperlink{class_vector_free_deformer_a8d60979a06158c8eb3cb0838b044e97a}{set\+Points}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p0, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p1, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p2, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p3) override
+\item 
+\mbox{\hyperlink{class_t_vector_image}{TVector\+Image}} $\ast$ \mbox{\hyperlink{class_vector_free_deformer_a595e9849f9e6af00fe751df88362839b}{get\+Deformed\+Image}} () const
+\item 
+void \mbox{\hyperlink{class_vector_free_deformer_a48a3f8db6c8b998b04d9e94e5d5c6ff7}{deform\+Regions}} ()
+\item 
+void \mbox{\hyperlink{class_vector_free_deformer_aa6cdb449ad22f3cf1f9b6aec1c98ce38}{deform\+Image}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_vector_free_deformer_aab287782c3a991822e427ccbb46b35a7}\label{class_vector_free_deformer_aab287782c3a991822e427ccbb46b35a7}} 
+\index{VectorFreeDeformer@{VectorFreeDeformer}!VectorFreeDeformer@{VectorFreeDeformer}}
+\index{VectorFreeDeformer@{VectorFreeDeformer}!VectorFreeDeformer@{VectorFreeDeformer}}
+\doxysubsubsection{\texorpdfstring{VectorFreeDeformer()}{VectorFreeDeformer()}}
+{\footnotesize\ttfamily Vector\+Free\+Deformer\+::\+Vector\+Free\+Deformer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}}}]{vi,  }\item[{std\+::set$<$ int $>$}]{stroke\+Indexes }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00139     : \mbox{\hyperlink{class_free_deformer}{FreeDeformer}}()}
+\DoxyCodeLine{00140     , m\_vi(vi)}
+\DoxyCodeLine{00141     , m\_strokeIndexes(strokeIndexes)}
+\DoxyCodeLine{00142     , m\_preserveThickness(\textcolor{keyword}{false})}
+\DoxyCodeLine{00143     , m\_computeRegion(\textcolor{keyword}{false})}
+\DoxyCodeLine{00144     , m\_flip(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00145   \mbox{\hyperlink{class_t_rect_t}{TRectD}} r;}
+\DoxyCodeLine{00146 }
+\DoxyCodeLine{00147   std::set<int>::iterator it, iEnd = m\_strokeIndexes.end();}
+\DoxyCodeLine{00148   \textcolor{keywordflow}{for} (it = m\_strokeIndexes.begin(); it != iEnd; ++it) \{}
+\DoxyCodeLine{00149     \mbox{\hyperlink{class_t_stroke}{TStroke}} *stroke = m\_vi-\/>getStroke(*it);}
+\DoxyCodeLine{00150     r += stroke-\/>\mbox{\hyperlink{class_t_stroke_a456bedcae5e8af3a84823cb251584957}{getBBox}}();}
+\DoxyCodeLine{00151     m\_originalStrokes.push\_back(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_stroke}{TStroke}}(*stroke));}
+\DoxyCodeLine{00152   \}}
+\DoxyCodeLine{00153 }
+\DoxyCodeLine{00154   m\_originalP00 = r.getP00();}
+\DoxyCodeLine{00155   m\_originalP11 = r.getP11();}
+\DoxyCodeLine{00156   m\_newPoints.push\_back(m\_originalP00);}
+\DoxyCodeLine{00157   m\_newPoints.push\_back(r.getP10());}
+\DoxyCodeLine{00158   m\_newPoints.push\_back(m\_originalP11);}
+\DoxyCodeLine{00159   m\_newPoints.push\_back(r.getP01());}
+\DoxyCodeLine{00160 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_free_deformer_a724f7fdf885faee61e2dff983e75401c}\label{class_vector_free_deformer_a724f7fdf885faee61e2dff983e75401c}} 
+\index{VectorFreeDeformer@{VectorFreeDeformer}!````~VectorFreeDeformer@{$\sim$VectorFreeDeformer}}
+\index{````~VectorFreeDeformer@{$\sim$VectorFreeDeformer}!VectorFreeDeformer@{VectorFreeDeformer}}
+\doxysubsubsection{\texorpdfstring{$\sim$VectorFreeDeformer()}{~VectorFreeDeformer()}}
+{\footnotesize\ttfamily Vector\+Free\+Deformer\+::$\sim$\+Vector\+Free\+Deformer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00164                                         \{}
+\DoxyCodeLine{00165   clearPointerContainer(m\_originalStrokes);}
+\DoxyCodeLine{00166 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_vector_free_deformer_aa6cdb449ad22f3cf1f9b6aec1c98ce38}\label{class_vector_free_deformer_aa6cdb449ad22f3cf1f9b6aec1c98ce38}} 
+\index{VectorFreeDeformer@{VectorFreeDeformer}!deformImage@{deformImage}}
+\index{deformImage@{deformImage}!VectorFreeDeformer@{VectorFreeDeformer}}
+\doxysubsubsection{\texorpdfstring{deformImage()}{deformImage()}}
+{\footnotesize\ttfamily void Vector\+Free\+Deformer\+::deform\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_free_deformer}{Free\+Deformer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00214                                      \{}
+\DoxyCodeLine{00215   \textcolor{comment}{// debug}}
+\DoxyCodeLine{00216   assert(m\_strokeIndexes.size() == m\_originalStrokes.size());}
+\DoxyCodeLine{00217 }
+\DoxyCodeLine{00218   \textcolor{comment}{// release}}
+\DoxyCodeLine{00219   \textcolor{keywordflow}{if} (m\_strokeIndexes.size() != m\_originalStrokes.size()) \{}
+\DoxyCodeLine{00220     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00221   \}}
+\DoxyCodeLine{00222 }
+\DoxyCodeLine{00223   QMutexLocker lock(m\_vi-\/>getMutex());}
+\DoxyCodeLine{00224 }
+\DoxyCodeLine{00225   std::size\_t i = 0;}
+\DoxyCodeLine{00226   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} it = m\_strokeIndexes.begin(), end = m\_strokeIndexes.end();}
+\DoxyCodeLine{00227        it != end; ++it) \{}
+\DoxyCodeLine{00228     \mbox{\hyperlink{class_t_stroke}{TStroke}} *stroke         = m\_vi-\/>getStroke(*it);}
+\DoxyCodeLine{00229     \mbox{\hyperlink{class_t_stroke}{TStroke}} *originalStroke = m\_originalStrokes[i++];}
+\DoxyCodeLine{00230 }
+\DoxyCodeLine{00231     assert(stroke-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}() ==}
+\DoxyCodeLine{00232            originalStroke-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}());}
+\DoxyCodeLine{00233     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0, count = stroke-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}(); j < count; ++j) \{}
+\DoxyCodeLine{00234       \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} p = deform(originalStroke-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(j));}
+\DoxyCodeLine{00235       stroke-\/>\mbox{\hyperlink{class_t_stroke_abc4f174af1e2712c400ae63e005aac18}{setControlPoint}}(j, p);}
+\DoxyCodeLine{00236     \}}
+\DoxyCodeLine{00237   \}}
+\DoxyCodeLine{00238 }
+\DoxyCodeLine{00239   \textcolor{keywordflow}{if} (m\_computeRegion) deformRegions();}
+\DoxyCodeLine{00240 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_free_deformer_a48a3f8db6c8b998b04d9e94e5d5c6ff7}\label{class_vector_free_deformer_a48a3f8db6c8b998b04d9e94e5d5c6ff7}} 
+\index{VectorFreeDeformer@{VectorFreeDeformer}!deformRegions@{deformRegions}}
+\index{deformRegions@{deformRegions}!VectorFreeDeformer@{VectorFreeDeformer}}
+\doxysubsubsection{\texorpdfstring{deformRegions()}{deformRegions()}}
+{\footnotesize\ttfamily void Vector\+Free\+Deformer\+::deform\+Regions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00202                                        \{}
+\DoxyCodeLine{00203   \textcolor{keywordflow}{if} (m\_strokeIndexes.empty() || !m\_computeRegion) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00204 }
+\DoxyCodeLine{00205   std::vector<int> selectedIndexes(m\_strokeIndexes.begin(),}
+\DoxyCodeLine{00206                                    m\_strokeIndexes.end());}
+\DoxyCodeLine{00207 }
+\DoxyCodeLine{00208   m\_vi-\/>notifyChangedStrokes(selectedIndexes, m\_originalStrokes, m\_flip);}
+\DoxyCodeLine{00209   m\_computeRegion = \textcolor{keyword}{false};}
+\DoxyCodeLine{00210 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_free_deformer_a595e9849f9e6af00fe751df88362839b}\label{class_vector_free_deformer_a595e9849f9e6af00fe751df88362839b}} 
+\index{VectorFreeDeformer@{VectorFreeDeformer}!getDeformedImage@{getDeformedImage}}
+\index{getDeformedImage@{getDeformedImage}!VectorFreeDeformer@{VectorFreeDeformer}}
+\doxysubsubsection{\texorpdfstring{getDeformedImage()}{getDeformedImage()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_vector_image}{TVector\+Image}} $\ast$ Vector\+Free\+Deformer\+::get\+Deformed\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Helper function. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00091 \{ \textcolor{keywordflow}{return} m\_vi.getPointer(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_free_deformer_a37b664d93857784e204fd9d42c167211}\label{class_vector_free_deformer_a37b664d93857784e204fd9d42c167211}} 
+\index{VectorFreeDeformer@{VectorFreeDeformer}!getPoint@{getPoint}}
+\index{getPoint@{getPoint}!VectorFreeDeformer@{VectorFreeDeformer}}
+\doxysubsubsection{\texorpdfstring{getPoint()}{getPoint()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_point_t}{TPointD}} Vector\+Free\+Deformer\+::get\+Point (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return {\bfseries{index}} point, with index from 0 to 3. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00084 \{ \textcolor{keywordflow}{return} m\_newPoints[index]; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_free_deformer_adb1aafea83fdad3402f8169a6d629fc0}\label{class_vector_free_deformer_adb1aafea83fdad3402f8169a6d629fc0}} 
+\index{VectorFreeDeformer@{VectorFreeDeformer}!setComputeRegion@{setComputeRegion}}
+\index{setComputeRegion@{setComputeRegion}!VectorFreeDeformer@{VectorFreeDeformer}}
+\doxysubsubsection{\texorpdfstring{setComputeRegion()}{setComputeRegion()}}
+{\footnotesize\ttfamily void Vector\+Free\+Deformer\+::set\+Compute\+Region (\begin{DoxyParamCaption}\item[{bool}]{compute\+Region }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00176                                                             \{}
+\DoxyCodeLine{00177   m\_computeRegion = computeRegion;}
+\DoxyCodeLine{00178 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_free_deformer_abc816a7c6844e781f9d927242b5a8e51}\label{class_vector_free_deformer_abc816a7c6844e781f9d927242b5a8e51}} 
+\index{VectorFreeDeformer@{VectorFreeDeformer}!setFlip@{setFlip}}
+\index{setFlip@{setFlip}!VectorFreeDeformer@{VectorFreeDeformer}}
+\doxysubsubsection{\texorpdfstring{setFlip()}{setFlip()}}
+{\footnotesize\ttfamily void Vector\+Free\+Deformer\+::set\+Flip (\begin{DoxyParamCaption}\item[{bool}]{flip }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00182 \{ m\_flip = flip; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_free_deformer_aadb715dcc40f11ad2811b8ad20337c7b}\label{class_vector_free_deformer_aadb715dcc40f11ad2811b8ad20337c7b}} 
+\index{VectorFreeDeformer@{VectorFreeDeformer}!setPoint@{setPoint}}
+\index{setPoint@{setPoint}!VectorFreeDeformer@{VectorFreeDeformer}}
+\doxysubsubsection{\texorpdfstring{setPoint()}{setPoint()}}
+{\footnotesize\ttfamily void Vector\+Free\+Deformer\+::set\+Point (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Set {\bfseries{index}} point to {\bfseries{p}}, with index from 0 to 3. 
+
+Implements \mbox{\hyperlink{class_free_deformer_a4aa3ccc74db9dfbf0f528d0d1a1a9ffb}{Free\+Deformer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00186                                                              \{}
+\DoxyCodeLine{00187   m\_newPoints[index] = p;}
+\DoxyCodeLine{00188 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_free_deformer_a8d60979a06158c8eb3cb0838b044e97a}\label{class_vector_free_deformer_a8d60979a06158c8eb3cb0838b044e97a}} 
+\index{VectorFreeDeformer@{VectorFreeDeformer}!setPoints@{setPoints}}
+\index{setPoints@{setPoints}!VectorFreeDeformer@{VectorFreeDeformer}}
+\doxysubsubsection{\texorpdfstring{setPoints()}{setPoints()}}
+{\footnotesize\ttfamily void Vector\+Free\+Deformer\+::set\+Points (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p0,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p1,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p2,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p3 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Helper function. 
+
+Implements \mbox{\hyperlink{class_free_deformer_a86c8888b71c42c278261f81faeb34101}{Free\+Deformer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00193                                                                          \{}
+\DoxyCodeLine{00194   m\_newPoints[0] = p0;}
+\DoxyCodeLine{00195   m\_newPoints[1] = p1;}
+\DoxyCodeLine{00196   m\_newPoints[2] = p2;}
+\DoxyCodeLine{00197   m\_newPoints[3] = p3;}
+\DoxyCodeLine{00198 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l00636}{Drag\+Selection\+Tool\+::\+Vector\+Deform\+Tool\+::transform\+Whole\+Level()}}.
+
+\mbox{\Hypertarget{class_vector_free_deformer_a5fc2a0d3dfc2a5018e291cb5a973f062}\label{class_vector_free_deformer_a5fc2a0d3dfc2a5018e291cb5a973f062}} 
+\index{VectorFreeDeformer@{VectorFreeDeformer}!setPreserveThickness@{setPreserveThickness}}
+\index{setPreserveThickness@{setPreserveThickness}!VectorFreeDeformer@{VectorFreeDeformer}}
+\doxysubsubsection{\texorpdfstring{setPreserveThickness()}{setPreserveThickness()}}
+{\footnotesize\ttfamily void Vector\+Free\+Deformer\+::set\+Preserve\+Thickness (\begin{DoxyParamCaption}\item[{bool}]{preserve\+Thickness }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00170                                                                     \{}
+\DoxyCodeLine{00171   m\_preserveThickness = preserveThickness;}
+\DoxyCodeLine{00172 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/vectorselectiontool.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/vectorselectiontool.\+cpp\end{DoxyCompactItemize}

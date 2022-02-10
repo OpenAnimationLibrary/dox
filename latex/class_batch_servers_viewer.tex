@@ -1,0 +1,220 @@
+\hypertarget{class_batch_servers_viewer}{}\doxysection{Batch\+Servers\+Viewer Class Reference}
+\label{class_batch_servers_viewer}\index{BatchServersViewer@{BatchServersViewer}}
+
+
+The \mbox{\hyperlink{class_batch_servers_viewer}{Batch\+Servers\+Viewer}} class is a ...  
+
+
+Inheritance diagram for Batch\+Servers\+Viewer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_batch_servers_viewer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_batch_servers_viewer_aa374141248aeec13aadf8ec2ed5aa11d}{Batch\+Servers\+Viewer}} (QWidget $\ast$parent=0, Qt\+::\+WFlags flags=0)
+\item 
+void \mbox{\hyperlink{class_batch_servers_viewer_a06c990dd5398343c3f422f0443b0e045}{update\+Selected}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_batch_servers_viewer_a31ddd5fa78366d3604b7e65dcafb1978}{set\+GRoot}} ()
+\item 
+void \mbox{\hyperlink{class_batch_servers_viewer_a72b0d94df7220597f557629b72dbab0a}{on\+Process\+With}} (int index)
+\item 
+void \mbox{\hyperlink{class_batch_servers_viewer_a39077e3b1f0091f1d80d2f6e6f897617}{on\+Current\+Item\+Changed}} (QList\+Widget\+Item $\ast$)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_batch_servers_viewer}{Batch\+Servers\+Viewer}} class is a ... 
+
+Inherits {\bfseries{QFrame}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_batch_servers_viewer_aa374141248aeec13aadf8ec2ed5aa11d}\label{class_batch_servers_viewer_aa374141248aeec13aadf8ec2ed5aa11d}} 
+\index{BatchServersViewer@{BatchServersViewer}!BatchServersViewer@{BatchServersViewer}}
+\index{BatchServersViewer@{BatchServersViewer}!BatchServersViewer@{BatchServersViewer}}
+\doxysubsubsection{\texorpdfstring{BatchServersViewer()}{BatchServersViewer()}}
+{\footnotesize\ttfamily Batch\+Servers\+Viewer\+::\+Batch\+Servers\+Viewer (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0},  }\item[{Qt\+::\+WFlags}]{flags = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00263     : QFrame(parent) \{}
+\DoxyCodeLine{00264   \textcolor{keywordtype}{int} row = 0;}
+\DoxyCodeLine{00265 }
+\DoxyCodeLine{00266   setFrameStyle(QFrame::StyledPanel);}
+\DoxyCodeLine{00267   setObjectName(\textcolor{stringliteral}{"{}OnePixelMarginFrame"{}});}
+\DoxyCodeLine{00268 }
+\DoxyCodeLine{00269   QGridLayout *layout = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00270   layout-\/>setMargin(15);}
+\DoxyCodeLine{00271   layout-\/>setSpacing(8);}
+\DoxyCodeLine{00272 }
+\DoxyCodeLine{00273   layout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Process with:"{}})), row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00274   m\_processWith = \textcolor{keyword}{new} QComboBox();}
+\DoxyCodeLine{00275   QStringList type;}
+\DoxyCodeLine{00276   type << tr(\textcolor{stringliteral}{"{}Local"{}}) << tr(\textcolor{stringliteral}{"{}Render Farm"{}});}
+\DoxyCodeLine{00277   m\_processWith-\/>addItems(type);}
+\DoxyCodeLine{00278   layout-\/>addWidget(m\_processWith, row++, 1);}
+\DoxyCodeLine{00279   connect(m\_processWith, SIGNAL(currentIndexChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00280           SLOT(onProcessWith(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00281 }
+\DoxyCodeLine{00282   m\_farmRootField = ::create(layout, tr(\textcolor{stringliteral}{"{}Farm Global Root:"{}}), row, \textcolor{keyword}{false});}
+\DoxyCodeLine{00283 }
+\DoxyCodeLine{00284   QString path = QSettings().value(\textcolor{stringliteral}{"{}TFarmGlobalRoot"{}}).toString();}
+\DoxyCodeLine{00285   \textcolor{keywordflow}{if} (path != \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{00286     m\_farmRootField-\/>setText(path);}
+\DoxyCodeLine{00287     TFarmStuff::setGlobalRoot(\mbox{\hyperlink{class_t_file_path}{TFilePath}}(path.toStdWString()));}
+\DoxyCodeLine{00288   \}}
+\DoxyCodeLine{00289   connect(m\_farmRootField, SIGNAL(editingFinished()), \textcolor{keyword}{this}, SLOT(setGRoot()));}
+\DoxyCodeLine{00290 }
+\DoxyCodeLine{00291   m\_serverList = \textcolor{keyword}{new} \mbox{\hyperlink{class_farm_server_list_view}{FarmServerListView}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00292   connect(m\_serverList,}
+\DoxyCodeLine{00293           SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),}
+\DoxyCodeLine{00294           \textcolor{keyword}{this}, SLOT(onCurrentItemChanged(QListWidgetItem *)));}
+\DoxyCodeLine{00295   \textcolor{comment}{// connect(m\_serverList, SIGNAL(itemPressed(QListWidgetItem *)), this,}}
+\DoxyCodeLine{00296   \textcolor{comment}{// SLOT(onCurrentItemChanged(QListWidgetItem *)));}}
+\DoxyCodeLine{00297 }
+\DoxyCodeLine{00298   layout-\/>addWidget(m\_serverList, row, 0, 18, 2);}
+\DoxyCodeLine{00299   row += 18 + 1;}
+\DoxyCodeLine{00300 }
+\DoxyCodeLine{00301   m\_name  = ::create(layout, tr(\textcolor{stringliteral}{"{}Name:"{}}), row);}
+\DoxyCodeLine{00302   m\_ip    = ::create(layout, tr(\textcolor{stringliteral}{"{}IP Address:"{}}), row);}
+\DoxyCodeLine{00303   m\_port  = ::create(layout, tr(\textcolor{stringliteral}{"{}Port Number:"{}}), row);}
+\DoxyCodeLine{00304   m\_tasks = ::create(layout, tr(\textcolor{stringliteral}{"{}Tasks:"{}}), row);}
+\DoxyCodeLine{00305   m\_state = ::create(layout, tr(\textcolor{stringliteral}{"{}State:"{}}), row);}
+\DoxyCodeLine{00306   m\_cpu   = ::create(layout, tr(\textcolor{stringliteral}{"{}Number of CPU:"{}}), row);}
+\DoxyCodeLine{00307   m\_mem   = ::create(layout, tr(\textcolor{stringliteral}{"{}Physical Memory:"{}}), row);}
+\DoxyCodeLine{00308 }
+\DoxyCodeLine{00309   setLayout(layout);}
+\DoxyCodeLine{00310 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_batch_servers_viewer_a72783fd9b36a060e163be0d70c70ee7b}\label{class_batch_servers_viewer_a72783fd9b36a060e163be0d70c70ee7b}} 
+\index{BatchServersViewer@{BatchServersViewer}!````~BatchServersViewer@{$\sim$BatchServersViewer}}
+\index{````~BatchServersViewer@{$\sim$BatchServersViewer}!BatchServersViewer@{BatchServersViewer}}
+\doxysubsubsection{\texorpdfstring{$\sim$BatchServersViewer()}{~BatchServersViewer()}}
+{\footnotesize\ttfamily Batch\+Servers\+Viewer\+::$\sim$\+Batch\+Servers\+Viewer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00314 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_batch_servers_viewer_a39077e3b1f0091f1d80d2f6e6f897617}\label{class_batch_servers_viewer_a39077e3b1f0091f1d80d2f6e6f897617}} 
+\index{BatchServersViewer@{BatchServersViewer}!onCurrentItemChanged@{onCurrentItemChanged}}
+\index{onCurrentItemChanged@{onCurrentItemChanged}!BatchServersViewer@{BatchServersViewer}}
+\doxysubsubsection{\texorpdfstring{onCurrentItemChanged}{onCurrentItemChanged}}
+{\footnotesize\ttfamily void Batch\+Servers\+Viewer\+::on\+Current\+Item\+Changed (\begin{DoxyParamCaption}\item[{QList\+Widget\+Item $\ast$}]{\+\_\+item }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00237                                                                     \{}
+\DoxyCodeLine{00238   \mbox{\hyperlink{class_my_list_item}{MyListItem}} *item = (\mbox{\hyperlink{class_my_list_item}{MyListItem}} *)\_item;}
+\DoxyCodeLine{00239   updateServerInfo(item ? item-\/>m\_id : QString());}
+\DoxyCodeLine{00240 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_batch_servers_viewer_a72b0d94df7220597f557629b72dbab0a}\label{class_batch_servers_viewer_a72b0d94df7220597f557629b72dbab0a}} 
+\index{BatchServersViewer@{BatchServersViewer}!onProcessWith@{onProcessWith}}
+\index{onProcessWith@{onProcessWith}!BatchServersViewer@{BatchServersViewer}}
+\doxysubsubsection{\texorpdfstring{onProcessWith}{onProcessWith}}
+{\footnotesize\ttfamily void Batch\+Servers\+Viewer\+::on\+Process\+With (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00326                                                 \{}
+\DoxyCodeLine{00327   \textcolor{keywordflow}{if} (index == 0) \{}
+\DoxyCodeLine{00328     BatchesController::instance()-\/>setController(0);}
+\DoxyCodeLine{00329     m\_serverList-\/>clear();}
+\DoxyCodeLine{00330     m\_serverId = \textcolor{stringliteral}{"{}localhost"{}};}
+\DoxyCodeLine{00331     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00332   \}}
+\DoxyCodeLine{00333 }
+\DoxyCodeLine{00334   \textcolor{keywordtype}{bool} connected = \textcolor{keyword}{false};}
+\DoxyCodeLine{00335   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00336     connected = TFarmStuff::testConnectionToController();}
+\DoxyCodeLine{00337   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_farm_stuff_1_1_t_missing_g_root_environment_variable}{TMissingGRootEnvironmentVariable}} \&) \{}
+\DoxyCodeLine{00338     DVGui::warning(}
+\DoxyCodeLine{00339         QString(tr(\textcolor{stringliteral}{"{}In order to use the render farm you have to define the "{}}}
+\DoxyCodeLine{00340                    \textcolor{stringliteral}{"{}Farm Global Root first."{}})));}
+\DoxyCodeLine{00341     m\_processWith-\/>setCurrentIndex(0);}
+\DoxyCodeLine{00342     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00343   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_farm_stuff_1_1_t_missing_g_root_folder}{TMissingGRootFolder}} \&) \{}
+\DoxyCodeLine{00344     DVGui::warning(}
+\DoxyCodeLine{00345         tr(\textcolor{stringliteral}{"{}The Farm Global Root folder doesn't exist\(\backslash\)nPlease create this "{}}}
+\DoxyCodeLine{00346            \textcolor{stringliteral}{"{}folder before using the render farm."{}}));}
+\DoxyCodeLine{00347     m\_processWith-\/>setCurrentIndex(0);}
+\DoxyCodeLine{00348     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00349   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{00350     DVGui::warning(QString::fromStdString(::to\_string(e.getMessage())));}
+\DoxyCodeLine{00351     m\_processWith-\/>setCurrentIndex(0);}
+\DoxyCodeLine{00352     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00353   \}}
+\DoxyCodeLine{00354 }
+\DoxyCodeLine{00355   \textcolor{keywordflow}{if} (!TFarmStuff::testConnectionToController()) \{}
+\DoxyCodeLine{00356     QString hostName, addr;}
+\DoxyCodeLine{00357     \textcolor{keywordtype}{int} port;}
+\DoxyCodeLine{00358     TFarmStuff::getControllerData(hostName, addr, port);}
+\DoxyCodeLine{00359 }
+\DoxyCodeLine{00360     QString msg(tr(\textcolor{stringliteral}{"{}Unable to connect to the ToonzFarm Controller\(\backslash\)n \(\backslash\)}}
+\DoxyCodeLine{00361 \textcolor{stringliteral}{  The Controller should run on \%1 at port \%2\(\backslash\)n \(\backslash\)}}
+\DoxyCodeLine{00362 \textcolor{stringliteral}{  Please start the Controller before using the ToonzFarm"{}})}
+\DoxyCodeLine{00363                     .arg(hostName)}
+\DoxyCodeLine{00364                     .arg(QString::number(port)));}
+\DoxyCodeLine{00365 }
+\DoxyCodeLine{00366     DVGui::warning(msg);}
+\DoxyCodeLine{00367     m\_processWith-\/>setCurrentIndex(0);}
+\DoxyCodeLine{00368     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00369   \}}
+\DoxyCodeLine{00370 }
+\DoxyCodeLine{00371   BatchesController::instance()-\/>setController(getTFarmController());}
+\DoxyCodeLine{00372 }
+\DoxyCodeLine{00373   m\_serverList-\/>update();}
+\DoxyCodeLine{00374 }
+\DoxyCodeLine{00375   \textcolor{comment}{// m\_serversListView-\/>update();}}
+\DoxyCodeLine{00376   \textcolor{comment}{// if (m\_serversListView-\/>getItemCount() > 0)}}
+\DoxyCodeLine{00377   \textcolor{comment}{//  m\_serversListView-\/>select(0, true);}}
+\DoxyCodeLine{00378 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_batch_servers_viewer_a31ddd5fa78366d3604b7e65dcafb1978}\label{class_batch_servers_viewer_a31ddd5fa78366d3604b7e65dcafb1978}} 
+\index{BatchServersViewer@{BatchServersViewer}!setGRoot@{setGRoot}}
+\index{setGRoot@{setGRoot}!BatchServersViewer@{BatchServersViewer}}
+\doxysubsubsection{\texorpdfstring{setGRoot}{setGRoot}}
+{\footnotesize\ttfamily void Batch\+Servers\+Viewer\+::set\+GRoot (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00318                                   \{}
+\DoxyCodeLine{00319   TFarmStuff::setGlobalRoot(\mbox{\hyperlink{class_t_file_path}{TFilePath}}(m\_farmRootField-\/>text().toStdWString()));}
+\DoxyCodeLine{00320   QSettings().setValue(\textcolor{stringliteral}{"{}TFarmGlobalRoot"{}}, m\_farmRootField-\/>text());}
+\DoxyCodeLine{00321 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_batch_servers_viewer_a06c990dd5398343c3f422f0443b0e045}\label{class_batch_servers_viewer_a06c990dd5398343c3f422f0443b0e045}} 
+\index{BatchServersViewer@{BatchServersViewer}!updateSelected@{updateSelected}}
+\index{updateSelected@{updateSelected}!BatchServersViewer@{BatchServersViewer}}
+\doxysubsubsection{\texorpdfstring{updateSelected()}{updateSelected()}}
+{\footnotesize\ttfamily void Batch\+Servers\+Viewer\+::update\+Selected (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00230                                         \{}
+\DoxyCodeLine{00231   \mbox{\hyperlink{class_my_list_item}{MyListItem}} *item = (\mbox{\hyperlink{class_my_list_item}{MyListItem}} *)m\_serverList-\/>currentItem();}
+\DoxyCodeLine{00232   onCurrentItemChanged(item);}
+\DoxyCodeLine{00233 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/batchserversviewer.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/batchserversviewer.\+cpp\end{DoxyCompactItemize}

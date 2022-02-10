@@ -1,0 +1,195 @@
+\hypertarget{class_locator_popup}{}\doxysection{Locator\+Popup Class Reference}
+\label{class_locator_popup}\index{LocatorPopup@{LocatorPopup}}
+Inheritance diagram for Locator\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_locator_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_locator_popup_a1d0d168a30c5f614c24e5a0618825998}{Locator\+Popup}} (QWidget $\ast$parent=0)
+\item 
+\mbox{\hyperlink{class_scene_viewer}{Scene\+Viewer}} $\ast$ \mbox{\hyperlink{class_locator_popup_a8959843d32ca639a6888aed69e7bb60a}{viewer}} ()
+\item 
+void \mbox{\hyperlink{class_locator_popup_a8fd63199325887499d75c7829b267d96}{on\+Change\+View\+Aff}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&cur\+Pos)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_locator_popup_a0d6613022111e664335dac554b051e7c}{change\+Window\+Title}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_locator_popup_a2f9aed887917b1bd0af2c72100b70921}{show\+Event}} (QShow\+Event $\ast$)
+\item 
+void \mbox{\hyperlink{class_locator_popup_a8db9f2dc3d9ec5a40ded787ff41f0e7a}{hide\+Event}} (QHide\+Event $\ast$)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_locator_popup_a1d0d168a30c5f614c24e5a0618825998}\label{class_locator_popup_a1d0d168a30c5f614c24e5a0618825998}} 
+\index{LocatorPopup@{LocatorPopup}!LocatorPopup@{LocatorPopup}}
+\index{LocatorPopup@{LocatorPopup}!LocatorPopup@{LocatorPopup}}
+\doxysubsubsection{\texorpdfstring{LocatorPopup()}{LocatorPopup()}}
+{\footnotesize\ttfamily Locator\+Popup\+::\+Locator\+Popup (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00016     : QDialog(parent), m\_initialZoom(\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{00017   m\_viewer = \textcolor{keyword}{new} \mbox{\hyperlink{class_scene_viewer}{SceneViewer}}(NULL);}
+\DoxyCodeLine{00018   m\_viewer-\/>setParent(parent);}
+\DoxyCodeLine{00019   m\_viewer-\/>setIsLocator();}
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021   \textcolor{comment}{//-\/-\/-\/-\/ layout}}
+\DoxyCodeLine{00022   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00023   mainLayout-\/>setMargin(0);}
+\DoxyCodeLine{00024   mainLayout-\/>addWidget(m\_viewer, 1);}
+\DoxyCodeLine{00025   setLayout(mainLayout);}
+\DoxyCodeLine{00026 }
+\DoxyCodeLine{00027   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00028   \textcolor{comment}{// When zoom changed, change window title.}}
+\DoxyCodeLine{00029   ret = connect(m\_viewer, SIGNAL(onZoomChanged()), SLOT(changeWindowTitle()));}
+\DoxyCodeLine{00030   ret = ret \&\&}
+\DoxyCodeLine{00031         connect(m\_viewer, SIGNAL(previewToggled()), SLOT(changeWindowTitle()));}
+\DoxyCodeLine{00032   assert(ret);}
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034   resize(400, 400);}
+\DoxyCodeLine{00035 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_locator_popup_a0d6613022111e664335dac554b051e7c}\label{class_locator_popup_a0d6613022111e664335dac554b051e7c}} 
+\index{LocatorPopup@{LocatorPopup}!changeWindowTitle@{changeWindowTitle}}
+\index{changeWindowTitle@{changeWindowTitle}!LocatorPopup@{LocatorPopup}}
+\doxysubsubsection{\texorpdfstring{changeWindowTitle}{changeWindowTitle}}
+{\footnotesize\ttfamily void Locator\+Popup\+::change\+Window\+Title (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00081                                      \{}
+\DoxyCodeLine{00082   \mbox{\hyperlink{class_t_app}{TApp}} *app = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00083   \textcolor{comment}{// put the titlebar texts in this string}}
+\DoxyCodeLine{00084   QString name = tr(\textcolor{stringliteral}{"{}Locator"{}});}
+\DoxyCodeLine{00085 }
+\DoxyCodeLine{00086   \textcolor{keywordtype}{bool} showZoomFactor = \textcolor{keyword}{false};}
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088   \textcolor{comment}{// if the frame type is "{}scene editing"{}}}
+\DoxyCodeLine{00089   \textcolor{keywordflow}{if} (app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>isEditingScene()) \{}
+\DoxyCodeLine{00090     \textcolor{keywordflow}{if} (m\_viewer-\/>isPreviewEnabled()) showZoomFactor = \textcolor{keyword}{true};}
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00092     \textcolor{comment}{// If the current level exists and some option is set in the preference,}}
+\DoxyCodeLine{00093     \textcolor{comment}{// set the zoom value to the current level's dpi}}
+\DoxyCodeLine{00094     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (Preferences::instance()}
+\DoxyCodeLine{00095                  -\/>isActualPixelViewOnSceneEditingModeEnabled() \&\&}
+\DoxyCodeLine{00096              app-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>getSimpleLevel() \&\&}
+\DoxyCodeLine{00097              !\mbox{\hyperlink{class_cleanup_preview_check_a231efbbe4e3356757b725452d5efb62d}{CleanupPreviewCheck::instance}}()}
+\DoxyCodeLine{00098                   -\/>isEnabled()  \textcolor{comment}{// cleanup preview must be OFF}}
+\DoxyCodeLine{00099              \&\&}
+\DoxyCodeLine{00100              !\mbox{\hyperlink{class_camera_test_check_adc1033b93dea95f49db36d8fb668e16d}{CameraTestCheck::instance}}()}
+\DoxyCodeLine{00101                   -\/>isEnabled())  \textcolor{comment}{// camera test mode must be OFF neither}}
+\DoxyCodeLine{00102       showZoomFactor = \textcolor{keyword}{true};}
+\DoxyCodeLine{00103   \}}
+\DoxyCodeLine{00104   \textcolor{comment}{// if the frame type is "{}level editing"{}}}
+\DoxyCodeLine{00105   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00106     \mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *level          = app-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>getLevel();}
+\DoxyCodeLine{00107     \textcolor{keywordflow}{if} (level) showZoomFactor = \textcolor{keyword}{true};}
+\DoxyCodeLine{00108   \}}
+\DoxyCodeLine{00109 }
+\DoxyCodeLine{00110   \textcolor{keywordflow}{if} (showZoomFactor) \{}
+\DoxyCodeLine{00111     name = name + \textcolor{stringliteral}{"{}  Zoom : "{}} +}
+\DoxyCodeLine{00112            QString::number((\textcolor{keywordtype}{int})(100.0 * sqrt(m\_viewer-\/>\mbox{\hyperlink{class_scene_viewer_a3f746b9c53dc17030711cac65d96f625}{getViewMatrix}}().det()) *}
+\DoxyCodeLine{00113                                  m\_viewer-\/>\mbox{\hyperlink{class_scene_viewer_a7fd1e40caee87c57edd5d890dc41b8c8}{getDpiFactor}}())) +}
+\DoxyCodeLine{00114            \textcolor{stringliteral}{"{}\%"{}};}
+\DoxyCodeLine{00115   \}}
+\DoxyCodeLine{00116   setWindowTitle(name);}
+\DoxyCodeLine{00117 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_locator_popup_a8db9f2dc3d9ec5a40ded787ff41f0e7a}\label{class_locator_popup_a8db9f2dc3d9ec5a40ded787ff41f0e7a}} 
+\index{LocatorPopup@{LocatorPopup}!hideEvent@{hideEvent}}
+\index{hideEvent@{hideEvent}!LocatorPopup@{LocatorPopup}}
+\doxysubsubsection{\texorpdfstring{hideEvent()}{hideEvent()}}
+{\footnotesize\ttfamily void Locator\+Popup\+::hide\+Event (\begin{DoxyParamCaption}\item[{QHide\+Event $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073                                          \{}
+\DoxyCodeLine{00074   \mbox{\hyperlink{class_t_app}{TApp}} *app = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00075   disconnect(app-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}());}
+\DoxyCodeLine{00076   disconnect(app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}());}
+\DoxyCodeLine{00077 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_locator_popup_a8fd63199325887499d75c7829b267d96}\label{class_locator_popup_a8fd63199325887499d75c7829b267d96}} 
+\index{LocatorPopup@{LocatorPopup}!onChangeViewAff@{onChangeViewAff}}
+\index{onChangeViewAff@{onChangeViewAff}!LocatorPopup@{LocatorPopup}}
+\doxysubsubsection{\texorpdfstring{onChangeViewAff()}{onChangeViewAff()}}
+{\footnotesize\ttfamily void Locator\+Popup\+::on\+Change\+View\+Aff (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{cur\+Pos }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039                                                      \{}
+\DoxyCodeLine{00040   \mbox{\hyperlink{class_t_affine}{TAffine}} curAff = m\_viewer-\/>\mbox{\hyperlink{class_scene_viewer_a71c3b2c826bd5efa2762dc38b695edfb}{getSceneMatrix}}();}
+\DoxyCodeLine{00041   \mbox{\hyperlink{class_t_affine}{TAffine}} newAff(curAff.a11, 0, -\/pos.x * curAff.a11, 0, curAff.a22,}
+\DoxyCodeLine{00042                  -\/pos.y * curAff.a22);}
+\DoxyCodeLine{00043   m\_viewer-\/>setViewMatrix(newAff, 0);}
+\DoxyCodeLine{00044   m\_viewer-\/>setViewMatrix(newAff, 1);}
+\DoxyCodeLine{00045   m\_viewer-\/>update();}
+\DoxyCodeLine{00046 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_locator_popup_a2f9aed887917b1bd0af2c72100b70921}\label{class_locator_popup_a2f9aed887917b1bd0af2c72100b70921}} 
+\index{LocatorPopup@{LocatorPopup}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!LocatorPopup@{LocatorPopup}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Locator\+Popup\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00050                                          \{}
+\DoxyCodeLine{00051   \textcolor{comment}{// zoom the locator for the first time}}
+\DoxyCodeLine{00052   \textcolor{keywordflow}{if} (m\_initialZoom) \{}
+\DoxyCodeLine{00053     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} z    = 0; z < 4; z++) m\_viewer-\/>zoomQt(\textcolor{keyword}{true}, \textcolor{keyword}{false});}
+\DoxyCodeLine{00054     m\_initialZoom = \textcolor{keyword}{false};}
+\DoxyCodeLine{00055   \}}
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00057   \mbox{\hyperlink{class_t_app}{TApp}} *app                    = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00058   \mbox{\hyperlink{class_t_frame_handle}{TFrameHandle}} *frameHandle    = app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}();}
+\DoxyCodeLine{00059   \mbox{\hyperlink{class_t_xsh_level_handle}{TXshLevelHandle}} *levelHandle = app-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}();}
+\DoxyCodeLine{00060 }
+\DoxyCodeLine{00061   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00062   ret      = ret \&\& connect(frameHandle, SIGNAL(frameSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00063                        SLOT(changeWindowTitle()));}
+\DoxyCodeLine{00064   ret = ret \&\& connect(levelHandle, SIGNAL(xshLevelSwitched(\mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00065                        SLOT(changeWindowTitle()));}
+\DoxyCodeLine{00066   assert(ret);}
+\DoxyCodeLine{00067 }
+\DoxyCodeLine{00068   changeWindowTitle();}
+\DoxyCodeLine{00069 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_locator_popup_a8959843d32ca639a6888aed69e7bb60a}\label{class_locator_popup_a8959843d32ca639a6888aed69e7bb60a}} 
+\index{LocatorPopup@{LocatorPopup}!viewer@{viewer}}
+\index{viewer@{viewer}!LocatorPopup@{LocatorPopup}}
+\doxysubsubsection{\texorpdfstring{viewer()}{viewer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_scene_viewer}{Scene\+Viewer}} $\ast$ Locator\+Popup\+::viewer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022 \{ \textcolor{keywordflow}{return} m\_viewer; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/locatorpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/locatorpopup.\+cpp\end{DoxyCompactItemize}

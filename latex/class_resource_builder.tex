@@ -1,0 +1,470 @@
+\hypertarget{class_resource_builder}{}\doxysection{Resource\+Builder Class Reference}
+\label{class_resource_builder}\index{ResourceBuilder@{ResourceBuilder}}
+
+
+{\ttfamily \#include $<$tfxcachemanager.\+h$>$}
+
+Inheritance diagram for Resource\+Builder\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_resource_builder}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_resource_builder_a22ca82c4a5f190535b674a574d44e367}{Resource\+Builder}} (const std\+::string \&resource\+Name, const \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} \&fx, double frame, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&rs)
+\item 
+void \mbox{\hyperlink{class_resource_builder_a93fa732060823d1af1dc4637c6ade042}{sim\+Build}} (const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&tile)
+\item 
+void \mbox{\hyperlink{class_resource_builder_a79021377e08366222adba816402f5dc4}{build}} (const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&tile)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_resource_builder_ae61a58c9c0af2531b73970b01e58e839}{declare\+Resource}} (const std\+::string \&alias, const \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} \&fx, const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&rect, double frame, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&rs, bool subtileable=true)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_resource_builder_a7fe13ad46d69763ff7a99b17c5bf41a1}\label{class_resource_builder_a7fe13ad46d69763ff7a99b17c5bf41a1}} 
+virtual void {\bfseries sim\+Compute} (const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&rect)=0
+\item 
+\mbox{\Hypertarget{class_resource_builder_a41876ee5ff98f2840db5022ef574c035}\label{class_resource_builder_a41876ee5ff98f2840db5022ef574c035}} 
+virtual void {\bfseries compute} (const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&rect)=0
+\item 
+\mbox{\Hypertarget{class_resource_builder_abeba13fe63315fb1d604439ff181a6da}\label{class_resource_builder_abeba13fe63315fb1d604439ff181a6da}} 
+virtual void {\bfseries upload} (\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}} \&resource)=0
+\item 
+\mbox{\Hypertarget{class_resource_builder_a77aa9e18a479bdb36a04b67032d393a5}\label{class_resource_builder_a77aa9e18a479bdb36a04b67032d393a5}} 
+virtual bool {\bfseries download} (\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}} \&resource)=0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_resource_builder}{Resource\+Builder}} class is the preferential base interface that must be used to by eventual users to interact with the Toonz cache during render processes.
+
+Caching can be used to specify that some intermediate rendering result is useful, and efforts should be taken to ensure that it is stored in memory rather than repeatedly rebuilt, when it is sufficiently convenient. ~\newline
+These kind of operations are automatically performed by Toonz on the overall results of fx nodes -\/ users should definitely implement hidden fx nodes rather than a specialized \mbox{\hyperlink{class_resource_builder}{Resource\+Builder}} class. However, \mbox{\hyperlink{class_resource_builder}{Resource\+Builder}} provides a more simple and generic API than \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}}\textquotesingle{}s, and does not force code splitting into several fxs.
+
+This class already works out most of the implementation details necessary to deal with cache management and predictability issues. ~\newline
+ ~\newline
+It just requires the implementation of two essential functions\+:
+
+The compute() method, which performs the effective calculation of the passed tile.  The sim\+Compute() method, which is a dummy simulation of the above compute(), used by the builder for predictive purposes.
+
+Please refer to their descriptions for implementation details. ~\newline
+ ~\newline
+Once the necessary compute() and sim\+Compute() functions have been supplied, the \mbox{\hyperlink{class_resource_builder}{Resource\+Builder}} can be used to obtain the resource data associated with passed \mbox{\hyperlink{class_t_tile}{TTile}} simply by invoking the build() method. The build() invocation performs all the cache resource availability checkings, retrieval, and the eventual resource calculation on its own. ~\newline
+ ~\newline
+The sim\+Build() method is the dummy counterpart for build(), which must be used in the sim\+Compute() simulations whenever some father resource requires that a child resource is built first. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_resource_builder_a22ca82c4a5f190535b674a574d44e367}\label{class_resource_builder_a22ca82c4a5f190535b674a574d44e367}} 
+\index{ResourceBuilder@{ResourceBuilder}!ResourceBuilder@{ResourceBuilder}}
+\index{ResourceBuilder@{ResourceBuilder}!ResourceBuilder@{ResourceBuilder}}
+\doxysubsubsection{\texorpdfstring{ResourceBuilder()}{ResourceBuilder()}}
+{\footnotesize\ttfamily Resource\+Builder\+::\+Resource\+Builder (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{resource\+Name,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} \&}]{fx,  }\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{rs }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00501     : m\_cacheManager(TFxCacheManager::instance())}
+\DoxyCodeLine{00502     , m\_data(m\_cacheManager-\/>getResource(resourceName, fx, frame, rs)) \{}
+\DoxyCodeLine{00503 \textcolor{preprocessor}{\#ifdef WRITESTACK}}
+\DoxyCodeLine{00504   DIAGNOSTICS\_THRSET(\textcolor{stringliteral}{"{}frame"{}}, frame);}
+\DoxyCodeLine{00505   DIAGNOSTICS\_THRSTRSET(}
+\DoxyCodeLine{00506       \textcolor{stringliteral}{"{}frameStr"{}},}
+\DoxyCodeLine{00507       \textcolor{stringliteral}{"{}Frame "{}} + QString::number(frame).rightJustified(4, \textcolor{charliteral}{' '}) + \textcolor{stringliteral}{"{} | "{}});}
+\DoxyCodeLine{00508   DIAGNOSTICS\_THRSTRSET(\textcolor{stringliteral}{"{}stackVar"{}}, DIAGNOSTICS\_GLOSTRGET(\textcolor{stringliteral}{"{}status"{}}) + \textcolor{stringliteral}{"{}sv"{}} +}
+\DoxyCodeLine{00509                                         DIAGNOSTICS\_GLOSTRGET(\textcolor{stringliteral}{"{}instVar"{}}) +}
+\DoxyCodeLine{00510                                         \textcolor{stringliteral}{"{}fr"{}} + QString::number(frame));}
+\DoxyCodeLine{00511   DIAGNOSTICS\_THRSTRSET(\textcolor{stringliteral}{"{}ResourceName"{}},}
+\DoxyCodeLine{00512                         QString::fromStdString(resourceName).left(35));}
+\DoxyCodeLine{00513 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00514 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resource_builder_a5f448ed5c33a431b0778fdbba37ab22c}\label{class_resource_builder_a5f448ed5c33a431b0778fdbba37ab22c}} 
+\index{ResourceBuilder@{ResourceBuilder}!````~ResourceBuilder@{$\sim$ResourceBuilder}}
+\index{````~ResourceBuilder@{$\sim$ResourceBuilder}!ResourceBuilder@{ResourceBuilder}}
+\doxysubsubsection{\texorpdfstring{$\sim$ResourceBuilder()}{~ResourceBuilder()}}
+{\footnotesize\ttfamily virtual Resource\+Builder\+::$\sim$\+Resource\+Builder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_resource_builder_a79021377e08366222adba816402f5dc4}\label{class_resource_builder_a79021377e08366222adba816402f5dc4}} 
+\index{ResourceBuilder@{ResourceBuilder}!build@{build}}
+\index{build@{build}!ResourceBuilder@{ResourceBuilder}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily void Resource\+Builder\+::build (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{tile }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00691                                                   \{}
+\DoxyCodeLine{00692 \textcolor{preprocessor}{\#ifdef WRITESTACK}}
+\DoxyCodeLine{00693   QString resName(DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}ResourceName"{}}));}
+\DoxyCodeLine{00694 }
+\DoxyCodeLine{00695   QString renderStr(DIAGNOSTICS\_GLOSTRGET(\textcolor{stringliteral}{"{}compRenderStr"{}}));}
+\DoxyCodeLine{00696   QString frameStr(DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}frameStr"{}}));}
+\DoxyCodeLine{00697   DIAGNOSTICS\_NUMBEREDSTRSET(}
+\DoxyCodeLine{00698       prefixComp + renderStr + frameStr, DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}stackVar"{}}),}
+\DoxyCodeLine{00699       DIAGNOSTICS\_STACKGET(\textcolor{stringliteral}{"{}parentResource"{}}) + \textcolor{stringliteral}{"{} "{}} + resName,}
+\DoxyCodeLine{00700       ::traduce(tileRect), 4);}
+\DoxyCodeLine{00701   DIAGNOSTICS\_PUSHAUTO(}
+\DoxyCodeLine{00702       \textcolor{stringliteral}{"{}parentResource"{}},}
+\DoxyCodeLine{00703       QString::number(DIAGNOSTICS\_GLOGET(DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}stackVar"{}}))),}
+\DoxyCodeLine{00704       bla);}
+\DoxyCodeLine{00705 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00706 }
+\DoxyCodeLine{00707   \textcolor{comment}{// If there is no resource, just compute the tile directly.}}
+\DoxyCodeLine{00708   \textcolor{keywordflow}{if} (!m\_data.second) \{}
+\DoxyCodeLine{00709 \textcolor{preprocessor}{\#ifdef WRITEGENERAL}}
+\DoxyCodeLine{00710     \textcolor{keywordflow}{if} (m\_data.first)}
+\DoxyCodeLine{00711       \textcolor{keywordflow}{if} (m\_data.first-\/>m\_tilesCount > 0)}
+\DoxyCodeLine{00712         DIAGNOSTICS\_ADD(}
+\DoxyCodeLine{00713             prefixErr +}
+\DoxyCodeLine{00714                 \textcolor{stringliteral}{"{}Computing | No-\/resource build, active decl, tilesCount > 0"{}},}
+\DoxyCodeLine{00715             1);}
+\DoxyCodeLine{00716       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00717         DIAGNOSTICS\_ADD(}
+\DoxyCodeLine{00718             prefixErr +}
+\DoxyCodeLine{00719                 \textcolor{stringliteral}{"{}Computing | No-\/resource build, active decl, tilesCount <= 0"{}},}
+\DoxyCodeLine{00720             1);}
+\DoxyCodeLine{00721 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00722 }
+\DoxyCodeLine{00723     \textcolor{comment}{// assert(!m\_data.first);  //Should have been erased before the COMPUTING}}
+\DoxyCodeLine{00724     \textcolor{comment}{// run.}}
+\DoxyCodeLine{00725     compute(tileRect);}
+\DoxyCodeLine{00726     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00727   \}}
+\DoxyCodeLine{00728 }
+\DoxyCodeLine{00729   \textcolor{comment}{// Since this function must be thread-\/safe, use the appropriate}}
+\DoxyCodeLine{00730   \textcolor{comment}{// synchronization tool.}}
+\DoxyCodeLine{00731   QMutexLocker locker(m\_data.second-\/>getMutex());}
+\DoxyCodeLine{00732 }
+\DoxyCodeLine{00733   \textcolor{comment}{// Without declaration, you can just deal with the required tile.}}
+\DoxyCodeLine{00734   \textcolor{keywordflow}{if} (!(m\_data.first \&\& m\_data.first-\/>m\_tilesCount > 0)) \{}
+\DoxyCodeLine{00735 \textcolor{preprocessor}{\#ifdef WRITEGENERAL}}
+\DoxyCodeLine{00736     \textcolor{keywordflow}{if} (!m\_data.first)}
+\DoxyCodeLine{00737       DIAGNOSTICS\_ADD(\textcolor{stringliteral}{"{}\#error.txt | Resources without declaration"{}}, 1);}
+\DoxyCodeLine{00738     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00739       DIAGNOSTICS\_ADD(\textcolor{stringliteral}{"{}\#error.txt | Resources with declaration, tilesCount <=0"{}},}
+\DoxyCodeLine{00740                       1);}
+\DoxyCodeLine{00741 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00742 }
+\DoxyCodeLine{00743     \textcolor{keywordflow}{if} (download(m\_data.second)) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00744 }
+\DoxyCodeLine{00745     compute(tileRect);}
+\DoxyCodeLine{00746 }
+\DoxyCodeLine{00747     \textcolor{comment}{// Since there is an associated resource, the calculated content is}}
+\DoxyCodeLine{00748     \textcolor{comment}{// supposedly}}
+\DoxyCodeLine{00749     \textcolor{comment}{// an interesting one. Upload it.}}
+\DoxyCodeLine{00750     upload(m\_data.second);}
+\DoxyCodeLine{00751 }
+\DoxyCodeLine{00752     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00753   \}}
+\DoxyCodeLine{00754 }
+\DoxyCodeLine{00755   \textcolor{comment}{// Now, both the declaration and the resource exist.}}
+\DoxyCodeLine{00756 }
+\DoxyCodeLine{00757   \textcolor{comment}{// Retrieve the predicted tile that must be built in place of tile.}}
+\DoxyCodeLine{00758   \mbox{\hyperlink{class_t_dimension_t}{TDimension}} dim(tileRect.getLx(), tileRect.getLy());}
+\DoxyCodeLine{00759 }
+\DoxyCodeLine{00760   std::vector<ResourceDeclaration::TileData *> tiles;}
+\DoxyCodeLine{00761   \textcolor{keywordtype}{bool} fittingPrediction = getTilesToBuild(m\_data, tileRect, tiles);}
+\DoxyCodeLine{00762 }
+\DoxyCodeLine{00763   \textcolor{keywordflow}{if} (!fittingPrediction) \{}
+\DoxyCodeLine{00764 \textcolor{preprocessor}{\#ifdef WRITEGENERAL}}
+\DoxyCodeLine{00765     DIAGNOSTICS\_ADD(prefixErr + \textcolor{stringliteral}{"{}Computing | Not fitting tiles"{}}, 1);}
+\DoxyCodeLine{00766 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00767 }
+\DoxyCodeLine{00768     \textcolor{comment}{// If the required tile is not fitting the prediction, we assume it is a}}
+\DoxyCodeLine{00769     \textcolor{comment}{// full un-\/predicted one -\/ so no reference count will be updated (this would}}
+\DoxyCodeLine{00770     \textcolor{comment}{// comply}}
+\DoxyCodeLine{00771     \textcolor{comment}{// with the simCompute() method, in case we assume that mis-\/predicted}}
+\DoxyCodeLine{00772     \textcolor{comment}{// computes are always prudently built IN EXCESS).}}
+\DoxyCodeLine{00773 }
+\DoxyCodeLine{00774     \textcolor{comment}{// For now, just calculate it and stop.}}
+\DoxyCodeLine{00775     locker.unlock();}
+\DoxyCodeLine{00776 }
+\DoxyCodeLine{00777     compute(tileRect);}
+\DoxyCodeLine{00778     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00779   \}}
+\DoxyCodeLine{00780 }
+\DoxyCodeLine{00781   \textcolor{comment}{// If necessary, calculate something}}
+\DoxyCodeLine{00782   \textcolor{keywordflow}{if} (tiles.size() > 0) \{}
+\DoxyCodeLine{00783     \textcolor{comment}{// For every tile to build}}
+\DoxyCodeLine{00784     std::vector<ResourceDeclaration::TileData *>::iterator it;}
+\DoxyCodeLine{00785     \textcolor{keywordflow}{for} (it = tiles.begin(); it != tiles.end(); ++it) \{}
+\DoxyCodeLine{00786       \mbox{\hyperlink{struct_resource_declaration_1_1_tile_data}{ResourceDeclaration::TileData}} \&tileData = **it;}
+\DoxyCodeLine{00787 }
+\DoxyCodeLine{00788       \textcolor{comment}{// If the tile can be downloaded from the resource, it's because it has}}
+\DoxyCodeLine{00789       \textcolor{comment}{// actually}}
+\DoxyCodeLine{00790       \textcolor{comment}{// been calculated by another render process -\/ either a concurrent one, or}}
+\DoxyCodeLine{00791       \textcolor{comment}{// any}}
+\DoxyCodeLine{00792       \textcolor{comment}{// which has written this resource part on disk storage.}}
+\DoxyCodeLine{00793 }
+\DoxyCodeLine{00794       \textcolor{comment}{// Since reference counts built in the simCompute assume that tiles}}
+\DoxyCodeLine{00795       \textcolor{comment}{// downloaded}}
+\DoxyCodeLine{00796       \textcolor{comment}{// from the resource have been calculated in THIS very render process,}}
+\DoxyCodeLine{00797       \textcolor{comment}{// therefore having tileData.m\_calculated == true, in this case}}
+\DoxyCodeLine{00798       \textcolor{comment}{// heir refCounts must be updated since no computing will happen on them}}
+\DoxyCodeLine{00799       \textcolor{comment}{// due to the predicted node builds of this resource.}}
+\DoxyCodeLine{00800       \mbox{\hyperlink{class_t_rect_t}{TRect}} tileRectI(tileData.m\_rect.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}, tileData.m\_rect.y0,}
+\DoxyCodeLine{00801                       tileData.m\_rect.x1 -\/ 1, tileData.m\_rect.y1 -\/ 1);}
+\DoxyCodeLine{00802 }
+\DoxyCodeLine{00803       \textcolor{keywordflow}{if} (m\_data.second-\/>canDownloadAll(tileRectI)) \{}
+\DoxyCodeLine{00804         \textcolor{keywordflow}{if} (!tileData.m\_calculated \&\& tileData.m\_refCount > 0) \{}
+\DoxyCodeLine{00805           \textcolor{comment}{/*\#ifdef WRITESTACK}}
+\DoxyCodeLine{00806 \textcolor{comment}{QString renderStr(DIAGNOSTICS\_GLOSTRGET("{}compRenderStr"{}));}}
+\DoxyCodeLine{00807 \textcolor{comment}{QString frameStr(DIAGNOSTICS\_THRSTRGET("{}frameStr"{}));}}
+\DoxyCodeLine{00808 \textcolor{comment}{DIAGNOSTICS\_NUMBEREDSTRSET(prefixComp + renderStr + frameStr,}}
+\DoxyCodeLine{00809 \textcolor{comment}{DIAGNOSTICS\_THRSTRGET("{}stackVar"{}), "{}\$ > "{} + resName,}}
+\DoxyCodeLine{00810 \textcolor{comment}{::traduce(tileData.m\_rect), 4);}}
+\DoxyCodeLine{00811 \textcolor{comment}{\#endif*/}}
+\DoxyCodeLine{00812 }
+\DoxyCodeLine{00813           \textcolor{comment}{// Deplete children refsCount -\/ rely on the simulated procedure}}
+\DoxyCodeLine{00814           simCompute(tileData.m\_rect);}
+\DoxyCodeLine{00815         \}}
+\DoxyCodeLine{00816       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00817 \textcolor{preprocessor}{\#ifdef WRITESUBRECTS}}
+\DoxyCodeLine{00818         DIAGNOSTICS\_NUMBEREDSTRSET(}
+\DoxyCodeLine{00819             prefixComp + renderStr + frameStr,}
+\DoxyCodeLine{00820             DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}stackVar"{}}),}
+\DoxyCodeLine{00821             DIAGNOSTICS\_STACKGET(\textcolor{stringliteral}{"{}parentResource"{}}) + \textcolor{stringliteral}{"{}   "{}} + resName,}
+\DoxyCodeLine{00822             ::traduce(tileData.m\_rect), 4);}
+\DoxyCodeLine{00823         DIAGNOSTICS\_PUSHAUTO(\textcolor{stringliteral}{"{}parentResource"{}},}
+\DoxyCodeLine{00824                              QString::number(DIAGNOSTICS\_GLOGET(}
+\DoxyCodeLine{00825                                  DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}stackVar"{}}))),}
+\DoxyCodeLine{00826                              bla2);}
+\DoxyCodeLine{00827 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00828 }
+\DoxyCodeLine{00829         \textcolor{comment}{// Compute the tile to be calculated}}
+\DoxyCodeLine{00830         compute(tileData.m\_rect);}
+\DoxyCodeLine{00831         \textcolor{keywordflow}{if} (tileData.m\_refCount > 0) tileData.m\_calculated = \textcolor{keyword}{true};}
+\DoxyCodeLine{00832 }
+\DoxyCodeLine{00833         \textcolor{comment}{// Upload the tile into the resource -\/ do so even if the tile}}
+\DoxyCodeLine{00834         \textcolor{comment}{// was unpredicted. In this case, we rely on the resource refCount to}}
+\DoxyCodeLine{00835         \textcolor{comment}{// provide the deallocations... Should be so?}}
+\DoxyCodeLine{00836         upload(m\_data.second);}
+\DoxyCodeLine{00837       \}}
+\DoxyCodeLine{00838     \}}
+\DoxyCodeLine{00839   \}}
+\DoxyCodeLine{00840 }
+\DoxyCodeLine{00841   \textcolor{comment}{// Finally, download the built resource in the required tile}}
+\DoxyCodeLine{00842   \textcolor{keywordtype}{bool} ret = download(m\_data.second);}
+\DoxyCodeLine{00843   assert(ret);}
+\DoxyCodeLine{00844 }
+\DoxyCodeLine{00845 \textcolor{preprocessor}{\#ifdef WRITESTACK}}
+\DoxyCodeLine{00846   \textcolor{keywordflow}{if} (!ret)}
+\DoxyCodeLine{00847     DIAGNOSTICS\_STRSET(}
+\DoxyCodeLine{00848         prefixErr + \textcolor{stringliteral}{"{}Download falliti | "{}} +}
+\DoxyCodeLine{00849             DIAGNOSTICS\_GLOSTRGET(\textcolor{stringliteral}{"{}compRenderStr"{}}) +}
+\DoxyCodeLine{00850             DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}frameStr"{}}) +}
+\DoxyCodeLine{00851             QString::number(}
+\DoxyCodeLine{00852                 DIAGNOSTICS\_GLOGET(DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}stackVar"{}}))),}
+\DoxyCodeLine{00853         \textcolor{stringliteral}{"{}CROP \#"{}} + QString::number(DIAGNOSTICS\_GLOGET(\textcolor{stringliteral}{"{}crStack"{}})));}
+\DoxyCodeLine{00854 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00855 }
+\DoxyCodeLine{00856   \textcolor{comment}{// Deplete a usage for all tiles intersecting the downloaded one. Fully}}
+\DoxyCodeLine{00857   \textcolor{comment}{// depleted}}
+\DoxyCodeLine{00858   \textcolor{comment}{// tiles become unpredicted from now on.}}
+\DoxyCodeLine{00859   std::vector<ResourceDeclaration::TileData> \&resTiles = m\_data.first-\/>m\_tiles;}
+\DoxyCodeLine{00860   std::vector<ResourceDeclaration::TileData>::iterator it;}
+\DoxyCodeLine{00861   \textcolor{keywordflow}{for} (it = resTiles.begin(); it != resTiles.end(); ++it) \{}
+\DoxyCodeLine{00862     \mbox{\hyperlink{struct_resource_declaration_1_1_tile_data}{ResourceDeclaration::TileData}} \&tileData = *it;}
+\DoxyCodeLine{00863 }
+\DoxyCodeLine{00864     \textcolor{keywordflow}{if} (!isEmpty(tileData.m\_rect * tileRect)) \{}
+\DoxyCodeLine{00865       \textcolor{keywordflow}{if} (tileData.m\_refCount <= 0) \{}
+\DoxyCodeLine{00866 \textcolor{preprocessor}{\#ifdef WRITEGENERAL}}
+\DoxyCodeLine{00867         DIAGNOSTICS\_ADD(prefixErr + \textcolor{stringliteral}{"{}Computing | Over-\/used subtiles"{}}, 1);}
+\DoxyCodeLine{00868 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00869 }
+\DoxyCodeLine{00870         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00871       \}}
+\DoxyCodeLine{00872 }
+\DoxyCodeLine{00873       \textcolor{keywordflow}{if} (-\/-\/tileData.m\_refCount == 0) \{}
+\DoxyCodeLine{00874         tileData.m\_calculated = \textcolor{keyword}{false};}
+\DoxyCodeLine{00875         -\/-\/m\_data.first-\/>m\_tilesCount;}
+\DoxyCodeLine{00876       \}}
+\DoxyCodeLine{00877 }
+\DoxyCodeLine{00878       \mbox{\hyperlink{class_t_rect_t}{TRect}} tileRectI(tileData.m\_rect.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}, tileData.m\_rect.y0,}
+\DoxyCodeLine{00879                       tileData.m\_rect.x1 -\/ 1, tileData.m\_rect.y1 -\/ 1);}
+\DoxyCodeLine{00880 }
+\DoxyCodeLine{00881       m\_data.second-\/>release2(tileRectI);}
+\DoxyCodeLine{00882     \}}
+\DoxyCodeLine{00883   \}}
+\DoxyCodeLine{00884 }
+\DoxyCodeLine{00885   \textcolor{comment}{// If the declaration has been completely used up, destroy it.}}
+\DoxyCodeLine{00886   \textcolor{comment}{// NOTE: Keeping the declarations is useful for diagnostic purposes. The}}
+\DoxyCodeLine{00887   \textcolor{comment}{// following code}}
+\DoxyCodeLine{00888   \textcolor{comment}{// could be reactivated -\/ but declarations tend to be lightweight now...}}
+\DoxyCodeLine{00889   \textcolor{comment}{// NOTE: If re-\/enabled, competing mutexes must be set where the resourcesData}}
+\DoxyCodeLine{00890   \textcolor{comment}{// map is used...}}
+\DoxyCodeLine{00891   \textcolor{comment}{/*if(m\_data.first-\/>m\_tilesCount <= 0)}}
+\DoxyCodeLine{00892 \textcolor{comment}{\{}}
+\DoxyCodeLine{00893 \textcolor{comment}{QMutexLocker locker(\&m\_cacheManager-\/>m\_imp-\/>m\_mutex);}}
+\DoxyCodeLine{00894 \textcolor{comment}{m\_cacheManager-\/>m\_imp-\/>m\_resourcesData.erase(m\_data.second-\/>getName());}}
+\DoxyCodeLine{00895 \textcolor{comment}{\}*/}}
+\DoxyCodeLine{00896 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resource_builder_ae61a58c9c0af2531b73970b01e58e839}\label{class_resource_builder_ae61a58c9c0af2531b73970b01e58e839}} 
+\index{ResourceBuilder@{ResourceBuilder}!declareResource@{declareResource}}
+\index{declareResource@{declareResource}!ResourceBuilder@{ResourceBuilder}}
+\doxysubsubsection{\texorpdfstring{declareResource()}{declareResource()}}
+{\footnotesize\ttfamily void Resource\+Builder\+::declare\+Resource (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{alias,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} \&}]{fx,  }\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{rect,  }\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{rs,  }\item[{bool}]{subtileable = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00521                                                         \{}
+\DoxyCodeLine{00522   TFxCacheManager::instance()-\/>declareResource(alias, fx, rect, frame, rs,}
+\DoxyCodeLine{00523                                                subtileable);}
+\DoxyCodeLine{00524 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resource_builder_a93fa732060823d1af1dc4637c6ade042}\label{class_resource_builder_a93fa732060823d1af1dc4637c6ade042}} 
+\index{ResourceBuilder@{ResourceBuilder}!simBuild@{simBuild}}
+\index{simBuild@{simBuild}!ResourceBuilder@{ResourceBuilder}}
+\doxysubsubsection{\texorpdfstring{simBuild()}{simBuild()}}
+{\footnotesize\ttfamily void Resource\+Builder\+::sim\+Build (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{tile }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00564                                                  \{}
+\DoxyCodeLine{00565   \textcolor{comment}{// Retrieve the render status}}
+\DoxyCodeLine{00566   \textcolor{keywordtype}{int} renderStatus = m\_cacheManager-\/>m\_imp-\/>m\_renderStatus;}
+\DoxyCodeLine{00567 }
+\DoxyCodeLine{00568   \textcolor{comment}{// In the initial precomputing stage, just retrieve all the declarations}}
+\DoxyCodeLine{00569   \textcolor{comment}{// without efforts.}}
+\DoxyCodeLine{00570   \textcolor{keywordflow}{if} (renderStatus == TRenderer::FIRSTRUN) \{}
+\DoxyCodeLine{00571     simCompute(rect);}
+\DoxyCodeLine{00572     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00573   \}}
+\DoxyCodeLine{00574 }
+\DoxyCodeLine{00575   \textcolor{comment}{// Perform the test run}}
+\DoxyCodeLine{00576   \textcolor{keywordflow}{if} (renderStatus == TRenderer::TESTRUN) \{}
+\DoxyCodeLine{00577     \textcolor{keywordflow}{if} (!(m\_data.first \&\& m\_data.second)) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00578 }
+\DoxyCodeLine{00579 \textcolor{preprocessor}{\#ifdef WRITESTACK}}
+\DoxyCodeLine{00580     QString resName(DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}ResourceName"{}}));}
+\DoxyCodeLine{00581 }
+\DoxyCodeLine{00582     QString renderStr(DIAGNOSTICS\_GLOSTRGET(\textcolor{stringliteral}{"{}testRenderStr"{}}));}
+\DoxyCodeLine{00583     QString frameStr(DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}frameStr"{}}));}
+\DoxyCodeLine{00584     DIAGNOSTICS\_NUMBEREDSTRSET(}
+\DoxyCodeLine{00585         prefixTest + renderStr + frameStr, DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}stackVar"{}}),}
+\DoxyCodeLine{00586         DIAGNOSTICS\_STACKGET(\textcolor{stringliteral}{"{}parentResource"{}}) + \textcolor{stringliteral}{"{} "{}} + resName, ::traduce(rect),}
+\DoxyCodeLine{00587         4);}
+\DoxyCodeLine{00588     DIAGNOSTICS\_PUSHAUTO(}
+\DoxyCodeLine{00589         \textcolor{stringliteral}{"{}parentResource"{}},}
+\DoxyCodeLine{00590         QString::number(DIAGNOSTICS\_GLOGET(DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}stackVar"{}}))),}
+\DoxyCodeLine{00591         bla);}
+\DoxyCodeLine{00592 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00593 }
+\DoxyCodeLine{00594     \textcolor{comment}{// Retrieve the tiles to build}}
+\DoxyCodeLine{00595     std::vector<ResourceDeclaration::TileData> \&tiles = m\_data.first-\/>m\_tiles;}
+\DoxyCodeLine{00596 }
+\DoxyCodeLine{00597     \textcolor{comment}{// For every tile intersecting rect}}
+\DoxyCodeLine{00598     std::vector<ResourceDeclaration::TileData>::iterator it;}
+\DoxyCodeLine{00599     \textcolor{keywordflow}{for} (it = tiles.begin(); it != tiles.end(); ++it) \{}
+\DoxyCodeLine{00600       \mbox{\hyperlink{struct_resource_declaration_1_1_tile_data}{ResourceDeclaration::TileData}} \&tileData = *it;}
+\DoxyCodeLine{00601 }
+\DoxyCodeLine{00602       \textcolor{keywordflow}{if} (!isEmpty(tileData.m\_rect * rect)) \{}
+\DoxyCodeLine{00603         \textcolor{comment}{// If the tile ref count == 0, assume that this tile has not yet been}}
+\DoxyCodeLine{00604         \textcolor{comment}{// simComputed.}}
+\DoxyCodeLine{00605         \textcolor{comment}{// Do so, then; further, add 1 to the number of predicted actively}}
+\DoxyCodeLine{00606         \textcolor{comment}{// accessed tiles.}}
+\DoxyCodeLine{00607         \textcolor{keywordflow}{if} (tileData.m\_refCount == 0) \{}
+\DoxyCodeLine{00608 \textcolor{preprocessor}{\#ifdef WRITESUBRECTS}}
+\DoxyCodeLine{00609           DIAGNOSTICS\_NUMBEREDSTRSET(}
+\DoxyCodeLine{00610               prefixTest + renderStr + frameStr,}
+\DoxyCodeLine{00611               DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}stackVar"{}}),}
+\DoxyCodeLine{00612               DIAGNOSTICS\_STACKGET(\textcolor{stringliteral}{"{}parentResource"{}}) + \textcolor{stringliteral}{"{}   "{}} + resName,}
+\DoxyCodeLine{00613               ::traduce(tileData.m\_rect), 4);}
+\DoxyCodeLine{00614           DIAGNOSTICS\_PUSHAUTO(\textcolor{stringliteral}{"{}parentResource"{}},}
+\DoxyCodeLine{00615                                QString::number(DIAGNOSTICS\_GLOGET(}
+\DoxyCodeLine{00616                                    DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}stackVar"{}}))),}
+\DoxyCodeLine{00617                                bla2);}
+\DoxyCodeLine{00618 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00619 }
+\DoxyCodeLine{00620           simCompute(tileData.m\_rect);}
+\DoxyCodeLine{00621           ++m\_data.first-\/>m\_tilesCount;}
+\DoxyCodeLine{00622         \}}
+\DoxyCodeLine{00623 }
+\DoxyCodeLine{00624         \textcolor{comment}{// Add a reference to this tile}}
+\DoxyCodeLine{00625         ++tileData.m\_refCount;}
+\DoxyCodeLine{00626 }
+\DoxyCodeLine{00627         \textcolor{keywordflow}{if} (m\_data.second) \{}
+\DoxyCodeLine{00628           QMutexLocker locker(m\_data.second-\/>getMutex());}
+\DoxyCodeLine{00629 }
+\DoxyCodeLine{00630           \mbox{\hyperlink{class_t_rect_t}{TRect}} tileRectI(tileData.m\_rect.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}, tileData.m\_rect.y0,}
+\DoxyCodeLine{00631                           tileData.m\_rect.x1 -\/ 1, tileData.m\_rect.y1 -\/ 1);}
+\DoxyCodeLine{00632 }
+\DoxyCodeLine{00633           m\_data.second-\/>addRef2(tileRectI);}
+\DoxyCodeLine{00634         \}}
+\DoxyCodeLine{00635       \}}
+\DoxyCodeLine{00636     \}}
+\DoxyCodeLine{00637 }
+\DoxyCodeLine{00638     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00639   \}}
+\DoxyCodeLine{00640 }
+\DoxyCodeLine{00641   \textcolor{comment}{// In this case, the simulation is used to declare that this rect will NOT be}}
+\DoxyCodeLine{00642   \textcolor{comment}{// calculated.}}
+\DoxyCodeLine{00643   \textcolor{comment}{// So, this is the behaviour: 1 refCount is depleted by all cells intersecting}}
+\DoxyCodeLine{00644   \textcolor{comment}{// the rect}}
+\DoxyCodeLine{00645   \textcolor{comment}{// -\/ if the refCount is still >0, then another request will occur that will}}
+\DoxyCodeLine{00646   \textcolor{comment}{// make the}}
+\DoxyCodeLine{00647   \textcolor{comment}{// tile calculated. If it is == 0, and the tile has not yet been calculated,}}
+\DoxyCodeLine{00648   \textcolor{comment}{// then the tile}}
+\DoxyCodeLine{00649   \textcolor{comment}{// will supposedly be NO MORE calculated, so the simCompute has to be launched}}
+\DoxyCodeLine{00650   \textcolor{comment}{// on that tile, too.}}
+\DoxyCodeLine{00651 }
+\DoxyCodeLine{00652   \textcolor{keywordflow}{if} (renderStatus == TRenderer::COMPUTING) \{}
+\DoxyCodeLine{00653     \textcolor{keywordflow}{if} (!(m\_data.first \&\& m\_data.second)) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00654 }
+\DoxyCodeLine{00655     QMutexLocker locker(m\_data.second-\/>getMutex());}
+\DoxyCodeLine{00656 }
+\DoxyCodeLine{00657     \textcolor{comment}{// Retrieve the tiles to build}}
+\DoxyCodeLine{00658     std::vector<ResourceDeclaration::TileData> \&tiles = m\_data.first-\/>m\_tiles;}
+\DoxyCodeLine{00659 }
+\DoxyCodeLine{00660     \textcolor{comment}{// Please note that the request should definitely be fitting the predicted}}
+\DoxyCodeLine{00661     \textcolor{comment}{// results,}}
+\DoxyCodeLine{00662     \textcolor{comment}{// since the original rect which generated these simCompute calls must have}}
+\DoxyCodeLine{00663     \textcolor{comment}{// been fitting.}}
+\DoxyCodeLine{00664 }
+\DoxyCodeLine{00665     \textcolor{comment}{// For every tile to build}}
+\DoxyCodeLine{00666     std::vector<ResourceDeclaration::TileData>::iterator it;}
+\DoxyCodeLine{00667     \textcolor{keywordflow}{for} (it = tiles.begin(); it != tiles.end(); ++it) \{}
+\DoxyCodeLine{00668       \mbox{\hyperlink{struct_resource_declaration_1_1_tile_data}{ResourceDeclaration::TileData}} \&tileData = *it;}
+\DoxyCodeLine{00669 }
+\DoxyCodeLine{00670       \textcolor{keywordflow}{if} (!isEmpty(tileData.m\_rect * rect)) \{}
+\DoxyCodeLine{00671         \textcolor{keywordflow}{if} (tileData.m\_refCount <= 0) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00672 }
+\DoxyCodeLine{00673         \textcolor{keywordflow}{if} (-\/-\/tileData.m\_refCount == 0 \&\& !tileData.m\_calculated) \{}
+\DoxyCodeLine{00674           -\/-\/m\_data.first-\/>m\_tilesCount;}
+\DoxyCodeLine{00675           simCompute(tileData.m\_rect);}
+\DoxyCodeLine{00676         \}}
+\DoxyCodeLine{00677 }
+\DoxyCodeLine{00678         \textcolor{keywordflow}{if} (m\_data.second) \{}
+\DoxyCodeLine{00679           \mbox{\hyperlink{class_t_rect_t}{TRect}} tileRectI(tileData.m\_rect.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}, tileData.m\_rect.y0,}
+\DoxyCodeLine{00680                           tileData.m\_rect.x1 -\/ 1, tileData.m\_rect.y1 -\/ 1);}
+\DoxyCodeLine{00681 }
+\DoxyCodeLine{00682           m\_data.second-\/>release2(tileRectI);}
+\DoxyCodeLine{00683         \}}
+\DoxyCodeLine{00684       \}}
+\DoxyCodeLine{00685     \}}
+\DoxyCodeLine{00686   \}}
+\DoxyCodeLine{00687 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tfxcachemanager.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tfx/tfxcachemanager.\+cpp\end{DoxyCompactItemize}

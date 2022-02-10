@@ -1,0 +1,229 @@
+\hypertarget{class_fx_histogram_render}{}\doxysection{Fx\+Histogram\+Render Class Reference}
+\label{class_fx_histogram_render}\index{FxHistogramRender@{FxHistogramRender}}
+Inheritance diagram for Fx\+Histogram\+Render\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_fx_histogram_render}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_fx_histogram_render_a3a92672fd6a684ba188cef88766be1cd}{set\+Scene}} (\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$scene)
+\item 
+void \mbox{\hyperlink{class_fx_histogram_render_a127a93f3ce643d8ae9a9921ef49f310d}{set\+Histograms}} (\mbox{\hyperlink{class_histograms}{Histograms}} $\ast$histograms)
+\item 
+void \mbox{\hyperlink{class_fx_histogram_render_acc310aec1353605fade7b8bf504e29cc}{set\+Is\+Camera\+View\+Mode}} (bool is\+Camera\+View\+Mode)
+\item 
+bool \mbox{\hyperlink{class_fx_histogram_render_aa9fe93e823fc18e97db298f921c86ca6}{is\+Camera\+View\+Mode}} ()
+\item 
+void \mbox{\hyperlink{class_fx_histogram_render_a0b52c51db0d9c886da19a555dbc06e5a}{compute\+Histogram}} (\mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} fx, int frame)
+\item 
+void \mbox{\hyperlink{class_fx_histogram_render_a7bd9a5738aa0a53f156c5b3b1eac6e57}{invalidate\+Frame}} (int frame)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_fx_histogram_render_afddc8b8d2bf06c399349cff408895cac}\label{class_fx_histogram_render_afddc8b8d2bf06c399349cff408895cac}} 
+static \mbox{\hyperlink{class_fx_histogram_render}{Fx\+Histogram\+Render}} $\ast$ {\bfseries instance} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_fx_histogram_render_a41f37eac755f1c9cf4b0edddad3d9630}{on\+Render\+Completed}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&, UINT)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_fx_histogram_render_a1089939cea070ddb123ae0e6089e4ca4}\label{class_fx_histogram_render_a1089939cea070ddb123ae0e6089e4ca4}} 
+\index{FxHistogramRender@{FxHistogramRender}!FxHistogramRender@{FxHistogramRender}}
+\index{FxHistogramRender@{FxHistogramRender}!FxHistogramRender@{FxHistogramRender}}
+\doxysubsubsection{\texorpdfstring{FxHistogramRender()}{FxHistogramRender()}}
+{\footnotesize\ttfamily Fx\+Histogram\+Render\+::\+Fx\+Histogram\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00047     : QObject()}
+\DoxyCodeLine{00048     , m\_renderer(TSystem::getProcessorCount())}
+\DoxyCodeLine{00049     , m\_lastFrameInfo()}
+\DoxyCodeLine{00050     , m\_scene()}
+\DoxyCodeLine{00051     , m\_histograms()}
+\DoxyCodeLine{00052     , m\_isCameraViewMode(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00053   m\_renderPort = \textcolor{keyword}{new} \mbox{\hyperlink{class_fx_histogram_render_port}{FxHistogramRenderPort}}();}
+\DoxyCodeLine{00054   m\_renderer.enablePrecomputing(\textcolor{keyword}{false});}
+\DoxyCodeLine{00055   m\_renderer.addPort(m\_renderPort);}
+\DoxyCodeLine{00056   m\_abortedRendering.clear();}
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00058   qRegisterMetaType<TRasterP>(\textcolor{stringliteral}{"{}TRasterP"{}});}
+\DoxyCodeLine{00059   qRegisterMetaType<UINT>(\textcolor{stringliteral}{"{}UINT"{}});}
+\DoxyCodeLine{00060   connect(m\_renderPort, SIGNAL(renderCompleted(\textcolor{keyword}{const} \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&, UINT)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00061           SLOT(onRenderCompleted(\textcolor{keyword}{const} \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&, UINT)));}
+\DoxyCodeLine{00062 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_histogram_render_ac866099f264e24f617c85e74a534fe82}\label{class_fx_histogram_render_ac866099f264e24f617c85e74a534fe82}} 
+\index{FxHistogramRender@{FxHistogramRender}!````~FxHistogramRender@{$\sim$FxHistogramRender}}
+\index{````~FxHistogramRender@{$\sim$FxHistogramRender}!FxHistogramRender@{FxHistogramRender}}
+\doxysubsubsection{\texorpdfstring{$\sim$FxHistogramRender()}{~FxHistogramRender()}}
+{\footnotesize\ttfamily Fx\+Histogram\+Render\+::$\sim$\+Fx\+Histogram\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00066                                       \{}
+\DoxyCodeLine{00067   \textcolor{keywordflow}{if} (m\_renderPort) \textcolor{keyword}{delete} m\_renderPort;}
+\DoxyCodeLine{00068 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_fx_histogram_render_a0b52c51db0d9c886da19a555dbc06e5a}\label{class_fx_histogram_render_a0b52c51db0d9c886da19a555dbc06e5a}} 
+\index{FxHistogramRender@{FxHistogramRender}!computeHistogram@{computeHistogram}}
+\index{computeHistogram@{computeHistogram}!FxHistogramRender@{FxHistogramRender}}
+\doxysubsubsection{\texorpdfstring{computeHistogram()}{computeHistogram()}}
+{\footnotesize\ttfamily void Fx\+Histogram\+Render\+::compute\+Histogram (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}}}]{fx,  }\item[{int}]{frame }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00082                                                            \{}
+\DoxyCodeLine{00083   \textcolor{keywordflow}{if} (!m\_histograms || !m\_scene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00084   \textcolor{keywordflow}{if} (!fx.getPointer()) \{}
+\DoxyCodeLine{00085     m\_histograms-\/>setRaster(0);}
+\DoxyCodeLine{00086     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00087   \}}
+\DoxyCodeLine{00088 }
+\DoxyCodeLine{00089   \mbox{\hyperlink{class_t_scene_properties}{TSceneProperties}} *sceneProperties = m\_scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}();}
+\DoxyCodeLine{00090   \textcolor{keywordflow}{if} (!sceneProperties) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00091   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}} *outputProperties = sceneProperties-\/>\mbox{\hyperlink{class_t_scene_properties_a0b905e0ea16e27aa5e67da31e469026e}{getPreviewProperties}}();}
+\DoxyCodeLine{00092   \textcolor{keywordflow}{if} (!outputProperties) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00093   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_render_settings}{TRenderSettings}} rs = outputProperties-\/>\mbox{\hyperlink{class_t_output_properties_afa7c771452b57b50047aa4afc6032cad}{getRenderSettings}}();}
+\DoxyCodeLine{00094   \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} buildedFx;}
+\DoxyCodeLine{00095   \textcolor{keywordflow}{if} (m\_isCameraViewMode)}
+\DoxyCodeLine{00096     buildedFx =}
+\DoxyCodeLine{00097         buildPartialSceneFx(m\_scene, (\textcolor{keywordtype}{double})frame, fx, rs.\mbox{\hyperlink{class_t_render_settings_a52dd41881bbf6aaf953fe300be2e233e}{m\_shrinkX}}, \textcolor{keyword}{true});}
+\DoxyCodeLine{00098   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00099     buildedFx = buildSceneFx(m\_scene, frame, fx, \textcolor{keyword}{true});}
+\DoxyCodeLine{00100   \textcolor{keywordflow}{if} (!buildedFx.getPointer()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00101   \mbox{\hyperlink{class_t_raster_fx_p}{TRasterFxP}} rasterFx(buildedFx);}
+\DoxyCodeLine{00102   \textcolor{keywordflow}{if} (!rasterFx) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00103   std::string alias = rasterFx-\/>getAlias(frame, rs);}
+\DoxyCodeLine{00104   \textcolor{keywordflow}{if} (!TImageCache::instance()-\/>isCached(alias + \textcolor{stringliteral}{"{}.noext"{}} +}
+\DoxyCodeLine{00105                                          std::to\_string(frame))) \{}
+\DoxyCodeLine{00106     \mbox{\hyperlink{class_t_dimension_t}{TDimension}} size = m\_scene-\/>\mbox{\hyperlink{class_toonz_scene_a750b5ab623ccec744013b0c83bf20abc}{getCurrentCamera}}()-\/>\mbox{\hyperlink{class_t_camera_a9a7c573e7a2c397ffae4b747809ea2a5}{getRes}}();}
+\DoxyCodeLine{00107     \mbox{\hyperlink{class_t_rect_t}{TRectD}} area(\mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/0.5 * size.lx, -\/0.5 * size.ly),}
+\DoxyCodeLine{00108                 \mbox{\hyperlink{class_t_dimension_t}{TDimensionD}}(size.lx, size.ly));}
+\DoxyCodeLine{00109     m\_renderPort-\/>\mbox{\hyperlink{class_t_render_port_a743d79f021d27a9f8017ef468839cadb}{setRenderArea}}(area);}
+\DoxyCodeLine{00110     \mbox{\hyperlink{class_t_fx_pair}{TFxPair}} fxPair;}
+\DoxyCodeLine{00111     fxPair.m\_frameA = buildedFx;}
+\DoxyCodeLine{00112     m\_lastFrameInfo.m\_renderId =}
+\DoxyCodeLine{00113         m\_renderer.\mbox{\hyperlink{class_t_renderer_a478735dc2935569993603911e116e0f5}{startRendering}}((\textcolor{keywordtype}{double})frame, rs, fxPair);}
+\DoxyCodeLine{00114     \textcolor{keywordflow}{if} (m\_lastFrameInfo.m\_renderId == (UINT)-\/1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116     m\_lastFrameInfo.m\_frame   = frame;}
+\DoxyCodeLine{00117     m\_lastFrameInfo.m\_fx      = fx;}
+\DoxyCodeLine{00118     m\_lastFrameInfo.m\_fxAlias = alias;}
+\DoxyCodeLine{00119   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00120     std::string \textcolor{keywordtype}{id} =}
+\DoxyCodeLine{00121         std::to\_string(fx-\/>getIdentifier()) + \textcolor{stringliteral}{"{}.noext"{}} + std::to\_string(frame);}
+\DoxyCodeLine{00122     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} img = TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_aea3ac2752efd6fa9689f5a7c1e895e41}{get}}(\textcolor{keywordtype}{id}, \textcolor{keyword}{false});}
+\DoxyCodeLine{00123     m\_histograms-\/>setRaster(img-\/>getRaster());}
+\DoxyCodeLine{00124   \}}
+\DoxyCodeLine{00125 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_histogram_render_a7bd9a5738aa0a53f156c5b3b1eac6e57}\label{class_fx_histogram_render_a7bd9a5738aa0a53f156c5b3b1eac6e57}} 
+\index{FxHistogramRender@{FxHistogramRender}!invalidateFrame@{invalidateFrame}}
+\index{invalidateFrame@{invalidateFrame}!FxHistogramRender@{FxHistogramRender}}
+\doxysubsubsection{\texorpdfstring{invalidateFrame()}{invalidateFrame()}}
+{\footnotesize\ttfamily void Fx\+Histogram\+Render\+::invalidate\+Frame (\begin{DoxyParamCaption}\item[{int}]{frame }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00129                                                  \{}
+\DoxyCodeLine{00130   \textcolor{keywordflow}{if} (!m\_histograms || !m\_scene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00131   QMutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00132   updateRenderer(frame);}
+\DoxyCodeLine{00133 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_histogram_render_aa9fe93e823fc18e97db298f921c86ca6}\label{class_fx_histogram_render_aa9fe93e823fc18e97db298f921c86ca6}} 
+\index{FxHistogramRender@{FxHistogramRender}!isCameraViewMode@{isCameraViewMode}}
+\index{isCameraViewMode@{isCameraViewMode}!FxHistogramRender@{FxHistogramRender}}
+\doxysubsubsection{\texorpdfstring{isCameraViewMode()}{isCameraViewMode()}}
+{\footnotesize\ttfamily bool Fx\+Histogram\+Render\+::is\+Camera\+View\+Mode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00097 \{ \textcolor{keywordflow}{return} m\_isCameraViewMode; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_histogram_render_a41f37eac755f1c9cf4b0edddad3d9630}\label{class_fx_histogram_render_a41f37eac755f1c9cf4b0edddad3d9630}} 
+\index{FxHistogramRender@{FxHistogramRender}!onRenderCompleted@{onRenderCompleted}}
+\index{onRenderCompleted@{onRenderCompleted}!FxHistogramRender@{FxHistogramRender}}
+\doxysubsubsection{\texorpdfstring{onRenderCompleted}{onRenderCompleted}}
+{\footnotesize\ttfamily void Fx\+Histogram\+Render\+::on\+Render\+Completed (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&}]{raster,  }\item[{UINT}]{render\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00190                                                          \{}
+\DoxyCodeLine{00191   \textcolor{keywordflow}{if} (m\_abortedRendering.contains(renderId)) \{}
+\DoxyCodeLine{00192     m\_abortedRendering.removeAll(renderId);}
+\DoxyCodeLine{00193     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00194   \}}
+\DoxyCodeLine{00195 }
+\DoxyCodeLine{00196   QMutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00197   \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} img(raster);}
+\DoxyCodeLine{00198   std::string \textcolor{keywordtype}{id} = std::to\_string(m\_lastFrameInfo.m\_fx-\/>getIdentifier()) +}
+\DoxyCodeLine{00199                    \textcolor{stringliteral}{"{}.noext"{}} + std::to\_string(m\_lastFrameInfo.m\_frame);}
+\DoxyCodeLine{00200   TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a124eae4cf370288f42c22b3477cb5163}{add}}(\textcolor{keywordtype}{id}, img, \textcolor{keyword}{true});}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202   m\_histograms-\/>setRaster(raster);}
+\DoxyCodeLine{00203 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_histogram_render_a127a93f3ce643d8ae9a9921ef49f310d}\label{class_fx_histogram_render_a127a93f3ce643d8ae9a9921ef49f310d}} 
+\index{FxHistogramRender@{FxHistogramRender}!setHistograms@{setHistograms}}
+\index{setHistograms@{setHistograms}!FxHistogramRender@{FxHistogramRender}}
+\doxysubsubsection{\texorpdfstring{setHistograms()}{setHistograms()}}
+{\footnotesize\ttfamily void Fx\+Histogram\+Render\+::set\+Histograms (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_histograms}{Histograms}} $\ast$}]{histograms }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00076                                                             \{}
+\DoxyCodeLine{00077   m\_histograms = histograms;}
+\DoxyCodeLine{00078 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_histogram_render_acc310aec1353605fade7b8bf504e29cc}\label{class_fx_histogram_render_acc310aec1353605fade7b8bf504e29cc}} 
+\index{FxHistogramRender@{FxHistogramRender}!setIsCameraViewMode@{setIsCameraViewMode}}
+\index{setIsCameraViewMode@{setIsCameraViewMode}!FxHistogramRender@{FxHistogramRender}}
+\doxysubsubsection{\texorpdfstring{setIsCameraViewMode()}{setIsCameraViewMode()}}
+{\footnotesize\ttfamily void Fx\+Histogram\+Render\+::set\+Is\+Camera\+View\+Mode (\begin{DoxyParamCaption}\item[{bool}]{is\+Camera\+View\+Mode }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00094                                                   \{}
+\DoxyCodeLine{00095     m\_isCameraViewMode = isCameraViewMode;}
+\DoxyCodeLine{00096   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_histogram_render_a3a92672fd6a684ba188cef88766be1cd}\label{class_fx_histogram_render_a3a92672fd6a684ba188cef88766be1cd}} 
+\index{FxHistogramRender@{FxHistogramRender}!setScene@{setScene}}
+\index{setScene@{setScene}!FxHistogramRender@{FxHistogramRender}}
+\doxysubsubsection{\texorpdfstring{setScene()}{setScene()}}
+{\footnotesize\ttfamily void Fx\+Histogram\+Render\+::set\+Scene (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$}]{scene }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00072 \{ m\_scene = scene; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/fxhistogramrender.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/fxhistogramrender.\+cpp\end{DoxyCompactItemize}

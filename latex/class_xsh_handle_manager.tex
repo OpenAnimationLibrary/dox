@@ -1,0 +1,127 @@
+\hypertarget{class_xsh_handle_manager}{}\doxysection{Xsh\+Handle\+Manager Class Reference}
+\label{class_xsh_handle_manager}\index{XshHandleManager@{XshHandleManager}}
+Inheritance diagram for Xsh\+Handle\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_xsh_handle_manager}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_xsh_handle_manager_abd2cd8cdc4e4e84eee114f792696b587}{Xsh\+Handle\+Manager}} (\mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$xsh)
+\item 
+\mbox{\hyperlink{class_t_point_t}{TPointD}} \mbox{\hyperlink{class_xsh_handle_manager_af1f5698c979aced630db5674498043ae}{get\+Handle\+Pos}} (const \mbox{\hyperlink{class_t_stage_object_id}{TStage\+Object\+Id}} \&id, const std\+::string \&handle, int row) const override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_xsh_handle_manager_abd2cd8cdc4e4e84eee114f792696b587}\label{class_xsh_handle_manager_abd2cd8cdc4e4e84eee114f792696b587}} 
+\index{XshHandleManager@{XshHandleManager}!XshHandleManager@{XshHandleManager}}
+\index{XshHandleManager@{XshHandleManager}!XshHandleManager@{XshHandleManager}}
+\doxysubsubsection{\texorpdfstring{XshHandleManager()}{XshHandleManager()}}
+{\footnotesize\ttfamily Xsh\+Handle\+Manager\+::\+Xsh\+Handle\+Manager (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$}]{xsh }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00025 : m\_xsh(xsh) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_xsh_handle_manager_af1f5698c979aced630db5674498043ae}\label{class_xsh_handle_manager_af1f5698c979aced630db5674498043ae}} 
+\index{XshHandleManager@{XshHandleManager}!getHandlePos@{getHandlePos}}
+\index{getHandlePos@{getHandlePos}!XshHandleManager@{XshHandleManager}}
+\doxysubsubsection{\texorpdfstring{getHandlePos()}{getHandlePos()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_point_t}{TPointD}} Xsh\+Handle\+Manager\+::get\+Handle\+Pos (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_stage_object_id}{TStage\+Object\+Id}} \&}]{id,  }\item[{const std\+::string \&}]{handle,  }\item[{int}]{row }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_handle_manager}{Handle\+Manager}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00082                                                       \{}
+\DoxyCodeLine{00083   \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{double} unit = 8.0;}
+\DoxyCodeLine{00084 }
+\DoxyCodeLine{00085   assert(m\_xsh-\/>\mbox{\hyperlink{class_t_xsheet_a35d49d436513243d059eee3a25ffa2ef}{getScene}}());}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087   \textcolor{keywordflow}{if} (handle == \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{00088     \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_point_t}{TPointD}}();}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (handle[0] == \textcolor{charliteral}{'H'} \&\& handle.length() > 1) \{}
+\DoxyCodeLine{00091     \textcolor{comment}{// Hook port case}}
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{00093     \textcolor{keywordflow}{if} (!\textcolor{keywordtype}{id}.isColumn()) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_point_t}{TPointD}}();}
+\DoxyCodeLine{00094 }
+\DoxyCodeLine{00095     \textcolor{keywordtype}{int} hookIndex = 0;}
+\DoxyCodeLine{00096     \{}
+\DoxyCodeLine{00097       \textcolor{keywordtype}{int} h, hLength = handle.length();}
+\DoxyCodeLine{00098       \textcolor{keywordflow}{for} (h = 1; h != hLength; ++h)}
+\DoxyCodeLine{00099         hookIndex = hookIndex * 10 + (handle[h] -\/ \textcolor{charliteral}{'0'});}
+\DoxyCodeLine{00100     \}}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102     \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *obj = m\_xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00103     \textcolor{keywordflow}{if} (\textcolor{keyword}{const} \mbox{\hyperlink{class_t_smart_pointer_t}{PlasticSkeletonDeformationP}} \&def =}
+\DoxyCodeLine{00104             obj-\/>\mbox{\hyperlink{class_t_stage_object_af2c5d9f172e73e4cb09b769700df3acb}{getPlasticSkeletonDeformation}}()) \{}
+\DoxyCodeLine{00105       \textcolor{keywordtype}{int} skelId = def-\/>skeletonId(row);}
+\DoxyCodeLine{00106 }
+\DoxyCodeLine{00107       \mbox{\hyperlink{class_plastic_skeleton}{PlasticSkeleton}} skel;}
+\DoxyCodeLine{00108       def-\/>storeDeformedSkeleton(skelId, row, skel);}
+\DoxyCodeLine{00109 }
+\DoxyCodeLine{00110       \textcolor{keywordtype}{int} v = def-\/>vertexIndex(hookIndex, skelId);}
+\DoxyCodeLine{00111       \textcolor{keywordflow}{return} (v >= 0) ? \mbox{\hyperlink{class_t_scale}{TScale}}(1.0 / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}}) * skel.vertex(v).P()}
+\DoxyCodeLine{00112                       : \mbox{\hyperlink{class_t_point_t}{TPointD}}();}
+\DoxyCodeLine{00113     \}}
+\DoxyCodeLine{00114 }
+\DoxyCodeLine{00115     -\/-\/hookIndex;}
+\DoxyCodeLine{00116 }
+\DoxyCodeLine{00117     \textcolor{keywordtype}{int} col = \textcolor{keywordtype}{id}.getIndex();}
+\DoxyCodeLine{00118     \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell(m\_xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(row, col));}
+\DoxyCodeLine{00119 }
+\DoxyCodeLine{00120     \mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *xl = cell.m\_level.getPointer();}
+\DoxyCodeLine{00121     \textcolor{keywordflow}{if} (!xl) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_point_t}{TPointD}}();}
+\DoxyCodeLine{00122 }
+\DoxyCodeLine{00123     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl = xl-\/>\mbox{\hyperlink{class_t_xsh_level_a023065559cff76164ecb6344c586ba27}{getSimpleLevel}}();}
+\DoxyCodeLine{00124     \textcolor{keywordflow}{if} (!sl) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_point_t}{TPointD}}();}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126     \mbox{\hyperlink{class_hook}{Hook}} *hook = sl-\/>\mbox{\hyperlink{class_t_xsh_level_a6e1f2998c39699adbe9133f87109a104}{getHookSet}}()-\/>getHook(hookIndex);}
+\DoxyCodeLine{00127     \textcolor{keywordflow}{if} (!hook) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_point_t}{TPointD}}();}
+\DoxyCodeLine{00128 }
+\DoxyCodeLine{00129     \mbox{\hyperlink{class_t_frame_id}{TFrameId}} fid(cell.m\_frameId);}
+\DoxyCodeLine{00130 }
+\DoxyCodeLine{00131     \mbox{\hyperlink{class_t_point_t}{TPointD}} pos = hook-\/>getAPos(fid) * (1.0 / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}});}
+\DoxyCodeLine{00132     \mbox{\hyperlink{class_t_point_t}{TPointD}} delta;}
+\DoxyCodeLine{00133 }
+\DoxyCodeLine{00134     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} r = row -\/ 1; r >= 0; -\/-\/r) \{}
+\DoxyCodeLine{00135       cell = m\_xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r, col);}
+\DoxyCodeLine{00136       \textcolor{keywordflow}{if} (cell.m\_level.getPointer() != xl) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00138       \textcolor{keyword}{const} \mbox{\hyperlink{class_t_frame_id}{TFrameId}} \&precFid = cell.m\_frameId;}
+\DoxyCodeLine{00139       delta += computePassHook(fid, precFid, sl, hook);}
+\DoxyCodeLine{00140       fid = precFid;}
+\DoxyCodeLine{00141     \}}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143     pos += delta * (1.0 / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}});}
+\DoxyCodeLine{00144     pos = getDpiAffine(sl, cell.m\_frameId, \textcolor{keyword}{true}) * pos;}
+\DoxyCodeLine{00145 }
+\DoxyCodeLine{00146     \textcolor{keywordflow}{return} pos;}
+\DoxyCodeLine{00147   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\textcolor{charliteral}{'A'} <= handle[0] \&\& handle[0] <= \textcolor{charliteral}{'Z'})}
+\DoxyCodeLine{00148     \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_point_t}{TPointD}}(unit * (handle[0] -\/ \textcolor{charliteral}{'B'}), 0);}
+\DoxyCodeLine{00149   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\textcolor{charliteral}{'a'} <= handle[0] \&\& handle[0] <= \textcolor{charliteral}{'z'})}
+\DoxyCodeLine{00150     \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_point_t}{TPointD}}(0.5 * unit * (handle[0] -\/ \textcolor{charliteral}{'b'}), 0);}
+\DoxyCodeLine{00151   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00152     \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_point_t}{TPointD}}();}
+\DoxyCodeLine{00153 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/xshhandlemanager.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/xshhandlemanager.\+cpp\end{DoxyCompactItemize}

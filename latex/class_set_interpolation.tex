@@ -1,0 +1,86 @@
+\hypertarget{class_set_interpolation}{}\doxysection{Set\+Interpolation Class Reference}
+\label{class_set_interpolation}\index{SetInterpolation@{SetInterpolation}}
+Inheritance diagram for Set\+Interpolation\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_set_interpolation}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_set_interpolation_aefce7de4540be4236289af909d998205}{Set\+Interpolation}} (Command\+Id cmd\+Id, TDouble\+Keyframe\+::\+Type type)
+\item 
+void \mbox{\hyperlink{class_set_interpolation_a31cff730f87cdd69580c70eb4170ca8a}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_set_interpolation_aefce7de4540be4236289af909d998205}\label{class_set_interpolation_aefce7de4540be4236289af909d998205}} 
+\index{SetInterpolation@{SetInterpolation}!SetInterpolation@{SetInterpolation}}
+\index{SetInterpolation@{SetInterpolation}!SetInterpolation@{SetInterpolation}}
+\doxysubsubsection{\texorpdfstring{SetInterpolation()}{SetInterpolation()}}
+{\footnotesize\ttfamily Set\+Interpolation\+::\+Set\+Interpolation (\begin{DoxyParamCaption}\item[{Command\+Id}]{cmd\+Id,  }\item[{TDouble\+Keyframe\+::\+Type}]{type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01700       : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(cmdId), m\_type(type) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_set_interpolation_a31cff730f87cdd69580c70eb4170ca8a}\label{class_set_interpolation_a31cff730f87cdd69580c70eb4170ca8a}} 
+\index{SetInterpolation@{SetInterpolation}!execute@{execute}}
+\index{execute@{execute}!SetInterpolation@{SetInterpolation}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Set\+Interpolation\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01702                           \{}
+\DoxyCodeLine{01703     \mbox{\hyperlink{class_t_app}{TApp}} *app    = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{01704     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{01705     \textcolor{keywordtype}{int} row      = app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>getFrame();}
+\DoxyCodeLine{01706 }
+\DoxyCodeLine{01707     \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} objectId = app-\/>\mbox{\hyperlink{class_t_app_a0d91c122eec2b756b7c4780014e49f9e}{getCurrentObject}}()-\/>getObjectId();}
+\DoxyCodeLine{01708     \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *pegbar    = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(objectId);}
+\DoxyCodeLine{01709     \textcolor{keywordflow}{if} (!pegbar) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01710 }
+\DoxyCodeLine{01711     \textcolor{keywordtype}{int} r0, r1;}
+\DoxyCodeLine{01712     \textcolor{keywordtype}{double} ease0, ease1;}
+\DoxyCodeLine{01713 }
+\DoxyCodeLine{01714     pegbar-\/>getKeyframeSpan(row, r0, ease0, r1, ease1);}
+\DoxyCodeLine{01715 }
+\DoxyCodeLine{01716     KeyFrameHandleCommandUndo *undo =}
+\DoxyCodeLine{01717         \textcolor{keyword}{new} KeyFrameHandleCommandUndo(objectId, r0, r1);}
+\DoxyCodeLine{01718 }
+\DoxyCodeLine{01719     \mbox{\hyperlink{struct_t_stage_object_1_1_keyframe}{TStageObject::Keyframe}} k0 = pegbar-\/>\mbox{\hyperlink{class_t_stage_object_aacff624691523109a01d3039b8aae432}{getKeyframe}}(r0);}
+\DoxyCodeLine{01720     \mbox{\hyperlink{struct_t_stage_object_1_1_keyframe}{TStageObject::Keyframe}} k1 = pegbar-\/>\mbox{\hyperlink{class_t_stage_object_aacff624691523109a01d3039b8aae432}{getKeyframe}}(r1);}
+\DoxyCodeLine{01721 }
+\DoxyCodeLine{01722     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < TStageObject::T\_ChannelCount; i++) \{}
+\DoxyCodeLine{01723       k0.\mbox{\hyperlink{struct_t_stage_object_1_1_keyframe_a550937888febd57e2059d37d1e0df68f}{m\_channels}}[i].m\_type     = m\_type;}
+\DoxyCodeLine{01724       k1.\mbox{\hyperlink{struct_t_stage_object_1_1_keyframe_a550937888febd57e2059d37d1e0df68f}{m\_channels}}[i].m\_prevType = m\_type;}
+\DoxyCodeLine{01725     \}}
+\DoxyCodeLine{01726     pegbar-\/>setKeyframeWithoutUndo(r0, k0);}
+\DoxyCodeLine{01727     pegbar-\/>setKeyframeWithoutUndo(r1, k1);}
+\DoxyCodeLine{01728 }
+\DoxyCodeLine{01729     TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{01730 }
+\DoxyCodeLine{01731     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{01732     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a0d91c122eec2b756b7c4780014e49f9e}{getCurrentObject}}()-\/>notifyObjectIdChanged(\textcolor{keyword}{false});}
+\DoxyCodeLine{01733   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xsheetcmd.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,108 @@
+\hypertarget{class_particles_manager}{}\doxysection{Particles\+Manager Class Reference}
+\label{class_particles_manager}\index{ParticlesManager@{ParticlesManager}}
+Inheritance diagram for Particles\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_particles_manager}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_particles_manager_1_1_frame_data}{Frame\+Data}}
+\item 
+struct \mbox{\hyperlink{struct_particles_manager_1_1_fx_data}{Fx\+Data}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_particles_manager_1_1_frame_data}{Frame\+Data}} $\ast$ \mbox{\hyperlink{class_particles_manager_a0d4e0a4477beb72745681b92e34f0bb3}{data}} (unsigned long fx\+Id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_particles_manager}{Particles\+Manager}} $\ast$ \mbox{\hyperlink{class_particles_manager_a1a25f89167a3ec282c5482dd6d30f6da}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_particles_manager_a923986ed2f5ffba138948e222b7209a4}\label{class_particles_manager_a923986ed2f5ffba138948e222b7209a4}} 
+\index{ParticlesManager@{ParticlesManager}!ParticlesManager@{ParticlesManager}}
+\index{ParticlesManager@{ParticlesManager}!ParticlesManager@{ParticlesManager}}
+\doxysubsubsection{\texorpdfstring{ParticlesManager()}{ParticlesManager()}}
+{\footnotesize\ttfamily Particles\+Manager\+::\+Particles\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00099 : m\_renderStatus(-\/1) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_particles_manager_a29da1900cdb8ae1016a7d8cd58f3c57a}\label{class_particles_manager_a29da1900cdb8ae1016a7d8cd58f3c57a}} 
+\index{ParticlesManager@{ParticlesManager}!````~ParticlesManager@{$\sim$ParticlesManager}}
+\index{````~ParticlesManager@{$\sim$ParticlesManager}!ParticlesManager@{ParticlesManager}}
+\doxysubsubsection{\texorpdfstring{$\sim$ParticlesManager()}{~ParticlesManager()}}
+{\footnotesize\ttfamily Particles\+Manager\+::$\sim$\+Particles\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00103                                     \{}
+\DoxyCodeLine{00104   \textcolor{comment}{// Release all fxDatas}}
+\DoxyCodeLine{00105   std::map<unsigned long, FxData *>::iterator it, end = m\_fxs.end();}
+\DoxyCodeLine{00106   \textcolor{keywordflow}{for} (it = m\_fxs.begin(); it != end; ++it) it-\/>second-\/>release();}
+\DoxyCodeLine{00107 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_particles_manager_a0d4e0a4477beb72745681b92e34f0bb3}\label{class_particles_manager_a0d4e0a4477beb72745681b92e34f0bb3}} 
+\index{ParticlesManager@{ParticlesManager}!data@{data}}
+\index{data@{data}!ParticlesManager@{ParticlesManager}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_particles_manager_1_1_frame_data}{Particles\+Manager\+::\+Frame\+Data}} $\ast$ Particles\+Manager\+::data (\begin{DoxyParamCaption}\item[{unsigned long}]{fx\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00117                                                                     \{}
+\DoxyCodeLine{00118   QMutexLocker locker(\&m\_mutex);}
+\DoxyCodeLine{00119 }
+\DoxyCodeLine{00120   std::map<unsigned long, FxData *>::iterator it = m\_fxs.find(fxId);}
+\DoxyCodeLine{00121   \textcolor{keywordflow}{if} (it == m\_fxs.end()) \{}
+\DoxyCodeLine{00122     it = m\_fxs.insert(std::make\_pair(fxId, \textcolor{keyword}{new} FxData)).first;}
+\DoxyCodeLine{00123     it-\/>second-\/>addRef();}
+\DoxyCodeLine{00124   \}}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126   FxData *fxData = it-\/>second;}
+\DoxyCodeLine{00127   FrameData *d   = fxData-\/>m\_frames.localData();}
+\DoxyCodeLine{00128   \textcolor{keywordflow}{if} (!d) \{}
+\DoxyCodeLine{00129     d = \textcolor{keyword}{new} FrameData(fxData);}
+\DoxyCodeLine{00130     fxData-\/>m\_frames.setLocalData(d);}
+\DoxyCodeLine{00131   \}}
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00133   \textcolor{keywordflow}{return} d;}
+\DoxyCodeLine{00134 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_particles_manager_a1a25f89167a3ec282c5482dd6d30f6da}\label{class_particles_manager_a1a25f89167a3ec282c5482dd6d30f6da}} 
+\index{ParticlesManager@{ParticlesManager}!instance@{instance}}
+\index{instance@{instance}!ParticlesManager@{ParticlesManager}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_particles_manager}{Particles\+Manager}} $\ast$ Particles\+Manager\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00092                                              \{}
+\DoxyCodeLine{00093   \textcolor{keywordflow}{return} \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{class_particles_manager}{ParticlesManager}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{00094       ParticlesManager::gen()-\/>getManager(\mbox{\hyperlink{class_t_renderer_ab120ad7931abf8858c10459d66f4c659}{TRenderer::renderId}}()));}
+\DoxyCodeLine{00095 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/particlesmanager.\+h\item 
+E\+:/opentoonz/toonz/sources/stdfx/particlesmanager.\+cpp\end{DoxyCompactItemize}

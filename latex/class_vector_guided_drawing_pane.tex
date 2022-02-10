@@ -1,0 +1,324 @@
+\hypertarget{class_vector_guided_drawing_pane}{}\doxysection{Vector\+Guided\+Drawing\+Pane Class Reference}
+\label{class_vector_guided_drawing_pane}\index{VectorGuidedDrawingPane@{VectorGuidedDrawingPane}}
+Inheritance diagram for Vector\+Guided\+Drawing\+Pane\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_vector_guided_drawing_pane}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_vector_guided_drawing_pane_ae1ee333445c3ed0eee104ce63211cc5a}{Vector\+Guided\+Drawing\+Pane}} (QWidget $\ast$parent=0, Qt\+::\+Window\+Flags flags=0)
+\item 
+void \mbox{\hyperlink{class_vector_guided_drawing_pane_a1a94f6312c797d8cf15ddabd49f4a84b}{update\+Status}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_vector_guided_drawing_pane_a62c86a53a357539f20fccd1c3890e497}{on\+Guided\+Type\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_vector_guided_drawing_pane_a7446934db22577b11a0ebcac82264260}{on\+Auto\+Inbetween\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_vector_guided_drawing_pane_a6cc28ff338bf8d233b0607c8a9fce640}{on\+Interpolation\+Type\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_vector_guided_drawing_pane_aa0a02ac3cbe4438c7155bf5c6e41c0a4}{on\+Preference\+Changed}} (const QString \&)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_vector_guided_drawing_pane_ae1ee333445c3ed0eee104ce63211cc5a}\label{class_vector_guided_drawing_pane_ae1ee333445c3ed0eee104ce63211cc5a}} 
+\index{VectorGuidedDrawingPane@{VectorGuidedDrawingPane}!VectorGuidedDrawingPane@{VectorGuidedDrawingPane}}
+\index{VectorGuidedDrawingPane@{VectorGuidedDrawingPane}!VectorGuidedDrawingPane@{VectorGuidedDrawingPane}}
+\doxysubsubsection{\texorpdfstring{VectorGuidedDrawingPane()}{VectorGuidedDrawingPane()}}
+{\footnotesize\ttfamily Vector\+Guided\+Drawing\+Pane\+::\+Vector\+Guided\+Drawing\+Pane (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0},  }\item[{Qt\+::\+Window\+Flags}]{flags = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028     : QFrame(parent) \{}
+\DoxyCodeLine{00029 }
+\DoxyCodeLine{00030   setObjectName(\textcolor{stringliteral}{"{}cornerWidget"{}});}
+\DoxyCodeLine{00031   setObjectName(\textcolor{stringliteral}{"{}VectorGuidedDrawingToolbar"{}});}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033   m\_guidedTypeCB = \textcolor{keyword}{new} QComboBox();}
+\DoxyCodeLine{00034   QStringList inputs;}
+\DoxyCodeLine{00035   inputs << tr(\textcolor{stringliteral}{"{}Off"{}}) << tr(\textcolor{stringliteral}{"{}Closest"{}}) << tr(\textcolor{stringliteral}{"{}Farthest"{}}) << tr(\textcolor{stringliteral}{"{}All"{}});}
+\DoxyCodeLine{00036   m\_guidedTypeCB-\/>addItems(inputs);}
+\DoxyCodeLine{00037   \textcolor{keywordtype}{int} guidedIndex = Preferences::instance()-\/>getGuidedDrawingType();}
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00039   m\_guidedTypeCB-\/>setCurrentIndex(guidedIndex);}
+\DoxyCodeLine{00040 }
+\DoxyCodeLine{00041   m\_autoInbetween = \textcolor{keyword}{new} QCheckBox(tr(\textcolor{stringliteral}{"{}Auto Inbetween"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00042   m\_autoInbetween-\/>setChecked(}
+\DoxyCodeLine{00043       Preferences::instance()-\/>getGuidedAutoInbetween());}
+\DoxyCodeLine{00044   connect(m\_autoInbetween, SIGNAL(stateChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00045           SLOT(onAutoInbetweenChanged()));}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047   m\_interpolationTypeCB = \textcolor{keyword}{new} QComboBox();}
+\DoxyCodeLine{00048   inputs.clear();}
+\DoxyCodeLine{00049   inputs << tr(\textcolor{stringliteral}{"{}Linear"{}}) << tr(\textcolor{stringliteral}{"{}Ease In"{}}) << tr(\textcolor{stringliteral}{"{}Ease Out"{}}) << tr(\textcolor{stringliteral}{"{}EaseIn/Out"{}});}
+\DoxyCodeLine{00050   m\_interpolationTypeCB-\/>addItems(inputs);}
+\DoxyCodeLine{00051   \textcolor{keywordtype}{int} interpolationIndex =}
+\DoxyCodeLine{00052       Preferences::instance()-\/>getGuidedInterpolation() -\/ 1;}
+\DoxyCodeLine{00053   \textcolor{keywordflow}{if} (interpolationIndex < 0) \{}
+\DoxyCodeLine{00054     \textcolor{comment}{// Was set off, force to Linear}}
+\DoxyCodeLine{00055     Preferences::instance()-\/>setValue(guidedInterpolationType, 1);}
+\DoxyCodeLine{00056     interpolationIndex = 0;}
+\DoxyCodeLine{00057   \}}
+\DoxyCodeLine{00058   m\_interpolationTypeCB-\/>setCurrentIndex(interpolationIndex);}
+\DoxyCodeLine{00059 }
+\DoxyCodeLine{00060   QAction *action;}
+\DoxyCodeLine{00061   m\_selectPrevGuideBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Previous"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00062   action = CommandManager::instance()-\/>getAction(MI\_SelectPrevGuideStroke);}
+\DoxyCodeLine{00063   m\_selectPrevGuideBtn-\/>addAction(action);}
+\DoxyCodeLine{00064   connect(m\_selectPrevGuideBtn, SIGNAL(clicked()), action, SLOT(trigger()));}
+\DoxyCodeLine{00065 }
+\DoxyCodeLine{00066   m\_selectNextGuideBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Next"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00067   action = CommandManager::instance()-\/>getAction(MI\_SelectNextGuideStroke);}
+\DoxyCodeLine{00068   m\_selectNextGuideBtn-\/>addAction(action);}
+\DoxyCodeLine{00069   connect(m\_selectNextGuideBtn, SIGNAL(clicked()), action, SLOT(trigger()));}
+\DoxyCodeLine{00070 }
+\DoxyCodeLine{00071   m\_selectBothGuideBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Both"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00072   action = CommandManager::instance()-\/>getAction(MI\_SelectBothGuideStrokes);}
+\DoxyCodeLine{00073   m\_selectBothGuideBtn-\/>addAction(action);}
+\DoxyCodeLine{00074   connect(m\_selectBothGuideBtn, SIGNAL(clicked()), action, SLOT(trigger()));}
+\DoxyCodeLine{00075 }
+\DoxyCodeLine{00076   m\_resetGuidesBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Reset"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00077   action = CommandManager::instance()-\/>getAction(MI\_SelectGuideStrokeReset);}
+\DoxyCodeLine{00078   m\_resetGuidesBtn-\/>addAction(action);}
+\DoxyCodeLine{00079   connect(m\_resetGuidesBtn, SIGNAL(clicked()), action, SLOT(trigger()));}
+\DoxyCodeLine{00080 }
+\DoxyCodeLine{00081   m\_tweenSelectedGuidesBtn =}
+\DoxyCodeLine{00082       \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Tween Selected Guide Strokes"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00083   action = CommandManager::instance()-\/>getAction(MI\_TweenGuideStrokes);}
+\DoxyCodeLine{00084   m\_tweenSelectedGuidesBtn-\/>addAction(action);}
+\DoxyCodeLine{00085   connect(m\_tweenSelectedGuidesBtn, SIGNAL(clicked()), action, SLOT(trigger()));}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087   m\_tweenToSelectedStrokeBtn =}
+\DoxyCodeLine{00088       \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Tween Guide Strokes to Selected"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00089   action = CommandManager::instance()-\/>getAction(MI\_TweenGuideStrokeToSelected);}
+\DoxyCodeLine{00090   m\_tweenToSelectedStrokeBtn-\/>addAction(action);}
+\DoxyCodeLine{00091   connect(m\_tweenToSelectedStrokeBtn, SIGNAL(clicked()), action,}
+\DoxyCodeLine{00092           SLOT(trigger()));}
+\DoxyCodeLine{00093 }
+\DoxyCodeLine{00094   m\_SelectAndTweenBtn =}
+\DoxyCodeLine{00095       \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Select Guide Strokes \&\& Tween Mode"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00096   action = CommandManager::instance()-\/>getAction(MI\_SelectGuidesAndTweenMode);}
+\DoxyCodeLine{00097   m\_SelectAndTweenBtn-\/>addAction(action);}
+\DoxyCodeLine{00098   connect(m\_SelectAndTweenBtn, SIGNAL(clicked()), action, SLOT(trigger()));}
+\DoxyCodeLine{00099 }
+\DoxyCodeLine{00100   m\_FlipNextDirectionBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Next"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00101   action = CommandManager::instance()-\/>getAction(MI\_FlipNextGuideStroke);}
+\DoxyCodeLine{00102   m\_FlipNextDirectionBtn-\/>addAction(action);}
+\DoxyCodeLine{00103   connect(m\_FlipNextDirectionBtn, SIGNAL(clicked()), action, SLOT(trigger()));}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105   m\_FlipPrevDirectionBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Previous"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00106   action = CommandManager::instance()-\/>getAction(MI\_FlipPrevGuideStroke);}
+\DoxyCodeLine{00107   m\_FlipPrevDirectionBtn-\/>addAction(action);}
+\DoxyCodeLine{00108   connect(m\_FlipPrevDirectionBtn, SIGNAL(clicked()), action, SLOT(trigger()));}
+\DoxyCodeLine{00109 }
+\DoxyCodeLine{00110   QGridLayout *mainlayout = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00111   mainlayout-\/>setMargin(5);}
+\DoxyCodeLine{00112   mainlayout-\/>setSpacing(2);}
+\DoxyCodeLine{00113   \{}
+\DoxyCodeLine{00114     QLabel *guideFrameLabel = \textcolor{keyword}{new} QLabel(\textcolor{keyword}{this});}
+\DoxyCodeLine{00115     guideFrameLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Guide Frames:"{}}));}
+\DoxyCodeLine{00116     mainlayout-\/>addWidget(guideFrameLabel, 0, 0, Qt::AlignRight);}
+\DoxyCodeLine{00117     mainlayout-\/>addWidget(m\_guidedTypeCB, 0, 1);}
+\DoxyCodeLine{00118 }
+\DoxyCodeLine{00119     QLabel *selectGuideStrokeLabel = \textcolor{keyword}{new} QLabel(\textcolor{keyword}{this});}
+\DoxyCodeLine{00120     selectGuideStrokeLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Select Guide Stroke:"{}}));}
+\DoxyCodeLine{00121     mainlayout-\/>addWidget(selectGuideStrokeLabel, 1, 0, Qt::AlignRight);}
+\DoxyCodeLine{00122     QHBoxLayout *selectBtnLayout = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00123     selectBtnLayout-\/>setMargin(0);}
+\DoxyCodeLine{00124     selectBtnLayout-\/>setSpacing(2);}
+\DoxyCodeLine{00125     \{}
+\DoxyCodeLine{00126       selectBtnLayout-\/>addWidget(m\_selectPrevGuideBtn, 0);}
+\DoxyCodeLine{00127       selectBtnLayout-\/>addWidget(m\_selectNextGuideBtn, 0);}
+\DoxyCodeLine{00128       selectBtnLayout-\/>addWidget(m\_selectBothGuideBtn, 0);}
+\DoxyCodeLine{00129       selectBtnLayout-\/>addWidget(m\_resetGuidesBtn, 0);}
+\DoxyCodeLine{00130     \}}
+\DoxyCodeLine{00131     mainlayout-\/>addLayout(selectBtnLayout, 1, 1);}
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00133     QLabel *flipGuideStrokeLabel = \textcolor{keyword}{new} QLabel(\textcolor{keyword}{this});}
+\DoxyCodeLine{00134     flipGuideStrokeLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Flip Guide Stroke:"{}}));}
+\DoxyCodeLine{00135     mainlayout-\/>addWidget(flipGuideStrokeLabel, 2, 0, Qt::AlignRight);}
+\DoxyCodeLine{00136     QHBoxLayout *flipBtnLayout = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00137     flipBtnLayout-\/>setMargin(0);}
+\DoxyCodeLine{00138     flipBtnLayout-\/>setSpacing(2);}
+\DoxyCodeLine{00139     \{}
+\DoxyCodeLine{00140       flipBtnLayout-\/>addWidget(m\_FlipPrevDirectionBtn, 0);}
+\DoxyCodeLine{00141       flipBtnLayout-\/>addWidget(m\_FlipNextDirectionBtn, 0);}
+\DoxyCodeLine{00142     \}}
+\DoxyCodeLine{00143     mainlayout-\/>addLayout(flipBtnLayout, 2, 1);}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145     mainlayout-\/>addWidget(\textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_separator}{DVGui::Separator}}(\textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{this}, \textcolor{keyword}{true}), 3, 0, 1, 2);}
+\DoxyCodeLine{00146 }
+\DoxyCodeLine{00147     mainlayout-\/>addWidget(m\_autoInbetween, 4, 1);}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149     QLabel *interpolationLabel = \textcolor{keyword}{new} QLabel(\textcolor{keyword}{this});}
+\DoxyCodeLine{00150     interpolationLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Interpolation:"{}}));}
+\DoxyCodeLine{00151     mainlayout-\/>addWidget(interpolationLabel, 5, 0, Qt::AlignRight);}
+\DoxyCodeLine{00152     mainlayout-\/>addWidget(m\_interpolationTypeCB, 5, 1);}
+\DoxyCodeLine{00153 }
+\DoxyCodeLine{00154     mainlayout-\/>addWidget(\textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_separator}{DVGui::Separator}}(\textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{this}, \textcolor{keyword}{true}), 6, 0, 1, 2);}
+\DoxyCodeLine{00155 }
+\DoxyCodeLine{00156     mainlayout-\/>addWidget(m\_tweenSelectedGuidesBtn, 7, 0, 1, 2);}
+\DoxyCodeLine{00157     mainlayout-\/>addWidget(m\_tweenToSelectedStrokeBtn, 8, 0, 1, 2);}
+\DoxyCodeLine{00158     mainlayout-\/>addWidget(m\_SelectAndTweenBtn, 9, 0, 1, 2);}
+\DoxyCodeLine{00159   \}}
+\DoxyCodeLine{00160 }
+\DoxyCodeLine{00161   setLayout(mainlayout);}
+\DoxyCodeLine{00162 }
+\DoxyCodeLine{00163   connect(m\_guidedTypeCB, SIGNAL(currentIndexChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00164           SLOT(onGuidedTypeChanged()));}
+\DoxyCodeLine{00165   connect(m\_interpolationTypeCB, SIGNAL(currentIndexChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00166           SLOT(onInterpolationTypeChanged()));}
+\DoxyCodeLine{00167   connect(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentScene(),}
+\DoxyCodeLine{00168           SIGNAL(preferenceChanged(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00169           SLOT(onPreferenceChanged(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00170 }
+\DoxyCodeLine{00171   updateStatus();}
+\DoxyCodeLine{00172 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_guided_drawing_pane_a4a302056ac3cc0f1cef2d28fda45d64d}\label{class_vector_guided_drawing_pane_a4a302056ac3cc0f1cef2d28fda45d64d}} 
+\index{VectorGuidedDrawingPane@{VectorGuidedDrawingPane}!````~VectorGuidedDrawingPane@{$\sim$VectorGuidedDrawingPane}}
+\index{````~VectorGuidedDrawingPane@{$\sim$VectorGuidedDrawingPane}!VectorGuidedDrawingPane@{VectorGuidedDrawingPane}}
+\doxysubsubsection{\texorpdfstring{$\sim$VectorGuidedDrawingPane()}{~VectorGuidedDrawingPane()}}
+{\footnotesize\ttfamily Vector\+Guided\+Drawing\+Pane\+::$\sim$\+Vector\+Guided\+Drawing\+Pane (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00034 \{\};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_vector_guided_drawing_pane_a7446934db22577b11a0ebcac82264260}\label{class_vector_guided_drawing_pane_a7446934db22577b11a0ebcac82264260}} 
+\index{VectorGuidedDrawingPane@{VectorGuidedDrawingPane}!onAutoInbetweenChanged@{onAutoInbetweenChanged}}
+\index{onAutoInbetweenChanged@{onAutoInbetweenChanged}!VectorGuidedDrawingPane@{VectorGuidedDrawingPane}}
+\doxysubsubsection{\texorpdfstring{onAutoInbetweenChanged}{onAutoInbetweenChanged}}
+{\footnotesize\ttfamily void Vector\+Guided\+Drawing\+Pane\+::on\+Auto\+Inbetween\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00216                                                      \{}
+\DoxyCodeLine{00217   Preferences::instance()-\/>setValue(guidedAutoInbetween,}
+\DoxyCodeLine{00218                                     m\_autoInbetween-\/>isChecked());}
+\DoxyCodeLine{00219 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_guided_drawing_pane_a62c86a53a357539f20fccd1c3890e497}\label{class_vector_guided_drawing_pane_a62c86a53a357539f20fccd1c3890e497}} 
+\index{VectorGuidedDrawingPane@{VectorGuidedDrawingPane}!onGuidedTypeChanged@{onGuidedTypeChanged}}
+\index{onGuidedTypeChanged@{onGuidedTypeChanged}!VectorGuidedDrawingPane@{VectorGuidedDrawingPane}}
+\doxysubsubsection{\texorpdfstring{onGuidedTypeChanged}{onGuidedTypeChanged}}
+{\footnotesize\ttfamily void Vector\+Guided\+Drawing\+Pane\+::on\+Guided\+Type\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00201                                                   \{}
+\DoxyCodeLine{00202   \textcolor{keywordtype}{int} guidedIndex = m\_guidedTypeCB-\/>currentIndex();}
+\DoxyCodeLine{00203   \textcolor{comment}{// 0 == Off 1 = closest, 2 = farthest, 3 = all}}
+\DoxyCodeLine{00204   Preferences::instance()-\/>setValue(guidedDrawingType, guidedIndex);}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206   QAction *guidedDrawingAction =}
+\DoxyCodeLine{00207       CommandManager::instance()-\/>getAction(MI\_VectorGuidedDrawing);}
+\DoxyCodeLine{00208   \textcolor{keywordflow}{if} (guidedDrawingAction)}
+\DoxyCodeLine{00209     guidedDrawingAction-\/>setChecked(}
+\DoxyCodeLine{00210         Preferences::instance()-\/>isGuidedDrawingEnabled());}
+\DoxyCodeLine{00211 }
+\DoxyCodeLine{00212   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getActiveViewer()-\/>update();}
+\DoxyCodeLine{00213   updateStatus();}
+\DoxyCodeLine{00214 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_guided_drawing_pane_a6cc28ff338bf8d233b0607c8a9fce640}\label{class_vector_guided_drawing_pane_a6cc28ff338bf8d233b0607c8a9fce640}} 
+\index{VectorGuidedDrawingPane@{VectorGuidedDrawingPane}!onInterpolationTypeChanged@{onInterpolationTypeChanged}}
+\index{onInterpolationTypeChanged@{onInterpolationTypeChanged}!VectorGuidedDrawingPane@{VectorGuidedDrawingPane}}
+\doxysubsubsection{\texorpdfstring{onInterpolationTypeChanged}{onInterpolationTypeChanged}}
+{\footnotesize\ttfamily void Vector\+Guided\+Drawing\+Pane\+::on\+Interpolation\+Type\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00221                                                          \{}
+\DoxyCodeLine{00222   \textcolor{keywordtype}{int} interpolationIndex = m\_interpolationTypeCB-\/>currentIndex() + 1;}
+\DoxyCodeLine{00223   \textcolor{comment}{// 1 = Linear, 2 = Ease In, 3 = Ease Out, 4 = Ease In/Out}}
+\DoxyCodeLine{00224   Preferences::instance()-\/>setValue(guidedInterpolationType,}
+\DoxyCodeLine{00225                                     interpolationIndex);}
+\DoxyCodeLine{00226 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_guided_drawing_pane_aa0a02ac3cbe4438c7155bf5c6e41c0a4}\label{class_vector_guided_drawing_pane_aa0a02ac3cbe4438c7155bf5c6e41c0a4}} 
+\index{VectorGuidedDrawingPane@{VectorGuidedDrawingPane}!onPreferenceChanged@{onPreferenceChanged}}
+\index{onPreferenceChanged@{onPreferenceChanged}!VectorGuidedDrawingPane@{VectorGuidedDrawingPane}}
+\doxysubsubsection{\texorpdfstring{onPreferenceChanged}{onPreferenceChanged}}
+{\footnotesize\ttfamily void Vector\+Guided\+Drawing\+Pane\+::on\+Preference\+Changed (\begin{DoxyParamCaption}\item[{const QString \&}]{property\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00230                                                                              \{}
+\DoxyCodeLine{00231   \textcolor{keywordflow}{if} (propertyName.isEmpty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00232 }
+\DoxyCodeLine{00233   \textcolor{keywordflow}{if} (propertyName == \textcolor{stringliteral}{"{}GuidedDrawingFrame"{}})}
+\DoxyCodeLine{00234     m\_guidedTypeCB-\/>setCurrentIndex(}
+\DoxyCodeLine{00235         Preferences::instance()-\/>getGuidedDrawingType());}
+\DoxyCodeLine{00236   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (propertyName == \textcolor{stringliteral}{"{}GuidedDrawingAutoInbetween"{}})}
+\DoxyCodeLine{00237     m\_autoInbetween-\/>setChecked(}
+\DoxyCodeLine{00238         Preferences::instance()-\/>getGuidedAutoInbetween());}
+\DoxyCodeLine{00239   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (propertyName == \textcolor{stringliteral}{"{}GuidedDrawingInterpolation"{}})}
+\DoxyCodeLine{00240     m\_interpolationTypeCB-\/>setCurrentIndex(}
+\DoxyCodeLine{00241         Preferences::instance()-\/>getGuidedInterpolation() -\/ 1);}
+\DoxyCodeLine{00242   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00243     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00244 }
+\DoxyCodeLine{00245   updateStatus();}
+\DoxyCodeLine{00246 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_guided_drawing_pane_a1a94f6312c797d8cf15ddabd49f4a84b}\label{class_vector_guided_drawing_pane_a1a94f6312c797d8cf15ddabd49f4a84b}} 
+\index{VectorGuidedDrawingPane@{VectorGuidedDrawingPane}!updateStatus@{updateStatus}}
+\index{updateStatus@{updateStatus}!VectorGuidedDrawingPane@{VectorGuidedDrawingPane}}
+\doxysubsubsection{\texorpdfstring{updateStatus()}{updateStatus()}}
+{\footnotesize\ttfamily void Vector\+Guided\+Drawing\+Pane\+::update\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00174                                            \{}
+\DoxyCodeLine{00175   \textcolor{keywordtype}{int} guidedType = m\_guidedTypeCB-\/>currentIndex();}
+\DoxyCodeLine{00176   \textcolor{keywordflow}{if} (guidedType == 0 || guidedType == 3) \{  \textcolor{comment}{// Off or All}}
+\DoxyCodeLine{00177     m\_selectPrevGuideBtn-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00178     m\_selectNextGuideBtn-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00179     m\_selectBothGuideBtn-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00180     m\_autoInbetween-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00181     m\_interpolationTypeCB-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00182     m\_tweenSelectedGuidesBtn-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00183     m\_tweenToSelectedStrokeBtn-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00184     m\_SelectAndTweenBtn-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00185     m\_FlipNextDirectionBtn-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00186     m\_FlipPrevDirectionBtn-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00187   \} \textcolor{keywordflow}{else} \{  \textcolor{comment}{// Closest/Farthest}}
+\DoxyCodeLine{00188     m\_selectPrevGuideBtn-\/>setDisabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00189     m\_selectNextGuideBtn-\/>setDisabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00190     m\_selectBothGuideBtn-\/>setDisabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00191     m\_autoInbetween-\/>setDisabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00192     m\_interpolationTypeCB-\/>setDisabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00193     m\_tweenSelectedGuidesBtn-\/>setDisabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00194     m\_tweenToSelectedStrokeBtn-\/>setDisabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00195     m\_SelectAndTweenBtn-\/>setDisabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00196     m\_FlipNextDirectionBtn-\/>setDisabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00197     m\_FlipPrevDirectionBtn-\/>setDisabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00198   \}}
+\DoxyCodeLine{00199 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/vectorguideddrawingpane.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/vectorguideddrawingpane.\+cpp\end{DoxyCompactItemize}

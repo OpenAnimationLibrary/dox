@@ -1,0 +1,96 @@
+\hypertarget{class_data_reader}{}\doxysection{Data\+Reader Class Reference}
+\label{class_data_reader}\index{DataReader@{DataReader}}
+Inheritance diagram for Data\+Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_data_reader}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_data_reader_ac9cb105725f92f999cc1c570ec685a11}{Data\+Reader}} (int client\+Socket, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_t_tcp_ip_server_imp}{TTcp\+Ip\+Server\+Imp}} $>$ server\+Imp)
+\item 
+void \mbox{\hyperlink{class_data_reader_a5e0041ec8b2df52c678ffe0b7f2cd2cd}{run}} () override
+\begin{DoxyCompactList}\small\item\em The central code of the task that is executed by a worker thread. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_data_reader_a5ef7597c9baf1f97c225984315a2cee5}{m\+\_\+client\+Socket}}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_t_tcp_ip_server_imp}{TTcp\+Ip\+Server\+Imp}} $>$ \mbox{\hyperlink{class_data_reader_a4aa069fdb9d49e8d749d831adf069ee5}{m\+\_\+server\+Imp}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_data_reader_ac9cb105725f92f999cc1c570ec685a11}\label{class_data_reader_ac9cb105725f92f999cc1c570ec685a11}} 
+\index{DataReader@{DataReader}!DataReader@{DataReader}}
+\index{DataReader@{DataReader}!DataReader@{DataReader}}
+\doxysubsubsection{\texorpdfstring{DataReader()}{DataReader()}}
+{\footnotesize\ttfamily Data\+Reader\+::\+Data\+Reader (\begin{DoxyParamCaption}\item[{int}]{client\+Socket,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_t_tcp_ip_server_imp}{TTcp\+Ip\+Server\+Imp}} $>$}]{server\+Imp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00273       : m\_clientSocket(clientSocket), m\_serverImp(std::move(serverImp)) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_data_reader_a5e0041ec8b2df52c678ffe0b7f2cd2cd}\label{class_data_reader_a5e0041ec8b2df52c678ffe0b7f2cd2cd}} 
+\index{DataReader@{DataReader}!run@{run}}
+\index{run@{run}!DataReader@{DataReader}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Data\+Reader\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The central code of the task that is executed by a worker thread. 
+
+
+
+Implements \mbox{\hyperlink{class_t_thread_1_1_runnable_ad3b8ee5e7b375bd169f7382fa26b00ef}{TThread\+::\+Runnable}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00281                      \{}
+\DoxyCodeLine{00282   QString data;}
+\DoxyCodeLine{00283   \textcolor{keywordtype}{int} ret = m\_serverImp-\/>readData(m\_clientSocket, data);}
+\DoxyCodeLine{00284   \textcolor{keywordflow}{if} (ret != -\/1) \{}
+\DoxyCodeLine{00285     \textcolor{keywordflow}{if} (data == QString(\textcolor{stringliteral}{"{}shutdown"{}}))}
+\DoxyCodeLine{00286       Sthutdown = \textcolor{keyword}{true};}
+\DoxyCodeLine{00287     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00288       m\_serverImp-\/>onReceive(m\_clientSocket, data);}
+\DoxyCodeLine{00289 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00290     closesocket(m\_clientSocket);}
+\DoxyCodeLine{00291 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00292     close(m\_clientSocket);}
+\DoxyCodeLine{00293 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00294   \}}
+\DoxyCodeLine{00295 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_data_reader_a5ef7597c9baf1f97c225984315a2cee5}\label{class_data_reader_a5ef7597c9baf1f97c225984315a2cee5}} 
+\index{DataReader@{DataReader}!m\_clientSocket@{m\_clientSocket}}
+\index{m\_clientSocket@{m\_clientSocket}!DataReader@{DataReader}}
+\doxysubsubsection{\texorpdfstring{m\_clientSocket}{m\_clientSocket}}
+{\footnotesize\ttfamily int Data\+Reader\+::m\+\_\+client\+Socket}
+
+\mbox{\Hypertarget{class_data_reader_a4aa069fdb9d49e8d749d831adf069ee5}\label{class_data_reader_a4aa069fdb9d49e8d749d831adf069ee5}} 
+\index{DataReader@{DataReader}!m\_serverImp@{m\_serverImp}}
+\index{m\_serverImp@{m\_serverImp}!DataReader@{DataReader}}
+\doxysubsubsection{\texorpdfstring{m\_serverImp}{m\_serverImp}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{class_t_tcp_ip_server_imp}{TTcp\+Ip\+Server\+Imp}}$>$ Data\+Reader\+::m\+\_\+server\+Imp}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tfarm/ttcpipserver.\+cpp\end{DoxyCompactItemize}

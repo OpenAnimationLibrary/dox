@@ -1,0 +1,262 @@
+\hypertarget{class_item_view_play_widget}{}\doxysection{Item\+View\+Play\+Widget Class Reference}
+\label{class_item_view_play_widget}\index{ItemViewPlayWidget@{ItemViewPlayWidget}}
+Inheritance diagram for Item\+View\+Play\+Widget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_item_view_play_widget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_item_view_play_widget_a3465eb359602254dadd075c99c4bef63}{Item\+View\+Play\+Widget}} (QWidget $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_item_view_play_widget_aebc4383459b68c2c458ba9e15bf23c61}{play}} ()
+\item 
+void \mbox{\hyperlink{class_item_view_play_widget_a0e665b127be0c0e17b2bdd5a31def119}{stop}} ()
+\item 
+void \mbox{\hyperlink{class_item_view_play_widget_a80380f8b6d396046f6b208714c4353b2}{clear}} ()
+\item 
+void \mbox{\hyperlink{class_item_view_play_widget_a12d70fa9085630848f31e2eec30a7758}{set\+Is\+Playing}} (\mbox{\hyperlink{class_dv_item_list_model}{Dv\+Item\+List\+Model}} $\ast$model, int index)
+\item 
+void \mbox{\hyperlink{class_item_view_play_widget_af6d827443b1b2717b1527535b0361697}{set\+Is\+Playing\+Current\+Frame\+Index}} (\mbox{\hyperlink{class_dv_item_list_model}{Dv\+Item\+List\+Model}} $\ast$model, int index, int x\+Value, int length)
+\item 
+int \mbox{\hyperlink{class_item_view_play_widget_a942db9cdc3bb394919339def014d62a1}{get\+Current\+Frame\+Position}} (int length)
+\item 
+bool \mbox{\hyperlink{class_item_view_play_widget_aeff18185a81af3122f964b81e7df5230}{is\+Index\+Playing}} (int index)
+\item 
+bool \mbox{\hyperlink{class_item_view_play_widget_aa4e401493145569fd4e712e19aa0b0b6}{is\+Playing}} ()
+\item 
+bool \mbox{\hyperlink{class_item_view_play_widget_a4547f232e225ae56154e2b78e86d30f3}{is\+Slider\+Mode}} ()
+\item 
+void \mbox{\hyperlink{class_item_view_play_widget_ad53a2f21cda27c2420a083faaee4da65}{paint}} (QPainter $\ast$painter, QRect rect)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_item_view_play_widget_ad1cd3e0e4526aee2f5e3b66faf88e956}{timer\+Event}} (QTimer\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_item_view_play_widget_a3465eb359602254dadd075c99c4bef63}\label{class_item_view_play_widget_a3465eb359602254dadd075c99c4bef63}} 
+\index{ItemViewPlayWidget@{ItemViewPlayWidget}!ItemViewPlayWidget@{ItemViewPlayWidget}}
+\index{ItemViewPlayWidget@{ItemViewPlayWidget}!ItemViewPlayWidget@{ItemViewPlayWidget}}
+\doxysubsubsection{\texorpdfstring{ItemViewPlayWidget()}{ItemViewPlayWidget()}}
+{\footnotesize\ttfamily Item\+View\+Play\+Widget\+::\+Item\+View\+Play\+Widget (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00493     : QWidget(parent)}
+\DoxyCodeLine{00494     , m\_currentItemIndex(-\/1)}
+\DoxyCodeLine{00495     , m\_timerId(0)}
+\DoxyCodeLine{00496     , m\_isSliderMode(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00497   m\_playManager = \textcolor{keyword}{new} PlayManager();}
+\DoxyCodeLine{00498 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_view_play_widget_ac50e900d238fa04f8aa36d24f12e0785}\label{class_item_view_play_widget_ac50e900d238fa04f8aa36d24f12e0785}} 
+\index{ItemViewPlayWidget@{ItemViewPlayWidget}!````~ItemViewPlayWidget@{$\sim$ItemViewPlayWidget}}
+\index{````~ItemViewPlayWidget@{$\sim$ItemViewPlayWidget}!ItemViewPlayWidget@{ItemViewPlayWidget}}
+\doxysubsubsection{\texorpdfstring{$\sim$ItemViewPlayWidget()}{~ItemViewPlayWidget()}}
+{\footnotesize\ttfamily Item\+View\+Play\+Widget\+::$\sim$\+Item\+View\+Play\+Widget (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00139 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_item_view_play_widget_a80380f8b6d396046f6b208714c4353b2}\label{class_item_view_play_widget_a80380f8b6d396046f6b208714c4353b2}} 
+\index{ItemViewPlayWidget@{ItemViewPlayWidget}!clear@{clear}}
+\index{clear@{clear}!ItemViewPlayWidget@{ItemViewPlayWidget}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void Item\+View\+Play\+Widget\+::clear (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00515                                \{}
+\DoxyCodeLine{00516   m\_isSliderMode = \textcolor{keyword}{false};}
+\DoxyCodeLine{00517   \textcolor{keywordflow}{if} (m\_currentItemIndex != -\/1) stop();}
+\DoxyCodeLine{00518   m\_playManager-\/>reset();}
+\DoxyCodeLine{00519 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_view_play_widget_a942db9cdc3bb394919339def014d62a1}\label{class_item_view_play_widget_a942db9cdc3bb394919339def014d62a1}} 
+\index{ItemViewPlayWidget@{ItemViewPlayWidget}!getCurrentFramePosition@{getCurrentFramePosition}}
+\index{getCurrentFramePosition@{getCurrentFramePosition}!ItemViewPlayWidget@{ItemViewPlayWidget}}
+\doxysubsubsection{\texorpdfstring{getCurrentFramePosition()}{getCurrentFramePosition()}}
+{\footnotesize\ttfamily int Item\+View\+Play\+Widget\+::get\+Current\+Frame\+Position (\begin{DoxyParamCaption}\item[{int}]{length }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00558                                                           \{}
+\DoxyCodeLine{00559   \textcolor{keywordflow}{if} (m\_playManager-\/>isFrameIndexInRange())}
+\DoxyCodeLine{00560     \textcolor{keywordflow}{return} m\_playManager-\/>currentFrameIndexToXValue(length);}
+\DoxyCodeLine{00561   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00562 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_view_play_widget_aeff18185a81af3122f964b81e7df5230}\label{class_item_view_play_widget_aeff18185a81af3122f964b81e7df5230}} 
+\index{ItemViewPlayWidget@{ItemViewPlayWidget}!isIndexPlaying@{isIndexPlaying}}
+\index{isIndexPlaying@{isIndexPlaying}!ItemViewPlayWidget@{ItemViewPlayWidget}}
+\doxysubsubsection{\texorpdfstring{isIndexPlaying()}{isIndexPlaying()}}
+{\footnotesize\ttfamily bool Item\+View\+Play\+Widget\+::is\+Index\+Playing (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00150 \{ \textcolor{keywordflow}{return} m\_currentItemIndex == index; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_view_play_widget_aa4e401493145569fd4e712e19aa0b0b6}\label{class_item_view_play_widget_aa4e401493145569fd4e712e19aa0b0b6}} 
+\index{ItemViewPlayWidget@{ItemViewPlayWidget}!isPlaying@{isPlaying}}
+\index{isPlaying@{isPlaying}!ItemViewPlayWidget@{ItemViewPlayWidget}}
+\doxysubsubsection{\texorpdfstring{isPlaying()}{isPlaying()}}
+{\footnotesize\ttfamily bool Item\+View\+Play\+Widget\+::is\+Playing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00151 \{ \textcolor{keywordflow}{return} m\_currentItemIndex != -\/1; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_view_play_widget_a4547f232e225ae56154e2b78e86d30f3}\label{class_item_view_play_widget_a4547f232e225ae56154e2b78e86d30f3}} 
+\index{ItemViewPlayWidget@{ItemViewPlayWidget}!isSliderMode@{isSliderMode}}
+\index{isSliderMode@{isSliderMode}!ItemViewPlayWidget@{ItemViewPlayWidget}}
+\doxysubsubsection{\texorpdfstring{isSliderMode()}{isSliderMode()}}
+{\footnotesize\ttfamily bool Item\+View\+Play\+Widget\+::is\+Slider\+Mode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00152 \{ \textcolor{keywordflow}{return} m\_isSliderMode; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_view_play_widget_ad53a2f21cda27c2420a083faaee4da65}\label{class_item_view_play_widget_ad53a2f21cda27c2420a083faaee4da65}} 
+\index{ItemViewPlayWidget@{ItemViewPlayWidget}!paint@{paint}}
+\index{paint@{paint}!ItemViewPlayWidget@{ItemViewPlayWidget}}
+\doxysubsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Item\+View\+Play\+Widget\+::paint (\begin{DoxyParamCaption}\item[{QPainter $\ast$}]{painter,  }\item[{QRect}]{rect }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00566                                                             \{}
+\DoxyCodeLine{00567   QPixmap pixmap = m\_playManager-\/>getCurrentPixmap();}
+\DoxyCodeLine{00568   \textcolor{keywordflow}{if} (pixmap.isNull()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00569   painter-\/>drawPixmap(rect.adjusted(2, 2, -\/1, -\/1), pixmap);}
+\DoxyCodeLine{00570 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_view_play_widget_aebc4383459b68c2c458ba9e15bf23c61}\label{class_item_view_play_widget_aebc4383459b68c2c458ba9e15bf23c61}} 
+\index{ItemViewPlayWidget@{ItemViewPlayWidget}!play@{play}}
+\index{play@{play}!ItemViewPlayWidget@{ItemViewPlayWidget}}
+\doxysubsubsection{\texorpdfstring{play()}{play()}}
+{\footnotesize\ttfamily void Item\+View\+Play\+Widget\+::play (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00502 \{ m\_timerId = startTimer(100); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_view_play_widget_a12d70fa9085630848f31e2eec30a7758}\label{class_item_view_play_widget_a12d70fa9085630848f31e2eec30a7758}} 
+\index{ItemViewPlayWidget@{ItemViewPlayWidget}!setIsPlaying@{setIsPlaying}}
+\index{setIsPlaying@{setIsPlaying}!ItemViewPlayWidget@{ItemViewPlayWidget}}
+\doxysubsubsection{\texorpdfstring{setIsPlaying()}{setIsPlaying()}}
+{\footnotesize\ttfamily void Item\+View\+Play\+Widget\+::set\+Is\+Playing (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_dv_item_list_model}{Dv\+Item\+List\+Model}} $\ast$}]{model,  }\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00523                                                                        \{}
+\DoxyCodeLine{00524   \textcolor{keywordflow}{if} (isIndexPlaying(index) \&\&}
+\DoxyCodeLine{00525       !m\_isSliderMode)  \textcolor{comment}{// Devo fare stop prima di inizializzare un nuovo play}}
+\DoxyCodeLine{00526   \{}
+\DoxyCodeLine{00527     stop();}
+\DoxyCodeLine{00528     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00529   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_isSliderMode) \{}
+\DoxyCodeLine{00530     m\_isSliderMode = \textcolor{keyword}{false};}
+\DoxyCodeLine{00531   \}}
+\DoxyCodeLine{00532 }
+\DoxyCodeLine{00533   \textcolor{keywordflow}{if} (m\_currentItemIndex == -\/1) \{}
+\DoxyCodeLine{00534     m\_currentItemIndex = index;}
+\DoxyCodeLine{00535     m\_playManager-\/>setInfo(model, index);}
+\DoxyCodeLine{00536   \}}
+\DoxyCodeLine{00537   play();}
+\DoxyCodeLine{00538 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_view_play_widget_af6d827443b1b2717b1527535b0361697}\label{class_item_view_play_widget_af6d827443b1b2717b1527535b0361697}} 
+\index{ItemViewPlayWidget@{ItemViewPlayWidget}!setIsPlayingCurrentFrameIndex@{setIsPlayingCurrentFrameIndex}}
+\index{setIsPlayingCurrentFrameIndex@{setIsPlayingCurrentFrameIndex}!ItemViewPlayWidget@{ItemViewPlayWidget}}
+\doxysubsubsection{\texorpdfstring{setIsPlayingCurrentFrameIndex()}{setIsPlayingCurrentFrameIndex()}}
+{\footnotesize\ttfamily void Item\+View\+Play\+Widget\+::set\+Is\+Playing\+Current\+Frame\+Index (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_dv_item_list_model}{Dv\+Item\+List\+Model}} $\ast$}]{model,  }\item[{int}]{index,  }\item[{int}]{x\+Value,  }\item[{int}]{length }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00544                                                                    \{}
+\DoxyCodeLine{00545   m\_isSliderMode = \textcolor{keyword}{true};}
+\DoxyCodeLine{00546 }
+\DoxyCodeLine{00547   \textcolor{keywordflow}{if} (m\_currentItemIndex == -\/1) \{}
+\DoxyCodeLine{00548     m\_currentItemIndex = index;}
+\DoxyCodeLine{00549     m\_playManager-\/>setInfo(model, index);}
+\DoxyCodeLine{00550   \}}
+\DoxyCodeLine{00551   \textcolor{keywordflow}{if} (!m\_playManager-\/>setCurrentFrameIndexFromXValue(xValue, length)) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00552   stop();  \textcolor{comment}{// Devo fare stop prima di cambiare il frame corrente}}
+\DoxyCodeLine{00553   play();}
+\DoxyCodeLine{00554 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_view_play_widget_a0e665b127be0c0e17b2bdd5a31def119}\label{class_item_view_play_widget_a0e665b127be0c0e17b2bdd5a31def119}} 
+\index{ItemViewPlayWidget@{ItemViewPlayWidget}!stop@{stop}}
+\index{stop@{stop}!ItemViewPlayWidget@{ItemViewPlayWidget}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void Item\+View\+Play\+Widget\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00506                               \{}
+\DoxyCodeLine{00507   \textcolor{keywordflow}{if} (m\_timerId != 0) \{}
+\DoxyCodeLine{00508     killTimer(m\_timerId);}
+\DoxyCodeLine{00509     m\_timerId = 0;}
+\DoxyCodeLine{00510   \}}
+\DoxyCodeLine{00511   \textcolor{keywordflow}{if} (!m\_isSliderMode) m\_currentItemIndex = -\/1;}
+\DoxyCodeLine{00512 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_view_play_widget_ad1cd3e0e4526aee2f5e3b66faf88e956}\label{class_item_view_play_widget_ad1cd3e0e4526aee2f5e3b66faf88e956}} 
+\index{ItemViewPlayWidget@{ItemViewPlayWidget}!timerEvent@{timerEvent}}
+\index{timerEvent@{timerEvent}!ItemViewPlayWidget@{ItemViewPlayWidget}}
+\doxysubsubsection{\texorpdfstring{timerEvent()}{timerEvent()}}
+{\footnotesize\ttfamily void Item\+View\+Play\+Widget\+::timer\+Event (\begin{DoxyParamCaption}\item[{QTimer\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00574                                                       \{}
+\DoxyCodeLine{00575   \textcolor{keywordflow}{if} (!m\_playManager-\/>isFrameIndexInRange()) \{}
+\DoxyCodeLine{00576     stop();}
+\DoxyCodeLine{00577     parentWidget()-\/>update();}
+\DoxyCodeLine{00578     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00579   \}}
+\DoxyCodeLine{00580   \textcolor{keywordflow}{if} (m\_isSliderMode)  \textcolor{comment}{// Modalita' slider}}
+\DoxyCodeLine{00581   \{}
+\DoxyCodeLine{00582     \textcolor{keywordflow}{if} (!m\_playManager-\/>getCurrentFrame()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00583     parentWidget()-\/>update();}
+\DoxyCodeLine{00584     stop();}
+\DoxyCodeLine{00585     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00586   \}}
+\DoxyCodeLine{00587   \textcolor{comment}{// Modalita' play}}
+\DoxyCodeLine{00588   \textcolor{keywordflow}{if} (!m\_playManager-\/>increaseCurrentFrame())}
+\DoxyCodeLine{00589     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00590   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00591     parentWidget()-\/>update();}
+\DoxyCodeLine{00592 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/dvitemview.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/dvitemview.\+cpp\end{DoxyCompactItemize}

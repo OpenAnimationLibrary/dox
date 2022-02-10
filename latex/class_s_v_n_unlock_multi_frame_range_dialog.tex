@@ -1,0 +1,217 @@
+\hypertarget{class_s_v_n_unlock_multi_frame_range_dialog}{}\doxysection{SVNUnlock\+Multi\+Frame\+Range\+Dialog Class Reference}
+\label{class_s_v_n_unlock_multi_frame_range_dialog}\index{SVNUnlockMultiFrameRangeDialog@{SVNUnlockMultiFrameRangeDialog}}
+Inheritance diagram for SVNUnlock\+Multi\+Frame\+Range\+Dialog\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_s_v_n_unlock_multi_frame_range_dialog}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_s_v_n_unlock_multi_frame_range_dialog_a24d0dd75acf0d81520214fa804ee1e1a}\label{class_s_v_n_unlock_multi_frame_range_dialog_a24d0dd75acf0d81520214fa804ee1e1a}} 
+void {\bfseries done} (const QString\+List \&)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_v_n_unlock_multi_frame_range_dialog_a8a0a5573eb4d4fe0c12d95aa3ddd33b7}{SVNUnlock\+Multi\+Frame\+Range\+Dialog}} (QWidget $\ast$parent, const QString \&working\+Dir, const QString\+List \&files)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_v_n_unlock_multi_frame_range_dialog_affb1c6de2c5bd7a21eef26b1b8c313d9}{on\+Error}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_s_v_n_unlock_multi_frame_range_dialog_abf6441a369f406ab548f6407b6be1cb0}{on\+Status\+Retrieved}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_s_v_n_unlock_multi_frame_range_dialog_a21a374f6930e533b0be573f513ab2bbf}{on\+Unlock\+Button\+Clicked}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_unlock_multi_frame_range_dialog_a2fb54db2c4245424a1ad2c41ccce789b}{on\+Unlock\+Done}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_v_n_unlock_multi_frame_range_dialog_a8a0a5573eb4d4fe0c12d95aa3ddd33b7}\label{class_s_v_n_unlock_multi_frame_range_dialog_a8a0a5573eb4d4fe0c12d95aa3ddd33b7}} 
+\index{SVNUnlockMultiFrameRangeDialog@{SVNUnlockMultiFrameRangeDialog}!SVNUnlockMultiFrameRangeDialog@{SVNUnlockMultiFrameRangeDialog}}
+\index{SVNUnlockMultiFrameRangeDialog@{SVNUnlockMultiFrameRangeDialog}!SVNUnlockMultiFrameRangeDialog@{SVNUnlockMultiFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{SVNUnlockMultiFrameRangeDialog()}{SVNUnlockMultiFrameRangeDialog()}}
+{\footnotesize\ttfamily SVNUnlock\+Multi\+Frame\+Range\+Dialog\+::\+SVNUnlock\+Multi\+Frame\+Range\+Dialog (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{const QString \&}]{working\+Dir,  }\item[{const QString\+List \&}]{files }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00890     : Dialog(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false})}
+\DoxyCodeLine{00891     , m\_workingDir(workingDir)}
+\DoxyCodeLine{00892     , m\_files(files)}
+\DoxyCodeLine{00893     , m\_hasError(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00894   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00895   setAttribute(Qt::WA\_DeleteOnClose, \textcolor{keyword}{true});}
+\DoxyCodeLine{00896 }
+\DoxyCodeLine{00897   setWindowTitle(tr(\textcolor{stringliteral}{"{}Version Control: Unlock Frame Range"{}}));}
+\DoxyCodeLine{00898 }
+\DoxyCodeLine{00899   setMinimumSize(300, 150);}
+\DoxyCodeLine{00900   QWidget *container = \textcolor{keyword}{new} QWidget;}
+\DoxyCodeLine{00901 }
+\DoxyCodeLine{00902   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout;}
+\DoxyCodeLine{00903   mainLayout-\/>setAlignment(Qt::AlignHCenter);}
+\DoxyCodeLine{00904   mainLayout-\/>setMargin(0);}
+\DoxyCodeLine{00905 }
+\DoxyCodeLine{00906   QHBoxLayout *hLayout = \textcolor{keyword}{new} QHBoxLayout;}
+\DoxyCodeLine{00907 }
+\DoxyCodeLine{00908   m\_waitingLabel      = \textcolor{keyword}{new} QLabel;}
+\DoxyCodeLine{00909   QMovie *waitingMove = \textcolor{keyword}{new} QMovie(\textcolor{stringliteral}{"{}:Resources/waiting.gif"{}});}
+\DoxyCodeLine{00910   waitingMove-\/>setParent(\textcolor{keyword}{this});}
+\DoxyCodeLine{00911 }
+\DoxyCodeLine{00912   m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{00913 }
+\DoxyCodeLine{00914   m\_waitingLabel-\/>setMovie(waitingMove);}
+\DoxyCodeLine{00915   waitingMove-\/>setCacheMode(QMovie::CacheAll);}
+\DoxyCodeLine{00916   waitingMove-\/>start();}
+\DoxyCodeLine{00917 }
+\DoxyCodeLine{00918   m\_textLabel = \textcolor{keyword}{new} QLabel;}
+\DoxyCodeLine{00919 }
+\DoxyCodeLine{00920   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Getting repository status..."{}}));}
+\DoxyCodeLine{00921 }
+\DoxyCodeLine{00922   hLayout-\/>addStretch();}
+\DoxyCodeLine{00923   hLayout-\/>addWidget(m\_waitingLabel);}
+\DoxyCodeLine{00924   hLayout-\/>addWidget(m\_textLabel);}
+\DoxyCodeLine{00925   hLayout-\/>addStretch();}
+\DoxyCodeLine{00926 }
+\DoxyCodeLine{00927   mainLayout-\/>addLayout(hLayout);}
+\DoxyCodeLine{00928   container-\/>setLayout(mainLayout);}
+\DoxyCodeLine{00929 }
+\DoxyCodeLine{00930   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a21628a44d453352094b61b62b4407c6b}{beginHLayout}}();}
+\DoxyCodeLine{00931   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(container, \textcolor{keyword}{false});}
+\DoxyCodeLine{00932   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_abe29ee90829fe5e0351fbdee41089252}{endHLayout}}();}
+\DoxyCodeLine{00933 }
+\DoxyCodeLine{00934   m\_unlockButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Unlock"{}}));}
+\DoxyCodeLine{00935   connect(m\_unlockButton, SIGNAL(clicked()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00936           SLOT(onUnlockButtonClicked()));}
+\DoxyCodeLine{00937 }
+\DoxyCodeLine{00938   m\_cancelButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cancel"{}}));}
+\DoxyCodeLine{00939   connect(m\_cancelButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(reject()));}
+\DoxyCodeLine{00940 }
+\DoxyCodeLine{00941   m\_unlockButton-\/>hide();}
+\DoxyCodeLine{00942 }
+\DoxyCodeLine{00943   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(m\_unlockButton, m\_cancelButton);}
+\DoxyCodeLine{00944 }
+\DoxyCodeLine{00945   \textcolor{comment}{// 0. Connect for svn errors (that may occur)}}
+\DoxyCodeLine{00946   connect(\&m\_thread, SIGNAL(error(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00947           SLOT(onError(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00948 }
+\DoxyCodeLine{00949   \textcolor{comment}{// 1. Getting status}}
+\DoxyCodeLine{00950   connect(\&m\_thread, SIGNAL(statusRetrieved(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00951           SLOT(onStatusRetrieved(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00952   m\_thread.getSVNStatus(m\_workingDir, m\_files, \textcolor{keyword}{true});}
+\DoxyCodeLine{00953 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_v_n_unlock_multi_frame_range_dialog_affb1c6de2c5bd7a21eef26b1b8c313d9}\label{class_s_v_n_unlock_multi_frame_range_dialog_affb1c6de2c5bd7a21eef26b1b8c313d9}} 
+\index{SVNUnlockMultiFrameRangeDialog@{SVNUnlockMultiFrameRangeDialog}!onError@{onError}}
+\index{onError@{onError}!SVNUnlockMultiFrameRangeDialog@{SVNUnlockMultiFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{onError}{onError}}
+{\footnotesize\ttfamily void SVNUnlock\+Multi\+Frame\+Range\+Dialog\+::on\+Error (\begin{DoxyParamCaption}\item[{const QString \&}]{text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01005                                                                 \{}
+\DoxyCodeLine{01006   m\_textLabel-\/>setText(text);}
+\DoxyCodeLine{01007   switchToCloseButton();}
+\DoxyCodeLine{01008   update();}
+\DoxyCodeLine{01009   m\_hasError = \textcolor{keyword}{true};}
+\DoxyCodeLine{01010 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_unlock_multi_frame_range_dialog_abf6441a369f406ab548f6407b6be1cb0}\label{class_s_v_n_unlock_multi_frame_range_dialog_abf6441a369f406ab548f6407b6be1cb0}} 
+\index{SVNUnlockMultiFrameRangeDialog@{SVNUnlockMultiFrameRangeDialog}!onStatusRetrieved@{onStatusRetrieved}}
+\index{onStatusRetrieved@{onStatusRetrieved}!SVNUnlockMultiFrameRangeDialog@{SVNUnlockMultiFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{onStatusRetrieved}{onStatusRetrieved}}
+{\footnotesize\ttfamily void SVNUnlock\+Multi\+Frame\+Range\+Dialog\+::on\+Status\+Retrieved (\begin{DoxyParamCaption}\item[{const QString \&}]{xml\+Response }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00976                                 \{}
+\DoxyCodeLine{00977   m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{00978 }
+\DoxyCodeLine{00979   \mbox{\hyperlink{class_s_v_n_status_reader}{SVNStatusReader}} sr(xmlResponse);}
+\DoxyCodeLine{00980   m\_status = sr.getStatus();}
+\DoxyCodeLine{00981 }
+\DoxyCodeLine{00982   QString userName = VersionControl::instance()-\/>getUserName();}
+\DoxyCodeLine{00983 }
+\DoxyCodeLine{00984   \textcolor{keywordtype}{int} count = m\_status.size();}
+\DoxyCodeLine{00985   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; i++) \{}
+\DoxyCodeLine{00986     \mbox{\hyperlink{struct_s_v_n_status}{SVNStatus}} s = m\_status.at(i);}
+\DoxyCodeLine{00987     \textcolor{keywordflow}{if} (s.m\_isLocked \&\& s.m\_lockOwner == userName)}
+\DoxyCodeLine{00988       m\_filesToUnlock.append(m\_files.at(i));}
+\DoxyCodeLine{00989   \}}
+\DoxyCodeLine{00990 }
+\DoxyCodeLine{00991   \textcolor{keywordtype}{int} filesToUnlockCount = m\_filesToUnlock.size();}
+\DoxyCodeLine{00992 }
+\DoxyCodeLine{00993   \textcolor{keywordflow}{if} (filesToUnlockCount == 0) \{}
+\DoxyCodeLine{00994     m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}No items to unlock."{}}));}
+\DoxyCodeLine{00995     switchToCloseButton();}
+\DoxyCodeLine{00996   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00997     m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{00998     m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}\%1 items to unlock."{}}).arg(filesToUnlockCount));}
+\DoxyCodeLine{00999     m\_unlockButton-\/>show();}
+\DoxyCodeLine{01000   \}}
+\DoxyCodeLine{01001 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_unlock_multi_frame_range_dialog_a21a374f6930e533b0be573f513ab2bbf}\label{class_s_v_n_unlock_multi_frame_range_dialog_a21a374f6930e533b0be573f513ab2bbf}} 
+\index{SVNUnlockMultiFrameRangeDialog@{SVNUnlockMultiFrameRangeDialog}!onUnlockButtonClicked@{onUnlockButtonClicked}}
+\index{onUnlockButtonClicked@{onUnlockButtonClicked}!SVNUnlockMultiFrameRangeDialog@{SVNUnlockMultiFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{onUnlockButtonClicked}{onUnlockButtonClicked}}
+{\footnotesize\ttfamily void SVNUnlock\+Multi\+Frame\+Range\+Dialog\+::on\+Unlock\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00956                                                            \{}
+\DoxyCodeLine{00957   m\_waitingLabel-\/>show();}
+\DoxyCodeLine{00958 }
+\DoxyCodeLine{00959   \textcolor{keywordtype}{int} fileCount = m\_filesToUnlock.size();}
+\DoxyCodeLine{00960 }
+\DoxyCodeLine{00961   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Unlocking \%1 items..."{}}).arg(fileCount));}
+\DoxyCodeLine{00962 }
+\DoxyCodeLine{00963   QStringList args;}
+\DoxyCodeLine{00964   args << \textcolor{stringliteral}{"{}unlock"{}};}
+\DoxyCodeLine{00965 }
+\DoxyCodeLine{00966   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < fileCount; i++) args << m\_filesToUnlock.at(i);}
+\DoxyCodeLine{00967 }
+\DoxyCodeLine{00968   m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00969   connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), SLOT(onUnlockDone()));}
+\DoxyCodeLine{00970   m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args);}
+\DoxyCodeLine{00971 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_unlock_multi_frame_range_dialog_a2fb54db2c4245424a1ad2c41ccce789b}\label{class_s_v_n_unlock_multi_frame_range_dialog_a2fb54db2c4245424a1ad2c41ccce789b}} 
+\index{SVNUnlockMultiFrameRangeDialog@{SVNUnlockMultiFrameRangeDialog}!onUnlockDone@{onUnlockDone}}
+\index{onUnlockDone@{onUnlockDone}!SVNUnlockMultiFrameRangeDialog@{SVNUnlockMultiFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{onUnlockDone}{onUnlockDone}}
+{\footnotesize\ttfamily void SVNUnlock\+Multi\+Frame\+Range\+Dialog\+::on\+Unlock\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01026                                                   \{}
+\DoxyCodeLine{01027   \textcolor{keywordflow}{if} (!m\_hasError) \{}
+\DoxyCodeLine{01028     QStringList files;}
+\DoxyCodeLine{01029     \textcolor{keywordtype}{int} fileCount = m\_filesToUnlock.size();}
+\DoxyCodeLine{01030     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < fileCount; i++) files.append(m\_filesToUnlock.at(i));}
+\DoxyCodeLine{01031     emit done(files);}
+\DoxyCodeLine{01032     close();}
+\DoxyCodeLine{01033   \}}
+\DoxyCodeLine{01034 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/svnlockframerangedialog.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/svnlockframerangedialog.\+cpp\end{DoxyCompactItemize}

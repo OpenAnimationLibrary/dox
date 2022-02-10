@@ -1,0 +1,95 @@
+\hypertarget{class_xdts_io_1_1_xdts_track_frame_item}{}\doxysection{Xdts\+Io\+::Xdts\+Track\+Frame\+Item Class Reference}
+\label{class_xdts_io_1_1_xdts_track_frame_item}\index{XdtsIo::XdtsTrackFrameItem@{XdtsIo::XdtsTrackFrameItem}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_xdts_io_1_1_xdts_track_frame_item_a1b0909041b59cf988ac8b83abc945461}{Xdts\+Track\+Frame\+Item}} (int frame, \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} f\+Id)
+\item 
+void \mbox{\hyperlink{class_xdts_io_1_1_xdts_track_frame_item_a09839931fd999cb68462a13594a6c262}{read}} (const QJson\+Object \&json)
+\item 
+void \mbox{\hyperlink{class_xdts_io_1_1_xdts_track_frame_item_ab3b21ae127ac3f4aa4461957e4f0c943}{write}} (QJson\+Object \&json) const
+\item 
+QPair$<$ int, \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} $>$ \mbox{\hyperlink{class_xdts_io_1_1_xdts_track_frame_item_a29fc38f42ff0bc1489a3f4297b4224f6}{frame\+Fid}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_xdts_io_1_1_xdts_track_frame_item_a1b0909041b59cf988ac8b83abc945461}\label{class_xdts_io_1_1_xdts_track_frame_item_a1b0909041b59cf988ac8b83abc945461}} 
+\index{XdtsIo::XdtsTrackFrameItem@{XdtsIo::XdtsTrackFrameItem}!XdtsTrackFrameItem@{XdtsTrackFrameItem}}
+\index{XdtsTrackFrameItem@{XdtsTrackFrameItem}!XdtsIo::XdtsTrackFrameItem@{XdtsIo::XdtsTrackFrameItem}}
+\doxysubsubsection{\texorpdfstring{XdtsTrackFrameItem()}{XdtsTrackFrameItem()}}
+{\footnotesize\ttfamily Xdts\+Io\+::\+Xdts\+Track\+Frame\+Item\+::\+Xdts\+Track\+Frame\+Item (\begin{DoxyParamCaption}\item[{int}]{frame,  }\item[{\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}}}]{f\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00110                                               : m\_frame(frame) \{}
+\DoxyCodeLine{00111     m\_data.append(XdtsFrameDataItem(fId));}
+\DoxyCodeLine{00112   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_xdts_io_1_1_xdts_track_frame_item_a29fc38f42ff0bc1489a3f4297b4224f6}\label{class_xdts_io_1_1_xdts_track_frame_item_a29fc38f42ff0bc1489a3f4297b4224f6}} 
+\index{XdtsIo::XdtsTrackFrameItem@{XdtsIo::XdtsTrackFrameItem}!frameFid@{frameFid}}
+\index{frameFid@{frameFid}!XdtsIo::XdtsTrackFrameItem@{XdtsIo::XdtsTrackFrameItem}}
+\doxysubsubsection{\texorpdfstring{frameFid()}{frameFid()}}
+{\footnotesize\ttfamily QPair$<$ int, \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} $>$ Xdts\+Track\+Frame\+Item\+::frame\+Fid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00162                                                         \{}
+\DoxyCodeLine{00163   \textcolor{keywordflow}{return} QPair<int, TFrameId>(m\_frame, m\_data[0].getFrameId());}
+\DoxyCodeLine{00164 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xdts_io_1_1_xdts_track_frame_item_a09839931fd999cb68462a13594a6c262}\label{class_xdts_io_1_1_xdts_track_frame_item_a09839931fd999cb68462a13594a6c262}} 
+\index{XdtsIo::XdtsTrackFrameItem@{XdtsIo::XdtsTrackFrameItem}!read@{read}}
+\index{read@{read}!XdtsIo::XdtsTrackFrameItem@{XdtsIo::XdtsTrackFrameItem}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily void Xdts\+Track\+Frame\+Item\+::read (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{json }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00137                                                      \{}
+\DoxyCodeLine{00138   QJsonArray dataArray = json[\textcolor{stringliteral}{"{}data"{}}].toArray();}
+\DoxyCodeLine{00139   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} dataIndex = 0; dataIndex < dataArray.size(); ++dataIndex) \{}
+\DoxyCodeLine{00140     QJsonObject dataObject = dataArray[dataIndex].toObject();}
+\DoxyCodeLine{00141     \mbox{\hyperlink{class_xdts_io_1_1_xdts_frame_data_item}{XdtsFrameDataItem}} data;}
+\DoxyCodeLine{00142     data.read(dataObject);}
+\DoxyCodeLine{00143     m\_data.append(data);}
+\DoxyCodeLine{00144   \}}
+\DoxyCodeLine{00145   m\_frame = json[\textcolor{stringliteral}{"{}frame"{}}].toInt();}
+\DoxyCodeLine{00146 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xdts_io_1_1_xdts_track_frame_item_ab3b21ae127ac3f4aa4461957e4f0c943}\label{class_xdts_io_1_1_xdts_track_frame_item_ab3b21ae127ac3f4aa4461957e4f0c943}} 
+\index{XdtsIo::XdtsTrackFrameItem@{XdtsIo::XdtsTrackFrameItem}!write@{write}}
+\index{write@{write}!XdtsIo::XdtsTrackFrameItem@{XdtsIo::XdtsTrackFrameItem}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void Xdts\+Track\+Frame\+Item\+::write (\begin{DoxyParamCaption}\item[{QJson\+Object \&}]{json }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00148                                                       \{}
+\DoxyCodeLine{00149   QJsonArray dataArray;}
+\DoxyCodeLine{00150   \textcolor{keywordflow}{foreach} (\textcolor{keyword}{const} \mbox{\hyperlink{class_xdts_io_1_1_xdts_frame_data_item}{XdtsFrameDataItem}} \&data, m\_data) \{}
+\DoxyCodeLine{00151     QJsonObject dataObject;}
+\DoxyCodeLine{00152     data.write(dataObject);}
+\DoxyCodeLine{00153     dataArray.append(dataObject);}
+\DoxyCodeLine{00154   \}}
+\DoxyCodeLine{00155   json[\textcolor{stringliteral}{"{}data"{}}] = dataArray;}
+\DoxyCodeLine{00156 }
+\DoxyCodeLine{00157   json[\textcolor{stringliteral}{"{}frame"{}}] = m\_frame;}
+\DoxyCodeLine{00158 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xdtsio.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/xdtsio.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,180 @@
+\hypertarget{class_signaturemap}{}\doxysection{Signaturemap Class Reference}
+\label{class_signaturemap}\index{Signaturemap@{Signaturemap}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_signaturemap_ad56629d5a8a7b65771230264f6ea5f07}{Signaturemap}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&ras, int threshold)
+\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{class_signaturemap_a4904e2dc4fd6eabb5182ed771f340dce}{read\+Raster\+Data}} (const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+PT}}$<$ T $>$ \&ras, int threshold)
+\item 
+int \mbox{\hyperlink{class_signaturemap_abb3051f79282471211b77e6ffb7fbd4c}{get\+Row\+Size}} () const
+\item 
+int \mbox{\hyperlink{class_signaturemap_a04d6a6b57a3f5ab41049f1809f066f52}{get\+Col\+Size}} () const
+\item 
+unsigned char $\ast$ \mbox{\hyperlink{class_signaturemap_afe6cc63de7875bef5bd35a48b7dc43d8}{pixel\+Byte}} (int x, int y)
+\item 
+bool \mbox{\hyperlink{class_signaturemap_a3422f3c0e0b085b7f68f1aafc0f66f53}{get\+Bitmap\+Color}} (int x, int y) const
+\item 
+unsigned char \mbox{\hyperlink{class_signaturemap_a527782b1d46785992512c66703ec6dcb}{get\+Signature}} (int x, int y) const
+\item 
+void \mbox{\hyperlink{class_signaturemap_a8889d34bef873a5a95c276bd7b6de150}{set\+Signature}} (int x, int y, int val)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_signaturemap_ad56629d5a8a7b65771230264f6ea5f07}\label{class_signaturemap_ad56629d5a8a7b65771230264f6ea5f07}} 
+\index{Signaturemap@{Signaturemap}!Signaturemap@{Signaturemap}}
+\index{Signaturemap@{Signaturemap}!Signaturemap@{Signaturemap}}
+\doxysubsubsection{\texorpdfstring{Signaturemap()}{Signaturemap()}}
+{\footnotesize\ttfamily Signaturemap\+::\+Signaturemap (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&}]{ras,  }\item[{int}]{threshold }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00205                                                              \{}
+\DoxyCodeLine{00206   \textcolor{comment}{// Extrapolate raster type}}
+\DoxyCodeLine{00207   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} rr   = (\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}})ras;}
+\DoxyCodeLine{00208   \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}} rgr = (\mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}})ras;}
+\DoxyCodeLine{00209   \mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}} rt = (\mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}})ras;}
+\DoxyCodeLine{00210   assert(rr || rgr || rt);}
+\DoxyCodeLine{00211 }
+\DoxyCodeLine{00212   \textcolor{comment}{// Read raster data}}
+\DoxyCodeLine{00213   \textcolor{keywordflow}{if} (rr) \{}
+\DoxyCodeLine{00214     rr-\/>lock();}
+\DoxyCodeLine{00215     readRasterData(rr, threshold);}
+\DoxyCodeLine{00216     rr-\/>unlock();}
+\DoxyCodeLine{00217   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (rgr) \{}
+\DoxyCodeLine{00218     rgr-\/>lock();}
+\DoxyCodeLine{00219     readRasterData(rgr, threshold);}
+\DoxyCodeLine{00220     rgr-\/>unlock();}
+\DoxyCodeLine{00221   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00222     rt-\/>lock();}
+\DoxyCodeLine{00223     readRasterData(rt, threshold);}
+\DoxyCodeLine{00224     rt-\/>unlock();}
+\DoxyCodeLine{00225   \}}
+\DoxyCodeLine{00226 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_signaturemap_a3422f3c0e0b085b7f68f1aafc0f66f53}\label{class_signaturemap_a3422f3c0e0b085b7f68f1aafc0f66f53}} 
+\index{Signaturemap@{Signaturemap}!getBitmapColor@{getBitmapColor}}
+\index{getBitmapColor@{getBitmapColor}!Signaturemap@{Signaturemap}}
+\doxysubsubsection{\texorpdfstring{getBitmapColor()}{getBitmapColor()}}
+{\footnotesize\ttfamily bool Signaturemap\+::get\+Bitmap\+Color (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00188                                           \{}
+\DoxyCodeLine{00189     \textcolor{keywordflow}{return} m\_array[(y + 1) * m\_rowSize + x + 1] \& 1;}
+\DoxyCodeLine{00190   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_signaturemap_a04d6a6b57a3f5ab41049f1809f066f52}\label{class_signaturemap_a04d6a6b57a3f5ab41049f1809f066f52}} 
+\index{Signaturemap@{Signaturemap}!getColSize@{getColSize}}
+\index{getColSize@{getColSize}!Signaturemap@{Signaturemap}}
+\doxysubsubsection{\texorpdfstring{getColSize()}{getColSize()}}
+{\footnotesize\ttfamily int Signaturemap\+::get\+Col\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00182 \{ \textcolor{keywordflow}{return} m\_colSize; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_signaturemap_abb3051f79282471211b77e6ffb7fbd4c}\label{class_signaturemap_abb3051f79282471211b77e6ffb7fbd4c}} 
+\index{Signaturemap@{Signaturemap}!getRowSize@{getRowSize}}
+\index{getRowSize@{getRowSize}!Signaturemap@{Signaturemap}}
+\doxysubsubsection{\texorpdfstring{getRowSize()}{getRowSize()}}
+{\footnotesize\ttfamily int Signaturemap\+::get\+Row\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00181 \{ \textcolor{keywordflow}{return} m\_rowSize; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_signaturemap_a527782b1d46785992512c66703ec6dcb}\label{class_signaturemap_a527782b1d46785992512c66703ec6dcb}} 
+\index{Signaturemap@{Signaturemap}!getSignature@{getSignature}}
+\index{getSignature@{getSignature}!Signaturemap@{Signaturemap}}
+\doxysubsubsection{\texorpdfstring{getSignature()}{getSignature()}}
+{\footnotesize\ttfamily unsigned char Signaturemap\+::get\+Signature (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00192                                                         \{}
+\DoxyCodeLine{00193     \textcolor{keywordflow}{return} m\_array[(y + 1) * m\_rowSize + x + 1] >> 1;}
+\DoxyCodeLine{00194   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_signaturemap_afe6cc63de7875bef5bd35a48b7dc43d8}\label{class_signaturemap_afe6cc63de7875bef5bd35a48b7dc43d8}} 
+\index{Signaturemap@{Signaturemap}!pixelByte@{pixelByte}}
+\index{pixelByte@{pixelByte}!Signaturemap@{Signaturemap}}
+\doxysubsubsection{\texorpdfstring{pixelByte()}{pixelByte()}}
+{\footnotesize\ttfamily unsigned char $\ast$ Signaturemap\+::pixel\+Byte (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00184                                          \{}
+\DoxyCodeLine{00185     \textcolor{keywordflow}{return} \&m\_array[(y + 1) * m\_rowSize + x + 1];}
+\DoxyCodeLine{00186   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_signaturemap_a4904e2dc4fd6eabb5182ed771f340dce}\label{class_signaturemap_a4904e2dc4fd6eabb5182ed771f340dce}} 
+\index{Signaturemap@{Signaturemap}!readRasterData@{readRasterData}}
+\index{readRasterData@{readRasterData}!Signaturemap@{Signaturemap}}
+\doxysubsubsection{\texorpdfstring{readRasterData()}{readRasterData()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void Signaturemap\+::read\+Raster\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster\+PT}}$<$ T $>$ \&}]{ras,  }\item[{int}]{threshold }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00231                                                                         \{}
+\DoxyCodeLine{00232   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *currByte;}
+\DoxyCodeLine{00233   \textcolor{keywordtype}{int} x, y;}
+\DoxyCodeLine{00234 }
+\DoxyCodeLine{00235   \mbox{\hyperlink{class_pixel_evaluator}{PixelEvaluator<T>}} evaluator(ras, threshold);}
+\DoxyCodeLine{00236 }
+\DoxyCodeLine{00237   m\_rowSize = ras-\/>getLx() + 2;}
+\DoxyCodeLine{00238   m\_colSize = ras-\/>getLy() + 2;}
+\DoxyCodeLine{00239   m\_array.reset(\textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[m\_rowSize * m\_colSize]);}
+\DoxyCodeLine{00240 }
+\DoxyCodeLine{00241   memset(m\_array.get(), none << 1, m\_rowSize);}
+\DoxyCodeLine{00242 }
+\DoxyCodeLine{00243   currByte = m\_array.get() + m\_rowSize;}
+\DoxyCodeLine{00244   \textcolor{keywordflow}{for} (y = 0; y < ras-\/>getLy(); ++y) \{}
+\DoxyCodeLine{00245     *currByte = none << 1;}
+\DoxyCodeLine{00246     currByte++;}
+\DoxyCodeLine{00247 }
+\DoxyCodeLine{00248     \textcolor{keywordflow}{for} (x = 0; x < ras-\/>getLx(); ++x, ++currByte)}
+\DoxyCodeLine{00249       *currByte = evaluator.getBlackOrWhite(x, y) | (none << 1);}
+\DoxyCodeLine{00250 }
+\DoxyCodeLine{00251     *currByte = none << 1;}
+\DoxyCodeLine{00252     currByte++;}
+\DoxyCodeLine{00253   \}}
+\DoxyCodeLine{00254 }
+\DoxyCodeLine{00255   memset(currByte, none << 1, m\_rowSize);}
+\DoxyCodeLine{00256 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_signaturemap_a8889d34bef873a5a95c276bd7b6de150}\label{class_signaturemap_a8889d34bef873a5a95c276bd7b6de150}} 
+\index{Signaturemap@{Signaturemap}!setSignature@{setSignature}}
+\index{setSignature@{setSignature}!Signaturemap@{Signaturemap}}
+\doxysubsubsection{\texorpdfstring{setSignature()}{setSignature()}}
+{\footnotesize\ttfamily void Signaturemap\+::set\+Signature (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00196                                            \{}
+\DoxyCodeLine{00197     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *pixel = pixelByte(x, y);}
+\DoxyCodeLine{00198     *pixel \&= 1;}
+\DoxyCodeLine{00199     *pixel |= (val << 1);  \textcolor{comment}{// Si puo' fare meglio??}}
+\DoxyCodeLine{00200   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tcenterlinepolygonizer.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,109 @@
+\hypertarget{class_spectrum_param_field_undo}{}\doxysection{Spectrum\+Param\+Field\+Undo Class Reference}
+\label{class_spectrum_param_field_undo}\index{SpectrumParamFieldUndo@{SpectrumParamFieldUndo}}
+Inheritance diagram for Spectrum\+Param\+Field\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_spectrum_param_field_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_spectrum_param_field_undo_a73e820c4e38249fe74a955b2eec8d4f2}{Spectrum\+Param\+Field\+Undo}} (const \mbox{\hyperlink{class_t_spectrum_param_p}{TSpectrum\+ParamP}} param, QString name, int frame, \mbox{\hyperlink{class_t_fx_handle}{TFx\+Handle}} $\ast$fx\+Handle)
+\item 
+void \mbox{\hyperlink{class_spectrum_param_field_undo_a0a2264a24eeaecec11805a66fc8f8d52}{on\+Add}} () override
+\item 
+void \mbox{\hyperlink{class_spectrum_param_field_undo_a49bd8a374d3373c994c836dd6aad3dbe}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_spectrum_param_field_undo_aea1179e056473109d3e4f1257d22e7e1}{redo}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Spectrum\+Param\+Fieldの\+Undo 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_spectrum_param_field_undo_a73e820c4e38249fe74a955b2eec8d4f2}\label{class_spectrum_param_field_undo_a73e820c4e38249fe74a955b2eec8d4f2}} 
+\index{SpectrumParamFieldUndo@{SpectrumParamFieldUndo}!SpectrumParamFieldUndo@{SpectrumParamFieldUndo}}
+\index{SpectrumParamFieldUndo@{SpectrumParamFieldUndo}!SpectrumParamFieldUndo@{SpectrumParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{SpectrumParamFieldUndo()}{SpectrumParamFieldUndo()}}
+{\footnotesize\ttfamily Spectrum\+Param\+Field\+Undo\+::\+Spectrum\+Param\+Field\+Undo (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_spectrum_param_p}{TSpectrum\+ParamP}}}]{param,  }\item[{QString}]{name,  }\item[{int}]{frame,  }\item[{\mbox{\hyperlink{class_t_fx_handle}{TFx\+Handle}} $\ast$}]{fx\+Handle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00325       : \mbox{\hyperlink{class_animatable_fx_settings_undo}{AnimatableFxSettingsUndo}}(name, frame, fxHandle), m\_param(param) \{}
+\DoxyCodeLine{00326     m\_oldSpectrum = param-\/>getValue(frame);}
+\DoxyCodeLine{00327     m\_newSpectrum = m\_oldSpectrum;}
+\DoxyCodeLine{00328     m\_wasKeyframe = m\_param-\/>isKeyframe(frame);}
+\DoxyCodeLine{00329   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_spectrum_param_field_undo_a0a2264a24eeaecec11805a66fc8f8d52}\label{class_spectrum_param_field_undo_a0a2264a24eeaecec11805a66fc8f8d52}} 
+\index{SpectrumParamFieldUndo@{SpectrumParamFieldUndo}!onAdd@{onAdd}}
+\index{onAdd@{onAdd}!SpectrumParamFieldUndo@{SpectrumParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{onAdd()}{onAdd()}}
+{\footnotesize\ttfamily void Spectrum\+Param\+Field\+Undo\+::on\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00331 \{ m\_newSpectrum = m\_param-\/>getValue(m\_frame); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_spectrum_param_field_undo_aea1179e056473109d3e4f1257d22e7e1}\label{class_spectrum_param_field_undo_aea1179e056473109d3e4f1257d22e7e1}} 
+\index{SpectrumParamFieldUndo@{SpectrumParamFieldUndo}!redo@{redo}}
+\index{redo@{redo}!SpectrumParamFieldUndo@{SpectrumParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Spectrum\+Param\+Field\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00344                              \{}
+\DoxyCodeLine{00345     \textcolor{keywordflow}{if} (!m\_wasKeyframe)}
+\DoxyCodeLine{00346       m\_param-\/>setDefaultValue(m\_newSpectrum);}
+\DoxyCodeLine{00347     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00348       m\_param-\/>setValue(m\_frame, m\_newSpectrum);}
+\DoxyCodeLine{00349     \textcolor{keywordflow}{if} (m\_fxHandle) m\_fxHandle-\/>notifyFxChanged();}
+\DoxyCodeLine{00350   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_spectrum_param_field_undo_a49bd8a374d3373c994c836dd6aad3dbe}\label{class_spectrum_param_field_undo_a49bd8a374d3373c994c836dd6aad3dbe}} 
+\index{SpectrumParamFieldUndo@{SpectrumParamFieldUndo}!undo@{undo}}
+\index{undo@{undo}!SpectrumParamFieldUndo@{SpectrumParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Spectrum\+Param\+Field\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00333                              \{}
+\DoxyCodeLine{00334     \textcolor{keywordflow}{if} (!m\_wasKeyframe)}
+\DoxyCodeLine{00335       m\_param-\/>setDefaultValue(m\_oldSpectrum);}
+\DoxyCodeLine{00336     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00337       m\_param-\/>setValue(m\_frame, m\_oldSpectrum);}
+\DoxyCodeLine{00338 }
+\DoxyCodeLine{00339     \textcolor{keywordflow}{if} (m\_fxHandle) \{}
+\DoxyCodeLine{00340       m\_fxHandle-\/>notifyFxChanged();}
+\DoxyCodeLine{00341     \}}
+\DoxyCodeLine{00342   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/paramfield.\+cpp\end{DoxyCompactItemize}

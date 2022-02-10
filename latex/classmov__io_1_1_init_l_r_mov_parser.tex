@@ -1,0 +1,83 @@
+\hypertarget{classmov__io_1_1_init_l_r_mov_parser}{}\doxysection{mov\+\_\+io\+::Init\+LRMov\+Parser Class Reference}
+\label{classmov__io_1_1_init_l_r_mov_parser}\index{mov\_io::InitLRMovParser@{mov\_io::InitLRMovParser}}
+Inheritance diagram for mov\+\_\+io\+::Init\+LRMov\+Parser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmov__io_1_1_init_l_r_mov_parser}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{classmov__io_1_1_init_l_r_mov_parser_a09006f21865d0395756df0a4792b2849}{header}} () const override
+\item 
+void \mbox{\hyperlink{classmov__io_1_1_init_l_r_mov_parser_a2fd427825945bed5a53b862f10462926}{operator()}} (\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&stream) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmov__io_1_1_init_l_r_mov_parser_a09006f21865d0395756df0a4792b2849}\label{classmov__io_1_1_init_l_r_mov_parser_a09006f21865d0395756df0a4792b2849}} 
+\index{mov\_io::InitLRMovParser@{mov\_io::InitLRMovParser}!header@{header}}
+\index{header@{header}!mov\_io::InitLRMovParser@{mov\_io::InitLRMovParser}}
+\doxysubsubsection{\texorpdfstring{header()}{header()}}
+{\footnotesize\ttfamily QString mov\+\_\+io\+::\+Init\+LRMov\+Parser\+::header (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00125 \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$initLRMov"{}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmov__io_1_1_init_l_r_mov_parser_a2fd427825945bed5a53b862f10462926}\label{classmov__io_1_1_init_l_r_mov_parser_a2fd427825945bed5a53b862f10462926}} 
+\index{mov\_io::InitLRMovParser@{mov\_io::InitLRMovParser}!operator()@{operator()}}
+\index{operator()@{operator()}!mov\_io::InitLRMovParser@{mov\_io::InitLRMovParser}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily void mov\+\_\+io\+::\+Init\+LRMov\+Parser\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00304                                              \{}
+\DoxyCodeLine{00305   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} id;}
+\DoxyCodeLine{00306   QString fp, propsFp;}
+\DoxyCodeLine{00307   msg >> \textcolor{keywordtype}{id} >> fp >> clr;}
+\DoxyCodeLine{00308   assert(!fp.isEmpty());}
+\DoxyCodeLine{00309 }
+\DoxyCodeLine{00310   \mbox{\hyperlink{class_t_file_path}{TFilePath}} tfp(fp.toStdWString());}
+\DoxyCodeLine{00311 }
+\DoxyCodeLine{00312   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00313     \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}} lrm(tfp);}
+\DoxyCodeLine{00314 }
+\DoxyCodeLine{00315     \textcolor{comment}{// Extract some info to be returned}}
+\DoxyCodeLine{00316     \textcolor{keyword}{const} \mbox{\hyperlink{class_t_image_info}{TImageInfo}} *info = lrm-\/>getImageInfo();}
+\DoxyCodeLine{00317     \textcolor{keywordflow}{if} (!info) \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_image_exception}{TImageException}}(tfp, \textcolor{stringliteral}{"{}Couldn't retrieve image properties"{}});}
+\DoxyCodeLine{00318 }
+\DoxyCodeLine{00319     \textcolor{keywordtype}{int} lx = info-\/>m\_lx, ly = info-\/>m\_ly;}
+\DoxyCodeLine{00320     \textcolor{keywordtype}{double} frameRate = info-\/>m\_frameRate;}
+\DoxyCodeLine{00321 }
+\DoxyCodeLine{00322     tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}Inserted image"{}}}
+\DoxyCodeLine{00323                         << QString::fromStdWString(tfp.getWideString()));}
+\DoxyCodeLine{00324     readers.insert(\textcolor{keywordtype}{id}, lrm);}
+\DoxyCodeLine{00325 }
+\DoxyCodeLine{00326     msg << QString(\textcolor{stringliteral}{"{}ok"{}}) << lx << ly << frameRate;}
+\DoxyCodeLine{00327   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00328     msg << QString(\textcolor{stringliteral}{"{}err"{}});}
+\DoxyCodeLine{00329   \}}
+\DoxyCodeLine{00330 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+h\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+cpp\end{DoxyCompactItemize}

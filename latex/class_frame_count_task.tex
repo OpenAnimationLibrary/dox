@@ -1,0 +1,153 @@
+\hypertarget{class_frame_count_task}{}\doxysection{Frame\+Count\+Task Class Reference}
+\label{class_frame_count_task}\index{FrameCountTask@{FrameCountTask}}
+Inheritance diagram for Frame\+Count\+Task\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_frame_count_task}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_frame_count_task_ab7c039b05c0a76f8defd9465edd18dbb}{on\+Started}} (\mbox{\hyperlink{class_t_smart_pointer_t}{TThread\+::\+RunnableP}} this\+Task) override
+\item 
+void \mbox{\hyperlink{class_frame_count_task_aa6188f864f79f6e183fc3ca29d521e41}{on\+Canceled}} (\mbox{\hyperlink{class_t_smart_pointer_t}{TThread\+::\+RunnableP}} this\+Task) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_frame_count_task_aefc90ba6db25c919ecef8e1edb11b2ad}{Frame\+Count\+Task}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, const QDate\+Time \&modified\+Date)
+\item 
+void \mbox{\hyperlink{class_frame_count_task_a6f14324f0ed74122a1eb1dfb9b754692}{run}} () override
+\begin{DoxyCompactList}\small\item\em The central code of the task that is executed by a worker thread. \end{DoxyCompactList}\item 
+QThread\+::\+Priority \mbox{\hyperlink{class_frame_count_task_acb732c7156e6baaa33f61f10544cdfb0}{running\+Priority}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_frame_count_task_aefc90ba6db25c919ecef8e1edb11b2ad}\label{class_frame_count_task_aefc90ba6db25c919ecef8e1edb11b2ad}} 
+\index{FrameCountTask@{FrameCountTask}!FrameCountTask@{FrameCountTask}}
+\index{FrameCountTask@{FrameCountTask}!FrameCountTask@{FrameCountTask}}
+\doxysubsubsection{\texorpdfstring{FrameCountTask()}{FrameCountTask()}}
+{\footnotesize\ttfamily Frame\+Count\+Task\+::\+Frame\+Count\+Task (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{const QDate\+Time \&}]{modified\+Date }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02368     : m\_path(path), m\_modifiedDate(modifiedDate), m\_started(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{02369   connect(\textcolor{keyword}{this}, SIGNAL(\mbox{\hyperlink{class_t_thread_1_1_runnable_a4603628ddbc41e9e73e027e8f817bff1}{started}}(\mbox{\hyperlink{class_t_smart_pointer_t}{TThread::RunnableP}})), \textcolor{keyword}{this},}
+\DoxyCodeLine{02370           SLOT(onStarted(\mbox{\hyperlink{class_t_smart_pointer_t}{TThread::RunnableP}})));}
+\DoxyCodeLine{02371   connect(\textcolor{keyword}{this}, SIGNAL(\mbox{\hyperlink{class_t_thread_1_1_runnable_a87a003e7e55636146017bd05df73531a}{canceled}}(\mbox{\hyperlink{class_t_smart_pointer_t}{TThread::RunnableP}})), \textcolor{keyword}{this},}
+\DoxyCodeLine{02372           SLOT(onCanceled(\mbox{\hyperlink{class_t_smart_pointer_t}{TThread::RunnableP}})));}
+\DoxyCodeLine{02373 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_frame_count_task_a376519e9667664759da1408334518b60}\label{class_frame_count_task_a376519e9667664759da1408334518b60}} 
+\index{FrameCountTask@{FrameCountTask}!````~FrameCountTask@{$\sim$FrameCountTask}}
+\index{````~FrameCountTask@{$\sim$FrameCountTask}!FrameCountTask@{FrameCountTask}}
+\doxysubsubsection{\texorpdfstring{$\sim$FrameCountTask()}{~FrameCountTask()}}
+{\footnotesize\ttfamily Frame\+Count\+Task\+::$\sim$\+Frame\+Count\+Task (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02377 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_frame_count_task_aa6188f864f79f6e183fc3ca29d521e41}\label{class_frame_count_task_aa6188f864f79f6e183fc3ca29d521e41}} 
+\index{FrameCountTask@{FrameCountTask}!onCanceled@{onCanceled}}
+\index{onCanceled@{onCanceled}!FrameCountTask@{FrameCountTask}}
+\doxysubsubsection{\texorpdfstring{onCanceled}{onCanceled}}
+{\footnotesize\ttfamily void Frame\+Count\+Task\+::on\+Canceled (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{TThread\+::\+RunnableP}}}]{this\+Task }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02420                                                          \{}
+\DoxyCodeLine{02421   \textcolor{keywordflow}{if} (!m\_started) \{}
+\DoxyCodeLine{02422     QMutexLocker fCMapMutex(\&frameCountMapMutex);}
+\DoxyCodeLine{02423 }
+\DoxyCodeLine{02424     frameCountMap.erase(m\_path);}
+\DoxyCodeLine{02425   \}}
+\DoxyCodeLine{02426 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_frame_count_task_ab7c039b05c0a76f8defd9465edd18dbb}\label{class_frame_count_task_ab7c039b05c0a76f8defd9465edd18dbb}} 
+\index{FrameCountTask@{FrameCountTask}!onStarted@{onStarted}}
+\index{onStarted@{onStarted}!FrameCountTask@{FrameCountTask}}
+\doxysubsubsection{\texorpdfstring{onStarted}{onStarted}}
+{\footnotesize\ttfamily void Frame\+Count\+Task\+::on\+Started (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{TThread\+::\+RunnableP}}}]{this\+Task }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02414                                                         \{}
+\DoxyCodeLine{02415   m\_started = \textcolor{keyword}{true};}
+\DoxyCodeLine{02416 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_frame_count_task_a6f14324f0ed74122a1eb1dfb9b754692}\label{class_frame_count_task_a6f14324f0ed74122a1eb1dfb9b754692}} 
+\index{FrameCountTask@{FrameCountTask}!run@{run}}
+\index{run@{run}!FrameCountTask@{FrameCountTask}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Frame\+Count\+Task\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The central code of the task that is executed by a worker thread. 
+
+
+
+Implements \mbox{\hyperlink{class_t_thread_1_1_runnable_ad3b8ee5e7b375bd169f7382fa26b00ef}{TThread\+::\+Runnable}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02381                          \{}
+\DoxyCodeLine{02382   \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}} lr(m\_path);}
+\DoxyCodeLine{02383   \textcolor{keywordtype}{int} frameCount = lr-\/>loadInfo()-\/>getFrameCount();}
+\DoxyCodeLine{02384 }
+\DoxyCodeLine{02385   QMutexLocker fCMapMutex(\&frameCountMapMutex);}
+\DoxyCodeLine{02386 }
+\DoxyCodeLine{02387   std::map<TFilePath, FCData>::iterator it = frameCountMap.find(m\_path);}
+\DoxyCodeLine{02388 }
+\DoxyCodeLine{02389   \textcolor{keywordflow}{if} (it == frameCountMap.end()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{02390 }
+\DoxyCodeLine{02391   \textcolor{comment}{// Memorize the found frameCount into the frameCountMap}}
+\DoxyCodeLine{02392   \textcolor{keywordflow}{if} (frameCount > 0) \{}
+\DoxyCodeLine{02393     it-\/>second.m\_frameCount = frameCount;}
+\DoxyCodeLine{02394     it-\/>second.m\_date       = m\_modifiedDate;}
+\DoxyCodeLine{02395   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{02396     \textcolor{comment}{// Seems that tlv reads sometimes may fail, returning invalid frame counts}}
+\DoxyCodeLine{02397     \textcolor{comment}{// (typically 0).}}
+\DoxyCodeLine{02398     \textcolor{comment}{// However, if no exception was thrown, we try to recover it}}
+\DoxyCodeLine{02399     it-\/>second.m\_underProgress = \textcolor{keyword}{false};}
+\DoxyCodeLine{02400     it-\/>second.m\_retryCount-\/-\/;}
+\DoxyCodeLine{02401   \}}
+\DoxyCodeLine{02402 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_frame_count_task_acb732c7156e6baaa33f61f10544cdfb0}\label{class_frame_count_task_acb732c7156e6baaa33f61f10544cdfb0}} 
+\index{FrameCountTask@{FrameCountTask}!runningPriority@{runningPriority}}
+\index{runningPriority@{runningPriority}!FrameCountTask@{FrameCountTask}}
+\doxysubsubsection{\texorpdfstring{runningPriority()}{runningPriority()}}
+{\footnotesize\ttfamily QThread\+::\+Priority Frame\+Count\+Task\+::running\+Priority (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Returns the QThread\+::\+Priority used by worker threads when they adopt the task. The default value returned is QThread\+::\+Normal. 
+
+Reimplemented from \mbox{\hyperlink{class_t_thread_1_1_runnable_a7266725bb29e0ba78a4d3ddb728a5aac}{TThread\+::\+Runnable}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02406                                                 \{}
+\DoxyCodeLine{02407   \textcolor{keywordflow}{return} QThread::LowPriority;}
+\DoxyCodeLine{02408 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowser.\+cpp\end{DoxyCompactItemize}

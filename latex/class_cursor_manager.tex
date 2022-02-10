@@ -1,0 +1,193 @@
+\hypertarget{class_cursor_manager}{}\doxysection{Cursor\+Manager Class Reference}
+\label{class_cursor_manager}\index{CursorManager@{CursorManager}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_cursor_manager_aeccb394fa4751b29aba1216868ee843e}{do\+Decoration}} (QPixmap \&pixmap, int decoration\+Flag, bool use\+Left)
+\item 
+const Cursor\+Data \& \mbox{\hyperlink{class_cursor_manager_a5ad7340e97a40de947550edfb44c6bd6}{get\+Cursor\+Data}} (int cursor\+Type)
+\item 
+QCursor \mbox{\hyperlink{class_cursor_manager_a48775d1ceda48fd7e9b08443c2c1ca89}{get\+Cursor}} (int cursor\+Type)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_cursor_manager}{Cursor\+Manager}} $\ast$ \mbox{\hyperlink{class_cursor_manager_a5e21a9b44f06c733005b5b31e110e634}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_cursor_manager_aeccb394fa4751b29aba1216868ee843e}\label{class_cursor_manager_aeccb394fa4751b29aba1216868ee843e}} 
+\index{CursorManager@{CursorManager}!doDecoration@{doDecoration}}
+\index{doDecoration@{doDecoration}!CursorManager@{CursorManager}}
+\doxysubsubsection{\texorpdfstring{doDecoration()}{doDecoration()}}
+{\footnotesize\ttfamily void Cursor\+Manager\+::do\+Decoration (\begin{DoxyParamCaption}\item[{QPixmap \&}]{pixmap,  }\item[{int}]{decoration\+Flag,  }\item[{bool}]{use\+Left }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00142                                                                        \{}
+\DoxyCodeLine{00143     \textcolor{keywordflow}{if} (decorationFlag == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00144     \textcolor{keywordflow}{if} (decorationFlag > ToolCursor::Ex\_Negate) \{}
+\DoxyCodeLine{00145       QPainter p(\&pixmap);}
+\DoxyCodeLine{00146       p.setCompositionMode(QPainter::CompositionMode\_SourceOver);}
+\DoxyCodeLine{00147       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; decorateInfo[i].pixmapFilename; i++)}
+\DoxyCodeLine{00148         \textcolor{keywordflow}{if} (decorationFlag \& decorateInfo[i].decorateType) \{}
+\DoxyCodeLine{00149           QString leftStr = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00150           \textcolor{keywordflow}{if} (useLeft) leftStr = \textcolor{stringliteral}{"{}\_left"{}};}
+\DoxyCodeLine{00151           QString path = QString(\textcolor{stringliteral}{"{}:Resources/"{}}) +}
+\DoxyCodeLine{00152                          decorateInfo[i].pixmapFilename + leftStr + \textcolor{stringliteral}{"{}.png"{}};}
+\DoxyCodeLine{00153           p.drawPixmap(0, 0, QPixmap(path));}
+\DoxyCodeLine{00154         \}}
+\DoxyCodeLine{00155     \}}
+\DoxyCodeLine{00156     \textcolor{comment}{// negate}}
+\DoxyCodeLine{00157     \textcolor{keywordflow}{if} (decorationFlag \& ToolCursor::Ex\_Negate) \{}
+\DoxyCodeLine{00158       QImage img = pixmap.toImage();}
+\DoxyCodeLine{00159       img.invertPixels(QImage::InvertRgb);  \textcolor{comment}{// leave the alpha channel unchanged}}
+\DoxyCodeLine{00160       pixmap = QPixmap::fromImage(img);}
+\DoxyCodeLine{00161     \}}
+\DoxyCodeLine{00162   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cursor_manager_a48775d1ceda48fd7e9b08443c2c1ca89}\label{class_cursor_manager_a48775d1ceda48fd7e9b08443c2c1ca89}} 
+\index{CursorManager@{CursorManager}!getCursor@{getCursor}}
+\index{getCursor@{getCursor}!CursorManager@{CursorManager}}
+\doxysubsubsection{\texorpdfstring{getCursor()}{getCursor()}}
+{\footnotesize\ttfamily QCursor Cursor\+Manager\+::get\+Cursor (\begin{DoxyParamCaption}\item[{int}]{cursor\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00249                                     \{}
+\DoxyCodeLine{00250     \textcolor{comment}{// assert(cursorType!=0);}}
+\DoxyCodeLine{00251 }
+\DoxyCodeLine{00252     QCursor cursor;}
+\DoxyCodeLine{00253     \textcolor{comment}{/*}}
+\DoxyCodeLine{00254 \textcolor{comment}{if (cursorType == ToolCursor::CURSOR\_ARROW)}}
+\DoxyCodeLine{00255 \textcolor{comment}{  cursor = Qt::ArrowCursor;}}
+\DoxyCodeLine{00256 \textcolor{comment}{else */}}
+\DoxyCodeLine{00257     \textcolor{keywordflow}{if} (cursorType == ToolCursor::ForbiddenCursor)}
+\DoxyCodeLine{00258       cursor = Qt::ForbiddenCursor;}
+\DoxyCodeLine{00259     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00260       \textcolor{keyword}{const} CursorData \&data = getCursorData(cursorType);}
+\DoxyCodeLine{00261       cursor                 = QCursor(data.pixmap, data.x, data.y);}
+\DoxyCodeLine{00262     \}}
+\DoxyCodeLine{00263 }
+\DoxyCodeLine{00264     \textcolor{keywordflow}{return} cursor;}
+\DoxyCodeLine{00265   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cursor_manager_a5ad7340e97a40de947550edfb44c6bd6}\label{class_cursor_manager_a5ad7340e97a40de947550edfb44c6bd6}} 
+\index{CursorManager@{CursorManager}!getCursorData@{getCursorData}}
+\index{getCursorData@{getCursorData}!CursorManager@{CursorManager}}
+\doxysubsubsection{\texorpdfstring{getCursorData()}{getCursorData()}}
+{\footnotesize\ttfamily const Cursor\+Data \& Cursor\+Manager\+::get\+Cursor\+Data (\begin{DoxyParamCaption}\item[{int}]{cursor\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00164                                                   \{}
+\DoxyCodeLine{00165     \textcolor{comment}{// se e' gia' in tabella lo restituisco}}
+\DoxyCodeLine{00166     std::map<int, CursorData>::iterator it;}
+\DoxyCodeLine{00167 }
+\DoxyCodeLine{00168     \textcolor{keywordflow}{if} (Preferences::instance()-\/>getCursorBrushStyle() == \textcolor{stringliteral}{"{}Simple"{}})}
+\DoxyCodeLine{00169       cursorType = ToolCursor::PenCursor;}
+\DoxyCodeLine{00170 }
+\DoxyCodeLine{00171     \textcolor{keywordflow}{if} (cursorType == ToolCursor::PenCursor) \{}
+\DoxyCodeLine{00172       QString brushType = Preferences::instance()-\/>getCursorBrushType();}
+\DoxyCodeLine{00173       \textcolor{keywordflow}{if} (brushType == \textcolor{stringliteral}{"{}Large"{}})}
+\DoxyCodeLine{00174         cursorType = ToolCursor::PenLargeCursor;}
+\DoxyCodeLine{00175       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (brushType == \textcolor{stringliteral}{"{}Crosshair"{}})}
+\DoxyCodeLine{00176         cursorType = ToolCursor::PenCrosshairCursor;}
+\DoxyCodeLine{00177     \}}
+\DoxyCodeLine{00178 }
+\DoxyCodeLine{00179     \textcolor{keywordtype}{bool} useLeft =}
+\DoxyCodeLine{00180         (Preferences::instance()-\/>getCursorBrushStyle() == \textcolor{stringliteral}{"{}Left-\/Handed"{}});}
+\DoxyCodeLine{00181     \textcolor{keywordflow}{if} (useLeft) \{}
+\DoxyCodeLine{00182       it = m\_cursorsLeft.find(cursorType);}
+\DoxyCodeLine{00183       \textcolor{keywordflow}{if} (it != m\_cursorsLeft.end()) \textcolor{keywordflow}{return} it-\/>second;}
+\DoxyCodeLine{00184     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00185       it = m\_cursors.find(cursorType);}
+\DoxyCodeLine{00186       \textcolor{keywordflow}{if} (it != m\_cursors.end()) \textcolor{keywordflow}{return} it-\/>second;}
+\DoxyCodeLine{00187     \}}
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189     \textcolor{keywordtype}{int} decorationsFlag = cursorType \& \string~(0xFF);}
+\DoxyCodeLine{00190     \textcolor{keywordtype}{int} baseCursorType  = cursorType \& 0xFF;}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192     \textcolor{keywordflow}{if} (baseCursorType == ToolCursor::CURSOR\_ARROW) \{}
+\DoxyCodeLine{00193       CursorData data;}
+\DoxyCodeLine{00194       QCursor leftArrow(Qt::ArrowCursor);}
+\DoxyCodeLine{00195       data.pixmap = leftArrow.pixmap();}
+\DoxyCodeLine{00196       data.x      = leftArrow.hotSpot().x();}
+\DoxyCodeLine{00197       data.y      = leftArrow.hotSpot().y();}
+\DoxyCodeLine{00198 }
+\DoxyCodeLine{00199       \textcolor{keywordflow}{if} (useLeft) \{}
+\DoxyCodeLine{00200         QImage target = (\&data.pixmap)-\/>toImage();}
+\DoxyCodeLine{00201         (\&data.pixmap)-\/>convertFromImage(target.mirrored(\textcolor{keyword}{true}, \textcolor{keyword}{false}));}
+\DoxyCodeLine{00202         data.x = data.pixmap.width() -\/ data.x -\/ 1;}
+\DoxyCodeLine{00203         it     = m\_cursorsLeft.insert(std::make\_pair(cursorType, data)).first;}
+\DoxyCodeLine{00204       \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00205         it = m\_cursors.insert(std::make\_pair(cursorType, data)).first;}
+\DoxyCodeLine{00206 }
+\DoxyCodeLine{00207       \textcolor{keywordflow}{return} it-\/>second;}
+\DoxyCodeLine{00208     \}}
+\DoxyCodeLine{00209 }
+\DoxyCodeLine{00210     \textcolor{comment}{// provo a cercarlo in cursorInfo[]}}
+\DoxyCodeLine{00211     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00212     \textcolor{keywordflow}{for} (i = 0; cursorInfo[i].pixmapFilename; i++)}
+\DoxyCodeLine{00213       \textcolor{keywordflow}{if} (baseCursorType == cursorInfo[i].cursorType) \{}
+\DoxyCodeLine{00214         QString path =}
+\DoxyCodeLine{00215             QString(\textcolor{stringliteral}{"{}:Resources/"{}}) + cursorInfo[i].pixmapFilename + \textcolor{stringliteral}{"{}.png"{}};}
+\DoxyCodeLine{00216         CursorData data;}
+\DoxyCodeLine{00217         data.pixmap = QPixmap(path);}
+\DoxyCodeLine{00218         \textcolor{keywordflow}{if} (data.pixmap.isNull())}
+\DoxyCodeLine{00219           data = getCursorData(ToolCursor::CURSOR\_ARROW);}
+\DoxyCodeLine{00220         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00221           data.x = cursorInfo[i].x;}
+\DoxyCodeLine{00222           data.y = cursorInfo[i].y;}
+\DoxyCodeLine{00223           \textcolor{keywordflow}{if} (useLeft \&\& cursorInfo[i].flippable) \{}
+\DoxyCodeLine{00224             QImage target = (\&data.pixmap)-\/>toImage();}
+\DoxyCodeLine{00225             (\&data.pixmap)-\/>convertFromImage(target.mirrored(\textcolor{keyword}{true}, \textcolor{keyword}{false}));}
+\DoxyCodeLine{00226             data.x = data.pixmap.width() -\/ cursorInfo[i].x -\/ 1;}
+\DoxyCodeLine{00227           \}}
+\DoxyCodeLine{00228           \textcolor{keywordflow}{if} (decorationsFlag != 0)}
+\DoxyCodeLine{00229             doDecoration(data.pixmap, decorationsFlag, useLeft);}
+\DoxyCodeLine{00230         \}}
+\DoxyCodeLine{00231         \textcolor{keywordflow}{if} (useLeft)}
+\DoxyCodeLine{00232           it = m\_cursorsLeft.insert(std::make\_pair(cursorType, data)).first;}
+\DoxyCodeLine{00233         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00234           it = m\_cursors.insert(std::make\_pair(cursorType, data)).first;}
+\DoxyCodeLine{00235         \textcolor{keywordflow}{return} it-\/>second;}
+\DoxyCodeLine{00236       \}}
+\DoxyCodeLine{00237     \textcolor{comment}{// niente da fare. uso un default}}
+\DoxyCodeLine{00238     CursorData data;}
+\DoxyCodeLine{00239     \textcolor{keyword}{static} \textcolor{keyword}{const} QPixmap standardCursorPixmap(\textcolor{stringliteral}{"{}cursors/hook.png"{}});}
+\DoxyCodeLine{00240     data.pixmap = standardCursorPixmap;}
+\DoxyCodeLine{00241     data.x = data.y = 0;}
+\DoxyCodeLine{00242     \textcolor{keywordflow}{if} (useLeft)}
+\DoxyCodeLine{00243       it = m\_cursorsLeft.insert(std::make\_pair(cursorType, data)).first;}
+\DoxyCodeLine{00244     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00245       it = m\_cursors.insert(std::make\_pair(cursorType, data)).first;}
+\DoxyCodeLine{00246     \textcolor{keywordflow}{return} it-\/>second;}
+\DoxyCodeLine{00247   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cursor_manager_a5e21a9b44f06c733005b5b31e110e634}\label{class_cursor_manager_a5e21a9b44f06c733005b5b31e110e634}} 
+\index{CursorManager@{CursorManager}!instance@{instance}}
+\index{instance@{instance}!CursorManager@{CursorManager}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_cursor_manager}{Cursor\+Manager}} $\ast$ Cursor\+Manager\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00137                                    \{}
+\DoxyCodeLine{00138     \textcolor{keyword}{static} \mbox{\hyperlink{class_cursor_manager}{CursorManager}} \_instance;}
+\DoxyCodeLine{00139     \textcolor{keywordflow}{return} \&\_instance;}
+\DoxyCodeLine{00140   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/cursormanager.\+cpp\end{DoxyCompactItemize}

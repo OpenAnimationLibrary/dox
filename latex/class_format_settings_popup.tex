@@ -1,0 +1,138 @@
+\hypertarget{class_format_settings_popup}{}\doxysection{Format\+Settings\+Popup Class Reference}
+\label{class_format_settings_popup}\index{FormatSettingsPopup@{FormatSettingsPopup}}
+Inheritance diagram for Format\+Settings\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_format_settings_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_format_settings_popup_a34a5112df2f691cdb5413d50463df2bf}{Format\+Settings\+Popup}} (QWidget $\ast$parent, const std\+::string \&format, \mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$props)
+\item 
+void \mbox{\hyperlink{class_format_settings_popup_a189e8e73b65e22c86d620b9ff18d63af}{set\+Level\+Path}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path)
+\item 
+void \mbox{\hyperlink{class_format_settings_popup_a2e293368d69ee8c27c889b74dc9ae2d1}{set\+Format\+Properties}} (\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$props)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_format_settings_popup_a34a5112df2f691cdb5413d50463df2bf}\label{class_format_settings_popup_a34a5112df2f691cdb5413d50463df2bf}} 
+\index{FormatSettingsPopup@{FormatSettingsPopup}!FormatSettingsPopup@{FormatSettingsPopup}}
+\index{FormatSettingsPopup@{FormatSettingsPopup}!FormatSettingsPopup@{FormatSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{FormatSettingsPopup()}{FormatSettingsPopup()}}
+{\footnotesize\ttfamily Format\+Settings\+Popup\+::\+Format\+Settings\+Popup (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{const std\+::string \&}]{format,  }\item[{\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$}]{props }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040     : Dialog(parent)}
+\DoxyCodeLine{00041     , m\_format(format)}
+\DoxyCodeLine{00042     , m\_props(props)}
+\DoxyCodeLine{00043     , m\_levelPath(\mbox{\hyperlink{class_t_file_path}{TFilePath}}())}
+\DoxyCodeLine{00044 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00045     , m\_codecRestriction(0)}
+\DoxyCodeLine{00046     , m\_codecComboBox(0)}
+\DoxyCodeLine{00047     , m\_configureCodec(0)}
+\DoxyCodeLine{00048 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00049 \{}
+\DoxyCodeLine{00050   setWindowTitle(tr(\textcolor{stringliteral}{"{}File Settings"{}}));}
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{00052   setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);}
+\DoxyCodeLine{00053 }
+\DoxyCodeLine{00054   m\_mainLayout = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00055   m\_mainLayout-\/>setMargin(0);}
+\DoxyCodeLine{00056   m\_mainLayout-\/>setVerticalSpacing(5);}
+\DoxyCodeLine{00057   m\_mainLayout-\/>setHorizontalSpacing(5);}
+\DoxyCodeLine{00058   m\_mainLayout-\/>setColumnStretch(0, 0);}
+\DoxyCodeLine{00059   m\_mainLayout-\/>setColumnStretch(1, 1);}
+\DoxyCodeLine{00060 }
+\DoxyCodeLine{00061   \textcolor{keywordtype}{int} i = 0;}
+\DoxyCodeLine{00062   \textcolor{keywordflow}{for} (i = 0; i < m\_props-\/>getPropertyCount(); i++) \{}
+\DoxyCodeLine{00063     \textcolor{keywordflow}{if} (\textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_enum_property}{TEnumProperty}} *\textcolor{keyword}{>}(m\_props-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(i)))}
+\DoxyCodeLine{00064       buildPropertyComboBox(i, m\_props);}
+\DoxyCodeLine{00065     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_range_property}{TIntProperty}} *\textcolor{keyword}{>}(m\_props-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(i)))}
+\DoxyCodeLine{00066       buildValueField(i, m\_props);}
+\DoxyCodeLine{00067     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_range_property}{TDoubleProperty}} *\textcolor{keyword}{>}(m\_props-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(i)))}
+\DoxyCodeLine{00068       buildDoubleField(i, m\_props);}
+\DoxyCodeLine{00069     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_bool_property}{TBoolProperty}} *\textcolor{keyword}{>}(m\_props-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(i)))}
+\DoxyCodeLine{00070       buildPropertyCheckBox(i, m\_props);}
+\DoxyCodeLine{00071     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_string_property}{TStringProperty}} *\textcolor{keyword}{>}(m\_props-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(i)))}
+\DoxyCodeLine{00072       buildPropertyLineEdit(i, m\_props);}
+\DoxyCodeLine{00073     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00074       assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{00075   \}}
+\DoxyCodeLine{00076 }
+\DoxyCodeLine{00077 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00078   \textcolor{keywordflow}{if} (format == \textcolor{stringliteral}{"{}avi"{}}) \{}
+\DoxyCodeLine{00079     m\_codecRestriction = \textcolor{keyword}{new} QLabel(\textcolor{keyword}{this});}
+\DoxyCodeLine{00080     m\_codecRestriction-\/>setMinimumHeight(70);}
+\DoxyCodeLine{00081     m\_codecRestriction-\/>setStyleSheet(\textcolor{stringliteral}{"{}border: 1px solid rgba(0,0,0,0.5);"{}});}
+\DoxyCodeLine{00082     m\_mainLayout-\/>addWidget(m\_codecRestriction, m\_mainLayout-\/>rowCount(), 0, 1,}
+\DoxyCodeLine{00083                             2);}
+\DoxyCodeLine{00084     m\_configureCodec = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Configure Codec"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00085     m\_configureCodec-\/>setObjectName(\textcolor{stringliteral}{"{}PushButton\_NoPadding"{}});}
+\DoxyCodeLine{00086     m\_configureCodec-\/>setFixedSize(100, DVGui::WidgetHeight);}
+\DoxyCodeLine{00087     m\_mainLayout-\/>addWidget(m\_configureCodec, m\_mainLayout-\/>rowCount(), 0, 1,}
+\DoxyCodeLine{00088                             2);}
+\DoxyCodeLine{00089     connect(m\_configureCodec, SIGNAL(released()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00090             SLOT(onAviCodecConfigure()));}
+\DoxyCodeLine{00091   \}}
+\DoxyCodeLine{00092 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00093 }
+\DoxyCodeLine{00094   QPushButton *closeButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Close"{}}));}
+\DoxyCodeLine{00095   closeButton-\/>setContentsMargins(4, 4, 4, 4);}
+\DoxyCodeLine{00096   closeButton-\/>setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);}
+\DoxyCodeLine{00097   connect(closeButton, SIGNAL(released()), \textcolor{keyword}{this}, SLOT(close()));}
+\DoxyCodeLine{00098 }
+\DoxyCodeLine{00099   m\_mainLayout-\/>addWidget(closeButton, m\_mainLayout-\/>rowCount(), 0, 1, 2,}
+\DoxyCodeLine{00100                           Qt::AlignCenter);}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102   m\_topLayout-\/>addLayout(m\_mainLayout, 1);}
+\DoxyCodeLine{00103 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_format_settings_popup_a2e293368d69ee8c27c889b74dc9ae2d1}\label{class_format_settings_popup_a2e293368d69ee8c27c889b74dc9ae2d1}} 
+\index{FormatSettingsPopup@{FormatSettingsPopup}!setFormatProperties@{setFormatProperties}}
+\index{setFormatProperties@{setFormatProperties}!FormatSettingsPopup@{FormatSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{setFormatProperties()}{setFormatProperties()}}
+{\footnotesize\ttfamily void Format\+Settings\+Popup\+::set\+Format\+Properties (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$}]{props }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107                                                                    \{}
+\DoxyCodeLine{00108   \textcolor{keywordflow}{if} (props == m\_props) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00109 }
+\DoxyCodeLine{00110   m\_props = props;}
+\DoxyCodeLine{00111 }
+\DoxyCodeLine{00112   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_props-\/>getPropertyCount(); i++) \{}
+\DoxyCodeLine{00113     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_property}{TProperty}} *prop = m\_props-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(i))}
+\DoxyCodeLine{00114       m\_widgets[prop-\/>getName()]-\/>setProperty(prop);}
+\DoxyCodeLine{00115   \}}
+\DoxyCodeLine{00116 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_format_settings_popup_a189e8e73b65e22c86d620b9ff18d63af}\label{class_format_settings_popup_a189e8e73b65e22c86d620b9ff18d63af}} 
+\index{FormatSettingsPopup@{FormatSettingsPopup}!setLevelPath@{setLevelPath}}
+\index{setLevelPath@{setLevelPath}!FormatSettingsPopup@{FormatSettingsPopup}}
+\doxysubsubsection{\texorpdfstring{setLevelPath()}{setLevelPath()}}
+{\footnotesize\ttfamily void Format\+Settings\+Popup\+::set\+Level\+Path (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040 \{ m\_levelPath = path; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/formatsettingspopups.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/formatsettingspopups.\+cpp\end{DoxyCompactItemize}

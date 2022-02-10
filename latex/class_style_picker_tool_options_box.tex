@@ -1,0 +1,141 @@
+\hypertarget{class_style_picker_tool_options_box}{}\doxysection{Style\+Picker\+Tool\+Options\+Box Class Reference}
+\label{class_style_picker_tool_options_box}\index{StylePickerToolOptionsBox@{StylePickerToolOptionsBox}}
+Inheritance diagram for Style\+Picker\+Tool\+Options\+Box\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_style_picker_tool_options_box}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_style_picker_tool_options_box_ae80dbec94972812856f64145384e88c5}{Style\+Picker\+Tool\+Options\+Box}} (QWidget $\ast$parent, \mbox{\hyperlink{class_t_tool}{TTool}} $\ast$tool, \mbox{\hyperlink{class_t_palette_handle}{TPalette\+Handle}} $\ast$plt\+Handle, \mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$tool\+Handle, \mbox{\hyperlink{class_palette_controller}{Palette\+Controller}} $\ast$palette\+Controller)
+\item 
+void \mbox{\hyperlink{class_style_picker_tool_options_box_af97d7a93bd62f53ec051ea8ea2939107}{update\+Status}} ()
+\begin{DoxyCompactList}\small\item\em Invokes \mbox{\hyperlink{class_style_picker_tool_options_box_af97d7a93bd62f53ec051ea8ea2939107}{update\+Status()}} on all registered controls. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_style_picker_tool_options_box_a514424bfd73b1c139cba87ae81398f2d}{update\+Real\+Time\+Pick\+Label}} (const int, const int, const int)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_style_picker_tool_options_box_ae80dbec94972812856f64145384e88c5}\label{class_style_picker_tool_options_box_ae80dbec94972812856f64145384e88c5}} 
+\index{StylePickerToolOptionsBox@{StylePickerToolOptionsBox}!StylePickerToolOptionsBox@{StylePickerToolOptionsBox}}
+\index{StylePickerToolOptionsBox@{StylePickerToolOptionsBox}!StylePickerToolOptionsBox@{StylePickerToolOptionsBox}}
+\doxysubsubsection{\texorpdfstring{StylePickerToolOptionsBox()}{StylePickerToolOptionsBox()}}
+{\footnotesize\ttfamily Style\+Picker\+Tool\+Options\+Box\+::\+Style\+Picker\+Tool\+Options\+Box (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{\mbox{\hyperlink{class_t_tool}{TTool}} $\ast$}]{tool,  }\item[{\mbox{\hyperlink{class_t_palette_handle}{TPalette\+Handle}} $\ast$}]{plt\+Handle,  }\item[{\mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$}]{tool\+Handle,  }\item[{\mbox{\hyperlink{class_palette_controller}{Palette\+Controller}} $\ast$}]{palette\+Controller }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02349     : \mbox{\hyperlink{class_tool_options_box}{ToolOptionsBox}}(parent) \{}
+\DoxyCodeLine{02350   setFrameStyle(QFrame::StyledPanel);}
+\DoxyCodeLine{02351   setFixedHeight(26);}
+\DoxyCodeLine{02352 }
+\DoxyCodeLine{02353   m\_currentStyleLabel = \textcolor{keyword}{new} QLabel(\textcolor{stringliteral}{"{} -\/ -\/ -\/ "{}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{02354   m\_currentStyleLabel-\/>setObjectName(\textcolor{stringliteral}{"{}SytlePickerValue"{}});}
+\DoxyCodeLine{02355   setStyleSheet(}
+\DoxyCodeLine{02356       \textcolor{stringliteral}{"{}\#SytlePickerValue \{color: black; border:0px; background: "{}}}
+\DoxyCodeLine{02357       \textcolor{stringliteral}{"{}rgb(196,196,196);\}"{}});}
+\DoxyCodeLine{02358 }
+\DoxyCodeLine{02359   m\_currentStyleLabel-\/>setFixedSize(200, 20);}
+\DoxyCodeLine{02360   m\_currentStyleLabel-\/>setAlignment(Qt::AlignCenter);}
+\DoxyCodeLine{02361 }
+\DoxyCodeLine{02362   \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}} *props = tool-\/>getProperties(0);}
+\DoxyCodeLine{02363   assert(props-\/>getPropertyCount() > 0);}
+\DoxyCodeLine{02364 }
+\DoxyCodeLine{02365   \mbox{\hyperlink{class_tool_option_control_builder}{ToolOptionControlBuilder}} builder(\textcolor{keyword}{this}, tool, pltHandle, toolHandle);}
+\DoxyCodeLine{02366   \textcolor{keywordflow}{if} (tool \&\& tool-\/>getProperties(0)) tool-\/>getProperties(0)-\/>accept(builder);}
+\DoxyCodeLine{02367 }
+\DoxyCodeLine{02368   m\_realTimePickMode =}
+\DoxyCodeLine{02369       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_tool_option_checkbox}{ToolOptionCheckbox}} *\textcolor{keyword}{>}(\mbox{\hyperlink{class_tool_options_box_a111acd54b0b8c1ba3b1b847267b0dd7b}{m\_controls}}.value(\textcolor{stringliteral}{"{}Passive Pick"{}}));}
+\DoxyCodeLine{02370 }
+\DoxyCodeLine{02371   m\_layout-\/>addWidget(m\_currentStyleLabel, 0);}
+\DoxyCodeLine{02372   m\_layout-\/>addStretch(1);}
+\DoxyCodeLine{02373   \textcolor{comment}{// retrieve the "{}organize palette"{} checkbox from the layout and insert}}
+\DoxyCodeLine{02374   \textcolor{comment}{// into rightmost of the tool option bar}}
+\DoxyCodeLine{02375   \mbox{\hyperlink{class_tool_option_checkbox}{ToolOptionCheckbox}} *organizePaletteCB =}
+\DoxyCodeLine{02376       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_tool_option_checkbox}{ToolOptionCheckbox}} *\textcolor{keyword}{>}(\mbox{\hyperlink{class_tool_options_box_a111acd54b0b8c1ba3b1b847267b0dd7b}{m\_controls}}.value(\textcolor{stringliteral}{"{}Organize Palette"{}}));}
+\DoxyCodeLine{02377   m\_layout-\/>removeWidget(organizePaletteCB);}
+\DoxyCodeLine{02378   \textcolor{comment}{// m\_layout-\/>addWidget(new ToolOptionsBarSeparator(this), 0);}}
+\DoxyCodeLine{02379   m\_layout-\/>addWidget(organizePaletteCB);}
+\DoxyCodeLine{02380   m\_layout-\/>addSpacing(5);}
+\DoxyCodeLine{02381   organizePaletteCB-\/>setToolTip(}
+\DoxyCodeLine{02382       tr(\textcolor{stringliteral}{"{}With this option being activated, the picked style will be\(\backslash\)nmoved to "{}}}
+\DoxyCodeLine{02383          \textcolor{stringliteral}{"{}the end of the first page of the palette."{}}));}
+\DoxyCodeLine{02384 }
+\DoxyCodeLine{02385   \textcolor{keywordflow}{if} (m\_realTimePickMode) \{}
+\DoxyCodeLine{02386     connect(m\_realTimePickMode, SIGNAL(toggled(\textcolor{keywordtype}{bool})), m\_currentStyleLabel,}
+\DoxyCodeLine{02387             SLOT(setVisible(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{02388     m\_currentStyleLabel-\/>setVisible(m\_realTimePickMode-\/>isChecked());}
+\DoxyCodeLine{02389   \}}
+\DoxyCodeLine{02390 }
+\DoxyCodeLine{02391   \textcolor{comment}{// for passive pick}}
+\DoxyCodeLine{02392   connect(paletteController,}
+\DoxyCodeLine{02393           SIGNAL(stylePassivePicked(\textcolor{keyword}{const} \textcolor{keywordtype}{int}, \textcolor{keyword}{const} \textcolor{keywordtype}{int}, \textcolor{keyword}{const} \textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{02394           SLOT(updateRealTimePickLabel(\textcolor{keyword}{const} \textcolor{keywordtype}{int}, \textcolor{keyword}{const} \textcolor{keywordtype}{int}, \textcolor{keyword}{const} \textcolor{keywordtype}{int})));}
+\DoxyCodeLine{02395 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_style_picker_tool_options_box_a514424bfd73b1c139cba87ae81398f2d}\label{class_style_picker_tool_options_box_a514424bfd73b1c139cba87ae81398f2d}} 
+\index{StylePickerToolOptionsBox@{StylePickerToolOptionsBox}!updateRealTimePickLabel@{updateRealTimePickLabel}}
+\index{updateRealTimePickLabel@{updateRealTimePickLabel}!StylePickerToolOptionsBox@{StylePickerToolOptionsBox}}
+\doxysubsubsection{\texorpdfstring{updateRealTimePickLabel}{updateRealTimePickLabel}}
+{\footnotesize\ttfamily void Style\+Picker\+Tool\+Options\+Box\+::update\+Real\+Time\+Pick\+Label (\begin{DoxyParamCaption}\item[{const int}]{ink,  }\item[{const int}]{paint,  }\item[{const int}]{tone }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02409                                                                         \{}
+\DoxyCodeLine{02410   \textcolor{keywordflow}{if} (isVisible()) \{}
+\DoxyCodeLine{02411     \textcolor{keywordflow}{if} (ink < 0)}
+\DoxyCodeLine{02412       m\_currentStyleLabel-\/>setText(\textcolor{stringliteral}{"{} -\/ -\/ -\/ "{}});}
+\DoxyCodeLine{02413     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{02414       m\_currentStyleLabel-\/>setText(QString(\textcolor{stringliteral}{"{}INK: \#\%1  PAINT: \#\%2  TONE: \%3"{}})}
+\DoxyCodeLine{02415                                        .arg(ink)}
+\DoxyCodeLine{02416                                        .arg(paint)}
+\DoxyCodeLine{02417                                        .arg(tone));}
+\DoxyCodeLine{02418   \}}
+\DoxyCodeLine{02419 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_picker_tool_options_box_af97d7a93bd62f53ec051ea8ea2939107}\label{class_style_picker_tool_options_box_af97d7a93bd62f53ec051ea8ea2939107}} 
+\index{StylePickerToolOptionsBox@{StylePickerToolOptionsBox}!updateStatus@{updateStatus}}
+\index{updateStatus@{updateStatus}!StylePickerToolOptionsBox@{StylePickerToolOptionsBox}}
+\doxysubsubsection{\texorpdfstring{updateStatus()}{updateStatus()}}
+{\footnotesize\ttfamily void Style\+Picker\+Tool\+Options\+Box\+::update\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Invokes \mbox{\hyperlink{class_style_picker_tool_options_box_af97d7a93bd62f53ec051ea8ea2939107}{update\+Status()}} on all registered controls. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tool_options_box_a475daf4252f0d89d4968d25bb57783ab}{Tool\+Options\+Box}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02399                                              \{}
+\DoxyCodeLine{02400   QMap<std::string, ToolOptionControl *>::iterator it;}
+\DoxyCodeLine{02401   \textcolor{keywordflow}{for} (it = \mbox{\hyperlink{class_tool_options_box_a111acd54b0b8c1ba3b1b847267b0dd7b}{m\_controls}}.begin(); it != \mbox{\hyperlink{class_tool_options_box_a111acd54b0b8c1ba3b1b847267b0dd7b}{m\_controls}}.end(); it++)}
+\DoxyCodeLine{02402     it.value()-\/>updateStatus();}
+\DoxyCodeLine{02403 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00106}{Tool\+Options\+Box\+::m\+\_\+controls}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tools/tooloptions.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptions.\+cpp\end{DoxyCompactItemize}

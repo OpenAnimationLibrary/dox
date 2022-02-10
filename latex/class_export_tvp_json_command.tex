@@ -1,0 +1,117 @@
+\hypertarget{class_export_tvp_json_command}{}\doxysection{Export\+Tvp\+Json\+Command Class Reference}
+\label{class_export_tvp_json_command}\index{ExportTvpJsonCommand@{ExportTvpJsonCommand}}
+Inheritance diagram for Export\+Tvp\+Json\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_export_tvp_json_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_export_tvp_json_command_a31769afd7b8f30d24cf5ba70bbb6e36c}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_export_tvp_json_command_acdbe28e15275464b294bcc877121b81d}\label{class_export_tvp_json_command_acdbe28e15275464b294bcc877121b81d}} 
+\index{ExportTvpJsonCommand@{ExportTvpJsonCommand}!ExportTvpJsonCommand@{ExportTvpJsonCommand}}
+\index{ExportTvpJsonCommand@{ExportTvpJsonCommand}!ExportTvpJsonCommand@{ExportTvpJsonCommand}}
+\doxysubsubsection{\texorpdfstring{ExportTvpJsonCommand()}{ExportTvpJsonCommand()}}
+{\footnotesize\ttfamily Export\+Tvp\+Json\+Command\+::\+Export\+Tvp\+Json\+Command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00449 : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(MI\_ExportTvpJson) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_export_tvp_json_command_a31769afd7b8f30d24cf5ba70bbb6e36c}\label{class_export_tvp_json_command_a31769afd7b8f30d24cf5ba70bbb6e36c}} 
+\index{ExportTvpJsonCommand@{ExportTvpJsonCommand}!execute@{execute}}
+\index{execute@{execute}!ExportTvpJsonCommand@{ExportTvpJsonCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Export\+Tvp\+Json\+Command\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00453                                    \{}
+\DoxyCodeLine{00454   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}}* scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00455   \textcolor{keywordflow}{if} (scene-\/>\mbox{\hyperlink{class_toonz_scene_a53cbaf09f551658479eb743e153ab6bc}{isUntitled}}()) \{}
+\DoxyCodeLine{00456     DVGui::error(}
+\DoxyCodeLine{00457         QObject::tr(\textcolor{stringliteral}{"{}TVPaint JSON file cannot be exported from untitled scene. "{}}}
+\DoxyCodeLine{00458                     \textcolor{stringliteral}{"{}Save the scene first."{}}));}
+\DoxyCodeLine{00459     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00460   \}}
+\DoxyCodeLine{00461   \mbox{\hyperlink{class_t_xsheet}{TXsheet}}* xsheet = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00462   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp    = scene-\/>\mbox{\hyperlink{class_toonz_scene_ad42b52b671b094f66e003c4b7ebefd45}{getScenePath}}().\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(\textcolor{stringliteral}{"{}json"{}});}
+\DoxyCodeLine{00463 }
+\DoxyCodeLine{00464   \mbox{\hyperlink{class_tvp_json_io_1_1_tvp_json_data}{TvpJsonData}} tvpJsonData;}
+\DoxyCodeLine{00465   tvpJsonData.build(scene, xsheet);}
+\DoxyCodeLine{00466   \textcolor{keywordflow}{if} (tvpJsonData.isEmpty()) \{}
+\DoxyCodeLine{00467     DVGui::error(}
+\DoxyCodeLine{00468         QObject::tr(\textcolor{stringliteral}{"{}No columns can be exported. Please note the followings:\(\backslash\)n "{}}}
+\DoxyCodeLine{00469                     \textcolor{stringliteral}{"{}-\/ The level files must be placed at the same or child "{}}}
+\DoxyCodeLine{00470                     \textcolor{stringliteral}{"{}folder relative to the scene file.\(\backslash\)n -\/ Currently only the "{}}}
+\DoxyCodeLine{00471                     \textcolor{stringliteral}{"{}columns containing raster levels can be exported."{}}));}
+\DoxyCodeLine{00472     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00473   \}}
+\DoxyCodeLine{00474 }
+\DoxyCodeLine{00475   \textcolor{keyword}{static} \mbox{\hyperlink{class_generic_save_file_popup}{GenericSaveFilePopup}}* savePopup = 0;}
+\DoxyCodeLine{00476   \textcolor{keywordflow}{if} (!savePopup) \{}
+\DoxyCodeLine{00477     savePopup =}
+\DoxyCodeLine{00478         \textcolor{keyword}{new} \mbox{\hyperlink{class_generic_save_file_popup}{GenericSaveFilePopup}}(QObject::tr(\textcolor{stringliteral}{"{}Export TVPaint JSON File"{}}));}
+\DoxyCodeLine{00479     savePopup-\/>addFilterType(\textcolor{stringliteral}{"{}json"{}});}
+\DoxyCodeLine{00480   \}}
+\DoxyCodeLine{00481   \textcolor{keywordflow}{if} (!scene-\/>\mbox{\hyperlink{class_toonz_scene_a53cbaf09f551658479eb743e153ab6bc}{isUntitled}}())}
+\DoxyCodeLine{00482     savePopup-\/>setFolder(fp.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}());}
+\DoxyCodeLine{00483   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00484     savePopup-\/>setFolder(}
+\DoxyCodeLine{00485         \mbox{\hyperlink{class_t_project_manager_a150ca0d6e2eb171b8117b0c5f03dbfad}{TProjectManager::instance}}()-\/>getCurrentProject()-\/>getScenesPath());}
+\DoxyCodeLine{00486   savePopup-\/>setFilename(fp.\mbox{\hyperlink{class_t_file_path_ac17d65d827432f0fae28fed699bf4afa}{withoutParentDir}}());}
+\DoxyCodeLine{00487   fp = savePopup-\/>\mbox{\hyperlink{class_generic_save_file_popup_a60a6017d0e411695c066c478b4974745}{getPath}}();}
+\DoxyCodeLine{00488   \textcolor{keywordflow}{if} (fp.isEmpty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00489 }
+\DoxyCodeLine{00490   QFile saveFile(fp.getQString());}
+\DoxyCodeLine{00491 }
+\DoxyCodeLine{00492   \textcolor{keywordflow}{if} (!saveFile.open(QIODevice::WriteOnly)) \{}
+\DoxyCodeLine{00493     qWarning(\textcolor{stringliteral}{"{}Couldn't open save file."{}});}
+\DoxyCodeLine{00494     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00495   \}}
+\DoxyCodeLine{00496 }
+\DoxyCodeLine{00497   QJsonObject tvpJsonObject;}
+\DoxyCodeLine{00498   tvpJsonData.write(tvpJsonObject);}
+\DoxyCodeLine{00499   QJsonDocument saveDoc(tvpJsonObject);}
+\DoxyCodeLine{00500   QByteArray jsonByteArrayData = saveDoc.toJson();}
+\DoxyCodeLine{00501   saveFile.write(jsonByteArrayData);}
+\DoxyCodeLine{00502 }
+\DoxyCodeLine{00503   QString str = QObject::tr(\textcolor{stringliteral}{"{}The file \%1 has been exported successfully."{}})}
+\DoxyCodeLine{00504                     .arg(QString::fromStdString(fp.\mbox{\hyperlink{class_t_file_path_a9b256108e6e5ff99f3ba828d4cdbd7ee}{getLevelName}}()));}
+\DoxyCodeLine{00505 }
+\DoxyCodeLine{00506   std::vector<QString> buttons = \{QObject::tr(\textcolor{stringliteral}{"{}OK"{}}),}
+\DoxyCodeLine{00507                                   QObject::tr(\textcolor{stringliteral}{"{}Open containing folder"{}})\};}
+\DoxyCodeLine{00508   \textcolor{keywordtype}{int} ret = DVGui::MsgBox(DVGui::INFORMATION, str, buttons);}
+\DoxyCodeLine{00509 }
+\DoxyCodeLine{00510   \textcolor{keywordflow}{if} (ret == 2) \{}
+\DoxyCodeLine{00511     \mbox{\hyperlink{class_t_file_path}{TFilePath}} folderPath = fp.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}();}
+\DoxyCodeLine{00512     \textcolor{keywordflow}{if} (TSystem::isUNC(folderPath))}
+\DoxyCodeLine{00513       QDesktopServices::openUrl(QUrl(folderPath.getQString()));}
+\DoxyCodeLine{00514     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00515       QDesktopServices::openUrl(QUrl::fromLocalFile(folderPath.getQString()));}
+\DoxyCodeLine{00516   \}}
+\DoxyCodeLine{00517 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/tvpjson\+\_\+io.\+cpp\end{DoxyCompactItemize}

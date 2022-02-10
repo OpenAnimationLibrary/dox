@@ -1,0 +1,271 @@
+\hypertarget{class_exr_reader}{}\doxysection{Exr\+Reader Class Reference}
+\label{class_exr_reader}\index{ExrReader@{ExrReader}}
+Inheritance diagram for Exr\+Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_exr_reader}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_exr_reader_a8a04ac56b0fbac3f2a623b3955d2584b}{open}} (FILE $\ast$file) override
+\item 
+Tiio\+::\+Row\+Order \mbox{\hyperlink{class_exr_reader_aa81e4ea2975f6dcc22fbd6e4778d3069}{get\+Row\+Order}} () const override
+\item 
+bool \mbox{\hyperlink{class_exr_reader_af4051081b163f76e9b7fff2767c75c89}{read16\+Bit\+Is\+Enabled}} () const override
+\item 
+int \mbox{\hyperlink{class_exr_reader_ad98631d80f81f909c286409671e10918}{skip\+Lines}} (int line\+Count) override
+\item 
+void \mbox{\hyperlink{class_exr_reader_a12fe5d0f23b7e84f7aba97b2a90c2445}{read\+Line}} (char $\ast$buffer, int x0, int x1, int shrink) override
+\item 
+void \mbox{\hyperlink{class_exr_reader_a1de01cbc276e8076f61fcea5dccfe24b}{read\+Line}} (short $\ast$buffer, int x0, int x1, int shrink) override
+\item 
+void \mbox{\hyperlink{class_exr_reader_a7f40114a4b6e5c4632e50236e6d31ad9}{load\+Image}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_exr_reader_a489a99e3a7acfee7e40d84e61fad7571}\label{class_exr_reader_a489a99e3a7acfee7e40d84e61fad7571}} 
+\index{ExrReader@{ExrReader}!ExrReader@{ExrReader}}
+\index{ExrReader@{ExrReader}!ExrReader@{ExrReader}}
+\doxysubsubsection{\texorpdfstring{ExrReader()}{ExrReader()}}
+{\footnotesize\ttfamily Exr\+Reader\+::\+Exr\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00070 : m\_rgbaBuf(\textcolor{keyword}{nullptr}), m\_row(0), m\_exr\_header(\textcolor{keyword}{nullptr}) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_exr_reader_a96402c5e4656474a47271e7c03f97628}\label{class_exr_reader_a96402c5e4656474a47271e7c03f97628}} 
+\index{ExrReader@{ExrReader}!````~ExrReader@{$\sim$ExrReader}}
+\index{````~ExrReader@{$\sim$ExrReader}!ExrReader@{ExrReader}}
+\doxysubsubsection{\texorpdfstring{$\sim$ExrReader()}{~ExrReader()}}
+{\footnotesize\ttfamily Exr\+Reader\+::$\sim$\+Exr\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00072                       \{}
+\DoxyCodeLine{00073   \textcolor{keywordflow}{if} (m\_rgbaBuf) free(m\_rgbaBuf);}
+\DoxyCodeLine{00074   \textcolor{keywordflow}{if} (m\_exr\_header) FreeEXRHeader(m\_exr\_header);}
+\DoxyCodeLine{00075 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_exr_reader_aa81e4ea2975f6dcc22fbd6e4778d3069}\label{class_exr_reader_aa81e4ea2975f6dcc22fbd6e4778d3069}} 
+\index{ExrReader@{ExrReader}!getRowOrder@{getRowOrder}}
+\index{getRowOrder@{getRowOrder}!ExrReader@{ExrReader}}
+\doxysubsubsection{\texorpdfstring{getRowOrder()}{getRowOrder()}}
+{\footnotesize\ttfamily Tiio\+::\+Row\+Order Exr\+Reader\+::get\+Row\+Order (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00108 \{ \textcolor{keywordflow}{return} Tiio::TOP2BOTTOM; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_exr_reader_a7f40114a4b6e5c4632e50236e6d31ad9}\label{class_exr_reader_a7f40114a4b6e5c4632e50236e6d31ad9}} 
+\index{ExrReader@{ExrReader}!loadImage@{loadImage}}
+\index{loadImage@{loadImage}!ExrReader@{ExrReader}}
+\doxysubsubsection{\texorpdfstring{loadImage()}{loadImage()}}
+{\footnotesize\ttfamily void Exr\+Reader\+::load\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00117                           \{}
+\DoxyCodeLine{00118   assert(!m\_rgbaBuf);}
+\DoxyCodeLine{00119   \textcolor{keyword}{const} \textcolor{keywordtype}{char}* err;}
+\DoxyCodeLine{00120   \{}
+\DoxyCodeLine{00121     \textcolor{keywordtype}{int} ret =}
+\DoxyCodeLine{00122         LoadEXRImageBufFromFileHandle(\&m\_rgbaBuf, *m\_exr\_header, m\_fp, \&err);}
+\DoxyCodeLine{00123     \textcolor{keywordflow}{if} (ret != 0) \{}
+\DoxyCodeLine{00124       m\_exr\_header = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00125       \textcolor{keywordflow}{throw}(std::string(err));}
+\DoxyCodeLine{00126     \}}
+\DoxyCodeLine{00127   \}}
+\DoxyCodeLine{00128   \textcolor{comment}{// header memory is freed after loading image}}
+\DoxyCodeLine{00129   m\_exr\_header = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00130 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_exr_reader_a8a04ac56b0fbac3f2a623b3955d2584b}\label{class_exr_reader_a8a04ac56b0fbac3f2a623b3955d2584b}} 
+\index{ExrReader@{ExrReader}!open@{open}}
+\index{open@{open}!ExrReader@{ExrReader}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily void Exr\+Reader\+::open (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00077                                \{}
+\DoxyCodeLine{00078   m\_fp         = file;}
+\DoxyCodeLine{00079   m\_exr\_header = \textcolor{keyword}{new} EXRHeader();}
+\DoxyCodeLine{00080   \textcolor{keyword}{const} \textcolor{keywordtype}{char}* err;}
+\DoxyCodeLine{00081   \{}
+\DoxyCodeLine{00082     \textcolor{keywordtype}{int} ret = LoadEXRHeaderFromFileHandle(*m\_exr\_header, file, \&err);}
+\DoxyCodeLine{00083     \textcolor{keywordflow}{if} (ret != 0) \{}
+\DoxyCodeLine{00084       m\_exr\_header = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00085       \textcolor{keywordflow}{throw}(std::string(err));}
+\DoxyCodeLine{00086     \}}
+\DoxyCodeLine{00087   \}}
+\DoxyCodeLine{00088   m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} =}
+\DoxyCodeLine{00089       m\_exr\_header-\/>data\_window.max\_x -\/ m\_exr\_header-\/>data\_window.min\_x + 1;}
+\DoxyCodeLine{00090   m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}} =}
+\DoxyCodeLine{00091       m\_exr\_header-\/>data\_window.max\_y -\/ m\_exr\_header-\/>data\_window.min\_y + 1;}
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{00093   m\_info.\mbox{\hyperlink{class_t_image_info_a6b58380f718e21dde1b37577090f5c77}{m\_samplePerPixel}} = m\_exr\_header-\/>num\_channels;}
+\DoxyCodeLine{00094 }
+\DoxyCodeLine{00095   \textcolor{keywordtype}{int} bps = 16;}
+\DoxyCodeLine{00096   \textcolor{keywordflow}{switch} (m\_exr\_header-\/>pixel\_types[0]) \{}
+\DoxyCodeLine{00097   \textcolor{keywordflow}{case} TINYEXR\_PIXELTYPE\_UINT:}
+\DoxyCodeLine{00098   \textcolor{keywordflow}{case} TINYEXR\_PIXELTYPE\_FLOAT:}
+\DoxyCodeLine{00099     bps = 32;}
+\DoxyCodeLine{00100     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00101   \textcolor{keywordflow}{case} TINYEXR\_PIXELTYPE\_HALF:}
+\DoxyCodeLine{00102     bps = 16;}
+\DoxyCodeLine{00103     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00104   \}}
+\DoxyCodeLine{00105   m\_info.\mbox{\hyperlink{class_t_image_info_aa69221d579b49a27bcd54ffaabb2e8be}{m\_bitsPerSample}} = bps;}
+\DoxyCodeLine{00106 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_exr_reader_af4051081b163f76e9b7fff2767c75c89}\label{class_exr_reader_af4051081b163f76e9b7fff2767c75c89}} 
+\index{ExrReader@{ExrReader}!read16BitIsEnabled@{read16BitIsEnabled}}
+\index{read16BitIsEnabled@{read16BitIsEnabled}!ExrReader@{ExrReader}}
+\doxysubsubsection{\texorpdfstring{read16BitIsEnabled()}{read16BitIsEnabled()}}
+{\footnotesize\ttfamily bool Exr\+Reader\+::read16\+Bit\+Is\+Enabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00110 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{true}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_exr_reader_a12fe5d0f23b7e84f7aba97b2a90c2445}\label{class_exr_reader_a12fe5d0f23b7e84f7aba97b2a90c2445}} 
+\index{ExrReader@{ExrReader}!readLine@{readLine}}
+\index{readLine@{readLine}!ExrReader@{ExrReader}}
+\doxysubsubsection{\texorpdfstring{readLine()}{readLine()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Exr\+Reader\+::read\+Line (\begin{DoxyParamCaption}\item[{char $\ast$}]{buffer,  }\item[{int}]{x0,  }\item[{int}]{x1,  }\item[{int}]{shrink }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00132                                                                  \{}
+\DoxyCodeLine{00133   \textcolor{keyword}{const} \textcolor{keywordtype}{int} pixelSize = 4;}
+\DoxyCodeLine{00134   \textcolor{keywordflow}{if} (m\_row < 0 || m\_row >= m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}}) \{}
+\DoxyCodeLine{00135     memset(buffer, 0, (x1 -\/ x0 + 1) * pixelSize);}
+\DoxyCodeLine{00136     m\_row++;}
+\DoxyCodeLine{00137     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00138   \}}
+\DoxyCodeLine{00139 }
+\DoxyCodeLine{00140   \textcolor{keywordflow}{if} (!m\_rgbaBuf) loadImage();}
+\DoxyCodeLine{00141 }
+\DoxyCodeLine{00142   TPixel32* pix = (TPixel32*)buffer;}
+\DoxyCodeLine{00143   \textcolor{keywordtype}{float}* v      = m\_rgbaBuf + m\_row * m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} * 4;}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145   pix += x0;}
+\DoxyCodeLine{00146   v += x0 * 4;}
+\DoxyCodeLine{00147 }
+\DoxyCodeLine{00148   \textcolor{keywordtype}{int} width =}
+\DoxyCodeLine{00149       (x1 < x0) ? (m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} -\/ 1) / shrink + 1 : (x1 -\/ x0) / shrink + 1;}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < width; i++) \{}
+\DoxyCodeLine{00152     pix-\/>r = ftouc(v[0]);}
+\DoxyCodeLine{00153     pix-\/>g = ftouc(v[1]);}
+\DoxyCodeLine{00154     pix-\/>b = ftouc(v[2]);}
+\DoxyCodeLine{00155     pix-\/>m = ftouc(v[3]);}
+\DoxyCodeLine{00156 }
+\DoxyCodeLine{00157     v += shrink * 4;}
+\DoxyCodeLine{00158     pix += shrink;}
+\DoxyCodeLine{00159   \}}
+\DoxyCodeLine{00160 }
+\DoxyCodeLine{00161   m\_row++;}
+\DoxyCodeLine{00162 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_exr_reader_a1de01cbc276e8076f61fcea5dccfe24b}\label{class_exr_reader_a1de01cbc276e8076f61fcea5dccfe24b}} 
+\index{ExrReader@{ExrReader}!readLine@{readLine}}
+\index{readLine@{readLine}!ExrReader@{ExrReader}}
+\doxysubsubsection{\texorpdfstring{readLine()}{readLine()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Exr\+Reader\+::read\+Line (\begin{DoxyParamCaption}\item[{short $\ast$}]{buffer,  }\item[{int}]{x0,  }\item[{int}]{x1,  }\item[{int}]{shrink }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00164                                                                   \{}
+\DoxyCodeLine{00165   \textcolor{keyword}{const} \textcolor{keywordtype}{int} pixelSize = 8;}
+\DoxyCodeLine{00166   \textcolor{keywordflow}{if} (m\_row < 0 || m\_row >= m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}}) \{}
+\DoxyCodeLine{00167     memset(buffer, 0, (x1 -\/ x0 + 1) * pixelSize);}
+\DoxyCodeLine{00168     m\_row++;}
+\DoxyCodeLine{00169     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00170   \}}
+\DoxyCodeLine{00171 }
+\DoxyCodeLine{00172   \textcolor{keywordflow}{if} (!m\_rgbaBuf) loadImage();}
+\DoxyCodeLine{00173 }
+\DoxyCodeLine{00174   TPixel64* pix = (TPixel64*)buffer;}
+\DoxyCodeLine{00175   \textcolor{keywordtype}{float}* v      = m\_rgbaBuf + m\_row * m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} * 4;}
+\DoxyCodeLine{00176 }
+\DoxyCodeLine{00177   pix += x0;}
+\DoxyCodeLine{00178   v += x0 * 4;}
+\DoxyCodeLine{00179 }
+\DoxyCodeLine{00180   \textcolor{keywordtype}{int} width =}
+\DoxyCodeLine{00181       (x1 < x0) ? (m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} -\/ 1) / shrink + 1 : (x1 -\/ x0) / shrink + 1;}
+\DoxyCodeLine{00182 }
+\DoxyCodeLine{00183   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < width; i++) \{}
+\DoxyCodeLine{00184     pix-\/>r = ftous(v[0]);}
+\DoxyCodeLine{00185     pix-\/>g = ftous(v[1]);}
+\DoxyCodeLine{00186     pix-\/>b = ftous(v[2]);}
+\DoxyCodeLine{00187     pix-\/>m = ftous(v[3], 1.0f);}
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189     v += shrink * 4;}
+\DoxyCodeLine{00190     pix += shrink;}
+\DoxyCodeLine{00191   \}}
+\DoxyCodeLine{00192 }
+\DoxyCodeLine{00193   m\_row++;}
+\DoxyCodeLine{00194 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_exr_reader_ad98631d80f81f909c286409671e10918}\label{class_exr_reader_ad98631d80f81f909c286409671e10918}} 
+\index{ExrReader@{ExrReader}!skipLines@{skipLines}}
+\index{skipLines@{skipLines}!ExrReader@{ExrReader}}
+\doxysubsubsection{\texorpdfstring{skipLines()}{skipLines()}}
+{\footnotesize\ttfamily int Exr\+Reader\+::skip\+Lines (\begin{DoxyParamCaption}\item[{int}]{line\+Count }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00112                                       \{}
+\DoxyCodeLine{00113   m\_row += lineCount;}
+\DoxyCodeLine{00114   \textcolor{keywordflow}{return} lineCount;}
+\DoxyCodeLine{00115 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/exr/tiio\+\_\+exr.\+cpp\end{DoxyCompactItemize}

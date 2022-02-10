@@ -1,0 +1,209 @@
+\hypertarget{class_drag_selection_tool_1_1_undo_raster_deform}{}\doxysection{Drag\+Selection\+Tool\+::Undo\+Raster\+Deform Class Reference}
+\label{class_drag_selection_tool_1_1_undo_raster_deform}\index{DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}}
+Inheritance diagram for Drag\+Selection\+Tool\+::Undo\+Raster\+Deform\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_drag_selection_tool_1_1_undo_raster_deform}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_drag_selection_tool_1_1_undo_raster_deform_a94784f3f1c3d5303a5d29e5d447769f8}{Undo\+Raster\+Deform}} (\mbox{\hyperlink{class_raster_selection_tool}{Raster\+Selection\+Tool}} $\ast$tool)
+\item 
+void \mbox{\hyperlink{class_drag_selection_tool_1_1_undo_raster_deform_a5369beb352361759908c8d12215e20cc}{register\+Raster\+Deformation}} ()
+\item 
+void \mbox{\hyperlink{class_drag_selection_tool_1_1_undo_raster_deform_aebd2f5fe1e81a9b7a9826e35fb1521c9}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_drag_selection_tool_1_1_undo_raster_deform_ac29d507415608fd497d0f59504fa5133}{redo}} () const override
+\item 
+int \mbox{\hyperlink{class_drag_selection_tool_1_1_undo_raster_deform_a7da8405b0e9e8e2cbd153ce4df2be169}{get\+Size}} () const override
+\item 
+QString \mbox{\hyperlink{class_drag_selection_tool_1_1_undo_raster_deform_abf216e47e3bbe1018abf57fb3ff1ae52}{get\+History\+String}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_drag_selection_tool_1_1_undo_raster_deform_a94784f3f1c3d5303a5d29e5d447769f8}\label{class_drag_selection_tool_1_1_undo_raster_deform_a94784f3f1c3d5303a5d29e5d447769f8}} 
+\index{DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}!UndoRasterDeform@{UndoRasterDeform}}
+\index{UndoRasterDeform@{UndoRasterDeform}!DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}}
+\doxysubsubsection{\texorpdfstring{UndoRasterDeform()}{UndoRasterDeform()}}
+{\footnotesize\ttfamily Drag\+Selection\+Tool\+::\+Undo\+Raster\+Deform\+::\+Undo\+Raster\+Deform (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_raster_selection_tool}{Raster\+Selection\+Tool}} $\ast$}]{tool }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087     : \mbox{\hyperlink{class_t_undo}{TUndo}}()}
+\DoxyCodeLine{00088     , m\_tool(tool)}
+\DoxyCodeLine{00089     , m\_oldBBox(tool-\/>getBBox())}
+\DoxyCodeLine{00090     , m\_newBBox()}
+\DoxyCodeLine{00091     , m\_oldCenter(tool-\/>getCenter())}
+\DoxyCodeLine{00092     , m\_newCenter()}
+\DoxyCodeLine{00093     , m\_dim() \{}
+\DoxyCodeLine{00094   \mbox{\hyperlink{class_raster_selection}{RasterSelection}} *selection = (\mbox{\hyperlink{class_raster_selection}{RasterSelection}} *)tool-\/>\mbox{\hyperlink{class_raster_selection_tool_a9a464e45100ead00f947d1700431c384}{getSelection}}();}
+\DoxyCodeLine{00095   m\_oldStrokes               = selection-\/>getStrokes();}
+\DoxyCodeLine{00096   m\_oldFloatingImageId =}
+\DoxyCodeLine{00097       \textcolor{stringliteral}{"{}UndoRasterDeform\_old\_floating\_"{}} + std::to\_string(m\_id++);}
+\DoxyCodeLine{00098   \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} floatingRas = selection-\/>getFloatingSelection();}
+\DoxyCodeLine{00099   \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} floatingImage;}
+\DoxyCodeLine{00100   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}} toonzRas = (\mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}})(floatingRas)) \{}
+\DoxyCodeLine{00101     floatingImage = \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}}(toonzRas, toonzRas-\/>getBounds());}
+\DoxyCodeLine{00102     m\_dim         = toonzRas-\/>getSize();}
+\DoxyCodeLine{00103     m\_pixelSize   = toonzRas-\/>getPixelSize();}
+\DoxyCodeLine{00104   \}}
+\DoxyCodeLine{00105   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} fullColorRas = (\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}})(floatingRas)) \{}
+\DoxyCodeLine{00106     floatingImage = \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}(fullColorRas);}
+\DoxyCodeLine{00107     m\_dim         = fullColorRas-\/>getSize();}
+\DoxyCodeLine{00108     m\_pixelSize   = fullColorRas-\/>getPixelSize();}
+\DoxyCodeLine{00109   \}}
+\DoxyCodeLine{00110   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}} grRas = (\mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}})(floatingRas)) \{}
+\DoxyCodeLine{00111     floatingImage = \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}(grRas);}
+\DoxyCodeLine{00112     m\_dim         = grRas-\/>getSize();}
+\DoxyCodeLine{00113     m\_pixelSize   = grRas-\/>getPixelSize();}
+\DoxyCodeLine{00114   \}}
+\DoxyCodeLine{00115   TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a124eae4cf370288f42c22b3477cb5163}{add}}(m\_oldFloatingImageId, floatingImage, \textcolor{keyword}{false});}
+\DoxyCodeLine{00116 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_drag_selection_tool_1_1_undo_raster_deform_a3bf7408f6fbde2588b6faa1e4cf2191f}\label{class_drag_selection_tool_1_1_undo_raster_deform_a3bf7408f6fbde2588b6faa1e4cf2191f}} 
+\index{DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}!````~UndoRasterDeform@{$\sim$UndoRasterDeform}}
+\index{````~UndoRasterDeform@{$\sim$UndoRasterDeform}!DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}}
+\doxysubsubsection{\texorpdfstring{$\sim$UndoRasterDeform()}{~UndoRasterDeform()}}
+{\footnotesize\ttfamily Drag\+Selection\+Tool\+::\+Undo\+Raster\+Deform\+::$\sim$\+Undo\+Raster\+Deform (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00120                                                      \{}
+\DoxyCodeLine{00121   \textcolor{keywordflow}{if} (TImageCache::instance()-\/>isCached(m\_oldFloatingImageId))}
+\DoxyCodeLine{00122     TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a57d63227dfe2532b0aed22c47113be66}{remove}}(m\_oldFloatingImageId);}
+\DoxyCodeLine{00123   \textcolor{keywordflow}{if} (TImageCache::instance()-\/>isCached(m\_newFloatingImageId))}
+\DoxyCodeLine{00124     TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a57d63227dfe2532b0aed22c47113be66}{remove}}(m\_newFloatingImageId);}
+\DoxyCodeLine{00125 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_drag_selection_tool_1_1_undo_raster_deform_abf216e47e3bbe1018abf57fb3ff1ae52}\label{class_drag_selection_tool_1_1_undo_raster_deform_abf216e47e3bbe1018abf57fb3ff1ae52}} 
+\index{DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}!getHistoryString@{getHistoryString}}
+\index{getHistoryString@{getHistoryString}!DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}}
+\doxysubsubsection{\texorpdfstring{getHistoryString()}{getHistoryString()}}
+{\footnotesize\ttfamily QString Drag\+Selection\+Tool\+::\+Undo\+Raster\+Deform\+::get\+History\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00071 \{ \textcolor{keywordflow}{return} QObject::tr(\textcolor{stringliteral}{"{}Deform Raster"{}}); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_drag_selection_tool_1_1_undo_raster_deform_a7da8405b0e9e8e2cbd153ce4df2be169}\label{class_drag_selection_tool_1_1_undo_raster_deform_a7da8405b0e9e8e2cbd153ce4df2be169}} 
+\index{DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}!getSize@{getSize}}
+\index{getSize@{getSize}!DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Drag\+Selection\+Tool\+::\+Undo\+Raster\+Deform\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00182                                                      \{}
+\DoxyCodeLine{00183   \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(*this) + (m\_dim.lx * m\_dim.ly * m\_pixelSize);}
+\DoxyCodeLine{00184 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_drag_selection_tool_1_1_undo_raster_deform_ac29d507415608fd497d0f59504fa5133}\label{class_drag_selection_tool_1_1_undo_raster_deform_ac29d507415608fd497d0f59504fa5133}} 
+\index{DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}!redo@{redo}}
+\index{redo@{redo}!DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Drag\+Selection\+Tool\+::\+Undo\+Raster\+Deform\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00166                                                    \{}
+\DoxyCodeLine{00167   \mbox{\hyperlink{class_raster_selection}{RasterSelection}} *selection = (\mbox{\hyperlink{class_raster_selection}{RasterSelection}} *)m\_tool-\/>\mbox{\hyperlink{class_raster_selection_tool_a9a464e45100ead00f947d1700431c384}{getSelection}}();}
+\DoxyCodeLine{00168   \textcolor{keywordflow}{if} (!selection-\/>isFloating()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00169   \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} img = TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_aea3ac2752efd6fa9689f5a7c1e895e41}{get}}(m\_newFloatingImageId, \textcolor{keyword}{false});}
+\DoxyCodeLine{00170   \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras;}
+\DoxyCodeLine{00171   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} ti = (\mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}})(img)) ras = ti-\/>getRaster();}
+\DoxyCodeLine{00172   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} ri = (\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}})(img)) ras = ri-\/>getRaster();}
+\DoxyCodeLine{00173   selection-\/>setStrokes(m\_newStrokes);}
+\DoxyCodeLine{00174   m\_tool-\/>setBBox(m\_newBBox);}
+\DoxyCodeLine{00175   m\_tool-\/>setCenter(m\_newCenter);}
+\DoxyCodeLine{00176   m\_tool-\/>\mbox{\hyperlink{class_t_tool_a3e791336c642542c5648aa8ea86e2348}{invalidate}}();}
+\DoxyCodeLine{00177   m\_tool-\/>increaseTransformationCount();}
+\DoxyCodeLine{00178 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_drag_selection_tool_1_1_undo_raster_deform_a5369beb352361759908c8d12215e20cc}\label{class_drag_selection_tool_1_1_undo_raster_deform_a5369beb352361759908c8d12215e20cc}} 
+\index{DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}!registerRasterDeformation@{registerRasterDeformation}}
+\index{registerRasterDeformation@{registerRasterDeformation}!DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}}
+\doxysubsubsection{\texorpdfstring{registerRasterDeformation()}{registerRasterDeformation()}}
+{\footnotesize\ttfamily void Drag\+Selection\+Tool\+::\+Undo\+Raster\+Deform\+::register\+Raster\+Deformation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00129                                                                   \{}
+\DoxyCodeLine{00130   \mbox{\hyperlink{class_raster_selection}{RasterSelection}} *selection = (\mbox{\hyperlink{class_raster_selection}{RasterSelection}} *)m\_tool-\/>\mbox{\hyperlink{class_raster_selection_tool_a9a464e45100ead00f947d1700431c384}{getSelection}}();}
+\DoxyCodeLine{00131   m\_newStrokes               = selection-\/>getStrokes();}
+\DoxyCodeLine{00132   m\_newFloatingImageId =}
+\DoxyCodeLine{00133       \textcolor{stringliteral}{"{}UndoRasterDeform\_new\_floating\_"{}} + std::to\_string(m\_id);}
+\DoxyCodeLine{00134   \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} floatingRas = selection-\/>getFloatingSelection();}
+\DoxyCodeLine{00135   \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} floatingImage;}
+\DoxyCodeLine{00136   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}} toonzRas = (\mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}})(floatingRas))}
+\DoxyCodeLine{00137     floatingImage = \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}}(toonzRas, toonzRas-\/>getBounds());}
+\DoxyCodeLine{00138   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} fullColorRas = (\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}})(floatingRas))}
+\DoxyCodeLine{00139     floatingImage = \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}(fullColorRas);}
+\DoxyCodeLine{00140   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}} grRas = (\mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}})(floatingRas))}
+\DoxyCodeLine{00141     floatingImage = \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}(grRas);}
+\DoxyCodeLine{00142   TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a124eae4cf370288f42c22b3477cb5163}{add}}(m\_newFloatingImageId, floatingImage, \textcolor{keyword}{false});}
+\DoxyCodeLine{00143   m\_newBBox   = m\_tool-\/>getBBox();}
+\DoxyCodeLine{00144   m\_newCenter = m\_tool-\/>getCenter();}
+\DoxyCodeLine{00145 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_drag_selection_tool_1_1_undo_raster_deform_aebd2f5fe1e81a9b7a9826e35fb1521c9}\label{class_drag_selection_tool_1_1_undo_raster_deform_aebd2f5fe1e81a9b7a9826e35fb1521c9}} 
+\index{DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}!undo@{undo}}
+\index{undo@{undo}!DragSelectionTool::UndoRasterDeform@{DragSelectionTool::UndoRasterDeform}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Drag\+Selection\+Tool\+::\+Undo\+Raster\+Deform\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00149                                                    \{}
+\DoxyCodeLine{00150   \mbox{\hyperlink{class_raster_selection}{RasterSelection}} *selection = (\mbox{\hyperlink{class_raster_selection}{RasterSelection}} *)m\_tool-\/>\mbox{\hyperlink{class_raster_selection_tool_a9a464e45100ead00f947d1700431c384}{getSelection}}();}
+\DoxyCodeLine{00151   \textcolor{keywordflow}{if} (!selection-\/>isFloating()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00152   \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} img = TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_aea3ac2752efd6fa9689f5a7c1e895e41}{get}}(m\_oldFloatingImageId, \textcolor{keyword}{false});}
+\DoxyCodeLine{00153   \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras;}
+\DoxyCodeLine{00154   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} ti = (\mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}})(img)) ras = ti-\/>getRaster();}
+\DoxyCodeLine{00155   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} ri = (\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}})(img)) ras = ri-\/>getRaster();}
+\DoxyCodeLine{00156   selection-\/>setFloatingSeletion(ras);}
+\DoxyCodeLine{00157   selection-\/>setStrokes(m\_oldStrokes);}
+\DoxyCodeLine{00158   m\_tool-\/>setBBox(m\_oldBBox);}
+\DoxyCodeLine{00159   m\_tool-\/>setCenter(m\_oldCenter);}
+\DoxyCodeLine{00160   m\_tool-\/>\mbox{\hyperlink{class_t_tool_a3e791336c642542c5648aa8ea86e2348}{invalidate}}();}
+\DoxyCodeLine{00161   m\_tool-\/>decreaseTransformationCount();}
+\DoxyCodeLine{00162 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/rasterselectiontool.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/rasterselectiontool.\+cpp\end{DoxyCompactItemize}

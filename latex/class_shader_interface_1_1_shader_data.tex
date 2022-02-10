@@ -1,0 +1,183 @@
+\hypertarget{class_shader_interface_1_1_shader_data}{}\doxysection{Shader\+Interface\+::Shader\+Data Class Reference}
+\label{class_shader_interface_1_1_shader_data}\index{ShaderInterface::ShaderData@{ShaderInterface::ShaderData}}
+Inheritance diagram for Shader\+Interface\+::Shader\+Data\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_shader_interface_1_1_shader_data}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_shader_interface_1_1_shader_data_a0309348c58e5b32a6c8dd049992c19b2}{is\+Valid}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{class_shader_interface_1_1_shader_data_a59542536d3858d4776b8f903dea77371}{m\+\_\+name}}
+\begin{DoxyCompactList}\small\item\em A name associated to the shader action. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \mbox{\hyperlink{class_shader_interface_1_1_shader_data_aadea1ae01612d9e81ff005a4d60838e7}{m\+\_\+path}}
+\begin{DoxyCompactList}\small\item\em The shader program\textquotesingle{}s file path. \end{DoxyCompactList}\item 
+QOpen\+GLShader\+::\+Shader\+Type \mbox{\hyperlink{class_shader_interface_1_1_shader_data_a0f6cb39226af27932d79821075f6ea7e}{m\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em The shader type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_shader_interface_1_1_shader_data_ad84b669d544a0554b42064f57a9129d0}{save\+Data}} (\mbox{\hyperlink{class_t_o_stream}{TOStream}} \&os) override
+\item 
+void \mbox{\hyperlink{class_shader_interface_1_1_shader_data_af6f723f2e46af84b6817644ea1abfdb2}{load\+Data}} (\mbox{\hyperlink{class_t_i_stream}{TIStream}} \&is) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_shader_interface_1_1_shader_data_a0309348c58e5b32a6c8dd049992c19b2}\label{class_shader_interface_1_1_shader_data_a0309348c58e5b32a6c8dd049992c19b2}} 
+\index{ShaderInterface::ShaderData@{ShaderInterface::ShaderData}!isValid@{isValid}}
+\index{isValid@{isValid}!ShaderInterface::ShaderData@{ShaderInterface::ShaderData}}
+\doxysubsubsection{\texorpdfstring{isValid()}{isValid()}}
+{\footnotesize\ttfamily bool Shader\+Interface\+::\+Shader\+Data\+::is\+Valid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00183 \{ \textcolor{keywordflow}{return} !\mbox{\hyperlink{class_shader_interface_1_1_shader_data_aadea1ae01612d9e81ff005a4d60838e7}{m\_path}}.isEmpty(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shader_interface_1_1_shader_data_af6f723f2e46af84b6817644ea1abfdb2}\label{class_shader_interface_1_1_shader_data_af6f723f2e46af84b6817644ea1abfdb2}} 
+\index{ShaderInterface::ShaderData@{ShaderInterface::ShaderData}!loadData@{loadData}}
+\index{loadData@{loadData}!ShaderInterface::ShaderData@{ShaderInterface::ShaderData}}
+\doxysubsubsection{\texorpdfstring{loadData()}{loadData()}}
+{\footnotesize\ttfamily void Shader\+Interface\+::\+Shader\+Data\+::load\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_i_stream}{TIStream}} \&}]{is }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+\begin{DoxyVerb} This is a pure virtual function and must be overridden with a method
+\end{DoxyVerb}
+ that implements the object loading from a stream (i.\+e take the object\textquotesingle{}s features from a formatted data stream). For example the \mbox{\hyperlink{class_t_stage_object}{TStage\+Object}} class use his implementation to take the values of the parameters that characterizes a stage object as name, coordinates, etc... from a file. {\itshape is} is an input file stream 
+
+Implements \mbox{\hyperlink{class_t_persist_a9e9d78431e843edb9299095af867a136}{TPersist}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00378                                                      \{}
+\DoxyCodeLine{00379   \textcolor{keyword}{struct }locals \{}
+\DoxyCodeLine{00380     \textcolor{keyword}{inline} \textcolor{keyword}{static} \mbox{\hyperlink{class_t_file_path}{TFilePath}} getAbsolutePath(\textcolor{keyword}{const} \mbox{\hyperlink{class_t_file_path}{TFilePath}} \&file,}
+\DoxyCodeLine{00381                                             \textcolor{keyword}{const} \mbox{\hyperlink{class_t_file_path}{TFilePath}} \&relTo) \{}
+\DoxyCodeLine{00382       QDir relToDir(}
+\DoxyCodeLine{00383           QString::fromStdWString(relTo.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}().getWideString()));}
+\DoxyCodeLine{00384       QString absFileStr(relToDir.absoluteFilePath(}
+\DoxyCodeLine{00385           QString::fromStdWString(file.getWideString())));}
+\DoxyCodeLine{00386       \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_file_path}{TFilePath}}(absFileStr.toStdWString());}
+\DoxyCodeLine{00387     \}}
+\DoxyCodeLine{00388   \};}
+\DoxyCodeLine{00389 }
+\DoxyCodeLine{00390   std::string tagName;}
+\DoxyCodeLine{00391 }
+\DoxyCodeLine{00392   \textcolor{keywordflow}{while} (is.\mbox{\hyperlink{class_t_i_stream_a735640240402316f00c595134bfe6b4b}{openChild}}(tagName)) \{}
+\DoxyCodeLine{00393     \textcolor{keywordflow}{if} (tagName == l\_names[NAME])}
+\DoxyCodeLine{00394       is >> \mbox{\hyperlink{class_shader_interface_1_1_shader_data_a59542536d3858d4776b8f903dea77371}{m\_name}}, is.\mbox{\hyperlink{class_t_i_stream_a57d85a02799eb0e904c8b22788dc671b}{closeChild}}();}
+\DoxyCodeLine{00395     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tagName == l\_names[PROGRAM\_FILE]) \{}
+\DoxyCodeLine{00396       is >> \mbox{\hyperlink{class_shader_interface_1_1_shader_data_aadea1ae01612d9e81ff005a4d60838e7}{m\_path}};}
+\DoxyCodeLine{00397       \mbox{\hyperlink{class_shader_interface_1_1_shader_data_aadea1ae01612d9e81ff005a4d60838e7}{m\_path}} = locals::getAbsolutePath(\mbox{\hyperlink{class_shader_interface_1_1_shader_data_aadea1ae01612d9e81ff005a4d60838e7}{m\_path}}, is.\mbox{\hyperlink{class_t_i_stream_a5a770238e933a111555fb09c7dd164f8}{getFilePath}}());}
+\DoxyCodeLine{00398       is.\mbox{\hyperlink{class_t_i_stream_a57d85a02799eb0e904c8b22788dc671b}{closeChild}}();}
+\DoxyCodeLine{00399     \} else}
+\DoxyCodeLine{00400       ::skipTag(is, tagName);}
+\DoxyCodeLine{00401   \}}
+\DoxyCodeLine{00402 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01242}{TIStream\+::close\+Child()}}, \mbox{\hyperlink{l00639}{TIStream\+::get\+File\+Path()}}, \mbox{\hyperlink{l00683}{TFile\+Path\+::get\+Parent\+Dir()}}, and \mbox{\hyperlink{l01231}{TIStream\+::open\+Child()}}.
+
+\mbox{\Hypertarget{class_shader_interface_1_1_shader_data_ad84b669d544a0554b42064f57a9129d0}\label{class_shader_interface_1_1_shader_data_ad84b669d544a0554b42064f57a9129d0}} 
+\index{ShaderInterface::ShaderData@{ShaderInterface::ShaderData}!saveData@{saveData}}
+\index{saveData@{saveData}!ShaderInterface::ShaderData@{ShaderInterface::ShaderData}}
+\doxysubsubsection{\texorpdfstring{saveData()}{saveData()}}
+{\footnotesize\ttfamily void Shader\+Interface\+::\+Shader\+Data\+::save\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_o_stream}{TOStream}} \&}]{os }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+\begin{DoxyVerb} This is a pure virtual function and must be overridden with a method
+\end{DoxyVerb}
+ that implements the object saving to a data stream (i.\+e put the object\textquotesingle{}s features on a formatted data stream). For example the \mbox{\hyperlink{class_t_stage_object}{TStage\+Object}} class use his implementation to save the values of the parameters that characterizes a stage object as name, coordinates, etc... on a file {\itshape os} is an output file stream. 
+
+Implements \mbox{\hyperlink{class_t_persist_afb991f7b26f14dbee1740ef036ff4e85}{TPersist}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00355                                                      \{}
+\DoxyCodeLine{00356   \textcolor{keyword}{struct }locals \{}
+\DoxyCodeLine{00357     \textcolor{keyword}{inline} \textcolor{keyword}{static} \mbox{\hyperlink{class_t_file_path}{TFilePath}} getRelativePath(\textcolor{keyword}{const} \mbox{\hyperlink{class_t_file_path}{TFilePath}} \&file,}
+\DoxyCodeLine{00358                                             \textcolor{keyword}{const} \mbox{\hyperlink{class_t_file_path}{TFilePath}} \&relTo) \{}
+\DoxyCodeLine{00359       QDir relToDir(}
+\DoxyCodeLine{00360           QString::fromStdWString(relTo.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}().getWideString()));}
+\DoxyCodeLine{00361       QString relFileStr(relToDir.relativeFilePath(}
+\DoxyCodeLine{00362           QString::fromStdWString(file.getWideString())));}
+\DoxyCodeLine{00363       \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_file_path}{TFilePath}}(relFileStr.toStdWString());}
+\DoxyCodeLine{00364     \}}
+\DoxyCodeLine{00365   \};}
+\DoxyCodeLine{00366 }
+\DoxyCodeLine{00367   os.\mbox{\hyperlink{class_t_o_stream_a38fe0f56d934f1c25e2b5d8156415673}{openChild}}(l\_names[NAME]);}
+\DoxyCodeLine{00368   os << \mbox{\hyperlink{class_shader_interface_1_1_shader_data_a59542536d3858d4776b8f903dea77371}{m\_name}};}
+\DoxyCodeLine{00369   os.\mbox{\hyperlink{class_t_o_stream_ae80752da32b21a502953e151e7c4b2ee}{closeChild}}();}
+\DoxyCodeLine{00370 }
+\DoxyCodeLine{00371   os.\mbox{\hyperlink{class_t_o_stream_a38fe0f56d934f1c25e2b5d8156415673}{openChild}}(l\_names[PROGRAM\_FILE]);}
+\DoxyCodeLine{00372   os << locals::getRelativePath(\mbox{\hyperlink{class_shader_interface_1_1_shader_data_aadea1ae01612d9e81ff005a4d60838e7}{m\_path}}, os.\mbox{\hyperlink{class_t_o_stream_a362cf5d050afa8629b1feedc267d6404}{getFilePath}}());}
+\DoxyCodeLine{00373   os.\mbox{\hyperlink{class_t_o_stream_ae80752da32b21a502953e151e7c4b2ee}{closeChild}}();}
+\DoxyCodeLine{00374 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00520}{TOStream\+::close\+Child()}}, \mbox{\hyperlink{l00315}{TOStream\+::get\+File\+Path()}}, \mbox{\hyperlink{l00683}{TFile\+Path\+::get\+Parent\+Dir()}}, \mbox{\hyperlink{l00178}{m\+\_\+name}}, \mbox{\hyperlink{l00179}{m\+\_\+path}}, and \mbox{\hyperlink{class_t_o_stream_a38fe0f56d934f1c25e2b5d8156415673}{TOStream\+::open\+Child()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_shader_interface_1_1_shader_data_a59542536d3858d4776b8f903dea77371}\label{class_shader_interface_1_1_shader_data_a59542536d3858d4776b8f903dea77371}} 
+\index{ShaderInterface::ShaderData@{ShaderInterface::ShaderData}!m\_name@{m\_name}}
+\index{m\_name@{m\_name}!ShaderInterface::ShaderData@{ShaderInterface::ShaderData}}
+\doxysubsubsection{\texorpdfstring{m\_name}{m\_name}}
+{\footnotesize\ttfamily QString Shader\+Interface\+::\+Shader\+Data\+::m\+\_\+name}
+
+
+
+A name associated to the shader action. 
+
+
+
+Referenced by \mbox{\hyperlink{l00355}{save\+Data()}}.
+
+\mbox{\Hypertarget{class_shader_interface_1_1_shader_data_aadea1ae01612d9e81ff005a4d60838e7}\label{class_shader_interface_1_1_shader_data_aadea1ae01612d9e81ff005a4d60838e7}} 
+\index{ShaderInterface::ShaderData@{ShaderInterface::ShaderData}!m\_path@{m\_path}}
+\index{m\_path@{m\_path}!ShaderInterface::ShaderData@{ShaderInterface::ShaderData}}
+\doxysubsubsection{\texorpdfstring{m\_path}{m\_path}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} Shader\+Interface\+::\+Shader\+Data\+::m\+\_\+path}
+
+
+
+The shader program\textquotesingle{}s file path. 
+
+
+
+Referenced by \mbox{\hyperlink{l00169}{Shader\+Interface\+::make\+Program()}}, and \mbox{\hyperlink{l00355}{save\+Data()}}.
+
+\mbox{\Hypertarget{class_shader_interface_1_1_shader_data_a0f6cb39226af27932d79821075f6ea7e}\label{class_shader_interface_1_1_shader_data_a0f6cb39226af27932d79821075f6ea7e}} 
+\index{ShaderInterface::ShaderData@{ShaderInterface::ShaderData}!m\_type@{m\_type}}
+\index{m\_type@{m\_type}!ShaderInterface::ShaderData@{ShaderInterface::ShaderData}}
+\doxysubsubsection{\texorpdfstring{m\_type}{m\_type}}
+{\footnotesize\ttfamily QOpen\+GLShader\+::\+Shader\+Type Shader\+Interface\+::\+Shader\+Data\+::m\+\_\+type}
+
+
+
+The shader type. 
+
+
+
+Referenced by \mbox{\hyperlink{l00256}{Shader\+Interface\+::load\+Data()}}, and \mbox{\hyperlink{l00169}{Shader\+Interface\+::make\+Program()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/stdfx/shaderinterface.\+h\item 
+E\+:/opentoonz/toonz/sources/stdfx/shaderinterface.\+cpp\end{DoxyCompactItemize}

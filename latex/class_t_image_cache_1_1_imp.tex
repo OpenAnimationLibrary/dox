@@ -1,0 +1,843 @@
+\hypertarget{class_t_image_cache_1_1_imp}{}\doxysection{TImage\+Cache\+::Imp Class Reference}
+\label{class_t_image_cache_1_1_imp}\index{TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_t_image_cache_1_1_imp_ac2e7f24487c3fabee451ac72c0ffb157}{not\+Enough\+Memory}} ()
+\item 
+void \mbox{\hyperlink{class_t_image_cache_1_1_imp_a971de7a8f3f8211a8c092a61270b584c}{do\+Compress}} ()
+\item 
+void \mbox{\hyperlink{class_t_image_cache_1_1_imp_af0dff4fe661dba446d9b9dcc21ef90c5}{do\+Compress}} (std\+::string id)
+\item 
+UCHAR $\ast$ \mbox{\hyperlink{class_t_image_cache_1_1_imp_a2e29c56b6f2a4bc1bf42d505c315be6a}{compress\+And\+Malloc}} (TUINT32 requested\+Size)
+\item 
+void \mbox{\hyperlink{class_t_image_cache_1_1_imp_a09735a976f21638d124236b548a11a7e}{output\+Map}} (UINT chunk\+Requested, std\+::string filename)
+\item 
+void \mbox{\hyperlink{class_t_image_cache_1_1_imp_a2751841b45fca7b4fdb512965d7570bd}{remove}} (const std\+::string \&id)
+\item 
+void \mbox{\hyperlink{class_t_image_cache_1_1_imp_a7409dc4b3c1f7f143716f654609de8c6}{remap}} (const std\+::string \&dst\+Id, const std\+::string \&src\+Id)
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \mbox{\hyperlink{class_t_image_cache_1_1_imp_a520d0a1180043af2e8f7bdb9b2946780}{get}} (const std\+::string \&id, bool to\+Be\+Modified)
+\item 
+void \mbox{\hyperlink{class_t_image_cache_1_1_imp_afa527dc2eb7da57579110efa7f9aadc2}{add}} (const std\+::string \&id, const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&img, bool overwrite)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \mbox{\hyperlink{class_t_image_cache_1_1_imp_aa4b3bcb0ddede7224b899757fc5bc164}{m\+\_\+root\+Dir}}
+\item 
+QThread\+Storage$<$ bool $\ast$ $>$ \mbox{\hyperlink{class_t_image_cache_1_1_imp_a7246fac918c6fc87078b8c4e451e0ac6}{m\+\_\+is\+Enabled}}
+\item 
+std\+::map$<$ std\+::string, \mbox{\hyperlink{class_t_smart_pointer_t}{Cache\+ItemP}} $>$ \mbox{\hyperlink{class_t_image_cache_1_1_imp_a7560e31deb10434dfae0c7d929727db5}{m\+\_\+uncompressed\+Items}}
+\item 
+std\+::map$<$ TUINT32, std\+::string $>$ \mbox{\hyperlink{class_t_image_cache_1_1_imp_aa0b50ab48536920dd150c53557fd344f}{m\+\_\+item\+History}}
+\item 
+std\+::map$<$ std\+::string, \mbox{\hyperlink{class_t_smart_pointer_t}{Cache\+ItemP}} $>$ \mbox{\hyperlink{class_t_image_cache_1_1_imp_adcbf5b5cd4f6a95aeea8511c831a41e4}{m\+\_\+compressed\+Items}}
+\item 
+std\+::map$<$ void $\ast$, std\+::string $>$ \mbox{\hyperlink{class_t_image_cache_1_1_imp_a3ff9cb73078ade9741c3fa00e33609d8}{m\+\_\+items\+By\+Image\+Pointer}}
+\item 
+std\+::map$<$ std\+::string, std\+::string $>$ \mbox{\hyperlink{class_t_image_cache_1_1_imp_a4d1c713f1a74fb81d225473f3398ca94}{m\+\_\+duplicated\+Items}}
+\item 
+TINT64 \mbox{\hyperlink{class_t_image_cache_1_1_imp_a5115a2ad58307fa8ea5402bf89d9988a}{m\+\_\+reserved\+Memory}}
+\item 
+\mbox{\hyperlink{class_t_thread_1_1_mutex}{TThread\+::\+Mutex}} \mbox{\hyperlink{class_t_image_cache_1_1_imp_aa648b74327aa7241496e9a2a2ea2f6a5}{m\+\_\+mutex}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static int \mbox{\hyperlink{class_t_image_cache_1_1_imp_a8a10d42f12f41afa489395e7b9597ff9}{m\+\_\+fileid}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_a846d5b539c36641977e16cf0d7cf14d3}\label{class_t_image_cache_1_1_imp_a846d5b539c36641977e16cf0d7cf14d3}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!Imp@{Imp}}
+\index{Imp@{Imp}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{Imp()}{Imp()}}
+{\footnotesize\ttfamily TImage\+Cache\+::\+Imp\+::\+Imp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00687         : m\_rootDir() \{}
+\DoxyCodeLine{00688     \textcolor{comment}{// ATTENZIONE: e' molto piu' veloce se si usa memoria fisica}}
+\DoxyCodeLine{00689     \textcolor{comment}{// invece che virtuale: la virtuale e' tanta, non c'e' quindi bisogno}}
+\DoxyCodeLine{00690     \textcolor{comment}{// di comprimere le immagini, che grandi come sono vengono swappate su disco}}
+\DoxyCodeLine{00691     \textcolor{keywordflow}{if} (TBigMemoryManager::instance()-\/>isActive()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00692 }
+\DoxyCodeLine{00693     m\_reservedMemory = (TINT64)(TSystem::getMemorySize(\textcolor{keyword}{true}) * 0.10);}
+\DoxyCodeLine{00694     \textcolor{keywordflow}{if} (m\_reservedMemory < 64 * 1024) m\_reservedMemory = 64 * 1024;}
+\DoxyCodeLine{00695   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_af8dff661a606a628cd69dd27af064abe}\label{class_t_image_cache_1_1_imp_af8dff661a606a628cd69dd27af064abe}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!````~Imp@{$\sim$Imp}}
+\index{````~Imp@{$\sim$Imp}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{$\sim$Imp()}{~Imp()}}
+{\footnotesize\ttfamily TImage\+Cache\+::\+Imp\+::$\sim$\+Imp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00697          \{}
+\DoxyCodeLine{00698     \textcolor{keywordflow}{if} (m\_rootDir != \mbox{\hyperlink{class_t_file_path}{TFilePath}}()) TSystem::rmDirTree(m\_rootDir);}
+\DoxyCodeLine{00699   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_afa527dc2eb7da57579110efa7f9aadc2}\label{class_t_image_cache_1_1_imp_afa527dc2eb7da57579110efa7f9aadc2}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!add@{add}}
+\index{add@{add}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily void TImage\+Cache\+::\+Imp\+::add (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&}]{img,  }\item[{bool}]{overwrite }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01162                                            \{}
+\DoxyCodeLine{01163   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{01164 }
+\DoxyCodeLine{01165 \textcolor{preprocessor}{\#ifdef LEVO}}
+\DoxyCodeLine{01166   std::map<std::string, CacheItemP>::iterator it1 = m\_uncompressedItems.begin();}
+\DoxyCodeLine{01167 }
+\DoxyCodeLine{01168   \textcolor{keywordflow}{for} (; it1 != m\_uncompressedItems.end(); ++it1) \{}
+\DoxyCodeLine{01169     \mbox{\hyperlink{class_t_derived_smart_pointer_t}{UncompressedOnMemoryCacheItemP}} item =}
+\DoxyCodeLine{01170         (\mbox{\hyperlink{class_t_derived_smart_pointer_t}{UncompressedOnMemoryCacheItemP}})it1-\/>second;}
+\DoxyCodeLine{01171     \textcolor{comment}{// m\_memUsage -\/= item-\/>getSize();}}
+\DoxyCodeLine{01172     assert(item);}
+\DoxyCodeLine{01173     \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} refImg = item-\/>getImage();}
+\DoxyCodeLine{01174     \textcolor{keywordflow}{if} (refImg.getPointer() == img.getPointer() \&\& it1-\/>first != id)}
+\DoxyCodeLine{01175       assert(!\textcolor{stringliteral}{"{}opps gia' esiste in cache!"{}});}
+\DoxyCodeLine{01176   \}}
+\DoxyCodeLine{01177 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01178 }
+\DoxyCodeLine{01179   std::map<std::string, CacheItemP>::iterator itUncompr =}
+\DoxyCodeLine{01180       m\_uncompressedItems.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{01181   std::map<std::string, CacheItemP>::iterator itCompr =}
+\DoxyCodeLine{01182       m\_compressedItems.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{01183 }
+\DoxyCodeLine{01184 \textcolor{preprocessor}{\#ifdef \_DEBUGTOONZ}}
+\DoxyCodeLine{01185   \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} rimg = (\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}})img;}
+\DoxyCodeLine{01186   \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} timg  = (\mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}})img;}
+\DoxyCodeLine{01187 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01188 }
+\DoxyCodeLine{01189   \textcolor{keywordflow}{if} (itUncompr != m\_uncompressedItems.end() ||}
+\DoxyCodeLine{01190       itCompr !=}
+\DoxyCodeLine{01191           m\_compressedItems.end())  \textcolor{comment}{// already present in cache with same id...}}
+\DoxyCodeLine{01192   \{}
+\DoxyCodeLine{01193     \textcolor{keywordflow}{if} (overwrite) \{}
+\DoxyCodeLine{01194 \textcolor{preprocessor}{\#ifdef \_DEBUGTOONZ}}
+\DoxyCodeLine{01195       \textcolor{keywordflow}{if} (rimg)}
+\DoxyCodeLine{01196         rimg-\/>getRaster()-\/>m\_cashed = \textcolor{keyword}{true};}
+\DoxyCodeLine{01197       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (timg)}
+\DoxyCodeLine{01198         timg-\/>getRaster()-\/>m\_cashed = \textcolor{keyword}{true};}
+\DoxyCodeLine{01199 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01200       std::map<std::string, CacheItemP>::iterator it;}
+\DoxyCodeLine{01201 }
+\DoxyCodeLine{01202       \textcolor{keywordflow}{if} (itUncompr != m\_uncompressedItems.end()) \{}
+\DoxyCodeLine{01203         assert(m\_itemHistory.find(itUncompr-\/>second-\/>m\_historyCount) !=}
+\DoxyCodeLine{01204                m\_itemHistory.end());}
+\DoxyCodeLine{01205         m\_itemHistory.erase(itUncompr-\/>second-\/>m\_historyCount);}
+\DoxyCodeLine{01206         m\_itemsByImagePointer.erase(getPointer(itUncompr-\/>second-\/>getImage()));}
+\DoxyCodeLine{01207         m\_uncompressedItems.erase(itUncompr);}
+\DoxyCodeLine{01208       \}}
+\DoxyCodeLine{01209       \textcolor{keywordflow}{if} (itCompr != m\_compressedItems.end()) m\_compressedItems.erase(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{01210     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01211       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01212   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01213     std::map<std::string, std::string>::iterator dt =}
+\DoxyCodeLine{01214         m\_duplicatedItems.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{01215     \textcolor{keywordflow}{if} ((dt != m\_duplicatedItems.end()) \&\& !overwrite) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01216 }
+\DoxyCodeLine{01217     std::map<void *, std::string>::iterator it;}
+\DoxyCodeLine{01218     \textcolor{keywordflow}{if} ((it = m\_itemsByImagePointer.find(getPointer(img))) !=}
+\DoxyCodeLine{01219         m\_itemsByImagePointer}
+\DoxyCodeLine{01220             .end())  \textcolor{comment}{// already present in cache with another id...}}
+\DoxyCodeLine{01221     \{}
+\DoxyCodeLine{01222       m\_duplicatedItems[id] = it-\/>second;}
+\DoxyCodeLine{01223       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01224     \}}
+\DoxyCodeLine{01225 }
+\DoxyCodeLine{01226     \textcolor{keywordflow}{if} (dt != m\_duplicatedItems.end()) m\_duplicatedItems.erase(dt);}
+\DoxyCodeLine{01227   \}}
+\DoxyCodeLine{01228 }
+\DoxyCodeLine{01229   \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} item;}
+\DoxyCodeLine{01230 }
+\DoxyCodeLine{01231 \textcolor{preprocessor}{\#ifdef \_DEBUGTOONZ}}
+\DoxyCodeLine{01232   \textcolor{keywordflow}{if} (rimg)}
+\DoxyCodeLine{01233     rimg-\/>getRaster()-\/>m\_cashed = \textcolor{keyword}{true};}
+\DoxyCodeLine{01234   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (timg)}
+\DoxyCodeLine{01235     timg-\/>getRaster()-\/>m\_cashed = \textcolor{keyword}{true};}
+\DoxyCodeLine{01236 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01237 }
+\DoxyCodeLine{01238   item = \textcolor{keyword}{new} \mbox{\hyperlink{class_uncompressed_on_memory_cache_item}{UncompressedOnMemoryCacheItem}}(img);}
+\DoxyCodeLine{01239 \textcolor{preprocessor}{\#ifdef TNZCORE\_LIGHT}}
+\DoxyCodeLine{01240   item-\/>m\_cantCompress = \textcolor{keyword}{false};}
+\DoxyCodeLine{01241 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{01242   item-\/>m\_cantCompress = (\mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}}(img) ? true : \textcolor{keyword}{false});}
+\DoxyCodeLine{01243 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01244   item-\/>m\_id                             = id;}
+\DoxyCodeLine{01245   m\_uncompressedItems[id]                = item;}
+\DoxyCodeLine{01246   m\_itemsByImagePointer[getPointer(img)] = id;}
+\DoxyCodeLine{01247   item-\/>m\_historyCount                   = HistoryCount;}
+\DoxyCodeLine{01248   m\_itemHistory[HistoryCount]            = id;}
+\DoxyCodeLine{01249   HistoryCount++;}
+\DoxyCodeLine{01250 }
+\DoxyCodeLine{01251   \mbox{\hyperlink{class_t_image_cache_1_1_imp_a971de7a8f3f8211a8c092a61270b584c}{doCompress}}();}
+\DoxyCodeLine{01252 }
+\DoxyCodeLine{01253 \textcolor{preprocessor}{\#ifdef \_DEBUGTOONZ}}
+\DoxyCodeLine{01254 \textcolor{comment}{// int itemCount =}}
+\DoxyCodeLine{01255 \textcolor{comment}{// m\_imp-\/>m\_uncompressedItems.size()+m\_imp-\/>m\_compressedItems.size();}}
+\DoxyCodeLine{01256 \textcolor{comment}{// m\_imp-\/>outputDebug();}}
+\DoxyCodeLine{01257 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01258 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_a2e29c56b6f2a4bc1bf42d505c315be6a}\label{class_t_image_cache_1_1_imp_a2e29c56b6f2a4bc1bf42d505c315be6a}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!compressAndMalloc@{compressAndMalloc}}
+\index{compressAndMalloc@{compressAndMalloc}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{compressAndMalloc()}{compressAndMalloc()}}
+{\footnotesize\ttfamily UCHAR $\ast$ TImage\+Cache\+::\+Imp\+::compress\+And\+Malloc (\begin{DoxyParamCaption}\item[{TUINT32}]{requested\+Size }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00968                                                      \{}
+\DoxyCodeLine{00969   UCHAR *buf = 0;}
+\DoxyCodeLine{00970 }
+\DoxyCodeLine{00971   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00972 }
+\DoxyCodeLine{00973   TheCodec::instance()-\/>reset();}
+\DoxyCodeLine{00974 }
+\DoxyCodeLine{00975   \textcolor{comment}{// if (size!=0)}}
+\DoxyCodeLine{00976   \textcolor{comment}{//  size = size>>10;}}
+\DoxyCodeLine{00977 }
+\DoxyCodeLine{00978   \textcolor{comment}{// assert(size==0 || TBigMemoryManager::instance()-\/>isActive());}}
+\DoxyCodeLine{00979 }
+\DoxyCodeLine{00980   std::map<TUINT32, std::string>::iterator itu = m\_itemHistory.begin();}
+\DoxyCodeLine{00981   \textcolor{keywordflow}{while} (}
+\DoxyCodeLine{00982       (buf = TBigMemoryManager::instance()-\/>getBuffer(size)) == 0 \&\&}
+\DoxyCodeLine{00983       itu !=}
+\DoxyCodeLine{00984           m\_itemHistory}
+\DoxyCodeLine{00985               .end())  \textcolor{comment}{//>TBigMemoryManager::instance()-\/>getAvailableMemoryinKb()))}}
+\DoxyCodeLine{00986   \{}
+\DoxyCodeLine{00987     std::map<std::string, CacheItemP>::iterator it =}
+\DoxyCodeLine{00988         m\_uncompressedItems.find(itu-\/>second);}
+\DoxyCodeLine{00989     assert(it != m\_uncompressedItems.end());}
+\DoxyCodeLine{00990     \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} item = it-\/>second;}
+\DoxyCodeLine{00991 }
+\DoxyCodeLine{00992     \mbox{\hyperlink{class_t_derived_smart_pointer_t}{UncompressedOnMemoryCacheItemP}} uitem = item;}
+\DoxyCodeLine{00993     \textcolor{keywordflow}{if} (item-\/>m\_cantCompress ||}
+\DoxyCodeLine{00994         (uitem \&\& (!uitem-\/>m\_image || hasExternalReferences(uitem-\/>m\_image)))) \{}
+\DoxyCodeLine{00995       ++itu;}
+\DoxyCodeLine{00996       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00997     \}}
+\DoxyCodeLine{00998 }
+\DoxyCodeLine{00999     \textcolor{keywordflow}{if} (m\_compressedItems.find(it-\/>first) == m\_compressedItems.end()) \{}
+\DoxyCodeLine{01000       assert(uitem);}
+\DoxyCodeLine{01001       \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} newItem;}
+\DoxyCodeLine{01002       \textcolor{comment}{// newItem = new CompressedOnMemoryCacheItem(item-\/>getImage());}}
+\DoxyCodeLine{01003       \textcolor{comment}{// if (newItem-\/>getSize()==0)}}
+\DoxyCodeLine{01004       \textcolor{comment}{//  \{}}
+\DoxyCodeLine{01005       assert(m\_rootDir != \mbox{\hyperlink{class_t_file_path}{TFilePath}}());}
+\DoxyCodeLine{01006       \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp =}
+\DoxyCodeLine{01007           m\_rootDir + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(std::to\_string(TImageCache::Imp::m\_fileid++));}
+\DoxyCodeLine{01008       newItem = \textcolor{keyword}{new} \mbox{\hyperlink{class_uncompressed_on_disk_cache_item}{UncompressedOnDiskCacheItem}}(fp, item-\/>getImage());}
+\DoxyCodeLine{01009       \textcolor{comment}{//  \}}}
+\DoxyCodeLine{01010 }
+\DoxyCodeLine{01011       m\_compressedItems[it-\/>first] = newItem;}
+\DoxyCodeLine{01012     \}}
+\DoxyCodeLine{01013 }
+\DoxyCodeLine{01014 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{01015     assert(itu-\/>first == it-\/>second-\/>m\_historyCount);}
+\DoxyCodeLine{01016     itu = m\_itemHistory.erase(itu);}
+\DoxyCodeLine{01017     m\_itemsByImagePointer.erase(getPointer(item-\/>getImage()));}
+\DoxyCodeLine{01018     m\_uncompressedItems.erase(it);}
+\DoxyCodeLine{01019 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{01020     std::map<TUINT32, std::string>::iterator itu2 = itu;}
+\DoxyCodeLine{01021     itu++;}
+\DoxyCodeLine{01022     m\_itemHistory.erase(itu2);}
+\DoxyCodeLine{01023     m\_itemsByImagePointer.erase(item-\/>getImage().getPointer());}
+\DoxyCodeLine{01024     m\_uncompressedItems.erase(it);}
+\DoxyCodeLine{01025 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01026   \}}
+\DoxyCodeLine{01027 }
+\DoxyCodeLine{01028   \textcolor{keywordflow}{if} (buf != 0) \textcolor{keywordflow}{return} buf;}
+\DoxyCodeLine{01029 }
+\DoxyCodeLine{01030   std::map<std::string, CacheItemP>::iterator itc = m\_compressedItems.begin();}
+\DoxyCodeLine{01031   \textcolor{keywordflow}{for} (; itc != m\_compressedItems.end() \&\&}
+\DoxyCodeLine{01032          (buf = TBigMemoryManager::instance()-\/>getBuffer(size)) == 0;}
+\DoxyCodeLine{01033        ++itc) \{}
+\DoxyCodeLine{01034     \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} item = itc-\/>second;}
+\DoxyCodeLine{01035     \textcolor{keywordflow}{if} (item-\/>m\_cantCompress) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01036 }
+\DoxyCodeLine{01037     \mbox{\hyperlink{class_t_derived_smart_pointer_t}{CompressedOnMemoryCacheItemP}} citem = itc-\/>second;}
+\DoxyCodeLine{01038     \textcolor{keywordflow}{if} (citem) \{}
+\DoxyCodeLine{01039       assert(m\_rootDir != \mbox{\hyperlink{class_t_file_path}{TFilePath}}());}
+\DoxyCodeLine{01040       \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp =}
+\DoxyCodeLine{01041           m\_rootDir + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(std::to\_string(TImageCache::Imp::m\_fileid++));}
+\DoxyCodeLine{01042 }
+\DoxyCodeLine{01043       \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} newItem = \textcolor{keyword}{new} \mbox{\hyperlink{class_compressed_on_disk_cache_item}{CompressedOnDiskCacheItem}}(}
+\DoxyCodeLine{01044           fp, citem-\/>m\_compressedRas, citem-\/>m\_builder-\/>clone(),}
+\DoxyCodeLine{01045           citem-\/>m\_imageInfo-\/>clone());}
+\DoxyCodeLine{01046 }
+\DoxyCodeLine{01047       itc-\/>second                   = 0;}
+\DoxyCodeLine{01048       m\_compressedItems[itc-\/>first] = newItem;}
+\DoxyCodeLine{01049     \}}
+\DoxyCodeLine{01050   \}}
+\DoxyCodeLine{01051 }
+\DoxyCodeLine{01052   \textcolor{keywordflow}{return} buf;}
+\DoxyCodeLine{01053 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_a971de7a8f3f8211a8c092a61270b584c}\label{class_t_image_cache_1_1_imp_a971de7a8f3f8211a8c092a61270b584c}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!doCompress@{doCompress}}
+\index{doCompress@{doCompress}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{doCompress()}{doCompress()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void TImage\+Cache\+::\+Imp\+::do\+Compress (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+non c\textquotesingle{}era memoria sufficiente per il buffer compresso....
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00784                                 \{}
+\DoxyCodeLine{00785   \textcolor{comment}{// se la memoria usata per mantenere le immagini decompresse e' superiore}}
+\DoxyCodeLine{00786   \textcolor{comment}{// a un dato valore, comprimo alcune immagini non compresse non checked-\/out}}
+\DoxyCodeLine{00787   \textcolor{comment}{// in modo da liberare memoria}}
+\DoxyCodeLine{00788 }
+\DoxyCodeLine{00789   \textcolor{comment}{// per il momento scorre tutte le immagini alla ricerca di immagini}}
+\DoxyCodeLine{00790   \textcolor{comment}{// non compresse non checked-\/out}}
+\DoxyCodeLine{00791 }
+\DoxyCodeLine{00792   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00793 }
+\DoxyCodeLine{00794   std::map<TUINT32, std::string>::iterator itu = m\_itemHistory.begin();}
+\DoxyCodeLine{00795 }
+\DoxyCodeLine{00796   \textcolor{keywordflow}{for} (; itu != m\_itemHistory.end() \&\& notEnoughMemory();) \{}
+\DoxyCodeLine{00797     std::map<std::string, CacheItemP>::iterator it =}
+\DoxyCodeLine{00798         m\_uncompressedItems.find(itu-\/>second);}
+\DoxyCodeLine{00799     assert(it != m\_uncompressedItems.end());}
+\DoxyCodeLine{00800     \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} item = it-\/>second;}
+\DoxyCodeLine{00801 }
+\DoxyCodeLine{00802     \mbox{\hyperlink{class_t_derived_smart_pointer_t}{UncompressedOnMemoryCacheItemP}} uitem = item;}
+\DoxyCodeLine{00803     \textcolor{keywordflow}{if} (item-\/>m\_cantCompress ||}
+\DoxyCodeLine{00804         (uitem \&\& (!uitem-\/>m\_image || hasExternalReferences(uitem-\/>m\_image)))) \{}
+\DoxyCodeLine{00805       ++itu;}
+\DoxyCodeLine{00806       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00807     \}}
+\DoxyCodeLine{00808     std::string \textcolor{keywordtype}{id} = it-\/>first;}
+\DoxyCodeLine{00809 }
+\DoxyCodeLine{00810 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00811     assert(itu-\/>first == it-\/>second-\/>m\_historyCount);}
+\DoxyCodeLine{00812     itu = m\_itemHistory.erase(itu);}
+\DoxyCodeLine{00813     m\_itemsByImagePointer.erase(getPointer(item-\/>getImage()));}
+\DoxyCodeLine{00814     m\_uncompressedItems.erase(it);}
+\DoxyCodeLine{00815 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00816     std::map<TUINT32, std::string>::iterator itu2 = itu;}
+\DoxyCodeLine{00817     itu++;}
+\DoxyCodeLine{00818     m\_itemHistory.erase(itu2);}
+\DoxyCodeLine{00819     m\_itemsByImagePointer.erase(item-\/>getImage().getPointer());}
+\DoxyCodeLine{00820     m\_uncompressedItems.erase(it);}
+\DoxyCodeLine{00821 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00822 }
+\DoxyCodeLine{00823     \textcolor{keywordflow}{if} (m\_compressedItems.find(\textcolor{keywordtype}{id}) == m\_compressedItems.end()) \{}
+\DoxyCodeLine{00824       assert(uitem);}
+\DoxyCodeLine{00825       item-\/>m\_cantCompress = \textcolor{keyword}{true};}
+\DoxyCodeLine{00826       \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} newItem   = \textcolor{keyword}{new} \mbox{\hyperlink{class_compressed_on_memory_cache_item}{CompressedOnMemoryCacheItem}}(}
+\DoxyCodeLine{00827           item-\/>getImage());  \textcolor{comment}{// WARNING the codec buffer allocation can CHANGE}}
+\DoxyCodeLine{00828                               \textcolor{comment}{// the cache.}}
+\DoxyCodeLine{00829       item-\/>m\_cantCompress = \textcolor{keyword}{false};}
+\DoxyCodeLine{00830       \textcolor{keywordflow}{if} (newItem-\/>getSize() ==}
+\DoxyCodeLine{00831           0)  }
+\DoxyCodeLine{00832       \{}
+\DoxyCodeLine{00833         assert(m\_rootDir != \mbox{\hyperlink{class_t_file_path}{TFilePath}}());}
+\DoxyCodeLine{00834         \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp =}
+\DoxyCodeLine{00835             m\_rootDir + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(std::to\_string(TImageCache::Imp::m\_fileid++));}
+\DoxyCodeLine{00836         newItem = \textcolor{keyword}{new} \mbox{\hyperlink{class_uncompressed_on_disk_cache_item}{UncompressedOnDiskCacheItem}}(fp, item-\/>getImage());}
+\DoxyCodeLine{00837       \}}
+\DoxyCodeLine{00838       m\_compressedItems[id] = newItem;}
+\DoxyCodeLine{00839       item                  = \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}}();}
+\DoxyCodeLine{00840       uitem                 = \mbox{\hyperlink{class_t_derived_smart_pointer_t}{UncompressedOnMemoryCacheItemP}}();}
+\DoxyCodeLine{00841       \textcolor{comment}{// doCompress();//restart, since iterators could have been changed (see}}
+\DoxyCodeLine{00842       \textcolor{comment}{// comment above)}}
+\DoxyCodeLine{00843       \textcolor{comment}{// return;}}
+\DoxyCodeLine{00844       itu = m\_itemHistory.begin();}
+\DoxyCodeLine{00845     \}}
+\DoxyCodeLine{00846   \}}
+\DoxyCodeLine{00847 }
+\DoxyCodeLine{00848   \textcolor{comment}{// se il quantitativo di memoria utilizzata e' superiore a un dato valore,}}
+\DoxyCodeLine{00849   \textcolor{comment}{// sposto}}
+\DoxyCodeLine{00850   \textcolor{comment}{// su disco alcune immagini compresse in modo da liberare memoria}}
+\DoxyCodeLine{00851 }
+\DoxyCodeLine{00852   \textcolor{keywordflow}{if} (itu != m\_itemHistory.end())  \textcolor{comment}{// memory is enough!}}
+\DoxyCodeLine{00853     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00854 }
+\DoxyCodeLine{00855   std::map<std::string, CacheItemP>::iterator itc = m\_compressedItems.begin();}
+\DoxyCodeLine{00856   \textcolor{keywordflow}{for} (; itc != m\_compressedItems.end() \&\& notEnoughMemory(); ++itc) \{}
+\DoxyCodeLine{00857     \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} item = itc-\/>second;}
+\DoxyCodeLine{00858     \textcolor{keywordflow}{if} (item-\/>m\_cantCompress) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00859 }
+\DoxyCodeLine{00860     \mbox{\hyperlink{class_t_derived_smart_pointer_t}{CompressedOnMemoryCacheItemP}} citem = itc-\/>second;}
+\DoxyCodeLine{00861     \textcolor{keywordflow}{if} (citem) \{}
+\DoxyCodeLine{00862       assert(m\_rootDir != \mbox{\hyperlink{class_t_file_path}{TFilePath}}());}
+\DoxyCodeLine{00863       \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp =}
+\DoxyCodeLine{00864           m\_rootDir + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(std::to\_string(TImageCache::Imp::m\_fileid++));}
+\DoxyCodeLine{00865 }
+\DoxyCodeLine{00866       \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} newItem = \textcolor{keyword}{new} \mbox{\hyperlink{class_compressed_on_disk_cache_item}{CompressedOnDiskCacheItem}}(}
+\DoxyCodeLine{00867           fp, citem-\/>m\_compressedRas, citem-\/>m\_builder-\/>clone(),}
+\DoxyCodeLine{00868           citem-\/>m\_imageInfo-\/>clone());}
+\DoxyCodeLine{00869 }
+\DoxyCodeLine{00870       itc-\/>second                   = 0;}
+\DoxyCodeLine{00871       m\_compressedItems[itc-\/>first] = newItem;}
+\DoxyCodeLine{00872     \}}
+\DoxyCodeLine{00873   \}}
+\DoxyCodeLine{00874 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_af0dff4fe661dba446d9b9dcc21ef90c5}\label{class_t_image_cache_1_1_imp_af0dff4fe661dba446d9b9dcc21ef90c5}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!doCompress@{doCompress}}
+\index{doCompress@{doCompress}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{doCompress()}{doCompress()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void TImage\+Cache\+::\+Imp\+::do\+Compress (\begin{DoxyParamCaption}\item[{std\+::string}]{id }\end{DoxyParamCaption})}
+
+non c\textquotesingle{}era memoria sufficiente per il buffer compresso....
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00878                                             \{}
+\DoxyCodeLine{00879   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00880 }
+\DoxyCodeLine{00881   \textcolor{comment}{// search id in m\_uncompressedItems}}
+\DoxyCodeLine{00882   std::map<std::string, CacheItemP>::iterator it = m\_uncompressedItems.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00883   \textcolor{keywordflow}{if} (it == m\_uncompressedItems.end()) \textcolor{keywordflow}{return};  \textcolor{comment}{// id not found: return}}
+\DoxyCodeLine{00884 }
+\DoxyCodeLine{00885   \textcolor{comment}{// is item suitable for compression ?}}
+\DoxyCodeLine{00886   \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} item                      = it-\/>second;}
+\DoxyCodeLine{00887   \mbox{\hyperlink{class_t_derived_smart_pointer_t}{UncompressedOnMemoryCacheItemP}} uitem = item;}
+\DoxyCodeLine{00888   \textcolor{keywordflow}{if} (item-\/>m\_cantCompress ||}
+\DoxyCodeLine{00889       (uitem \&\& (!uitem-\/>m\_image || hasExternalReferences(uitem-\/>m\_image))))}
+\DoxyCodeLine{00890     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00891 }
+\DoxyCodeLine{00892   \textcolor{comment}{// search id in m\_itemHistory}}
+\DoxyCodeLine{00893   std::map<TUINT32, std::string>::iterator itu = m\_itemHistory.begin();}
+\DoxyCodeLine{00894   \textcolor{keywordflow}{while} (itu != m\_itemHistory.end() \&\& itu-\/>second != \textcolor{keywordtype}{id}) ++itu;}
+\DoxyCodeLine{00895   \textcolor{keywordflow}{if} (itu == m\_itemHistory.end()) \textcolor{keywordflow}{return};  \textcolor{comment}{// id not found: return}}
+\DoxyCodeLine{00896 }
+\DoxyCodeLine{00897 \textcolor{comment}{// delete itu from m\_itemHistory}}
+\DoxyCodeLine{00898 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00899   assert(itu-\/>first == it-\/>second-\/>m\_historyCount);}
+\DoxyCodeLine{00900   itu = m\_itemHistory.erase(itu);}
+\DoxyCodeLine{00901   m\_itemsByImagePointer.erase(getPointer(item-\/>getImage()));}
+\DoxyCodeLine{00902 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00903   std::map<TUINT32, std::string>::iterator itu2 = itu;}
+\DoxyCodeLine{00904   itu++;}
+\DoxyCodeLine{00905   m\_itemHistory.erase(itu2);}
+\DoxyCodeLine{00906   m\_itemsByImagePointer.erase(item-\/>getImage().getPointer());}
+\DoxyCodeLine{00907 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00908 }
+\DoxyCodeLine{00909   \textcolor{comment}{// delete item from m\_uncompressedItems}}
+\DoxyCodeLine{00910   m\_uncompressedItems.erase(it);}
+\DoxyCodeLine{00911 }
+\DoxyCodeLine{00912   \textcolor{comment}{// check if item has been already compressed. this should never happen}}
+\DoxyCodeLine{00913   \textcolor{keywordflow}{if} (m\_compressedItems.find(\textcolor{keywordtype}{id}) != m\_compressedItems.end()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00914 }
+\DoxyCodeLine{00915   assert(uitem);}
+\DoxyCodeLine{00916   item-\/>m\_cantCompress = \textcolor{keyword}{true};  \textcolor{comment}{// ??}}
+\DoxyCodeLine{00917   \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} newItem   = \textcolor{keyword}{new} \mbox{\hyperlink{class_compressed_on_memory_cache_item}{CompressedOnMemoryCacheItem}}(}
+\DoxyCodeLine{00918       item-\/>getImage());  \textcolor{comment}{// WARNING the codec buffer  allocation can CHANGE the}}
+\DoxyCodeLine{00919                           \textcolor{comment}{// cache.}}
+\DoxyCodeLine{00920   item-\/>m\_cantCompress = \textcolor{keyword}{false};  \textcolor{comment}{// ??}}
+\DoxyCodeLine{00921   \textcolor{keywordflow}{if} (newItem-\/>getSize() ==}
+\DoxyCodeLine{00922       0)  }
+\DoxyCodeLine{00923   \{}
+\DoxyCodeLine{00924     assert(m\_rootDir != \mbox{\hyperlink{class_t_file_path}{TFilePath}}());}
+\DoxyCodeLine{00925     \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp =}
+\DoxyCodeLine{00926         m\_rootDir + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(std::to\_string(TImageCache::Imp::m\_fileid++));}
+\DoxyCodeLine{00927     newItem = \textcolor{keyword}{new} \mbox{\hyperlink{class_uncompressed_on_disk_cache_item}{UncompressedOnDiskCacheItem}}(fp, item-\/>getImage());}
+\DoxyCodeLine{00928   \}}
+\DoxyCodeLine{00929   m\_compressedItems[id] = newItem;}
+\DoxyCodeLine{00930   item                  = \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}}();}
+\DoxyCodeLine{00931   uitem                 = \mbox{\hyperlink{class_t_derived_smart_pointer_t}{UncompressedOnMemoryCacheItemP}}();}
+\DoxyCodeLine{00932 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_a520d0a1180043af2e8f7bdb9b2946780}\label{class_t_image_cache_1_1_imp_a520d0a1180043af2e8f7bdb9b2946780}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!get@{get}}
+\index{get@{get}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} TImage\+Cache\+::\+Imp\+::get (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id,  }\item[{bool}]{to\+Be\+Modified }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01678                                                                   \{}
+\DoxyCodeLine{01679   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{01680 }
+\DoxyCodeLine{01681   std::map<std::string, std::string>::const\_iterator it;}
+\DoxyCodeLine{01682   \textcolor{keywordflow}{if} ((it = m\_duplicatedItems.find(\textcolor{keywordtype}{id})) != m\_duplicatedItems.end()) \{}
+\DoxyCodeLine{01683     assert(m\_duplicatedItems.find(it-\/>second) == m\_duplicatedItems.end());}
+\DoxyCodeLine{01684     \textcolor{keywordflow}{return} get(it-\/>second, toBeModified);}
+\DoxyCodeLine{01685   \}}
+\DoxyCodeLine{01686 }
+\DoxyCodeLine{01687   \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} img;}
+\DoxyCodeLine{01688 }
+\DoxyCodeLine{01689   std::map<std::string, CacheItemP>::iterator itu =}
+\DoxyCodeLine{01690       m\_uncompressedItems.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{01691   \textcolor{keywordflow}{if} (itu != m\_uncompressedItems.end()) \{}
+\DoxyCodeLine{01692     img = itu-\/>second-\/>getImage();}
+\DoxyCodeLine{01693     \textcolor{keywordflow}{if} (itu-\/>second-\/>m\_historyCount !=}
+\DoxyCodeLine{01694         HistoryCount -\/ 1)  \textcolor{comment}{// significa che l'ultimo get non era sulla stessa}}
+\DoxyCodeLine{01695                            \textcolor{comment}{// immagine, quindi  serve aggiornare l'history!}}
+\DoxyCodeLine{01696     \{}
+\DoxyCodeLine{01697       assert(m\_itemHistory.find(itu-\/>second-\/>m\_historyCount) !=}
+\DoxyCodeLine{01698              m\_itemHistory.end());}
+\DoxyCodeLine{01699       m\_itemHistory.erase(itu-\/>second-\/>m\_historyCount);}
+\DoxyCodeLine{01700       m\_itemHistory[HistoryCount] = id;}
+\DoxyCodeLine{01701       itu-\/>second-\/>m\_historyCount = HistoryCount;}
+\DoxyCodeLine{01702       HistoryCount++;}
+\DoxyCodeLine{01703     \}}
+\DoxyCodeLine{01704     \textcolor{keywordflow}{if} (toBeModified) \{}
+\DoxyCodeLine{01705       itu-\/>second-\/>m\_modified = \textcolor{keyword}{true};}
+\DoxyCodeLine{01706       std::map<std::string, CacheItemP>::iterator itc =}
+\DoxyCodeLine{01707           m\_compressedItems.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{01708       \textcolor{keywordflow}{if} (itc != m\_compressedItems.end()) m\_compressedItems.erase(itc);}
+\DoxyCodeLine{01709     \}}
+\DoxyCodeLine{01710     \textcolor{keywordflow}{return} img;}
+\DoxyCodeLine{01711   \}}
+\DoxyCodeLine{01712 }
+\DoxyCodeLine{01713   std::map<std::string, CacheItemP>::iterator itc = m\_compressedItems.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{01714   \textcolor{keywordflow}{if} (itc == m\_compressedItems.end()) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{01715 }
+\DoxyCodeLine{01716   \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} cacheItem = itc-\/>second;}
+\DoxyCodeLine{01717 }
+\DoxyCodeLine{01718   img = cacheItem-\/>getImage();}
+\DoxyCodeLine{01719 }
+\DoxyCodeLine{01720   \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} uncompressed;}
+\DoxyCodeLine{01721   uncompressed                    = \textcolor{keyword}{new} \mbox{\hyperlink{class_uncompressed_on_memory_cache_item}{UncompressedOnMemoryCacheItem}}(img);}
+\DoxyCodeLine{01722   m\_uncompressedItems[itc-\/>first] = uncompressed;}
+\DoxyCodeLine{01723   m\_itemsByImagePointer[getPointer(img)] = itc-\/>first;}
+\DoxyCodeLine{01724 }
+\DoxyCodeLine{01725   m\_itemHistory[HistoryCount]  = itc-\/>first;}
+\DoxyCodeLine{01726   uncompressed-\/>m\_historyCount = HistoryCount;}
+\DoxyCodeLine{01727   HistoryCount++;}
+\DoxyCodeLine{01728 }
+\DoxyCodeLine{01729   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_derived_smart_pointer_t}{CompressedOnMemoryCacheItemP}}(cacheItem))}
+\DoxyCodeLine{01730   \textcolor{comment}{// l'immagine compressa non la tengo insieme alla}}
+\DoxyCodeLine{01731   \textcolor{comment}{// uncompressa se e' troppo grande}}
+\DoxyCodeLine{01732   \{}
+\DoxyCodeLine{01733     \textcolor{keywordflow}{if} (10 * cacheItem-\/>getSize() > uncompressed-\/>getSize()) \{}
+\DoxyCodeLine{01734       m\_compressedItems.erase(itc);}
+\DoxyCodeLine{01735       itc = m\_compressedItems.end();}
+\DoxyCodeLine{01736     \}}
+\DoxyCodeLine{01737   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01738     assert((\mbox{\hyperlink{class_t_derived_smart_pointer_t}{CompressedOnDiskCacheItemP}})cacheItem ||}
+\DoxyCodeLine{01739            (\mbox{\hyperlink{class_t_derived_smart_pointer_t}{UncompressedOnDiskCacheItemP}})cacheItem);  \textcolor{comment}{// deve essere compressa!}}
+\DoxyCodeLine{01740 }
+\DoxyCodeLine{01741   \textcolor{keywordflow}{if} (toBeModified \&\& itc != m\_compressedItems.end()) \{}
+\DoxyCodeLine{01742     uncompressed-\/>m\_modified = \textcolor{keyword}{true};}
+\DoxyCodeLine{01743     m\_compressedItems.erase(itc);}
+\DoxyCodeLine{01744   \}}
+\DoxyCodeLine{01745 }
+\DoxyCodeLine{01746   uncompressed-\/>m\_cantCompress = toBeModified;}
+\DoxyCodeLine{01747   \textcolor{comment}{// se la memoria utilizzata e' superiore al massimo consentito, comprime}}
+\DoxyCodeLine{01748   \mbox{\hyperlink{class_t_image_cache_1_1_imp_a971de7a8f3f8211a8c092a61270b584c}{doCompress}}();}
+\DoxyCodeLine{01749 }
+\DoxyCodeLine{01750   uncompressed-\/>m\_cantCompress = \textcolor{keyword}{false};}
+\DoxyCodeLine{01751 }
+\DoxyCodeLine{01752 \textcolor{comment}{//\#define DO\_MEMCHECK}}
+\DoxyCodeLine{01753 \textcolor{preprocessor}{\#ifdef DO\_MEMCHECK}}
+\DoxyCodeLine{01754   assert(\_CrtCheckMemory());}
+\DoxyCodeLine{01755 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01756 }
+\DoxyCodeLine{01757   \textcolor{keywordflow}{return} img;}
+\DoxyCodeLine{01758 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_ac2e7f24487c3fabee451ac72c0ffb157}\label{class_t_image_cache_1_1_imp_ac2e7f24487c3fabee451ac72c0ffb157}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!notEnoughMemory@{notEnoughMemory}}
+\index{notEnoughMemory@{notEnoughMemory}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{notEnoughMemory()}{notEnoughMemory()}}
+{\footnotesize\ttfamily bool TImage\+Cache\+::\+Imp\+::not\+Enough\+Memory (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00701                                 \{}
+\DoxyCodeLine{00702     \textcolor{keywordflow}{if} (TBigMemoryManager::instance()-\/>isActive())}
+\DoxyCodeLine{00703       \textcolor{keywordflow}{return} TBigMemoryManager::instance()-\/>getAvailableMemoryinKb() <}
+\DoxyCodeLine{00704              50 * 1024;}
+\DoxyCodeLine{00705     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00706       \textcolor{keywordflow}{return} TSystem::memoryShortage();}
+\DoxyCodeLine{00707   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_a09735a976f21638d124236b548a11a7e}\label{class_t_image_cache_1_1_imp_a09735a976f21638d124236b548a11a7e}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!outputMap@{outputMap}}
+\index{outputMap@{outputMap}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{outputMap()}{outputMap()}}
+{\footnotesize\ttfamily void TImage\+Cache\+::\+Imp\+::output\+Map (\begin{DoxyParamCaption}\item[{UINT}]{chunk\+Requested,  }\item[{std\+::string}]{filename }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01846                                                                       \{}
+\DoxyCodeLine{01847   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{01848   \textcolor{comment}{//\#ifdef \_DEBUG}}
+\DoxyCodeLine{01849   \textcolor{comment}{// static int Count = 0;}}
+\DoxyCodeLine{01850 }
+\DoxyCodeLine{01851   std::string st = filename \textcolor{comment}{/*+toString(Count++)*/} + \textcolor{stringliteral}{"{}.txt"{}};}
+\DoxyCodeLine{01852   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp(st);}
+\DoxyCodeLine{01853   \mbox{\hyperlink{class_tofstream}{Tofstream}} os(fp);}
+\DoxyCodeLine{01854 }
+\DoxyCodeLine{01855   \textcolor{keywordtype}{int} umcount1 = 0;}
+\DoxyCodeLine{01856   \textcolor{keywordtype}{int} umcount2 = 0;}
+\DoxyCodeLine{01857   \textcolor{keywordtype}{int} umcount3 = 0;}
+\DoxyCodeLine{01858   \textcolor{keywordtype}{int} cmcount  = 0;}
+\DoxyCodeLine{01859   \textcolor{keywordtype}{int} cdcount  = 0;}
+\DoxyCodeLine{01860   \textcolor{keywordtype}{int} umcount  = 0;}
+\DoxyCodeLine{01861   \textcolor{keywordtype}{int} udcount  = 0;}
+\DoxyCodeLine{01862 }
+\DoxyCodeLine{01863   TUINT64 umsize1 = 0;}
+\DoxyCodeLine{01864   TUINT64 umsize2 = 0;}
+\DoxyCodeLine{01865   TUINT64 umsize3 = 0;}
+\DoxyCodeLine{01866   TUINT64 cmsize  = 0;}
+\DoxyCodeLine{01867   TUINT64 cdsize  = 0;}
+\DoxyCodeLine{01868   TUINT64 umsize  = 0;}
+\DoxyCodeLine{01869   TUINT64 udsize  = 0;}
+\DoxyCodeLine{01870 }
+\DoxyCodeLine{01871   std::map<std::string, CacheItemP>::iterator itu = m\_uncompressedItems.begin();}
+\DoxyCodeLine{01872 }
+\DoxyCodeLine{01873   \textcolor{keywordflow}{for} (; itu != m\_uncompressedItems.end(); ++itu) \{}
+\DoxyCodeLine{01874     \mbox{\hyperlink{class_t_derived_smart_pointer_t}{UncompressedOnMemoryCacheItemP}} uitem = itu-\/>second;}
+\DoxyCodeLine{01875     \textcolor{keywordflow}{if} (uitem-\/>m\_image \&\& hasExternalReferences(uitem-\/>m\_image)) \{}
+\DoxyCodeLine{01876       umcount1++;}
+\DoxyCodeLine{01877       umsize1 += (TUINT64)(itu-\/>second-\/>getSize() / 1024.0);}
+\DoxyCodeLine{01878     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (uitem-\/>m\_cantCompress) \{}
+\DoxyCodeLine{01879       umcount2++;}
+\DoxyCodeLine{01880       umsize2 += (TUINT64)(itu-\/>second-\/>getSize() / 1024.0);}
+\DoxyCodeLine{01881     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01882       umcount3++;}
+\DoxyCodeLine{01883       umsize3 += (TUINT64)(itu-\/>second-\/>getSize() / 1024.0);}
+\DoxyCodeLine{01884     \}}
+\DoxyCodeLine{01885   \}}
+\DoxyCodeLine{01886   std::map<std::string, CacheItemP>::iterator itc = m\_compressedItems.begin();}
+\DoxyCodeLine{01887   \textcolor{keywordflow}{for} (; itc != m\_compressedItems.end(); ++itc) \{}
+\DoxyCodeLine{01888     \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} boh                      = itc-\/>second;}
+\DoxyCodeLine{01889     \mbox{\hyperlink{class_t_derived_smart_pointer_t}{CompressedOnMemoryCacheItemP}} cmitem = itc-\/>second;}
+\DoxyCodeLine{01890     \mbox{\hyperlink{class_t_derived_smart_pointer_t}{CompressedOnDiskCacheItemP}} cditem   = itc-\/>second;}
+\DoxyCodeLine{01891     \mbox{\hyperlink{class_t_derived_smart_pointer_t}{UncompressedOnDiskCacheItemP}} uditem = itc-\/>second;}
+\DoxyCodeLine{01892     \textcolor{keywordflow}{if} (cmitem) \{}
+\DoxyCodeLine{01893       cmcount++;}
+\DoxyCodeLine{01894       cmsize += cmitem-\/>getSize();}
+\DoxyCodeLine{01895     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (cditem) \{}
+\DoxyCodeLine{01896       cdcount++;}
+\DoxyCodeLine{01897       cdsize += cditem-\/>getSize();}
+\DoxyCodeLine{01898     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01899       assert(uditem);}
+\DoxyCodeLine{01900       udcount++;}
+\DoxyCodeLine{01901       udsize += uditem-\/>getSize();}
+\DoxyCodeLine{01902     \}}
+\DoxyCodeLine{01903   \}}
+\DoxyCodeLine{01904 }
+\DoxyCodeLine{01905   TUINT64 currPhisMemoryAvail =}
+\DoxyCodeLine{01906       (TUINT64)(TSystem::getFreeMemorySize(\textcolor{keyword}{true}) / 1024.0);}
+\DoxyCodeLine{01907   \textcolor{comment}{// TUINT64 currVirtualMemoryAvail = TSystem::getFreeMemorySize(false)/1024.0;}}
+\DoxyCodeLine{01908 }
+\DoxyCodeLine{01909   os << \textcolor{stringliteral}{"{}************************************************************\(\backslash\)n"{}};}
+\DoxyCodeLine{01910 }
+\DoxyCodeLine{01911   os << \textcolor{stringliteral}{"{}***requested memory: "{}} +}
+\DoxyCodeLine{01912             std::to\_string((\textcolor{keywordtype}{int})chunkRequested / 1048576.0) + \textcolor{stringliteral}{"{} MB\(\backslash\)n"{}};}
+\DoxyCodeLine{01913   \textcolor{comment}{// os<<"{}*** memory in rasters: "{} +}}
+\DoxyCodeLine{01914   \textcolor{comment}{// std::to\_string((int)TRaster::getTotalMemoryInKB()/1024.0) + "{} MB\(\backslash\)n"{};}}
+\DoxyCodeLine{01915   \textcolor{comment}{// os<<"{}***virtualmem "{} + std::to\_string((int)currVirtualMemoryAvail) + "{}}}
+\DoxyCodeLine{01916   \textcolor{comment}{// MB\(\backslash\)n"{};}}
+\DoxyCodeLine{01917   os << \textcolor{stringliteral}{"{}***phismem "{}} + std::to\_string((\textcolor{keywordtype}{int})currPhisMemoryAvail) +}
+\DoxyCodeLine{01918             \textcolor{stringliteral}{"{} MB; percent of tot:"{}} +}
+\DoxyCodeLine{01919             std::to\_string(}
+\DoxyCodeLine{01920                 (\textcolor{keywordtype}{int})((currPhisMemoryAvail * 100) / m\_reservedMemory)) +}
+\DoxyCodeLine{01921             \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{01922   \textcolor{comment}{// os<<"{}***bigmem available"{} +}}
+\DoxyCodeLine{01923   \textcolor{comment}{// std::to\_string((int)TBigMemoryManager::instance()-\/>getAvailableMemoryinKb());}}
+\DoxyCodeLine{01924   os << \textcolor{stringliteral}{"{}***uncompressed NOT compressible(refcount>1)   "{}} +}
+\DoxyCodeLine{01925             std::to\_string(umcount1) + \textcolor{stringliteral}{"{} "{}} + std::to\_string(umsize1 / 1024.0) +}
+\DoxyCodeLine{01926             \textcolor{stringliteral}{"{} MB\(\backslash\)n"{}};}
+\DoxyCodeLine{01927   os << \textcolor{stringliteral}{"{}***uncompressed NOT compressible(cantCompress)   "{}} +}
+\DoxyCodeLine{01928             std::to\_string(umcount2) + \textcolor{stringliteral}{"{} "{}} + std::to\_string(umsize2 / 1024.0) +}
+\DoxyCodeLine{01929             \textcolor{stringliteral}{"{} MB\(\backslash\)n"{}};}
+\DoxyCodeLine{01930   os << \textcolor{stringliteral}{"{}***uncompressed compressible   "{}} + std::to\_string(umcount3) + \textcolor{stringliteral}{"{} "{}} +}
+\DoxyCodeLine{01931             std::to\_string(umsize3 / 1024.0) + \textcolor{stringliteral}{"{} MB\(\backslash\)n"{}};}
+\DoxyCodeLine{01932   os << \textcolor{stringliteral}{"{}***compressed on mem  "{}} + std::to\_string(cmcount) + \textcolor{stringliteral}{"{} "{}} +}
+\DoxyCodeLine{01933             std::to\_string((\textcolor{keywordtype}{int})cmsize / 1048576.0) + \textcolor{stringliteral}{"{} MB\(\backslash\)n"{}};}
+\DoxyCodeLine{01934   os << \textcolor{stringliteral}{"{}***compressed on disk "{}} + std::to\_string(cdcount) + \textcolor{stringliteral}{"{} "{}} +}
+\DoxyCodeLine{01935             std::to\_string((\textcolor{keywordtype}{int})cdsize / 1048576.0) + \textcolor{stringliteral}{"{} MB\(\backslash\)n"{}};}
+\DoxyCodeLine{01936   os << \textcolor{stringliteral}{"{}***uncompressed on disk "{}} + std::to\_string(udcount) + \textcolor{stringliteral}{"{} "{}} +}
+\DoxyCodeLine{01937             std::to\_string((\textcolor{keywordtype}{int})udsize / 1048576.0) + \textcolor{stringliteral}{"{} MB\(\backslash\)n"{}};}
+\DoxyCodeLine{01938 }
+\DoxyCodeLine{01939   \textcolor{comment}{// TBigMemoryManager::instance()-\/>printMap();}}
+\DoxyCodeLine{01940 }
+\DoxyCodeLine{01941   \textcolor{comment}{//\#endif}}
+\DoxyCodeLine{01942 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_a7409dc4b3c1f7f143716f654609de8c6}\label{class_t_image_cache_1_1_imp_a7409dc4b3c1f7f143716f654609de8c6}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!remap@{remap}}
+\index{remap@{remap}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{remap()}{remap()}}
+{\footnotesize\ttfamily void TImage\+Cache\+::\+Imp\+::remap (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{dst\+Id,  }\item[{const std\+::string \&}]{src\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01322                                                      \{}
+\DoxyCodeLine{01323   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{01324   std::map<std::string, CacheItemP>::iterator it =}
+\DoxyCodeLine{01325       m\_uncompressedItems.find(srcId);}
+\DoxyCodeLine{01326   \textcolor{keywordflow}{if} (it != m\_uncompressedItems.end()) \{}
+\DoxyCodeLine{01327     \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} citem = it-\/>second;}
+\DoxyCodeLine{01328     assert(m\_itemHistory.find(citem-\/>m\_historyCount) != m\_itemHistory.end());}
+\DoxyCodeLine{01329     m\_itemHistory.erase(citem-\/>m\_historyCount);}
+\DoxyCodeLine{01330     m\_itemsByImagePointer.erase(getPointer(citem-\/>getImage()));}
+\DoxyCodeLine{01331     m\_uncompressedItems.erase(it);}
+\DoxyCodeLine{01332 }
+\DoxyCodeLine{01333     m\_uncompressedItems[dstId]                           = citem;}
+\DoxyCodeLine{01334     m\_itemHistory[citem-\/>m\_historyCount]                 = dstId;}
+\DoxyCodeLine{01335     m\_itemsByImagePointer[getPointer(citem-\/>getImage())] = dstId;}
+\DoxyCodeLine{01336   \}}
+\DoxyCodeLine{01337   it = m\_compressedItems.find(srcId);}
+\DoxyCodeLine{01338   \textcolor{keywordflow}{if} (it != m\_compressedItems.end()) \{}
+\DoxyCodeLine{01339     \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} citem = it-\/>second;}
+\DoxyCodeLine{01340     m\_compressedItems.erase(it);}
+\DoxyCodeLine{01341     m\_compressedItems[dstId] = citem;}
+\DoxyCodeLine{01342   \}}
+\DoxyCodeLine{01343   std::map<std::string, std::string>::iterator it2 =}
+\DoxyCodeLine{01344       m\_duplicatedItems.find(srcId);}
+\DoxyCodeLine{01345   \textcolor{keywordflow}{if} (it2 != m\_duplicatedItems.end()) \{}
+\DoxyCodeLine{01346     std::string \textcolor{keywordtype}{id} = it2-\/>second;}
+\DoxyCodeLine{01347     m\_duplicatedItems.erase(it2);}
+\DoxyCodeLine{01348     m\_duplicatedItems[dstId] = id;}
+\DoxyCodeLine{01349   \}}
+\DoxyCodeLine{01350   \textcolor{keywordflow}{for} (it2 = m\_duplicatedItems.begin(); it2 != m\_duplicatedItems.end(); ++it2)}
+\DoxyCodeLine{01351     \textcolor{keywordflow}{if} (it2-\/>second == srcId) it2-\/>second = dstId;}
+\DoxyCodeLine{01352 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_a2751841b45fca7b4fdb512965d7570bd}\label{class_t_image_cache_1_1_imp_a2751841b45fca7b4fdb512965d7570bd}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!remove@{remove}}
+\index{remove@{remove}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{remove()}{remove()}}
+{\footnotesize\ttfamily void TImage\+Cache\+::\+Imp\+::remove (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01264                                                \{}
+\DoxyCodeLine{01265   \textcolor{keywordflow}{if} (CacheInstance == 0)}
+\DoxyCodeLine{01266     \textcolor{keywordflow}{return};  \textcolor{comment}{// the remove can be called when exiting from toonz...after the}}
+\DoxyCodeLine{01267              \textcolor{comment}{// imagecache was already freed!}}
+\DoxyCodeLine{01268 }
+\DoxyCodeLine{01269   assert(check == magic);}
+\DoxyCodeLine{01270   TThread::MutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{01271 }
+\DoxyCodeLine{01272   std::map<std::string, std::string>::iterator it1;}
+\DoxyCodeLine{01273   \textcolor{keywordflow}{if} ((it1 = m\_duplicatedItems.find(\textcolor{keywordtype}{id})) !=}
+\DoxyCodeLine{01274       m\_duplicatedItems.end())  \textcolor{comment}{// it's a duplicated id...}}
+\DoxyCodeLine{01275   \{}
+\DoxyCodeLine{01276     m\_duplicatedItems.erase(it1);}
+\DoxyCodeLine{01277     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01278   \}}
+\DoxyCodeLine{01279 }
+\DoxyCodeLine{01280   \textcolor{keywordflow}{for} (it1 = m\_duplicatedItems.begin(); it1 != m\_duplicatedItems.end(); ++it1)}
+\DoxyCodeLine{01281     \textcolor{keywordflow}{if} (it1-\/>second == \textcolor{keywordtype}{id}) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01282 }
+\DoxyCodeLine{01283   \textcolor{keywordflow}{if} (it1 != m\_duplicatedItems.end())  \textcolor{comment}{// it has duplicated, so cannot erase it;}}
+\DoxyCodeLine{01284                                        \textcolor{comment}{// I erase the duplicate, and assign its}}
+\DoxyCodeLine{01285                                        \textcolor{comment}{// id has the main id}}
+\DoxyCodeLine{01286   \{}
+\DoxyCodeLine{01287     std::string sonId = it1-\/>first;}
+\DoxyCodeLine{01288     m\_duplicatedItems.erase(it1);}
+\DoxyCodeLine{01289     remap(sonId, \textcolor{keywordtype}{id});}
+\DoxyCodeLine{01290     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01291   \}}
+\DoxyCodeLine{01292 }
+\DoxyCodeLine{01293   std::map<std::string, CacheItemP>::iterator it = m\_uncompressedItems.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{01294   std::map<std::string, CacheItemP>::iterator itc = m\_compressedItems.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{01295   \textcolor{keywordflow}{if} (it != m\_uncompressedItems.end()) \{}
+\DoxyCodeLine{01296     \textcolor{keyword}{const} \mbox{\hyperlink{class_t_smart_pointer_t}{CacheItemP}} \&item = it-\/>second;}
+\DoxyCodeLine{01297     assert((\mbox{\hyperlink{class_t_derived_smart_pointer_t}{UncompressedOnMemoryCacheItemP}})item);}
+\DoxyCodeLine{01298     assert(m\_itemHistory.find(it-\/>second-\/>m\_historyCount) !=}
+\DoxyCodeLine{01299            m\_itemHistory.end());}
+\DoxyCodeLine{01300     m\_itemHistory.erase(it-\/>second-\/>m\_historyCount);}
+\DoxyCodeLine{01301     m\_itemsByImagePointer.erase(getPointer(it-\/>second-\/>getImage()));}
+\DoxyCodeLine{01302 }
+\DoxyCodeLine{01303 \textcolor{preprocessor}{\#ifdef \_DEBUGTOONZ}}
+\DoxyCodeLine{01304     \textcolor{keywordflow}{if} ((\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}})it-\/>second-\/>getImage())}
+\DoxyCodeLine{01305       ((\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}})it-\/>second-\/>getImage())-\/>getRaster()-\/>m\_cashed = \textcolor{keyword}{false};}
+\DoxyCodeLine{01306     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((\mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}})it-\/>second-\/>getImage())}
+\DoxyCodeLine{01307       ((\mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}})it-\/>second-\/>getImage())-\/>getRaster()-\/>m\_cashed = \textcolor{keyword}{false};}
+\DoxyCodeLine{01308 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01309 }
+\DoxyCodeLine{01310     m\_uncompressedItems.erase(it);}
+\DoxyCodeLine{01311   \}}
+\DoxyCodeLine{01312   \textcolor{keywordflow}{if} (itc != m\_compressedItems.end()) m\_compressedItems.erase(itc);}
+\DoxyCodeLine{01313 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_adcbf5b5cd4f6a95aeea8511c831a41e4}\label{class_t_image_cache_1_1_imp_adcbf5b5cd4f6a95aeea8511c831a41e4}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!m\_compressedItems@{m\_compressedItems}}
+\index{m\_compressedItems@{m\_compressedItems}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_compressedItems}{m\_compressedItems}}
+{\footnotesize\ttfamily std\+::map$<$std\+::string, \mbox{\hyperlink{class_t_smart_pointer_t}{Cache\+ItemP}}$>$ TImage\+Cache\+::\+Imp\+::m\+\_\+compressed\+Items}
+
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_a4d1c713f1a74fb81d225473f3398ca94}\label{class_t_image_cache_1_1_imp_a4d1c713f1a74fb81d225473f3398ca94}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!m\_duplicatedItems@{m\_duplicatedItems}}
+\index{m\_duplicatedItems@{m\_duplicatedItems}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_duplicatedItems}{m\_duplicatedItems}}
+{\footnotesize\ttfamily std\+::map$<$std\+::string, std\+::string$>$ TImage\+Cache\+::\+Imp\+::m\+\_\+duplicated\+Items}
+
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_a8a10d42f12f41afa489395e7b9597ff9}\label{class_t_image_cache_1_1_imp_a8a10d42f12f41afa489395e7b9597ff9}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!m\_fileid@{m\_fileid}}
+\index{m\_fileid@{m\_fileid}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_fileid}{m\_fileid}}
+{\footnotesize\ttfamily int TImage\+Cache\+::\+Imp\+::m\+\_\+fileid\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_a7246fac918c6fc87078b8c4e451e0ac6}\label{class_t_image_cache_1_1_imp_a7246fac918c6fc87078b8c4e451e0ac6}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!m\_isEnabled@{m\_isEnabled}}
+\index{m\_isEnabled@{m\_isEnabled}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_isEnabled}{m\_isEnabled}}
+{\footnotesize\ttfamily QThread\+Storage$<$bool $\ast$$>$ TImage\+Cache\+::\+Imp\+::m\+\_\+is\+Enabled}
+
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_aa0b50ab48536920dd150c53557fd344f}\label{class_t_image_cache_1_1_imp_aa0b50ab48536920dd150c53557fd344f}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!m\_itemHistory@{m\_itemHistory}}
+\index{m\_itemHistory@{m\_itemHistory}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_itemHistory}{m\_itemHistory}}
+{\footnotesize\ttfamily std\+::map$<$TUINT32, std\+::string$>$ TImage\+Cache\+::\+Imp\+::m\+\_\+item\+History}
+
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_a3ff9cb73078ade9741c3fa00e33609d8}\label{class_t_image_cache_1_1_imp_a3ff9cb73078ade9741c3fa00e33609d8}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!m\_itemsByImagePointer@{m\_itemsByImagePointer}}
+\index{m\_itemsByImagePointer@{m\_itemsByImagePointer}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_itemsByImagePointer}{m\_itemsByImagePointer}}
+{\footnotesize\ttfamily std\+::map$<$void $\ast$, std\+::string$>$ TImage\+Cache\+::\+Imp\+::m\+\_\+items\+By\+Image\+Pointer}
+
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_aa648b74327aa7241496e9a2a2ea2f6a5}\label{class_t_image_cache_1_1_imp_aa648b74327aa7241496e9a2a2ea2f6a5}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!m\_mutex@{m\_mutex}}
+\index{m\_mutex@{m\_mutex}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_mutex}{m\_mutex}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_thread_1_1_mutex}{TThread\+::\+Mutex}} TImage\+Cache\+::\+Imp\+::m\+\_\+mutex}
+
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_a5115a2ad58307fa8ea5402bf89d9988a}\label{class_t_image_cache_1_1_imp_a5115a2ad58307fa8ea5402bf89d9988a}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!m\_reservedMemory@{m\_reservedMemory}}
+\index{m\_reservedMemory@{m\_reservedMemory}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_reservedMemory}{m\_reservedMemory}}
+{\footnotesize\ttfamily TINT64 TImage\+Cache\+::\+Imp\+::m\+\_\+reserved\+Memory}
+
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_aa4b3bcb0ddede7224b899757fc5bc164}\label{class_t_image_cache_1_1_imp_aa4b3bcb0ddede7224b899757fc5bc164}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!m\_rootDir@{m\_rootDir}}
+\index{m\_rootDir@{m\_rootDir}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_rootDir}{m\_rootDir}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} TImage\+Cache\+::\+Imp\+::m\+\_\+root\+Dir}
+
+\mbox{\Hypertarget{class_t_image_cache_1_1_imp_a7560e31deb10434dfae0c7d929727db5}\label{class_t_image_cache_1_1_imp_a7560e31deb10434dfae0c7d929727db5}} 
+\index{TImageCache::Imp@{TImageCache::Imp}!m\_uncompressedItems@{m\_uncompressedItems}}
+\index{m\_uncompressedItems@{m\_uncompressedItems}!TImageCache::Imp@{TImageCache::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_uncompressedItems}{m\_uncompressedItems}}
+{\footnotesize\ttfamily std\+::map$<$std\+::string, \mbox{\hyperlink{class_t_smart_pointer_t}{Cache\+ItemP}}$>$ TImage\+Cache\+::\+Imp\+::m\+\_\+uncompressed\+Items}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tcache/timagecache.\+cpp\end{DoxyCompactItemize}

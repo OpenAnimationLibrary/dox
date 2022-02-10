@@ -1,0 +1,193 @@
+\hypertarget{class_x_d_t_s_import_popup}{}\doxysection{XDTSImport\+Popup Class Reference}
+\label{class_x_d_t_s_import_popup}\index{XDTSImportPopup@{XDTSImportPopup}}
+Inheritance diagram for XDTSImport\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_x_d_t_s_import_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_x_d_t_s_import_popup_aaf2600196fdfa122e5b530114f2a0c0f}{XDTSImport\+Popup}} (QString\+List level\+Names, \mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$scene, \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} scene\+Path)
+\item 
+QString \mbox{\hyperlink{class_x_d_t_s_import_popup_ac98f7a544303dff1f36c29ff8640725d}{get\+Level\+Path}} (QString level\+Name)
+\item 
+void \mbox{\hyperlink{class_x_d_t_s_import_popup_a4e3363180c51826925078f0614c1f04d}{get\+Marker\+Ids}} (int \&tick1\+Id, int \&tick2\+Id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_x_d_t_s_import_popup_adaa7e17cf25f764274b91576226b05d1}{on\+Path\+Changed}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_x_d_t_s_import_popup_aaf2600196fdfa122e5b530114f2a0c0f}\label{class_x_d_t_s_import_popup_aaf2600196fdfa122e5b530114f2a0c0f}} 
+\index{XDTSImportPopup@{XDTSImportPopup}!XDTSImportPopup@{XDTSImportPopup}}
+\index{XDTSImportPopup@{XDTSImportPopup}!XDTSImportPopup@{XDTSImportPopup}}
+\doxysubsubsection{\texorpdfstring{XDTSImportPopup()}{XDTSImportPopup()}}
+{\footnotesize\ttfamily XDTSImport\+Popup\+::\+XDTSImport\+Popup (\begin{DoxyParamCaption}\item[{QString\+List}]{level\+Names,  }\item[{\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$}]{scene,  }\item[{\mbox{\hyperlink{class_t_file_path}{TFile\+Path}}}]{scene\+Path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00032     : m\_scene(scene)}
+\DoxyCodeLine{00033     , \mbox{\hyperlink{class_d_v_gui_1_1_dialog}{DVGui::Dialog}}(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false},}
+\DoxyCodeLine{00034                     \textcolor{stringliteral}{"{}XDTSImport"{}}) \{}
+\DoxyCodeLine{00035   setWindowTitle(tr(\textcolor{stringliteral}{"{}Importing XDTS file \%1"{}})}
+\DoxyCodeLine{00036                      .arg(QString::fromStdString(scenePath.\mbox{\hyperlink{class_t_file_path_a9b256108e6e5ff99f3ba828d4cdbd7ee}{getLevelName}}())));}
+\DoxyCodeLine{00037   QPushButton* loadButton   = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Load"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00038   QPushButton* cancelButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cancel"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00039 }
+\DoxyCodeLine{00040   m\_tick1Combo                            = \textcolor{keyword}{new} QComboBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00041   m\_tick2Combo                            = \textcolor{keyword}{new} QComboBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00042   QList<TSceneProperties::CellMark> marks = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00043                                                 -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00044                                                 -\/>getScene()}
+\DoxyCodeLine{00045                                                 -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00046                                                 -\/>getCellMarks();}
+\DoxyCodeLine{00047   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 2; i++) \{}
+\DoxyCodeLine{00048     QComboBox* combo = (i == 0) ? m\_tick1Combo : m\_tick2Combo;}
+\DoxyCodeLine{00049     combo-\/>addItem(tr(\textcolor{stringliteral}{"{}None"{}}), -\/1);}
+\DoxyCodeLine{00050     \textcolor{keywordtype}{int} curId = 0;}
+\DoxyCodeLine{00051     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} mark : marks) \{}
+\DoxyCodeLine{00052       QString label = QString(\textcolor{stringliteral}{"{}\%1: \%2"{}}).arg(curId).arg(mark.name);}
+\DoxyCodeLine{00053       combo-\/>addItem(getColorChipIcon(mark.color), label, curId);}
+\DoxyCodeLine{00054       curId++;}
+\DoxyCodeLine{00055     \}}
+\DoxyCodeLine{00056   \}}
+\DoxyCodeLine{00057   m\_tick1Combo-\/>setCurrentIndex(m\_tick1Combo-\/>findData(0));}
+\DoxyCodeLine{00058   m\_tick2Combo-\/>setCurrentIndex(m\_tick2Combo-\/>findData(1));}
+\DoxyCodeLine{00059 }
+\DoxyCodeLine{00060   QString description =}
+\DoxyCodeLine{00061       tr(\textcolor{stringliteral}{"{}Please specify the level locations. Suggested paths "{}}}
+\DoxyCodeLine{00062          \textcolor{stringliteral}{"{}are input in the fields with blue border."{}});}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064   m\_topLayout-\/>addWidget(\textcolor{keyword}{new} QLabel(description, \textcolor{keyword}{this}), 0);}
+\DoxyCodeLine{00065   m\_topLayout-\/>addSpacing(15);}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067   QScrollArea* fieldsArea = \textcolor{keyword}{new} QScrollArea(\textcolor{keyword}{this});}
+\DoxyCodeLine{00068   fieldsArea-\/>setWidgetResizable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00069 }
+\DoxyCodeLine{00070   QWidget* fieldsWidget = \textcolor{keyword}{new} QWidget(\textcolor{keyword}{this});}
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00072   QGridLayout* fieldsLay = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00073   fieldsLay-\/>setMargin(0);}
+\DoxyCodeLine{00074   fieldsLay-\/>setHorizontalSpacing(10);}
+\DoxyCodeLine{00075   fieldsLay-\/>setVerticalSpacing(10);}
+\DoxyCodeLine{00076   fieldsLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Level Name"{}}), \textcolor{keyword}{this}), 0, 0,}
+\DoxyCodeLine{00077                        Qt::AlignLeft | Qt::AlignVCenter);}
+\DoxyCodeLine{00078   fieldsLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Level Path"{}}), \textcolor{keyword}{this}), 0, 1,}
+\DoxyCodeLine{00079                        Qt::AlignLeft | Qt::AlignVCenter);}
+\DoxyCodeLine{00080   \textcolor{keywordflow}{for} (QString\& levelName : levelNames) \{}
+\DoxyCodeLine{00081     \textcolor{keywordtype}{int} row = fieldsLay-\/>rowCount();}
+\DoxyCodeLine{00082     fieldsLay-\/>addWidget(\textcolor{keyword}{new} QLabel(levelName, \textcolor{keyword}{this}), row, 0,}
+\DoxyCodeLine{00083                          Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00084     \mbox{\hyperlink{class_d_v_gui_1_1_file_field}{FileField}}* fileField = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_file_field}{FileField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00085     fieldsLay-\/>addWidget(fileField, row, 1);}
+\DoxyCodeLine{00086     m\_fields.insert(levelName, fileField);}
+\DoxyCodeLine{00087     fileField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_file_field_aa7a756fa242d0b6dbcf80994ee59c79e}{setFileMode}}(QFileDialog::AnyFile);}
+\DoxyCodeLine{00088     fileField-\/>setObjectName(\textcolor{stringliteral}{"{}SuggestiveFileField"{}});}
+\DoxyCodeLine{00089     connect(fileField, SIGNAL(pathChanged()), \textcolor{keyword}{this}, SLOT(onPathChanged()));}
+\DoxyCodeLine{00090   \}}
+\DoxyCodeLine{00091   fieldsLay-\/>setColumnStretch(1, 1);}
+\DoxyCodeLine{00092   fieldsLay-\/>setRowStretch(fieldsLay-\/>rowCount(), 1);}
+\DoxyCodeLine{00093 }
+\DoxyCodeLine{00094   fieldsWidget-\/>setLayout(fieldsLay);}
+\DoxyCodeLine{00095   fieldsArea-\/>setWidget(fieldsWidget);}
+\DoxyCodeLine{00096   m\_topLayout-\/>addWidget(fieldsArea, 1);}
+\DoxyCodeLine{00097 }
+\DoxyCodeLine{00098   \textcolor{comment}{// cell mark area}}
+\DoxyCodeLine{00099   QGridLayout* markLay = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00100   markLay-\/>setMargin(0);}
+\DoxyCodeLine{00101   markLay-\/>setHorizontalSpacing(10);}
+\DoxyCodeLine{00102   markLay-\/>setVerticalSpacing(10);}
+\DoxyCodeLine{00103   \{}
+\DoxyCodeLine{00104     markLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Inbetween symbol mark"{}}), \textcolor{keyword}{this}), 0, 0,}
+\DoxyCodeLine{00105                        Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00106     markLay-\/>addWidget(m\_tick1Combo, 0, 1);}
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108     markLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Reverse sheet symbol mark"{}}), \textcolor{keyword}{this}), 1, 0,}
+\DoxyCodeLine{00109                        Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00110     markLay-\/>addWidget(m\_tick2Combo, 1, 1);}
+\DoxyCodeLine{00111   \}}
+\DoxyCodeLine{00112   markLay-\/>setColumnStretch(2, 1);}
+\DoxyCodeLine{00113   m\_topLayout-\/>addLayout(markLay, 0);}
+\DoxyCodeLine{00114 }
+\DoxyCodeLine{00115   connect(loadButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(accept()));}
+\DoxyCodeLine{00116   connect(cancelButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(reject()));}
+\DoxyCodeLine{00117 }
+\DoxyCodeLine{00118   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(loadButton, cancelButton);}
+\DoxyCodeLine{00119 }
+\DoxyCodeLine{00120   updateSuggestions(scenePath.getQString());}
+\DoxyCodeLine{00121 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_x_d_t_s_import_popup_ac98f7a544303dff1f36c29ff8640725d}\label{class_x_d_t_s_import_popup_ac98f7a544303dff1f36c29ff8640725d}} 
+\index{XDTSImportPopup@{XDTSImportPopup}!getLevelPath@{getLevelPath}}
+\index{getLevelPath@{getLevelPath}!XDTSImportPopup@{XDTSImportPopup}}
+\doxysubsubsection{\texorpdfstring{getLevelPath()}{getLevelPath()}}
+{\footnotesize\ttfamily QString XDTSImport\+Popup\+::get\+Level\+Path (\begin{DoxyParamCaption}\item[{QString}]{level\+Name }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00233                                                        \{}
+\DoxyCodeLine{00234   \mbox{\hyperlink{class_d_v_gui_1_1_file_field}{FileField}}* field = m\_fields.value(levelName);}
+\DoxyCodeLine{00235   \textcolor{keywordflow}{if} (!field) \textcolor{keywordflow}{return} QString();}
+\DoxyCodeLine{00236   \textcolor{keywordflow}{return} field-\/>getPath();}
+\DoxyCodeLine{00237 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_x_d_t_s_import_popup_a4e3363180c51826925078f0614c1f04d}\label{class_x_d_t_s_import_popup_a4e3363180c51826925078f0614c1f04d}} 
+\index{XDTSImportPopup@{XDTSImportPopup}!getMarkerIds@{getMarkerIds}}
+\index{getMarkerIds@{getMarkerIds}!XDTSImportPopup@{XDTSImportPopup}}
+\doxysubsubsection{\texorpdfstring{getMarkerIds()}{getMarkerIds()}}
+{\footnotesize\ttfamily void XDTSImport\+Popup\+::get\+Marker\+Ids (\begin{DoxyParamCaption}\item[{int \&}]{tick1\+Id,  }\item[{int \&}]{tick2\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00241                                                              \{}
+\DoxyCodeLine{00242   tick1Id = m\_tick1Combo-\/>currentData().toInt();}
+\DoxyCodeLine{00243   tick2Id = m\_tick2Combo-\/>currentData().toInt();}
+\DoxyCodeLine{00244 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_x_d_t_s_import_popup_adaa7e17cf25f764274b91576226b05d1}\label{class_x_d_t_s_import_popup_adaa7e17cf25f764274b91576226b05d1}} 
+\index{XDTSImportPopup@{XDTSImportPopup}!onPathChanged@{onPathChanged}}
+\index{onPathChanged@{onPathChanged}!XDTSImportPopup@{XDTSImportPopup}}
+\doxysubsubsection{\texorpdfstring{onPathChanged}{onPathChanged}}
+{\footnotesize\ttfamily void XDTSImport\+Popup\+::on\+Path\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00125                                     \{}
+\DoxyCodeLine{00126   \mbox{\hyperlink{class_d_v_gui_1_1_file_field}{FileField}}* fileField = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_d_v_gui_1_1_file_field}{FileField}}*\textcolor{keyword}{>}(sender());}
+\DoxyCodeLine{00127   \textcolor{keywordflow}{if} (!fileField) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00128   QString levelName = m\_fields.key(fileField);}
+\DoxyCodeLine{00129   \textcolor{comment}{// make the field non-\/suggestive}}
+\DoxyCodeLine{00130   m\_pathSuggestedLevels.removeAll(levelName);}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132   \textcolor{comment}{// if the path is specified under the sub-\/folder with the same name as the}}
+\DoxyCodeLine{00133   \textcolor{comment}{// level, then try to make suggestions from the parent folder of it}}
+\DoxyCodeLine{00134   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp =}
+\DoxyCodeLine{00135       m\_scene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(\mbox{\hyperlink{class_t_file_path}{TFilePath}}(fileField-\/>getPath())).getParentDir();}
+\DoxyCodeLine{00136   \textcolor{keywordflow}{if} (QDir(fp.getQString()).dirName() == levelName)}
+\DoxyCodeLine{00137     updateSuggestions(fp.getQString());}
+\DoxyCodeLine{00138 }
+\DoxyCodeLine{00139   updateSuggestions(fileField-\/>getPath());}
+\DoxyCodeLine{00140 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xdtsimportpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/xdtsimportpopup.\+cpp\end{DoxyCompactItemize}

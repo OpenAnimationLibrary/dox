@@ -1,0 +1,164 @@
+\hypertarget{class_load_scene_popup}{}\doxysection{Load\+Scene\+Popup Class Reference}
+\label{class_load_scene_popup}\index{LoadScenePopup@{LoadScenePopup}}
+Inheritance diagram for Load\+Scene\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_load_scene_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_load_scene_popup_af3659b9d3b8843da376781297ea31d5b}{execute}} () override
+\item 
+void \mbox{\hyperlink{class_load_scene_popup_a3e8e123d51db8825de651d38f7c63f4a}{init\+Folder}} () override
+\item 
+void \mbox{\hyperlink{class_load_scene_popup_a198c5571c1a1b0d797ac605303bbde25}{set\+Initial\+Folder\+By\+Current\+Room}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_load_scene_popup_aa1cfccd03c4d28c2f6ebeaf648fc4794}{on\+File\+Path\+Double\+Clicked}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_load_scene_popup_a43304cbbe951ac7c4b13fad55cb05e40}{show\+Event}} (QShow\+Event $\ast$) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_load_scene_popup_a5e91937b9a29025f898a4c0773e51952}\label{class_load_scene_popup_a5e91937b9a29025f898a4c0773e51952}} 
+\index{LoadScenePopup@{LoadScenePopup}!LoadScenePopup@{LoadScenePopup}}
+\index{LoadScenePopup@{LoadScenePopup}!LoadScenePopup@{LoadScenePopup}}
+\doxysubsubsection{\texorpdfstring{LoadScenePopup()}{LoadScenePopup()}}
+{\footnotesize\ttfamily Load\+Scene\+Popup\+::\+Load\+Scene\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00509                                : \mbox{\hyperlink{class_file_browser_popup}{FileBrowserPopup}}(tr(\textcolor{stringliteral}{"{}Load Scene"{}})) \{}
+\DoxyCodeLine{00510   setOkText(tr(\textcolor{stringliteral}{"{}Load"{}}));}
+\DoxyCodeLine{00511   addFilterType(\textcolor{stringliteral}{"{}tnz"{}});}
+\DoxyCodeLine{00512   addFilterType(\textcolor{stringliteral}{"{}xdts"{}});}
+\DoxyCodeLine{00513 }
+\DoxyCodeLine{00514   \textcolor{comment}{// set the initial current path according to the current module}}
+\DoxyCodeLine{00515   setInitialFolderByCurrentRoom();}
+\DoxyCodeLine{00516 }
+\DoxyCodeLine{00517   connect(m\_browser, SIGNAL(filePathDoubleClicked(\textcolor{keyword}{const} \mbox{\hyperlink{class_t_file_path}{TFilePath}} \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00518           SLOT(onFilePathDoubleClicked(\textcolor{keyword}{const} \mbox{\hyperlink{class_t_file_path}{TFilePath}} \&)));}
+\DoxyCodeLine{00519 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_load_scene_popup_af3659b9d3b8843da376781297ea31d5b}\label{class_load_scene_popup_af3659b9d3b8843da376781297ea31d5b}} 
+\index{LoadScenePopup@{LoadScenePopup}!execute@{execute}}
+\index{execute@{execute}!LoadScenePopup@{LoadScenePopup}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily bool Load\+Scene\+Popup\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Performs some action on m\+\_\+paths and returns whether the action was successful (accepted) -\/ in which case the popup closes. 
+
+Implements \mbox{\hyperlink{class_file_browser_popup_a8158b9b8756ac5dfa893b78cdc2fd9af}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00521                              \{}
+\DoxyCodeLine{00522   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.empty()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00523 }
+\DoxyCodeLine{00524   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_file_path}{TFilePath}} \&fp = *\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.begin();}
+\DoxyCodeLine{00525 }
+\DoxyCodeLine{00526   \textcolor{keywordflow}{if} (fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() != \textcolor{stringliteral}{"{}tnz"{}} \&\& fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() != \textcolor{stringliteral}{"{}xdts"{}}) \{}
+\DoxyCodeLine{00527     DVGui::error(toQString(fp) + tr(\textcolor{stringliteral}{"{} is not a scene file."{}}));}
+\DoxyCodeLine{00528     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00529   \}}
+\DoxyCodeLine{00530 }
+\DoxyCodeLine{00531   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(fp).doesExist()) \{}
+\DoxyCodeLine{00532     DVGui::error(toQString(fp) + tr(\textcolor{stringliteral}{"{} does not exist."{}}));}
+\DoxyCodeLine{00533     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00534   \}}
+\DoxyCodeLine{00535 }
+\DoxyCodeLine{00536   \textcolor{keywordflow}{return} IoCmd::loadScene(fp);}
+\DoxyCodeLine{00537 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00225}{TFile\+Path\+::get\+Type()}}, and \mbox{\hyperlink{l00090}{File\+Browser\+Popup\+::m\+\_\+selected\+Paths}}.
+
+\mbox{\Hypertarget{class_load_scene_popup_a3e8e123d51db8825de651d38f7c63f4a}\label{class_load_scene_popup_a3e8e123d51db8825de651d38f7c63f4a}} 
+\index{LoadScenePopup@{LoadScenePopup}!initFolder@{initFolder}}
+\index{initFolder@{initFolder}!LoadScenePopup@{LoadScenePopup}}
+\doxysubsubsection{\texorpdfstring{initFolder()}{initFolder()}}
+{\footnotesize\ttfamily void Load\+Scene\+Popup\+::init\+Folder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_file_browser_popup}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00539 \{ setInitialFolderByCurrentRoom(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_load_scene_popup_aa1cfccd03c4d28c2f6ebeaf648fc4794}\label{class_load_scene_popup_aa1cfccd03c4d28c2f6ebeaf648fc4794}} 
+\index{LoadScenePopup@{LoadScenePopup}!onFilePathDoubleClicked@{onFilePathDoubleClicked}}
+\index{onFilePathDoubleClicked@{onFilePathDoubleClicked}!LoadScenePopup@{LoadScenePopup}}
+\doxysubsubsection{\texorpdfstring{onFilePathDoubleClicked}{onFilePathDoubleClicked}}
+{\footnotesize\ttfamily void Load\+Scene\+Popup\+::on\+File\+Path\+Double\+Clicked (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00559                                                                   \{}
+\DoxyCodeLine{00560   Q\_UNUSED(path);}
+\DoxyCodeLine{00561   onOkPressed();}
+\DoxyCodeLine{00562 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_load_scene_popup_a198c5571c1a1b0d797ac605303bbde25}\label{class_load_scene_popup_a198c5571c1a1b0d797ac605303bbde25}} 
+\index{LoadScenePopup@{LoadScenePopup}!setInitialFolderByCurrentRoom@{setInitialFolderByCurrentRoom}}
+\index{setInitialFolderByCurrentRoom@{setInitialFolderByCurrentRoom}!LoadScenePopup@{LoadScenePopup}}
+\doxysubsubsection{\texorpdfstring{setInitialFolderByCurrentRoom()}{setInitialFolderByCurrentRoom()}}
+{\footnotesize\ttfamily void Load\+Scene\+Popup\+::set\+Initial\+Folder\+By\+Current\+Room (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00541                                                    \{}
+\DoxyCodeLine{00542   QString roomName  = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentRoomName();}
+\DoxyCodeLine{00543   \mbox{\hyperlink{class_t_smart_pointer_t}{TProjectP}} project = \mbox{\hyperlink{class_t_project_manager_a150ca0d6e2eb171b8117b0c5f03dbfad}{TProjectManager::instance}}()-\/>\mbox{\hyperlink{class_t_project_manager_a5267cfeae48d4e7585c3fc56d8d5b0b3}{getCurrentProject}}();}
+\DoxyCodeLine{00544   \mbox{\hyperlink{class_t_file_path}{TFilePath}} scenePath;}
+\DoxyCodeLine{00545   \textcolor{keywordflow}{if} (roomName == \textcolor{stringliteral}{"{}Cleanup"{}} || roomName == \textcolor{stringliteral}{"{}InknPaint"{}})}
+\DoxyCodeLine{00546     scenePath = project-\/>getFolder(\mbox{\hyperlink{class_t_project_a192daa44228264ac90d27f6d6491ac38}{TProject::Drawings}}, \textcolor{keyword}{true});}
+\DoxyCodeLine{00547   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (roomName == \textcolor{stringliteral}{"{}PltEdit"{}})}
+\DoxyCodeLine{00548     scenePath = project-\/>getFolder(\mbox{\hyperlink{class_t_project_a092d328ed133774a3522d4029eedf06c}{TProject::Palettes}}, \textcolor{keyword}{true});}
+\DoxyCodeLine{00549   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00550     scenePath = project-\/>getFolder(\mbox{\hyperlink{class_t_project_afa1aca692a03ae826a4d22565c7361cb}{TProject::Scenes}}, \textcolor{keyword}{true});}
+\DoxyCodeLine{00551   setFolder(scenePath);}
+\DoxyCodeLine{00552 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_load_scene_popup_a43304cbbe951ac7c4b13fad55cb05e40}\label{class_load_scene_popup_a43304cbbe951ac7c4b13fad55cb05e40}} 
+\index{LoadScenePopup@{LoadScenePopup}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!LoadScenePopup@{LoadScenePopup}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Load\+Scene\+Popup\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00554                                             \{}
+\DoxyCodeLine{00555   m\_nameField-\/>clear();}
+\DoxyCodeLine{00556   FileBrowserPopup::showEvent(e);}
+\DoxyCodeLine{00557 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowserpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowserpopup.\+cpp\end{DoxyCompactItemize}

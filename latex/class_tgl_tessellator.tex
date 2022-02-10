@@ -1,0 +1,206 @@
+\hypertarget{class_tgl_tessellator}{}\doxysection{Tgl\+Tessellator Class Reference}
+\label{class_tgl_tessellator}\index{TglTessellator@{TglTessellator}}
+Inheritance diagram for Tgl\+Tessellator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_tgl_tessellator}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_tgl_tessellator_1_1_g_l_tess}{GLTess}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_tgl_tessellator_a6df2f7f7a81e14c0457fbc711e5f20ca}{tessellate}} (const \mbox{\hyperlink{class_t_color_function}{TColor\+Function}} $\ast$cf, const bool anti\+Aliasing, \mbox{\hyperlink{class_t_region_outline}{TRegion\+Outline}} \&outline, TPixel32 color) override
+\item 
+void \mbox{\hyperlink{class_tgl_tessellator_ac514604c3d2a756e0b7f5dbd398add05}{tessellate}} (const \mbox{\hyperlink{class_t_color_function}{TColor\+Function}} $\ast$cf, const bool anti\+Aliasing, \mbox{\hyperlink{class_t_region_outline}{TRegion\+Outline}} \&outline, \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} texture) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tgl_tessellator_a6df2f7f7a81e14c0457fbc711e5f20ca}\label{class_tgl_tessellator_a6df2f7f7a81e14c0457fbc711e5f20ca}} 
+\index{TglTessellator@{TglTessellator}!tessellate@{tessellate}}
+\index{tessellate@{tessellate}!TglTessellator@{TglTessellator}}
+\doxysubsubsection{\texorpdfstring{tessellate()}{tessellate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Tgl\+Tessellator\+::tessellate (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_color_function}{TColor\+Function}} $\ast$}]{cf,  }\item[{const bool}]{anti\+Aliasing,  }\item[{\mbox{\hyperlink{class_t_region_outline}{TRegion\+Outline}} \&}]{outline,  }\item[{TPixel32}]{color }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_tessellator}{TTessellator}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00291                                                                          \{}
+\DoxyCodeLine{00292   \textcolor{keywordflow}{if} (cf) color = (*(cf))(color);}
+\DoxyCodeLine{00293 }
+\DoxyCodeLine{00294   \textcolor{keywordflow}{if} (color.m == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00295 }
+\DoxyCodeLine{00296   \textcolor{keywordtype}{bool} transparencyFlag = color.m < 255;}
+\DoxyCodeLine{00297 }
+\DoxyCodeLine{00298   tglColor(color);}
+\DoxyCodeLine{00299 }
+\DoxyCodeLine{00300   \textcolor{keywordflow}{if} (transparencyFlag) \{}
+\DoxyCodeLine{00301     tglEnableLineSmooth();}
+\DoxyCodeLine{00302   \}}
+\DoxyCodeLine{00303 }
+\DoxyCodeLine{00304   \mbox{\hyperlink{class_tgl_tessellator_1_1_g_l_tess}{TglTessellator::GLTess}} glTess;}
+\DoxyCodeLine{00305   gluTessCallback(glTess.m\_tess, GLU\_TESS\_VERTEX, (GluCallback)glVertex3dv);}
+\DoxyCodeLine{00306 }
+\DoxyCodeLine{00307   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\///}}
+\DoxyCodeLine{00308   doTessellate(glTess, cf, antiAliasing, outline);}
+\DoxyCodeLine{00309   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\///}}
+\DoxyCodeLine{00310 }
+\DoxyCodeLine{00311   \textcolor{keywordflow}{if} (antiAliasing \&\& outline.m\_doAntialiasing) \{}
+\DoxyCodeLine{00312     tglEnableLineSmooth();}
+\DoxyCodeLine{00313 }
+\DoxyCodeLine{00314     \textcolor{keywordflow}{for} (TRegionOutline::Boundary::iterator poly\_it =}
+\DoxyCodeLine{00315              outline.m\_exterior.begin();}
+\DoxyCodeLine{00316          poly\_it != outline.m\_exterior.end(); ++poly\_it) \{}
+\DoxyCodeLine{00317       std::vector<GLdouble> v;}
+\DoxyCodeLine{00318       \textcolor{keywordflow}{if} (poly\_it-\/>size() == 0) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00319       v.resize(poly\_it-\/>size() * 2);}
+\DoxyCodeLine{00320       \textcolor{keywordtype}{int} i = 0;}
+\DoxyCodeLine{00321       \textcolor{keywordflow}{for} (TRegionOutline::PointVector::iterator it = poly\_it-\/>begin();}
+\DoxyCodeLine{00322            it != poly\_it-\/>end(); ++it) \{}
+\DoxyCodeLine{00323         v[i++] = it-\/>x;}
+\DoxyCodeLine{00324         v[i++] = it-\/>y;}
+\DoxyCodeLine{00325       \}}
+\DoxyCodeLine{00326 }
+\DoxyCodeLine{00327       glEnableClientState(GL\_VERTEX\_ARRAY);}
+\DoxyCodeLine{00328 }
+\DoxyCodeLine{00329       glVertexPointer(2, GL\_DOUBLE, \textcolor{keyword}{sizeof}(GLdouble) * 2, \&v[0]);}
+\DoxyCodeLine{00330       glDrawArrays(GL\_LINE\_LOOP, 0, v.size() / 2);}
+\DoxyCodeLine{00331 }
+\DoxyCodeLine{00332       glDisableClientState(GL\_VERTEX\_ARRAY);}
+\DoxyCodeLine{00333     \}}
+\DoxyCodeLine{00334 }
+\DoxyCodeLine{00335     \textcolor{keywordflow}{for} (TRegionOutline::Boundary::iterator poly\_it =}
+\DoxyCodeLine{00336              outline.m\_interior.begin();}
+\DoxyCodeLine{00337          poly\_it != outline.m\_interior.end(); ++poly\_it) \{}
+\DoxyCodeLine{00338       std::vector<GLdouble> v;}
+\DoxyCodeLine{00339       v.resize(poly\_it-\/>size() * 2);}
+\DoxyCodeLine{00340       \textcolor{keywordtype}{int} i = 0;}
+\DoxyCodeLine{00341       \textcolor{keywordflow}{for} (TRegionOutline::PointVector::iterator it = poly\_it-\/>begin();}
+\DoxyCodeLine{00342            it != poly\_it-\/>end(); ++it) \{}
+\DoxyCodeLine{00343         v[i++] = it-\/>x;}
+\DoxyCodeLine{00344         v[i++] = it-\/>y;}
+\DoxyCodeLine{00345       \}}
+\DoxyCodeLine{00346       \textcolor{keywordflow}{if} (v.empty()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00347       glEnableClientState(GL\_VERTEX\_ARRAY);}
+\DoxyCodeLine{00348 }
+\DoxyCodeLine{00349       glVertexPointer(2, GL\_DOUBLE, \textcolor{keyword}{sizeof}(GLdouble) * 2, \&v[0]);}
+\DoxyCodeLine{00350       glDrawArrays(GL\_LINE\_LOOP, 0, v.size() / 2);}
+\DoxyCodeLine{00351 }
+\DoxyCodeLine{00352       glDisableClientState(GL\_VERTEX\_ARRAY);}
+\DoxyCodeLine{00353     \}}
+\DoxyCodeLine{00354   \}}
+\DoxyCodeLine{00355 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tgl_tessellator_ac514604c3d2a756e0b7f5dbd398add05}\label{class_tgl_tessellator_ac514604c3d2a756e0b7f5dbd398add05}} 
+\index{TglTessellator@{TglTessellator}!tessellate@{tessellate}}
+\index{tessellate@{tessellate}!TglTessellator@{TglTessellator}}
+\doxysubsubsection{\texorpdfstring{tessellate()}{tessellate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Tgl\+Tessellator\+::tessellate (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_color_function}{TColor\+Function}} $\ast$}]{cf,  }\item[{const bool}]{anti\+Aliasing,  }\item[{\mbox{\hyperlink{class_t_region_outline}{TRegion\+Outline}} \&}]{outline,  }\item[{\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}}]{texture }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_tessellator}{TTessellator}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00361                                                                              \{}
+\DoxyCodeLine{00362   \textcolor{comment}{// QMutexLocker sl(m\_mutex);}}
+\DoxyCodeLine{00363   checkErrorsByGL;}
+\DoxyCodeLine{00364   glEnable(GL\_TEXTURE\_2D);}
+\DoxyCodeLine{00365   glColor4d(1, 1, 1, 1);}
+\DoxyCodeLine{00366   checkErrorsByGL;}
+\DoxyCodeLine{00367   \mbox{\hyperlink{struct_texture_info_for_g_l}{TextureInfoForGL}} texInfo;}
+\DoxyCodeLine{00368 }
+\DoxyCodeLine{00369   \textcolor{keywordtype}{int} pow2Lx = \mbox{\hyperlink{namespacetcg_1_1numeric__ops_ac52e0f198805e231c1497086c535d185}{tcg::numeric\_ops::GE\_2Power}}((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int})texture-\/>getLx());}
+\DoxyCodeLine{00370   \textcolor{keywordtype}{int} pow2Ly = \mbox{\hyperlink{namespacetcg_1_1numeric__ops_ac52e0f198805e231c1497086c535d185}{tcg::numeric\_ops::GE\_2Power}}((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int})texture-\/>getLy());}
+\DoxyCodeLine{00371 }
+\DoxyCodeLine{00372   \mbox{\hyperlink{class_t_affine}{TAffine}} aff;}
+\DoxyCodeLine{00373   \textcolor{keywordflow}{if} (texture-\/>getLx() != pow2Lx || texture-\/>getLy() != pow2Ly) \{}
+\DoxyCodeLine{00374     \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} r(pow2Lx, pow2Ly);}
+\DoxyCodeLine{00375     aff = \mbox{\hyperlink{class_t_scale}{TScale}}((\textcolor{keywordtype}{double})pow2Lx / texture-\/>getLx(),}
+\DoxyCodeLine{00376                  (\textcolor{keywordtype}{double})pow2Ly / texture-\/>getLy());}
+\DoxyCodeLine{00377     \mbox{\hyperlink{namespace_t_rop_a5e39bc748039afe42001ba44f2d2a073}{TRop::resample}}(r, texture,}
+\DoxyCodeLine{00378                    aff.\mbox{\hyperlink{class_t_affine_a5c556c5952cff649a61add494ff3423c}{place}}(texture-\/>getCenterD(), r-\/>getCenterD()));}
+\DoxyCodeLine{00379     texture = r;}
+\DoxyCodeLine{00380     glPushMatrix();}
+\DoxyCodeLine{00381     tglMultMatrix(aff.\mbox{\hyperlink{class_t_affine_a570529b96b1ec5abc711aaa9aac09ff9}{inv}}());}
+\DoxyCodeLine{00382   \}}
+\DoxyCodeLine{00383 }
+\DoxyCodeLine{00384   \textcolor{comment}{// If GL\_BRGA isn't present make a proper texture to use (... obsolete?)}}
+\DoxyCodeLine{00385   texture-\/>lock();}
+\DoxyCodeLine{00386   \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} texImage = prepareTexture(texture, texInfo);}
+\DoxyCodeLine{00387   checkErrorsByGL;}
+\DoxyCodeLine{00388   \textcolor{keywordflow}{if} (texImage != texture) texImage-\/>lock();}
+\DoxyCodeLine{00389 }
+\DoxyCodeLine{00390   assert(texImage-\/>getLx() == texImage-\/>\mbox{\hyperlink{class_t_raster_a760946b6cb48d7414f90cd421078912c}{getWrap}}());}
+\DoxyCodeLine{00391 }
+\DoxyCodeLine{00392   GLuint texId;}
+\DoxyCodeLine{00393   glGenTextures(1, \&texId);  \textcolor{comment}{// Generate a texture name}}
+\DoxyCodeLine{00394   checkErrorsByGL;}
+\DoxyCodeLine{00395   glBindTexture(GL\_TEXTURE\_2D, texId);  \textcolor{comment}{// Bind it 'active'}}
+\DoxyCodeLine{00396   checkErrorsByGL;}
+\DoxyCodeLine{00397   glTexParameterf(GL\_TEXTURE\_2D, GL\_TEXTURE\_WRAP\_S,}
+\DoxyCodeLine{00398                   GL\_REPEAT);  \textcolor{comment}{// These must be invoked}}
+\DoxyCodeLine{00399   glTexParameterf(GL\_TEXTURE\_2D, GL\_TEXTURE\_WRAP\_T,}
+\DoxyCodeLine{00400                   GL\_REPEAT);  \textcolor{comment}{// on a bound texture}}
+\DoxyCodeLine{00401   glTexParameterf(GL\_TEXTURE\_2D, GL\_TEXTURE\_MAG\_FILTER, GL\_LINEAR);  \textcolor{comment}{//}}
+\DoxyCodeLine{00402   glTexParameterf(GL\_TEXTURE\_2D, GL\_TEXTURE\_MIN\_FILTER, GL\_LINEAR);  \textcolor{comment}{//}}
+\DoxyCodeLine{00403   checkErrorsByGL;}
+\DoxyCodeLine{00404   glTexEnvf(GL\_TEXTURE\_ENV,       \textcolor{comment}{// This too ?}}
+\DoxyCodeLine{00405             GL\_TEXTURE\_ENV\_MODE,  \textcolor{comment}{// Better here anyway}}
+\DoxyCodeLine{00406             GL\_MODULATE);         \textcolor{comment}{//}}
+\DoxyCodeLine{00407   checkErrorsByGL;}
+\DoxyCodeLine{00408   glPixelStorei(GL\_UNPACK\_ROW\_LENGTH, 0);}
+\DoxyCodeLine{00409   checkErrorsByGL;}
+\DoxyCodeLine{00410   glTexImage2D(GL\_TEXTURE\_2D,}
+\DoxyCodeLine{00411                0,                       \textcolor{comment}{// one level only}}
+\DoxyCodeLine{00412                texInfo.internalformat,  \textcolor{comment}{// pixel channels count}}
+\DoxyCodeLine{00413                texInfo.width,           \textcolor{comment}{// width}}
+\DoxyCodeLine{00414                texInfo.height,          \textcolor{comment}{// height}}
+\DoxyCodeLine{00415                0,                       \textcolor{comment}{// border size}}
+\DoxyCodeLine{00416                texInfo.type,    \textcolor{comment}{// pixel format           // crappy names}}
+\DoxyCodeLine{00417                texInfo.format,  \textcolor{comment}{// pixel data type        // oh, SO much}}
+\DoxyCodeLine{00418                texImage-\/>\mbox{\hyperlink{class_t_raster_a5ce02b7e8a5b8b594863aa272d8dcdbc}{getRawData}}());}
+\DoxyCodeLine{00419   checkErrorsByGL;}
+\DoxyCodeLine{00420   texture-\/>unlock();}
+\DoxyCodeLine{00421   \textcolor{keywordflow}{if} (texImage != texture) texImage-\/>unlock();}
+\DoxyCodeLine{00422 }
+\DoxyCodeLine{00423   \mbox{\hyperlink{class_tgl_tessellator_1_1_g_l_tess}{TglTessellator::GLTess}} glTess;}
+\DoxyCodeLine{00424   gluTessCallback(glTess.m\_tess, GLU\_TESS\_VERTEX,}
+\DoxyCodeLine{00425                   (GluCallback)tessellateTexture);}
+\DoxyCodeLine{00426   checkErrorsByGL;}
+\DoxyCodeLine{00427 }
+\DoxyCodeLine{00428   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\///}}
+\DoxyCodeLine{00429   \textcolor{keywordflow}{if} (aff != \mbox{\hyperlink{class_t_affine}{TAffine}}())}
+\DoxyCodeLine{00430     doTessellate(glTess, cf, antiAliasing, outline,}
+\DoxyCodeLine{00431                  aff);  \textcolor{comment}{// Tessellate \& render}}
+\DoxyCodeLine{00432   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00433     doTessellate(glTess, cf, antiAliasing, outline);  \textcolor{comment}{// Tessellate \& render}}
+\DoxyCodeLine{00434   checkErrorsByGL;}
+\DoxyCodeLine{00435   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\///}}
+\DoxyCodeLine{00436   \textcolor{keywordflow}{if} (aff != \mbox{\hyperlink{class_t_affine}{TAffine}}()) glPopMatrix();}
+\DoxyCodeLine{00437   glDeleteTextures(1, \&texId);  \textcolor{comment}{// Delete \& unbind texture}}
+\DoxyCodeLine{00438   checkErrorsByGL;}
+\DoxyCodeLine{00439   glDisable(GL\_TEXTURE\_2D);}
+\DoxyCodeLine{00440   checkErrorsByGL;}
+\DoxyCodeLine{00441 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/ttessellator.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tvrender/ttessellator.\+cpp\end{DoxyCompactItemize}

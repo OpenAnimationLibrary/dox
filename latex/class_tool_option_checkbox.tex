@@ -1,0 +1,105 @@
+\hypertarget{class_tool_option_checkbox}{}\doxysection{Tool\+Option\+Checkbox Class Reference}
+\label{class_tool_option_checkbox}\index{ToolOptionCheckbox@{ToolOptionCheckbox}}
+Inheritance diagram for Tool\+Option\+Checkbox\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_tool_option_checkbox}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_tool_option_checkbox_afb447501f1c4873f6df957f468bf9dc5}{Tool\+Option\+Checkbox}} (\mbox{\hyperlink{class_t_tool}{TTool}} $\ast$tool, \mbox{\hyperlink{class_t_bool_property}{TBool\+Property}} $\ast$property, \mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$tool\+Handle=0, QWidget $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_tool_option_checkbox_ade036d4beb0e9fe27d6e40a67ffde3b8}{update\+Status}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_tool_option_checkbox_a733dede00cf209213470f66ec8641b58}{next\+Check\+State}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_bool_property}{TBool\+Property}} $\ast$ \mbox{\hyperlink{class_tool_option_checkbox_a53aefc6893f0f72d1c71f490996a3392}{m\+\_\+property}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_tool_option_checkbox_afb447501f1c4873f6df957f468bf9dc5}\label{class_tool_option_checkbox_afb447501f1c4873f6df957f468bf9dc5}} 
+\index{ToolOptionCheckbox@{ToolOptionCheckbox}!ToolOptionCheckbox@{ToolOptionCheckbox}}
+\index{ToolOptionCheckbox@{ToolOptionCheckbox}!ToolOptionCheckbox@{ToolOptionCheckbox}}
+\doxysubsubsection{\texorpdfstring{ToolOptionCheckbox()}{ToolOptionCheckbox()}}
+{\footnotesize\ttfamily Tool\+Option\+Checkbox\+::\+Tool\+Option\+Checkbox (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_tool}{TTool}} $\ast$}]{tool,  }\item[{\mbox{\hyperlink{class_t_bool_property}{TBool\+Property}} $\ast$}]{property,  }\item[{\mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$}]{tool\+Handle = {\ttfamily 0},  }\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00094     : \mbox{\hyperlink{class_d_v_gui_1_1_check_box}{CheckBox}}(parent)}
+\DoxyCodeLine{00095     , \mbox{\hyperlink{class_tool_option_control}{ToolOptionControl}}(tool, property-\/>getName(), toolHandle)}
+\DoxyCodeLine{00096     , m\_property(property) \{}
+\DoxyCodeLine{00097   setText(property-\/>getQStringName());}
+\DoxyCodeLine{00098   m\_property-\/>addListener(\textcolor{keyword}{this});}
+\DoxyCodeLine{00099   updateStatus();}
+\DoxyCodeLine{00100   \textcolor{comment}{// synchronize the state with the same widgets in other tool option bars}}
+\DoxyCodeLine{00101   \textcolor{keywordflow}{if} (toolHandle)}
+\DoxyCodeLine{00102     connect(\textcolor{keyword}{this}, SIGNAL(clicked(\textcolor{keywordtype}{bool})), toolHandle, SIGNAL(toolChanged()));}
+\DoxyCodeLine{00103 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tool_option_checkbox_a733dede00cf209213470f66ec8641b58}\label{class_tool_option_checkbox_a733dede00cf209213470f66ec8641b58}} 
+\index{ToolOptionCheckbox@{ToolOptionCheckbox}!nextCheckState@{nextCheckState}}
+\index{nextCheckState@{nextCheckState}!ToolOptionCheckbox@{ToolOptionCheckbox}}
+\doxysubsubsection{\texorpdfstring{nextCheckState()}{nextCheckState()}}
+{\footnotesize\ttfamily void Tool\+Option\+Checkbox\+::next\+Check\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00117                                         \{}
+\DoxyCodeLine{00118   QAbstractButton::nextCheckState();}
+\DoxyCodeLine{00119   m\_property-\/>setValue(checkState() == Qt::Checked);}
+\DoxyCodeLine{00120   notifyTool();}
+\DoxyCodeLine{00121 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tool_option_checkbox_ade036d4beb0e9fe27d6e40a67ffde3b8}\label{class_tool_option_checkbox_ade036d4beb0e9fe27d6e40a67ffde3b8}} 
+\index{ToolOptionCheckbox@{ToolOptionCheckbox}!updateStatus@{updateStatus}}
+\index{updateStatus@{updateStatus}!ToolOptionCheckbox@{ToolOptionCheckbox}}
+\doxysubsubsection{\texorpdfstring{updateStatus()}{updateStatus()}}
+{\footnotesize\ttfamily void Tool\+Option\+Checkbox\+::update\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tool_option_control}{Tool\+Option\+Control}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107                                       \{}
+\DoxyCodeLine{00108   \textcolor{keywordtype}{bool} check = m\_property-\/>getValue();}
+\DoxyCodeLine{00109 }
+\DoxyCodeLine{00110   \textcolor{keywordflow}{if} (isChecked() == check) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00111 }
+\DoxyCodeLine{00112   setCheckState(check ? Qt::Checked : Qt::Unchecked);}
+\DoxyCodeLine{00113 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_tool_option_checkbox_a53aefc6893f0f72d1c71f490996a3392}\label{class_tool_option_checkbox_a53aefc6893f0f72d1c71f490996a3392}} 
+\index{ToolOptionCheckbox@{ToolOptionCheckbox}!m\_property@{m\_property}}
+\index{m\_property@{m\_property}!ToolOptionCheckbox@{ToolOptionCheckbox}}
+\doxysubsubsection{\texorpdfstring{m\_property}{m\_property}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_bool_property}{TBool\+Property}}$\ast$ Tool\+Option\+Checkbox\+::m\+\_\+property\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptionscontrols.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptionscontrols.\+cpp\end{DoxyCompactItemize}

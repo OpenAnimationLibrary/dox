@@ -1,0 +1,122 @@
+\hypertarget{class_xsheet_g_u_i_1_1_change_object_handle}{}\doxysection{Xsheet\+GUI\+::Change\+Object\+Handle Class Reference}
+\label{class_xsheet_g_u_i_1_1_change_object_handle}\index{XsheetGUI::ChangeObjectHandle@{XsheetGUI::ChangeObjectHandle}}
+Inheritance diagram for Xsheet\+GUI\+::Change\+Object\+Handle\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_xsheet_g_u_i_1_1_change_object_handle}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_xsheet_g_u_i_1_1_change_object_handle_a740e8188c99c41f8195c4b83dd96dc56}{Change\+Object\+Handle}} (QWidget $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_xsheet_g_u_i_1_1_change_object_handle_a5a2afb30827ce1641722cfa12799ec98}{refresh}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_xsheet_g_u_i_1_1_change_object_handle_a7a27b9770f23cab66ba6186000bf72e9}{on\+Text\+Changed}} (const QString \&) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_xsheet_g_u_i_1_1_change_object_handle_a740e8188c99c41f8195c4b83dd96dc56}\label{class_xsheet_g_u_i_1_1_change_object_handle_a740e8188c99c41f8195c4b83dd96dc56}} 
+\index{XsheetGUI::ChangeObjectHandle@{XsheetGUI::ChangeObjectHandle}!ChangeObjectHandle@{ChangeObjectHandle}}
+\index{ChangeObjectHandle@{ChangeObjectHandle}!XsheetGUI::ChangeObjectHandle@{XsheetGUI::ChangeObjectHandle}}
+\doxysubsubsection{\texorpdfstring{ChangeObjectHandle()}{ChangeObjectHandle()}}
+{\footnotesize\ttfamily Xsheet\+GUI\+::\+Change\+Object\+Handle\+::\+Change\+Object\+Handle (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00540     : ChangeObjectWidget(parent) \{}
+\DoxyCodeLine{00541   \textcolor{keywordtype}{bool} ret = connect(\textcolor{keyword}{this}, SIGNAL(currentTextChanged(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00542                      SLOT(onTextChanged(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00543   assert(ret);}
+\DoxyCodeLine{00544 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_g_u_i_1_1_change_object_handle_aeee2569f2a7ec8106c706a3650c9c152}\label{class_xsheet_g_u_i_1_1_change_object_handle_aeee2569f2a7ec8106c706a3650c9c152}} 
+\index{XsheetGUI::ChangeObjectHandle@{XsheetGUI::ChangeObjectHandle}!````~ChangeObjectHandle@{$\sim$ChangeObjectHandle}}
+\index{````~ChangeObjectHandle@{$\sim$ChangeObjectHandle}!XsheetGUI::ChangeObjectHandle@{XsheetGUI::ChangeObjectHandle}}
+\doxysubsubsection{\texorpdfstring{$\sim$ChangeObjectHandle()}{~ChangeObjectHandle()}}
+{\footnotesize\ttfamily Xsheet\+GUI\+::\+Change\+Object\+Handle\+::$\sim$\+Change\+Object\+Handle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00548 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_xsheet_g_u_i_1_1_change_object_handle_a7a27b9770f23cab66ba6186000bf72e9}\label{class_xsheet_g_u_i_1_1_change_object_handle_a7a27b9770f23cab66ba6186000bf72e9}} 
+\index{XsheetGUI::ChangeObjectHandle@{XsheetGUI::ChangeObjectHandle}!onTextChanged@{onTextChanged}}
+\index{onTextChanged@{onTextChanged}!XsheetGUI::ChangeObjectHandle@{XsheetGUI::ChangeObjectHandle}}
+\doxysubsubsection{\texorpdfstring{onTextChanged}{onTextChanged}}
+{\footnotesize\ttfamily void Xsheet\+GUI\+::\+Change\+Object\+Handle\+::on\+Text\+Changed (\begin{DoxyParamCaption}\item[{const QString \&}]{text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00577                                                           \{}
+\DoxyCodeLine{00578   assert(m\_xsheetHandle);}
+\DoxyCodeLine{00579   assert(m\_objectHandle);}
+\DoxyCodeLine{00580   \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} currentObjectId = m\_objectHandle-\/>getObjectId();}
+\DoxyCodeLine{00581   QString handle                 = text;}
+\DoxyCodeLine{00582   \textcolor{keywordflow}{if} (text.toInt() != 0) handle = QString(\textcolor{stringliteral}{"{}H"{}}) + handle;}
+\DoxyCodeLine{00583   \textcolor{keywordflow}{if} (handle.isEmpty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00584   std::vector<TStageObjectId> ids;}
+\DoxyCodeLine{00585   ids.push\_back(currentObjectId);}
+\DoxyCodeLine{00586   TStageObjectCmd::setParentHandle(ids, handle.toStdString(), m\_xsheetHandle);}
+\DoxyCodeLine{00587   hide();}
+\DoxyCodeLine{00588   m\_objectHandle-\/>notifyObjectIdChanged(\textcolor{keyword}{false});}
+\DoxyCodeLine{00589   m\_xsheetHandle-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00590 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_g_u_i_1_1_change_object_handle_a5a2afb30827ce1641722cfa12799ec98}\label{class_xsheet_g_u_i_1_1_change_object_handle_a5a2afb30827ce1641722cfa12799ec98}} 
+\index{XsheetGUI::ChangeObjectHandle@{XsheetGUI::ChangeObjectHandle}!refresh@{refresh}}
+\index{refresh@{refresh}!XsheetGUI::ChangeObjectHandle@{XsheetGUI::ChangeObjectHandle}}
+\doxysubsubsection{\texorpdfstring{refresh()}{refresh()}}
+{\footnotesize\ttfamily void Xsheet\+GUI\+::\+Change\+Object\+Handle\+::refresh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsheet_g_u_i_1_1_change_object_widget}{Xsheet\+GUI\+::\+Change\+Object\+Widget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00552                                  \{}
+\DoxyCodeLine{00553   clear();}
+\DoxyCodeLine{00554   assert(m\_xsheetHandle);}
+\DoxyCodeLine{00555   assert(m\_objectHandle);}
+\DoxyCodeLine{00556   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = m\_xsheetHandle-\/>getXsheet();}
+\DoxyCodeLine{00557   assert(xsh);}
+\DoxyCodeLine{00558   \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} currentObjectId = m\_objectHandle-\/>getObjectId();}
+\DoxyCodeLine{00559   \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *stageObject      = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(currentObjectId);}
+\DoxyCodeLine{00560   m\_width                        = 28;}
+\DoxyCodeLine{00561 }
+\DoxyCodeLine{00562   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00563   QString str;}
+\DoxyCodeLine{00564   \textcolor{keywordflow}{if} (stageObject-\/>\mbox{\hyperlink{class_t_stage_object_afb4724a8cc2ef7eb2c6c7585834210f2}{getParent}}().\mbox{\hyperlink{class_t_stage_object_id_af6d13fcf31e7e10eef28f085855f469c}{isColumn}}()) \{}
+\DoxyCodeLine{00565     \textcolor{keywordflow}{for} (i = 0; i < 20; i++) addItem(str.number(20 -\/ i));}
+\DoxyCodeLine{00566   \}}
+\DoxyCodeLine{00567   \textcolor{keywordflow}{for} (i = 0; i < 26; i++) addItem(QString(\textcolor{keywordtype}{char}(\textcolor{charliteral}{'A'} + i)));}
+\DoxyCodeLine{00568 }
+\DoxyCodeLine{00569   std::string handle = stageObject-\/>\mbox{\hyperlink{class_t_stage_object_a6025ddfaaae4ebe384894230d69f0b46}{getParentHandle}}();}
+\DoxyCodeLine{00570   \textcolor{keywordflow}{if} (handle[0] == \textcolor{charliteral}{'H'} \&\& handle.length() > 1) handle = handle.substr(1);}
+\DoxyCodeLine{00571 }
+\DoxyCodeLine{00572   selectCurrent(QString::fromStdString(handle));}
+\DoxyCodeLine{00573 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xshcolumnviewer.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/xshcolumnviewer.\+cpp\end{DoxyCompactItemize}

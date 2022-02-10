@@ -1,0 +1,130 @@
+\hypertarget{class_junction}{}\doxysection{Junction Class Reference}
+\label{class_junction}\index{Junction@{Junction}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_junction_a830cca43838c9a6c1bc5e31ceb1a8ced}{is\+Convex}} ()
+\item 
+\mbox{\Hypertarget{class_junction_a830cca43838c9a6c1bc5e31ceb1a8ced}\label{class_junction_a830cca43838c9a6c1bc5e31ceb1a8ced}} 
+bool {\bfseries is\+Convex} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} \mbox{\hyperlink{class_junction_a6bdb4ce52a7be802c05c32394dfbcf89}{m\+\_\+center}}
+\item 
+std\+::deque$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ \mbox{\hyperlink{class_junction_a308ac8830830e6314a6025cbb298988b}{m\+\_\+nodes}}
+\item 
+int \mbox{\hyperlink{class_junction_ad65043da25a06c74046073e0d8d51b0c}{m\+\_\+junction\+Order}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_proto_stroke}{Proto\+Stroke}} $\ast$ $>$ \mbox{\hyperlink{class_junction_a5ebc622e5bcd17734a12e998ec4b9500}{m\+\_\+proto\+Strokes}}
+\item 
+bool \mbox{\hyperlink{class_junction_ac870de12f224e62aaec2b75680e2bdaa}{m\+\_\+locked}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_junction_a27e6af22d8a7f4f2a96ca020d1e9891e}\label{class_junction_a27e6af22d8a7f4f2a96ca020d1e9891e}} 
+\index{Junction@{Junction}!Junction@{Junction}}
+\index{Junction@{Junction}!Junction@{Junction}}
+\doxysubsubsection{\texorpdfstring{Junction()}{Junction()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Junction\+::\+Junction (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00143       : m\_center()}
+\DoxyCodeLine{00144       , m\_nodes()}
+\DoxyCodeLine{00145       , m\_junctionOrder(0)}
+\DoxyCodeLine{00146       , m\_protoStrokes()}
+\DoxyCodeLine{00147       , m\_locked(\textcolor{keyword}{false}) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_junction_a27e6af22d8a7f4f2a96ca020d1e9891e}\label{class_junction_a27e6af22d8a7f4f2a96ca020d1e9891e}} 
+\index{Junction@{Junction}!Junction@{Junction}}
+\index{Junction@{Junction}!Junction@{Junction}}
+\doxysubsubsection{\texorpdfstring{Junction()}{Junction()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Junction\+::\+Junction (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00098       : m\_center()}
+\DoxyCodeLine{00099       , m\_nodes()}
+\DoxyCodeLine{00100       , m\_junctionOrder(0)}
+\DoxyCodeLine{00101       , m\_protoStrokes()}
+\DoxyCodeLine{00102       , m\_locked(\textcolor{keyword}{false}) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_junction_a830cca43838c9a6c1bc5e31ceb1a8ced}\label{class_junction_a830cca43838c9a6c1bc5e31ceb1a8ced}} 
+\index{Junction@{Junction}!isConvex@{isConvex}}
+\index{isConvex@{isConvex}!Junction@{Junction}}
+\doxysubsubsection{\texorpdfstring{isConvex()}{isConvex()}}
+{\footnotesize\ttfamily bool Junction\+::is\+Convex (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00441                         \{}
+\DoxyCodeLine{00442   \textcolor{keywordtype}{int} nonConvexAngles = 0;}
+\DoxyCodeLine{00443   assert(m\_nodes.size() > 2);}
+\DoxyCodeLine{00444   std::deque<Node *>::iterator it   = m\_nodes.begin();}
+\DoxyCodeLine{00445   std::deque<Node *>::iterator it\_e = m\_nodes.end() -\/ 2;}
+\DoxyCodeLine{00446   \textcolor{keywordflow}{for} (; it != it\_e; ++it) \{}
+\DoxyCodeLine{00447     \textcolor{keywordflow}{if} (right(convert((*(it))-\/>m\_pixel-\/>m\_pos),}
+\DoxyCodeLine{00448               convert((*(it + 1))-\/>m\_pixel-\/>m\_pos),}
+\DoxyCodeLine{00449               convert((*(it + 2))-\/>m\_pixel-\/>m\_pos)))}
+\DoxyCodeLine{00450       nonConvexAngles++;}
+\DoxyCodeLine{00451     \textcolor{keywordflow}{if} (nonConvexAngles > 1) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00452   \}}
+\DoxyCodeLine{00453   \textcolor{keywordflow}{if} (right(convert((*(it))-\/>m\_pixel-\/>m\_pos),}
+\DoxyCodeLine{00454             convert((*(it + 1))-\/>m\_pixel-\/>m\_pos),}
+\DoxyCodeLine{00455             convert((*(m\_nodes.begin()))-\/>m\_pixel-\/>m\_pos)))}
+\DoxyCodeLine{00456     nonConvexAngles++;}
+\DoxyCodeLine{00457   \textcolor{keywordflow}{if} (nonConvexAngles > 1) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00458   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00459 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_junction_a6bdb4ce52a7be802c05c32394dfbcf89}\label{class_junction_a6bdb4ce52a7be802c05c32394dfbcf89}} 
+\index{Junction@{Junction}!m\_center@{m\_center}}
+\index{m\_center@{m\_center}!Junction@{Junction}}
+\doxysubsubsection{\texorpdfstring{m\_center}{m\_center}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} Junction\+::m\+\_\+center}
+
+\mbox{\Hypertarget{class_junction_ad65043da25a06c74046073e0d8d51b0c}\label{class_junction_ad65043da25a06c74046073e0d8d51b0c}} 
+\index{Junction@{Junction}!m\_junctionOrder@{m\_junctionOrder}}
+\index{m\_junctionOrder@{m\_junctionOrder}!Junction@{Junction}}
+\doxysubsubsection{\texorpdfstring{m\_junctionOrder}{m\_junctionOrder}}
+{\footnotesize\ttfamily int Junction\+::m\+\_\+junction\+Order}
+
+\mbox{\Hypertarget{class_junction_ac870de12f224e62aaec2b75680e2bdaa}\label{class_junction_ac870de12f224e62aaec2b75680e2bdaa}} 
+\index{Junction@{Junction}!m\_locked@{m\_locked}}
+\index{m\_locked@{m\_locked}!Junction@{Junction}}
+\doxysubsubsection{\texorpdfstring{m\_locked}{m\_locked}}
+{\footnotesize\ttfamily bool Junction\+::m\+\_\+locked}
+
+\mbox{\Hypertarget{class_junction_a308ac8830830e6314a6025cbb298988b}\label{class_junction_a308ac8830830e6314a6025cbb298988b}} 
+\index{Junction@{Junction}!m\_nodes@{m\_nodes}}
+\index{m\_nodes@{m\_nodes}!Junction@{Junction}}
+\doxysubsubsection{\texorpdfstring{m\_nodes}{m\_nodes}}
+{\footnotesize\ttfamily std\+::deque$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ Junction\+::m\+\_\+nodes}
+
+\mbox{\Hypertarget{class_junction_a5ebc622e5bcd17734a12e998ec4b9500}\label{class_junction_a5ebc622e5bcd17734a12e998ec4b9500}} 
+\index{Junction@{Junction}!m\_protoStrokes@{m\_protoStrokes}}
+\index{m\_protoStrokes@{m\_protoStrokes}!Junction@{Junction}}
+\doxysubsubsection{\texorpdfstring{m\_protoStrokes}{m\_protoStrokes}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_proto_stroke}{Proto\+Stroke}} $\ast$ $>$ Junction\+::m\+\_\+proto\+Strokes}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tcenterlinevectorizer\+Old.\+cpp\item 
+E\+:/opentoonz/toonz/sources/toonzlib/toutlinevectorizer.\+cpp\end{DoxyCompactItemize}

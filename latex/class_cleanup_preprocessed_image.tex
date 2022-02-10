@@ -1,0 +1,153 @@
+\hypertarget{class_cleanup_preprocessed_image}{}\doxysection{Cleanup\+Preprocessed\+Image Class Reference}
+\label{class_cleanup_preprocessed_image}\index{CleanupPreprocessedImage@{CleanupPreprocessedImage}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_cleanup_preprocessed_image_adc26c2581eee8236e338c7f116729875}{Cleanup\+Preprocessed\+Image}} (\mbox{\hyperlink{class_cleanup_parameters}{Cleanup\+Parameters}} $\ast$parameters, \mbox{\hyperlink{class_t_toonz_image_p}{TToonz\+ImageP}} processed, bool from\+Gr8)
+\item 
+\mbox{\hyperlink{class_t_dimension_t}{TDimension}} \mbox{\hyperlink{class_cleanup_preprocessed_image_aeb696ff7a4a76e8a01620d9a2f5e083d}{get\+Size}} () const
+\item 
+\mbox{\hyperlink{class_t_toonz_image_p}{TToonz\+ImageP}} \mbox{\hyperlink{class_cleanup_preprocessed_image_a4ae3ab933310f53185cae7fb3af63648}{get\+Img}} () const
+\item 
+\mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \mbox{\hyperlink{class_cleanup_preprocessed_image_a08e8c166989619b2062db501a26a997c}{get\+Preview\+Image}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_cleanup_preprocessed_image_a7ccdbdd0a8bc4d25aad9a28d1d79bfdf}{m\+\_\+was\+From\+GR8}}
+\item 
+bool \mbox{\hyperlink{class_cleanup_preprocessed_image_a29de4309fb805c533e8719c31457a906}{m\+\_\+autocentered}}
+\item 
+std\+::vector$<$ TPixel32 $>$ \mbox{\hyperlink{class_cleanup_preprocessed_image_afa8a131fc6a2a3e36731b47a93d91a6a}{m\+\_\+pixels\+Lut}}
+\item 
+\mbox{\hyperlink{class_t_affine}{TAffine}} \mbox{\hyperlink{class_cleanup_preprocessed_image_a4cf04f2de010a074fb9ac091ff045240}{m\+\_\+applied\+Aff}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_cleanup_preprocessed_image_adc26c2581eee8236e338c7f116729875}\label{class_cleanup_preprocessed_image_adc26c2581eee8236e338c7f116729875}} 
+\index{CleanupPreprocessedImage@{CleanupPreprocessedImage}!CleanupPreprocessedImage@{CleanupPreprocessedImage}}
+\index{CleanupPreprocessedImage@{CleanupPreprocessedImage}!CleanupPreprocessedImage@{CleanupPreprocessedImage}}
+\doxysubsubsection{\texorpdfstring{CleanupPreprocessedImage()}{CleanupPreprocessedImage()}}
+{\footnotesize\ttfamily Cleanup\+Preprocessed\+Image\+::\+Cleanup\+Preprocessed\+Image (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_cleanup_parameters}{Cleanup\+Parameters}} $\ast$}]{parameters,  }\item[{\mbox{\hyperlink{class_t_toonz_image_p}{TToonz\+ImageP}}}]{processed,  }\item[{bool}]{from\+Gr8 }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00350     : m\_wasFromGR8(fromGr8)}
+\DoxyCodeLine{00351     , m\_autocentered(\textcolor{keyword}{false})}
+\DoxyCodeLine{00352     , m\_size(processed-\/>getSize()) \{}
+\DoxyCodeLine{00353   \textcolor{keywordflow}{if} (!processed)}
+\DoxyCodeLine{00354     m\_imgId = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00355   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00356     m\_imgId = TImageCache::instance()-\/>getUniqueId();}
+\DoxyCodeLine{00357     assert(!processed-\/>getRaster()-\/>getParent());}
+\DoxyCodeLine{00358     TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a124eae4cf370288f42c22b3477cb5163}{add}}(m\_imgId, (\mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}})processed);}
+\DoxyCodeLine{00359   \}}
+\DoxyCodeLine{00360 }
+\DoxyCodeLine{00361   \textcolor{keywordflow}{if} (!m\_wasFromGR8) \{}
+\DoxyCodeLine{00362     \textcolor{keyword}{const} TPixel32 white(255, 255, 255, 0);}
+\DoxyCodeLine{00363     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < parameters-\/>m\_colors.getColorCount(); ++i) \{}
+\DoxyCodeLine{00364       TPixel32 cc = parameters-\/>m\_colors.getColor(i).m\_color;}
+\DoxyCodeLine{00365       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} tone = 0; tone < 256; tone++) \{}
+\DoxyCodeLine{00366         m\_pixelsLut.push\_back(blend(parameters-\/>m\_colors.getColor(i).m\_color,}
+\DoxyCodeLine{00367                                     white, tone, TPixelCM32::getMaxTone()));}
+\DoxyCodeLine{00368       \}}
+\DoxyCodeLine{00369     \}}
+\DoxyCodeLine{00370   \}}
+\DoxyCodeLine{00371 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_preprocessed_image_a6ed8370daa0f86ffc64fda46bfa65a21}\label{class_cleanup_preprocessed_image_a6ed8370daa0f86ffc64fda46bfa65a21}} 
+\index{CleanupPreprocessedImage@{CleanupPreprocessedImage}!````~CleanupPreprocessedImage@{$\sim$CleanupPreprocessedImage}}
+\index{````~CleanupPreprocessedImage@{$\sim$CleanupPreprocessedImage}!CleanupPreprocessedImage@{CleanupPreprocessedImage}}
+\doxysubsubsection{\texorpdfstring{$\sim$CleanupPreprocessedImage()}{~CleanupPreprocessedImage()}}
+{\footnotesize\ttfamily Cleanup\+Preprocessed\+Image\+::$\sim$\+Cleanup\+Preprocessed\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00375                                                     \{}
+\DoxyCodeLine{00376   TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a57d63227dfe2532b0aed22c47113be66}{remove}}(m\_imgId);}
+\DoxyCodeLine{00377 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_cleanup_preprocessed_image_a4ae3ab933310f53185cae7fb3af63648}\label{class_cleanup_preprocessed_image_a4ae3ab933310f53185cae7fb3af63648}} 
+\index{CleanupPreprocessedImage@{CleanupPreprocessedImage}!getImg@{getImg}}
+\index{getImg@{getImg}!CleanupPreprocessedImage@{CleanupPreprocessedImage}}
+\doxysubsubsection{\texorpdfstring{getImg()}{getImg()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_toonz_image_p}{TToonz\+ImageP}} Cleanup\+Preprocessed\+Image\+::get\+Img (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00342                                                     \{}
+\DoxyCodeLine{00343   \textcolor{keywordflow}{return} (\mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}})(TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_aea3ac2752efd6fa9689f5a7c1e895e41}{get}}(m\_imgId, \textcolor{keyword}{true}));}
+\DoxyCodeLine{00344 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_preprocessed_image_a08e8c166989619b2062db501a26a997c}\label{class_cleanup_preprocessed_image_a08e8c166989619b2062db501a26a997c}} 
+\index{CleanupPreprocessedImage@{CleanupPreprocessedImage}!getPreviewImage@{getPreviewImage}}
+\index{getPreviewImage@{getPreviewImage}!CleanupPreprocessedImage@{CleanupPreprocessedImage}}
+\doxysubsubsection{\texorpdfstring{getPreviewImage()}{getPreviewImage()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} Cleanup\+Preprocessed\+Image\+::get\+Preview\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00381                                                               \{}
+\DoxyCodeLine{00382   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras(getSize());}
+\DoxyCodeLine{00383   \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} ri(ras);}
+\DoxyCodeLine{00384   \textcolor{keywordtype}{double} xdpi = 0, ydpi = 0;}
+\DoxyCodeLine{00385   getImg()-\/>getDpi(xdpi, ydpi);}
+\DoxyCodeLine{00386   ri-\/>setDpi(xdpi, ydpi);}
+\DoxyCodeLine{00387   \textcolor{keywordflow}{return} ri;}
+\DoxyCodeLine{00388 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_preprocessed_image_aeb696ff7a4a76e8a01620d9a2f5e083d}\label{class_cleanup_preprocessed_image_aeb696ff7a4a76e8a01620d9a2f5e083d}} 
+\index{CleanupPreprocessedImage@{CleanupPreprocessedImage}!getSize@{getSize}}
+\index{getSize@{getSize}!CleanupPreprocessedImage@{CleanupPreprocessedImage}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_dimension_t}{TDimension}} Cleanup\+Preprocessed\+Image\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00049 \{ \textcolor{keywordflow}{return} m\_size; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_cleanup_preprocessed_image_a4cf04f2de010a074fb9ac091ff045240}\label{class_cleanup_preprocessed_image_a4cf04f2de010a074fb9ac091ff045240}} 
+\index{CleanupPreprocessedImage@{CleanupPreprocessedImage}!m\_appliedAff@{m\_appliedAff}}
+\index{m\_appliedAff@{m\_appliedAff}!CleanupPreprocessedImage@{CleanupPreprocessedImage}}
+\doxysubsubsection{\texorpdfstring{m\_appliedAff}{m\_appliedAff}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_affine}{TAffine}} Cleanup\+Preprocessed\+Image\+::m\+\_\+applied\+Aff}
+
+\mbox{\Hypertarget{class_cleanup_preprocessed_image_a29de4309fb805c533e8719c31457a906}\label{class_cleanup_preprocessed_image_a29de4309fb805c533e8719c31457a906}} 
+\index{CleanupPreprocessedImage@{CleanupPreprocessedImage}!m\_autocentered@{m\_autocentered}}
+\index{m\_autocentered@{m\_autocentered}!CleanupPreprocessedImage@{CleanupPreprocessedImage}}
+\doxysubsubsection{\texorpdfstring{m\_autocentered}{m\_autocentered}}
+{\footnotesize\ttfamily bool Cleanup\+Preprocessed\+Image\+::m\+\_\+autocentered}
+
+\mbox{\Hypertarget{class_cleanup_preprocessed_image_afa8a131fc6a2a3e36731b47a93d91a6a}\label{class_cleanup_preprocessed_image_afa8a131fc6a2a3e36731b47a93d91a6a}} 
+\index{CleanupPreprocessedImage@{CleanupPreprocessedImage}!m\_pixelsLut@{m\_pixelsLut}}
+\index{m\_pixelsLut@{m\_pixelsLut}!CleanupPreprocessedImage@{CleanupPreprocessedImage}}
+\doxysubsubsection{\texorpdfstring{m\_pixelsLut}{m\_pixelsLut}}
+{\footnotesize\ttfamily std\+::vector$<$TPixel32$>$ Cleanup\+Preprocessed\+Image\+::m\+\_\+pixels\+Lut}
+
+\mbox{\Hypertarget{class_cleanup_preprocessed_image_a7ccdbdd0a8bc4d25aad9a28d1d79bfdf}\label{class_cleanup_preprocessed_image_a7ccdbdd0a8bc4d25aad9a28d1d79bfdf}} 
+\index{CleanupPreprocessedImage@{CleanupPreprocessedImage}!m\_wasFromGR8@{m\_wasFromGR8}}
+\index{m\_wasFromGR8@{m\_wasFromGR8}!CleanupPreprocessedImage@{CleanupPreprocessedImage}}
+\doxysubsubsection{\texorpdfstring{m\_wasFromGR8}{m\_wasFromGR8}}
+{\footnotesize\ttfamily bool Cleanup\+Preprocessed\+Image\+::m\+\_\+was\+From\+GR8}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/tcleanupper.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tcleanupper.\+cpp\end{DoxyCompactItemize}

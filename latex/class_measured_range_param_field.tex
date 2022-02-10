@@ -1,0 +1,171 @@
+\hypertarget{class_measured_range_param_field}{}\doxysection{Measured\+Range\+Param\+Field Class Reference}
+\label{class_measured_range_param_field}\index{MeasuredRangeParamField@{MeasuredRangeParamField}}
+Inheritance diagram for Measured\+Range\+Param\+Field\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_measured_range_param_field}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_measured_range_param_field_a283c38da1dd6dbf2d8963c196504ec92}{Measured\+Range\+Param\+Field}} (QWidget $\ast$parent, QString name, const TRange\+ParamP \&param)
+\item 
+void \mbox{\hyperlink{class_measured_range_param_field_a0cd4cdb8e6172cd14914d4ad28cc7bc0}{update\+Field}} (Double\+Pair value) override
+\item 
+QSize \mbox{\hyperlink{class_measured_range_param_field_a0d96ab2732896a8d37a19a80dd211dc2}{get\+Preferred\+Size}} () override
+\item 
+void \mbox{\hyperlink{class_measured_range_param_field_abeaafc173d8a88b807246244423ff24f}{set\+Precision}} (int precision) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_measured_range_param_field_ae895b9fbd9005aff78ca1a6855c2e015}{on\+Change}} (bool)
+\item 
+void \mbox{\hyperlink{class_measured_range_param_field_a90b83be3df22cc4c1f58a6b3d8d7662f}{on\+Key\+Toggled}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_measured_range_param_field_a283c38da1dd6dbf2d8963c196504ec92}\label{class_measured_range_param_field_a283c38da1dd6dbf2d8963c196504ec92}} 
+\index{MeasuredRangeParamField@{MeasuredRangeParamField}!MeasuredRangeParamField@{MeasuredRangeParamField}}
+\index{MeasuredRangeParamField@{MeasuredRangeParamField}!MeasuredRangeParamField@{MeasuredRangeParamField}}
+\doxysubsubsection{\texorpdfstring{MeasuredRangeParamField()}{MeasuredRangeParamField()}}
+{\footnotesize\ttfamily Measured\+Range\+Param\+Field\+::\+Measured\+Range\+Param\+Field (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{QString}]{name,  }\item[{const TRange\+ParamP \&}]{param }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00865     : \mbox{\hyperlink{class_animated_param_field}{AnimatedParamField<DoublePair, TRangeParamP>}}(parent, name, param) \{}
+\DoxyCodeLine{00866   QString str;}
+\DoxyCodeLine{00867   m\_paramName = str.fromStdString(param-\/>getName());}
+\DoxyCodeLine{00868 }
+\DoxyCodeLine{00869   m\_valueField = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_measured_double_pair_field}{MeasuredDoublePairField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00870   m\_valueField-\/>setLabelsEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00871   m\_valueField-\/>setMeasure(param-\/>getMin()-\/>getMeasureName());}
+\DoxyCodeLine{00872   m\_valueField-\/>setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);}
+\DoxyCodeLine{00873   \textcolor{keywordtype}{double} a, b, c, min, max;}
+\DoxyCodeLine{00874   param-\/>getMin()-\/>getValueRange(a, b, c);}
+\DoxyCodeLine{00875   min = a;}
+\DoxyCodeLine{00876   param-\/>getMax()-\/>getValueRange(a, b, c);}
+\DoxyCodeLine{00877   max = b;}
+\DoxyCodeLine{00878   \textcolor{keywordflow}{if} (min < max \&\& max -\/ min < 1e10)  \textcolor{comment}{// se min=-\/inf e max=inf}}
+\DoxyCodeLine{00879     m\_valueField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_double_value_pair_field_ac2d51974644cab91269a4986344b90b3}{setRange}}(min, max);}
+\DoxyCodeLine{00880 }
+\DoxyCodeLine{00881   m\_layout-\/>addWidget(m\_keyToggle);}
+\DoxyCodeLine{00882   m\_layout-\/>addWidget(m\_valueField);}
+\DoxyCodeLine{00883   setLayout(m\_layout);}
+\DoxyCodeLine{00884 }
+\DoxyCodeLine{00885   \textcolor{keywordtype}{bool} ret =}
+\DoxyCodeLine{00886       connect(m\_valueField, SIGNAL(valuesChanged(\textcolor{keywordtype}{bool})), SLOT(onChange(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00887   ret = ret \&\& connect(m\_keyToggle, SIGNAL(keyToggled()), SLOT(onKeyToggled()));}
+\DoxyCodeLine{00888   assert(ret);}
+\DoxyCodeLine{00889 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_measured_range_param_field_a0d96ab2732896a8d37a19a80dd211dc2}\label{class_measured_range_param_field_a0d96ab2732896a8d37a19a80dd211dc2}} 
+\index{MeasuredRangeParamField@{MeasuredRangeParamField}!getPreferredSize@{getPreferredSize}}
+\index{getPreferredSize@{getPreferredSize}!MeasuredRangeParamField@{MeasuredRangeParamField}}
+\doxysubsubsection{\texorpdfstring{getPreferredSize()}{getPreferredSize()}}
+{\footnotesize\ttfamily QSize Measured\+Range\+Param\+Field\+::get\+Preferred\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_param_field}{Param\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00396 \{ \textcolor{keywordflow}{return} QSize(300, 20); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_measured_range_param_field_ae895b9fbd9005aff78ca1a6855c2e015}\label{class_measured_range_param_field_ae895b9fbd9005aff78ca1a6855c2e015}} 
+\index{MeasuredRangeParamField@{MeasuredRangeParamField}!onChange@{onChange}}
+\index{onChange@{onChange}!MeasuredRangeParamField@{MeasuredRangeParamField}}
+\doxysubsubsection{\texorpdfstring{onChange}{onChange}}
+{\footnotesize\ttfamily void Measured\+Range\+Param\+Field\+::on\+Change (\begin{DoxyParamCaption}\item[{bool}]{dragging }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00899                                                     \{}
+\DoxyCodeLine{00900   \textcolor{keywordflow}{if} (dragging) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00901 }
+\DoxyCodeLine{00902   TRangeParamP rangeParam = m\_actualParam;}
+\DoxyCodeLine{00903 }
+\DoxyCodeLine{00904   DoublePair value = m\_valueField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_double_value_pair_field_a133bf611c574ae12e1c588ced715c840}{getValues}}();}
+\DoxyCodeLine{00905 }
+\DoxyCodeLine{00906   \mbox{\hyperlink{class_t_undo}{TUndo}} *undo = 0;}
+\DoxyCodeLine{00907 }
+\DoxyCodeLine{00908   \textcolor{comment}{/*-\/-\/ Undoを登録する条件：}}
+\DoxyCodeLine{00909 \textcolor{comment}{          値が変更されていて}}
+\DoxyCodeLine{00910 \textcolor{comment}{          キーフレーム上か、または、まだキーフレームが無い}}
+\DoxyCodeLine{00911 \textcolor{comment}{          （すなわち、実際にシーンの情報を変えることになる）場合}}
+\DoxyCodeLine{00912 \textcolor{comment}{  -\/-\/*/}}
+\DoxyCodeLine{00913   \textcolor{keywordflow}{if} (rangeParam \&\& rangeParam-\/>getValue(m\_frame) != value \&\&}
+\DoxyCodeLine{00914       (m\_actualParam-\/>isKeyframe(m\_frame) ||}
+\DoxyCodeLine{00915        !m\_actualParam.getPointer()-\/>hasKeyframes()))}
+\DoxyCodeLine{00916     undo = \textcolor{keyword}{new} \mbox{\hyperlink{class_range_param_field_undo}{RangeParamFieldUndo}}(rangeParam, m\_interfaceName, m\_frame,}
+\DoxyCodeLine{00917                                    ParamField::m\_fxHandleStat);}
+\DoxyCodeLine{00918 }
+\DoxyCodeLine{00919   setValue(value);}
+\DoxyCodeLine{00920 }
+\DoxyCodeLine{00921   \textcolor{keywordflow}{if} (undo) TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{00922 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_measured_range_param_field_a90b83be3df22cc4c1f58a6b3d8d7662f}\label{class_measured_range_param_field_a90b83be3df22cc4c1f58a6b3d8d7662f}} 
+\index{MeasuredRangeParamField@{MeasuredRangeParamField}!onKeyToggled@{onKeyToggled}}
+\index{onKeyToggled@{onKeyToggled}!MeasuredRangeParamField@{MeasuredRangeParamField}}
+\doxysubsubsection{\texorpdfstring{onKeyToggled}{onKeyToggled}}
+{\footnotesize\ttfamily void Measured\+Range\+Param\+Field\+::on\+Key\+Toggled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00926 \{ onKeyToggle(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_measured_range_param_field_abeaafc173d8a88b807246244423ff24f}\label{class_measured_range_param_field_abeaafc173d8a88b807246244423ff24f}} 
+\index{MeasuredRangeParamField@{MeasuredRangeParamField}!setPrecision@{setPrecision}}
+\index{setPrecision@{setPrecision}!MeasuredRangeParamField@{MeasuredRangeParamField}}
+\doxysubsubsection{\texorpdfstring{setPrecision()}{setPrecision()}}
+{\footnotesize\ttfamily void Measured\+Range\+Param\+Field\+::set\+Precision (\begin{DoxyParamCaption}\item[{int}]{precision }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_param_field}{Param\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00930                                                         \{}
+\DoxyCodeLine{00931   m\_valueField-\/>setPrecision(precision);}
+\DoxyCodeLine{00932 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_measured_range_param_field_a0cd4cdb8e6172cd14914d4ad28cc7bc0}\label{class_measured_range_param_field_a0cd4cdb8e6172cd14914d4ad28cc7bc0}} 
+\index{MeasuredRangeParamField@{MeasuredRangeParamField}!updateField@{updateField}}
+\index{updateField@{updateField}!MeasuredRangeParamField@{MeasuredRangeParamField}}
+\doxysubsubsection{\texorpdfstring{updateField()}{updateField()}}
+{\footnotesize\ttfamily void Measured\+Range\+Param\+Field\+::update\+Field (\begin{DoxyParamCaption}\item[{Double\+Pair}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_animated_param_field}{Animated\+Param\+Field$<$ Double\+Pair, TRange\+Param\+P $>$}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00893                                                           \{}
+\DoxyCodeLine{00894   m\_valueField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_double_value_pair_field_adb89b5fa4f166bb8dad6f60416913cc4}{setValues}}(value);}
+\DoxyCodeLine{00895 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/paramfield.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/paramfield.\+cpp\end{DoxyCompactItemize}

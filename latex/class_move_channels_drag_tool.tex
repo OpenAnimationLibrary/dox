@@ -1,0 +1,148 @@
+\hypertarget{class_move_channels_drag_tool}{}\doxysection{Move\+Channels\+Drag\+Tool Class Reference}
+\label{class_move_channels_drag_tool}\index{MoveChannelsDragTool@{MoveChannelsDragTool}}
+Inheritance diagram for Move\+Channels\+Drag\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_move_channels_drag_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_move_channels_drag_tool_a3387211e1208e91726d2b01bf03c34b9}{Move\+Channels\+Drag\+Tool}} (\mbox{\hyperlink{class_function_sheet}{Function\+Sheet}} $\ast$sheet)
+\item 
+void \mbox{\hyperlink{class_move_channels_drag_tool_a953d84aafbc1799ec456cebb88e09932}{click}} (int row, int col, QMouse\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_move_channels_drag_tool_a80d5d8ef694b6f86c7c1e98e5ddfa3b3}{drag}} (int row, int col, QMouse\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_move_channels_drag_tool_adf97942f519b6d026d6955355422813d}{release}} (int row, int col, QMouse\+Event $\ast$e) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_move_channels_drag_tool_a3387211e1208e91726d2b01bf03c34b9}\label{class_move_channels_drag_tool_a3387211e1208e91726d2b01bf03c34b9}} 
+\index{MoveChannelsDragTool@{MoveChannelsDragTool}!MoveChannelsDragTool@{MoveChannelsDragTool}}
+\index{MoveChannelsDragTool@{MoveChannelsDragTool}!MoveChannelsDragTool@{MoveChannelsDragTool}}
+\doxysubsubsection{\texorpdfstring{MoveChannelsDragTool()}{MoveChannelsDragTool()}}
+{\footnotesize\ttfamily Move\+Channels\+Drag\+Tool\+::\+Move\+Channels\+Drag\+Tool (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_function_sheet}{Function\+Sheet}} $\ast$}]{sheet }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00063       : m\_sheet(sheet), m\_firstKeyframeRow(-\/1) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_move_channels_drag_tool_a953d84aafbc1799ec456cebb88e09932}\label{class_move_channels_drag_tool_a953d84aafbc1799ec456cebb88e09932}} 
+\index{MoveChannelsDragTool@{MoveChannelsDragTool}!click@{click}}
+\index{click@{click}!MoveChannelsDragTool@{MoveChannelsDragTool}}
+\doxysubsubsection{\texorpdfstring{click()}{click()}}
+{\footnotesize\ttfamily void Move\+Channels\+Drag\+Tool\+::click (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col,  }\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_spreadsheet_1_1_drag_tool}{Spreadsheet\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00065                                                         \{}
+\DoxyCodeLine{00066     m\_firstKeyframeRow                  = -\/1;}
+\DoxyCodeLine{00067     \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *channel = m\_sheet-\/>getChannel(col);}
+\DoxyCodeLine{00068     \textcolor{keywordflow}{if} (!channel) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00069     \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve = channel-\/>getParam();}
+\DoxyCodeLine{00070     \textcolor{keywordtype}{int} k0 = -\/1, k1 = -\/1;}
+\DoxyCodeLine{00071     \textcolor{keywordflow}{if} (curve-\/>\mbox{\hyperlink{class_t_double_param_a2be2db8a6849e4619940ff37a0948574}{isKeyframe}}(row))}
+\DoxyCodeLine{00072       k0 = k1 = curve-\/>getClosestKeyframe(row);}
+\DoxyCodeLine{00073     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00074       k0 = curve-\/>\mbox{\hyperlink{class_t_double_param_a765abd97386a7e4e3a413255ba494e19}{getPrevKeyframe}}(row);}
+\DoxyCodeLine{00075       k1 = curve-\/>\mbox{\hyperlink{class_t_double_param_a28b99ec860d56fd1b47f89f08ca0a3ca}{getNextKeyframe}}(row);}
+\DoxyCodeLine{00076     \}}
+\DoxyCodeLine{00077     \textcolor{comment}{// return if clicking outside of the segments}}
+\DoxyCodeLine{00078     \textcolor{keywordflow}{if} (k0 < 0 || k1 < 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00079     \textcolor{keywordtype}{int} r0 = tround(curve-\/>\mbox{\hyperlink{class_t_double_param_af08442b9fd968fddada028a6f07983d5}{keyframeIndexToFrame}}(k0));}
+\DoxyCodeLine{00080     \textcolor{keywordtype}{int} r1 = tround(curve-\/>\mbox{\hyperlink{class_t_double_param_af08442b9fd968fddada028a6f07983d5}{keyframeIndexToFrame}}(k1));}
+\DoxyCodeLine{00081     \textcolor{keywordflow}{if} (m\_sheet-\/>isSelectedCell(row, col)) \{}
+\DoxyCodeLine{00082       m\_selectedCells = m\_sheet-\/>getSelectedCells();}
+\DoxyCodeLine{00083       m\_selectedCells.setTop(r0);}
+\DoxyCodeLine{00084       m\_selectedCells.setBottom(r1);}
+\DoxyCodeLine{00085     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00086       m\_selectedCells = QRect(col, r0, 1, r1 -\/ r0 + 1);}
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088     m\_sheet-\/>selectCells(m\_selectedCells);}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090     \textcolor{comment}{/*-\/-\/-\/}}
+\DoxyCodeLine{00091 \textcolor{comment}{シンプルに左のバーをクリックした場合はcolは1つだけ。}}
+\DoxyCodeLine{00092 \textcolor{comment}{すでに複数Columnが選択されている上でその選択範囲内のセルの左バーをクリックした場合は}}
+\DoxyCodeLine{00093 \textcolor{comment}{横（Column）幅は選択範囲に順ずるようになる。高さ(row)はクリックしたセグメントと同じになる。}}
+\DoxyCodeLine{00094 \textcolor{comment}{-\/-\/-\/*/}}
+\DoxyCodeLine{00095     \textcolor{comment}{/*-\/-\/-\/ セグメントごとドラッグに備えてKeyFrameを格納する -\/-\/-\/*/}}
+\DoxyCodeLine{00096     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} col = m\_selectedCells.left(); col <= m\_selectedCells.right();}
+\DoxyCodeLine{00097          ++col) \{}
+\DoxyCodeLine{00098       \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve = m\_sheet-\/>getCurve(col);}
+\DoxyCodeLine{00099       \textcolor{keywordflow}{if} (!curve) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00100       \mbox{\hyperlink{class_keyframe_setter}{KeyframeSetter}} *setter = \textcolor{keyword}{new} \mbox{\hyperlink{class_keyframe_setter}{KeyframeSetter}}(curve);}
+\DoxyCodeLine{00101       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} k = 0; k < curve-\/>getKeyframeCount(); k++) \{}
+\DoxyCodeLine{00102         \textcolor{keywordtype}{int} row = (int)curve-\/>\mbox{\hyperlink{class_t_double_param_af08442b9fd968fddada028a6f07983d5}{keyframeIndexToFrame}}(k);}
+\DoxyCodeLine{00103         \textcolor{keywordflow}{if} (r0 <= row \&\& row <= r1) \{}
+\DoxyCodeLine{00104           \textcolor{keywordflow}{if} (m\_firstKeyframeRow < 0 || row < m\_firstKeyframeRow)}
+\DoxyCodeLine{00105             m\_firstKeyframeRow = row;}
+\DoxyCodeLine{00106           setter-\/>selectKeyframe(k);}
+\DoxyCodeLine{00107         \}}
+\DoxyCodeLine{00108       \}}
+\DoxyCodeLine{00109       m\_setters.push\_back(setter);}
+\DoxyCodeLine{00110     \}}
+\DoxyCodeLine{00111     m\_oldRow = row;}
+\DoxyCodeLine{00112   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_move_channels_drag_tool_a80d5d8ef694b6f86c7c1e98e5ddfa3b3}\label{class_move_channels_drag_tool_a80d5d8ef694b6f86c7c1e98e5ddfa3b3}} 
+\index{MoveChannelsDragTool@{MoveChannelsDragTool}!drag@{drag}}
+\index{drag@{drag}!MoveChannelsDragTool@{MoveChannelsDragTool}}
+\doxysubsubsection{\texorpdfstring{drag()}{drag()}}
+{\footnotesize\ttfamily void Move\+Channels\+Drag\+Tool\+::drag (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col,  }\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_spreadsheet_1_1_drag_tool}{Spreadsheet\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00114                                                        \{}
+\DoxyCodeLine{00115     \textcolor{keywordtype}{int} d    = row -\/ m\_oldRow;}
+\DoxyCodeLine{00116     m\_oldRow = row;}
+\DoxyCodeLine{00117     \textcolor{keywordflow}{if} (d + m\_firstKeyframeRow < 0) d = -\/m\_firstKeyframeRow;}
+\DoxyCodeLine{00118     m\_firstKeyframeRow += d;}
+\DoxyCodeLine{00119     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_setters.size(); i++)}
+\DoxyCodeLine{00120       m\_setters[i]-\/>moveKeyframes(d, 0.0);}
+\DoxyCodeLine{00121     m\_selectedCells.translate(0, d);}
+\DoxyCodeLine{00122     m\_sheet-\/>selectCells(m\_selectedCells);}
+\DoxyCodeLine{00123   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_move_channels_drag_tool_adf97942f519b6d026d6955355422813d}\label{class_move_channels_drag_tool_adf97942f519b6d026d6955355422813d}} 
+\index{MoveChannelsDragTool@{MoveChannelsDragTool}!release@{release}}
+\index{release@{release}!MoveChannelsDragTool@{MoveChannelsDragTool}}
+\doxysubsubsection{\texorpdfstring{release()}{release()}}
+{\footnotesize\ttfamily void Move\+Channels\+Drag\+Tool\+::release (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col,  }\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_spreadsheet_1_1_drag_tool}{Spreadsheet\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00125                                                           \{}
+\DoxyCodeLine{00126     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_setters.size(); i++) \textcolor{keyword}{delete} m\_setters[i];}
+\DoxyCodeLine{00127     m\_setters.clear();}
+\DoxyCodeLine{00128   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/functionsheet.\+cpp\end{DoxyCompactItemize}

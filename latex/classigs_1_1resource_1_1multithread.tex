@@ -1,0 +1,93 @@
+\hypertarget{classigs_1_1resource_1_1multithread}{}\doxysection{igs\+::resource\+::multithread Class Reference}
+\label{classigs_1_1resource_1_1multithread}\index{igs::resource::multithread@{igs::resource::multithread}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classigs_1_1resource_1_1multithread_a39bd8c02e1ccc39a469a4fec8634658f}{add}} (void $\ast$thread\+\_\+execute\+\_\+instance)
+\item 
+void \mbox{\hyperlink{classigs_1_1resource_1_1multithread_a0fa240ef71fa3611f5a8116d84f95e5f}{run}} (void)
+\item 
+void \mbox{\hyperlink{classigs_1_1resource_1_1multithread_ae1ecad67ff4e604ec9324c26dbade116}{clear}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classigs_1_1resource_1_1multithread_a39bd8c02e1ccc39a469a4fec8634658f}\label{classigs_1_1resource_1_1multithread_a39bd8c02e1ccc39a469a4fec8634658f}} 
+\index{igs::resource::multithread@{igs::resource::multithread}!add@{add}}
+\index{add@{add}!igs::resource::multithread@{igs::resource::multithread}}
+\doxysubsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily void igs\+::resource\+::multithread\+::add (\begin{DoxyParamCaption}\item[{void $\ast$}]{thread\+\_\+execute\+\_\+instance }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018                                                               \{}
+\DoxyCodeLine{00019   this-\/>thre\_exec\_.push\_back(thread\_execute\_instance);}
+\DoxyCodeLine{00020 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classigs_1_1resource_1_1multithread_ae1ecad67ff4e604ec9324c26dbade116}\label{classigs_1_1resource_1_1multithread_ae1ecad67ff4e604ec9324c26dbade116}} 
+\index{igs::resource::multithread@{igs::resource::multithread}!clear@{clear}}
+\index{clear@{clear}!igs::resource::multithread@{igs::resource::multithread}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void igs\+::resource\+::multithread\+::clear (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00058 \{ this-\/>thre\_exec\_.clear(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classigs_1_1resource_1_1multithread_a0fa240ef71fa3611f5a8116d84f95e5f}\label{classigs_1_1resource_1_1multithread_a0fa240ef71fa3611f5a8116d84f95e5f}} 
+\index{igs::resource::multithread@{igs::resource::multithread}!run@{run}}
+\index{run@{run}!igs::resource::multithread@{igs::resource::multithread}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void igs\+::resource\+::multithread\+::run (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022                                      \{}
+\DoxyCodeLine{00023   \textcolor{keywordflow}{if} (1 == this-\/>thre\_exec\_.size()) \{}
+\DoxyCodeLine{00024     \textcolor{comment}{/* 指定が一個の場合はスレッド実行せず、ただ実行 */}}
+\DoxyCodeLine{00025     \mbox{\hyperlink{classigs_1_1resource_1_1thread__execute__interface}{igs::resource::thread\_execute\_interface}} *pp =}
+\DoxyCodeLine{00026         \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classigs_1_1resource_1_1thread__execute__interface}{igs::resource::thread\_execute\_interface}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{00027             this-\/>thre\_exec\_.at(0));}
+\DoxyCodeLine{00028     pp-\/>run();}
+\DoxyCodeLine{00029     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00030   \}}
+\DoxyCodeLine{00031 }
+\DoxyCodeLine{00032 \textcolor{comment}{// pthread\_t = unsigned long int(rhel4)}}
+\DoxyCodeLine{00033 \textcolor{comment}{// HANDLE = unsigned long(vc6.0) = void *(vc2005)}}
+\DoxyCodeLine{00034 \textcolor{preprocessor}{\#if defined \_WIN32  }\textcolor{comment}{// vc compile\_type}}
+\DoxyCodeLine{00035   std::vector<HANDLE> id;}
+\DoxyCodeLine{00036 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00037   std::vector<pthread\_t> id;}
+\DoxyCodeLine{00038 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00039   \{}
+\DoxyCodeLine{00040     std::vector<void *>::iterator it;}
+\DoxyCodeLine{00041     \textcolor{keywordflow}{for} (it = this-\/>thre\_exec\_.begin(); it != this-\/>thre\_exec\_.end(); ++it) \{}
+\DoxyCodeLine{00042       \textcolor{keywordtype}{id}.push\_back(igs::resource::thread\_run(function\_, *it));}
+\DoxyCodeLine{00043     \}}
+\DoxyCodeLine{00044   \}}
+\DoxyCodeLine{00045   \{}
+\DoxyCodeLine{00046 \textcolor{preprocessor}{\#if defined \_WIN32  }\textcolor{comment}{// vc compile\_type}}
+\DoxyCodeLine{00047     std::vector<HANDLE>::iterator it;}
+\DoxyCodeLine{00048 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00049     std::vector<pthread\_t>::iterator it;}
+\DoxyCodeLine{00050 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00051     \textcolor{keywordflow}{for} (it = \textcolor{keywordtype}{id}.begin(); it != \textcolor{keywordtype}{id}.end(); ++it) \{}
+\DoxyCodeLine{00052       igs::resource::thread\_join(*it);}
+\DoxyCodeLine{00053     \}}
+\DoxyCodeLine{00054   \}}
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056   \textcolor{keywordtype}{id}.clear();}
+\DoxyCodeLine{00057 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/igs\+\_\+resource\+\_\+multithread.\+h\item 
+E\+:/opentoonz/toonz/sources/stdfx/igs\+\_\+resource\+\_\+multithread.\+cpp\end{DoxyCompactItemize}

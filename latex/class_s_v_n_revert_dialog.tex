@@ -1,0 +1,293 @@
+\hypertarget{class_s_v_n_revert_dialog}{}\doxysection{SVNRevert\+Dialog Class Reference}
+\label{class_s_v_n_revert_dialog}\index{SVNRevertDialog@{SVNRevertDialog}}
+Inheritance diagram for SVNRevert\+Dialog\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_s_v_n_revert_dialog}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_s_v_n_revert_dialog_a33b6dfccfa20018548b81e95b111c5b4}\label{class_s_v_n_revert_dialog_a33b6dfccfa20018548b81e95b111c5b4}} 
+void {\bfseries done} (const QString\+List \&)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_v_n_revert_dialog_abefafaf52c716f37487816a812425049}{SVNRevert\+Dialog}} (QWidget $\ast$parent, const QString \&working\+Dir, const QString\+List \&files, bool folder\+Only=false, int scene\+Icon\+Added=0)
+\item 
+void \mbox{\hyperlink{class_s_v_n_revert_dialog_a989a1eac52a2434bdf2fbf5c101ce4f6}{check\+Files}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_v_n_revert_dialog_a848c8516994d5584fb66e5b79bd36313}{on\+Revert\+Button\+Clicked}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_revert_dialog_ac8a09ad32c293ef363f221bdd4358f45}{on\+Revert\+Done}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_revert_dialog_a1ad4a62c7fed44ff3f16dabdc5c531e4}{on\+Error}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_s_v_n_revert_dialog_a8234809eb903fdca70619972af34a1d4}{on\+Status\+Retrieved}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_s_v_n_revert_dialog_a7b849a682ae3a76fe3854d295910b364}{on\+Revert\+Scene\+Contents\+Toggled}} (bool checked)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_v_n_revert_dialog_abefafaf52c716f37487816a812425049}\label{class_s_v_n_revert_dialog_abefafaf52c716f37487816a812425049}} 
+\index{SVNRevertDialog@{SVNRevertDialog}!SVNRevertDialog@{SVNRevertDialog}}
+\index{SVNRevertDialog@{SVNRevertDialog}!SVNRevertDialog@{SVNRevertDialog}}
+\doxysubsubsection{\texorpdfstring{SVNRevertDialog()}{SVNRevertDialog()}}
+{\footnotesize\ttfamily SVNRevert\+Dialog\+::\+SVNRevert\+Dialog (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{const QString \&}]{working\+Dir,  }\item[{const QString\+List \&}]{files,  }\item[{bool}]{folder\+Only = {\ttfamily false},  }\item[{int}]{scene\+Icon\+Added = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00036     : Dialog(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false})}
+\DoxyCodeLine{00037     , m\_workingDir(workingDir)}
+\DoxyCodeLine{00038     , m\_files(files)}
+\DoxyCodeLine{00039     , m\_revertSceneContentsCheckBox(0)}
+\DoxyCodeLine{00040     , m\_folderOnly(folderOnly)}
+\DoxyCodeLine{00041     , m\_sceneIconAdded(sceneIconAdded) \{}
+\DoxyCodeLine{00042   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00043   setMinimumSize(300, 150);}
+\DoxyCodeLine{00044   setAttribute(Qt::WA\_DeleteOnClose, \textcolor{keyword}{true});}
+\DoxyCodeLine{00045   setWindowTitle(tr(\textcolor{stringliteral}{"{}Version Control: Revert changes"{}}));}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047   QWidget *container = \textcolor{keyword}{new} QWidget;}
+\DoxyCodeLine{00048 }
+\DoxyCodeLine{00049   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout;}
+\DoxyCodeLine{00050   mainLayout-\/>setAlignment(Qt::AlignHCenter);}
+\DoxyCodeLine{00051   mainLayout-\/>setMargin(0);}
+\DoxyCodeLine{00052 }
+\DoxyCodeLine{00053   QHBoxLayout *hLayout = \textcolor{keyword}{new} QHBoxLayout;}
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055   m\_waitingLabel      = \textcolor{keyword}{new} QLabel;}
+\DoxyCodeLine{00056   QMovie *waitingMove = \textcolor{keyword}{new} QMovie(\textcolor{stringliteral}{"{}:Resources/waiting.gif"{}});}
+\DoxyCodeLine{00057   waitingMove-\/>setParent(\textcolor{keyword}{this});}
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059   m\_waitingLabel-\/>setMovie(waitingMove);}
+\DoxyCodeLine{00060   waitingMove-\/>setCacheMode(QMovie::CacheAll);}
+\DoxyCodeLine{00061   waitingMove-\/>start();}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063   m\_textLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Getting repository status..."{}}));}
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00065   hLayout-\/>addStretch();}
+\DoxyCodeLine{00066   hLayout-\/>addWidget(m\_waitingLabel);}
+\DoxyCodeLine{00067   hLayout-\/>addWidget(m\_textLabel);}
+\DoxyCodeLine{00068   hLayout-\/>addStretch();}
+\DoxyCodeLine{00069 }
+\DoxyCodeLine{00070   mainLayout-\/>addLayout(hLayout);}
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00072   m\_treeWidget = \textcolor{keyword}{new} QTreeWidget;}
+\DoxyCodeLine{00073   m\_treeWidget-\/>setStyleSheet(\textcolor{stringliteral}{"{}QTreeWidget \{ border: 1px solid gray; \}"{}});}
+\DoxyCodeLine{00074   m\_treeWidget-\/>header()-\/>hide();}
+\DoxyCodeLine{00075   m\_treeWidget-\/>hide();}
+\DoxyCodeLine{00076   mainLayout-\/>addWidget(m\_treeWidget);}
+\DoxyCodeLine{00077 }
+\DoxyCodeLine{00078   \textcolor{keywordflow}{if} (!m\_folderOnly) \{}
+\DoxyCodeLine{00079     mainLayout-\/>addSpacing(10);}
+\DoxyCodeLine{00080     QHBoxLayout *checkBoxLayout = \textcolor{keyword}{new} QHBoxLayout;}
+\DoxyCodeLine{00081     checkBoxLayout-\/>setMargin(0);}
+\DoxyCodeLine{00082     m\_revertSceneContentsCheckBox = \textcolor{keyword}{new} QCheckBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00083     connect(m\_revertSceneContentsCheckBox, SIGNAL(toggled(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00084             SLOT(onRevertSceneContentsToggled(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00085     m\_revertSceneContentsCheckBox-\/>setChecked(\textcolor{keyword}{false});}
+\DoxyCodeLine{00086     m\_revertSceneContentsCheckBox-\/>hide();}
+\DoxyCodeLine{00087     m\_revertSceneContentsCheckBox-\/>setText(tr(\textcolor{stringliteral}{"{}Revert Scene Contents"{}}));}
+\DoxyCodeLine{00088     checkBoxLayout-\/>addStretch();}
+\DoxyCodeLine{00089     checkBoxLayout-\/>addWidget(m\_revertSceneContentsCheckBox);}
+\DoxyCodeLine{00090     checkBoxLayout-\/>addStretch();}
+\DoxyCodeLine{00091     mainLayout-\/>addLayout(checkBoxLayout);}
+\DoxyCodeLine{00092   \}}
+\DoxyCodeLine{00093 }
+\DoxyCodeLine{00094   container-\/>setLayout(mainLayout);}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a21628a44d453352094b61b62b4407c6b}{beginHLayout}}();}
+\DoxyCodeLine{00097   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(container, \textcolor{keyword}{false});}
+\DoxyCodeLine{00098   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_abe29ee90829fe5e0351fbdee41089252}{endHLayout}}();}
+\DoxyCodeLine{00099 }
+\DoxyCodeLine{00100   m\_revertButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Revert"{}}));}
+\DoxyCodeLine{00101   m\_revertButton-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00102   connect(m\_revertButton, SIGNAL(clicked()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00103           SLOT(onRevertButtonClicked()));}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105   m\_cancelButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cancel"{}}));}
+\DoxyCodeLine{00106   connect(m\_cancelButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(reject()));}
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(m\_revertButton, m\_cancelButton);}
+\DoxyCodeLine{00109 }
+\DoxyCodeLine{00110   \textcolor{comment}{// 0. Connect for svn errors (that may occur every time)}}
+\DoxyCodeLine{00111   connect(\&m\_thread, SIGNAL(error(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00112           SLOT(onError(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114   \textcolor{comment}{// 1. Getting status}}
+\DoxyCodeLine{00115   connect(\&m\_thread, SIGNAL(statusRetrieved(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00116           SLOT(onStatusRetrieved(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00117   m\_thread.getSVNStatus(m\_workingDir);}
+\DoxyCodeLine{00118 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_v_n_revert_dialog_a989a1eac52a2434bdf2fbf5c101ce4f6}\label{class_s_v_n_revert_dialog_a989a1eac52a2434bdf2fbf5c101ce4f6}} 
+\index{SVNRevertDialog@{SVNRevertDialog}!checkFiles@{checkFiles}}
+\index{checkFiles@{checkFiles}!SVNRevertDialog@{SVNRevertDialog}}
+\doxysubsubsection{\texorpdfstring{checkFiles()}{checkFiles()}}
+{\footnotesize\ttfamily void SVNRevert\+Dialog\+::check\+Files (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00163                                  \{}
+\DoxyCodeLine{00164   \textcolor{keywordtype}{int} statusCount = m\_status.size();}
+\DoxyCodeLine{00165   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < statusCount; i++) \{}
+\DoxyCodeLine{00166     \mbox{\hyperlink{struct_s_v_n_status}{SVNStatus}} s = m\_status.at(i);}
+\DoxyCodeLine{00167     \textcolor{keywordflow}{if} (s.m\_path == \textcolor{stringliteral}{"{}."{}} || s.m\_path == \textcolor{stringliteral}{"{}.."{}}) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00168     \textcolor{keywordflow}{if} (s.m\_item != \textcolor{stringliteral}{"{}normal"{}} \&\& s.m\_item != \textcolor{stringliteral}{"{}unversioned"{}}) \{}
+\DoxyCodeLine{00169       \textcolor{keywordflow}{if} (m\_folderOnly || m\_files.contains(s.m\_path))}
+\DoxyCodeLine{00170         m\_filesToRevert.append(s.m\_path);}
+\DoxyCodeLine{00171     \}}
+\DoxyCodeLine{00172   \}}
+\DoxyCodeLine{00173 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_revert_dialog_a1ad4a62c7fed44ff3f16dabdc5c531e4}\label{class_s_v_n_revert_dialog_a1ad4a62c7fed44ff3f16dabdc5c531e4}} 
+\index{SVNRevertDialog@{SVNRevertDialog}!onError@{onError}}
+\index{onError@{onError}!SVNRevertDialog@{SVNRevertDialog}}
+\doxysubsubsection{\texorpdfstring{onError}{onError}}
+{\footnotesize\ttfamily void SVNRevert\+Dialog\+::on\+Error (\begin{DoxyParamCaption}\item[{const QString \&}]{error\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00281                                                         \{}
+\DoxyCodeLine{00282   m\_textLabel-\/>setText(errorString);}
+\DoxyCodeLine{00283   switchToCloseButton();}
+\DoxyCodeLine{00284   update();}
+\DoxyCodeLine{00285 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_revert_dialog_a848c8516994d5584fb66e5b79bd36313}\label{class_s_v_n_revert_dialog_a848c8516994d5584fb66e5b79bd36313}} 
+\index{SVNRevertDialog@{SVNRevertDialog}!onRevertButtonClicked@{onRevertButtonClicked}}
+\index{onRevertButtonClicked@{onRevertButtonClicked}!SVNRevertDialog@{SVNRevertDialog}}
+\doxysubsubsection{\texorpdfstring{onRevertButtonClicked}{onRevertButtonClicked}}
+{\footnotesize\ttfamily void SVNRevert\+Dialog\+::on\+Revert\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00231                                             \{}
+\DoxyCodeLine{00232   m\_revertButton-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00233   revertFiles();}
+\DoxyCodeLine{00234 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_revert_dialog_ac8a09ad32c293ef363f221bdd4358f45}\label{class_s_v_n_revert_dialog_ac8a09ad32c293ef363f221bdd4358f45}} 
+\index{SVNRevertDialog@{SVNRevertDialog}!onRevertDone@{onRevertDone}}
+\index{onRevertDone@{onRevertDone}!SVNRevertDialog@{SVNRevertDialog}}
+\doxysubsubsection{\texorpdfstring{onRevertDone}{onRevertDone}}
+{\footnotesize\ttfamily void SVNRevert\+Dialog\+::on\+Revert\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00268                                    \{}
+\DoxyCodeLine{00269   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Revert done successfully."{}}));}
+\DoxyCodeLine{00270 }
+\DoxyCodeLine{00271   QStringList files;}
+\DoxyCodeLine{00272   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_filesToRevert.size(); i++)}
+\DoxyCodeLine{00273     files.append(m\_filesToRevert.at(i));}
+\DoxyCodeLine{00274   emit done(files);}
+\DoxyCodeLine{00275 }
+\DoxyCodeLine{00276   switchToCloseButton();}
+\DoxyCodeLine{00277 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_revert_dialog_a7b849a682ae3a76fe3854d295910b364}\label{class_s_v_n_revert_dialog_a7b849a682ae3a76fe3854d295910b364}} 
+\index{SVNRevertDialog@{SVNRevertDialog}!onRevertSceneContentsToggled@{onRevertSceneContentsToggled}}
+\index{onRevertSceneContentsToggled@{onRevertSceneContentsToggled}!SVNRevertDialog@{SVNRevertDialog}}
+\doxysubsubsection{\texorpdfstring{onRevertSceneContentsToggled}{onRevertSceneContentsToggled}}
+{\footnotesize\ttfamily void SVNRevert\+Dialog\+::on\+Revert\+Scene\+Contents\+Toggled (\begin{DoxyParamCaption}\item[{bool}]{checked }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00289                                                                \{}
+\DoxyCodeLine{00290   \textcolor{keywordflow}{if} (!checked)}
+\DoxyCodeLine{00291     m\_sceneResources.clear();}
+\DoxyCodeLine{00292   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00293     \mbox{\hyperlink{class_version_control}{VersionControl}} *vc = VersionControl::instance();}
+\DoxyCodeLine{00294 }
+\DoxyCodeLine{00295     \textcolor{keywordtype}{int} fileSize = m\_filesToRevert.count();}
+\DoxyCodeLine{00296     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < fileSize; i++) \{}
+\DoxyCodeLine{00297       QString fileName = m\_filesToRevert.at(i);}
+\DoxyCodeLine{00298       \textcolor{keywordflow}{if} (fileName.endsWith(\textcolor{stringliteral}{"{}.tnz"{}})) \{}
+\DoxyCodeLine{00299         \textcolor{keywordflow}{if} (m\_filesToRevert.contains(fileName))}
+\DoxyCodeLine{00300           m\_sceneResources.append(vc-\/>getSceneContents(m\_workingDir, fileName));}
+\DoxyCodeLine{00301       \}}
+\DoxyCodeLine{00302     \}}
+\DoxyCodeLine{00303   \}}
+\DoxyCodeLine{00304   m\_textLabel-\/>setText(}
+\DoxyCodeLine{00305       tr(\textcolor{stringliteral}{"{}\%1 items to revert."{}})}
+\DoxyCodeLine{00306           .arg(m\_filesToRevert.size() + m\_sceneResources.size() == 1}
+\DoxyCodeLine{00307                    ? 1}
+\DoxyCodeLine{00308                    : m\_filesToRevert.size() + m\_sceneResources.size() -\/}
+\DoxyCodeLine{00309                          m\_sceneIconAdded));}
+\DoxyCodeLine{00310 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_revert_dialog_a8234809eb903fdca70619972af34a1d4}\label{class_s_v_n_revert_dialog_a8234809eb903fdca70619972af34a1d4}} 
+\index{SVNRevertDialog@{SVNRevertDialog}!onStatusRetrieved@{onStatusRetrieved}}
+\index{onStatusRetrieved@{onStatusRetrieved}!SVNRevertDialog@{SVNRevertDialog}}
+\doxysubsubsection{\texorpdfstring{onStatusRetrieved}{onStatusRetrieved}}
+{\footnotesize\ttfamily void SVNRevert\+Dialog\+::on\+Status\+Retrieved (\begin{DoxyParamCaption}\item[{const QString \&}]{xml\+Response }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00122                                                                   \{}
+\DoxyCodeLine{00123   \mbox{\hyperlink{class_s_v_n_status_reader}{SVNStatusReader}} sr(xmlResponse);}
+\DoxyCodeLine{00124   m\_status   = sr.getStatus();}
+\DoxyCodeLine{00125   \textcolor{keywordtype}{int} height = 50;}
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127   checkFiles();}
+\DoxyCodeLine{00128 }
+\DoxyCodeLine{00129   \textcolor{keywordtype}{int} fileSize = m\_filesToRevert.size();}
+\DoxyCodeLine{00130   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < fileSize; i++) \{}
+\DoxyCodeLine{00131     \textcolor{keywordflow}{if} (m\_filesToRevert.at(i).endsWith(\textcolor{stringliteral}{"{}.tnz"{}})) \{}
+\DoxyCodeLine{00132       \textcolor{keywordflow}{if} (m\_revertSceneContentsCheckBox) m\_revertSceneContentsCheckBox-\/>show();}
+\DoxyCodeLine{00133       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00134     \}}
+\DoxyCodeLine{00135   \}}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137   initTreeWidget();}
+\DoxyCodeLine{00138 }
+\DoxyCodeLine{00139   \textcolor{keywordflow}{if} (m\_filesToRevert.size() == 0) \{}
+\DoxyCodeLine{00140     QString msg = QString(tr(\textcolor{stringliteral}{"{}No items to revert."{}}));}
+\DoxyCodeLine{00141     m\_textLabel-\/>setText(msg);}
+\DoxyCodeLine{00142     switchToCloseButton();}
+\DoxyCodeLine{00143   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00144     \textcolor{keywordflow}{if} (m\_treeWidget-\/>isVisible()) height += (m\_filesToRevert.size() * 50);}
+\DoxyCodeLine{00145 }
+\DoxyCodeLine{00146     setMinimumSize(300, std::min(height, 350));}
+\DoxyCodeLine{00147 }
+\DoxyCodeLine{00148     QString msg = QString(tr(\textcolor{stringliteral}{"{}\%1 items to revert."{}}))}
+\DoxyCodeLine{00149                       .arg(m\_filesToRevert.size() == 1}
+\DoxyCodeLine{00150                                ? 1}
+\DoxyCodeLine{00151                                : m\_filesToRevert.size() -\/ m\_sceneIconAdded);}
+\DoxyCodeLine{00152     m\_textLabel-\/>setText(msg);}
+\DoxyCodeLine{00153 }
+\DoxyCodeLine{00154     m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{00155     m\_revertButton-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00156 }
+\DoxyCodeLine{00157     m\_thread.disconnect(SIGNAL(statusRetrieved(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00158   \}}
+\DoxyCodeLine{00159 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/svnrevertdialog.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/svnrevertdialog.\+cpp\end{DoxyCompactItemize}

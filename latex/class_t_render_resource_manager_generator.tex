@@ -1,0 +1,173 @@
+\hypertarget{class_t_render_resource_manager_generator}{}\doxysection{TRender\+Resource\+Manager\+Generator Class Reference}
+\label{class_t_render_resource_manager_generator}\index{TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}}
+
+
+{\ttfamily \#include $<$trenderresourcemanager.\+h$>$}
+
+Inheritance diagram for TRender\+Resource\+Manager\+Generator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=10.000000cm]{class_t_render_resource_manager_generator}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_render_resource_manager_generator_a9325523d2a03e67a7a7be34a34f6f076}{TRender\+Resource\+Manager\+Generator}} (bool render\+Instance\+Scope=false)
+\item 
+int \mbox{\hyperlink{class_t_render_resource_manager_generator_af73e91e02d2e4fbfeb3d1e12c319c84b}{get\+Generator\+Index}} () const
+\item 
+\mbox{\Hypertarget{class_t_render_resource_manager_generator_ac02529bc08aa35dfb7871c3c4114127b}\label{class_t_render_resource_manager_generator_ac02529bc08aa35dfb7871c3c4114127b}} 
+virtual \mbox{\hyperlink{class_t_render_resource_manager}{TRender\+Resource\+Manager}} $\ast$ {\bfseries operator()} (void)=0
+\item 
+bool \mbox{\hyperlink{class_t_render_resource_manager_generator_a21197fcb7e9b1f9da872a4c328fae0e2}{has\+Instance\+Scope}} () const
+\item 
+\mbox{\hyperlink{class_t_render_resource_manager}{TRender\+Resource\+Manager}} $\ast$ \mbox{\hyperlink{class_t_render_resource_manager_generator_af4eedc62ab289f0eb5f177ea8e2d18f7}{get\+Manager}} (const \mbox{\hyperlink{class_t_renderer}{TRenderer}} \&renderer) const
+\item 
+\mbox{\hyperlink{class_t_render_resource_manager}{TRender\+Resource\+Manager}} $\ast$ \mbox{\hyperlink{class_t_render_resource_manager_generator_a6a383f394808391c2f45565400a44916}{get\+Manager}} (unsigned long render\+Id) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::vector$<$ \mbox{\hyperlink{class_t_render_resource_manager_generator}{TRender\+Resource\+Manager\+Generator}} $\ast$ $>$ \& \mbox{\hyperlink{class_t_render_resource_manager_generator_ae81d383406d6c695bcb0f7cdc24ae830}{generators}} ()
+\item 
+static std\+::vector$<$ \mbox{\hyperlink{class_t_render_resource_manager_generator}{TRender\+Resource\+Manager\+Generator}} $\ast$ $>$ \& \mbox{\hyperlink{class_t_render_resource_manager_generator_ac95a1d58f0b4c61554e6769d5864af5c}{generators}} (bool instance\+Scope)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_t_render_resource_manager_generator}{TRender\+Resource\+Manager\+Generator}} class is used to construct resource managers that will be used by TRenderers. Please refer to the \mbox{\hyperlink{class_t_render_resource_manager}{TRender\+Resource\+Manager}} documentation for the details.
+
+\begin{DoxyNote}{Note}
+Resource managers may be constructed with a {\itshape  render instance \texorpdfstring{$<$}{<}\textbackslash{}i\texorpdfstring{$>$}{>} scope rather than the default render context (ie \mbox{\hyperlink{class_t_renderer}{TRenderer}}) scope. This can be achieved by passing {\ttfamily true} at the generator\textquotesingle{}s constructor, proving especially useful considering that the same \mbox{\hyperlink{class_t_renderer}{TRenderer}} may virtually start multiple render instances at the same time. }
+\end{DoxyNote}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_render_resource_manager_generator_a9325523d2a03e67a7a7be34a34f6f076}\label{class_t_render_resource_manager_generator_a9325523d2a03e67a7a7be34a34f6f076}} 
+\index{TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}!TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}}
+\index{TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}!TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}}
+\doxysubsubsection{\texorpdfstring{TRenderResourceManagerGenerator()}{TRenderResourceManagerGenerator()}}
+{\footnotesize\ttfamily TRender\+Resource\+Manager\+Generator\+::\+TRender\+Resource\+Manager\+Generator (\begin{DoxyParamCaption}\item[{bool}]{render\+Instance\+Scope = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00118     : m\_instanceScope(renderInstanceScope) \{}
+\DoxyCodeLine{00119   \textcolor{comment}{// In case this has a renderInstanceScope, build a stub generator}}
+\DoxyCodeLine{00120   \textcolor{keywordflow}{if} (renderInstanceScope) \{}
+\DoxyCodeLine{00121     RenderInstanceManagersBuilder::gen();  \textcolor{comment}{// Stubs depend on this manager}}
+\DoxyCodeLine{00122 }
+\DoxyCodeLine{00123     \textcolor{keyword}{static} std::vector<TRenderResourceManagerGenerator *> stubGenerators;}
+\DoxyCodeLine{00124     stubGenerators.push\_back(\textcolor{keyword}{new} \mbox{\hyperlink{class_stub_generator}{StubGenerator}}(\textcolor{keyword}{this}));}
+\DoxyCodeLine{00125   \}}
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127   generators().push\_back(\textcolor{keyword}{this});}
+\DoxyCodeLine{00128 }
+\DoxyCodeLine{00129   std::vector<TRenderResourceManagerGenerator *> \&scopeGenerators =}
+\DoxyCodeLine{00130       generators(renderInstanceScope);}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132   scopeGenerators.push\_back(\textcolor{keyword}{this});}
+\DoxyCodeLine{00133   m\_managerIndex = scopeGenerators.size() -\/ 1;}
+\DoxyCodeLine{00134 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_render_resource_manager_generator_ac9de129dab80ae3db51b264dfd65bb51}\label{class_t_render_resource_manager_generator_ac9de129dab80ae3db51b264dfd65bb51}} 
+\index{TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}!````~TRenderResourceManagerGenerator@{$\sim$TRenderResourceManagerGenerator}}
+\index{````~TRenderResourceManagerGenerator@{$\sim$TRenderResourceManagerGenerator}!TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}}
+\doxysubsubsection{\texorpdfstring{$\sim$TRenderResourceManagerGenerator()}{~TRenderResourceManagerGenerator()}}
+{\footnotesize\ttfamily TRender\+Resource\+Manager\+Generator\+::$\sim$\+TRender\+Resource\+Manager\+Generator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00093 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_render_resource_manager_generator_ae81d383406d6c695bcb0f7cdc24ae830}\label{class_t_render_resource_manager_generator_ae81d383406d6c695bcb0f7cdc24ae830}} 
+\index{TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}!generators@{generators}}
+\index{generators@{generators}!TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}}
+\doxysubsubsection{\texorpdfstring{generators()}{generators()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_t_render_resource_manager_generator}{TRender\+Resource\+Manager\+Generator}} $\ast$ $>$ \& TRender\+Resource\+Manager\+Generator\+::generators (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00100                                                  \{}
+\DoxyCodeLine{00101   \textcolor{keyword}{static} std::vector<TRenderResourceManagerGenerator *> generatorsInstance;}
+\DoxyCodeLine{00102   \textcolor{keywordflow}{return} generatorsInstance;}
+\DoxyCodeLine{00103 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_render_resource_manager_generator_ac95a1d58f0b4c61554e6769d5864af5c}\label{class_t_render_resource_manager_generator_ac95a1d58f0b4c61554e6769d5864af5c}} 
+\index{TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}!generators@{generators}}
+\index{generators@{generators}!TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}}
+\doxysubsubsection{\texorpdfstring{generators()}{generators()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_t_render_resource_manager_generator}{TRender\+Resource\+Manager\+Generator}} $\ast$ $>$ \& TRender\+Resource\+Manager\+Generator\+::generators (\begin{DoxyParamCaption}\item[{bool}]{instance\+Scope }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00108                                                                    \{}
+\DoxyCodeLine{00109   \textcolor{keyword}{static} std::vector<TRenderResourceManagerGenerator *> generatorsInstance;}
+\DoxyCodeLine{00110   \textcolor{keyword}{static} std::vector<TRenderResourceManagerGenerator *> generatorsRenderer;}
+\DoxyCodeLine{00111   \textcolor{keywordflow}{return} instanceScope ? generatorsInstance : generatorsRenderer;}
+\DoxyCodeLine{00112 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_render_resource_manager_generator_af73e91e02d2e4fbfeb3d1e12c319c84b}\label{class_t_render_resource_manager_generator_af73e91e02d2e4fbfeb3d1e12c319c84b}} 
+\index{TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}!getGeneratorIndex@{getGeneratorIndex}}
+\index{getGeneratorIndex@{getGeneratorIndex}!TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}}
+\doxysubsubsection{\texorpdfstring{getGeneratorIndex()}{getGeneratorIndex()}}
+{\footnotesize\ttfamily int TRender\+Resource\+Manager\+Generator\+::get\+Generator\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00095 \{ \textcolor{keywordflow}{return} m\_managerIndex; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_render_resource_manager_generator_af4eedc62ab289f0eb5f177ea8e2d18f7}\label{class_t_render_resource_manager_generator_af4eedc62ab289f0eb5f177ea8e2d18f7}} 
+\index{TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}!getManager@{getManager}}
+\index{getManager@{getManager}!TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}}
+\doxysubsubsection{\texorpdfstring{getManager()}{getManager()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_render_resource_manager}{TRender\+Resource\+Manager}} $\ast$ TRender\+Resource\+Manager\+Generator\+::get\+Manager (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_renderer}{TRenderer}} \&}]{renderer }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00139                                      \{}
+\DoxyCodeLine{00140   \textcolor{keywordflow}{return} m\_instanceScope ? 0 : renderer.getManager(m\_managerIndex);}
+\DoxyCodeLine{00141 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_render_resource_manager_generator_a6a383f394808391c2f45565400a44916}\label{class_t_render_resource_manager_generator_a6a383f394808391c2f45565400a44916}} 
+\index{TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}!getManager@{getManager}}
+\index{getManager@{getManager}!TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}}
+\doxysubsubsection{\texorpdfstring{getManager()}{getManager()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_render_resource_manager}{TRender\+Resource\+Manager}} $\ast$ TRender\+Resource\+Manager\+Generator\+::get\+Manager (\begin{DoxyParamCaption}\item[{unsigned long}]{render\+Id }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00146                                   \{}
+\DoxyCodeLine{00147   \textcolor{keywordflow}{return} m\_instanceScope}
+\DoxyCodeLine{00148              ? RenderInstanceManagersBuilder::instance()-\/>getManager(}
+\DoxyCodeLine{00149                    renderId, m\_managerIndex)}
+\DoxyCodeLine{00150              : 0;}
+\DoxyCodeLine{00151 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_render_resource_manager_generator_a21197fcb7e9b1f9da872a4c328fae0e2}\label{class_t_render_resource_manager_generator_a21197fcb7e9b1f9da872a4c328fae0e2}} 
+\index{TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}!hasInstanceScope@{hasInstanceScope}}
+\index{hasInstanceScope@{hasInstanceScope}!TRenderResourceManagerGenerator@{TRenderResourceManagerGenerator}}
+\doxysubsubsection{\texorpdfstring{hasInstanceScope()}{hasInstanceScope()}}
+{\footnotesize\ttfamily bool TRender\+Resource\+Manager\+Generator\+::has\+Instance\+Scope (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00102 \{ \textcolor{keywordflow}{return} m\_instanceScope; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/trenderresourcemanager.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tfx/trenderresourcemanager.\+cpp\end{DoxyCompactItemize}

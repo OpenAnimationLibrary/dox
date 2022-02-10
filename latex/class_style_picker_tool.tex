@@ -1,0 +1,500 @@
+\hypertarget{class_style_picker_tool}{}\doxysection{Style\+Picker\+Tool Class Reference}
+\label{class_style_picker_tool}\index{StylePickerTool@{StylePickerTool}}
+Inheritance diagram for Style\+Picker\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_style_picker_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$ \mbox{\hyperlink{class_style_picker_tool_a9a2c6866590863ee2dc30f229a5e9f3d}{get\+Properties}} (int target\+Type) override
+\item 
+\mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296c}{Tool\+Type}} \mbox{\hyperlink{class_style_picker_tool_aeff3424299e9d96cdbccb88d0a05a3d6}{get\+Tool\+Type}} () const override
+\item 
+void \mbox{\hyperlink{class_style_picker_tool_a32ae73caefe3bfd6c364a7b69b1e81ff}{draw}} () override
+\begin{DoxyCompactList}\small\item\em Draws the tool on the viewer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_style_picker_tool_a95ff32647764b3448ee7a15a0a6ed8ca}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_style_picker_tool_a652f4727e72422cd11394ecdedea4684}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_style_picker_tool_aa86b509824fb162b289d75ec15089832}{pick}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e, bool is\+Dragging=true)
+\item 
+void \mbox{\hyperlink{class_style_picker_tool_a50173a51f2d337a1abaf1587ea2d2f08}{mouse\+Move}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+int \mbox{\hyperlink{class_style_picker_tool_a8baecb9efd19d1cec43eef45f3ad9a24}{get\+Cursor\+Id}} () const override
+\begin{DoxyCompactList}\small\item\em Returns the type of cursor used by the tool. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_style_picker_tool_aab504e0638e31438542244d81fa9d004}{on\+Property\+Changed}} (std\+::string property\+Name) override
+\item 
+bool \mbox{\hyperlink{class_style_picker_tool_a2ff5df1a12a36f4fab6c5b540cf7f8d6}{is\+Organize\+Palette\+Active}} ()
+\item 
+void \mbox{\hyperlink{class_style_picker_tool_a34bca7249b30cd29dfebd8e205e07660}{on\+Image\+Changed}} () override
+\begin{DoxyCompactList}\small\item\em Notifies changes in the image in use. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_style_picker_tool_abc4ba4d6476f5cd2937eb2b9eec31534}{update\+Translation}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_style_picker_tool_ad668f768d45cb73975afa52a7a648ed1}\label{class_style_picker_tool_ad668f768d45cb73975afa52a7a648ed1}} 
+\index{StylePickerTool@{StylePickerTool}!StylePickerTool@{StylePickerTool}}
+\index{StylePickerTool@{StylePickerTool}!StylePickerTool@{StylePickerTool}}
+\doxysubsubsection{\texorpdfstring{StylePickerTool()}{StylePickerTool()}}
+{\footnotesize\ttfamily Style\+Picker\+Tool\+::\+Style\+Picker\+Tool (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044     : \mbox{\hyperlink{class_t_tool_a9c63ec35f606e755d0d036bf4fed62ab}{TTool}}(\textcolor{stringliteral}{"{}T\_StylePicker"{}})}
+\DoxyCodeLine{00045     , m\_currentStyleId(0)}
+\DoxyCodeLine{00046     , m\_colorType(\textcolor{stringliteral}{"{}Mode:"{}})}
+\DoxyCodeLine{00047     , m\_passivePick(\textcolor{stringliteral}{"{}Passive Pick"{}}, \textcolor{keyword}{false})}
+\DoxyCodeLine{00048     , m\_organizePalette(\textcolor{stringliteral}{"{}Organize Palette"{}}, \textcolor{keyword}{false})}
+\DoxyCodeLine{00049     , m\_paletteToBeOrganized(NULL) \{}
+\DoxyCodeLine{00050   m\_prop.\mbox{\hyperlink{class_t_property_group_af135c807390f3d18237f4123e9d81d3d}{bind}}(m\_colorType);}
+\DoxyCodeLine{00051   m\_colorType.addValue(AREAS);}
+\DoxyCodeLine{00052   m\_colorType.addValue(LINES);}
+\DoxyCodeLine{00053   m\_colorType.addValue(ALL);}
+\DoxyCodeLine{00054   m\_colorType.setId(\textcolor{stringliteral}{"{}Mode"{}});}
+\DoxyCodeLine{00055   bind(TTool::CommonLevels);}
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00057   m\_prop.\mbox{\hyperlink{class_t_property_group_af135c807390f3d18237f4123e9d81d3d}{bind}}(m\_passivePick);}
+\DoxyCodeLine{00058   m\_passivePick.setId(\textcolor{stringliteral}{"{}PassivePick"{}});}
+\DoxyCodeLine{00059 }
+\DoxyCodeLine{00060   m\_prop.\mbox{\hyperlink{class_t_property_group_af135c807390f3d18237f4123e9d81d3d}{bind}}(m\_organizePalette);}
+\DoxyCodeLine{00061   m\_organizePalette.setId(\textcolor{stringliteral}{"{}OrganizePalette"{}});}
+\DoxyCodeLine{00062 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_style_picker_tool_a32ae73caefe3bfd6c364a7b69b1e81ff}\label{class_style_picker_tool_a32ae73caefe3bfd6c364a7b69b1e81ff}} 
+\index{StylePickerTool@{StylePickerTool}!draw@{draw}}
+\index{draw@{draw}!StylePickerTool@{StylePickerTool}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Style\+Picker\+Tool\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Draws the tool on the viewer. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_a058bf656d73bf3cd63b9826cbaaf48e0}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_picker_tool_a8baecb9efd19d1cec43eef45f3ad9a24}\label{class_style_picker_tool_a8baecb9efd19d1cec43eef45f3ad9a24}} 
+\index{StylePickerTool@{StylePickerTool}!getCursorId@{getCursorId}}
+\index{getCursorId@{getCursorId}!StylePickerTool@{StylePickerTool}}
+\doxysubsubsection{\texorpdfstring{getCursorId()}{getCursorId()}}
+{\footnotesize\ttfamily int Style\+Picker\+Tool\+::get\+Cursor\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns the type of cursor used by the tool. 
+
+\begin{DoxySeeAlso}{See also}
+For a list of cursor ids \mbox{\hyperlink{}{cursor.\+h}} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_a1768a57b8b6d1480618fd923fad15f1d}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00226                                        \{}
+\DoxyCodeLine{00227   \textcolor{keywordtype}{int} ret;}
+\DoxyCodeLine{00228 }
+\DoxyCodeLine{00229   \textcolor{keywordflow}{if} (!Preferences::instance()-\/>isMultiLayerStylePickerEnabled()) \{}
+\DoxyCodeLine{00230     \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} img      = \mbox{\hyperlink{class_t_tool_a947d2af39fd4df397577bbf8602abfd4}{getImage}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{00231     \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi = img;}
+\DoxyCodeLine{00232     \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} ti  = img;}
+\DoxyCodeLine{00233 }
+\DoxyCodeLine{00234     \textcolor{keywordflow}{if} (!vi \&\& !ti) \textcolor{keywordflow}{return} ToolCursor::CURSOR\_NO;}
+\DoxyCodeLine{00235   \}}
+\DoxyCodeLine{00236 }
+\DoxyCodeLine{00237   \textcolor{comment}{/* in case the "{}organize palette"{} option is active */}}
+\DoxyCodeLine{00238   \textcolor{keywordflow}{if} (m\_organizePalette.getValue())}
+\DoxyCodeLine{00239     ret = ToolCursor::PickerCursorOrganize;}
+\DoxyCodeLine{00240   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_colorType.getValue() == LINES)}
+\DoxyCodeLine{00241     ret = ToolCursor::PickerCursorLine;}
+\DoxyCodeLine{00242   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_colorType.getValue() == AREAS)}
+\DoxyCodeLine{00243     ret = ToolCursor::PickerCursorArea;}
+\DoxyCodeLine{00244   \textcolor{keywordflow}{else}  \textcolor{comment}{// line\&areas}}
+\DoxyCodeLine{00245     ret = ToolCursor::PickerCursor;}
+\DoxyCodeLine{00246 }
+\DoxyCodeLine{00247   \textcolor{keywordflow}{if} (ToonzCheck::instance()-\/>getChecks() \& \mbox{\hyperlink{class_toonz_check_add5b28b42f552cf90e3cfcde9e737876ab6d35869ac2f7cfc956d498b2089a1ff}{ToonzCheck::eBlackBg}})}
+\DoxyCodeLine{00248     ret = ret | ToolCursor::Ex\_Negate;}
+\DoxyCodeLine{00249   \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{00250 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00044}{Toonz\+Check\+::e\+Black\+Bg}}, and \mbox{\hyperlink{l00276}{TTool\+::get\+Image()}}.
+
+\mbox{\Hypertarget{class_style_picker_tool_a9a2c6866590863ee2dc30f229a5e9f3d}\label{class_style_picker_tool_a9a2c6866590863ee2dc30f229a5e9f3d}} 
+\index{StylePickerTool@{StylePickerTool}!getProperties@{getProperties}}
+\index{getProperties@{getProperties}!StylePickerTool@{StylePickerTool}}
+\doxysubsubsection{\texorpdfstring{getProperties()}{getProperties()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$ Style\+Picker\+Tool\+::get\+Properties (\begin{DoxyParamCaption}\item[{int}]{target\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027 \{ \textcolor{keywordflow}{return} \&m\_prop; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_picker_tool_aeff3424299e9d96cdbccb88d0a05a3d6}\label{class_style_picker_tool_aeff3424299e9d96cdbccb88d0a05a3d6}} 
+\index{StylePickerTool@{StylePickerTool}!getToolType@{getToolType}}
+\index{getToolType@{getToolType}!StylePickerTool@{StylePickerTool}}
+\doxysubsubsection{\texorpdfstring{getToolType()}{getToolType()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296c}{Tool\+Type}} Style\+Picker\+Tool\+::get\+Tool\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031 \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296ca18d911ba387409847ad5ae6a731031f8}{TTool::LevelReadTool}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_picker_tool_a2ff5df1a12a36f4fab6c5b540cf7f8d6}\label{class_style_picker_tool_a2ff5df1a12a36f4fab6c5b540cf7f8d6}} 
+\index{StylePickerTool@{StylePickerTool}!isOrganizePaletteActive@{isOrganizePaletteActive}}
+\index{isOrganizePaletteActive@{isOrganizePaletteActive}!StylePickerTool@{StylePickerTool}}
+\doxysubsubsection{\texorpdfstring{isOrganizePaletteActive()}{isOrganizePaletteActive()}}
+{\footnotesize\ttfamily bool Style\+Picker\+Tool\+::is\+Organize\+Palette\+Active (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00047 \{ \textcolor{keywordflow}{return} m\_organizePalette.getValue(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_picker_tool_a95ff32647764b3448ee7a15a0a6ed8ca}\label{class_style_picker_tool_a95ff32647764b3448ee7a15a0a6ed8ca}} 
+\index{StylePickerTool@{StylePickerTool}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!StylePickerTool@{StylePickerTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Style\+Picker\+Tool\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00064                                                                              \{}
+\DoxyCodeLine{00065   m\_oldStyleId = m\_currentStyleId =}
+\DoxyCodeLine{00066       getApplication()-\/>getCurrentLevelStyleIndex();}
+\DoxyCodeLine{00067   pick(pos, e, \textcolor{keyword}{false});}
+\DoxyCodeLine{00068 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_picker_tool_a652f4727e72422cd11394ecdedea4684}\label{class_style_picker_tool_a652f4727e72422cd11394ecdedea4684}} 
+\index{StylePickerTool@{StylePickerTool}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!StylePickerTool@{StylePickerTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Style\+Picker\+Tool\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00070                                                                              \{}
+\DoxyCodeLine{00071   pick(pos, e);}
+\DoxyCodeLine{00072 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_picker_tool_a50173a51f2d337a1abaf1587ea2d2f08}\label{class_style_picker_tool_a50173a51f2d337a1abaf1587ea2d2f08}} 
+\index{StylePickerTool@{StylePickerTool}!mouseMove@{mouseMove}}
+\index{mouseMove@{mouseMove}!StylePickerTool@{StylePickerTool}}
+\doxysubsubsection{\texorpdfstring{mouseMove()}{mouseMove()}}
+{\footnotesize\ttfamily void Style\+Picker\+Tool\+::mouse\+Move (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00199                                                                         \{}
+\DoxyCodeLine{00200   \textcolor{keywordflow}{if} (!m\_passivePick.getValue()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00201   \textcolor{comment}{/*-\/-\/-\/ PassiveにStyleを拾う機能 -\/-\/-\/*/}}
+\DoxyCodeLine{00202   \mbox{\hyperlink{class_palette_controller}{PaletteController}} *controller =}
+\DoxyCodeLine{00203       TTool::getApplication()-\/>getPaletteController();}
+\DoxyCodeLine{00204 }
+\DoxyCodeLine{00205   \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} image    = \mbox{\hyperlink{class_t_tool_a947d2af39fd4df397577bbf8602abfd4}{getImage}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{00206   \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} ti  = image;}
+\DoxyCodeLine{00207   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi = image;}
+\DoxyCodeLine{00208   \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *level =}
+\DoxyCodeLine{00209       getApplication()-\/>getCurrentLevel()-\/>getSimpleLevel();}
+\DoxyCodeLine{00210   \textcolor{keywordflow}{if} ((!ti \&\& !vi) || !level || !\mbox{\hyperlink{class_t_tool_a66f61f998b655c1c917ee63a595657c6}{m\_viewer}}-\/>getGeometry().contains(pos)) \{}
+\DoxyCodeLine{00211     controller-\/>notifyStylePassivePicked(-\/1, -\/1, -\/1);}
+\DoxyCodeLine{00212     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00213   \}}
+\DoxyCodeLine{00214 }
+\DoxyCodeLine{00215   \mbox{\hyperlink{class_t_affine}{TAffine}} aff     = getViewer()-\/>\mbox{\hyperlink{class_t_tool_1_1_viewer_a97b71c149134c5a3d0ba0d5333b0b3c2}{getViewMatrix}}() * \mbox{\hyperlink{class_t_tool_a73c1b7f13eaea33e1d305636f44c4a64}{getCurrentColumnMatrix}}();}
+\DoxyCodeLine{00216   \textcolor{keywordtype}{double} scale2   = aff.det();}
+\DoxyCodeLine{00217   \textcolor{keywordtype}{int} subsampling = level-\/>getImageSubsampling(\mbox{\hyperlink{class_t_tool_ae7db6c4288b721fd95f283419883a4b2}{getCurrentFid}}());}
+\DoxyCodeLine{00218   \mbox{\hyperlink{class_style_picker}{StylePicker}} picker(image);}
+\DoxyCodeLine{00219   \mbox{\hyperlink{class_t_point_t}{TPointD}} pickPos(\mbox{\hyperlink{class_t_scale}{TScale}}(1.0 / subsampling) * pos + \mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/0.5, -\/0.5));}
+\DoxyCodeLine{00220   \textcolor{keywordtype}{int} inkStyleId   = picker.pickStyleId(pickPos, 10.0, scale2, 1);}
+\DoxyCodeLine{00221   \textcolor{keywordtype}{int} paintStyleId = picker.pickStyleId(pickPos, 10.0, scale2, 0);}
+\DoxyCodeLine{00222   \textcolor{keywordtype}{int} tone         = picker.pickTone(pickPos);}
+\DoxyCodeLine{00223   controller-\/>notifyStylePassivePicked(inkStyleId, paintStyleId, tone);}
+\DoxyCodeLine{00224 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_picker_tool_a34bca7249b30cd29dfebd8e205e07660}\label{class_style_picker_tool_a34bca7249b30cd29dfebd8e205e07660}} 
+\index{StylePickerTool@{StylePickerTool}!onImageChanged@{onImageChanged}}
+\index{onImageChanged@{onImageChanged}!StylePickerTool@{StylePickerTool}}
+\doxysubsubsection{\texorpdfstring{onImageChanged()}{onImageChanged()}}
+{\footnotesize\ttfamily void Style\+Picker\+Tool\+::on\+Image\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Notifies changes in the image in use. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_aaf1e021290e74c1b085e4b095668e1ed}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00303                                      \{}
+\DoxyCodeLine{00304   std::cout << \textcolor{stringliteral}{"{}StylePickerTool::onImageChanged"{}} << std::endl;}
+\DoxyCodeLine{00305   \textcolor{keywordflow}{if} (!m\_organizePalette.getValue() || !m\_paletteToBeOrganized) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00306 }
+\DoxyCodeLine{00307   \mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *level = getApplication()-\/>getCurrentLevel()-\/>getLevel();}
+\DoxyCodeLine{00308   \textcolor{keywordflow}{if} (!level) \{}
+\DoxyCodeLine{00309     m\_organizePalette.setValue(\textcolor{keyword}{false});}
+\DoxyCodeLine{00310     getApplication()-\/>getCurrentTool()-\/>\mbox{\hyperlink{class_tool_handle_a39e34f1a30868bad11a629228b07bd40}{notifyToolChanged}}();}
+\DoxyCodeLine{00311     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00312   \}}
+\DoxyCodeLine{00313   \mbox{\hyperlink{class_t_palette}{TPalette}} *pal = NULL;}
+\DoxyCodeLine{00314   \textcolor{keywordflow}{if} (level-\/>\mbox{\hyperlink{class_t_xsh_level_a1a147f1e970a62120c0bbaf0020a8932}{getType}}() == PLT\_XSHLEVEL)}
+\DoxyCodeLine{00315     pal = level-\/>\mbox{\hyperlink{class_t_xsh_level_afdbb7e1664b681225414f59317a32b74}{getPaletteLevel}}()-\/>\mbox{\hyperlink{class_t_xsh_palette_level_a10f4de1fc40ba426ff7d93f548fae83d}{getPalette}}();}
+\DoxyCodeLine{00316   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (level-\/>\mbox{\hyperlink{class_t_xsh_level_a023065559cff76164ecb6344c586ba27}{getSimpleLevel}}()) \{}
+\DoxyCodeLine{00317     pal = level-\/>\mbox{\hyperlink{class_t_xsh_level_a023065559cff76164ecb6344c586ba27}{getSimpleLevel}}()-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}();}
+\DoxyCodeLine{00318   \}}
+\DoxyCodeLine{00319   \textcolor{keywordflow}{if} (!pal || pal != m\_paletteToBeOrganized) \{}
+\DoxyCodeLine{00320     m\_organizePalette.setValue(\textcolor{keyword}{false});}
+\DoxyCodeLine{00321     getApplication()-\/>getCurrentTool()-\/>\mbox{\hyperlink{class_tool_handle_a39e34f1a30868bad11a629228b07bd40}{notifyToolChanged}}();}
+\DoxyCodeLine{00322     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00323   \}}
+\DoxyCodeLine{00324 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00031}{TXsh\+Palette\+Level\+::get\+Palette()}}, \mbox{\hyperlink{l00424}{TXsh\+Simple\+Level\+::get\+Palette()}}, \mbox{\hyperlink{l00105}{TXsh\+Level\+::get\+Palette\+Level()}}, \mbox{\hyperlink{l00095}{TXsh\+Level\+::get\+Simple\+Level()}}, \mbox{\hyperlink{l00081}{TXsh\+Level\+::get\+Type()}}, and \mbox{\hyperlink{l00065}{Tool\+Handle\+::notify\+Tool\+Changed()}}.
+
+\mbox{\Hypertarget{class_style_picker_tool_aab504e0638e31438542244d81fa9d004}\label{class_style_picker_tool_aab504e0638e31438542244d81fa9d004}} 
+\index{StylePickerTool@{StylePickerTool}!onPropertyChanged@{onPropertyChanged}}
+\index{onPropertyChanged@{onPropertyChanged}!StylePickerTool@{StylePickerTool}}
+\doxysubsubsection{\texorpdfstring{onPropertyChanged()}{onPropertyChanged()}}
+{\footnotesize\ttfamily bool Style\+Picker\+Tool\+::on\+Property\+Changed (\begin{DoxyParamCaption}\item[{std\+::string}]{property\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+\begin{DoxyVerb} Does the tasks associated to changes in \p propertyName and returns \p
+\end{DoxyVerb}
+ true; Does the tasks associated to changes in {\ttfamily property\+Name} and returns {\ttfamily true}. 
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_a06694e0586f807c34b18e16341aa9ee2}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00252                                                               \{}
+\DoxyCodeLine{00253   \textcolor{keywordflow}{if} (propertyName == m\_organizePalette.getName()) \{}
+\DoxyCodeLine{00254     \textcolor{keywordflow}{if} (m\_organizePalette.getValue()) \{}
+\DoxyCodeLine{00255       \textcolor{keywordflow}{if} (!startOrganizePalette()) \{}
+\DoxyCodeLine{00256         m\_organizePalette.setValue(\textcolor{keyword}{false});}
+\DoxyCodeLine{00257         getApplication()-\/>getCurrentTool()-\/>\mbox{\hyperlink{class_tool_handle_a39e34f1a30868bad11a629228b07bd40}{notifyToolChanged}}();}
+\DoxyCodeLine{00258         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00259       \}}
+\DoxyCodeLine{00260     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00261       std::cout << \textcolor{stringliteral}{"{}End Organize Palette"{}} << std::endl;}
+\DoxyCodeLine{00262       m\_paletteToBeOrganized = NULL;}
+\DoxyCodeLine{00263     \}}
+\DoxyCodeLine{00264   \}}
+\DoxyCodeLine{00265   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00266 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00065}{Tool\+Handle\+::notify\+Tool\+Changed()}}.
+
+\mbox{\Hypertarget{class_style_picker_tool_aa86b509824fb162b289d75ec15089832}\label{class_style_picker_tool_aa86b509824fb162b289d75ec15089832}} 
+\index{StylePickerTool@{StylePickerTool}!pick@{pick}}
+\index{pick@{pick}!StylePickerTool@{StylePickerTool}}
+\doxysubsubsection{\texorpdfstring{pick()}{pick()}}
+{\footnotesize\ttfamily void Style\+Picker\+Tool\+::pick (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e,  }\item[{bool}]{is\+Dragging = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075                                             \{}
+\DoxyCodeLine{00076   \textcolor{comment}{// Area = 0, Line = 1, All = 2}}
+\DoxyCodeLine{00077   \textcolor{keywordtype}{int} modeValue = m\_colorType.getIndex();}
+\DoxyCodeLine{00078 }
+\DoxyCodeLine{00079   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00080   \textcolor{comment}{// MultiLayerStylePicker}}
+\DoxyCodeLine{00081   \textcolor{comment}{/*-\/-\/-\/}}
+\DoxyCodeLine{00082 \textcolor{comment}{                  PickしたStyleId = 0、かつ}}
+\DoxyCodeLine{00083 \textcolor{comment}{                  Preference で MultiLayerStylePickerが有効、かつ}}
+\DoxyCodeLine{00084 \textcolor{comment}{                  Scene編集モード、かつ}}
+\DoxyCodeLine{00085 \textcolor{comment}{                  下のカラムから拾った色がTransparentでない場合、}}
+\DoxyCodeLine{00086 \textcolor{comment}{                  → カレントLevelを移動する。}}
+\DoxyCodeLine{00087 \textcolor{comment}{  -\/-\/-\/*/}}
+\DoxyCodeLine{00088   \textcolor{keywordflow}{if} (Preferences::instance()-\/>isMultiLayerStylePickerEnabled() \&\&}
+\DoxyCodeLine{00089       getApplication()-\/>getCurrentFrame()-\/>isEditingScene()) \{}
+\DoxyCodeLine{00090     \textcolor{keywordtype}{double} pickRange = 10.0;}
+\DoxyCodeLine{00091     \textcolor{keywordtype}{int} superPickedColumnId =}
+\DoxyCodeLine{00092         getViewer()-\/>\mbox{\hyperlink{class_t_tool_1_1_viewer_a39e1e08bc287e5ca5a9ff6e7ac968ca2}{posToColumnIndex}}(e.\mbox{\hyperlink{class_t_mouse_event_a05a3f2378eb2179d121e2e46766916de}{m\_pos}}, pickRange, \textcolor{keyword}{false});}
+\DoxyCodeLine{00093 }
+\DoxyCodeLine{00094     \textcolor{keywordflow}{if} (superPickedColumnId >= 0 \textcolor{comment}{/*-\/-\/ 何かColumnに当たった場合 -\/-\/*/}}
+\DoxyCodeLine{00095         \&\& getApplication()-\/>getCurrentColumn()-\/>\mbox{\hyperlink{class_t_tool_a7214525a3ae0cdcb0a0393e4dc4d3bf5}{getColumnIndex}}() !=}
+\DoxyCodeLine{00096                superPickedColumnId) \textcolor{comment}{/*-\/-\/ かつ、Current Columnでない場合 -\/-\/*/}}
+\DoxyCodeLine{00097     \{}
+\DoxyCodeLine{00098       \textcolor{comment}{/*-\/-\/ そのColumnからPickを試みる -\/-\/*/}}
+\DoxyCodeLine{00099       \textcolor{keywordtype}{int} currentFrame = getApplication()-\/>getCurrentFrame()-\/>getFrame();}
+\DoxyCodeLine{00100       \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} pickedCell =}
+\DoxyCodeLine{00101           getApplication()-\/>getCurrentXsheet()-\/>getXsheet()-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(}
+\DoxyCodeLine{00102               currentFrame, superPickedColumnId);}
+\DoxyCodeLine{00103       \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} pickedImage           = pickedCell.\mbox{\hyperlink{class_t_xsh_cell_a20b623d308bc09b820ec6b116516f564}{getImage}}(\textcolor{keyword}{false}).getPointer();}
+\DoxyCodeLine{00104       \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} picked\_ti        = pickedImage;}
+\DoxyCodeLine{00105       \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} picked\_vi       = pickedImage;}
+\DoxyCodeLine{00106       \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *picked\_level = pickedCell.\mbox{\hyperlink{class_t_xsh_cell_a8898cc47eba24e59477bfba8e2511f1d}{getSimpleLevel}}();}
+\DoxyCodeLine{00107       \textcolor{keywordflow}{if} ((picked\_ti || picked\_vi) \&\& picked\_level) \{}
+\DoxyCodeLine{00108         \mbox{\hyperlink{class_t_point_t}{TPointD}} tmpMousePosition = \mbox{\hyperlink{class_t_tool_a99eb4354e2dba454b7210c986015d577}{getColumnMatrix}}(superPickedColumnId).\mbox{\hyperlink{class_t_affine_a570529b96b1ec5abc711aaa9aac09ff9}{inv}}() *}
+\DoxyCodeLine{00109                                    getViewer()-\/>winToWorld(e.\mbox{\hyperlink{class_t_mouse_event_a05a3f2378eb2179d121e2e46766916de}{m\_pos}});}
+\DoxyCodeLine{00110 }
+\DoxyCodeLine{00111         \mbox{\hyperlink{class_t_point_t}{TPointD}} tmpDpiScale = getCurrentDpiScale(picked\_level, \mbox{\hyperlink{class_t_tool_ae7db6c4288b721fd95f283419883a4b2}{getCurrentFid}}());}
+\DoxyCodeLine{00112 }
+\DoxyCodeLine{00113         tmpMousePosition.x /= tmpDpiScale.x;}
+\DoxyCodeLine{00114         tmpMousePosition.y /= tmpDpiScale.y;}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116         \mbox{\hyperlink{class_t_affine}{TAffine}} aff =}
+\DoxyCodeLine{00117             getViewer()-\/>\mbox{\hyperlink{class_t_tool_1_1_viewer_a97b71c149134c5a3d0ba0d5333b0b3c2}{getViewMatrix}}() * \mbox{\hyperlink{class_t_tool_a99eb4354e2dba454b7210c986015d577}{getColumnMatrix}}(superPickedColumnId);}
+\DoxyCodeLine{00118         \textcolor{keywordtype}{double} scale2 = aff.det();}
+\DoxyCodeLine{00119         \mbox{\hyperlink{class_style_picker}{StylePicker}} superPicker(pickedImage);}
+\DoxyCodeLine{00120         \textcolor{keywordtype}{int} picked\_subsampling =}
+\DoxyCodeLine{00121             picked\_level-\/>getImageSubsampling(pickedCell.\mbox{\hyperlink{class_t_xsh_cell_a5a1965b96c2c698d6f0fb42a80c03406}{getFrameId}}());}
+\DoxyCodeLine{00122         \textcolor{keywordtype}{int} superPicked\_StyleId = superPicker.pickStyleId(}
+\DoxyCodeLine{00123             \mbox{\hyperlink{class_t_scale}{TScale}}(1.0 / picked\_subsampling) * tmpMousePosition +}
+\DoxyCodeLine{00124                 \mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/0.5, -\/0.5),}
+\DoxyCodeLine{00125             pickRange, scale2, modeValue);}
+\DoxyCodeLine{00126         \textcolor{comment}{/*-\/-\/ 何かStyleが拾えて、Transparentでない場合 -\/-\/*/}}
+\DoxyCodeLine{00127         \textcolor{keywordflow}{if} (superPicked\_StyleId > 0) \{}
+\DoxyCodeLine{00128           \textcolor{comment}{/*-\/-\/ Levelの移動 -\/-\/*/}}
+\DoxyCodeLine{00129           getApplication()-\/>getCurrentLevel()-\/>setLevel(picked\_level);}
+\DoxyCodeLine{00130           \textcolor{comment}{/*-\/-\/ Columnの移動 -\/-\/*/}}
+\DoxyCodeLine{00131           getApplication()-\/>getCurrentColumn()-\/>setColumnIndex(}
+\DoxyCodeLine{00132               superPickedColumnId);}
+\DoxyCodeLine{00133           \textcolor{comment}{/*-\/-\/ 選択の解除 -\/-\/*/}}
+\DoxyCodeLine{00134           \textcolor{keywordflow}{if} (getApplication()-\/>getCurrentSelection()-\/>\mbox{\hyperlink{class_t_tool_add40ff8dd3dd04ed3ab5a259ed53fb85}{getSelection}}())}
+\DoxyCodeLine{00135             getApplication()}
+\DoxyCodeLine{00136                 -\/>getCurrentSelection()}
+\DoxyCodeLine{00137                 -\/>getSelection()}
+\DoxyCodeLine{00138                 -\/>selectNone();}
+\DoxyCodeLine{00139           \textcolor{comment}{/*-\/-\/ StyleIdの移動 -\/-\/*/}}
+\DoxyCodeLine{00140           getApplication()-\/>setCurrentLevelStyleIndex(superPicked\_StyleId,}
+\DoxyCodeLine{00141                                                       !isDragging);}
+\DoxyCodeLine{00142           \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00143         \}}
+\DoxyCodeLine{00144       \}}
+\DoxyCodeLine{00145     \}}
+\DoxyCodeLine{00146   \}}
+\DoxyCodeLine{00147   \textcolor{comment}{/*-\/-\/ MultiLayerStylePicker ここまで -\/-\/*/}}
+\DoxyCodeLine{00148   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00149   \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} image    = \mbox{\hyperlink{class_t_tool_a947d2af39fd4df397577bbf8602abfd4}{getImage}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{00150   \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} ti  = image;}
+\DoxyCodeLine{00151   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi = image;}
+\DoxyCodeLine{00152   \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *level =}
+\DoxyCodeLine{00153       getApplication()-\/>getCurrentLevel()-\/>getSimpleLevel();}
+\DoxyCodeLine{00154   \textcolor{keywordflow}{if} ((!ti \&\& !vi) || !level) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00155 }
+\DoxyCodeLine{00156   \textcolor{comment}{/*-\/-\/ 画面外をpickしても拾えないようにする -\/-\/*/}}
+\DoxyCodeLine{00157   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_t_tool_a66f61f998b655c1c917ee63a595657c6}{m\_viewer}}-\/>getGeometry().contains(pos)) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159   \mbox{\hyperlink{class_t_affine}{TAffine}} aff     = getViewer()-\/>\mbox{\hyperlink{class_t_tool_1_1_viewer_a97b71c149134c5a3d0ba0d5333b0b3c2}{getViewMatrix}}() * \mbox{\hyperlink{class_t_tool_a73c1b7f13eaea33e1d305636f44c4a64}{getCurrentColumnMatrix}}();}
+\DoxyCodeLine{00160   \textcolor{keywordtype}{double} scale2   = aff.det();}
+\DoxyCodeLine{00161   \textcolor{keywordtype}{int} subsampling = level-\/>getImageSubsampling(\mbox{\hyperlink{class_t_tool_ae7db6c4288b721fd95f283419883a4b2}{getCurrentFid}}());}
+\DoxyCodeLine{00162   \mbox{\hyperlink{class_style_picker}{StylePicker}} picker(image);}
+\DoxyCodeLine{00163   \textcolor{keywordtype}{int} styleId =}
+\DoxyCodeLine{00164       picker.pickStyleId(\mbox{\hyperlink{class_t_scale}{TScale}}(1.0 / subsampling) * pos + \mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/0.5, -\/0.5),}
+\DoxyCodeLine{00165                          10.0, scale2, modeValue);}
+\DoxyCodeLine{00166 }
+\DoxyCodeLine{00167   \textcolor{keywordflow}{if} (styleId < 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00168 }
+\DoxyCodeLine{00169   \textcolor{keywordflow}{if} (modeValue == 1)  \textcolor{comment}{// LINES}}
+\DoxyCodeLine{00170   \{}
+\DoxyCodeLine{00171     \textcolor{comment}{/*-\/-\/ pickLineモードのとき、取得Styleが0の場合はカレントStyleを変えない。}}
+\DoxyCodeLine{00172 \textcolor{comment}{     * -\/-\/*/}}
+\DoxyCodeLine{00173     \textcolor{keywordflow}{if} (styleId == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00174     \textcolor{comment}{/*-\/-\/}}
+\DoxyCodeLine{00175 \textcolor{comment}{     * pickLineモードのとき、PurePaintの部分をクリックしてもカレントStyleを変えない}}
+\DoxyCodeLine{00176 \textcolor{comment}{     * -\/-\/*/}}
+\DoxyCodeLine{00177     \textcolor{keywordflow}{if} (ti \&\& picker.pickTone(\mbox{\hyperlink{class_t_scale}{TScale}}(1.0 / subsampling) * pos +}
+\DoxyCodeLine{00178                               \mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/0.5, -\/0.5)) == 255)}
+\DoxyCodeLine{00179       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00180   \}}
+\DoxyCodeLine{00181 }
+\DoxyCodeLine{00182   \textcolor{comment}{/*-\/-\/-\/ Styleを選択している場合は選択を解除する -\/-\/-\/*/}}
+\DoxyCodeLine{00183   \mbox{\hyperlink{class_t_selection}{TSelection}} *selection =}
+\DoxyCodeLine{00184       TTool::getApplication()-\/>getCurrentSelection()-\/>getSelection();}
+\DoxyCodeLine{00185   \textcolor{keywordflow}{if} (selection) \{}
+\DoxyCodeLine{00186     \mbox{\hyperlink{class_t_style_selection}{TStyleSelection}} *styleSelection =}
+\DoxyCodeLine{00187         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_style_selection}{TStyleSelection}} *\textcolor{keyword}{>}(selection);}
+\DoxyCodeLine{00188     \textcolor{keywordflow}{if} (styleSelection) styleSelection-\/>selectNone();}
+\DoxyCodeLine{00189   \}}
+\DoxyCodeLine{00190 }
+\DoxyCodeLine{00191   \textcolor{comment}{// When clicking and switching between studio palette and level palette, the}}
+\DoxyCodeLine{00192   \textcolor{comment}{// signal broadcastColorStyleSwitched is not emitted if the picked style is}}
+\DoxyCodeLine{00193   \textcolor{comment}{// previously selected one.}}
+\DoxyCodeLine{00194   \textcolor{comment}{// Therefore here I set the "{}forceEmit"{} flag to true in order to emit the}}
+\DoxyCodeLine{00195   \textcolor{comment}{// signal whenever the picking with mouse press.}}
+\DoxyCodeLine{00196   getApplication()-\/>setCurrentLevelStyleIndex(styleId, !isDragging);}
+\DoxyCodeLine{00197 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_picker_tool_abc4ba4d6476f5cd2937eb2b9eec31534}\label{class_style_picker_tool_abc4ba4d6476f5cd2937eb2b9eec31534}} 
+\index{StylePickerTool@{StylePickerTool}!updateTranslation@{updateTranslation}}
+\index{updateTranslation@{updateTranslation}!StylePickerTool@{StylePickerTool}}
+\doxysubsubsection{\texorpdfstring{updateTranslation()}{updateTranslation()}}
+{\footnotesize\ttfamily void Style\+Picker\+Tool\+::update\+Translation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00328                                         \{}
+\DoxyCodeLine{00329   m\_colorType.setQStringName(tr(\textcolor{stringliteral}{"{}Mode:"{}}));}
+\DoxyCodeLine{00330   m\_colorType.setItemUIName(LINES, tr(\textcolor{stringliteral}{"{}Lines"{}}));}
+\DoxyCodeLine{00331   m\_colorType.setItemUIName(AREAS, tr(\textcolor{stringliteral}{"{}Areas"{}}));}
+\DoxyCodeLine{00332   m\_colorType.setItemUIName(ALL, tr(\textcolor{stringliteral}{"{}Lines \& Areas"{}}));}
+\DoxyCodeLine{00333   m\_passivePick.setQStringName(tr(\textcolor{stringliteral}{"{}Passive Pick"{}}));}
+\DoxyCodeLine{00334   m\_organizePalette.setQStringName(tr(\textcolor{stringliteral}{"{}Organize Palette"{}}));}
+\DoxyCodeLine{00335 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/stylepickertool.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/stylepickertool.\+cpp\end{DoxyCompactItemize}

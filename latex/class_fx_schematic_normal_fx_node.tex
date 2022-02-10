@@ -1,0 +1,406 @@
+\hypertarget{class_fx_schematic_normal_fx_node}{}\doxysection{Fx\+Schematic\+Normal\+Fx\+Node Class Reference}
+\label{class_fx_schematic_normal_fx_node}\index{FxSchematicNormalFxNode@{FxSchematicNormalFxNode}}
+Inheritance diagram for Fx\+Schematic\+Normal\+Fx\+Node\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_fx_schematic_normal_fx_node}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_fx_schematic_normal_fx_node_a31dace9691b7f6b9465349a4a72eae7a}{Fx\+Schematic\+Normal\+Fx\+Node}} (\mbox{\hyperlink{class_fx_schematic_scene}{Fx\+Schematic\+Scene}} $\ast$scene, \mbox{\hyperlink{class_t_fx}{TFx}} $\ast$fx)
+\item 
+QRectF \mbox{\hyperlink{class_fx_schematic_normal_fx_node_abf1b0dfe4a192d532c2376c48da61e63}{bounding\+Rect}} () const override
+\item 
+void \mbox{\hyperlink{class_fx_schematic_normal_fx_node_a32c95576eeab61c2a3213374cd9d241f}{paint}} (QPainter $\ast$painter, const QStyle\+Option\+Graphics\+Item $\ast$option, QWidget $\ast$widget=0) override
+\item 
+void \mbox{\hyperlink{class_fx_schematic_normal_fx_node_ab8ced715b44426321f5e44852dc1106e}{resize}} (bool maximize\+Node) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_fx_schematic_normal_fx_node_a3271c5345691ba6aaadf66199c8f2f27}{on\+Name\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_fx_schematic_normal_fx_node_ae94890d082765c80f1fe88d433731424}{on\+Render\+Toggle\+Clicked}} (bool)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_fx_schematic_normal_fx_node_aca6493d0ce0e251295354634adef440d}{mouse\+Double\+Click\+Event}} (QGraphics\+Scene\+Mouse\+Event $\ast$me) override
+\item 
+void \mbox{\hyperlink{class_fx_schematic_normal_fx_node_a55ade36f61b0b888bb9a12bde358c69d}{mouse\+Press\+Event}} (QGraphics\+Scene\+Mouse\+Event $\ast$me) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_fx_schematic_normal_fx_node_a31dace9691b7f6b9465349a4a72eae7a}\label{class_fx_schematic_normal_fx_node_a31dace9691b7f6b9465349a4a72eae7a}} 
+\index{FxSchematicNormalFxNode@{FxSchematicNormalFxNode}!FxSchematicNormalFxNode@{FxSchematicNormalFxNode}}
+\index{FxSchematicNormalFxNode@{FxSchematicNormalFxNode}!FxSchematicNormalFxNode@{FxSchematicNormalFxNode}}
+\doxysubsubsection{\texorpdfstring{FxSchematicNormalFxNode()}{FxSchematicNormalFxNode()}}
+{\footnotesize\ttfamily Fx\+Schematic\+Normal\+Fx\+Node\+::\+Fx\+Schematic\+Normal\+Fx\+Node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_schematic_scene}{Fx\+Schematic\+Scene}} $\ast$}]{scene,  }\item[{\mbox{\hyperlink{class_t_fx}{TFx}} $\ast$}]{fx }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02403     : \mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}}(scene, fx, 90, 32, eNormalFx) \{}
+\DoxyCodeLine{02404   \mbox{\hyperlink{class_schematic_viewer}{SchematicViewer}} *viewer = scene-\/>getSchematicViewer();}
+\DoxyCodeLine{02405 }
+\DoxyCodeLine{02406   \mbox{\hyperlink{class_fx_schematic_node_a3eef27a0fb680ff85bcc9f3b61d94d93}{checkDynamicInputPortSize}}();}
+\DoxyCodeLine{02407 }
+\DoxyCodeLine{02408   \textcolor{comment}{// resize if small scaled}}
+\DoxyCodeLine{02409   \textcolor{keywordflow}{if} (!m\_isNormalIconView) \{}
+\DoxyCodeLine{02410     setWidth(70);}
+\DoxyCodeLine{02411     setHeight(50);}
+\DoxyCodeLine{02412   \}}
+\DoxyCodeLine{02413 }
+\DoxyCodeLine{02414   \mbox{\hyperlink{class_t_macro_fx}{TMacroFx}} *macroFx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_macro_fx}{TMacroFx}} *\textcolor{keyword}{>}(fx);}
+\DoxyCodeLine{02415   \textcolor{keywordflow}{if} (macroFx) \{}
+\DoxyCodeLine{02416     m\_type                = eMacroFx;}
+\DoxyCodeLine{02417     std::vector<TFxP> fxs = macroFx-\/>getFxs();}
+\DoxyCodeLine{02418     \textcolor{keywordtype}{bool} enable           = \textcolor{keyword}{false};}
+\DoxyCodeLine{02419     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{02420     \textcolor{keywordflow}{for} (i = 0; i < (int)fxs.size(); i++)}
+\DoxyCodeLine{02421       enable = enable || fxs[i]-\/>getAttributes()-\/>isEnabled();}
+\DoxyCodeLine{02422     macroFx-\/>getAttributes()-\/>enable(enable);}
+\DoxyCodeLine{02423   \}}
+\DoxyCodeLine{02424   \mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}}       = QString::fromStdWString(fx-\/>getName());}
+\DoxyCodeLine{02425   m\_linkedNode = 0;}
+\DoxyCodeLine{02426 }
+\DoxyCodeLine{02427   \textcolor{comment}{// set fx type}}
+\DoxyCodeLine{02428   std::string \textcolor{keywordtype}{id} = fx-\/>getFxType();}
+\DoxyCodeLine{02429   \textcolor{keywordflow}{if} (isImageAdjustFx(\textcolor{keywordtype}{id}))}
+\DoxyCodeLine{02430     m\_type = eNormalImageAdjustFx;}
+\DoxyCodeLine{02431   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isLayerBlendingFx(\textcolor{keywordtype}{id}))}
+\DoxyCodeLine{02432     m\_type = eNormalLayerBlendingFx;}
+\DoxyCodeLine{02433   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isMatteFx(\textcolor{keywordtype}{id}))}
+\DoxyCodeLine{02434     m\_type = eNormalMatteFx;}
+\DoxyCodeLine{02435 }
+\DoxyCodeLine{02436   \textcolor{keywordflow}{switch} (m\_type) \{}
+\DoxyCodeLine{02437   \textcolor{keywordflow}{case} eNormalFx:}
+\DoxyCodeLine{02438   \textcolor{keywordflow}{case} eMacroFx:}
+\DoxyCodeLine{02439   \textcolor{keywordflow}{case} eNormalLayerBlendingFx:}
+\DoxyCodeLine{02440   \textcolor{keywordflow}{case} eNormalMatteFx:}
+\DoxyCodeLine{02441   \textcolor{keywordflow}{case} eNormalImageAdjustFx: \{}
+\DoxyCodeLine{02442     QString fxId = QString::fromStdWString(getFx()-\/>getFxId());}
+\DoxyCodeLine{02443     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}} != fxId)}
+\DoxyCodeLine{02444       setToolTip(QString(\textcolor{stringliteral}{"{}\%1 : \%2"{}}).arg(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}}, fxId));}
+\DoxyCodeLine{02445     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{02446       setToolTip(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{02447   \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{02448   \textcolor{keywordflow}{case} eZeraryFx: \{}
+\DoxyCodeLine{02449     \mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *zfx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *\textcolor{keyword}{>}(getFx());}
+\DoxyCodeLine{02450     \textcolor{keywordflow}{if} (zfx) \{}
+\DoxyCodeLine{02451       \mbox{\hyperlink{class_t_fx}{TFx}} *zeraryFx = zfx-\/>getZeraryFx();}
+\DoxyCodeLine{02452       \textcolor{keywordflow}{if} (zeraryFx) \{}
+\DoxyCodeLine{02453         setToolTip(QString(\textcolor{stringliteral}{"{}\%1 : \%2"{}}).arg(}
+\DoxyCodeLine{02454             \mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}}, QString::fromStdWString(zeraryFx-\/>getFxId())));}
+\DoxyCodeLine{02455       \}}
+\DoxyCodeLine{02456     \}}
+\DoxyCodeLine{02457     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{02458   \}}
+\DoxyCodeLine{02459   \textcolor{keywordflow}{case} eGroupedFx: \{}
+\DoxyCodeLine{02460     QString fxId =}
+\DoxyCodeLine{02461         \textcolor{stringliteral}{"{}Group "{}} + QString::number(getFx()-\/>getAttributes()-\/>getGroupId());}
+\DoxyCodeLine{02462     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}} != fxId)}
+\DoxyCodeLine{02463       setToolTip(QString(\textcolor{stringliteral}{"{}\%1 (\%2)"{}}).arg(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}}, fxId));}
+\DoxyCodeLine{02464     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{02465       setToolTip(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{02466   \}}
+\DoxyCodeLine{02467   \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{02468     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{02469   \}}
+\DoxyCodeLine{02470 }
+\DoxyCodeLine{02471   m\_nameItem = \textcolor{keyword}{new} \mbox{\hyperlink{class_schematic_name}{SchematicName}}(\textcolor{keyword}{this}, 72, 20);  \textcolor{comment}{// for rename}}
+\DoxyCodeLine{02472   m\_outDock  = \textcolor{keyword}{new} \mbox{\hyperlink{class_fx_schematic_dock}{FxSchematicDock}}(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}"{}}, 0, eFxOutputPort);}
+\DoxyCodeLine{02473   m\_linkDock = \textcolor{keyword}{new} \mbox{\hyperlink{class_fx_schematic_dock}{FxSchematicDock}}(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}"{}}, 0, eFxLinkPort);}
+\DoxyCodeLine{02474 }
+\DoxyCodeLine{02475   m\_renderToggle = \textcolor{keyword}{new} \mbox{\hyperlink{class_schematic_toggle}{SchematicToggle}}(}
+\DoxyCodeLine{02476       \textcolor{keyword}{this}, viewer-\/>getSchematicPreviewButtonOnImage(),}
+\DoxyCodeLine{02477       viewer-\/>getSchematicPreviewButtonBgOnColor(),}
+\DoxyCodeLine{02478       viewer-\/>getSchematicPreviewButtonOffImage(),}
+\DoxyCodeLine{02479       viewer-\/>getSchematicPreviewButtonBgOffColor(), 0, m\_isNormalIconView);}
+\DoxyCodeLine{02480 }
+\DoxyCodeLine{02481   m\_painter =}
+\DoxyCodeLine{02482       \textcolor{keyword}{new} \mbox{\hyperlink{class_fx_painter}{FxPainter}}(\textcolor{keyword}{this}, m\_width, m\_height, \mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}}, m\_type, fx-\/>getFxType());}
+\DoxyCodeLine{02483 }
+\DoxyCodeLine{02484   m\_linkedNode = 0;}
+\DoxyCodeLine{02485   \textcolor{comment}{//-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{02486   m\_nameItem-\/>setDefaultTextColor(viewer-\/>getTextColor());}
+\DoxyCodeLine{02487   m\_nameItem-\/>setName(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{02488   m\_renderToggle-\/>\mbox{\hyperlink{class_schematic_toggle_a2f03784874c4accab37ce531639a4448}{setIsActive}}(\mbox{\hyperlink{class_fx_schematic_node_a29dd352ba75392963ebf0ecd0cd40c86}{m\_fx}}-\/>getAttributes()-\/>isEnabled());}
+\DoxyCodeLine{02489 }
+\DoxyCodeLine{02490   addPort(0, m\_outDock-\/>getPort());}
+\DoxyCodeLine{02491   addPort(-\/1, m\_linkDock-\/>getPort());}
+\DoxyCodeLine{02492 }
+\DoxyCodeLine{02493   \textcolor{keywordflow}{if} (m\_isNormalIconView) \{}
+\DoxyCodeLine{02494     m\_nameItem-\/>setPos(1, -\/1);}
+\DoxyCodeLine{02495     m\_outDock-\/>setPos(72, 14);}
+\DoxyCodeLine{02496     m\_linkDock-\/>setPos(72, 7);}
+\DoxyCodeLine{02497     m\_renderToggle-\/>setPos(72, 0);}
+\DoxyCodeLine{02498   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{02499     QFont fnt = m\_nameItem-\/>font();}
+\DoxyCodeLine{02500     fnt.setPixelSize(fnt.pixelSize() * 2);}
+\DoxyCodeLine{02501     m\_nameItem-\/>setFont(fnt);}
+\DoxyCodeLine{02502 }
+\DoxyCodeLine{02503     m\_nameItem-\/>setPos(-\/1, 0);}
+\DoxyCodeLine{02504     m\_outDock-\/>setPos(60, 0);}
+\DoxyCodeLine{02505     m\_linkDock-\/>setPos(60, -\/5);}
+\DoxyCodeLine{02506     m\_renderToggle-\/>setPos(30, -\/5);}
+\DoxyCodeLine{02507   \}}
+\DoxyCodeLine{02508 }
+\DoxyCodeLine{02509   m\_nameItem-\/>setZValue(3);}
+\DoxyCodeLine{02510   m\_outDock-\/>setZValue(2);}
+\DoxyCodeLine{02511   m\_linkDock-\/>setZValue(2);}
+\DoxyCodeLine{02512   m\_renderToggle-\/>setZValue(2);}
+\DoxyCodeLine{02513   m\_painter-\/>setZValue(1);}
+\DoxyCodeLine{02514 }
+\DoxyCodeLine{02515   connect(m\_nameItem, SIGNAL(focusOut()), \textcolor{keyword}{this}, SLOT(onNameChanged()));}
+\DoxyCodeLine{02516   connect(m\_renderToggle, SIGNAL(toggled(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{02517           SLOT(onRenderToggleClicked(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{02518   m\_nameItem-\/>hide();}
+\DoxyCodeLine{02519 }
+\DoxyCodeLine{02520   \textcolor{keywordtype}{int} i, inputPorts = fx-\/>getInputPortCount();}
+\DoxyCodeLine{02521   \textcolor{keywordtype}{double} lastPosY = (m\_isNormalIconView) ? m\_height : 0;}
+\DoxyCodeLine{02522   \textcolor{keywordflow}{for} (i = 0; i < inputPorts; i++) \{}
+\DoxyCodeLine{02523     std::string portName = fx-\/>getInputPortName(i);}
+\DoxyCodeLine{02524     QString qPortName    = QString::fromStdString(portName);}
+\DoxyCodeLine{02525     QString toolTip      = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{02526     \textcolor{keywordflow}{if} (isA(eMacroFx)) \{}
+\DoxyCodeLine{02527       \textcolor{comment}{// Add a Tool Tip to the Dock showing the name of the port and the}}
+\DoxyCodeLine{02528       \textcolor{comment}{// original fx id.}}
+\DoxyCodeLine{02529       \textcolor{keywordtype}{int} firstIndex  = qPortName.indexOf(\textcolor{stringliteral}{"{}\_"{}});}
+\DoxyCodeLine{02530       \textcolor{keywordtype}{int} secondIndex = qPortName.indexOf(\textcolor{stringliteral}{"{}\_"{}}, firstIndex + 1);}
+\DoxyCodeLine{02531       qPortName.remove(qPortName.indexOf(\textcolor{stringliteral}{"{}\_"{}}), secondIndex -\/ firstIndex);}
+\DoxyCodeLine{02532       toolTip = qPortName;}
+\DoxyCodeLine{02533       toolTip.replace(\textcolor{stringliteral}{"{}\_"{}}, \textcolor{stringliteral}{"{}("{}});}
+\DoxyCodeLine{02534       toolTip.append(\textcolor{stringliteral}{"{})"{}});}
+\DoxyCodeLine{02535       QString qInMacroFxId = qPortName;}
+\DoxyCodeLine{02536       qInMacroFxId.remove(0, qInMacroFxId.indexOf(\textcolor{stringliteral}{"{}\_"{}}) + 1);}
+\DoxyCodeLine{02537       std::vector<TFxP> macroFxs = macroFx-\/>getFxs();}
+\DoxyCodeLine{02538       \textcolor{keywordtype}{int} j;}
+\DoxyCodeLine{02539       \textcolor{keywordflow}{for} (j = 0; j < (int)macroFxs.size(); j++) \{}
+\DoxyCodeLine{02540         \mbox{\hyperlink{class_t_fx}{TFx}} *inMacroFx      = macroFxs[j].getPointer();}
+\DoxyCodeLine{02541         std::wstring fxName = inMacroFx-\/>getName();}
+\DoxyCodeLine{02542         QString qFxName     = QString::fromStdWString(fxName);}
+\DoxyCodeLine{02543         \textcolor{keywordflow}{if} (inMacroFx-\/>getFxId() == qInMacroFxId.toStdWString()) \{}
+\DoxyCodeLine{02544           \textcolor{keywordtype}{int} count = inMacroFx-\/>getInputPortCount();}
+\DoxyCodeLine{02545           \textcolor{keywordflow}{if} (count == 1)}
+\DoxyCodeLine{02546             qPortName = qFxName;}
+\DoxyCodeLine{02547           \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{02548             qPortName.remove(1, qPortName.size());}
+\DoxyCodeLine{02549             qPortName += \textcolor{stringliteral}{"{}. "{}} + qFxName;}
+\DoxyCodeLine{02550           \}}
+\DoxyCodeLine{02551         \}}
+\DoxyCodeLine{02552       \}}
+\DoxyCodeLine{02553     \}}
+\DoxyCodeLine{02554 }
+\DoxyCodeLine{02555     \mbox{\hyperlink{class_fx_schematic_dock}{FxSchematicDock}} *inDock;}
+\DoxyCodeLine{02556 }
+\DoxyCodeLine{02557     \textcolor{keywordflow}{if} (m\_isNormalIconView) \{}
+\DoxyCodeLine{02558       inDock = \textcolor{keyword}{new} \mbox{\hyperlink{class_fx_schematic_dock}{FxSchematicDock}}(\textcolor{keyword}{this}, qPortName, m\_width -\/ 18, eFxInputPort);}
+\DoxyCodeLine{02559       inDock-\/>setPos(0, lastPosY);}
+\DoxyCodeLine{02560       lastPosY += inDock-\/>boundingRect().height();}
+\DoxyCodeLine{02561     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{02562       inDock = \textcolor{keyword}{new} \mbox{\hyperlink{class_fx_schematic_dock}{FxSchematicDock}}(\textcolor{keyword}{this}, qPortName, 10, eFxInputPort);}
+\DoxyCodeLine{02563       inDock-\/>setPos(0, lastPosY);}
+\DoxyCodeLine{02564       lastPosY += inDock-\/>boundingRect().height() + 4;  \textcolor{comment}{// 4 is margin}}
+\DoxyCodeLine{02565     \}}
+\DoxyCodeLine{02566 }
+\DoxyCodeLine{02567     inDock-\/>setZValue(2);}
+\DoxyCodeLine{02568     m\_inDocks.push\_back(inDock);}
+\DoxyCodeLine{02569     addPort(i + 1, inDock-\/>getPort());}
+\DoxyCodeLine{02570     \textcolor{keywordflow}{if} (toolTip != \textcolor{stringliteral}{"{}"{}}) inDock-\/>setToolTip(toolTip);}
+\DoxyCodeLine{02571   \}}
+\DoxyCodeLine{02572 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_normal_fx_node_a430d678e24d75fe7fe6b0047b292cee4}\label{class_fx_schematic_normal_fx_node_a430d678e24d75fe7fe6b0047b292cee4}} 
+\index{FxSchematicNormalFxNode@{FxSchematicNormalFxNode}!````~FxSchematicNormalFxNode@{$\sim$FxSchematicNormalFxNode}}
+\index{````~FxSchematicNormalFxNode@{$\sim$FxSchematicNormalFxNode}!FxSchematicNormalFxNode@{FxSchematicNormalFxNode}}
+\doxysubsubsection{\texorpdfstring{$\sim$FxSchematicNormalFxNode()}{~FxSchematicNormalFxNode()}}
+{\footnotesize\ttfamily Fx\+Schematic\+Normal\+Fx\+Node\+::$\sim$\+Fx\+Schematic\+Normal\+Fx\+Node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02576 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_fx_schematic_normal_fx_node_abf1b0dfe4a192d532c2376c48da61e63}\label{class_fx_schematic_normal_fx_node_abf1b0dfe4a192d532c2376c48da61e63}} 
+\index{FxSchematicNormalFxNode@{FxSchematicNormalFxNode}!boundingRect@{boundingRect}}
+\index{boundingRect@{boundingRect}!FxSchematicNormalFxNode@{FxSchematicNormalFxNode}}
+\doxysubsubsection{\texorpdfstring{boundingRect()}{boundingRect()}}
+{\footnotesize\ttfamily QRectF Fx\+Schematic\+Normal\+Fx\+Node\+::bounding\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02580                                                    \{}
+\DoxyCodeLine{02581   \textcolor{keywordflow}{return} QRectF(-\/5, -\/5, m\_width + 10, m\_height + 10);}
+\DoxyCodeLine{02582 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_normal_fx_node_aca6493d0ce0e251295354634adef440d}\label{class_fx_schematic_normal_fx_node_aca6493d0ce0e251295354634adef440d}} 
+\index{FxSchematicNormalFxNode@{FxSchematicNormalFxNode}!mouseDoubleClickEvent@{mouseDoubleClickEvent}}
+\index{mouseDoubleClickEvent@{mouseDoubleClickEvent}!FxSchematicNormalFxNode@{FxSchematicNormalFxNode}}
+\doxysubsubsection{\texorpdfstring{mouseDoubleClickEvent()}{mouseDoubleClickEvent()}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Normal\+Fx\+Node\+::mouse\+Double\+Click\+Event (\begin{DoxyParamCaption}\item[{QGraphics\+Scene\+Mouse\+Event $\ast$}]{me }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02663                                   \{}
+\DoxyCodeLine{02664   QRectF nameArea(0, 0, m\_width, 14);}
+\DoxyCodeLine{02665   \textcolor{keywordflow}{if} (nameArea.contains(me-\/>pos()) \&\& me-\/>modifiers() == Qt::ControlModifier) \{}
+\DoxyCodeLine{02666     m\_nameItem-\/>setPlainText(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{02667     m\_nameItem-\/>show();}
+\DoxyCodeLine{02668     m\_nameItem-\/>setFocus();}
+\DoxyCodeLine{02669     setFlag(QGraphicsItem::ItemIsSelectable, \textcolor{keyword}{false});}
+\DoxyCodeLine{02670   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{02671     QAction *fxEditorPopup =}
+\DoxyCodeLine{02672         CommandManager::instance()-\/>getAction(MI\_FxParamEditor);}
+\DoxyCodeLine{02673     fxEditorPopup-\/>trigger();}
+\DoxyCodeLine{02674     \textcolor{comment}{// this signal cause the update the contents of the FxSettings}}
+\DoxyCodeLine{02675     emit fxNodeDoubleClicked();}
+\DoxyCodeLine{02676   \}}
+\DoxyCodeLine{02677 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_normal_fx_node_a55ade36f61b0b888bb9a12bde358c69d}\label{class_fx_schematic_normal_fx_node_a55ade36f61b0b888bb9a12bde358c69d}} 
+\index{FxSchematicNormalFxNode@{FxSchematicNormalFxNode}!mousePressEvent@{mousePressEvent}}
+\index{mousePressEvent@{mousePressEvent}!FxSchematicNormalFxNode@{FxSchematicNormalFxNode}}
+\doxysubsubsection{\texorpdfstring{mousePressEvent()}{mousePressEvent()}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Normal\+Fx\+Node\+::mouse\+Press\+Event (\begin{DoxyParamCaption}\item[{QGraphics\+Scene\+Mouse\+Event $\ast$}]{me }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02681                                                                           \{}
+\DoxyCodeLine{02682   FxSchematicNode::mousePressEvent(me);}
+\DoxyCodeLine{02683 }
+\DoxyCodeLine{02684   QAction *fxEditorPopup =}
+\DoxyCodeLine{02685       CommandManager::instance()-\/>getAction(MI\_FxParamEditor);}
+\DoxyCodeLine{02686   \textcolor{comment}{// this signal cause the update the contents of the FxSettings}}
+\DoxyCodeLine{02687   \textcolor{keywordflow}{if} (fxEditorPopup-\/>isVisible()) emit fxNodeDoubleClicked();}
+\DoxyCodeLine{02688 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_normal_fx_node_a3271c5345691ba6aaadf66199c8f2f27}\label{class_fx_schematic_normal_fx_node_a3271c5345691ba6aaadf66199c8f2f27}} 
+\index{FxSchematicNormalFxNode@{FxSchematicNormalFxNode}!onNameChanged@{onNameChanged}}
+\index{onNameChanged@{onNameChanged}!FxSchematicNormalFxNode@{FxSchematicNormalFxNode}}
+\doxysubsubsection{\texorpdfstring{onNameChanged}{onNameChanged}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Normal\+Fx\+Node\+::on\+Name\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02594                                             \{}
+\DoxyCodeLine{02595   m\_nameItem-\/>hide();}
+\DoxyCodeLine{02596   \mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}} = m\_nameItem-\/>toPlainText();}
+\DoxyCodeLine{02597   m\_painter-\/>setName(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{02598 }
+\DoxyCodeLine{02599   \textcolor{keywordflow}{switch} (m\_type) \{}
+\DoxyCodeLine{02600   \textcolor{keywordflow}{case} eNormalFx:}
+\DoxyCodeLine{02601   \textcolor{keywordflow}{case} eMacroFx:}
+\DoxyCodeLine{02602   \textcolor{keywordflow}{case} eNormalLayerBlendingFx:}
+\DoxyCodeLine{02603   \textcolor{keywordflow}{case} eNormalMatteFx:}
+\DoxyCodeLine{02604   \textcolor{keywordflow}{case} eNormalImageAdjustFx: \{}
+\DoxyCodeLine{02605     QString fxId = QString::fromStdWString(getFx()-\/>getFxId());}
+\DoxyCodeLine{02606     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}} != fxId)}
+\DoxyCodeLine{02607       setToolTip(QString(\textcolor{stringliteral}{"{}\%1 : \%2"{}}).arg(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}}, fxId));}
+\DoxyCodeLine{02608     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{02609       setToolTip(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{02610   \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{02611   \textcolor{keywordflow}{case} eZeraryFx: \{}
+\DoxyCodeLine{02612     \mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *zfx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *\textcolor{keyword}{>}(getFx());}
+\DoxyCodeLine{02613     \textcolor{keywordflow}{if} (zfx) \{}
+\DoxyCodeLine{02614       \mbox{\hyperlink{class_t_fx}{TFx}} *zeraryFx = zfx-\/>getZeraryFx();}
+\DoxyCodeLine{02615       \textcolor{keywordflow}{if} (zeraryFx) \{}
+\DoxyCodeLine{02616         setToolTip(QString(\textcolor{stringliteral}{"{}\%1 : \%2"{}}).arg(}
+\DoxyCodeLine{02617             \mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}}, QString::fromStdWString(zeraryFx-\/>getFxId())));}
+\DoxyCodeLine{02618       \}}
+\DoxyCodeLine{02619     \}}
+\DoxyCodeLine{02620     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{02621   \}}
+\DoxyCodeLine{02622   \textcolor{keywordflow}{case} eGroupedFx: \{}
+\DoxyCodeLine{02623     QString fxId =}
+\DoxyCodeLine{02624         \textcolor{stringliteral}{"{}Group "{}} + QString::number(getFx()-\/>getAttributes()-\/>getGroupId());}
+\DoxyCodeLine{02625     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}} != fxId)}
+\DoxyCodeLine{02626       setToolTip(QString(\textcolor{stringliteral}{"{}\%1 (\%2)"{}}).arg(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}}, fxId));}
+\DoxyCodeLine{02627     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{02628       setToolTip(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{02629   \}}
+\DoxyCodeLine{02630   \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{02631     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{02632   \}}
+\DoxyCodeLine{02633 }
+\DoxyCodeLine{02634   setFlag(QGraphicsItem::ItemIsSelectable, \textcolor{keyword}{true});}
+\DoxyCodeLine{02635   \mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *fxScene = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{02636   \textcolor{keywordflow}{if} (!fxScene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{02637   TFxCommand::renameFx(\mbox{\hyperlink{class_fx_schematic_node_a29dd352ba75392963ebf0ecd0cd40c86}{m\_fx}}.getPointer(), \mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}}.toStdWString(),}
+\DoxyCodeLine{02638                        fxScene-\/>getXsheetHandle());}
+\DoxyCodeLine{02639   updateOutputDockToolTips(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{02640   emit sceneChanged();}
+\DoxyCodeLine{02641   update();}
+\DoxyCodeLine{02642 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_normal_fx_node_ae94890d082765c80f1fe88d433731424}\label{class_fx_schematic_normal_fx_node_ae94890d082765c80f1fe88d433731424}} 
+\index{FxSchematicNormalFxNode@{FxSchematicNormalFxNode}!onRenderToggleClicked@{onRenderToggleClicked}}
+\index{onRenderToggleClicked@{onRenderToggleClicked}!FxSchematicNormalFxNode@{FxSchematicNormalFxNode}}
+\doxysubsubsection{\texorpdfstring{onRenderToggleClicked}{onRenderToggleClicked}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Normal\+Fx\+Node\+::on\+Render\+Toggle\+Clicked (\begin{DoxyParamCaption}\item[{bool}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02646                                                               \{}
+\DoxyCodeLine{02647   \mbox{\hyperlink{class_fx_schematic_node_a29dd352ba75392963ebf0ecd0cd40c86}{m\_fx}}-\/>getAttributes()-\/>enable(value);}
+\DoxyCodeLine{02648   \mbox{\hyperlink{class_t_macro_fx}{TMacroFx}} *macro = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_macro_fx}{TMacroFx}} *\textcolor{keyword}{>}(\mbox{\hyperlink{class_fx_schematic_node_a29dd352ba75392963ebf0ecd0cd40c86}{m\_fx}}.getPointer());}
+\DoxyCodeLine{02649   \textcolor{keywordflow}{if} (macro) \{}
+\DoxyCodeLine{02650     std::vector<TFxP> fxs = macro-\/>getFxs();}
+\DoxyCodeLine{02651     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{02652     \textcolor{keywordflow}{for} (i = 0; i < (int)fxs.size(); i++)}
+\DoxyCodeLine{02653       fxs[i]-\/>getAttributes()-\/>enable(value);}
+\DoxyCodeLine{02654   \}}
+\DoxyCodeLine{02655   update();}
+\DoxyCodeLine{02656   emit sceneChanged();}
+\DoxyCodeLine{02657   emit xsheetChanged();}
+\DoxyCodeLine{02658 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_normal_fx_node_a32c95576eeab61c2a3213374cd9d241f}\label{class_fx_schematic_normal_fx_node_a32c95576eeab61c2a3213374cd9d241f}} 
+\index{FxSchematicNormalFxNode@{FxSchematicNormalFxNode}!paint@{paint}}
+\index{paint@{paint}!FxSchematicNormalFxNode@{FxSchematicNormalFxNode}}
+\doxysubsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Normal\+Fx\+Node\+::paint (\begin{DoxyParamCaption}\item[{QPainter $\ast$}]{painter,  }\item[{const QStyle\+Option\+Graphics\+Item $\ast$}]{option,  }\item[{QWidget $\ast$}]{widget = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02588                                                      \{}
+\DoxyCodeLine{02589   \mbox{\hyperlink{class_schematic_node_a587e509d56ea4bc2ad513f11509090cf}{FxSchematicNode::paint}}(painter, option, widget);}
+\DoxyCodeLine{02590 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_normal_fx_node_ab8ced715b44426321f5e44852dc1106e}\label{class_fx_schematic_normal_fx_node_ab8ced715b44426321f5e44852dc1106e}} 
+\index{FxSchematicNormalFxNode@{FxSchematicNormalFxNode}!resize@{resize}}
+\index{resize@{resize}!FxSchematicNormalFxNode@{FxSchematicNormalFxNode}}
+\doxysubsubsection{\texorpdfstring{resize()}{resize()}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Normal\+Fx\+Node\+::resize (\begin{DoxyParamCaption}\item[{bool}]{maximize\+Node }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_schematic_node}{Fx\+Schematic\+Node}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02692 \{\}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/fxschematicnode.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/fxschematicnode.\+cpp\end{DoxyCompactItemize}

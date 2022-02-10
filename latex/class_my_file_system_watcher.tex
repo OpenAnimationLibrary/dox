@@ -1,0 +1,113 @@
+\hypertarget{class_my_file_system_watcher}{}\doxysection{My\+File\+System\+Watcher Class Reference}
+\label{class_my_file_system_watcher}\index{MyFileSystemWatcher@{MyFileSystemWatcher}}
+Inheritance diagram for My\+File\+System\+Watcher\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_my_file_system_watcher}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_my_file_system_watcher_a59e8de9a498f5f82ff352ca029de22c4}\label{class_my_file_system_watcher_a59e8de9a498f5f82ff352ca029de22c4}} 
+void {\bfseries directory\+Changed} (const QString \&path)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_my_file_system_watcher_a2834df47b51547767ce8cb4661cf7010}{add\+Paths}} (const QString\+List \&paths, bool only\+New\+Path=false)
+\item 
+void \mbox{\hyperlink{class_my_file_system_watcher_a390eb88f6845a7e76db27ff5823487be}{remove\+Paths}} (const QString\+List \&paths)
+\item 
+void \mbox{\hyperlink{class_my_file_system_watcher_aaa3f9368ed05c3cb9f75eee38277811d}{remove\+All\+Paths}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_my_file_system_watcher}{My\+File\+System\+Watcher}} $\ast$ \mbox{\hyperlink{class_my_file_system_watcher_aa0966e88ae7a2c77909d232b68383060}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_my_file_system_watcher_a2834df47b51547767ce8cb4661cf7010}\label{class_my_file_system_watcher_a2834df47b51547767ce8cb4661cf7010}} 
+\index{MyFileSystemWatcher@{MyFileSystemWatcher}!addPaths@{addPaths}}
+\index{addPaths@{addPaths}!MyFileSystemWatcher@{MyFileSystemWatcher}}
+\doxysubsubsection{\texorpdfstring{addPaths()}{addPaths()}}
+{\footnotesize\ttfamily void My\+File\+System\+Watcher\+::add\+Paths (\begin{DoxyParamCaption}\item[{const QString\+List \&}]{paths,  }\item[{bool}]{only\+New\+Path = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00064                                                                              \{}
+\DoxyCodeLine{00065   \textcolor{keywordflow}{if} (paths.isEmpty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00066   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} p = 0; p < paths.size(); p++) \{}
+\DoxyCodeLine{00067     QString path = paths.at(p);}
+\DoxyCodeLine{00068     \textcolor{comment}{// if the path is not watched yet, try to start watching it}}
+\DoxyCodeLine{00069     \textcolor{keywordflow}{if} (!m\_watchedPath.contains(path)) \{}
+\DoxyCodeLine{00070       \textcolor{comment}{// symlink path will not be watched}}
+\DoxyCodeLine{00071       \textcolor{keywordflow}{if} (m\_watcher-\/>addPath(path)) m\_watchedPath.append(path);}
+\DoxyCodeLine{00072     \}}
+\DoxyCodeLine{00073     \textcolor{comment}{// or just add path to the list}}
+\DoxyCodeLine{00074     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!onlyNewPath) \{}
+\DoxyCodeLine{00075       m\_watchedPath.append(path);}
+\DoxyCodeLine{00076     \}}
+\DoxyCodeLine{00077   \}}
+\DoxyCodeLine{00078 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_file_system_watcher_aa0966e88ae7a2c77909d232b68383060}\label{class_my_file_system_watcher_aa0966e88ae7a2c77909d232b68383060}} 
+\index{MyFileSystemWatcher@{MyFileSystemWatcher}!instance@{instance}}
+\index{instance@{instance}!MyFileSystemWatcher@{MyFileSystemWatcher}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_my_file_system_watcher}{My\+File\+System\+Watcher}} $\ast$ My\+File\+System\+Watcher\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00043                                          \{}
+\DoxyCodeLine{00044     \textcolor{keyword}{static} \mbox{\hyperlink{class_my_file_system_watcher}{MyFileSystemWatcher}} \_instance;}
+\DoxyCodeLine{00045     \textcolor{keywordflow}{return} \&\_instance;}
+\DoxyCodeLine{00046   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_file_system_watcher_aaa3f9368ed05c3cb9f75eee38277811d}\label{class_my_file_system_watcher_aaa3f9368ed05c3cb9f75eee38277811d}} 
+\index{MyFileSystemWatcher@{MyFileSystemWatcher}!removeAllPaths@{removeAllPaths}}
+\index{removeAllPaths@{removeAllPaths}!MyFileSystemWatcher@{MyFileSystemWatcher}}
+\doxysubsubsection{\texorpdfstring{removeAllPaths()}{removeAllPaths()}}
+{\footnotesize\ttfamily void My\+File\+System\+Watcher\+::remove\+All\+Paths (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00090                                          \{}
+\DoxyCodeLine{00091   \textcolor{keywordflow}{if} (m\_watchedPath.isEmpty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00092   m\_watcher-\/>removePaths(m\_watcher-\/>directories());}
+\DoxyCodeLine{00093   m\_watchedPath.clear();}
+\DoxyCodeLine{00094 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_file_system_watcher_a390eb88f6845a7e76db27ff5823487be}\label{class_my_file_system_watcher_a390eb88f6845a7e76db27ff5823487be}} 
+\index{MyFileSystemWatcher@{MyFileSystemWatcher}!removePaths@{removePaths}}
+\index{removePaths@{removePaths}!MyFileSystemWatcher@{MyFileSystemWatcher}}
+\doxysubsubsection{\texorpdfstring{removePaths()}{removePaths()}}
+{\footnotesize\ttfamily void My\+File\+System\+Watcher\+::remove\+Paths (\begin{DoxyParamCaption}\item[{const QString\+List \&}]{paths }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080                                                               \{}
+\DoxyCodeLine{00081   \textcolor{keywordflow}{if} (m\_watchedPath.isEmpty() || paths.isEmpty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00082   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} p = 0; p < paths.size(); p++) \{}
+\DoxyCodeLine{00083     QString path = paths.at(p);}
+\DoxyCodeLine{00084     \textcolor{comment}{// removeOne will return false for symlink paths}}
+\DoxyCodeLine{00085     \textcolor{keywordtype}{bool} ret = m\_watchedPath.removeOne(path);}
+\DoxyCodeLine{00086     \textcolor{keywordflow}{if} (ret \&\& !m\_watchedPath.contains(path)) m\_watcher-\/>removePath(path);}
+\DoxyCodeLine{00087   \}}
+\DoxyCodeLine{00088 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/dvdirtreeview.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/dvdirtreeview.\+cpp\end{DoxyCompactItemize}

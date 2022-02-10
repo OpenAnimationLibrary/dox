@@ -1,0 +1,356 @@
+\hypertarget{class_style_name_editor}{}\doxysection{Style\+Name\+Editor Class Reference}
+\label{class_style_name_editor}\index{StyleNameEditor@{StyleNameEditor}}
+Inheritance diagram for Style\+Name\+Editor\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_style_name_editor}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_style_name_editor_a4de5b1cb51ad830f4e9d6ce7d7d8397c}{Style\+Name\+Editor}} (QWidget $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_style_name_editor_acc03d9714c04bc415e7290ce33cba3c4}{set\+Palette\+Handle}} (\mbox{\hyperlink{class_t_palette_handle}{TPalette\+Handle}} $\ast$ph)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_style_name_editor_a9ebef64e4f8aee09a05d7d76fd5eabd6}{on\+Style\+Switched}} ()
+\item 
+void \mbox{\hyperlink{class_style_name_editor_aa7f3ec3130ef78508867dbb1feacf33c}{on\+Ok\+Pressed}} ()
+\item 
+void \mbox{\hyperlink{class_style_name_editor_a54de077f1eeee13e2748bd2950e6b1c5}{on\+Apply\+Pressed}} ()
+\item 
+void \mbox{\hyperlink{class_style_name_editor_af0090efd0ed9a446f4eaa53282d53df6}{on\+Cancel\+Pressed}} ()
+\item 
+void \mbox{\hyperlink{class_style_name_editor_a49e5e7da26951e9de7bdf3139202123f}{on\+Word\+Clicked}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_style_name_editor_af7cda5d528d4468685a0c4498c08a765}{store\+Selection\+Info}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_style_name_editor_a07a965b19fcb87d8ca346f1cb40e63e0}{show\+Event}} (QShow\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_style_name_editor_a542d04d95fd569b2cb2511a59296caee}{hide\+Event}} (QHide\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_style_name_editor_a12e06610af9b0d5ec390aa4f323efc53}{enter\+Event}} (QEvent $\ast$) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_style_name_editor_a4de5b1cb51ad830f4e9d6ce7d7d8397c}\label{class_style_name_editor_a4de5b1cb51ad830f4e9d6ce7d7d8397c}} 
+\index{StyleNameEditor@{StyleNameEditor}!StyleNameEditor@{StyleNameEditor}}
+\index{StyleNameEditor@{StyleNameEditor}!StyleNameEditor@{StyleNameEditor}}
+\doxysubsubsection{\texorpdfstring{StyleNameEditor()}{StyleNameEditor()}}
+{\footnotesize\ttfamily Style\+Name\+Editor\+::\+Style\+Name\+Editor (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00340     : Dialog(parent, \textcolor{keyword}{false}, \textcolor{keyword}{false}, \textcolor{stringliteral}{"{}StyleNameEditor"{}})}
+\DoxyCodeLine{00341     , m\_paletteHandle(0)}
+\DoxyCodeLine{00342     , m\_selectionStart(-\/1)}
+\DoxyCodeLine{00343     , m\_selectionLength(0) \{}
+\DoxyCodeLine{00344   QString columnLabel[WORD\_COLUMN\_AMOUNT] = \{AddWordButton::tr(\textcolor{stringliteral}{"{}Character"{}}),}
+\DoxyCodeLine{00345                                              AddWordButton::tr(\textcolor{stringliteral}{"{}Part"{}}),}
+\DoxyCodeLine{00346                                              AddWordButton::tr(\textcolor{stringliteral}{"{}Suffix"{}})\};}
+\DoxyCodeLine{00347 }
+\DoxyCodeLine{00348   setWindowTitle(tr(\textcolor{stringliteral}{"{}Name Editor"{}}));}
+\DoxyCodeLine{00349 }
+\DoxyCodeLine{00350   m\_styleName                  = \textcolor{keyword}{new} QLineEdit(\textcolor{keyword}{this});}
+\DoxyCodeLine{00351   m\_okButton                   = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}OK"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00352   m\_cancelButton               = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cancel"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00353   m\_applyButton                = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Apply and Next"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00354   \mbox{\hyperlink{class_easy_input_area}{EasyInputArea}}* easyInputArea = \textcolor{keyword}{new} \mbox{\hyperlink{class_easy_input_area}{EasyInputArea}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00355 }
+\DoxyCodeLine{00356   QLabel* panelLabel[WORD\_COLUMN\_AMOUNT];}
+\DoxyCodeLine{00357   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < WORD\_COLUMN\_AMOUNT; i++) \{}
+\DoxyCodeLine{00358     panelLabel[i] = \textcolor{keyword}{new} QLabel(columnLabel[i], \textcolor{keyword}{this});}
+\DoxyCodeLine{00359     panelLabel[i]-\/>setStyleSheet(\textcolor{stringliteral}{"{}font-\/size: 10px; font: italic;"{}});}
+\DoxyCodeLine{00360   \}}
+\DoxyCodeLine{00361 }
+\DoxyCodeLine{00362   setFocusProxy(m\_styleName);}
+\DoxyCodeLine{00363 }
+\DoxyCodeLine{00364   m\_styleName-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00365   m\_okButton-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00366   m\_okButton-\/>setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{00367   m\_applyButton-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00368   m\_applyButton-\/>setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{00369   m\_cancelButton-\/>setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{00370 }
+\DoxyCodeLine{00371   m\_styleName-\/>setObjectName(\textcolor{stringliteral}{"{}LargeSizedText"{}});}
+\DoxyCodeLine{00372 }
+\DoxyCodeLine{00373   easyInputArea-\/>setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{00374 }
+\DoxyCodeLine{00375   \textcolor{comment}{// QVBoxLayout* mainLayout = new QVBoxLayout();}}
+\DoxyCodeLine{00376   m\_topLayout-\/>setMargin(10);}
+\DoxyCodeLine{00377   m\_topLayout-\/>setSpacing(5);}
+\DoxyCodeLine{00378   \{}
+\DoxyCodeLine{00379     QHBoxLayout* inputLayout = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00380     inputLayout-\/>setMargin(0);}
+\DoxyCodeLine{00381     inputLayout-\/>setSpacing(3);}
+\DoxyCodeLine{00382     \{}
+\DoxyCodeLine{00383       inputLayout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Style Name"{}}), \textcolor{keyword}{this}), 0);}
+\DoxyCodeLine{00384       inputLayout-\/>addWidget(m\_styleName, 1);}
+\DoxyCodeLine{00385     \}}
+\DoxyCodeLine{00386     m\_topLayout-\/>addLayout(inputLayout, 0);}
+\DoxyCodeLine{00387 }
+\DoxyCodeLine{00388     QHBoxLayout* buttonLayout = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00389     buttonLayout-\/>setMargin(0);}
+\DoxyCodeLine{00390     buttonLayout-\/>setSpacing(3);}
+\DoxyCodeLine{00391     \{}
+\DoxyCodeLine{00392       buttonLayout-\/>addWidget(m\_okButton);}
+\DoxyCodeLine{00393       buttonLayout-\/>addWidget(m\_applyButton);}
+\DoxyCodeLine{00394       buttonLayout-\/>addWidget(m\_cancelButton);}
+\DoxyCodeLine{00395     \}}
+\DoxyCodeLine{00396     m\_topLayout-\/>addLayout(buttonLayout, 0);}
+\DoxyCodeLine{00397 }
+\DoxyCodeLine{00398     m\_topLayout-\/>addSpacing(5);}
+\DoxyCodeLine{00399 }
+\DoxyCodeLine{00400     QHBoxLayout* labelLay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00401     labelLay-\/>setMargin(0);}
+\DoxyCodeLine{00402     labelLay-\/>setSpacing(3);}
+\DoxyCodeLine{00403     \{}
+\DoxyCodeLine{00404       labelLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Easy Inputs"{}}), \textcolor{keyword}{this}), 1,}
+\DoxyCodeLine{00405                           Qt::AlignLeft);}
+\DoxyCodeLine{00406       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < WORD\_COLUMN\_AMOUNT; i++) \{}
+\DoxyCodeLine{00407         labelLay-\/>addWidget(panelLabel[i],}
+\DoxyCodeLine{00408                             (i == 0) ? areaColCount[i] -\/ 1 : areaColCount[i],}
+\DoxyCodeLine{00409                             Qt::AlignRight | Qt::AlignBottom);}
+\DoxyCodeLine{00410       \}}
+\DoxyCodeLine{00411     \}}
+\DoxyCodeLine{00412     m\_topLayout-\/>addLayout(labelLay, 0);}
+\DoxyCodeLine{00413 }
+\DoxyCodeLine{00414     m\_topLayout-\/>addWidget(easyInputArea, 1);}
+\DoxyCodeLine{00415   \}}
+\DoxyCodeLine{00416 }
+\DoxyCodeLine{00417   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00418   ret =}
+\DoxyCodeLine{00419       ret \&\& connect(m\_okButton, SIGNAL(pressed()), \textcolor{keyword}{this}, SLOT(onOkPressed()));}
+\DoxyCodeLine{00420   ret = ret \&\& connect(m\_cancelButton, SIGNAL(pressed()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00421                        SLOT(onCancelPressed()));}
+\DoxyCodeLine{00422   ret = ret \&\&}
+\DoxyCodeLine{00423         connect(m\_applyButton, SIGNAL(pressed()), \textcolor{keyword}{this}, SLOT(onApplyPressed()));}
+\DoxyCodeLine{00424   ret = ret \&\& connect(easyInputArea, SIGNAL(wordClicked(\textcolor{keyword}{const} QString\&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00425                        SLOT(onWordClicked(\textcolor{keyword}{const} QString\&)));}
+\DoxyCodeLine{00426   ret = ret \&\& connect(easyInputArea, SIGNAL(mouseEnter()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00427                        SLOT(storeSelectionInfo()));}
+\DoxyCodeLine{00428   assert(ret);}
+\DoxyCodeLine{00429 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_style_name_editor_a12e06610af9b0d5ec390aa4f323efc53}\label{class_style_name_editor_a12e06610af9b0d5ec390aa4f323efc53}} 
+\index{StyleNameEditor@{StyleNameEditor}!enterEvent@{enterEvent}}
+\index{enterEvent@{enterEvent}!StyleNameEditor@{StyleNameEditor}}
+\doxysubsubsection{\texorpdfstring{enterEvent()}{enterEvent()}}
+{\footnotesize\ttfamily void Style\+Name\+Editor\+::enter\+Event (\begin{DoxyParamCaption}\item[{QEvent $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00524                                           \{}
+\DoxyCodeLine{00525   activateWindow();}
+\DoxyCodeLine{00526   m\_styleName-\/>setFocus();}
+\DoxyCodeLine{00527 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_name_editor_a542d04d95fd569b2cb2511a59296caee}\label{class_style_name_editor_a542d04d95fd569b2cb2511a59296caee}} 
+\index{StyleNameEditor@{StyleNameEditor}!hideEvent@{hideEvent}}
+\index{hideEvent@{hideEvent}!StyleNameEditor@{StyleNameEditor}}
+\doxysubsubsection{\texorpdfstring{hideEvent()}{hideEvent()}}
+{\footnotesize\ttfamily void Style\+Name\+Editor\+::hide\+Event (\begin{DoxyParamCaption}\item[{QHide\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00460                                              \{}
+\DoxyCodeLine{00461   disconnect(m\_paletteHandle, SIGNAL(colorStyleSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00462              SLOT(onStyleSwitched()));}
+\DoxyCodeLine{00463   disconnect(m\_paletteHandle, SIGNAL(paletteSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00464              SLOT(onStyleSwitched()));}
+\DoxyCodeLine{00465 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_name_editor_a54de077f1eeee13e2748bd2950e6b1c5}\label{class_style_name_editor_a54de077f1eeee13e2748bd2950e6b1c5}} 
+\index{StyleNameEditor@{StyleNameEditor}!onApplyPressed@{onApplyPressed}}
+\index{onApplyPressed@{onApplyPressed}!StyleNameEditor@{StyleNameEditor}}
+\doxysubsubsection{\texorpdfstring{onApplyPressed}{onApplyPressed}}
+{\footnotesize\ttfamily void Style\+Name\+Editor\+::on\+Apply\+Pressed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00487                                      \{}
+\DoxyCodeLine{00488   \textcolor{keywordflow}{if} (!m\_paletteHandle || !m\_paletteHandle-\/>getStyle()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00489   \textcolor{keywordflow}{if} (m\_styleName-\/>text() == \textcolor{stringliteral}{"{}"{}}) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00490 }
+\DoxyCodeLine{00491   std::wstring newName = m\_styleName-\/>text().toStdWString();}
+\DoxyCodeLine{00492 }
+\DoxyCodeLine{00493   PaletteCmd::renamePaletteStyle(m\_paletteHandle, newName);}
+\DoxyCodeLine{00494 }
+\DoxyCodeLine{00495   \textcolor{comment}{// move the current style to the next}}
+\DoxyCodeLine{00496   \mbox{\hyperlink{class_t_palette}{TPalette}}* palette    = m\_paletteHandle-\/>getPalette();}
+\DoxyCodeLine{00497   \textcolor{keywordtype}{int} currentIndex     = m\_paletteHandle-\/>getStyleIndex();}
+\DoxyCodeLine{00498   \mbox{\hyperlink{class_t_palette_1_1_page}{TPalette::Page}}* page = palette-\/>getStylePage(currentIndex);}
+\DoxyCodeLine{00499   \textcolor{keywordtype}{int} indexInPage      = page-\/>\mbox{\hyperlink{class_t_palette_1_1_page_a5d85ded487f7152a95ccbab63c5aecd5}{search}}(currentIndex);}
+\DoxyCodeLine{00500 }
+\DoxyCodeLine{00501   \textcolor{comment}{// If indexInPage is at the end of the page, then move to the top of the next}}
+\DoxyCodeLine{00502   \textcolor{comment}{// page}}
+\DoxyCodeLine{00503   \textcolor{keywordflow}{if} (indexInPage == page-\/>\mbox{\hyperlink{class_t_palette_1_1_page_ae6d6b899ee10f5b3900081acd882f8ee}{getStyleCount}}() -\/ 1) \{}
+\DoxyCodeLine{00504     \textcolor{keywordtype}{int} pageIndex = page-\/>\mbox{\hyperlink{class_t_palette_1_1_page_a0e09146e776286b87fc90283c561d19d}{getIndex}}();}
+\DoxyCodeLine{00505     \textcolor{comment}{// if the current page is the last one, then move to the first page}}
+\DoxyCodeLine{00506     \textcolor{keywordflow}{while} (1) \{}
+\DoxyCodeLine{00507       pageIndex++;}
+\DoxyCodeLine{00508       \textcolor{keywordflow}{if} (pageIndex == palette-\/>getPageCount()) pageIndex = 0;}
+\DoxyCodeLine{00509       page = palette-\/>getPage(pageIndex);}
+\DoxyCodeLine{00510       \textcolor{keywordflow}{if} (page-\/>\mbox{\hyperlink{class_t_palette_1_1_page_ae6d6b899ee10f5b3900081acd882f8ee}{getStyleCount}}() > 0) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00511     \}}
+\DoxyCodeLine{00512     currentIndex = page-\/>\mbox{\hyperlink{class_t_palette_1_1_page_a3d6eed995ee8b1c22d50a73911a45786}{getStyleId}}(0);}
+\DoxyCodeLine{00513   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00514     currentIndex = page-\/>\mbox{\hyperlink{class_t_palette_1_1_page_a3d6eed995ee8b1c22d50a73911a45786}{getStyleId}}(indexInPage + 1);}
+\DoxyCodeLine{00515   \textcolor{comment}{// change the current index}}
+\DoxyCodeLine{00516   m\_paletteHandle-\/>setStyleIndex(currentIndex);}
+\DoxyCodeLine{00517 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_name_editor_af0090efd0ed9a446f4eaa53282d53df6}\label{class_style_name_editor_af0090efd0ed9a446f4eaa53282d53df6}} 
+\index{StyleNameEditor@{StyleNameEditor}!onCancelPressed@{onCancelPressed}}
+\index{onCancelPressed@{onCancelPressed}!StyleNameEditor@{StyleNameEditor}}
+\doxysubsubsection{\texorpdfstring{onCancelPressed}{onCancelPressed}}
+{\footnotesize\ttfamily void Style\+Name\+Editor\+::on\+Cancel\+Pressed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00520 \{ close(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_name_editor_aa7f3ec3130ef78508867dbb1feacf33c}\label{class_style_name_editor_aa7f3ec3130ef78508867dbb1feacf33c}} 
+\index{StyleNameEditor@{StyleNameEditor}!onOkPressed@{onOkPressed}}
+\index{onOkPressed@{onOkPressed}!StyleNameEditor@{StyleNameEditor}}
+\doxysubsubsection{\texorpdfstring{onOkPressed}{onOkPressed}}
+{\footnotesize\ttfamily void Style\+Name\+Editor\+::on\+Ok\+Pressed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00481                                   \{}
+\DoxyCodeLine{00482   onApplyPressed();}
+\DoxyCodeLine{00483   close();}
+\DoxyCodeLine{00484 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_name_editor_a9ebef64e4f8aee09a05d7d76fd5eabd6}\label{class_style_name_editor_a9ebef64e4f8aee09a05d7d76fd5eabd6}} 
+\index{StyleNameEditor@{StyleNameEditor}!onStyleSwitched@{onStyleSwitched}}
+\index{onStyleSwitched@{onStyleSwitched}!StyleNameEditor@{StyleNameEditor}}
+\doxysubsubsection{\texorpdfstring{onStyleSwitched}{onStyleSwitched}}
+{\footnotesize\ttfamily void Style\+Name\+Editor\+::on\+Style\+Switched (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00468                                       \{}
+\DoxyCodeLine{00469   \textcolor{keywordflow}{if} (!m\_paletteHandle || !m\_paletteHandle-\/>getStyle()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00470 }
+\DoxyCodeLine{00471   std::wstring styleName = m\_paletteHandle-\/>getStyle()-\/>\mbox{\hyperlink{class_t_color_style_a611de20d126c5838456f9113b4682c4f}{getName}}();}
+\DoxyCodeLine{00472   m\_styleName-\/>setText(QString::fromStdWString(styleName));}
+\DoxyCodeLine{00473   m\_styleName-\/>selectAll();}
+\DoxyCodeLine{00474   m\_styleName-\/>setFocus();}
+\DoxyCodeLine{00475 }
+\DoxyCodeLine{00476   \textcolor{keywordtype}{int} styleId = m\_paletteHandle-\/>getStyleIndex();}
+\DoxyCodeLine{00477   setWindowTitle(tr(\textcolor{stringliteral}{"{}Name Editor: \# \%1"{}}).arg(styleId));}
+\DoxyCodeLine{00478 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_name_editor_a49e5e7da26951e9de7bdf3139202123f}\label{class_style_name_editor_a49e5e7da26951e9de7bdf3139202123f}} 
+\index{StyleNameEditor@{StyleNameEditor}!onWordClicked@{onWordClicked}}
+\index{onWordClicked@{onWordClicked}!StyleNameEditor@{StyleNameEditor}}
+\doxysubsubsection{\texorpdfstring{onWordClicked}{onWordClicked}}
+{\footnotesize\ttfamily void Style\+Name\+Editor\+::on\+Word\+Clicked (\begin{DoxyParamCaption}\item[{const QString \&}]{word }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00530                                                        \{}
+\DoxyCodeLine{00531   \textcolor{keywordflow}{if} (m\_selectionLength != 0)}
+\DoxyCodeLine{00532     m\_styleName-\/>setSelection(m\_selectionStart, m\_selectionLength);}
+\DoxyCodeLine{00533   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00534     m\_styleName-\/>setCursorPosition(m\_selectionStart);}
+\DoxyCodeLine{00535 }
+\DoxyCodeLine{00536   m\_styleName-\/>insert(word);}
+\DoxyCodeLine{00537   m\_styleName-\/>setFocus();}
+\DoxyCodeLine{00538 }
+\DoxyCodeLine{00539   storeSelectionInfo();}
+\DoxyCodeLine{00540 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_name_editor_acc03d9714c04bc415e7290ce33cba3c4}\label{class_style_name_editor_acc03d9714c04bc415e7290ce33cba3c4}} 
+\index{StyleNameEditor@{StyleNameEditor}!setPaletteHandle@{setPaletteHandle}}
+\index{setPaletteHandle@{setPaletteHandle}!StyleNameEditor@{StyleNameEditor}}
+\doxysubsubsection{\texorpdfstring{setPaletteHandle()}{setPaletteHandle()}}
+{\footnotesize\ttfamily void Style\+Name\+Editor\+::set\+Palette\+Handle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_palette_handle}{TPalette\+Handle}} $\ast$}]{ph }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00432                                                          \{}
+\DoxyCodeLine{00433   m\_paletteHandle = ph;}
+\DoxyCodeLine{00434   connect(m\_paletteHandle, SIGNAL(colorStyleSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00435           SLOT(onStyleSwitched()));}
+\DoxyCodeLine{00436   connect(m\_paletteHandle, SIGNAL(paletteSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00437           SLOT(onStyleSwitched()));}
+\DoxyCodeLine{00438   m\_styleName-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00439   m\_okButton-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00440   m\_applyButton-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00441 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_name_editor_a07a965b19fcb87d8ca346f1cb40e63e0}\label{class_style_name_editor_a07a965b19fcb87d8ca346f1cb40e63e0}} 
+\index{StyleNameEditor@{StyleNameEditor}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!StyleNameEditor@{StyleNameEditor}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Style\+Name\+Editor\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00444                                              \{}
+\DoxyCodeLine{00445   \textcolor{keywordflow}{if} (m\_paletteHandle) \{}
+\DoxyCodeLine{00446     disconnect(m\_paletteHandle, SIGNAL(colorStyleSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00447                SLOT(onStyleSwitched()));}
+\DoxyCodeLine{00448     disconnect(m\_paletteHandle, SIGNAL(paletteSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00449                SLOT(onStyleSwitched()));}
+\DoxyCodeLine{00450     connect(m\_paletteHandle, SIGNAL(colorStyleSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00451             SLOT(onStyleSwitched()));}
+\DoxyCodeLine{00452     connect(m\_paletteHandle, SIGNAL(paletteSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00453             SLOT(onStyleSwitched()));}
+\DoxyCodeLine{00454   \}}
+\DoxyCodeLine{00455   \textcolor{comment}{// update view}}
+\DoxyCodeLine{00456   onStyleSwitched();}
+\DoxyCodeLine{00457 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_name_editor_af7cda5d528d4468685a0c4498c08a765}\label{class_style_name_editor_af7cda5d528d4468685a0c4498c08a765}} 
+\index{StyleNameEditor@{StyleNameEditor}!storeSelectionInfo@{storeSelectionInfo}}
+\index{storeSelectionInfo@{storeSelectionInfo}!StyleNameEditor@{StyleNameEditor}}
+\doxysubsubsection{\texorpdfstring{storeSelectionInfo}{storeSelectionInfo}}
+{\footnotesize\ttfamily void Style\+Name\+Editor\+::store\+Selection\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00544                                          \{}
+\DoxyCodeLine{00545   \textcolor{keywordflow}{if} (m\_styleName-\/>hasSelectedText()) \{}
+\DoxyCodeLine{00546     m\_selectionStart  = m\_styleName-\/>selectionStart();}
+\DoxyCodeLine{00547     m\_selectionLength = m\_styleName-\/>selectedText().length();}
+\DoxyCodeLine{00548   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00549     m\_selectionStart  = m\_styleName-\/>cursorPosition();}
+\DoxyCodeLine{00550     m\_selectionLength = 0;}
+\DoxyCodeLine{00551   \}}
+\DoxyCodeLine{00552 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/stylenameeditor.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/stylenameeditor.\+cpp\end{DoxyCompactItemize}

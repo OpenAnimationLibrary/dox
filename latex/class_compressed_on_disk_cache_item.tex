@@ -1,0 +1,125 @@
+\hypertarget{class_compressed_on_disk_cache_item}{}\doxysection{Compressed\+On\+Disk\+Cache\+Item Class Reference}
+\label{class_compressed_on_disk_cache_item}\index{CompressedOnDiskCacheItem@{CompressedOnDiskCacheItem}}
+Inheritance diagram for Compressed\+On\+Disk\+Cache\+Item\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_compressed_on_disk_cache_item}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_compressed_on_disk_cache_item_abe96cb719bf1644158a4cda881e7e77d}{Compressed\+On\+Disk\+Cache\+Item}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&fp, const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&compressed\+Ras, \mbox{\hyperlink{class_image_builder}{Image\+Builder}} $\ast$builder, \mbox{\hyperlink{class_image_info}{Image\+Info}} $\ast$info)
+\item 
+TUINT32 \mbox{\hyperlink{class_compressed_on_disk_cache_item_ad9119a971a02bb3fb190c03f314827fe}{get\+Size}} () const override
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \mbox{\hyperlink{class_compressed_on_disk_cache_item_a6ae3529fefad7ab6ecadaff811afd305}{get\+Image}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \mbox{\hyperlink{class_compressed_on_disk_cache_item_a4cd686e0a7645af6a797c49a8b002501}{m\+\_\+fp}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_compressed_on_disk_cache_item_abe96cb719bf1644158a4cda881e7e77d}\label{class_compressed_on_disk_cache_item_abe96cb719bf1644158a4cda881e7e77d}} 
+\index{CompressedOnDiskCacheItem@{CompressedOnDiskCacheItem}!CompressedOnDiskCacheItem@{CompressedOnDiskCacheItem}}
+\index{CompressedOnDiskCacheItem@{CompressedOnDiskCacheItem}!CompressedOnDiskCacheItem@{CompressedOnDiskCacheItem}}
+\doxysubsubsection{\texorpdfstring{CompressedOnDiskCacheItem()}{CompressedOnDiskCacheItem()}}
+{\footnotesize\ttfamily Compressed\+On\+Disk\+Cache\+Item\+::\+Compressed\+On\+Disk\+Cache\+Item (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{fp,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&}]{compressed\+Ras,  }\item[{\mbox{\hyperlink{class_image_builder}{Image\+Builder}} $\ast$}]{builder,  }\item[{\mbox{\hyperlink{class_image_info}{Image\+Info}} $\ast$}]{info }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00494     : \mbox{\hyperlink{class_cache_item}{CacheItem}}(builder, info), m\_fp(fp) \{}
+\DoxyCodeLine{00495   compressedRas-\/>lock();}
+\DoxyCodeLine{00496 }
+\DoxyCodeLine{00497   \mbox{\hyperlink{class_tofstream}{Tofstream}} oss(m\_fp);}
+\DoxyCodeLine{00498   assert(compressedRas-\/>getLy() == 1 \&\& compressedRas-\/>getPixelSize() == 1);}
+\DoxyCodeLine{00499   TUINT32 size = compressedRas-\/>getLx();}
+\DoxyCodeLine{00500   oss.write((\textcolor{keywordtype}{char} *)\&size, \textcolor{keyword}{sizeof}(TUINT32));}
+\DoxyCodeLine{00501   oss.write((\textcolor{keywordtype}{char} *)compressedRas-\/>\mbox{\hyperlink{class_t_raster_a5ce02b7e8a5b8b594863aa272d8dcdbc}{getRawData}}(), size);}
+\DoxyCodeLine{00502   assert(!oss.fail());}
+\DoxyCodeLine{00503 }
+\DoxyCodeLine{00504   compressedRas-\/>unlock();}
+\DoxyCodeLine{00505 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_compressed_on_disk_cache_item_a00ebfa3e6c746c560b2021692c15d98c}\label{class_compressed_on_disk_cache_item_a00ebfa3e6c746c560b2021692c15d98c}} 
+\index{CompressedOnDiskCacheItem@{CompressedOnDiskCacheItem}!````~CompressedOnDiskCacheItem@{$\sim$CompressedOnDiskCacheItem}}
+\index{````~CompressedOnDiskCacheItem@{$\sim$CompressedOnDiskCacheItem}!CompressedOnDiskCacheItem@{CompressedOnDiskCacheItem}}
+\doxysubsubsection{\texorpdfstring{$\sim$CompressedOnDiskCacheItem()}{~CompressedOnDiskCacheItem()}}
+{\footnotesize\ttfamily Compressed\+On\+Disk\+Cache\+Item\+::$\sim$\+Compressed\+On\+Disk\+Cache\+Item (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00509                                                       \{}
+\DoxyCodeLine{00510   \textcolor{keyword}{delete} m\_imageInfo;}
+\DoxyCodeLine{00511   TSystem::deleteFile(m\_fp);}
+\DoxyCodeLine{00512 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_compressed_on_disk_cache_item_a6ae3529fefad7ab6ecadaff811afd305}\label{class_compressed_on_disk_cache_item_a6ae3529fefad7ab6ecadaff811afd305}} 
+\index{CompressedOnDiskCacheItem@{CompressedOnDiskCacheItem}!getImage@{getImage}}
+\index{getImage@{getImage}!CompressedOnDiskCacheItem@{CompressedOnDiskCacheItem}}
+\doxysubsubsection{\texorpdfstring{getImage()}{getImage()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} Compressed\+On\+Disk\+Cache\+Item\+::get\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_cache_item}{Cache\+Item}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00516                                                   \{}
+\DoxyCodeLine{00517   \mbox{\hyperlink{class_tifstream}{Tifstream}} is(m\_fp);}
+\DoxyCodeLine{00518   TUINT32 dataSize;}
+\DoxyCodeLine{00519   is.read((\textcolor{keywordtype}{char} *)\&dataSize, \textcolor{keyword}{sizeof}(TUINT32));}
+\DoxyCodeLine{00520   \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}} ras(dataSize, 1);}
+\DoxyCodeLine{00521   ras-\/>lock();}
+\DoxyCodeLine{00522   UCHAR *data = ras-\/>getRawData();}
+\DoxyCodeLine{00523   is.read((\textcolor{keywordtype}{char} *)data, dataSize);}
+\DoxyCodeLine{00524   assert(!is.fail());}
+\DoxyCodeLine{00525   ras-\/>unlock();}
+\DoxyCodeLine{00526   \mbox{\hyperlink{class_compressed_on_memory_cache_item}{CompressedOnMemoryCacheItem}} item(ras, m\_builder-\/>clone(),}
+\DoxyCodeLine{00527                                    m\_imageInfo-\/>clone());}
+\DoxyCodeLine{00528   \textcolor{keywordflow}{return} item.getImage();}
+\DoxyCodeLine{00529 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_compressed_on_disk_cache_item_ad9119a971a02bb3fb190c03f314827fe}\label{class_compressed_on_disk_cache_item_ad9119a971a02bb3fb190c03f314827fe}} 
+\index{CompressedOnDiskCacheItem@{CompressedOnDiskCacheItem}!getSize@{getSize}}
+\index{getSize@{getSize}!CompressedOnDiskCacheItem@{CompressedOnDiskCacheItem}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily TUINT32 Compressed\+On\+Disk\+Cache\+Item\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_cache_item}{Cache\+Item}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00476 \{ \textcolor{keywordflow}{return} 0; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_compressed_on_disk_cache_item_a4cd686e0a7645af6a797c49a8b002501}\label{class_compressed_on_disk_cache_item_a4cd686e0a7645af6a797c49a8b002501}} 
+\index{CompressedOnDiskCacheItem@{CompressedOnDiskCacheItem}!m\_fp@{m\_fp}}
+\index{m\_fp@{m\_fp}!CompressedOnDiskCacheItem@{CompressedOnDiskCacheItem}}
+\doxysubsubsection{\texorpdfstring{m\_fp}{m\_fp}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} Compressed\+On\+Disk\+Cache\+Item\+::m\+\_\+fp}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tcache/timagecache.\+cpp\end{DoxyCompactItemize}

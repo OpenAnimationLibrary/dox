@@ -1,0 +1,263 @@
+\hypertarget{class_mesh_texturizer_1_1_imp}{}\doxysection{Mesh\+Texturizer\+::Imp Class Reference}
+\label{class_mesh_texturizer_1_1_imp}\index{MeshTexturizer::Imp@{MeshTexturizer::Imp}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_mesh_texturizer_1_1_imp_a5e12bd67c640a1b5ab7d354c736c969d}{test\+Texture\+Alloc}} (int lx, int ly)
+\item 
+GLuint \mbox{\hyperlink{class_mesh_texturizer_1_1_imp_a0e8b54944fd3a56cabe312b3f0ba930a}{texture\+Alloc}} (const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&ras, const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&aux, int x, int y, int texture\+Lx, int texture\+Ly, bool premultiplied)
+\item 
+void \mbox{\hyperlink{class_mesh_texturizer_1_1_imp_a2ac4fc5fb1ef3948b401ce4fd6cc0c3c}{allocate\+Textures}} (int group\+Idx, const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&ras, const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&aux, int x, int y, int texture\+Lx, int texture\+Ly, bool premultiplied)
+\item 
+\mbox{\hyperlink{struct_mesh_texturizer_1_1_texture_data}{Texture\+Data}} $\ast$ \mbox{\hyperlink{class_mesh_texturizer_1_1_imp_ae5bac730e4ccba7cd4567afe3b138c1e}{get\+Texture\+Data}} (int group\+Idx)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QRead\+Write\+Lock \mbox{\hyperlink{class_mesh_texturizer_1_1_imp_a3985e022aa54184722ecd43c5c39fd86}{m\+\_\+lock}}
+\begin{DoxyCompactList}\small\item\em Lock for synchronized access. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtcg_1_1list}{tcg\+::list}}$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{struct_mesh_texturizer_1_1_texture_data}{Texture\+Data}} $>$ $>$ \mbox{\hyperlink{class_mesh_texturizer_1_1_imp_a19ffd8433cdb3be6a4d8f27dffdd0a93}{m\+\_\+texture\+Datas}}
+\begin{DoxyCompactList}\small\item\em Pool of texture datas. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_mesh_texturizer_1_1_imp_a97bcaba912cc980264899b681cb15e3f}\label{class_mesh_texturizer_1_1_imp_a97bcaba912cc980264899b681cb15e3f}} 
+\index{MeshTexturizer::Imp@{MeshTexturizer::Imp}!Imp@{Imp}}
+\index{Imp@{Imp}!MeshTexturizer::Imp@{MeshTexturizer::Imp}}
+\doxysubsubsection{\texorpdfstring{Imp()}{Imp()}}
+{\footnotesize\ttfamily Mesh\+Texturizer\+::\+Imp\+::\+Imp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00058 : \mbox{\hyperlink{class_mesh_texturizer_1_1_imp_a3985e022aa54184722ecd43c5c39fd86}{m\_lock}}(QReadWriteLock::Recursive) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_mesh_texturizer_1_1_imp_a2ac4fc5fb1ef3948b401ce4fd6cc0c3c}\label{class_mesh_texturizer_1_1_imp_a2ac4fc5fb1ef3948b401ce4fd6cc0c3c}} 
+\index{MeshTexturizer::Imp@{MeshTexturizer::Imp}!allocateTextures@{allocateTextures}}
+\index{allocateTextures@{allocateTextures}!MeshTexturizer::Imp@{MeshTexturizer::Imp}}
+\doxysubsubsection{\texorpdfstring{allocateTextures()}{allocateTextures()}}
+{\footnotesize\ttfamily void Mesh\+Texturizer\+::\+Imp\+::allocate\+Textures (\begin{DoxyParamCaption}\item[{int}]{group\+Idx,  }\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&}]{ras,  }\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&}]{aux,  }\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{texture\+Lx,  }\item[{int}]{texture\+Ly,  }\item[{bool}]{premultiplied }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00194                                                                \{}
+\DoxyCodeLine{00195   TextureData *data = \mbox{\hyperlink{class_mesh_texturizer_1_1_imp_a19ffd8433cdb3be6a4d8f27dffdd0a93}{m\_textureDatas}}[groupIdx].get();}
+\DoxyCodeLine{00196 }
+\DoxyCodeLine{00197   \textcolor{comment}{// Test the specified texture allocation}}
+\DoxyCodeLine{00198   \textcolor{keywordflow}{if} (testTextureAlloc(textureLx, textureLy)) \{}
+\DoxyCodeLine{00199     \mbox{\hyperlink{class_t_point_t}{TPointD}} scale(data-\/>m\_geom.getLx() / (\textcolor{keywordtype}{double})ras-\/>getLx(),}
+\DoxyCodeLine{00200                   data-\/>m\_geom.getLy() / (\textcolor{keywordtype}{double})ras-\/>getLy());}
+\DoxyCodeLine{00201     \mbox{\hyperlink{class_t_rect_t}{TRectD}} tileGeom(\mbox{\hyperlink{class_t_rect_t}{TRectD}}(scale.x * (x -\/ TOTAL\_BORDER),}
+\DoxyCodeLine{00202                            scale.y * (y -\/ TOTAL\_BORDER),}
+\DoxyCodeLine{00203                            scale.x * (x + textureLx + TOTAL\_BORDER),}
+\DoxyCodeLine{00204                            scale.y * (y + textureLy + TOTAL\_BORDER)) +}
+\DoxyCodeLine{00205                     data-\/>m\_geom.getP00());}
+\DoxyCodeLine{00206 }
+\DoxyCodeLine{00207     GLuint texId =}
+\DoxyCodeLine{00208         textureAlloc(ras, aux, x, y, textureLx, textureLy, premultiplied);}
+\DoxyCodeLine{00209 }
+\DoxyCodeLine{00210     TextureData::TileData td = \{texId, tileGeom\};}
+\DoxyCodeLine{00211     data-\/>m\_tileDatas.push\_back(td);}
+\DoxyCodeLine{00212 }
+\DoxyCodeLine{00213     assert(glGetError() == GL\_NO\_ERROR);}
+\DoxyCodeLine{00214     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00215   \}}
+\DoxyCodeLine{00216 }
+\DoxyCodeLine{00217   \textcolor{keywordflow}{if} (textureLx <= 1 \&\& textureLy <= 1) \textcolor{keywordflow}{return};  \textcolor{comment}{// No texture can be allocated}}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219   \textcolor{comment}{// The texture could not be allocated. Then, bisecate and branch.}}
+\DoxyCodeLine{00220   \textcolor{keywordflow}{if} (textureLx > textureLy) \{}
+\DoxyCodeLine{00221     \textcolor{keywordtype}{int} textureLx\_2 = textureLx >> 1;}
+\DoxyCodeLine{00222     allocateTextures(groupIdx, ras, aux, x, y, textureLx\_2, textureLy,}
+\DoxyCodeLine{00223                      premultiplied);}
+\DoxyCodeLine{00224     allocateTextures(groupIdx, ras, aux, x + textureLx\_2, y, textureLx\_2,}
+\DoxyCodeLine{00225                      textureLy, premultiplied);}
+\DoxyCodeLine{00226   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00227     \textcolor{keywordtype}{int} textureLy\_2 = textureLy >> 1;}
+\DoxyCodeLine{00228     allocateTextures(groupIdx, ras, aux, x, y, textureLx, textureLy\_2,}
+\DoxyCodeLine{00229                      premultiplied);}
+\DoxyCodeLine{00230     allocateTextures(groupIdx, ras, aux, x, y + textureLy\_2, textureLx,}
+\DoxyCodeLine{00231                      textureLy\_2, premultiplied);}
+\DoxyCodeLine{00232   \}}
+\DoxyCodeLine{00233 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_mesh_texturizer_1_1_imp_ae5bac730e4ccba7cd4567afe3b138c1e}\label{class_mesh_texturizer_1_1_imp_ae5bac730e4ccba7cd4567afe3b138c1e}} 
+\index{MeshTexturizer::Imp@{MeshTexturizer::Imp}!getTextureData@{getTextureData}}
+\index{getTextureData@{getTextureData}!MeshTexturizer::Imp@{MeshTexturizer::Imp}}
+\doxysubsubsection{\texorpdfstring{getTextureData()}{getTextureData()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_mesh_texturizer_1_1_texture_data}{Mesh\+Texturizer\+::\+Texture\+Data}} $\ast$ Mesh\+Texturizer\+::\+Imp\+::get\+Texture\+Data (\begin{DoxyParamCaption}\item[{int}]{group\+Idx }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00237                                                                          \{}
+\DoxyCodeLine{00238   \textcolor{keyword}{typedef} \mbox{\hyperlink{struct_mesh_texturizer_1_1_texture_data}{MeshTexturizer::TextureData}} TextureData;}
+\DoxyCodeLine{00239 }
+\DoxyCodeLine{00240   \textcolor{comment}{// Copy tile datas container}}
+\DoxyCodeLine{00241   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_mesh_texturizer_1_1_imp_a19ffd8433cdb3be6a4d8f27dffdd0a93}{m\_textureDatas}}[groupIdx].get();}
+\DoxyCodeLine{00242 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_mesh_texturizer_1_1_imp_a5e12bd67c640a1b5ab7d354c736c969d}\label{class_mesh_texturizer_1_1_imp_a5e12bd67c640a1b5ab7d354c736c969d}} 
+\index{MeshTexturizer::Imp@{MeshTexturizer::Imp}!testTextureAlloc@{testTextureAlloc}}
+\index{testTextureAlloc@{testTextureAlloc}!MeshTexturizer::Imp@{MeshTexturizer::Imp}}
+\doxysubsubsection{\texorpdfstring{testTextureAlloc()}{testTextureAlloc()}}
+{\footnotesize\ttfamily bool Mesh\+Texturizer\+::\+Imp\+::test\+Texture\+Alloc (\begin{DoxyParamCaption}\item[{int}]{lx,  }\item[{int}]{ly }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073                                                        \{}
+\DoxyCodeLine{00074   GLuint texName;}
+\DoxyCodeLine{00075   glEnable(GL\_TEXTURE\_2D);}
+\DoxyCodeLine{00076   glGenTextures(1, \&texName);}
+\DoxyCodeLine{00077   glBindTexture(GL\_TEXTURE\_2D, texName);}
+\DoxyCodeLine{00078 }
+\DoxyCodeLine{00079   lx += TOTAL\_BORDER\_2, ly += TOTAL\_BORDER\_2;  \textcolor{comment}{// Add border}}
+\DoxyCodeLine{00080 }
+\DoxyCodeLine{00081   \textcolor{keywordtype}{int} max\_texture\_size;}
+\DoxyCodeLine{00082   glGetIntegerv(GL\_MAX\_TEXTURE\_SIZE, \&max\_texture\_size);}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084   glTexImage2D(GL\_PROXY\_TEXTURE\_2D,}
+\DoxyCodeLine{00085                0,                 \textcolor{comment}{// one level only}}
+\DoxyCodeLine{00086                GL\_RGBA,           \textcolor{comment}{// number of pixel channels}}
+\DoxyCodeLine{00087                lx,                \textcolor{comment}{// width}}
+\DoxyCodeLine{00088                ly,                \textcolor{comment}{// height}}
+\DoxyCodeLine{00089                0,                 \textcolor{comment}{// border size}}
+\DoxyCodeLine{00090                TGL\_FMT,           \textcolor{comment}{// pixel format}}
+\DoxyCodeLine{00091                GL\_UNSIGNED\_BYTE,  \textcolor{comment}{// pixel data type}}
+\DoxyCodeLine{00092                0);}
+\DoxyCodeLine{00093 }
+\DoxyCodeLine{00094   \textcolor{keywordtype}{int} outLx;}
+\DoxyCodeLine{00095   glGetTexLevelParameteriv(GL\_PROXY\_TEXTURE\_2D, 0, GL\_TEXTURE\_WIDTH, \&outLx);}
+\DoxyCodeLine{00096 }
+\DoxyCodeLine{00097   glDeleteTextures(1, \&texName);}
+\DoxyCodeLine{00098   assert(glGetError() == GL\_NO\_ERROR);}
+\DoxyCodeLine{00099   \textcolor{keywordflow}{return} (lx == outLx);}
+\DoxyCodeLine{00100 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_mesh_texturizer_1_1_imp_a0e8b54944fd3a56cabe312b3f0ba930a}\label{class_mesh_texturizer_1_1_imp_a0e8b54944fd3a56cabe312b3f0ba930a}} 
+\index{MeshTexturizer::Imp@{MeshTexturizer::Imp}!textureAlloc@{textureAlloc}}
+\index{textureAlloc@{textureAlloc}!MeshTexturizer::Imp@{MeshTexturizer::Imp}}
+\doxysubsubsection{\texorpdfstring{textureAlloc()}{textureAlloc()}}
+{\footnotesize\ttfamily GLuint Mesh\+Texturizer\+::\+Imp\+::texture\+Alloc (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&}]{ras,  }\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&}]{aux,  }\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{texture\+Lx,  }\item[{int}]{texture\+Ly,  }\item[{bool}]{premultiplied }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107                                                              \{}
+\DoxyCodeLine{00108   \textcolor{keyword}{struct }locals \{}
+\DoxyCodeLine{00109     \textcolor{keyword}{static} \textcolor{keywordtype}{void} clearMatte(\textcolor{keyword}{const} \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&ras, \textcolor{keywordtype}{int} xBegin, \textcolor{keywordtype}{int} yBegin,}
+\DoxyCodeLine{00110                            \textcolor{keywordtype}{int} xEnd, \textcolor{keywordtype}{int} yEnd) \{}
+\DoxyCodeLine{00111       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = yBegin; y != yEnd; ++y) \{}
+\DoxyCodeLine{00112         TPixel32 *line = ras-\/>pixels(y), *pixEnd = line + xEnd;}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114         \textcolor{keywordflow}{for} (TPixel32 *pix = line + xBegin; pix != pixEnd; ++pix) pix-\/>m = 0;}
+\DoxyCodeLine{00115       \}}
+\DoxyCodeLine{00116     \}}
+\DoxyCodeLine{00117 }
+\DoxyCodeLine{00118     \textcolor{keyword}{static} \textcolor{keywordtype}{void} clearMatte\_border(\textcolor{keyword}{const} \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&ras, \textcolor{keywordtype}{int} border0,}
+\DoxyCodeLine{00119                                   \textcolor{keywordtype}{int} border1) \{}
+\DoxyCodeLine{00120       assert(border0 < border1);}
+\DoxyCodeLine{00121 }
+\DoxyCodeLine{00122       \textcolor{comment}{// Horizontal}}
+\DoxyCodeLine{00123       clearMatte(ras, border0, border0, ras-\/>getLx() -\/ border0, border1);}
+\DoxyCodeLine{00124       clearMatte(ras, border0, ras-\/>getLy() -\/ border1, ras-\/>getLx() -\/ border0,}
+\DoxyCodeLine{00125                  ras-\/>getLy() -\/ border0);}
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127       \textcolor{comment}{// Vertical}}
+\DoxyCodeLine{00128       clearMatte(ras, border0, border1, border1, ras-\/>getLy() -\/ border1);}
+\DoxyCodeLine{00129       clearMatte(ras, ras-\/>getLx() -\/ border1, border1, ras-\/>getLx() -\/ border0,}
+\DoxyCodeLine{00130                  ras-\/>getLy() -\/ border1);}
+\DoxyCodeLine{00131     \}}
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00133   \};  \textcolor{comment}{// locals}}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135   \textcolor{comment}{// Prepare the texture tile}}
+\DoxyCodeLine{00136   assert(aux-\/>getLx() >= textureLx + TOTAL\_BORDER\_2 \&\&}
+\DoxyCodeLine{00137          aux-\/>getLy() >= textureLy + TOTAL\_BORDER\_2);}
+\DoxyCodeLine{00138 }
+\DoxyCodeLine{00139   \mbox{\hyperlink{class_t_rect_t}{TRect}} rasRect(x, y, x + textureLx -\/ 1, y + textureLy -\/ 1);}
+\DoxyCodeLine{00140   rasRect = rasRect.enlarge(premultiplied ? COPIED\_BORDER}
+\DoxyCodeLine{00141                                           : COPIED\_BORDER + NONPREM\_BORDER);}
+\DoxyCodeLine{00142   rasRect = rasRect * ras-\/>getBounds();}
+\DoxyCodeLine{00143 }
+\DoxyCodeLine{00144   \mbox{\hyperlink{class_t_rect_t}{TRect}} auxRect(rasRect -\/ \mbox{\hyperlink{class_t_point_t}{TPoint}}(x -\/ TOTAL\_BORDER, y -\/ TOTAL\_BORDER));}
+\DoxyCodeLine{00145 }
+\DoxyCodeLine{00146   \textcolor{comment}{// An auxiliary raster must be used to supply the transparent border}}
+\DoxyCodeLine{00147   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} tex(aux-\/>extract(0, 0, textureLx + TOTAL\_BORDER\_2 -\/ 1,}
+\DoxyCodeLine{00148                               textureLy + TOTAL\_BORDER\_2 -\/ 1));}
+\DoxyCodeLine{00149   tex-\/>clear();}
+\DoxyCodeLine{00150   aux-\/>extract(auxRect)-\/>copy(ras-\/>extract(rasRect));}
+\DoxyCodeLine{00151 }
+\DoxyCodeLine{00152   \textcolor{keywordflow}{if} (!premultiplied \&\& NONPREM\_BORDER > 0) \{}
+\DoxyCodeLine{00153     locals::clearMatte\_border(tex, TRANSP\_BORDER -\/ NONPREM\_BORDER,}
+\DoxyCodeLine{00154                               TRANSP\_BORDER);}
+\DoxyCodeLine{00155     TRop::expandColor(tex, \textcolor{keyword}{true});  \textcolor{comment}{// precise is always true for now}}
+\DoxyCodeLine{00156   \}}
+\DoxyCodeLine{00157 }
+\DoxyCodeLine{00158   \textcolor{comment}{// Pass the raster into VRAM}}
+\DoxyCodeLine{00159   GLuint texId;}
+\DoxyCodeLine{00160   glGenTextures(1, \&texId);}
+\DoxyCodeLine{00161   glBindTexture(GL\_TEXTURE\_2D, texId);}
+\DoxyCodeLine{00162 }
+\DoxyCodeLine{00163   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_WRAP\_S,}
+\DoxyCodeLine{00164                   GL\_CLAMP);  \textcolor{comment}{// These must be used on a bound texture,}}
+\DoxyCodeLine{00165   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_WRAP\_T,}
+\DoxyCodeLine{00166                   GL\_CLAMP);  \textcolor{comment}{// and are remembered in the OpenGL context.}}
+\DoxyCodeLine{00167   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_MAG\_FILTER,}
+\DoxyCodeLine{00168                   GL\_LINEAR);  \textcolor{comment}{// They can be set here, no need for}}
+\DoxyCodeLine{00169   glTexParameteri(GL\_TEXTURE\_2D, GL\_TEXTURE\_MIN\_FILTER,}
+\DoxyCodeLine{00170                   GL\_LINEAR);  \textcolor{comment}{// the user to do it.}}
+\DoxyCodeLine{00171 }
+\DoxyCodeLine{00172   glPixelStorei(GL\_UNPACK\_ROW\_LENGTH, tex-\/>getWrap());}
+\DoxyCodeLine{00173   glPixelStorei(GL\_UNPACK\_ALIGNMENT, 1);}
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00175   glTexImage2D(GL\_TEXTURE\_2D,}
+\DoxyCodeLine{00176                0,                 \textcolor{comment}{// one level only}}
+\DoxyCodeLine{00177                GL\_RGBA,           \textcolor{comment}{// pixel channels count}}
+\DoxyCodeLine{00178                tex-\/>getLx(),      \textcolor{comment}{// width}}
+\DoxyCodeLine{00179                tex-\/>getLy(),      \textcolor{comment}{// height}}
+\DoxyCodeLine{00180                0,                 \textcolor{comment}{// border size}}
+\DoxyCodeLine{00181                TGL\_FMT,           \textcolor{comment}{// pixel format}}
+\DoxyCodeLine{00182                GL\_UNSIGNED\_BYTE,  \textcolor{comment}{// pixel data type}}
+\DoxyCodeLine{00183                (GLvoid *)tex-\/>getRawData());}
+\DoxyCodeLine{00184   assert(glGetError() == GL\_NO\_ERROR);}
+\DoxyCodeLine{00185 }
+\DoxyCodeLine{00186   \textcolor{keywordflow}{return} texId;}
+\DoxyCodeLine{00187 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_mesh_texturizer_1_1_imp_a3985e022aa54184722ecd43c5c39fd86}\label{class_mesh_texturizer_1_1_imp_a3985e022aa54184722ecd43c5c39fd86}} 
+\index{MeshTexturizer::Imp@{MeshTexturizer::Imp}!m\_lock@{m\_lock}}
+\index{m\_lock@{m\_lock}!MeshTexturizer::Imp@{MeshTexturizer::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_lock}{m\_lock}}
+{\footnotesize\ttfamily QRead\+Write\+Lock Mesh\+Texturizer\+::\+Imp\+::m\+\_\+lock}
+
+
+
+Lock for synchronized access. 
+
+\mbox{\Hypertarget{class_mesh_texturizer_1_1_imp_a19ffd8433cdb3be6a4d8f27dffdd0a93}\label{class_mesh_texturizer_1_1_imp_a19ffd8433cdb3be6a4d8f27dffdd0a93}} 
+\index{MeshTexturizer::Imp@{MeshTexturizer::Imp}!m\_textureDatas@{m\_textureDatas}}
+\index{m\_textureDatas@{m\_textureDatas}!MeshTexturizer::Imp@{MeshTexturizer::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_textureDatas}{m\_textureDatas}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classtcg_1_1list}{tcg\+::list}}$<$std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{struct_mesh_texturizer_1_1_texture_data}{Texture\+Data}}$>$ $>$ Mesh\+Texturizer\+::\+Imp\+::m\+\_\+texture\+Datas}
+
+
+
+Pool of texture datas. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnzext/meshtexturizer.\+cpp\end{DoxyCompactItemize}

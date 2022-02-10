@@ -1,0 +1,385 @@
+\hypertarget{class_shortcut_popup}{}\doxysection{Shortcut\+Popup Class Reference}
+\label{class_shortcut_popup}\index{ShortcutPopup@{ShortcutPopup}}
+Inheritance diagram for Shortcut\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_shortcut_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_shortcut_popup_a3a154c9d893628834e720d8d2634cfbd}{clear\+All\+Shortcuts}} (bool warning=true)
+\item 
+void \mbox{\hyperlink{class_shortcut_popup_ab0996d129ee2da72cb73236ae0757c60}{on\+Search\+Text\+Changed}} (const QString \&text)
+\item 
+void \mbox{\hyperlink{class_shortcut_popup_a6e40936b98cff8924a99388ed8dc7d83}{on\+Preset\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_shortcut_popup_a69cbdb29d25cefebd52e9c922706a7c4}{on\+Export\+Button}} (\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} fp=\mbox{\hyperlink{class_t_file_path}{TFile\+Path}}())
+\item 
+void \mbox{\hyperlink{class_shortcut_popup_acc48daa4b98fdecafe586226be652668}{on\+Delete\+Preset}} ()
+\item 
+void \mbox{\hyperlink{class_shortcut_popup_a669a5d5195439223b7599d689a02b5e3}{on\+Save\+Preset}} ()
+\item 
+void \mbox{\hyperlink{class_shortcut_popup_a9da466259859b73a1f605d5d0ed475b9}{on\+Load\+Preset}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_shortcut_popup_af558eea19cba2a65709466f2a5a27019}\label{class_shortcut_popup_af558eea19cba2a65709466f2a5a27019}} 
+\index{ShortcutPopup@{ShortcutPopup}!ShortcutPopup@{ShortcutPopup}}
+\index{ShortcutPopup@{ShortcutPopup}!ShortcutPopup@{ShortcutPopup}}
+\doxysubsubsection{\texorpdfstring{ShortcutPopup()}{ShortcutPopup()}}
+{\footnotesize\ttfamily Shortcut\+Popup\+::\+Shortcut\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00353     : Dialog(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{false}, \textcolor{keyword}{false}, \textcolor{stringliteral}{"{}Shortcut"{}}) \{}
+\DoxyCodeLine{00354   setWindowTitle(tr(\textcolor{stringliteral}{"{}Configure Shortcuts"{}}));}
+\DoxyCodeLine{00355   m\_presetChoiceCB = \textcolor{keyword}{new} QComboBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00356   buildPresets();}
+\DoxyCodeLine{00357 }
+\DoxyCodeLine{00358   m\_presetChoiceCB-\/>setCurrentIndex(0);}
+\DoxyCodeLine{00359   m\_list = \textcolor{keyword}{new} \mbox{\hyperlink{class_shortcut_tree}{ShortcutTree}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00360   m\_list-\/>setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);}
+\DoxyCodeLine{00361   m\_list-\/>setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);}
+\DoxyCodeLine{00362   m\_list-\/>setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);}
+\DoxyCodeLine{00363 }
+\DoxyCodeLine{00364   m\_sViewer            = \textcolor{keyword}{new} \mbox{\hyperlink{class_shortcut_viewer}{ShortcutViewer}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00365   m\_removeBtn          = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Remove"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00366   m\_loadShortcutsPopup = NULL;}
+\DoxyCodeLine{00367   m\_saveShortcutsPopup = NULL;}
+\DoxyCodeLine{00368   m\_dialog             = NULL;}
+\DoxyCodeLine{00369   m\_exportButton       = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Export Current Shortcuts"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00370   m\_exportButton-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Export Current Shortcuts"{}}));}
+\DoxyCodeLine{00371   m\_deletePresetButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Delete"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00372   m\_deletePresetButton-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Delete Current Preset"{}}));}
+\DoxyCodeLine{00373   m\_deletePresetButton-\/>setIcon(createQIcon(\textcolor{stringliteral}{"{}delete"{}}));}
+\DoxyCodeLine{00374   m\_savePresetButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Save As"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00375   m\_savePresetButton-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Save Current Shortcuts as New Preset"{}}));}
+\DoxyCodeLine{00376   m\_savePresetButton-\/>setIcon(createQIcon(\textcolor{stringliteral}{"{}saveas"{}}));}
+\DoxyCodeLine{00377   m\_loadPresetButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Load"{}}));}
+\DoxyCodeLine{00378   m\_loadPresetButton-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Use selected preset as shortcuts"{}}));}
+\DoxyCodeLine{00379   m\_loadPresetButton-\/>setIcon(createQIcon(\textcolor{stringliteral}{"{}load"{}}));}
+\DoxyCodeLine{00380   QGroupBox *presetBox = \textcolor{keyword}{new} QGroupBox(tr(\textcolor{stringliteral}{"{}Shortcut Presets"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00381   presetBox-\/>setObjectName(\textcolor{stringliteral}{"{}SolidLineFrame"{}});}
+\DoxyCodeLine{00382   m\_clearAllShortcutsButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Clear All Shortcuts"{}}));}
+\DoxyCodeLine{00383   QLabel *noSearchResultLabel =}
+\DoxyCodeLine{00384       \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Couldn't find any matching command."{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00385   noSearchResultLabel-\/>setHidden(\textcolor{keyword}{true});}
+\DoxyCodeLine{00386 }
+\DoxyCodeLine{00387   QLineEdit *searchEdit = \textcolor{keyword}{new} QLineEdit(\textcolor{keyword}{this});}
+\DoxyCodeLine{00388 }
+\DoxyCodeLine{00389   m\_topLayout-\/>setMargin(5);}
+\DoxyCodeLine{00390   m\_topLayout-\/>setSpacing(8);}
+\DoxyCodeLine{00391   \{}
+\DoxyCodeLine{00392     QHBoxLayout *searchLay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00393     searchLay-\/>setMargin(0);}
+\DoxyCodeLine{00394     searchLay-\/>setSpacing(5);}
+\DoxyCodeLine{00395     \{}
+\DoxyCodeLine{00396       searchLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Search:"{}}), \textcolor{keyword}{this}), 0);}
+\DoxyCodeLine{00397       searchLay-\/>addWidget(searchEdit);}
+\DoxyCodeLine{00398     \}}
+\DoxyCodeLine{00399     m\_topLayout-\/>addLayout(searchLay, 0);}
+\DoxyCodeLine{00400 }
+\DoxyCodeLine{00401     QVBoxLayout *listLay = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00402     listLay-\/>setMargin(0);}
+\DoxyCodeLine{00403     listLay-\/>setSpacing(0);}
+\DoxyCodeLine{00404     \{}
+\DoxyCodeLine{00405       listLay-\/>addWidget(noSearchResultLabel, 0,}
+\DoxyCodeLine{00406                          Qt::AlignTop | Qt::AlignHCenter);}
+\DoxyCodeLine{00407       listLay-\/>addWidget(m\_list, 1);}
+\DoxyCodeLine{00408     \}}
+\DoxyCodeLine{00409     m\_topLayout-\/>addLayout(listLay, 1);}
+\DoxyCodeLine{00410 }
+\DoxyCodeLine{00411     QHBoxLayout *bottomLayout = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00412     bottomLayout-\/>setMargin(0);}
+\DoxyCodeLine{00413     bottomLayout-\/>setSpacing(1);}
+\DoxyCodeLine{00414     \{}
+\DoxyCodeLine{00415       bottomLayout-\/>addWidget(m\_sViewer, 1);}
+\DoxyCodeLine{00416       bottomLayout-\/>addWidget(m\_removeBtn, 0);}
+\DoxyCodeLine{00417     \}}
+\DoxyCodeLine{00418     m\_topLayout-\/>addLayout(bottomLayout, 0);}
+\DoxyCodeLine{00419     m\_topLayout-\/>addSpacing(10);}
+\DoxyCodeLine{00420     QHBoxLayout *presetLay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00421     presetLay-\/>setMargin(5);}
+\DoxyCodeLine{00422     presetLay-\/>setSpacing(5);}
+\DoxyCodeLine{00423     \{}
+\DoxyCodeLine{00424       presetLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Preset:"{}}), \textcolor{keyword}{this}), 0);}
+\DoxyCodeLine{00425       presetLay-\/>addWidget(m\_presetChoiceCB, 1);}
+\DoxyCodeLine{00426       presetLay-\/>addWidget(m\_loadPresetButton, 0);}
+\DoxyCodeLine{00427       presetLay-\/>addWidget(m\_savePresetButton, 0);}
+\DoxyCodeLine{00428       presetLay-\/>addWidget(m\_deletePresetButton, 0);}
+\DoxyCodeLine{00429     \}}
+\DoxyCodeLine{00430     presetBox-\/>setLayout(presetLay);}
+\DoxyCodeLine{00431     m\_topLayout-\/>addWidget(presetBox, 0, Qt::AlignCenter);}
+\DoxyCodeLine{00432     m\_topLayout-\/>addSpacing(10);}
+\DoxyCodeLine{00433     QHBoxLayout *exportLay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00434     exportLay-\/>setMargin(0);}
+\DoxyCodeLine{00435     exportLay-\/>setSpacing(5);}
+\DoxyCodeLine{00436     \{}
+\DoxyCodeLine{00437       exportLay-\/>addWidget(m\_exportButton, 0);}
+\DoxyCodeLine{00438       exportLay-\/>addWidget(m\_clearAllShortcutsButton, 0);}
+\DoxyCodeLine{00439     \}}
+\DoxyCodeLine{00440     m\_topLayout-\/>addLayout(exportLay, 0);}
+\DoxyCodeLine{00441     \textcolor{comment}{// m\_topLayout-\/>addWidget(m\_exportButton, 0);}}
+\DoxyCodeLine{00442   \}}
+\DoxyCodeLine{00443 }
+\DoxyCodeLine{00444   connect(m\_list, SIGNAL(actionSelected(QAction *)), m\_sViewer,}
+\DoxyCodeLine{00445           SLOT(setAction(QAction *)));}
+\DoxyCodeLine{00446 }
+\DoxyCodeLine{00447   connect(m\_removeBtn, SIGNAL(clicked()), m\_sViewer, SLOT(removeShortcut()));}
+\DoxyCodeLine{00448 }
+\DoxyCodeLine{00449   connect(m\_sViewer, SIGNAL(shortcutChanged()), m\_list,}
+\DoxyCodeLine{00450           SLOT(onShortcutChanged()));}
+\DoxyCodeLine{00451 }
+\DoxyCodeLine{00452   connect(m\_list, SIGNAL(searched(\textcolor{keywordtype}{bool})), noSearchResultLabel,}
+\DoxyCodeLine{00453           SLOT(setHidden(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00454   connect(searchEdit, SIGNAL(textChanged(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00455           SLOT(onSearchTextChanged(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00456   connect(m\_presetChoiceCB, SIGNAL(currentIndexChanged(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00457           SLOT(onPresetChanged()));}
+\DoxyCodeLine{00458   connect(m\_exportButton, SIGNAL(clicked()), SLOT(onExportButton()));}
+\DoxyCodeLine{00459   connect(m\_deletePresetButton, SIGNAL(clicked()), SLOT(onDeletePreset()));}
+\DoxyCodeLine{00460   connect(m\_savePresetButton, SIGNAL(clicked()), SLOT(onSavePreset()));}
+\DoxyCodeLine{00461   connect(m\_loadPresetButton, SIGNAL(clicked()), SLOT(onLoadPreset()));}
+\DoxyCodeLine{00462   connect(m\_clearAllShortcutsButton, SIGNAL(clicked()),}
+\DoxyCodeLine{00463           SLOT(clearAllShortcuts()));}
+\DoxyCodeLine{00464 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shortcut_popup_ad397402ba63a884c07ae759b524e102f}\label{class_shortcut_popup_ad397402ba63a884c07ae759b524e102f}} 
+\index{ShortcutPopup@{ShortcutPopup}!````~ShortcutPopup@{$\sim$ShortcutPopup}}
+\index{````~ShortcutPopup@{$\sim$ShortcutPopup}!ShortcutPopup@{ShortcutPopup}}
+\doxysubsubsection{\texorpdfstring{$\sim$ShortcutPopup()}{~ShortcutPopup()}}
+{\footnotesize\ttfamily Shortcut\+Popup\+::$\sim$\+Shortcut\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00468 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_shortcut_popup_a3a154c9d893628834e720d8d2634cfbd}\label{class_shortcut_popup_a3a154c9d893628834e720d8d2634cfbd}} 
+\index{ShortcutPopup@{ShortcutPopup}!clearAllShortcuts@{clearAllShortcuts}}
+\index{clearAllShortcuts@{clearAllShortcuts}!ShortcutPopup@{ShortcutPopup}}
+\doxysubsubsection{\texorpdfstring{clearAllShortcuts}{clearAllShortcuts}}
+{\footnotesize\ttfamily void Shortcut\+Popup\+::clear\+All\+Shortcuts (\begin{DoxyParamCaption}\item[{bool}]{warning = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00490                                                   \{}
+\DoxyCodeLine{00491   \textcolor{keywordflow}{if} (warning) \{}
+\DoxyCodeLine{00492     QString question(tr(\textcolor{stringliteral}{"{}This will erase ALL shortcuts. Continue?"{}}));}
+\DoxyCodeLine{00493     \textcolor{keywordtype}{int} ret =}
+\DoxyCodeLine{00494         DVGui::MsgBox(question, QObject::tr(\textcolor{stringliteral}{"{}OK"{}}), QObject::tr(\textcolor{stringliteral}{"{}Cancel"{}}), 0);}
+\DoxyCodeLine{00495     \textcolor{keywordflow}{if} (ret == 0 || ret == 2) \{}
+\DoxyCodeLine{00496       \textcolor{comment}{// cancel (or closed message box window)}}
+\DoxyCodeLine{00497       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00498     \}}
+\DoxyCodeLine{00499     showDialog(\textcolor{stringliteral}{"{}Clearing All Shortcuts"{}});}
+\DoxyCodeLine{00500   \}}
+\DoxyCodeLine{00501   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} commandType = UndefinedCommandType; commandType <= MenuCommandType;}
+\DoxyCodeLine{00502        commandType++) \{}
+\DoxyCodeLine{00503     std::vector<QAction *> actions;}
+\DoxyCodeLine{00504     CommandManager::instance()-\/>getActions((CommandType)commandType, actions);}
+\DoxyCodeLine{00505     \textcolor{keywordflow}{for} (QAction *action : actions) \{}
+\DoxyCodeLine{00506       qApp-\/>processEvents();}
+\DoxyCodeLine{00507       m\_sViewer-\/>setAction(action);}
+\DoxyCodeLine{00508       m\_sViewer-\/>removeShortcut();}
+\DoxyCodeLine{00509     \}}
+\DoxyCodeLine{00510   \}}
+\DoxyCodeLine{00511   setCurrentPresetPref(\textcolor{stringliteral}{"{}DELETED"{}});}
+\DoxyCodeLine{00512   \textcolor{comment}{// if warning is true, this was called directly-\/ need to hide the dialog after}}
+\DoxyCodeLine{00513   \textcolor{keywordflow}{if} (warning) m\_dialog-\/>hide();}
+\DoxyCodeLine{00514 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shortcut_popup_acc48daa4b98fdecafe586226be652668}\label{class_shortcut_popup_acc48daa4b98fdecafe586226be652668}} 
+\index{ShortcutPopup@{ShortcutPopup}!onDeletePreset@{onDeletePreset}}
+\index{onDeletePreset@{onDeletePreset}!ShortcutPopup@{ShortcutPopup}}
+\doxysubsubsection{\texorpdfstring{onDeletePreset}{onDeletePreset}}
+{\footnotesize\ttfamily void Shortcut\+Popup\+::on\+Delete\+Preset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00621                                    \{}
+\DoxyCodeLine{00622   \textcolor{comment}{// change this to 5 once RETAS shortcuts are updated}}
+\DoxyCodeLine{00623   \textcolor{keywordflow}{if} (m\_presetChoiceCB-\/>currentIndex() <= 4) \{}
+\DoxyCodeLine{00624     DVGui::MsgBox(DVGui::CRITICAL, tr(\textcolor{stringliteral}{"{}Included presets cannot be deleted."{}}));}
+\DoxyCodeLine{00625     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00626   \}}
+\DoxyCodeLine{00627 }
+\DoxyCodeLine{00628   QString question(tr(\textcolor{stringliteral}{"{}Are you sure you want to delete the preset: "{}}) +}
+\DoxyCodeLine{00629                    m\_presetChoiceCB-\/>currentText() + tr(\textcolor{stringliteral}{"{}?"{}}));}
+\DoxyCodeLine{00630   \textcolor{keywordtype}{int} ret = DVGui::MsgBox(question, QObject::tr(\textcolor{stringliteral}{"{}Yes"{}}), QObject::tr(\textcolor{stringliteral}{"{}No"{}}), 0);}
+\DoxyCodeLine{00631   \textcolor{keywordflow}{if} (ret == 0 || ret == 2) \{}
+\DoxyCodeLine{00632     \textcolor{comment}{// cancel (or closed message box window)}}
+\DoxyCodeLine{00633     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00634   \}}
+\DoxyCodeLine{00635   \mbox{\hyperlink{class_t_file_path}{TFilePath}} presetDir =}
+\DoxyCodeLine{00636       ToonzFolder::getMyModuleDir() + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(\textcolor{stringliteral}{"{}shortcutpresets"{}});}
+\DoxyCodeLine{00637   QString presetName = m\_presetChoiceCB-\/>currentData().toString();}
+\DoxyCodeLine{00638   \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(presetDir +}
+\DoxyCodeLine{00639                                     \mbox{\hyperlink{class_t_file_path}{TFilePath}}(presetName + \textcolor{stringliteral}{"{}.ini"{}}))) \{}
+\DoxyCodeLine{00640     TSystem::deleteFile(presetDir + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(presetName + \textcolor{stringliteral}{"{}.ini"{}}));}
+\DoxyCodeLine{00641     buildPresets();}
+\DoxyCodeLine{00642     m\_presetChoiceCB-\/>setCurrentIndex(0);}
+\DoxyCodeLine{00643   \}}
+\DoxyCodeLine{00644   \textcolor{keywordflow}{if} (Preferences::instance()-\/>getShortcutPreset() == presetName)}
+\DoxyCodeLine{00645     setCurrentPresetPref(\textcolor{stringliteral}{"{}DELETED"{}});}
+\DoxyCodeLine{00646   getCurrentPresetPref();}
+\DoxyCodeLine{00647 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shortcut_popup_a69cbdb29d25cefebd52e9c922706a7c4}\label{class_shortcut_popup_a69cbdb29d25cefebd52e9c922706a7c4}} 
+\index{ShortcutPopup@{ShortcutPopup}!onExportButton@{onExportButton}}
+\index{onExportButton@{onExportButton}!ShortcutPopup@{ShortcutPopup}}
+\doxysubsubsection{\texorpdfstring{onExportButton}{onExportButton}}
+{\footnotesize\ttfamily void Shortcut\+Popup\+::on\+Export\+Button (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_file_path}{TFile\+Path}}}]{fp = {\ttfamily \mbox{\hyperlink{class_t_file_path}{TFile\+Path}}()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00586                                                \{}
+\DoxyCodeLine{00587   \textcolor{keywordflow}{if} (fp == \mbox{\hyperlink{class_t_file_path}{TFilePath}}()) \{}
+\DoxyCodeLine{00588     m\_saveShortcutsPopup = \textcolor{keyword}{new} \mbox{\hyperlink{class_generic_save_file_popup}{GenericSaveFilePopup}}(\textcolor{stringliteral}{"{}Save Current Shortcuts"{}});}
+\DoxyCodeLine{00589     m\_saveShortcutsPopup-\/>addFilterType(\textcolor{stringliteral}{"{}ini"{}});}
+\DoxyCodeLine{00590     fp = m\_saveShortcutsPopup-\/>\mbox{\hyperlink{class_generic_save_file_popup_a60a6017d0e411695c066c478b4974745}{getPath}}();}
+\DoxyCodeLine{00591     \textcolor{keywordflow}{if} (fp == \mbox{\hyperlink{class_t_file_path}{TFilePath}}()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00592   \}}
+\DoxyCodeLine{00593   showDialog(tr(\textcolor{stringliteral}{"{}Saving Shortcuts"{}}));}
+\DoxyCodeLine{00594 }
+\DoxyCodeLine{00595   QSettings preset(toQString(fp), QSettings::IniFormat);}
+\DoxyCodeLine{00596   preset.beginGroup(\textcolor{stringliteral}{"{}shortcuts"{}});}
+\DoxyCodeLine{00597 }
+\DoxyCodeLine{00598   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} commandType = UndefinedCommandType; commandType <= MenuCommandType;}
+\DoxyCodeLine{00599        commandType++) \{}
+\DoxyCodeLine{00600     std::vector<QAction *> actions;}
+\DoxyCodeLine{00601     CommandManager::instance()-\/>getActions((CommandType)commandType, actions);}
+\DoxyCodeLine{00602     \textcolor{keywordflow}{for} (QAction *action : actions) \{}
+\DoxyCodeLine{00603       qApp-\/>processEvents();}
+\DoxyCodeLine{00604       std::string \textcolor{keywordtype}{id} = CommandManager::instance()-\/>getIdFromAction(action);}
+\DoxyCodeLine{00605       std::string shortcut =}
+\DoxyCodeLine{00606           CommandManager::instance()-\/>getShortcutFromAction(action);}
+\DoxyCodeLine{00607       \textcolor{keywordflow}{if} (shortcut != \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{00608         preset.setValue(QString::fromStdString(\textcolor{keywordtype}{id}),}
+\DoxyCodeLine{00609                         QString::fromStdString(shortcut));}
+\DoxyCodeLine{00610       \}}
+\DoxyCodeLine{00611     \}}
+\DoxyCodeLine{00612   \}}
+\DoxyCodeLine{00613 }
+\DoxyCodeLine{00614   preset.endGroup();}
+\DoxyCodeLine{00615 }
+\DoxyCodeLine{00616   m\_dialog-\/>hide();}
+\DoxyCodeLine{00617 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shortcut_popup_a9da466259859b73a1f605d5d0ed475b9}\label{class_shortcut_popup_a9da466259859b73a1f605d5d0ed475b9}} 
+\index{ShortcutPopup@{ShortcutPopup}!onLoadPreset@{onLoadPreset}}
+\index{onLoadPreset@{onLoadPreset}!ShortcutPopup@{ShortcutPopup}}
+\doxysubsubsection{\texorpdfstring{onLoadPreset}{onLoadPreset}}
+{\footnotesize\ttfamily void Shortcut\+Popup\+::on\+Load\+Preset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00680                                  \{}
+\DoxyCodeLine{00681   QString preset = m\_presetChoiceCB-\/>currentData().toString();}
+\DoxyCodeLine{00682   \mbox{\hyperlink{class_t_file_path}{TFilePath}} presetDir;}
+\DoxyCodeLine{00683   \textcolor{keywordflow}{if} (m\_presetChoiceCB-\/>currentIndex() <= 4)}
+\DoxyCodeLine{00684     presetDir =}
+\DoxyCodeLine{00685         ToonzFolder::getProfileFolder() + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(\textcolor{stringliteral}{"{}layouts/shortcuts"{}});}
+\DoxyCodeLine{00686   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00687     presetDir = ToonzFolder::getMyModuleDir() + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(\textcolor{stringliteral}{"{}shortcutpresets"{}});}
+\DoxyCodeLine{00688 }
+\DoxyCodeLine{00689   \textcolor{keywordflow}{if} (preset.isEmpty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00690   \textcolor{keywordflow}{if} (preset == QString(\textcolor{stringliteral}{"{}LoadFromFile"{}})) \{}
+\DoxyCodeLine{00691     importPreset();}
+\DoxyCodeLine{00692     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00693   \}}
+\DoxyCodeLine{00694 }
+\DoxyCodeLine{00695   \textcolor{keywordflow}{if} (!showConfirmDialog()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00696   showDialog(tr(\textcolor{stringliteral}{"{}Setting Shortcuts"{}}));}
+\DoxyCodeLine{00697   \mbox{\hyperlink{class_t_file_path}{TFilePath}} presetFilePath(preset + \textcolor{stringliteral}{"{}.ini"{}});}
+\DoxyCodeLine{00698   \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(presetDir + presetFilePath)) \{}
+\DoxyCodeLine{00699     clearAllShortcuts(\textcolor{keyword}{false});}
+\DoxyCodeLine{00700     \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp = presetDir + presetFilePath;}
+\DoxyCodeLine{00701     setPresetShortcuts(fp);}
+\DoxyCodeLine{00702     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00703   \}}
+\DoxyCodeLine{00704   m\_dialog-\/>hide();}
+\DoxyCodeLine{00705 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shortcut_popup_a6e40936b98cff8924a99388ed8dc7d83}\label{class_shortcut_popup_a6e40936b98cff8924a99388ed8dc7d83}} 
+\index{ShortcutPopup@{ShortcutPopup}!onPresetChanged@{onPresetChanged}}
+\index{onPresetChanged@{onPresetChanged}!ShortcutPopup@{ShortcutPopup}}
+\doxysubsubsection{\texorpdfstring{onPresetChanged}{onPresetChanged}}
+{\footnotesize\ttfamily void Shortcut\+Popup\+::on\+Preset\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00482                                     \{}
+\DoxyCodeLine{00483   \textcolor{keywordflow}{if} (m\_presetChoiceCB-\/>currentData().toString() == QString(\textcolor{stringliteral}{"{}LoadFromFile"{}})) \{}
+\DoxyCodeLine{00484     importPreset();}
+\DoxyCodeLine{00485   \}}
+\DoxyCodeLine{00486 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shortcut_popup_a669a5d5195439223b7599d689a02b5e3}\label{class_shortcut_popup_a669a5d5195439223b7599d689a02b5e3}} 
+\index{ShortcutPopup@{ShortcutPopup}!onSavePreset@{onSavePreset}}
+\index{onSavePreset@{onSavePreset}!ShortcutPopup@{ShortcutPopup}}
+\doxysubsubsection{\texorpdfstring{onSavePreset}{onSavePreset}}
+{\footnotesize\ttfamily void Shortcut\+Popup\+::on\+Save\+Preset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00739                                  \{}
+\DoxyCodeLine{00740   QString presetName =}
+\DoxyCodeLine{00741       DVGui::getText(tr(\textcolor{stringliteral}{"{}Enter Preset Name"{}}), tr(\textcolor{stringliteral}{"{}Preset Name:"{}}), \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00742   \textcolor{keywordflow}{if} (presetName == \textcolor{stringliteral}{"{}"{}}) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00743   \mbox{\hyperlink{class_t_file_path}{TFilePath}} presetDir =}
+\DoxyCodeLine{00744       ToonzFolder::getMyModuleDir() + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(\textcolor{stringliteral}{"{}shortcutpresets"{}});}
+\DoxyCodeLine{00745   \textcolor{keywordflow}{if} (!TSystem::doesExistFileOrLevel(presetDir)) \{}
+\DoxyCodeLine{00746     TSystem::mkDir(presetDir);}
+\DoxyCodeLine{00747   \}}
+\DoxyCodeLine{00748   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp;}
+\DoxyCodeLine{00749   fp = presetDir + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(presetName + \textcolor{stringliteral}{"{}.ini"{}});}
+\DoxyCodeLine{00750   \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(fp)) \{}
+\DoxyCodeLine{00751     \textcolor{keywordflow}{if} (!showOverwriteDialog(QString::fromStdString(fp.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}()))) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00752   \}}
+\DoxyCodeLine{00753   onExportButton(fp);}
+\DoxyCodeLine{00754 }
+\DoxyCodeLine{00755   buildPresets();}
+\DoxyCodeLine{00756   setCurrentPresetPref(presetName);}
+\DoxyCodeLine{00757 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shortcut_popup_ab0996d129ee2da72cb73236ae0757c60}\label{class_shortcut_popup_ab0996d129ee2da72cb73236ae0757c60}} 
+\index{ShortcutPopup@{ShortcutPopup}!onSearchTextChanged@{onSearchTextChanged}}
+\index{onSearchTextChanged@{onSearchTextChanged}!ShortcutPopup@{ShortcutPopup}}
+\doxysubsubsection{\texorpdfstring{onSearchTextChanged}{onSearchTextChanged}}
+{\footnotesize\ttfamily void Shortcut\+Popup\+::on\+Search\+Text\+Changed (\begin{DoxyParamCaption}\item[{const QString \&}]{text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00472                                                            \{}
+\DoxyCodeLine{00473   \textcolor{keyword}{static} \textcolor{keywordtype}{bool} busy = \textcolor{keyword}{false};}
+\DoxyCodeLine{00474   \textcolor{keywordflow}{if} (busy) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00475   busy = \textcolor{keyword}{true};}
+\DoxyCodeLine{00476   m\_list-\/>searchItems(text);}
+\DoxyCodeLine{00477   busy = \textcolor{keyword}{false};}
+\DoxyCodeLine{00478 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/shortcutpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/shortcutpopup.\+cpp\end{DoxyCompactItemize}

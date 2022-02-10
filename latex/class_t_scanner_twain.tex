@@ -1,0 +1,309 @@
+\hypertarget{class_t_scanner_twain}{}\doxysection{TScanner\+Twain Class Reference}
+\label{class_t_scanner_twain}\index{TScannerTwain@{TScannerTwain}}
+Inheritance diagram for TScanner\+Twain\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_t_scanner_twain}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_t_scanner_twain_a75bf6d3829d434c15ebce7ccf431fa3f}{is\+Device\+Available}} () override
+\item 
+bool \mbox{\hyperlink{class_t_scanner_twain_a23a0d62532bf816f3aba0d93f7475a58}{is\+Device\+Selected}} () override
+\item 
+void \mbox{\hyperlink{class_t_scanner_twain_ae9483555f60de5cbb61189726e38d94b}{select\+Device}} () override
+\item 
+void \mbox{\hyperlink{class_t_scanner_twain_a82c3c903a400dfa7e159703c39478e53}{update\+Parameters}} (\mbox{\hyperlink{class_t_scanner_parameters}{TScanner\+Parameters}} \&) override
+\item 
+void \mbox{\hyperlink{class_t_scanner_twain_a97ce2d9a0ef4cc18c1152d48fefe0059}{acquire}} (const \mbox{\hyperlink{class_t_scanner_parameters}{TScanner\+Parameters}} \&param, int paper\+Count) override
+\item 
+bool \mbox{\hyperlink{class_t_scanner_twain_ad242a7920ec92a03901094c355727df6}{is\+Area\+Supported}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_scanner_twain_a7efc9f6b2fd25beb26e402058a6dd449}\label{class_t_scanner_twain_a7efc9f6b2fd25beb26e402058a6dd449}} 
+\index{TScannerTwain@{TScannerTwain}!TScannerTwain@{TScannerTwain}}
+\index{TScannerTwain@{TScannerTwain}!TScannerTwain@{TScannerTwain}}
+\doxysubsubsection{\texorpdfstring{TScannerTwain()}{TScannerTwain()}}
+{\footnotesize\ttfamily TScanner\+Twain\+::\+TScanner\+Twain (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_scanner_twain_a6054919e6c911e1f83bb18049186c3f2}\label{class_t_scanner_twain_a6054919e6c911e1f83bb18049186c3f2}} 
+\index{TScannerTwain@{TScannerTwain}!````~TScannerTwain@{$\sim$TScannerTwain}}
+\index{````~TScannerTwain@{$\sim$TScannerTwain}!TScannerTwain@{TScannerTwain}}
+\doxysubsubsection{\texorpdfstring{$\sim$TScannerTwain()}{~TScannerTwain()}}
+{\footnotesize\ttfamily TScanner\+Twain\+::$\sim$\+TScanner\+Twain (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00091 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_scanner_twain_a97ce2d9a0ef4cc18c1152d48fefe0059}\label{class_t_scanner_twain_a97ce2d9a0ef4cc18c1152d48fefe0059}} 
+\index{TScannerTwain@{TScannerTwain}!acquire@{acquire}}
+\index{acquire@{acquire}!TScannerTwain@{TScannerTwain}}
+\doxysubsubsection{\texorpdfstring{acquire()}{acquire()}}
+{\footnotesize\ttfamily void TScanner\+Twain\+::acquire (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_scanner_parameters}{TScanner\+Parameters}} \&}]{param,  }\item[{int}]{paper\+Count }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_scanner}{TScanner}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00281                                                                             \{}
+\DoxyCodeLine{00282   openAndSetupTwain();}
+\DoxyCodeLine{00283 }
+\DoxyCodeLine{00284   \textcolor{comment}{// int feeder = TTWAIN\_IsFeederLoaded();}}
+\DoxyCodeLine{00285   \textcolor{keywordtype}{int} feeder  = params.isPaperFeederEnabled();}
+\DoxyCodeLine{00286   m\_paperLeft = paperCount;}
+\DoxyCodeLine{00287   \textcolor{keywordtype}{int} rc;}
+\DoxyCodeLine{00288 }
+\DoxyCodeLine{00289 \textcolor{preprocessor}{\#ifdef MACOSX}}
+\DoxyCodeLine{00290   \textcolor{comment}{// pezza solo HP su MACOSX per gestire la scansione di piu' frame}}
+\DoxyCodeLine{00291   \textcolor{keywordtype}{bool} ishp = !!(strcasestr(TTWAIN\_GetProductName(), \textcolor{stringliteral}{"{}hp"{}}));}
+\DoxyCodeLine{00292 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00293   \textcolor{keywordtype}{bool} ishp = \textcolor{keyword}{false};}
+\DoxyCodeLine{00294 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00295   \textcolor{keywordflow}{if} (ishp) \{}
+\DoxyCodeLine{00296     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < paperCount; ++i) \{}
+\DoxyCodeLine{00297       printf(\textcolor{stringliteral}{"{}scanning \%d/\%d\(\backslash\)n"{}}, i + 1, paperCount);}
+\DoxyCodeLine{00298       \textcolor{keywordflow}{if} (i == 0) \{}
+\DoxyCodeLine{00299         setupParameters(params, isAreaSupported());}
+\DoxyCodeLine{00300         TTWAIN\_SetOnDoneCallback(onDoneCB, \textcolor{keyword}{this});}
+\DoxyCodeLine{00301         TTWAIN\_SetOnErrorCallback(onErrorCB, \textcolor{keyword}{this});}
+\DoxyCodeLine{00302       \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00303         openAndSetupTwain();}
+\DoxyCodeLine{00304 }
+\DoxyCodeLine{00305       rc = TTWAIN\_SetXferMech(TTWAIN\_TRANSFERMODE\_MEMORY, 0, 0, 0, 0, 1);}
+\DoxyCodeLine{00306       \textcolor{keywordtype}{int} acq\_rc = TTWAIN\_AcquireMemory(0);}
+\DoxyCodeLine{00307 }
+\DoxyCodeLine{00308       \textcolor{keywordflow}{if} (acq\_rc == 0) \textcolor{keywordflow}{break};  \textcolor{comment}{// error, or the user has closed the TWAIN UI}}
+\DoxyCodeLine{00309       \textcolor{keywordflow}{if} (!feeder \&\& ((paperCount -\/ i) > 1)) notifyNextPaper();}
+\DoxyCodeLine{00310       TTWAIN\_CloseAll(0);}
+\DoxyCodeLine{00311     \}}
+\DoxyCodeLine{00312   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00313     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (feeder ? 1 : paperCount); ++i) \{}
+\DoxyCodeLine{00314       printf(\textcolor{stringliteral}{"{}scanning \%d/\%d\(\backslash\)n"{}}, i + 1, paperCount);}
+\DoxyCodeLine{00315       setupParameters(params, isAreaSupported());}
+\DoxyCodeLine{00316 }
+\DoxyCodeLine{00317       rc = TTWAIN\_SetXferMech(TTWAIN\_TRANSFERMODE\_MEMORY, 0, 0, 0, 0,}
+\DoxyCodeLine{00318                               paperCount);}
+\DoxyCodeLine{00319 }
+\DoxyCodeLine{00320       TTWAIN\_SetOnDoneCallback(onDoneCB, \textcolor{keyword}{this});}
+\DoxyCodeLine{00321       TTWAIN\_SetOnErrorCallback(onErrorCB, \textcolor{keyword}{this});}
+\DoxyCodeLine{00322       \textcolor{keywordtype}{int} acq\_rc = TTWAIN\_AcquireMemory(0);}
+\DoxyCodeLine{00323 }
+\DoxyCodeLine{00324       \textcolor{keywordflow}{if} (acq\_rc == 0) \textcolor{keywordflow}{break};  \textcolor{comment}{// error, or the user has closed the TWAIN UI}}
+\DoxyCodeLine{00325       \textcolor{keywordflow}{if} (!feeder \&\& ((paperCount -\/ i) > 1)) notifyNextPaper();}
+\DoxyCodeLine{00326     \}}
+\DoxyCodeLine{00327     TTWAIN\_CloseAll(0);}
+\DoxyCodeLine{00328   \}}
+\DoxyCodeLine{00329 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_scanner_twain_ad242a7920ec92a03901094c355727df6}\label{class_t_scanner_twain_ad242a7920ec92a03901094c355727df6}} 
+\index{TScannerTwain@{TScannerTwain}!isAreaSupported@{isAreaSupported}}
+\index{isAreaSupported@{isAreaSupported}!TScannerTwain@{TScannerTwain}}
+\doxysubsubsection{\texorpdfstring{isAreaSupported()}{isAreaSupported()}}
+{\footnotesize\ttfamily bool TScanner\+Twain\+::is\+Area\+Supported (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00333                                     \{}
+\DoxyCodeLine{00334   \textcolor{comment}{/*}}
+\DoxyCodeLine{00335 \textcolor{comment}{TTWAIN\_IsCapPhysicalWidthSupported    (void);}}
+\DoxyCodeLine{00336 \textcolor{comment}{TTWAIN\_IsCapPhysicalHeightSupported   (void);}}
+\DoxyCodeLine{00337 \textcolor{comment}{*/}}
+\DoxyCodeLine{00338   \textcolor{keywordflow}{return} !!TTWAIN\_IsCapImageLayoutSupported();}
+\DoxyCodeLine{00339 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_scanner_twain_a75bf6d3829d434c15ebce7ccf431fa3f}\label{class_t_scanner_twain_a75bf6d3829d434c15ebce7ccf431fa3f}} 
+\index{TScannerTwain@{TScannerTwain}!isDeviceAvailable@{isDeviceAvailable}}
+\index{isDeviceAvailable@{isDeviceAvailable}!TScannerTwain@{TScannerTwain}}
+\doxysubsubsection{\texorpdfstring{isDeviceAvailable()}{isDeviceAvailable()}}
+{\footnotesize\ttfamily bool TScanner\+Twain\+::is\+Device\+Available (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_scanner}{TScanner}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00130 \{ \textcolor{keywordflow}{return} !!TTWAIN\_IsAvailable(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_scanner_twain_a23a0d62532bf816f3aba0d93f7475a58}\label{class_t_scanner_twain_a23a0d62532bf816f3aba0d93f7475a58}} 
+\index{TScannerTwain@{TScannerTwain}!isDeviceSelected@{isDeviceSelected}}
+\index{isDeviceSelected@{isDeviceSelected}!TScannerTwain@{TScannerTwain}}
+\doxysubsubsection{\texorpdfstring{isDeviceSelected()}{isDeviceSelected()}}
+{\footnotesize\ttfamily bool TScanner\+Twain\+::is\+Device\+Selected (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_scanner}{TScanner}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00126 \{ \textcolor{keywordflow}{return} deviceSelected; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_scanner_twain_ae9483555f60de5cbb61189726e38d94b}\label{class_t_scanner_twain_ae9483555f60de5cbb61189726e38d94b}} 
+\index{TScannerTwain@{TScannerTwain}!selectDevice@{selectDevice}}
+\index{selectDevice@{selectDevice}!TScannerTwain@{TScannerTwain}}
+\doxysubsubsection{\texorpdfstring{selectDevice()}{selectDevice()}}
+{\footnotesize\ttfamily void TScanner\+Twain\+::select\+Device (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_scanner}{TScanner}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00101                                  \{}
+\DoxyCodeLine{00102   TTWAIN\_SelectImageSource(0);}
+\DoxyCodeLine{00103   deviceSelected = \textcolor{keyword}{true};}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105   \textcolor{keywordflow}{if} (TTWAIN\_OpenDefaultSource()) \{}
+\DoxyCodeLine{00106     QString twainVersion(TTWAIN\_GetTwainVersion());}
+\DoxyCodeLine{00107     QString manufacturer(TTWAIN\_GetManufacturer());}
+\DoxyCodeLine{00108     QString productFamily(TTWAIN\_GetProductFamily());}
+\DoxyCodeLine{00109     QString productName(TTWAIN\_GetProductName());}
+\DoxyCodeLine{00110     QString version(TTWAIN\_GetVersion());}
+\DoxyCodeLine{00111 }
+\DoxyCodeLine{00112     TTWAIN\_CloseAll(0);}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114     \textcolor{keywordflow}{if} (manufacturer != \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{00115       \textcolor{comment}{// se c'e' il nome della marca lo tolgo dal productFamily e productName}}
+\DoxyCodeLine{00116       productFamily.replace(manufacturer, \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00117       productName.replace(manufacturer, \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00118     \}}
+\DoxyCodeLine{00119     setName(manufacturer + \textcolor{stringliteral}{"{} "{}} + productFamily + \textcolor{stringliteral}{"{} "{}} + productName + \textcolor{stringliteral}{"{} ("{}} +}
+\DoxyCodeLine{00120             version + \textcolor{stringliteral}{"{})"{}});}
+\DoxyCodeLine{00121   \}}
+\DoxyCodeLine{00122 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_scanner_twain_a82c3c903a400dfa7e159703c39478e53}\label{class_t_scanner_twain_a82c3c903a400dfa7e159703c39478e53}} 
+\index{TScannerTwain@{TScannerTwain}!updateParameters@{updateParameters}}
+\index{updateParameters@{updateParameters}!TScannerTwain@{TScannerTwain}}
+\doxysubsubsection{\texorpdfstring{updateParameters()}{updateParameters()}}
+{\footnotesize\ttfamily void TScanner\+Twain\+::update\+Parameters (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_scanner_parameters}{TScanner\+Parameters}} \&}]{param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_scanner}{TScanner}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00135                                                               \{}
+\DoxyCodeLine{00136   \textcolor{keywordtype}{int} rc = TTWAIN\_OpenDefaultSource();}
+\DoxyCodeLine{00137   \textcolor{keywordflow}{if} (!rc) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00138 }
+\DoxyCodeLine{00139 \textcolor{preprocessor}{\#ifdef MACOSX}}
+\DoxyCodeLine{00140 \textcolor{comment}{// TTWAIN\_DumpCapabilities(printf);}}
+\DoxyCodeLine{00141 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00142   \textcolor{keywordflow}{if} (isAreaSupported()) \{}
+\DoxyCodeLine{00143     \textcolor{keywordtype}{float} w, h;}
+\DoxyCodeLine{00144     TTWAIN\_GetPhysicalWidthWoAdf(\&w);}
+\DoxyCodeLine{00145     TTWAIN\_GetPhysicalHeightWoAdf(\&h);}
+\DoxyCodeLine{00146     \textcolor{keywordtype}{double} width\_mm  = w * 25.4;}
+\DoxyCodeLine{00147     \textcolor{keywordtype}{double} height\_mm = h * 25.4;}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149     param.setMaxPaperSize(width\_mm, height\_mm);}
+\DoxyCodeLine{00150     \textcolor{comment}{// sembra sbagliato: bisognerebbe comunque tenere conto del paperFormat}}
+\DoxyCodeLine{00151     \textcolor{comment}{// selezionato}}
+\DoxyCodeLine{00152     \textcolor{comment}{//    param.m\_scanArea = TRectD(0,0, width\_mm,height\_mm);}}
+\DoxyCodeLine{00153   \}}
+\DoxyCodeLine{00154   \mbox{\hyperlink{struct_t_scan_param}{TScanParam}} defaultTwainParam(0., 255., 128., 1.);}
+\DoxyCodeLine{00155   \textcolor{keywordflow}{if} (TTWAIN\_IsCapBrightnessSupported()) \{}
+\DoxyCodeLine{00156     m\_brightness.m\_supported = \textcolor{keyword}{true};}
+\DoxyCodeLine{00157     TTWAIN\_GetBrightness(\&m\_brightness.m\_min, \&m\_brightness.m\_max,}
+\DoxyCodeLine{00158                          \&m\_brightness.m\_step, \&m\_brightness.m\_def);}
+\DoxyCodeLine{00159   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00160     \textcolor{comment}{// m\_brightness.m\_def = m\_brightness.m\_max = m\_brightness.m\_min =}}
+\DoxyCodeLine{00161     \textcolor{comment}{// m\_brightness.m\_step = 0.;}}
+\DoxyCodeLine{00162     m\_brightness.update(defaultTwainParam);}
+\DoxyCodeLine{00163     m\_brightness.m\_supported = \textcolor{keyword}{false};}
+\DoxyCodeLine{00164   \}}
+\DoxyCodeLine{00165   \textcolor{comment}{// m\_brightness.m\_value = m\_brightness.m\_def;}}
+\DoxyCodeLine{00166   param.m\_brightness.update(m\_brightness);}
+\DoxyCodeLine{00167 }
+\DoxyCodeLine{00168   \textcolor{keywordflow}{if} (TTWAIN\_IsCapContrastSupported()) \{}
+\DoxyCodeLine{00169     m\_contrast.m\_supported = \textcolor{keyword}{true};}
+\DoxyCodeLine{00170     TTWAIN\_GetContrast(\&m\_contrast.m\_min, \&m\_contrast.m\_max, \&m\_contrast.m\_step,}
+\DoxyCodeLine{00171                        \&m\_contrast.m\_def);}
+\DoxyCodeLine{00172   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00173     \textcolor{comment}{// m\_contrast.m\_def = m\_contrast.m\_max = m\_contrast.m\_min =}}
+\DoxyCodeLine{00174     \textcolor{comment}{// m\_contrast.m\_step = 0.;}}
+\DoxyCodeLine{00175     m\_contrast.update(defaultTwainParam);}
+\DoxyCodeLine{00176     m\_contrast.m\_supported = \textcolor{keyword}{false};}
+\DoxyCodeLine{00177   \}}
+\DoxyCodeLine{00178   \textcolor{comment}{// m\_contrast.m\_value = m\_contrast.m\_def;}}
+\DoxyCodeLine{00179   param.m\_contrast.update(m\_contrast);}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181   \textcolor{keywordflow}{if} (TTWAIN\_IsCapThresholdSupported()) \{}
+\DoxyCodeLine{00182     m\_threshold.m\_supported = \textcolor{keyword}{true};}
+\DoxyCodeLine{00183     TTWAIN\_GetThreshold(\&m\_threshold.m\_min, \&m\_threshold.m\_max,}
+\DoxyCodeLine{00184                         \&m\_threshold.m\_step, \&m\_threshold.m\_def);}
+\DoxyCodeLine{00185   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00186     \textcolor{comment}{// m\_threshold.m\_def = m\_threshold.m\_max = m\_threshold.m\_min =}}
+\DoxyCodeLine{00187     \textcolor{comment}{// m\_threshold.m\_step = 0.;}}
+\DoxyCodeLine{00188     m\_threshold.update(defaultTwainParam);}
+\DoxyCodeLine{00189     m\_threshold.m\_supported = \textcolor{keyword}{false};}
+\DoxyCodeLine{00190   \}}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192   \textcolor{comment}{// m\_threshold.m\_value = m\_threshold.m\_def;}}
+\DoxyCodeLine{00193   param.m\_threshold.update(m\_threshold);}
+\DoxyCodeLine{00194 }
+\DoxyCodeLine{00195   \textcolor{keywordflow}{if} (TTWAIN\_IsCapResolutionSupported()) \{}
+\DoxyCodeLine{00196     m\_dpi.m\_supported = \textcolor{keyword}{true};}
+\DoxyCodeLine{00197     TTWAIN\_GetResolution(\&m\_dpi.m\_min, \&m\_dpi.m\_max, \&m\_dpi.m\_step,}
+\DoxyCodeLine{00198                          \&m\_dpi.m\_def);}
+\DoxyCodeLine{00199     param.m\_dpi.update(m\_dpi);}
+\DoxyCodeLine{00200   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00201     \textcolor{comment}{// m\_dpi.m\_def = m\_dpi.m\_max = m\_dpi.m\_min = m\_dpi.m\_step = 0.;}}
+\DoxyCodeLine{00202     param.m\_dpi.m\_supported = \textcolor{keyword}{false};}
+\DoxyCodeLine{00203   \}}
+\DoxyCodeLine{00204   \textcolor{comment}{// m\_dpi.m\_value = m\_dpi.m\_def;}}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206   \textcolor{comment}{/*}}
+\DoxyCodeLine{00207 \textcolor{comment}{param.m\_twainVersion = string(TTWAIN\_GetTwainVersion());}}
+\DoxyCodeLine{00208 \textcolor{comment}{param.m\_manufacturer = string(TTWAIN\_GetManufacturer ());}}
+\DoxyCodeLine{00209 \textcolor{comment}{param.m\_prodFamily = string(TTWAIN\_GetProductFamily());}}
+\DoxyCodeLine{00210 \textcolor{comment}{param.m\_productName = string(TTWAIN\_GetProductName  ());}}
+\DoxyCodeLine{00211 \textcolor{comment}{param.m\_version = string(TTWAIN\_GetVersion());}}
+\DoxyCodeLine{00212 \textcolor{comment}{*/}}
+\DoxyCodeLine{00213 }
+\DoxyCodeLine{00214   \textcolor{keywordtype}{bool} bw = !!TTWAIN\_SupportsPixelType(TTWAIN\_BW) ||}
+\DoxyCodeLine{00215             !!TTWAIN\_SupportsPixelType(TTWAIN\_WB);}
+\DoxyCodeLine{00216   \textcolor{keywordtype}{bool} gray = !!TTWAIN\_SupportsPixelType(TTWAIN\_GRAY8);}
+\DoxyCodeLine{00217   \textcolor{keywordtype}{bool} rgb  = !!TTWAIN\_SupportsPixelType(TTWAIN\_RGB24);}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219   param.setSupportedTypes(bw, gray, rgb);}
+\DoxyCodeLine{00220 }
+\DoxyCodeLine{00221   TTWAIN\_CloseAll(0);}
+\DoxyCodeLine{00222 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnzbase/tscanner/tscannertwain.\+h\item 
+E\+:/opentoonz/toonz/sources/tnzbase/tscanner/tscannertwain.\+cpp\end{DoxyCompactItemize}

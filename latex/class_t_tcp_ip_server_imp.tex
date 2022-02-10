@@ -1,0 +1,185 @@
+\hypertarget{class_t_tcp_ip_server_imp}{}\doxysection{TTcp\+Ip\+Server\+Imp Class Reference}
+\label{class_t_tcp_ip_server_imp}\index{TTcpIpServerImp@{TTcpIpServerImp}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_tcp_ip_server_imp_a483cdc3f8432304df0cbfa51238325c8}{TTcp\+Ip\+Server\+Imp}} (int port)
+\item 
+int \mbox{\hyperlink{class_t_tcp_ip_server_imp_a6af8d12913a8feaf80911aac9f0cbf1a}{read\+Data}} (int sock, QString \&data)
+\item 
+void \mbox{\hyperlink{class_t_tcp_ip_server_imp_adf310f792398e688f74424a72d04a8e5}{on\+Receive}} (int sock, const QString \&data)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_t_tcp_ip_server_imp_ae3c6ebb2f2b0ed3730c82c497fb45eca}{m\+\_\+s}}
+\item 
+int \mbox{\hyperlink{class_t_tcp_ip_server_imp_affc381b7e46a00b1dcacad3552991584}{m\+\_\+port}}
+\item 
+\mbox{\hyperlink{class_t_tcp_ip_server}{TTcp\+Ip\+Server}} $\ast$ \mbox{\hyperlink{class_t_tcp_ip_server_imp_a79b49f2b2fc27590a1cb6d6fbf912ff4}{m\+\_\+server}}
+\item 
+\mbox{\hyperlink{class_t_thread_1_1_mutex}{TThread\+::\+Mutex}} \mbox{\hyperlink{class_t_tcp_ip_server_imp_a5105422acd170f836e44d413d32e839d}{m\+\_\+mutex}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_tcp_ip_server_imp_a483cdc3f8432304df0cbfa51238325c8}\label{class_t_tcp_ip_server_imp_a483cdc3f8432304df0cbfa51238325c8}} 
+\index{TTcpIpServerImp@{TTcpIpServerImp}!TTcpIpServerImp@{TTcpIpServerImp}}
+\index{TTcpIpServerImp@{TTcpIpServerImp}!TTcpIpServerImp@{TTcpIpServerImp}}
+\doxysubsubsection{\texorpdfstring{TTcpIpServerImp()}{TTcpIpServerImp()}}
+{\footnotesize\ttfamily TTcp\+Ip\+Server\+Imp\+::\+TTcp\+Ip\+Server\+Imp (\begin{DoxyParamCaption}\item[{int}]{port }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044 : m\_port(port), m\_s(-\/1), m\_server(0) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_tcp_ip_server_imp_adf310f792398e688f74424a72d04a8e5}\label{class_t_tcp_ip_server_imp_adf310f792398e688f74424a72d04a8e5}} 
+\index{TTcpIpServerImp@{TTcpIpServerImp}!onReceive@{onReceive}}
+\index{onReceive@{onReceive}!TTcpIpServerImp@{TTcpIpServerImp}}
+\doxysubsubsection{\texorpdfstring{onReceive()}{onReceive()}}
+{\footnotesize\ttfamily void TTcp\+Ip\+Server\+Imp\+::on\+Receive (\begin{DoxyParamCaption}\item[{int}]{sock,  }\item[{const QString \&}]{data }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00228                                                              \{}
+\DoxyCodeLine{00229   QMutexLocker sl(\&m\_mutex);}
+\DoxyCodeLine{00230   m\_server-\/>onReceive(sock, data);}
+\DoxyCodeLine{00231 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_tcp_ip_server_imp_a6af8d12913a8feaf80911aac9f0cbf1a}\label{class_t_tcp_ip_server_imp_a6af8d12913a8feaf80911aac9f0cbf1a}} 
+\index{TTcpIpServerImp@{TTcpIpServerImp}!readData@{readData}}
+\index{readData@{readData}!TTcpIpServerImp@{TTcpIpServerImp}}
+\doxysubsubsection{\texorpdfstring{readData()}{readData()}}
+{\footnotesize\ttfamily int TTcp\+Ip\+Server\+Imp\+::read\+Data (\begin{DoxyParamCaption}\item[{int}]{sock,  }\item[{QString \&}]{data }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00058                                                      \{}
+\DoxyCodeLine{00059   \textcolor{keywordtype}{int} cnt = 0;}
+\DoxyCodeLine{00060   \textcolor{keywordtype}{char} buff[1025];}
+\DoxyCodeLine{00061   memset(buff, 0, \textcolor{keyword}{sizeof}(buff));}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00064   \textcolor{keywordflow}{if} ((cnt = recv(sock, buff, \textcolor{keyword}{sizeof}(buff) -\/ 1, 0)) < 0) \{}
+\DoxyCodeLine{00065     \textcolor{keywordtype}{int} err = WSAGetLastError();}
+\DoxyCodeLine{00066     \textcolor{comment}{// GESTIRE L'ERRORE SPECIFICO}}
+\DoxyCodeLine{00067     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00068   \}}
+\DoxyCodeLine{00069 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00070   \textcolor{keywordflow}{if} ((cnt = read(sock, buff, \textcolor{keyword}{sizeof}(buff) -\/ 1)) < 0) \{}
+\DoxyCodeLine{00071     printf(\textcolor{stringliteral}{"{}socket read failure \%d\(\backslash\)n"{}}, errno);}
+\DoxyCodeLine{00072     perror(\textcolor{stringliteral}{"{}network server"{}});}
+\DoxyCodeLine{00073     close(sock);}
+\DoxyCodeLine{00074     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00075   \}}
+\DoxyCodeLine{00076 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00077 }
+\DoxyCodeLine{00078   \textcolor{keywordflow}{if} (cnt == 0) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080 \textcolor{preprocessor}{\#ifdef TRACE}}
+\DoxyCodeLine{00081   cout << buff << endl << endl;}
+\DoxyCodeLine{00082 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084   \textcolor{keywordtype}{string} aa(buff);}
+\DoxyCodeLine{00085   \textcolor{keywordtype}{int} x1 = aa.find(\textcolor{stringliteral}{"{}\#\$\#THS01.00"{}});}
+\DoxyCodeLine{00086   x1 += \textcolor{keyword}{sizeof}(\textcolor{stringliteral}{"{}\#\$\#THS01.00"{}}) -\/ 1;}
+\DoxyCodeLine{00087   \textcolor{keywordtype}{int} x2 = aa.find(\textcolor{stringliteral}{"{}\#\$\#THE"{}});}
+\DoxyCodeLine{00088 }
+\DoxyCodeLine{00089   \textcolor{keywordtype}{string} ssize;}
+\DoxyCodeLine{00090   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = x1; i < x2; ++i) ssize.push\_back(buff[i]);}
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00092   \textcolor{keywordtype}{int} dataSize = std::stoi(ssize);}
+\DoxyCodeLine{00093 }
+\DoxyCodeLine{00094   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} size = dataSize;}
+\DoxyCodeLine{00095   data               = QString(buff + x2 + \textcolor{keyword}{sizeof}(\textcolor{stringliteral}{"{}\#\$\#THE"{}}) -\/ 1);}
+\DoxyCodeLine{00096   size -\/= data.size();}
+\DoxyCodeLine{00097 }
+\DoxyCodeLine{00098   \textcolor{keywordflow}{while} (size > 0) \{}
+\DoxyCodeLine{00099     memset(buff, 0, \textcolor{keyword}{sizeof}(buff));}
+\DoxyCodeLine{00100 }
+\DoxyCodeLine{00101 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00102     \textcolor{keywordflow}{if} ((cnt = recv(sock, buff, \textcolor{keyword}{sizeof}(buff) -\/ 1, 0)) < 0) \{}
+\DoxyCodeLine{00103       \textcolor{keywordtype}{int} err = WSAGetLastError();}
+\DoxyCodeLine{00104       \textcolor{comment}{// GESTIRE L'ERRORE SPECIFICO}}
+\DoxyCodeLine{00105       \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00106     \}}
+\DoxyCodeLine{00107 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00108     \textcolor{keywordflow}{if} ((cnt = read(sock, buff, \textcolor{keyword}{sizeof}(buff) -\/ 1)) < 0) \{}
+\DoxyCodeLine{00109       printf(\textcolor{stringliteral}{"{}socket read failure \%d\(\backslash\)n"{}}, errno);}
+\DoxyCodeLine{00110       perror(\textcolor{stringliteral}{"{}network server"{}});}
+\DoxyCodeLine{00111       close(sock);}
+\DoxyCodeLine{00112       \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00113     \}}
+\DoxyCodeLine{00114 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00115     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (cnt == 0) \{}
+\DoxyCodeLine{00116       \textcolor{keywordflow}{break};  \textcolor{comment}{// break out of loop}}
+\DoxyCodeLine{00117     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (cnt < (\textcolor{keywordtype}{int})\textcolor{keyword}{sizeof}(buff)) \{}
+\DoxyCodeLine{00118       buff[cnt] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00119       data += QString(buff);}
+\DoxyCodeLine{00120       \textcolor{comment}{// break;  // break out of loop}}
+\DoxyCodeLine{00121     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00122       data += QString(buff);}
+\DoxyCodeLine{00123     \}}
+\DoxyCodeLine{00124 }
+\DoxyCodeLine{00125 \textcolor{preprocessor}{\#ifdef TRACE}}
+\DoxyCodeLine{00126     cout << buff << endl << endl;}
+\DoxyCodeLine{00127 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00128 }
+\DoxyCodeLine{00129     size -\/= cnt;}
+\DoxyCodeLine{00130   \}}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132 \textcolor{preprocessor}{\#ifdef TRACE}}
+\DoxyCodeLine{00133   cout << \textcolor{stringliteral}{"{}read "{}} << toString((\textcolor{keywordtype}{int})data.length()) << \textcolor{stringliteral}{"{} on "{}} << dataSize << endl}
+\DoxyCodeLine{00134        << endl;}
+\DoxyCodeLine{00135 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137   \textcolor{keywordflow}{if} (data.size() < dataSize) \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00138 }
+\DoxyCodeLine{00139 \textcolor{preprocessor}{\#ifdef TRACE}}
+\DoxyCodeLine{00140   cout << data.toStdString() << endl;}
+\DoxyCodeLine{00141 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00144 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_tcp_ip_server_imp_a5105422acd170f836e44d413d32e839d}\label{class_t_tcp_ip_server_imp_a5105422acd170f836e44d413d32e839d}} 
+\index{TTcpIpServerImp@{TTcpIpServerImp}!m\_mutex@{m\_mutex}}
+\index{m\_mutex@{m\_mutex}!TTcpIpServerImp@{TTcpIpServerImp}}
+\doxysubsubsection{\texorpdfstring{m\_mutex}{m\_mutex}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_thread_1_1_mutex}{TThread\+::\+Mutex}} TTcp\+Ip\+Server\+Imp\+::m\+\_\+mutex}
+
+\mbox{\Hypertarget{class_t_tcp_ip_server_imp_affc381b7e46a00b1dcacad3552991584}\label{class_t_tcp_ip_server_imp_affc381b7e46a00b1dcacad3552991584}} 
+\index{TTcpIpServerImp@{TTcpIpServerImp}!m\_port@{m\_port}}
+\index{m\_port@{m\_port}!TTcpIpServerImp@{TTcpIpServerImp}}
+\doxysubsubsection{\texorpdfstring{m\_port}{m\_port}}
+{\footnotesize\ttfamily int TTcp\+Ip\+Server\+Imp\+::m\+\_\+port}
+
+\mbox{\Hypertarget{class_t_tcp_ip_server_imp_ae3c6ebb2f2b0ed3730c82c497fb45eca}\label{class_t_tcp_ip_server_imp_ae3c6ebb2f2b0ed3730c82c497fb45eca}} 
+\index{TTcpIpServerImp@{TTcpIpServerImp}!m\_s@{m\_s}}
+\index{m\_s@{m\_s}!TTcpIpServerImp@{TTcpIpServerImp}}
+\doxysubsubsection{\texorpdfstring{m\_s}{m\_s}}
+{\footnotesize\ttfamily int TTcp\+Ip\+Server\+Imp\+::m\+\_\+s}
+
+\mbox{\Hypertarget{class_t_tcp_ip_server_imp_a79b49f2b2fc27590a1cb6d6fbf912ff4}\label{class_t_tcp_ip_server_imp_a79b49f2b2fc27590a1cb6d6fbf912ff4}} 
+\index{TTcpIpServerImp@{TTcpIpServerImp}!m\_server@{m\_server}}
+\index{m\_server@{m\_server}!TTcpIpServerImp@{TTcpIpServerImp}}
+\doxysubsubsection{\texorpdfstring{m\_server}{m\_server}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_tcp_ip_server}{TTcp\+Ip\+Server}}$\ast$ TTcp\+Ip\+Server\+Imp\+::m\+\_\+server}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tfarm/ttcpipserver.\+cpp\end{DoxyCompactItemize}

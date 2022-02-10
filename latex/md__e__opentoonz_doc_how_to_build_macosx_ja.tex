@@ -1,0 +1,105 @@
+\hypertarget{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md39}{}\doxysection{必要なソフトウェア}\label{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md39}
+
+\begin{DoxyItemize}
+\item git
+\item brew
+\item Xcode
+\item cmake (3.\+2.\+2以降)
+\item Qt (5.\+9.\+2以降)
+\item boost　(1.\+55.\+0以降)
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md40}{}\doxysection{ビルド手順}\label{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md40}
+\hypertarget{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md41}{}\doxysubsection{Xcode をインストール}\label{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md41}
+\hypertarget{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md42}{}\doxysubsection{Homebrew をインストール}\label{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md42}
+
+\begin{DoxyEnumerate}
+\item ターミナルウィンドウを起動
+\item 下記を実行します： 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ /bin/bash -\/c "{}\$(curl -\/fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"{}}
+
+\end{DoxyCode}
+
+\end{DoxyEnumerate}\hypertarget{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md43}{}\doxysubsection{brew で必要なパッケージをインストール}\label{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md43}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ brew install glew lz4 libjpeg libpng lzo pkg-\/config libusb cmake git-\/lfs libmypaint qt boost}
+\DoxyCodeLine{\$ git lfs install}
+
+\end{DoxyCode}
+\hypertarget{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md44}{}\doxysubsection{リポジトリを clone}\label{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md44}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ git clone https://github.com/opentoonz/opentoonz}
+\DoxyCodeLine{\$ cd opentoonz}
+\DoxyCodeLine{\$ git lfs pull}
+\DoxyCodeLine{\$ cd thirdparty/lzo}
+\DoxyCodeLine{\$ cp -\/r 2.03/include/lzo driver}
+\DoxyCodeLine{\$ cd ../tiff-\/4.0.3}
+\DoxyCodeLine{\$ ./configure \&\& make}
+
+\end{DoxyCode}
+
+
+boost をhomebrewではなく \href{https://boost.org}{\texttt{ https\+://boost.\+org}} からダウンロードした場合は以下を実行します。以下のコマンドは {\ttfamily $\sim$/\+Downsloads} に {\ttfamily boost\+\_\+1\+\_\+72\+\_\+0.\+tar.\+bz2} がダウンロードされていることを想定しています。 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ cd ../boost}
+\DoxyCodeLine{\$ mv \string~/Downloads/boost\_1\_72\_0.tar.bz2 .}
+\DoxyCodeLine{\$ tar xjvf boost\_1\_72\_0.tar.bz2}
+
+\end{DoxyCode}
+\hypertarget{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md45}{}\doxysubsection{本体のビルド}\label{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md45}
+
+\begin{DoxyEnumerate}
+\item buildディレクトリの作成 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ cd ../../toonz}
+\DoxyCodeLine{\$ mkdir build}
+\DoxyCodeLine{\$ cd build}
+
+\end{DoxyCode}
+
+\item ビルド コマンドラインの場合は下記を実行します。 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ cmake ../sources -\/DQT\_PATH='/usr/local/opt/qt/lib'}
+\DoxyCodeLine{\$ make}
+
+\end{DoxyCode}
+
+\end{DoxyEnumerate}
+\begin{DoxyItemize}
+\item Qt を\+Homebrewでなく \href{http://download.qt.io/official_releases/qt/}{\texttt{ http\+://download.\+qt.\+io/official\+\_\+releases/qt/}} からダウンロードして {\ttfamily /\+Users/ユーザ名/\+Qt} にインストールしている場合、{\ttfamily QT\+\_\+\+PATH}の値は {\ttfamily $\sim$/\+Qt/5.12.\+2/clang\+\_\+64/lib} または {\ttfamily $\sim$/\+Qt/5.12.\+2/clang\+\_\+32/lib} のようになります。
+\end{DoxyItemize}
+
+ビルドが長いので気長に待ちます。
+
+Xcodeを用いる場合は下記を実行します。 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ sudo xcode-\/select -\/s /Applications/Xcode.app/Contents/Developer}
+\DoxyCodeLine{\$ cmake -\/G Xcode ../sources -\/B. -\/DQT\_PATH='/usr/local/opt/qt/lib' -\/DWITH\_TRANSLATION=OFF}
+
+\end{DoxyCode}
+
+\begin{DoxyItemize}
+\item オプション {\ttfamily -\/DWITH\+\_\+\+TRANSLATION=OFF} は\+Xcode12以降で必要です。
+\item Xcodeでプロジェクト {\ttfamily /opentoonz/toonz/build/\+Open\+Toonz.xcodeproj} を開き、ビルドします。
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md46}{}\doxysubsection{stuff ディレクトリの設置 (任意)}\label{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md46}
+{\ttfamily /\+Applications/\+Open\+Toonz/\+Open\+Toonz\+\_\+stuff} というディレクトリが存在していない場合は以下のコマンド等でリポジトリのひな形を設置する必要があります。
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ sudo cp -\/r opentoonz/stuff /Applications/OpenToonz/OpenToonz\_stuff}
+\DoxyCodeLine{\$ sudo chmod -\/R 777 /Applications/OpenToonz}
+
+\end{DoxyCode}
+\hypertarget{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md47}{}\doxysubsection{アプリケーションの実行}\label{md__e__opentoonz_doc_how_to_build_macosx_ja_autotoc_md47}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ open ./toonz/OpenToonz.app}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyItemize}
+\item Xcode でビルドしている場合、アプリケーションは　$<$tt$>$.\+toonz/build/\+Debug/\+Open\+Toonz.app にあります。 
+\end{DoxyItemize}

@@ -1,0 +1,210 @@
+\hypertarget{class_t_tcp_ip_client}{}\doxysection{TTcp\+Ip\+Client Class Reference}
+\label{class_t_tcp_ip_client}\index{TTcpIpClient@{TTcpIpClient}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_t_tcp_ip_client_a3952a578523f04b192a74c3a92bfc0c7}{connect}} (const QString \&name, const QString \&addr, int port, int \&sock)
+\item 
+int \mbox{\hyperlink{class_t_tcp_ip_client_a5acf58baf7a7ae1a78dd7afefa0edc08}{disconnect}} (int sock)
+\item 
+int \mbox{\hyperlink{class_t_tcp_ip_client_a7caa4cfb4c3c632c34ccab784fee1ff5}{send}} (int sock, const QString \&data)
+\item 
+int \mbox{\hyperlink{class_t_tcp_ip_client_acc5280b34c2a17837aa7bd753bae2053}{send}} (int sock, const QString \&data, QString \&reply)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_tcp_ip_client_a4bba2b489ad200e318db7950215fb5fc}\label{class_t_tcp_ip_client_a4bba2b489ad200e318db7950215fb5fc}} 
+\index{TTcpIpClient@{TTcpIpClient}!TTcpIpClient@{TTcpIpClient}}
+\index{TTcpIpClient@{TTcpIpClient}!TTcpIpClient@{TTcpIpClient}}
+\doxysubsubsection{\texorpdfstring{TTcpIpClient()}{TTcpIpClient()}}
+{\footnotesize\ttfamily TTcp\+Ip\+Client\+::\+TTcp\+Ip\+Client (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026                            \{}
+\DoxyCodeLine{00027 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00028   WSADATA wsaData;}
+\DoxyCodeLine{00029   WORD wVersionRequested = MAKEWORD(1, 1);}
+\DoxyCodeLine{00030   \textcolor{keywordtype}{int} irc                = WSAStartup(wVersionRequested, \&wsaData);}
+\DoxyCodeLine{00031 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00032 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_tcp_ip_client_a25e7694be974cbad5acb5bbcda35fa93}\label{class_t_tcp_ip_client_a25e7694be974cbad5acb5bbcda35fa93}} 
+\index{TTcpIpClient@{TTcpIpClient}!````~TTcpIpClient@{$\sim$TTcpIpClient}}
+\index{````~TTcpIpClient@{$\sim$TTcpIpClient}!TTcpIpClient@{TTcpIpClient}}
+\doxysubsubsection{\texorpdfstring{$\sim$TTcpIpClient()}{~TTcpIpClient()}}
+{\footnotesize\ttfamily TTcp\+Ip\+Client\+::$\sim$\+TTcp\+Ip\+Client (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00036                             \{}
+\DoxyCodeLine{00037 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00038   WSACleanup();}
+\DoxyCodeLine{00039 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00040 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_tcp_ip_client_a3952a578523f04b192a74c3a92bfc0c7}\label{class_t_tcp_ip_client_a3952a578523f04b192a74c3a92bfc0c7}} 
+\index{TTcpIpClient@{TTcpIpClient}!connect@{connect}}
+\index{connect@{connect}!TTcpIpClient@{TTcpIpClient}}
+\doxysubsubsection{\texorpdfstring{connect()}{connect()}}
+{\footnotesize\ttfamily int TTcp\+Ip\+Client\+::connect (\begin{DoxyParamCaption}\item[{const QString \&}]{name,  }\item[{const QString \&}]{addr,  }\item[{int}]{port,  }\item[{int \&}]{sock }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00045                                                \{}
+\DoxyCodeLine{00046 \textcolor{comment}{/*}}
+\DoxyCodeLine{00047 \textcolor{comment}{  if (!addrStr.empty())}}
+\DoxyCodeLine{00048 \textcolor{comment}{  \{}}
+\DoxyCodeLine{00049 \textcolor{comment}{    unsigned long ipAddr = inet\_addr(addrStr.c\_str());}}
+\DoxyCodeLine{00050 \textcolor{comment}{  \}}}
+\DoxyCodeLine{00051 \textcolor{comment}{*/}}
+\DoxyCodeLine{00052 \textcolor{preprocessor}{\#if QT\_VERSION >= 0x050500}}
+\DoxyCodeLine{00053   \textcolor{keyword}{struct }hostent *he = gethostbyname(hostName.toUtf8());}
+\DoxyCodeLine{00054 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00055   \textcolor{keyword}{struct }hostent *he = gethostbyname(hostName.toAscii());}
+\DoxyCodeLine{00056 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00057   \textcolor{keywordflow}{if} (!he) \{}
+\DoxyCodeLine{00058 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00059     \textcolor{keywordtype}{int} err = WSAGetLastError();}
+\DoxyCodeLine{00060 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00061 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00062     \textcolor{keywordflow}{return} HOST\_UNKNOWN;}
+\DoxyCodeLine{00063   \}}
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00065   \textcolor{keywordtype}{int} socket\_id = socket(AF\_INET, SOCK\_STREAM, 0);}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067   \textcolor{keyword}{struct }sockaddr\_in addr;}
+\DoxyCodeLine{00068   memset((\textcolor{keywordtype}{char} *)\&addr, 0, \textcolor{keyword}{sizeof} addr);}
+\DoxyCodeLine{00069   addr.sin\_family = he-\/>h\_addrtype;}
+\DoxyCodeLine{00070   addr.sin\_port   = htons(port);}
+\DoxyCodeLine{00071   memcpy((\textcolor{keywordtype}{char} *)\&(addr.sin\_addr), he-\/>h\_addr, he-\/>h\_length);}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073   \textcolor{keywordtype}{int} rcConnect = ::connect(socket\_id, (\textcolor{keyword}{struct} sockaddr *)\&(addr), \textcolor{keyword}{sizeof} addr);}
+\DoxyCodeLine{00074   \textcolor{keywordflow}{if} (rcConnect == SOCKET\_ERROR) \{}
+\DoxyCodeLine{00075     sock = -\/1;}
+\DoxyCodeLine{00076 }
+\DoxyCodeLine{00077 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00078     \textcolor{keywordtype}{int} err = WSAGetLastError();}
+\DoxyCodeLine{00079     \textcolor{keywordflow}{switch} (err) \{}
+\DoxyCodeLine{00080     \textcolor{keywordflow}{case} WSAECONNREFUSED:}
+\DoxyCodeLine{00081       err = CONNECTION\_REFUSED;}
+\DoxyCodeLine{00082       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00083     \textcolor{keywordflow}{case} WSAETIMEDOUT:}
+\DoxyCodeLine{00084       err = CONNECTION\_TIMEDOUT;}
+\DoxyCodeLine{00085       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00086     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00087       err = CONNECTION\_FAILED;}
+\DoxyCodeLine{00088       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00089     \}}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091     closesocket(socket\_id);}
+\DoxyCodeLine{00092     \textcolor{keywordflow}{return} err;}
+\DoxyCodeLine{00093 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00094     close(socket\_id);}
+\DoxyCodeLine{00095     \textcolor{keywordflow}{return} CONNECTION\_FAILED;}
+\DoxyCodeLine{00096 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00097   \}}
+\DoxyCodeLine{00098 }
+\DoxyCodeLine{00099   sock = socket\_id;}
+\DoxyCodeLine{00100   \textcolor{keywordflow}{return} OK;}
+\DoxyCodeLine{00101 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_tcp_ip_client_a5acf58baf7a7ae1a78dd7afefa0edc08}\label{class_t_tcp_ip_client_a5acf58baf7a7ae1a78dd7afefa0edc08}} 
+\index{TTcpIpClient@{TTcpIpClient}!disconnect@{disconnect}}
+\index{disconnect@{disconnect}!TTcpIpClient@{TTcpIpClient}}
+\doxysubsubsection{\texorpdfstring{disconnect()}{disconnect()}}
+{\footnotesize\ttfamily int TTcp\+Ip\+Client\+::disconnect (\begin{DoxyParamCaption}\item[{int}]{sock }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00153                                      \{}
+\DoxyCodeLine{00154 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00155   closesocket(sock);}
+\DoxyCodeLine{00156 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00157   close(sock);}
+\DoxyCodeLine{00158 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00159 }
+\DoxyCodeLine{00160   \textcolor{keywordflow}{return} OK;}
+\DoxyCodeLine{00161 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_tcp_ip_client_a7caa4cfb4c3c632c34ccab784fee1ff5}\label{class_t_tcp_ip_client_a7caa4cfb4c3c632c34ccab784fee1ff5}} 
+\index{TTcpIpClient@{TTcpIpClient}!send@{send}}
+\index{send@{send}!TTcpIpClient@{TTcpIpClient}}
+\doxysubsubsection{\texorpdfstring{send()}{send()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily int TTcp\+Ip\+Client\+::send (\begin{DoxyParamCaption}\item[{int}]{sock,  }\item[{const QString \&}]{data }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00165                                                     \{}
+\DoxyCodeLine{00166   std::string dataUtf8 = data.toStdString();}
+\DoxyCodeLine{00167 }
+\DoxyCodeLine{00168   QString header(\textcolor{stringliteral}{"{}\#\$\#THS01.00"{}});}
+\DoxyCodeLine{00169   header += QString::number((\textcolor{keywordtype}{int})dataUtf8.size());}
+\DoxyCodeLine{00170   header += \textcolor{stringliteral}{"{}\#\$\#THE"{}};}
+\DoxyCodeLine{00171 }
+\DoxyCodeLine{00172   std::string packet = header.toStdString() + dataUtf8;}
+\DoxyCodeLine{00173 }
+\DoxyCodeLine{00174   \textcolor{comment}{//  string packet = data;;}}
+\DoxyCodeLine{00175 }
+\DoxyCodeLine{00176   \textcolor{keywordtype}{int} nLeft = packet.size();}
+\DoxyCodeLine{00177   \textcolor{keywordtype}{int} idx   = 0;}
+\DoxyCodeLine{00178   \textcolor{keywordflow}{while} (nLeft > 0) \{}
+\DoxyCodeLine{00179 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00180     \textcolor{keywordtype}{int} ret = ::send(sock, packet.c\_str() + idx, nLeft, 0);}
+\DoxyCodeLine{00181 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00182     \textcolor{keywordtype}{int} ret = write(sock, packet.c\_str() + idx, nLeft);}
+\DoxyCodeLine{00183 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00184 }
+\DoxyCodeLine{00185     \textcolor{keywordflow}{if} (ret == SOCKET\_ERROR) \{}
+\DoxyCodeLine{00186 \textcolor{comment}{// Error}}
+\DoxyCodeLine{00187 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00188       \textcolor{keywordtype}{int} err = WSAGetLastError();}
+\DoxyCodeLine{00189 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00190 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00191       \textcolor{keywordflow}{return} SEND\_FAILED;}
+\DoxyCodeLine{00192     \}}
+\DoxyCodeLine{00193     nLeft -\/= ret;}
+\DoxyCodeLine{00194     idx += ret;}
+\DoxyCodeLine{00195   \}}
+\DoxyCodeLine{00196 }
+\DoxyCodeLine{00197   shutdown(sock, 1);}
+\DoxyCodeLine{00198   \textcolor{keywordflow}{return} OK;}
+\DoxyCodeLine{00199 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_tcp_ip_client_acc5280b34c2a17837aa7bd753bae2053}\label{class_t_tcp_ip_client_acc5280b34c2a17837aa7bd753bae2053}} 
+\index{TTcpIpClient@{TTcpIpClient}!send@{send}}
+\index{send@{send}!TTcpIpClient@{TTcpIpClient}}
+\doxysubsubsection{\texorpdfstring{send()}{send()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily int TTcp\+Ip\+Client\+::send (\begin{DoxyParamCaption}\item[{int}]{sock,  }\item[{const QString \&}]{data,  }\item[{QString \&}]{reply }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00354                                                                     \{}
+\DoxyCodeLine{00355   \textcolor{keywordflow}{if} (data.size() > 0) \{}
+\DoxyCodeLine{00356     \textcolor{keywordtype}{int} ret           = send(sock, data);}
+\DoxyCodeLine{00357     \textcolor{keywordflow}{if} (ret == 0) ret = readData(sock, reply);}
+\DoxyCodeLine{00358     \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{00359   \}}
+\DoxyCodeLine{00360 }
+\DoxyCodeLine{00361   \textcolor{keywordflow}{return} OK;}
+\DoxyCodeLine{00362 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/ttcpip.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tfarm/ttcpipclient.\+cpp\end{DoxyCompactItemize}

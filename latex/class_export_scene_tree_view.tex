@@ -1,0 +1,156 @@
+\hypertarget{class_export_scene_tree_view}{}\doxysection{Export\+Scene\+Tree\+View Class Reference}
+\label{class_export_scene_tree_view}\index{ExportSceneTreeView@{ExportSceneTreeView}}
+Inheritance diagram for Export\+Scene\+Tree\+View\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_export_scene_tree_view}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_export_scene_tree_view_affcde61e17bdcc19d0c042369c13daab}{resize\+To\+Conts}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_export_scene_tree_view_ab3fea7d8aff81f456adf5db2fa76700c}\label{class_export_scene_tree_view_ab3fea7d8aff81f456adf5db2fa76700c}} 
+void {\bfseries focus\+In} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_export_scene_tree_view_a8c2eede7ccedce90fed6b99f9f345373}{Export\+Scene\+Tree\+View}} (QWidget $\ast$parent)
+\item 
+QSize \mbox{\hyperlink{class_export_scene_tree_view_a8d1ec8ff3ab39141af4a1924f0e9e11d}{size\+Hint}} () const override
+\item 
+\mbox{\hyperlink{class_dv_dir_model_node}{Dv\+Dir\+Model\+Node}} $\ast$ \mbox{\hyperlink{class_export_scene_tree_view_a749105b66546bd459427a23d900c9d15}{get\+Current\+Node}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_export_scene_tree_view_aa05db28b614d3a79e3aaa001aaa80773}{refresh}} ()
+\item 
+void \mbox{\hyperlink{class_export_scene_tree_view_a894cecba2fec706a6942c102f4860009}{show\+Event}} (QShow\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_export_scene_tree_view_af14fbb075f39f0ca5b6e93f528329979}{focus\+In\+Event}} (QFocus\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_export_scene_tree_view_a8c2eede7ccedce90fed6b99f9f345373}\label{class_export_scene_tree_view_a8c2eede7ccedce90fed6b99f9f345373}} 
+\index{ExportSceneTreeView@{ExportSceneTreeView}!ExportSceneTreeView@{ExportSceneTreeView}}
+\index{ExportSceneTreeView@{ExportSceneTreeView}!ExportSceneTreeView@{ExportSceneTreeView}}
+\doxysubsubsection{\texorpdfstring{ExportSceneTreeView()}{ExportSceneTreeView()}}
+{\footnotesize\ttfamily Export\+Scene\+Tree\+View\+::\+Export\+Scene\+Tree\+View (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00453     : \mbox{\hyperlink{class_styled_tree_view}{StyledTreeView}}(parent) \{}
+\DoxyCodeLine{00454   setStyleSheet(\textcolor{stringliteral}{"{}border:1px solid rgba(0,0,0,0.5);"{}});}
+\DoxyCodeLine{00455   m\_model = \textcolor{keyword}{new} \mbox{\hyperlink{class_export_scene_dv_dir_model}{ExportSceneDvDirModel}}();}
+\DoxyCodeLine{00456   setModel(m\_model);}
+\DoxyCodeLine{00457   header()-\/>close();}
+\DoxyCodeLine{00458   setItemDelegate(\textcolor{keyword}{new} \mbox{\hyperlink{class_export_scene_tree_view_delegate}{ExportSceneTreeViewDelegate}}(\textcolor{keyword}{this}));}
+\DoxyCodeLine{00459   setSelectionMode(QAbstractItemView::SingleSelection);}
+\DoxyCodeLine{00460 }
+\DoxyCodeLine{00461   \textcolor{comment}{// Connect all possible changes that can alter the}}
+\DoxyCodeLine{00462   \textcolor{comment}{// bottom horizontal scrollbar to resize contents...}}
+\DoxyCodeLine{00463   \textcolor{keywordtype}{bool} ret = connect(\textcolor{keyword}{this}, SIGNAL(expanded(\textcolor{keyword}{const} QModelIndex \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00464                      SLOT(resizeToConts()));}
+\DoxyCodeLine{00465   ret = ret \&\& connect(\textcolor{keyword}{this}, SIGNAL(collapsed(\textcolor{keyword}{const} QModelIndex \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00466                        SLOT(resizeToConts()));}
+\DoxyCodeLine{00467   ret = ret \&\& connect(this-\/>model(), SIGNAL(layoutChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00468                        SLOT(resizeToConts()));}
+\DoxyCodeLine{00469 }
+\DoxyCodeLine{00470   assert(ret);}
+\DoxyCodeLine{00471   setAcceptDrops(\textcolor{keyword}{true});}
+\DoxyCodeLine{00472 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_export_scene_tree_view_af14fbb075f39f0ca5b6e93f528329979}\label{class_export_scene_tree_view_af14fbb075f39f0ca5b6e93f528329979}} 
+\index{ExportSceneTreeView@{ExportSceneTreeView}!focusInEvent@{focusInEvent}}
+\index{focusInEvent@{focusInEvent}!ExportSceneTreeView@{ExportSceneTreeView}}
+\doxysubsubsection{\texorpdfstring{focusInEvent()}{focusInEvent()}}
+{\footnotesize\ttfamily void Export\+Scene\+Tree\+View\+::focus\+In\+Event (\begin{DoxyParamCaption}\item[{QFocus\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00500                                                          \{}
+\DoxyCodeLine{00501   QTreeView::focusInEvent(event);}
+\DoxyCodeLine{00502   emit focusIn();}
+\DoxyCodeLine{00503 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_scene_tree_view_a749105b66546bd459427a23d900c9d15}\label{class_export_scene_tree_view_a749105b66546bd459427a23d900c9d15}} 
+\index{ExportSceneTreeView@{ExportSceneTreeView}!getCurrentNode@{getCurrentNode}}
+\index{getCurrentNode@{getCurrentNode}!ExportSceneTreeView@{ExportSceneTreeView}}
+\doxysubsubsection{\texorpdfstring{getCurrentNode()}{getCurrentNode()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_dv_dir_model_node}{Dv\+Dir\+Model\+Node}} $\ast$ Export\+Scene\+Tree\+View\+::get\+Current\+Node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00484                                                           \{}
+\DoxyCodeLine{00485   QModelIndex index    = currentIndex();}
+\DoxyCodeLine{00486   \mbox{\hyperlink{class_dv_dir_model_node}{DvDirModelNode}} *node = m\_model-\/>getNode(index);}
+\DoxyCodeLine{00487   \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{00488 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_scene_tree_view_aa05db28b614d3a79e3aaa001aaa80773}\label{class_export_scene_tree_view_aa05db28b614d3a79e3aaa001aaa80773}} 
+\index{ExportSceneTreeView@{ExportSceneTreeView}!refresh@{refresh}}
+\index{refresh@{refresh}!ExportSceneTreeView@{ExportSceneTreeView}}
+\doxysubsubsection{\texorpdfstring{refresh()}{refresh()}}
+{\footnotesize\ttfamily void Export\+Scene\+Tree\+View\+::refresh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00480 \{ m\_model-\/>refresh(QModelIndex()); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_scene_tree_view_affcde61e17bdcc19d0c042369c13daab}\label{class_export_scene_tree_view_affcde61e17bdcc19d0c042369c13daab}} 
+\index{ExportSceneTreeView@{ExportSceneTreeView}!resizeToConts@{resizeToConts}}
+\index{resizeToConts@{resizeToConts}!ExportSceneTreeView@{ExportSceneTreeView}}
+\doxysubsubsection{\texorpdfstring{resizeToConts}{resizeToConts}}
+{\footnotesize\ttfamily void Export\+Scene\+Tree\+View\+::resize\+To\+Conts (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00476 \{ resizeColumnToContents(0); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_scene_tree_view_a894cecba2fec706a6942c102f4860009}\label{class_export_scene_tree_view_a894cecba2fec706a6942c102f4860009}} 
+\index{ExportSceneTreeView@{ExportSceneTreeView}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!ExportSceneTreeView@{ExportSceneTreeView}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Export\+Scene\+Tree\+View\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00496 \{ refresh(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_scene_tree_view_a8d1ec8ff3ab39141af4a1924f0e9e11d}\label{class_export_scene_tree_view_a8d1ec8ff3ab39141af4a1924f0e9e11d}} 
+\index{ExportSceneTreeView@{ExportSceneTreeView}!sizeHint@{sizeHint}}
+\index{sizeHint@{sizeHint}!ExportSceneTreeView@{ExportSceneTreeView}}
+\doxysubsubsection{\texorpdfstring{sizeHint()}{sizeHint()}}
+{\footnotesize\ttfamily QSize Export\+Scene\+Tree\+View\+::size\+Hint (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00492 \{ \textcolor{keywordflow}{return} QSize(100, 100); \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/exportscenepopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/exportscenepopup.\+cpp\end{DoxyCompactItemize}

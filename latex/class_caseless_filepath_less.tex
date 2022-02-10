@@ -1,0 +1,57 @@
+\hypertarget{class_caseless_filepath_less}{}\doxysection{Caseless\+Filepath\+Less Class Reference}
+\label{class_caseless_filepath_less}\index{CaselessFilepathLess@{CaselessFilepathLess}}
+Inheritance diagram for Caseless\+Filepath\+Less\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_caseless_filepath_less}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_caseless_filepath_less_a38dd967ded0db1e8604f47fb8ebc9663}{operator()}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&a, const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&b) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_caseless_filepath_less_a38dd967ded0db1e8604f47fb8ebc9663}\label{class_caseless_filepath_less_a38dd967ded0db1e8604f47fb8ebc9663}} 
+\index{CaselessFilepathLess@{CaselessFilepathLess}!operator()@{operator()}}
+\index{operator()@{operator()}!CaselessFilepathLess@{CaselessFilepathLess}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily bool Caseless\+Filepath\+Less\+::operator() (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{a,  }\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{b }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00414                                                                 \{}
+\DoxyCodeLine{00415     \textcolor{comment}{// Perform case sensitive compare, fallback to case insensitive.}}
+\DoxyCodeLine{00416     \textcolor{keyword}{const} wstring a\_str = a.getWideString();}
+\DoxyCodeLine{00417     \textcolor{keyword}{const} wstring b\_str = b.getWideString();}
+\DoxyCodeLine{00418 }
+\DoxyCodeLine{00419     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i   = 0;}
+\DoxyCodeLine{00420     \textcolor{keywordtype}{int} case\_compare = -\/1;}
+\DoxyCodeLine{00421     \textcolor{keywordflow}{while} (a\_str[i] || b\_str[i]) \{}
+\DoxyCodeLine{00422       \textcolor{keywordflow}{if} (a\_str[i] != b\_str[i]) \{}
+\DoxyCodeLine{00423         \textcolor{keyword}{const} \textcolor{keywordtype}{wchar\_t} a\_wchar = towlower(a\_str[i]);}
+\DoxyCodeLine{00424         \textcolor{keyword}{const} \textcolor{keywordtype}{wchar\_t} b\_wchar = towlower(b\_str[i]);}
+\DoxyCodeLine{00425         \textcolor{keywordflow}{if} (a\_wchar < b\_wchar) \{}
+\DoxyCodeLine{00426           \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00427         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (a\_wchar > b\_wchar) \{}
+\DoxyCodeLine{00428           \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00429         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (case\_compare == -\/1) \{}
+\DoxyCodeLine{00430           case\_compare = a\_str[i] < b\_str[i];}
+\DoxyCodeLine{00431         \}}
+\DoxyCodeLine{00432       \}}
+\DoxyCodeLine{00433       i++;}
+\DoxyCodeLine{00434     \}}
+\DoxyCodeLine{00435     \textcolor{keywordflow}{return} (case\_compare == 1);}
+\DoxyCodeLine{00436   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tsystem/tsystem.\+cpp\end{DoxyCompactItemize}

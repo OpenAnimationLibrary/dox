@@ -1,0 +1,81 @@
+\hypertarget{class_select_all_keyframes_before_command}{}\doxysection{Select\+All\+Keyframes\+Before\+Command Class Reference}
+\label{class_select_all_keyframes_before_command}\index{SelectAllKeyframesBeforeCommand@{SelectAllKeyframesBeforeCommand}}
+Inheritance diagram for Select\+All\+Keyframes\+Before\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_select_all_keyframes_before_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_select_all_keyframes_before_command_ab7beb3b38e28123a9c2f199cd91dc90f}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_select_all_keyframes_before_command_accdcb359896db347f3cc6a519980d954}\label{class_select_all_keyframes_before_command_accdcb359896db347f3cc6a519980d954}} 
+\index{SelectAllKeyframesBeforeCommand@{SelectAllKeyframesBeforeCommand}!SelectAllKeyframesBeforeCommand@{SelectAllKeyframesBeforeCommand}}
+\index{SelectAllKeyframesBeforeCommand@{SelectAllKeyframesBeforeCommand}!SelectAllKeyframesBeforeCommand@{SelectAllKeyframesBeforeCommand}}
+\doxysubsubsection{\texorpdfstring{SelectAllKeyframesBeforeCommand()}{SelectAllKeyframesBeforeCommand()}}
+{\footnotesize\ttfamily Select\+All\+Keyframes\+Before\+Command\+::\+Select\+All\+Keyframes\+Before\+Command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01178       : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(MI\_SelectAllKeyframesNotBefore) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_select_all_keyframes_before_command_ab7beb3b38e28123a9c2f199cd91dc90f}\label{class_select_all_keyframes_before_command_ab7beb3b38e28123a9c2f199cd91dc90f}} 
+\index{SelectAllKeyframesBeforeCommand@{SelectAllKeyframesBeforeCommand}!execute@{execute}}
+\index{execute@{execute}!SelectAllKeyframesBeforeCommand@{SelectAllKeyframesBeforeCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Select\+All\+Keyframes\+Before\+Command\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01180                           \{}
+\DoxyCodeLine{01181     \mbox{\hyperlink{class_t_app}{TApp}} *app                     = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{01182     \mbox{\hyperlink{class_t_keyframe_selection}{TKeyframeSelection}} *selection = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_keyframe_selection}{TKeyframeSelection}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{01183         app-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}()-\/>getSelection());}
+\DoxyCodeLine{01184     \textcolor{keywordflow}{if} (!selection) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01185     \textcolor{keywordtype}{int} currentRow = app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>getFrame();}
+\DoxyCodeLine{01186 }
+\DoxyCodeLine{01187     selection-\/>selectNone();}
+\DoxyCodeLine{01188     \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = app-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{01189     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh      = scene-\/>\mbox{\hyperlink{class_toonz_scene_ae3c828e3223fd809fd59189233d0576a}{getXsheet}}();}
+\DoxyCodeLine{01190     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} col = -\/1; col < xsh-\/>\mbox{\hyperlink{class_t_xsheet_a17464dc5617cf87a46f03e1a52d36cc1}{getColumnCount}}(); col++) \{}
+\DoxyCodeLine{01191       \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} objectId;}
+\DoxyCodeLine{01192       \textcolor{keywordflow}{if} (col == -\/1 \&\& Preferences::instance()-\/>isXsheetCameraColumnVisible())}
+\DoxyCodeLine{01193         objectId = TStageObjectId::CameraId(xsh-\/>getCameraColumnIndex());}
+\DoxyCodeLine{01194       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01195         objectId = TStageObjectId::ColumnId(col);}
+\DoxyCodeLine{01196       \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *pegbar = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(objectId);}
+\DoxyCodeLine{01197       \mbox{\hyperlink{class_t_stage_object_aeb7ffeab4e2feefb1248eab636199872}{TStageObject::KeyframeMap}} keyframes;}
+\DoxyCodeLine{01198       pegbar-\/>\mbox{\hyperlink{class_t_stage_object_abd07edf36366eeefd6f6f68e58b147bc}{getKeyframes}}(keyframes);}
+\DoxyCodeLine{01199       \textcolor{keywordflow}{for} (TStageObject::KeyframeMap::iterator it = keyframes.begin();}
+\DoxyCodeLine{01200            it != keyframes.end(); ++it) \{}
+\DoxyCodeLine{01201         \textcolor{keywordtype}{int} row = it-\/>first;}
+\DoxyCodeLine{01202         \textcolor{keywordflow}{if} (row < currentRow) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01203         assert(pegbar-\/>\mbox{\hyperlink{class_t_stage_object_af2c8c37f71b2b2e2c2a15c6eb73b8b38}{isKeyframe}}(row));}
+\DoxyCodeLine{01204         selection-\/>select(row, col);}
+\DoxyCodeLine{01205       \}}
+\DoxyCodeLine{01206     \}}
+\DoxyCodeLine{01207     app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{01208   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xsheetcmd.\+cpp\end{DoxyCompactItemize}

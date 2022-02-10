@@ -1,0 +1,104 @@
+\hypertarget{class_define_scanner_popup}{}\doxysection{Define\+Scanner\+Popup Class Reference}
+\label{class_define_scanner_popup}\index{DefineScannerPopup@{DefineScannerPopup}}
+
+
+The \mbox{\hyperlink{class_define_scanner_popup}{Define\+Scanner\+Popup}} class provides a modal dialog to choose and define a scan for application.  
+
+
+Inheritance diagram for Define\+Scanner\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_define_scanner_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_define_scanner_popup_af7a28df273bb3533253e054158a7d647}{accept}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_define_scanner_popup}{Define\+Scanner\+Popup}} class provides a modal dialog to choose and define a scan for application. 
+
+\begin{DoxyVerb}         Inherits \b Dialog.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_define_scanner_popup_ab442e339b63140605ec52ef67896f9e8}\label{class_define_scanner_popup_ab442e339b63140605ec52ef67896f9e8}} 
+\index{DefineScannerPopup@{DefineScannerPopup}!DefineScannerPopup@{DefineScannerPopup}}
+\index{DefineScannerPopup@{DefineScannerPopup}!DefineScannerPopup@{DefineScannerPopup}}
+\doxysubsubsection{\texorpdfstring{DefineScannerPopup()}{DefineScannerPopup()}}
+{\footnotesize\ttfamily Define\+Scanner\+Popup\+::\+Define\+Scanner\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00183     : \mbox{\hyperlink{class_d_v_gui_1_1_dialog}{Dialog}}(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true},}
+\DoxyCodeLine{00184              Preferences::instance()-\/>getCurrentLanguage() == \textcolor{stringliteral}{"{}English"{}},}
+\DoxyCodeLine{00185              \textcolor{stringliteral}{"{}DefineScanner"{}}) \{}
+\DoxyCodeLine{00186 \textcolor{preprocessor}{\#ifdef MACOSX}}
+\DoxyCodeLine{00187   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00188 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00189   setWindowTitle(tr(\textcolor{stringliteral}{"{}Define Scanner"{}}));}
+\DoxyCodeLine{00190 }
+\DoxyCodeLine{00191   m\_scanDriverOm = \textcolor{keyword}{new} QComboBox();}
+\DoxyCodeLine{00192   m\_scanDriverOm-\/>setFixedSize(150, WidgetHeight);}
+\DoxyCodeLine{00193   QStringList scan;}
+\DoxyCodeLine{00194   scan << \textcolor{stringliteral}{"{}TWAIN"{}}}
+\DoxyCodeLine{00195        << \textcolor{stringliteral}{"{}Internal"{}};}
+\DoxyCodeLine{00196   m\_scanDriverOm-\/>addItems(scan);}
+\DoxyCodeLine{00197   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(tr(\textcolor{stringliteral}{"{}Scanner Driver:"{}}), m\_scanDriverOm);}
+\DoxyCodeLine{00198 }
+\DoxyCodeLine{00199   \textcolor{keywordflow}{if} (QSettings().value(\textcolor{stringliteral}{"{}CurrentScannerType"{}}).toString() == \textcolor{stringliteral}{"{}Internal"{}})}
+\DoxyCodeLine{00200     m\_scanDriverOm-\/>setCurrentIndex(1);}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202   QPushButton *okBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}OK"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00203   okBtn-\/>setDefault(\textcolor{keyword}{true});}
+\DoxyCodeLine{00204   QPushButton *cancelBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cancel"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00205   connect(okBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(accept()));}
+\DoxyCodeLine{00206   connect(cancelBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(reject()));}
+\DoxyCodeLine{00207 }
+\DoxyCodeLine{00208   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(okBtn, cancelBtn);}
+\DoxyCodeLine{00209 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_define_scanner_popup_af7a28df273bb3533253e054158a7d647}\label{class_define_scanner_popup_af7a28df273bb3533253e054158a7d647}} 
+\index{DefineScannerPopup@{DefineScannerPopup}!accept@{accept}}
+\index{accept@{accept}!DefineScannerPopup@{DefineScannerPopup}}
+\doxysubsubsection{\texorpdfstring{accept}{accept}}
+{\footnotesize\ttfamily void Define\+Scanner\+Popup\+::accept (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00213                                 \{}
+\DoxyCodeLine{00214   QString scannerType = m\_scanDriverOm-\/>currentText();}
+\DoxyCodeLine{00215 }
+\DoxyCodeLine{00216   \textcolor{keywordflow}{if} (QSettings().value(\textcolor{stringliteral}{"{}CurrentScannerType"{}}).toString() != scannerType ||}
+\DoxyCodeLine{00217       !ScannerHasBeenDefined) \{}
+\DoxyCodeLine{00218     QSettings().setValue(\textcolor{stringliteral}{"{}CurrentScannerType"{}}, scannerType);}
+\DoxyCodeLine{00219     ScannerHasBeenDefined = defineScanner(scannerType);}
+\DoxyCodeLine{00220     QAction *setCropAction =}
+\DoxyCodeLine{00221         CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_SetScanCropbox"{}});}
+\DoxyCodeLine{00222     QAction *resetCropAction =}
+\DoxyCodeLine{00223         CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_ResetScanCropbox"{}});}
+\DoxyCodeLine{00224     \textcolor{keywordflow}{if} (scannerType == \textcolor{stringliteral}{"{}TWAIN"{}})}
+\DoxyCodeLine{00225       setCropAction-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00226     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00227       setCropAction-\/>setDisabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00228     resetCropAction-\/>setDisabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00229   \}}
+\DoxyCodeLine{00230   QDialog::accept();}
+\DoxyCodeLine{00231 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/scanpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/scanpopup.\+cpp\end{DoxyCompactItemize}

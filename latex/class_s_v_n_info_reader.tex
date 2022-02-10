@@ -1,0 +1,131 @@
+\hypertarget{class_s_v_n_info_reader}{}\doxysection{SVNInfo\+Reader Class Reference}
+\label{class_s_v_n_info_reader}\index{SVNInfoReader@{SVNInfoReader}}
+Inheritance diagram for SVNInfo\+Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_v_n_info_reader}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_v_n_info_reader_aae1072b6e097394ff61cd0ff3ffc65a3}{SVNInfo\+Reader}} (const QString \&xml\+SVNResponse)
+\item 
+QString \mbox{\hyperlink{class_s_v_n_info_reader_a9b91bce9cad6670b0ad2612e4517fa89}{get\+Revision}} () const
+\item 
+QString \mbox{\hyperlink{class_s_v_n_info_reader_a636fc6ef215124902f3c32c82ff40f81}{get\+URL}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_v_n_info_reader_af670953c9c66b79837141333bc32f45f}{read\+Entry}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_info_reader_a56d34c75d58fc83b94d7dee8ad3e733b}{read\+Unknown\+Element}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_v_n_info_reader_aae1072b6e097394ff61cd0ff3ffc65a3}\label{class_s_v_n_info_reader_aae1072b6e097394ff61cd0ff3ffc65a3}} 
+\index{SVNInfoReader@{SVNInfoReader}!SVNInfoReader@{SVNInfoReader}}
+\index{SVNInfoReader@{SVNInfoReader}!SVNInfoReader@{SVNInfoReader}}
+\doxysubsubsection{\texorpdfstring{SVNInfoReader()}{SVNInfoReader()}}
+{\footnotesize\ttfamily SVNInfo\+Reader\+::\+SVNInfo\+Reader (\begin{DoxyParamCaption}\item[{const QString \&}]{xml\+SVNResponse }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00483     : m\_data(xmlSVNResponse) \{}
+\DoxyCodeLine{00484   addData(m\_data);}
+\DoxyCodeLine{00485 }
+\DoxyCodeLine{00486   \textcolor{keywordflow}{while} (!atEnd()) \{}
+\DoxyCodeLine{00487     readNext();}
+\DoxyCodeLine{00488 }
+\DoxyCodeLine{00489     \textcolor{keywordflow}{if} (isStartElement()) \{}
+\DoxyCodeLine{00490       \textcolor{keywordflow}{if} (name() == \textcolor{stringliteral}{"{}entry"{}}) readEntry();}
+\DoxyCodeLine{00491     \}}
+\DoxyCodeLine{00492   \}}
+\DoxyCodeLine{00493 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_v_n_info_reader_a9b91bce9cad6670b0ad2612e4517fa89}\label{class_s_v_n_info_reader_a9b91bce9cad6670b0ad2612e4517fa89}} 
+\index{SVNInfoReader@{SVNInfoReader}!getRevision@{getRevision}}
+\index{getRevision@{getRevision}!SVNInfoReader@{SVNInfoReader}}
+\doxysubsubsection{\texorpdfstring{getRevision()}{getRevision()}}
+{\footnotesize\ttfamily QString SVNInfo\+Reader\+::get\+Revision (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00175 \{ \textcolor{keywordflow}{return} m\_revision; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_info_reader_a636fc6ef215124902f3c32c82ff40f81}\label{class_s_v_n_info_reader_a636fc6ef215124902f3c32c82ff40f81}} 
+\index{SVNInfoReader@{SVNInfoReader}!getURL@{getURL}}
+\index{getURL@{getURL}!SVNInfoReader@{SVNInfoReader}}
+\doxysubsubsection{\texorpdfstring{getURL()}{getURL()}}
+{\footnotesize\ttfamily QString SVNInfo\+Reader\+::get\+URL (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00176 \{ \textcolor{keywordflow}{return} m\_url; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_info_reader_af670953c9c66b79837141333bc32f45f}\label{class_s_v_n_info_reader_af670953c9c66b79837141333bc32f45f}} 
+\index{SVNInfoReader@{SVNInfoReader}!readEntry@{readEntry}}
+\index{readEntry@{readEntry}!SVNInfoReader@{SVNInfoReader}}
+\doxysubsubsection{\texorpdfstring{readEntry()}{readEntry()}}
+{\footnotesize\ttfamily void SVNInfo\+Reader\+::read\+Entry (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00497                               \{}
+\DoxyCodeLine{00498   Q\_ASSERT(isStartElement() \&\& name() == \textcolor{stringliteral}{"{}entry"{}});}
+\DoxyCodeLine{00499 }
+\DoxyCodeLine{00500   m\_revision = attributes().value(\textcolor{stringliteral}{"{}revision"{}}).toString();}
+\DoxyCodeLine{00501 }
+\DoxyCodeLine{00502   \textcolor{keywordflow}{while} (!atEnd()) \{}
+\DoxyCodeLine{00503     readNext();}
+\DoxyCodeLine{00504 }
+\DoxyCodeLine{00505     \textcolor{keywordflow}{if} (isEndElement()) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00506     \textcolor{keywordflow}{if} (isStartElement()) \{}
+\DoxyCodeLine{00507       \textcolor{keywordflow}{if} (name() == \textcolor{stringliteral}{"{}url"{}}) \{}
+\DoxyCodeLine{00508         m\_url = readElementText();}
+\DoxyCodeLine{00509         readNext();}
+\DoxyCodeLine{00510       \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00511         readUnknownElement();}
+\DoxyCodeLine{00512     \}}
+\DoxyCodeLine{00513   \}}
+\DoxyCodeLine{00514 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_info_reader_a56d34c75d58fc83b94d7dee8ad3e733b}\label{class_s_v_n_info_reader_a56d34c75d58fc83b94d7dee8ad3e733b}} 
+\index{SVNInfoReader@{SVNInfoReader}!readUnknownElement@{readUnknownElement}}
+\index{readUnknownElement@{readUnknownElement}!SVNInfoReader@{SVNInfoReader}}
+\doxysubsubsection{\texorpdfstring{readUnknownElement()}{readUnknownElement()}}
+{\footnotesize\ttfamily void SVNInfo\+Reader\+::read\+Unknown\+Element (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00518                                        \{}
+\DoxyCodeLine{00519   Q\_ASSERT(isStartElement());}
+\DoxyCodeLine{00520 }
+\DoxyCodeLine{00521   \textcolor{keywordflow}{while} (!atEnd()) \{}
+\DoxyCodeLine{00522     readNext();}
+\DoxyCodeLine{00523 }
+\DoxyCodeLine{00524     \textcolor{keywordflow}{if} (isEndElement()) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00525 }
+\DoxyCodeLine{00526     \textcolor{keywordflow}{if} (isStartElement()) readUnknownElement();}
+\DoxyCodeLine{00527   \}}
+\DoxyCodeLine{00528 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/versioncontrolxmlreader.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/versioncontrolxmlreader.\+cpp\end{DoxyCompactItemize}

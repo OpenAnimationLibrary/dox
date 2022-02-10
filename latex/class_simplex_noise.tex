@@ -1,0 +1,504 @@
+\hypertarget{class_simplex_noise}{}\doxysection{Simplex\+Noise Class Reference}
+\label{class_simplex_noise}\index{SimplexNoise@{SimplexNoise}}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static double \mbox{\hyperlink{class_simplex_noise_aa5576d9985e96f843c6e9f08da6809f5}{noise}} (double xin, double yin)
+\item 
+static double \mbox{\hyperlink{class_simplex_noise_a9dadeb2e4a7f8230b6308323d3ce44b2}{noise}} (double xin, double yin, double zin)
+\item 
+static double \mbox{\hyperlink{class_simplex_noise_a440e61ae55382082d54def4ae0d0c5f0}{noise}} (double x, double y, double z, double w)
+\item 
+static \mbox{\hyperlink{struct_cell_ids}{Cell\+Ids}} \mbox{\hyperlink{class_simplex_noise_a2fbb0830651b9e1f011fd5d4345d648b}{get\+Cell\+Ids}} (double xin, double yin, double zin)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_simplex_noise_a2fbb0830651b9e1f011fd5d4345d648b}\label{class_simplex_noise_a2fbb0830651b9e1f011fd5d4345d648b}} 
+\index{SimplexNoise@{SimplexNoise}!getCellIds@{getCellIds}}
+\index{getCellIds@{getCellIds}!SimplexNoise@{SimplexNoise}}
+\doxysubsubsection{\texorpdfstring{getCellIds()}{getCellIds()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_cell_ids}{Cell\+Ids}} Simplex\+Noise\+::get\+Cell\+Ids (\begin{DoxyParamCaption}\item[{double}]{xin,  }\item[{double}]{yin,  }\item[{double}]{zin }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00502                                                                    \{}
+\DoxyCodeLine{00503   \textcolor{comment}{// Skew the input space to determine which simplex cell we're in}}
+\DoxyCodeLine{00504   \textcolor{keyword}{const} \textcolor{keywordtype}{double} F3 = 1.0 / 3.0;}
+\DoxyCodeLine{00505   \textcolor{keywordtype}{double} s = (xin + yin + zin) * F3;  \textcolor{comment}{// Very nice and simple skew factor for 3D}}
+\DoxyCodeLine{00506   \textcolor{keywordtype}{int} i    = fastfloor(xin + s);}
+\DoxyCodeLine{00507   \textcolor{keywordtype}{int} j    = fastfloor(yin + s);}
+\DoxyCodeLine{00508   \textcolor{keywordtype}{int} k    = fastfloor(zin + s);}
+\DoxyCodeLine{00509   \textcolor{keyword}{const} \textcolor{keywordtype}{double} G3 = 1.0 / 6.0;  \textcolor{comment}{// Very nice and simple unskew factor, too}}
+\DoxyCodeLine{00510   \textcolor{keywordtype}{double} t        = (i + j + k) * G3;}
+\DoxyCodeLine{00511   \textcolor{keywordtype}{double} X0       = i -\/ t;  \textcolor{comment}{// Unskew the cell origin back to (x,y,z) space}}
+\DoxyCodeLine{00512   \textcolor{keywordtype}{double} Y0       = j -\/ t;}
+\DoxyCodeLine{00513   \textcolor{keywordtype}{double} Z0       = k -\/ t;}
+\DoxyCodeLine{00514   \textcolor{keywordtype}{double} x0       = xin -\/ X0;  \textcolor{comment}{// The x,y,z distances from the cell origin}}
+\DoxyCodeLine{00515   \textcolor{keywordtype}{double} y0       = yin -\/ Y0;}
+\DoxyCodeLine{00516   \textcolor{keywordtype}{double} z0       = zin -\/ Z0;}
+\DoxyCodeLine{00517   \textcolor{comment}{// For the 3D case, the simplex shape is a slightly irregular tetrahedron.}}
+\DoxyCodeLine{00518   \textcolor{comment}{// Determine which simplex we are in.}}
+\DoxyCodeLine{00519   \textcolor{keywordtype}{int} i1, j1, k1;  \textcolor{comment}{// Offsets for second corner of simplex in (i,j,k) coords}}
+\DoxyCodeLine{00520   \textcolor{keywordtype}{int} i2, j2, k2;  \textcolor{comment}{// Offsets for third corner of simplex in (i,j,k) coords}}
+\DoxyCodeLine{00521   \textcolor{keywordflow}{if} (x0 >= y0) \{}
+\DoxyCodeLine{00522     \textcolor{keywordflow}{if} (y0 >= z0) \{}
+\DoxyCodeLine{00523       i1 = 1;}
+\DoxyCodeLine{00524       j1 = 0;}
+\DoxyCodeLine{00525       k1 = 0;}
+\DoxyCodeLine{00526       i2 = 1;}
+\DoxyCodeLine{00527       j2 = 1;}
+\DoxyCodeLine{00528       k2 = 0;}
+\DoxyCodeLine{00529     \}  \textcolor{comment}{// X Y Z order}}
+\DoxyCodeLine{00530     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (x0 >= z0) \{}
+\DoxyCodeLine{00531       i1 = 1;}
+\DoxyCodeLine{00532       j1 = 0;}
+\DoxyCodeLine{00533       k1 = 0;}
+\DoxyCodeLine{00534       i2 = 1;}
+\DoxyCodeLine{00535       j2 = 0;}
+\DoxyCodeLine{00536       k2 = 1;}
+\DoxyCodeLine{00537     \}  \textcolor{comment}{// X Z Y order}}
+\DoxyCodeLine{00538     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00539       i1 = 0;}
+\DoxyCodeLine{00540       j1 = 0;}
+\DoxyCodeLine{00541       k1 = 1;}
+\DoxyCodeLine{00542       i2 = 1;}
+\DoxyCodeLine{00543       j2 = 0;}
+\DoxyCodeLine{00544       k2 = 1;}
+\DoxyCodeLine{00545     \}       \textcolor{comment}{// Z X Y order}}
+\DoxyCodeLine{00546   \} \textcolor{keywordflow}{else} \{  \textcolor{comment}{// x0<y0}}
+\DoxyCodeLine{00547     \textcolor{keywordflow}{if} (y0 < z0) \{}
+\DoxyCodeLine{00548       i1 = 0;}
+\DoxyCodeLine{00549       j1 = 0;}
+\DoxyCodeLine{00550       k1 = 1;}
+\DoxyCodeLine{00551       i2 = 0;}
+\DoxyCodeLine{00552       j2 = 1;}
+\DoxyCodeLine{00553       k2 = 1;}
+\DoxyCodeLine{00554     \}  \textcolor{comment}{// Z Y X order}}
+\DoxyCodeLine{00555     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (x0 < z0) \{}
+\DoxyCodeLine{00556       i1 = 0;}
+\DoxyCodeLine{00557       j1 = 1;}
+\DoxyCodeLine{00558       k1 = 0;}
+\DoxyCodeLine{00559       i2 = 0;}
+\DoxyCodeLine{00560       j2 = 1;}
+\DoxyCodeLine{00561       k2 = 1;}
+\DoxyCodeLine{00562     \}  \textcolor{comment}{// Y Z X order}}
+\DoxyCodeLine{00563     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00564       i1 = 0;}
+\DoxyCodeLine{00565       j1 = 1;}
+\DoxyCodeLine{00566       k1 = 0;}
+\DoxyCodeLine{00567       i2 = 1;}
+\DoxyCodeLine{00568       j2 = 1;}
+\DoxyCodeLine{00569       k2 = 0;}
+\DoxyCodeLine{00570     \}  \textcolor{comment}{// Y X Z order}}
+\DoxyCodeLine{00571   \}}
+\DoxyCodeLine{00572   \textcolor{keywordflow}{return} \mbox{\hyperlink{struct_cell_ids}{CellIds}}(i, j, k, i1, j1, k1, i2, j2, k2);}
+\DoxyCodeLine{00573 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_simplex_noise_a440e61ae55382082d54def4ae0d0c5f0}\label{class_simplex_noise_a440e61ae55382082d54def4ae0d0c5f0}} 
+\index{SimplexNoise@{SimplexNoise}!noise@{noise}}
+\index{noise@{noise}!SimplexNoise@{SimplexNoise}}
+\doxysubsubsection{\texorpdfstring{noise()}{noise()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily double Simplex\+Noise\+::noise (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{y,  }\item[{double}]{z,  }\item[{double}]{w }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00338                                                                  \{}
+\DoxyCodeLine{00339   \textcolor{comment}{// Skewing and unskewing factors for 4 dimensions}}
+\DoxyCodeLine{00340   \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{double} F4 = (sqrt(5.0) -\/ 1.0) / 4.0;}
+\DoxyCodeLine{00341   \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{double} G4 = (5.0 -\/ sqrt(5.0)) / 20.0;}
+\DoxyCodeLine{00342 }
+\DoxyCodeLine{00343   \textcolor{comment}{// The skewing and unskewing factors are hairy again for the 4D case}}
+\DoxyCodeLine{00344   \textcolor{keywordtype}{double} n0, n1, n2, n3, n4;  \textcolor{comment}{// Noise contributions from the five corners}}
+\DoxyCodeLine{00345 }
+\DoxyCodeLine{00346   \textcolor{comment}{// Skew the (x,y,z,w) space to determine which cell of 24 simplices we're in}}
+\DoxyCodeLine{00347   \textcolor{keywordtype}{double} s  = (x + y + z + w) * F4;  \textcolor{comment}{// Factor for 4D skewing}}
+\DoxyCodeLine{00348   \textcolor{keywordtype}{int} i     = fastfloor(x + s);}
+\DoxyCodeLine{00349   \textcolor{keywordtype}{int} j     = fastfloor(y + s);}
+\DoxyCodeLine{00350   \textcolor{keywordtype}{int} k     = fastfloor(z + s);}
+\DoxyCodeLine{00351   \textcolor{keywordtype}{int} l     = fastfloor(w + s);}
+\DoxyCodeLine{00352   \textcolor{keywordtype}{double} t  = (i + j + k + l) * G4;  \textcolor{comment}{// Factor for 4D unskewing}}
+\DoxyCodeLine{00353   \textcolor{keywordtype}{double} X0 = i -\/ t;  \textcolor{comment}{// Unskew the cell origin back to (x,y,z,w) space}}
+\DoxyCodeLine{00354   \textcolor{keywordtype}{double} Y0 = j -\/ t;}
+\DoxyCodeLine{00355   \textcolor{keywordtype}{double} Z0 = k -\/ t;}
+\DoxyCodeLine{00356   \textcolor{keywordtype}{double} W0 = l -\/ t;}
+\DoxyCodeLine{00357   \textcolor{keywordtype}{double} x0 = x -\/ X0;  \textcolor{comment}{// The x,y,z,w distances from the cell origin}}
+\DoxyCodeLine{00358   \textcolor{keywordtype}{double} y0 = y -\/ Y0;}
+\DoxyCodeLine{00359   \textcolor{keywordtype}{double} z0 = z -\/ Z0;}
+\DoxyCodeLine{00360   \textcolor{keywordtype}{double} w0 = w -\/ W0;}
+\DoxyCodeLine{00361 }
+\DoxyCodeLine{00362   \textcolor{comment}{// For the 4D case, the simplex is a 4D shape I won't even try to describe.}}
+\DoxyCodeLine{00363   \textcolor{comment}{// To find out which of the 24 possible simplices we're in, we need to}}
+\DoxyCodeLine{00364   \textcolor{comment}{// determine the magnitude ordering of x0, y0, z0 and w0.}}
+\DoxyCodeLine{00365   \textcolor{comment}{// Six pair-\/wise comparisons are performed between each possible pair}}
+\DoxyCodeLine{00366   \textcolor{comment}{// of the four coordinates, and the results are used to rank the numbers.}}
+\DoxyCodeLine{00367   \textcolor{keywordtype}{int} rankx = 0;}
+\DoxyCodeLine{00368   \textcolor{keywordtype}{int} ranky = 0;}
+\DoxyCodeLine{00369   \textcolor{keywordtype}{int} rankz = 0;}
+\DoxyCodeLine{00370   \textcolor{keywordtype}{int} rankw = 0;}
+\DoxyCodeLine{00371   \textcolor{keywordflow}{if} (x0 > y0)}
+\DoxyCodeLine{00372     rankx++;}
+\DoxyCodeLine{00373   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00374     ranky++;}
+\DoxyCodeLine{00375   \textcolor{keywordflow}{if} (x0 > z0)}
+\DoxyCodeLine{00376     rankx++;}
+\DoxyCodeLine{00377   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00378     rankz++;}
+\DoxyCodeLine{00379   \textcolor{keywordflow}{if} (x0 > w0)}
+\DoxyCodeLine{00380     rankx++;}
+\DoxyCodeLine{00381   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00382     rankw++;}
+\DoxyCodeLine{00383   \textcolor{keywordflow}{if} (y0 > z0)}
+\DoxyCodeLine{00384     ranky++;}
+\DoxyCodeLine{00385   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00386     rankz++;}
+\DoxyCodeLine{00387   \textcolor{keywordflow}{if} (y0 > w0)}
+\DoxyCodeLine{00388     ranky++;}
+\DoxyCodeLine{00389   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00390     rankw++;}
+\DoxyCodeLine{00391   \textcolor{keywordflow}{if} (z0 > w0)}
+\DoxyCodeLine{00392     rankz++;}
+\DoxyCodeLine{00393   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00394     rankw++;}
+\DoxyCodeLine{00395   \textcolor{keywordtype}{int} i1, j1, k1, l1;  \textcolor{comment}{// The integer offsets for the second simplex corner}}
+\DoxyCodeLine{00396   \textcolor{keywordtype}{int} i2, j2, k2, l2;  \textcolor{comment}{// The integer offsets for the third simplex corner}}
+\DoxyCodeLine{00397   \textcolor{keywordtype}{int} i3, j3, k3, l3;  \textcolor{comment}{// The integer offsets for the fourth simplex corner}}
+\DoxyCodeLine{00398 }
+\DoxyCodeLine{00399   \textcolor{comment}{// simplex[c] is a 4-\/vector with the numbers 0, 1, 2 and 3 in some order.}}
+\DoxyCodeLine{00400   \textcolor{comment}{// Many values of c will never occur, since e.g. x>y>z>w makes x<z, y<w and}}
+\DoxyCodeLine{00401   \textcolor{comment}{// x<w}}
+\DoxyCodeLine{00402   \textcolor{comment}{// impossible. Only the 24 indices which have non-\/zero entries make any sense.}}
+\DoxyCodeLine{00403   \textcolor{comment}{// We use a thresholding to set the coordinates in turn from the largest}}
+\DoxyCodeLine{00404   \textcolor{comment}{// magnitude.}}
+\DoxyCodeLine{00405   \textcolor{comment}{// Rank 3 denotes the largest coordinate.}}
+\DoxyCodeLine{00406   i1 = rankx >= 3 ? 1 : 0;}
+\DoxyCodeLine{00407   j1 = ranky >= 3 ? 1 : 0;}
+\DoxyCodeLine{00408   k1 = rankz >= 3 ? 1 : 0;}
+\DoxyCodeLine{00409   l1 = rankw >= 3 ? 1 : 0;}
+\DoxyCodeLine{00410   \textcolor{comment}{// Rank 2 denotes the second largest coordinate.}}
+\DoxyCodeLine{00411   i2 = rankx >= 2 ? 1 : 0;}
+\DoxyCodeLine{00412   j2 = ranky >= 2 ? 1 : 0;}
+\DoxyCodeLine{00413   k2 = rankz >= 2 ? 1 : 0;}
+\DoxyCodeLine{00414   l2 = rankw >= 2 ? 1 : 0;}
+\DoxyCodeLine{00415   \textcolor{comment}{// Rank 1 denotes the second smallest coordinate.}}
+\DoxyCodeLine{00416   i3 = rankx >= 1 ? 1 : 0;}
+\DoxyCodeLine{00417   j3 = ranky >= 1 ? 1 : 0;}
+\DoxyCodeLine{00418   k3 = rankz >= 1 ? 1 : 0;}
+\DoxyCodeLine{00419   l3 = rankw >= 1 ? 1 : 0;}
+\DoxyCodeLine{00420 }
+\DoxyCodeLine{00421   \textcolor{comment}{// The fifth corner has all coordinate offsets = 1, so no need to look that}}
+\DoxyCodeLine{00422   \textcolor{comment}{// up.}}
+\DoxyCodeLine{00423   \textcolor{keywordtype}{double} x1 = x0 -\/ i1 + G4;  \textcolor{comment}{// Offsets for second corner in (x,y,z,w) coords}}
+\DoxyCodeLine{00424   \textcolor{keywordtype}{double} y1 = y0 -\/ j1 + G4;}
+\DoxyCodeLine{00425   \textcolor{keywordtype}{double} z1 = z0 -\/ k1 + G4;}
+\DoxyCodeLine{00426   \textcolor{keywordtype}{double} w1 = w0 -\/ l1 + G4;}
+\DoxyCodeLine{00427   \textcolor{keywordtype}{double} x2 =}
+\DoxyCodeLine{00428       x0 -\/ i2 + 2.0 * G4;  \textcolor{comment}{// Offsets for third corner in (x,y,z,w) coords}}
+\DoxyCodeLine{00429   \textcolor{keywordtype}{double} y2 = y0 -\/ j2 + 2.0 * G4;}
+\DoxyCodeLine{00430   \textcolor{keywordtype}{double} z2 = z0 -\/ k2 + 2.0 * G4;}
+\DoxyCodeLine{00431   \textcolor{keywordtype}{double} w2 = w0 -\/ l2 + 2.0 * G4;}
+\DoxyCodeLine{00432   \textcolor{keywordtype}{double} x3 =}
+\DoxyCodeLine{00433       x0 -\/ i3 + 3.0 * G4;  \textcolor{comment}{// Offsets for fourth corner in (x,y,z,w) coords}}
+\DoxyCodeLine{00434   \textcolor{keywordtype}{double} y3 = y0 -\/ j3 + 3.0 * G4;}
+\DoxyCodeLine{00435   \textcolor{keywordtype}{double} z3 = z0 -\/ k3 + 3.0 * G4;}
+\DoxyCodeLine{00436   \textcolor{keywordtype}{double} w3 = w0 -\/ l3 + 3.0 * G4;}
+\DoxyCodeLine{00437   \textcolor{keywordtype}{double} x4 =}
+\DoxyCodeLine{00438       x0 -\/ 1.0 + 4.0 * G4;  \textcolor{comment}{// Offsets for last corner in (x,y,z,w) coords}}
+\DoxyCodeLine{00439   \textcolor{keywordtype}{double} y4 = y0 -\/ 1.0 + 4.0 * G4;}
+\DoxyCodeLine{00440   \textcolor{keywordtype}{double} z4 = z0 -\/ 1.0 + 4.0 * G4;}
+\DoxyCodeLine{00441   \textcolor{keywordtype}{double} w4 = w0 -\/ 1.0 + 4.0 * G4;}
+\DoxyCodeLine{00442 }
+\DoxyCodeLine{00443   \textcolor{comment}{// Work out the hashed gradient indices of the five simplex corners}}
+\DoxyCodeLine{00444   \textcolor{keywordtype}{int} ii  = i \& 255;}
+\DoxyCodeLine{00445   \textcolor{keywordtype}{int} jj  = j \& 255;}
+\DoxyCodeLine{00446   \textcolor{keywordtype}{int} kk  = k \& 255;}
+\DoxyCodeLine{00447   \textcolor{keywordtype}{int} ll  = l \& 255;}
+\DoxyCodeLine{00448   \textcolor{keywordtype}{int} gi0 = perm[ii + perm[jj + perm[kk + perm[ll]]]] \% 32;}
+\DoxyCodeLine{00449   \textcolor{keywordtype}{int} gi1 = perm[ii + i1 + perm[jj + j1 + perm[kk + k1 + perm[ll + l1]]]] \% 32;}
+\DoxyCodeLine{00450   \textcolor{keywordtype}{int} gi2 = perm[ii + i2 + perm[jj + j2 + perm[kk + k2 + perm[ll + l2]]]] \% 32;}
+\DoxyCodeLine{00451   \textcolor{keywordtype}{int} gi3 = perm[ii + i3 + perm[jj + j3 + perm[kk + k3 + perm[ll + l3]]]] \% 32;}
+\DoxyCodeLine{00452   \textcolor{keywordtype}{int} gi4 = perm[ii + 1 + perm[jj + 1 + perm[kk + 1 + perm[ll + 1]]]] \% 32;}
+\DoxyCodeLine{00453 }
+\DoxyCodeLine{00454   \textcolor{comment}{/*-\/ パラメータ調整 -\/*/}}
+\DoxyCodeLine{00455   \textcolor{keywordtype}{double} range = 0.66;}
+\DoxyCodeLine{00456   \textcolor{comment}{// double range = 0.6;}}
+\DoxyCodeLine{00457 }
+\DoxyCodeLine{00458   \textcolor{comment}{// Calculate the contribution from the five corners}}
+\DoxyCodeLine{00459   \textcolor{keywordtype}{double} t0 = range -\/ x0 * x0 -\/ y0 * y0 -\/ z0 * z0 -\/ w0 * w0;}
+\DoxyCodeLine{00460   \textcolor{keywordflow}{if} (t0 < 0)}
+\DoxyCodeLine{00461     n0 = 0.0;}
+\DoxyCodeLine{00462   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00463     t0 *= t0;}
+\DoxyCodeLine{00464     n0 = t0 * t0 * dot(grad4[gi0], x0, y0, z0, w0);}
+\DoxyCodeLine{00465   \}}
+\DoxyCodeLine{00466   \textcolor{keywordtype}{double} t1 = range -\/ x1 * x1 -\/ y1 * y1 -\/ z1 * z1 -\/ w1 * w1;}
+\DoxyCodeLine{00467   \textcolor{keywordflow}{if} (t1 < 0)}
+\DoxyCodeLine{00468     n1 = 0.0;}
+\DoxyCodeLine{00469   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00470     t1 *= t1;}
+\DoxyCodeLine{00471     n1 = t1 * t1 * dot(grad4[gi1], x1, y1, z1, w1);}
+\DoxyCodeLine{00472   \}}
+\DoxyCodeLine{00473   \textcolor{keywordtype}{double} t2 = range -\/ x2 * x2 -\/ y2 * y2 -\/ z2 * z2 -\/ w2 * w2;}
+\DoxyCodeLine{00474   \textcolor{keywordflow}{if} (t2 < 0)}
+\DoxyCodeLine{00475     n2 = 0.0;}
+\DoxyCodeLine{00476   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00477     t2 *= t2;}
+\DoxyCodeLine{00478     n2 = t2 * t2 * dot(grad4[gi2], x2, y2, z2, w2);}
+\DoxyCodeLine{00479   \}}
+\DoxyCodeLine{00480   \textcolor{keywordtype}{double} t3 = range -\/ x3 * x3 -\/ y3 * y3 -\/ z3 * z3 -\/ w3 * w3;}
+\DoxyCodeLine{00481   \textcolor{keywordflow}{if} (t3 < 0)}
+\DoxyCodeLine{00482     n3 = 0.0;}
+\DoxyCodeLine{00483   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00484     t3 *= t3;}
+\DoxyCodeLine{00485     n3 = t3 * t3 * dot(grad4[gi3], x3, y3, z3, w3);}
+\DoxyCodeLine{00486   \}}
+\DoxyCodeLine{00487   \textcolor{keywordtype}{double} t4 = range -\/ x4 * x4 -\/ y4 * y4 -\/ z4 * z4 -\/ w4 * w4;}
+\DoxyCodeLine{00488   \textcolor{keywordflow}{if} (t4 < 0)}
+\DoxyCodeLine{00489     n4 = 0.0;}
+\DoxyCodeLine{00490   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00491     t4 *= t4;}
+\DoxyCodeLine{00492     n4 = t4 * t4 * dot(grad4[gi4], x4, y4, z4, w4);}
+\DoxyCodeLine{00493   \}}
+\DoxyCodeLine{00494 }
+\DoxyCodeLine{00495   \textcolor{comment}{// Sum up and scale the result to cover the range [-\/1,1]}}
+\DoxyCodeLine{00496   \textcolor{keywordflow}{return} 27.0 * (n0 + n1 + n2 + n3 + n4);}
+\DoxyCodeLine{00497 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_simplex_noise_aa5576d9985e96f843c6e9f08da6809f5}\label{class_simplex_noise_aa5576d9985e96f843c6e9f08da6809f5}} 
+\index{SimplexNoise@{SimplexNoise}!noise@{noise}}
+\index{noise@{noise}!SimplexNoise@{SimplexNoise}}
+\doxysubsubsection{\texorpdfstring{noise()}{noise()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily double Simplex\+Noise\+::noise (\begin{DoxyParamCaption}\item[{double}]{xin,  }\item[{double}]{yin }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00123                                                  \{}
+\DoxyCodeLine{00124   \textcolor{comment}{// Skewing and unskewing factors for 2 dimensions}}
+\DoxyCodeLine{00125   \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{double} F2 = 0.5 * (sqrt(3.0) -\/ 1.0);}
+\DoxyCodeLine{00126   \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{double} G2 = (3.0 -\/ sqrt(3.0)) / 6.0;}
+\DoxyCodeLine{00127 }
+\DoxyCodeLine{00128   \textcolor{keywordtype}{double} n0, n1, n2;  \textcolor{comment}{// Noise contributions from the three corners}}
+\DoxyCodeLine{00129   \textcolor{comment}{// Skew the input space to determine which simplex cell we're in}}
+\DoxyCodeLine{00130   \textcolor{keywordtype}{double} s  = (xin + yin) * F2;  \textcolor{comment}{// Hairy factor for 2D}}
+\DoxyCodeLine{00131   \textcolor{keywordtype}{int} i     = fastfloor(xin + s);}
+\DoxyCodeLine{00132   \textcolor{keywordtype}{int} j     = fastfloor(yin + s);}
+\DoxyCodeLine{00133   \textcolor{keywordtype}{double} t  = (i + j) * G2;}
+\DoxyCodeLine{00134   \textcolor{keywordtype}{double} X0 = i -\/ t;  \textcolor{comment}{// Unskew the cell origin back to (x,y) space}}
+\DoxyCodeLine{00135   \textcolor{keywordtype}{double} Y0 = j -\/ t;}
+\DoxyCodeLine{00136   \textcolor{keywordtype}{double} x0 = xin -\/ X0;  \textcolor{comment}{// The x,y distances from the cell origin}}
+\DoxyCodeLine{00137   \textcolor{keywordtype}{double} y0 = yin -\/ Y0;}
+\DoxyCodeLine{00138 }
+\DoxyCodeLine{00139   \textcolor{comment}{// For the 2D case, the simplex shape is an equilateral triangle.}}
+\DoxyCodeLine{00140   \textcolor{comment}{// Determine which simplex we are in.}}
+\DoxyCodeLine{00141   \textcolor{keywordtype}{int} i1, j1;  \textcolor{comment}{// Offsets for second (middle) corner of simplex in (i,j) coords}}
+\DoxyCodeLine{00142   \textcolor{keywordflow}{if} (x0 > y0) \{}
+\DoxyCodeLine{00143     i1 = 1;}
+\DoxyCodeLine{00144     j1 = 0;}
+\DoxyCodeLine{00145   \}  \textcolor{comment}{// lower triangle, XY order: (0,0)-\/>(1,0)-\/>(1,1)}}
+\DoxyCodeLine{00146   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00147     i1 = 0;}
+\DoxyCodeLine{00148     j1 = 1;}
+\DoxyCodeLine{00149   \}  \textcolor{comment}{// upper triangle, YX order: (0,0)-\/>(0,1)-\/>(1,1)}}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   \textcolor{comment}{// A step of (1,0) in (i,j) means a step of (1-\/c,-\/c) in (x,y), and}}
+\DoxyCodeLine{00152   \textcolor{comment}{// a step of (0,1) in (i,j) means a step of (-\/c,1-\/c) in (x,y), where}}
+\DoxyCodeLine{00153   \textcolor{comment}{// c = (3-\/sqrt(3))/6}}
+\DoxyCodeLine{00154   \textcolor{keywordtype}{double} x1 =}
+\DoxyCodeLine{00155       x0 -\/ i1 + G2;  \textcolor{comment}{// Offsets for middle corner in (x,y) unskewed coords}}
+\DoxyCodeLine{00156   \textcolor{keywordtype}{double} y1 = y0 -\/ j1 + G2;}
+\DoxyCodeLine{00157   \textcolor{keywordtype}{double} x2 =}
+\DoxyCodeLine{00158       x0 -\/ 1.0 + 2.0 * G2;  \textcolor{comment}{// Offsets for last corner in (x,y) unskewed coords}}
+\DoxyCodeLine{00159   \textcolor{keywordtype}{double} y2 = y0 -\/ 1.0 + 2.0 * G2;}
+\DoxyCodeLine{00160 }
+\DoxyCodeLine{00161   \textcolor{comment}{// Work out the hashed gradient indices of the three simplex corners}}
+\DoxyCodeLine{00162   \textcolor{keywordtype}{int} ii  = i \& 255;}
+\DoxyCodeLine{00163   \textcolor{keywordtype}{int} jj  = j \& 255;}
+\DoxyCodeLine{00164   \textcolor{keywordtype}{int} gi0 = permMod12[ii + perm[jj]];}
+\DoxyCodeLine{00165   \textcolor{keywordtype}{int} gi1 = permMod12[ii + i1 + perm[jj + j1]];}
+\DoxyCodeLine{00166   \textcolor{keywordtype}{int} gi2 = permMod12[ii + 1 + perm[jj + 1]];}
+\DoxyCodeLine{00167 }
+\DoxyCodeLine{00168   \textcolor{comment}{// Calculate the contribution from the three corners}}
+\DoxyCodeLine{00169   \textcolor{keywordtype}{double} t0 = 0.5 -\/ x0 * x0 -\/ y0 * y0;}
+\DoxyCodeLine{00170   \textcolor{keywordflow}{if} (t0 < 0)}
+\DoxyCodeLine{00171     n0 = 0.0;}
+\DoxyCodeLine{00172   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00173     t0 *= t0;}
+\DoxyCodeLine{00174     n0 = t0 * t0 *}
+\DoxyCodeLine{00175          dot(grad3[gi0], x0, y0);  \textcolor{comment}{// (x,y) of grad3 used for 2D gradient}}
+\DoxyCodeLine{00176   \}}
+\DoxyCodeLine{00177   \textcolor{keywordtype}{double} t1 = 0.5 -\/ x1 * x1 -\/ y1 * y1;}
+\DoxyCodeLine{00178   \textcolor{keywordflow}{if} (t1 < 0)}
+\DoxyCodeLine{00179     n1 = 0.0;}
+\DoxyCodeLine{00180   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00181     t1 *= t1;}
+\DoxyCodeLine{00182     n1 = t1 * t1 * dot(grad3[gi1], x1, y1);}
+\DoxyCodeLine{00183   \}}
+\DoxyCodeLine{00184   \textcolor{keywordtype}{double} t2 = 0.5 -\/ x2 * x2 -\/ y2 * y2;}
+\DoxyCodeLine{00185   \textcolor{keywordflow}{if} (t2 < 0)}
+\DoxyCodeLine{00186     n2 = 0.0;}
+\DoxyCodeLine{00187   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00188     t2 *= t2;}
+\DoxyCodeLine{00189     n2 = t2 * t2 * dot(grad3[gi2], x2, y2);}
+\DoxyCodeLine{00190   \}}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192   \textcolor{comment}{// Add contributions from each corner to get the final noise value.}}
+\DoxyCodeLine{00193   \textcolor{comment}{// The result is scaled to return values in the interval [-\/1,1].}}
+\DoxyCodeLine{00194   \textcolor{keywordflow}{return} 70.0 * (n0 + n1 + n2);}
+\DoxyCodeLine{00195 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_simplex_noise_a9dadeb2e4a7f8230b6308323d3ce44b2}\label{class_simplex_noise_a9dadeb2e4a7f8230b6308323d3ce44b2}} 
+\index{SimplexNoise@{SimplexNoise}!noise@{noise}}
+\index{noise@{noise}!SimplexNoise@{SimplexNoise}}
+\doxysubsubsection{\texorpdfstring{noise()}{noise()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily double Simplex\+Noise\+::noise (\begin{DoxyParamCaption}\item[{double}]{xin,  }\item[{double}]{yin,  }\item[{double}]{zin }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00200                                                              \{}
+\DoxyCodeLine{00201   \textcolor{comment}{// Skewing and unskewing factors for 3 dimensions}}
+\DoxyCodeLine{00202   \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{double} F3 = 1.0 / 3.0;}
+\DoxyCodeLine{00203   \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{double} G3 = 1.0 / 6.0;}
+\DoxyCodeLine{00204 }
+\DoxyCodeLine{00205   \textcolor{keywordtype}{double} n0, n1, n2, n3;  \textcolor{comment}{// Noise contributions from the four corners}}
+\DoxyCodeLine{00206   \textcolor{comment}{// Skew the input space to determine which simplex cell we're in}}
+\DoxyCodeLine{00207   \textcolor{keywordtype}{double} s = (xin + yin + zin) * F3;  \textcolor{comment}{// Very nice and simple skew factor for 3D}}
+\DoxyCodeLine{00208   \textcolor{keywordtype}{int} i    = fastfloor(xin + s);}
+\DoxyCodeLine{00209   \textcolor{keywordtype}{int} j    = fastfloor(yin + s);}
+\DoxyCodeLine{00210   \textcolor{keywordtype}{int} k    = fastfloor(zin + s);}
+\DoxyCodeLine{00211   \textcolor{keywordtype}{double} t = (i + j + k) * G3;}
+\DoxyCodeLine{00212   \textcolor{keywordtype}{double} X0 = i -\/ t;  \textcolor{comment}{// Unskew the cell origin back to (x,y,z) space}}
+\DoxyCodeLine{00213   \textcolor{keywordtype}{double} Y0 = j -\/ t;}
+\DoxyCodeLine{00214   \textcolor{keywordtype}{double} Z0 = k -\/ t;}
+\DoxyCodeLine{00215   \textcolor{keywordtype}{double} x0 = xin -\/ X0;  \textcolor{comment}{// The x,y,z distances from the cell origin}}
+\DoxyCodeLine{00216   \textcolor{keywordtype}{double} y0 = yin -\/ Y0;}
+\DoxyCodeLine{00217   \textcolor{keywordtype}{double} z0 = zin -\/ Z0;}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219   \textcolor{comment}{// For the 3D case, the simplex shape is a slightly irregular tetrahedron.}}
+\DoxyCodeLine{00220   \textcolor{comment}{// Determine which simplex we are in.}}
+\DoxyCodeLine{00221   \textcolor{keywordtype}{int} i1, j1, k1;  \textcolor{comment}{// Offsets for second corner of simplex in (i,j,k) coords}}
+\DoxyCodeLine{00222   \textcolor{keywordtype}{int} i2, j2, k2;  \textcolor{comment}{// Offsets for third corner of simplex in (i,j,k) coords}}
+\DoxyCodeLine{00223   \textcolor{keywordflow}{if} (x0 >= y0) \{}
+\DoxyCodeLine{00224     \textcolor{keywordflow}{if} (y0 >= z0) \{}
+\DoxyCodeLine{00225       i1 = 1;}
+\DoxyCodeLine{00226       j1 = 0;}
+\DoxyCodeLine{00227       k1 = 0;}
+\DoxyCodeLine{00228       i2 = 1;}
+\DoxyCodeLine{00229       j2 = 1;}
+\DoxyCodeLine{00230       k2 = 0;}
+\DoxyCodeLine{00231     \}  \textcolor{comment}{// X Y Z order}}
+\DoxyCodeLine{00232     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (x0 >= z0) \{}
+\DoxyCodeLine{00233       i1 = 1;}
+\DoxyCodeLine{00234       j1 = 0;}
+\DoxyCodeLine{00235       k1 = 0;}
+\DoxyCodeLine{00236       i2 = 1;}
+\DoxyCodeLine{00237       j2 = 0;}
+\DoxyCodeLine{00238       k2 = 1;}
+\DoxyCodeLine{00239     \}  \textcolor{comment}{// X Z Y order}}
+\DoxyCodeLine{00240     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00241       i1 = 0;}
+\DoxyCodeLine{00242       j1 = 0;}
+\DoxyCodeLine{00243       k1 = 1;}
+\DoxyCodeLine{00244       i2 = 1;}
+\DoxyCodeLine{00245       j2 = 0;}
+\DoxyCodeLine{00246       k2 = 1;}
+\DoxyCodeLine{00247     \}       \textcolor{comment}{// Z X Y order}}
+\DoxyCodeLine{00248   \} \textcolor{keywordflow}{else} \{  \textcolor{comment}{// x0<y0}}
+\DoxyCodeLine{00249     \textcolor{keywordflow}{if} (y0 < z0) \{}
+\DoxyCodeLine{00250       i1 = 0;}
+\DoxyCodeLine{00251       j1 = 0;}
+\DoxyCodeLine{00252       k1 = 1;}
+\DoxyCodeLine{00253       i2 = 0;}
+\DoxyCodeLine{00254       j2 = 1;}
+\DoxyCodeLine{00255       k2 = 1;}
+\DoxyCodeLine{00256     \}  \textcolor{comment}{// Z Y X order}}
+\DoxyCodeLine{00257     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (x0 < z0) \{}
+\DoxyCodeLine{00258       i1 = 0;}
+\DoxyCodeLine{00259       j1 = 1;}
+\DoxyCodeLine{00260       k1 = 0;}
+\DoxyCodeLine{00261       i2 = 0;}
+\DoxyCodeLine{00262       j2 = 1;}
+\DoxyCodeLine{00263       k2 = 1;}
+\DoxyCodeLine{00264     \}  \textcolor{comment}{// Y Z X order}}
+\DoxyCodeLine{00265     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00266       i1 = 0;}
+\DoxyCodeLine{00267       j1 = 1;}
+\DoxyCodeLine{00268       k1 = 0;}
+\DoxyCodeLine{00269       i2 = 1;}
+\DoxyCodeLine{00270       j2 = 1;}
+\DoxyCodeLine{00271       k2 = 0;}
+\DoxyCodeLine{00272     \}  \textcolor{comment}{// Y X Z order}}
+\DoxyCodeLine{00273   \}}
+\DoxyCodeLine{00274 }
+\DoxyCodeLine{00275   \textcolor{comment}{// A step of (1,0,0) in (i,j,k) means a step of (1-\/c,-\/c,-\/c) in (x,y,z),}}
+\DoxyCodeLine{00276   \textcolor{comment}{// a step of (0,1,0) in (i,j,k) means a step of (-\/c,1-\/c,-\/c) in (x,y,z), and}}
+\DoxyCodeLine{00277   \textcolor{comment}{// a step of (0,0,1) in (i,j,k) means a step of (-\/c,-\/c,1-\/c) in (x,y,z), where}}
+\DoxyCodeLine{00278   \textcolor{comment}{// c = 1/6.}}
+\DoxyCodeLine{00279   \textcolor{keywordtype}{double} x1 = x0 -\/ i1 + G3;  \textcolor{comment}{// Offsets for second corner in (x,y,z) coords}}
+\DoxyCodeLine{00280   \textcolor{keywordtype}{double} y1 = y0 -\/ j1 + G3;}
+\DoxyCodeLine{00281   \textcolor{keywordtype}{double} z1 = z0 -\/ k1 + G3;}
+\DoxyCodeLine{00282   \textcolor{keywordtype}{double} x2 = x0 -\/ i2 + 2.0 * G3;  \textcolor{comment}{// Offsets for third corner in (x,y,z) coords}}
+\DoxyCodeLine{00283   \textcolor{keywordtype}{double} y2 = y0 -\/ j2 + 2.0 * G3;}
+\DoxyCodeLine{00284   \textcolor{keywordtype}{double} z2 = z0 -\/ k2 + 2.0 * G3;}
+\DoxyCodeLine{00285   \textcolor{keywordtype}{double} x3 = x0 -\/ 1.0 + 3.0 * G3;  \textcolor{comment}{// Offsets for last corner in (x,y,z) coords}}
+\DoxyCodeLine{00286   \textcolor{keywordtype}{double} y3 = y0 -\/ 1.0 + 3.0 * G3;}
+\DoxyCodeLine{00287   \textcolor{keywordtype}{double} z3 = z0 -\/ 1.0 + 3.0 * G3;}
+\DoxyCodeLine{00288 }
+\DoxyCodeLine{00289   \textcolor{comment}{// Work out the hashed gradient indices of the four simplex corners}}
+\DoxyCodeLine{00290   \textcolor{keywordtype}{int} ii  = i \& 255;}
+\DoxyCodeLine{00291   \textcolor{keywordtype}{int} jj  = j \& 255;}
+\DoxyCodeLine{00292   \textcolor{keywordtype}{int} kk  = k \& 255;}
+\DoxyCodeLine{00293   \textcolor{keywordtype}{int} gi0 = permMod12[ii + perm[jj + perm[kk]]];}
+\DoxyCodeLine{00294   \textcolor{keywordtype}{int} gi1 = permMod12[ii + i1 + perm[jj + j1 + perm[kk + k1]]];}
+\DoxyCodeLine{00295   \textcolor{keywordtype}{int} gi2 = permMod12[ii + i2 + perm[jj + j2 + perm[kk + k2]]];}
+\DoxyCodeLine{00296   \textcolor{keywordtype}{int} gi3 = permMod12[ii + 1 + perm[jj + 1 + perm[kk + 1]]];}
+\DoxyCodeLine{00297 }
+\DoxyCodeLine{00298   \textcolor{comment}{// Calculate the contribution from the four corners}}
+\DoxyCodeLine{00299   \textcolor{keywordtype}{double} range = 0.6;}
+\DoxyCodeLine{00300   \textcolor{keywordtype}{double} t0    = range -\/ x0 * x0 -\/ y0 * y0 -\/ z0 * z0;}
+\DoxyCodeLine{00301   \textcolor{keywordflow}{if} (t0 < 0)}
+\DoxyCodeLine{00302     n0 = 0.0;}
+\DoxyCodeLine{00303   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00304     t0 *= t0;}
+\DoxyCodeLine{00305     n0 = t0 * t0 * dot(grad3[gi0], x0, y0, z0);}
+\DoxyCodeLine{00306   \}}
+\DoxyCodeLine{00307   \textcolor{keywordtype}{double} t1 = range -\/ x1 * x1 -\/ y1 * y1 -\/ z1 * z1;}
+\DoxyCodeLine{00308   \textcolor{keywordflow}{if} (t1 < 0)}
+\DoxyCodeLine{00309     n1 = 0.0;}
+\DoxyCodeLine{00310   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00311     t1 *= t1;}
+\DoxyCodeLine{00312     n1 = t1 * t1 * dot(grad3[gi1], x1, y1, z1);}
+\DoxyCodeLine{00313   \}}
+\DoxyCodeLine{00314   \textcolor{keywordtype}{double} t2 = range -\/ x2 * x2 -\/ y2 * y2 -\/ z2 * z2;}
+\DoxyCodeLine{00315   \textcolor{keywordflow}{if} (t2 < 0)}
+\DoxyCodeLine{00316     n2 = 0.0;}
+\DoxyCodeLine{00317   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00318     t2 *= t2;}
+\DoxyCodeLine{00319     n2 = t2 * t2 * dot(grad3[gi2], x2, y2, z2);}
+\DoxyCodeLine{00320   \}}
+\DoxyCodeLine{00321   \textcolor{keywordtype}{double} t3 = range -\/ x3 * x3 -\/ y3 * y3 -\/ z3 * z3;}
+\DoxyCodeLine{00322   \textcolor{keywordflow}{if} (t3 < 0)}
+\DoxyCodeLine{00323     n3 = 0.0;}
+\DoxyCodeLine{00324   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00325     t3 *= t3;}
+\DoxyCodeLine{00326     n3 = t3 * t3 * dot(grad3[gi3], x3, y3, z3);}
+\DoxyCodeLine{00327   \}}
+\DoxyCodeLine{00328   \textcolor{comment}{// Add contributions from each corner to get the final noise value.}}
+\DoxyCodeLine{00329   \textcolor{comment}{// The result is scaled to stay just inside [-\/1,1]}}
+\DoxyCodeLine{00330   \textcolor{comment}{/*-\/ 変更： [-\/0.5,0.5]　の範囲にする -\/*/}}
+\DoxyCodeLine{00331   \textcolor{keywordflow}{return} 16.0 * (n0 + n1 + n2 + n3);}
+\DoxyCodeLine{00332   \textcolor{comment}{// return 32.0*(n0 + n1 + n2 + n3);}}
+\DoxyCodeLine{00333 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/iwa\+\_\+simplexnoise.\+h\item 
+E\+:/opentoonz/toonz/sources/stdfx/iwa\+\_\+simplexnoise.\+cpp\end{DoxyCompactItemize}

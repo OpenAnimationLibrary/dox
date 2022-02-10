@@ -1,0 +1,233 @@
+\hypertarget{class_spectrum_param_field}{}\doxysection{Spectrum\+Param\+Field Class Reference}
+\label{class_spectrum_param_field}\index{SpectrumParamField@{SpectrumParamField}}
+Inheritance diagram for Spectrum\+Param\+Field\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_spectrum_param_field}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_spectrum_param_field_a4fb7eff5b2bc12ae3dbc61d35e97866f}{Spectrum\+Param\+Field}} (QWidget $\ast$parent, QString name, const \mbox{\hyperlink{class_t_spectrum_param_p}{TSpectrum\+ParamP}} \&param)
+\item 
+void \mbox{\hyperlink{class_spectrum_param_field_abf5f5eeb2c67a896e8b09900e87d8a2e}{update\+Field}} (\mbox{\hyperlink{class_t_spectrum_t}{TSpectrum}} value) override
+\item 
+void \mbox{\hyperlink{class_spectrum_param_field_a7a7355b7d294d392679f224dfa19f3fc}{set\+Params}} ()
+\item 
+QSize \mbox{\hyperlink{class_spectrum_param_field_af25259cec9f54da0eb13658d4bc9a498}{get\+Preferred\+Size}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_spectrum_param_field_a03b91b6df1bd8c2665c4b891b1afcb41}{on\+Key\+Toggled}} ()
+\item 
+void \mbox{\hyperlink{class_spectrum_param_field_a97262242a8a1f674239acd48e65aca90}{on\+Change}} (bool is\+Dragging)
+\item 
+void \mbox{\hyperlink{class_spectrum_param_field_aaa636281fdd56e076a43c5c84a6eb59f}{on\+Key\+Added}} (int key\+Index)
+\item 
+void \mbox{\hyperlink{class_spectrum_param_field_a221c35eaa8ce58c1500f8235027924bb}{on\+Key\+Removed}} (int key\+Index)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_spectrum_param_field_a4fb7eff5b2bc12ae3dbc61d35e97866f}\label{class_spectrum_param_field_a4fb7eff5b2bc12ae3dbc61d35e97866f}} 
+\index{SpectrumParamField@{SpectrumParamField}!SpectrumParamField@{SpectrumParamField}}
+\index{SpectrumParamField@{SpectrumParamField}!SpectrumParamField@{SpectrumParamField}}
+\doxysubsubsection{\texorpdfstring{SpectrumParamField()}{SpectrumParamField()}}
+{\footnotesize\ttfamily Spectrum\+Param\+Field\+::\+Spectrum\+Param\+Field (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{QString}]{name,  }\item[{const \mbox{\hyperlink{class_t_spectrum_param_p}{TSpectrum\+ParamP}} \&}]{param }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01181     : \mbox{\hyperlink{class_animated_param_field}{AnimatedParamField<TSpectrum, TSpectrumParamP>}}(parent, name, param) \{}
+\DoxyCodeLine{01182   QString str;}
+\DoxyCodeLine{01183   m\_paramName = str.fromStdString(param-\/>getName());}
+\DoxyCodeLine{01184 }
+\DoxyCodeLine{01185   m\_spectrumField = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_spectrum_field}{SpectrumField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{01186   m\_spectrumField-\/>setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);}
+\DoxyCodeLine{01187   m\_spectrumField-\/>setCurrentKeyIndex(0);}
+\DoxyCodeLine{01188 }
+\DoxyCodeLine{01189   \textcolor{comment}{//-\/-\/-\/ layout}}
+\DoxyCodeLine{01190   m\_layout-\/>addWidget(m\_keyToggle);}
+\DoxyCodeLine{01191   m\_layout-\/>addWidget(m\_spectrumField);}
+\DoxyCodeLine{01192   setLayout(m\_layout);}
+\DoxyCodeLine{01193 }
+\DoxyCodeLine{01194   \textcolor{comment}{//-\/-\/-\/ signal-\/slot connections}}
+\DoxyCodeLine{01195   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{01196   ret = ret \&\& connect(m\_spectrumField, SIGNAL(keyColorChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01197                        SLOT(onChange(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{01198   ret = ret \&\& connect(m\_spectrumField, SIGNAL(keyPositionChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01199                        SLOT(onChange(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{01200   ret = ret \&\& connect(m\_spectrumField, SIGNAL(keyAdded(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01201                        SLOT(onKeyAdded(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{01202   ret = ret \&\& connect(m\_spectrumField, SIGNAL(keyRemoved(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01203                        SLOT(onKeyRemoved(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{01204   ret = ret \&\& connect(m\_keyToggle, SIGNAL(keyToggled()), SLOT(onKeyToggled()));}
+\DoxyCodeLine{01205   assert(ret);}
+\DoxyCodeLine{01206 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_spectrum_param_field_af25259cec9f54da0eb13658d4bc9a498}\label{class_spectrum_param_field_af25259cec9f54da0eb13658d4bc9a498}} 
+\index{SpectrumParamField@{SpectrumParamField}!getPreferredSize@{getPreferredSize}}
+\index{getPreferredSize@{getPreferredSize}!SpectrumParamField@{SpectrumParamField}}
+\doxysubsubsection{\texorpdfstring{getPreferredSize()}{getPreferredSize()}}
+{\footnotesize\ttfamily QSize Spectrum\+Param\+Field\+::get\+Preferred\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_param_field}{Param\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00492 \{ \textcolor{keywordflow}{return} QSize(477, 60); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_spectrum_param_field_a97262242a8a1f674239acd48e65aca90}\label{class_spectrum_param_field_a97262242a8a1f674239acd48e65aca90}} 
+\index{SpectrumParamField@{SpectrumParamField}!onChange@{onChange}}
+\index{onChange@{onChange}!SpectrumParamField@{SpectrumParamField}}
+\doxysubsubsection{\texorpdfstring{onChange}{onChange}}
+{\footnotesize\ttfamily void Spectrum\+Param\+Field\+::on\+Change (\begin{DoxyParamCaption}\item[{bool}]{is\+Dragging }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01241                                                  \{}
+\DoxyCodeLine{01242   \textcolor{keywordflow}{if} (isDragging) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01243 }
+\DoxyCodeLine{01244   \mbox{\hyperlink{class_t_spectrum_param_p}{TSpectrumParamP}} spectrumParam = m\_actualParam;}
+\DoxyCodeLine{01245   \mbox{\hyperlink{class_t_undo}{TUndo}} *undo                   = 0;}
+\DoxyCodeLine{01246   \textcolor{keywordflow}{if} (spectrumParam \&\&}
+\DoxyCodeLine{01247       spectrumParam-\/>getValue(m\_frame) != m\_spectrumField-\/>getSpectrum() \&\&}
+\DoxyCodeLine{01248       (m\_actualParam-\/>isKeyframe(m\_frame) ||}
+\DoxyCodeLine{01249        !m\_actualParam.getPointer()-\/>\mbox{\hyperlink{class_t_spectrum_param_a0f35be98c078c286922d749fbee9ab95}{hasKeyframes}}()))}
+\DoxyCodeLine{01250     undo = \textcolor{keyword}{new} \mbox{\hyperlink{class_spectrum_param_field_undo}{SpectrumParamFieldUndo}}(spectrumParam, m\_interfaceName, m\_frame,}
+\DoxyCodeLine{01251                                       ParamField::m\_fxHandleStat);}
+\DoxyCodeLine{01252 }
+\DoxyCodeLine{01253   setParams();}
+\DoxyCodeLine{01254 }
+\DoxyCodeLine{01255   \textcolor{keywordflow}{if} (undo) TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{01256 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_spectrum_param_field_aaa636281fdd56e076a43c5c84a6eb59f}\label{class_spectrum_param_field_aaa636281fdd56e076a43c5c84a6eb59f}} 
+\index{SpectrumParamField@{SpectrumParamField}!onKeyAdded@{onKeyAdded}}
+\index{onKeyAdded@{onKeyAdded}!SpectrumParamField@{SpectrumParamField}}
+\doxysubsubsection{\texorpdfstring{onKeyAdded}{onKeyAdded}}
+{\footnotesize\ttfamily void Spectrum\+Param\+Field\+::on\+Key\+Added (\begin{DoxyParamCaption}\item[{int}]{key\+Index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01260                                                 \{}
+\DoxyCodeLine{01261   TSpectrum::ColorKey key = m\_spectrumField-\/>getSpectrum().getKey(keyIndex);}
+\DoxyCodeLine{01262 }
+\DoxyCodeLine{01263   \mbox{\hyperlink{class_t_spectrum_param_p}{TSpectrumParamP}} actualSpectrumParam = m\_actualParam;}
+\DoxyCodeLine{01264   assert(actualSpectrumParam);}
+\DoxyCodeLine{01265   actualSpectrumParam-\/>addKey(key.first, key.second);}
+\DoxyCodeLine{01266 }
+\DoxyCodeLine{01267   \mbox{\hyperlink{class_t_spectrum_param_p}{TSpectrumParamP}} currentSpectrumParam = m\_currentParam;}
+\DoxyCodeLine{01268   assert(currentSpectrumParam);}
+\DoxyCodeLine{01269   currentSpectrumParam-\/>addKey(key.first, key.second);}
+\DoxyCodeLine{01270 }
+\DoxyCodeLine{01271   TUndoManager::manager()-\/>add(\textcolor{keyword}{new} \mbox{\hyperlink{class_spectrum_param_field_add_remove_key_undo}{SpectrumParamFieldAddRemoveKeyUndo}}(}
+\DoxyCodeLine{01272       actualSpectrumParam, currentSpectrumParam, key, keyIndex, \textcolor{keyword}{true},}
+\DoxyCodeLine{01273       m\_interfaceName, ParamField::m\_fxHandleStat));}
+\DoxyCodeLine{01274 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_spectrum_param_field_a221c35eaa8ce58c1500f8235027924bb}\label{class_spectrum_param_field_a221c35eaa8ce58c1500f8235027924bb}} 
+\index{SpectrumParamField@{SpectrumParamField}!onKeyRemoved@{onKeyRemoved}}
+\index{onKeyRemoved@{onKeyRemoved}!SpectrumParamField@{SpectrumParamField}}
+\doxysubsubsection{\texorpdfstring{onKeyRemoved}{onKeyRemoved}}
+{\footnotesize\ttfamily void Spectrum\+Param\+Field\+::on\+Key\+Removed (\begin{DoxyParamCaption}\item[{int}]{key\+Index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01278                                                   \{}
+\DoxyCodeLine{01279   \mbox{\hyperlink{class_t_undo}{TUndo}} *undo                          = 0;}
+\DoxyCodeLine{01280   \mbox{\hyperlink{class_t_spectrum_param_p}{TSpectrumParamP}} actualSpectrumParam  = m\_actualParam;}
+\DoxyCodeLine{01281   \mbox{\hyperlink{class_t_spectrum_param_p}{TSpectrumParamP}} currentSpectrumParam = m\_currentParam;}
+\DoxyCodeLine{01282   \textcolor{keywordflow}{if} (currentSpectrumParam \&\& actualSpectrumParam) \{}
+\DoxyCodeLine{01283     TSpectrum::ColorKey key =}
+\DoxyCodeLine{01284         actualSpectrumParam-\/>getValue(m\_frame).getKey(keyIndex);}
+\DoxyCodeLine{01285     undo = \textcolor{keyword}{new} \mbox{\hyperlink{class_spectrum_param_field_add_remove_key_undo}{SpectrumParamFieldAddRemoveKeyUndo}}(}
+\DoxyCodeLine{01286         actualSpectrumParam, currentSpectrumParam, key, keyIndex, \textcolor{keyword}{false},}
+\DoxyCodeLine{01287         m\_interfaceName, ParamField::m\_fxHandleStat);}
+\DoxyCodeLine{01288   \}}
+\DoxyCodeLine{01289 }
+\DoxyCodeLine{01290   m\_currentParam-\/>removeKey(keyIndex);}
+\DoxyCodeLine{01291   m\_actualParam-\/>removeKey(keyIndex);}
+\DoxyCodeLine{01292 }
+\DoxyCodeLine{01293   setParams();}
+\DoxyCodeLine{01294 }
+\DoxyCodeLine{01295   \textcolor{keywordflow}{if} (undo) TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{01296 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_spectrum_param_field_a03b91b6df1bd8c2665c4b891b1afcb41}\label{class_spectrum_param_field_a03b91b6df1bd8c2665c4b891b1afcb41}} 
+\index{SpectrumParamField@{SpectrumParamField}!onKeyToggled@{onKeyToggled}}
+\index{onKeyToggled@{onKeyToggled}!SpectrumParamField@{SpectrumParamField}}
+\doxysubsubsection{\texorpdfstring{onKeyToggled}{onKeyToggled}}
+{\footnotesize\ttfamily void Spectrum\+Param\+Field\+::on\+Key\+Toggled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01237 \{ onKeyToggle(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_spectrum_param_field_a7a7355b7d294d392679f224dfa19f3fc}\label{class_spectrum_param_field_a7a7355b7d294d392679f224dfa19f3fc}} 
+\index{SpectrumParamField@{SpectrumParamField}!setParams@{setParams}}
+\index{setParams@{setParams}!SpectrumParamField@{SpectrumParamField}}
+\doxysubsubsection{\texorpdfstring{setParams()}{setParams()}}
+{\footnotesize\ttfamily void Spectrum\+Param\+Field\+::set\+Params (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01217                                    \{}
+\DoxyCodeLine{01218   \mbox{\hyperlink{class_t_spectrum_t}{TSpectrum}} spectrum = m\_spectrumField-\/>getSpectrum();}
+\DoxyCodeLine{01219   \textcolor{comment}{// if(m\_currentParam-\/>getValue(0) == spectrum) return; //Rivedi quando sistemi}}
+\DoxyCodeLine{01220   \textcolor{comment}{// lo SwatchViewer}}
+\DoxyCodeLine{01221 }
+\DoxyCodeLine{01222   m\_currentParam-\/>setValue(m\_frame, spectrum);}
+\DoxyCodeLine{01223   \textcolor{keywordflow}{if} (m\_actualParam-\/>isKeyframe(m\_frame)) \{}
+\DoxyCodeLine{01224     m\_actualParam-\/>setValue(m\_frame, spectrum);}
+\DoxyCodeLine{01225     emit actualParamChanged();}
+\DoxyCodeLine{01226   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!m\_actualParam-\/>hasKeyframes()) \{}
+\DoxyCodeLine{01227     m\_actualParam-\/>setDefaultValue(spectrum);}
+\DoxyCodeLine{01228     emit actualParamChanged();}
+\DoxyCodeLine{01229   \}}
+\DoxyCodeLine{01230   updateKeyToggle();}
+\DoxyCodeLine{01231 }
+\DoxyCodeLine{01232   emit currentParamChanged();}
+\DoxyCodeLine{01233 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_spectrum_param_field_abf5f5eeb2c67a896e8b09900e87d8a2e}\label{class_spectrum_param_field_abf5f5eeb2c67a896e8b09900e87d8a2e}} 
+\index{SpectrumParamField@{SpectrumParamField}!updateField@{updateField}}
+\index{updateField@{updateField}!SpectrumParamField@{SpectrumParamField}}
+\doxysubsubsection{\texorpdfstring{updateField()}{updateField()}}
+{\footnotesize\ttfamily void Spectrum\+Param\+Field\+::update\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_spectrum_t}{TSpectrum}}}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_animated_param_field}{Animated\+Param\+Field$<$ TSpectrum, TSpectrum\+Param\+P $>$}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01210                                                     \{}
+\DoxyCodeLine{01211   \textcolor{keywordflow}{if} (m\_spectrumField-\/>getSpectrum() == value) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01212   m\_spectrumField-\/>setSpectrum(value);}
+\DoxyCodeLine{01213 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/paramfield.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/paramfield.\+cpp\end{DoxyCompactItemize}

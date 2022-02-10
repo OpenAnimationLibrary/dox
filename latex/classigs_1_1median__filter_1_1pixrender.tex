@@ -1,0 +1,193 @@
+\hypertarget{classigs_1_1median__filter_1_1pixrender}{}\doxysection{igs\+::median\+\_\+filter\+::pixrender Class Reference}
+\label{classigs_1_1median__filter_1_1pixrender}\index{igs::median\_filter::pixrender@{igs::median\_filter::pixrender}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classigs_1_1median__filter_1_1pixrender_a9d4974a170cbe467726c48736e401d8b}{pixrender}} (double radius, igs\+::median\+\_\+filter\+::out\+\_\+of\+\_\+image type)
+\item 
+void \mbox{\hyperlink{classigs_1_1median__filter_1_1pixrender_ac2673039251532fb2e31b8c8692a8663}{position}} (const int ww, const int hh, int \&xx, int \&yy)
+\item 
+void \mbox{\hyperlink{classigs_1_1median__filter_1_1pixrender_a785edba829df0f8c059e6494a3663a38}{clear}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{classigs_1_1median__filter_1_1pixrender_a2d0616759f96139f48b775ae0621a5ae}{xp}}
+\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{classigs_1_1median__filter_1_1pixrender_a013208419c24cf4d7efaacc18ff8a273}{yp}}
+\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{classigs_1_1median__filter_1_1pixrender_a0130e010eef0aa59b76142e2bdbc9828}{around}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classigs_1_1median__filter_1_1pixrender_a9d4974a170cbe467726c48736e401d8b}\label{classigs_1_1median__filter_1_1pixrender_a9d4974a170cbe467726c48736e401d8b}} 
+\index{igs::median\_filter::pixrender@{igs::median\_filter::pixrender}!pixrender@{pixrender}}
+\index{pixrender@{pixrender}!igs::median\_filter::pixrender@{igs::median\_filter::pixrender}}
+\doxysubsubsection{\texorpdfstring{pixrender()}{pixrender()}}
+{\footnotesize\ttfamily igs\+::median\+\_\+filter\+::pixrender\+::pixrender (\begin{DoxyParamCaption}\item[{double}]{radius,  }\item[{igs\+::median\+\_\+filter\+::out\+\_\+of\+\_\+image}]{type }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00034     : type\_(type) \{}
+\DoxyCodeLine{00035   \textcolor{keyword}{const} \textcolor{keywordtype}{int} radius\_int = (int)ceil(radius);}
+\DoxyCodeLine{00036   \textcolor{keywordtype}{int} size             = 0;}
+\DoxyCodeLine{00037 }
+\DoxyCodeLine{00038   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} yy = -\/radius\_int; yy <= radius\_int; ++yy) \{}
+\DoxyCodeLine{00039     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} xx = -\/radius\_int; xx <= radius\_int; ++xx) \{}
+\DoxyCodeLine{00040 \textcolor{comment}{      /***}}
+\DoxyCodeLine{00041 \textcolor{comment}{const double xr = xx / radius;}}
+\DoxyCodeLine{00042 \textcolor{comment}{const double yr = yy / radius;}}
+\DoxyCodeLine{00043 \textcolor{comment}{if ( sqrt(xr * xr + yr * yr) <= (1.0 + 1e-\/6) )\{}}
+\DoxyCodeLine{00044 \textcolor{comment}{++size;}}
+\DoxyCodeLine{00045 \textcolor{comment}{\}}}
+\DoxyCodeLine{00046 \textcolor{comment}{***/}}
+\DoxyCodeLine{00047       \textcolor{keyword}{const} \textcolor{keywordtype}{double} xr = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(xx);}
+\DoxyCodeLine{00048       \textcolor{keyword}{const} \textcolor{keywordtype}{double} yr = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(yy);}
+\DoxyCodeLine{00049       \textcolor{keywordflow}{if} ((xr * xr + yr * yr) <= (radius * radius + 1e-\/6)) \{}
+\DoxyCodeLine{00050         ++size;}
+\DoxyCodeLine{00051       \}}
+\DoxyCodeLine{00052     \}}
+\DoxyCodeLine{00053   \}}
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055   this-\/>xp.resize(size);}
+\DoxyCodeLine{00056   this-\/>yp.resize(size);}
+\DoxyCodeLine{00057   this-\/>around.resize(size);}
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059   \textcolor{keywordtype}{int} ii = 0;}
+\DoxyCodeLine{00060   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} yy = -\/radius\_int; yy <= radius\_int; ++yy) \{}
+\DoxyCodeLine{00061     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} xx = -\/radius\_int; xx <= radius\_int; ++xx) \{}
+\DoxyCodeLine{00062 \textcolor{comment}{      /***}}
+\DoxyCodeLine{00063 \textcolor{comment}{const double xr = xx / radius;}}
+\DoxyCodeLine{00064 \textcolor{comment}{const double yr = yy / radius;}}
+\DoxyCodeLine{00065 \textcolor{comment}{if ( sqrt(xr * xr + yr * yr) <= (1.0 + 1e-\/6) )\{}}
+\DoxyCodeLine{00066 \textcolor{comment}{this-\/>xp.at(ii) = xx;}}
+\DoxyCodeLine{00067 \textcolor{comment}{this-\/>yp.at(ii) = yy;}}
+\DoxyCodeLine{00068 \textcolor{comment}{++ii;}}
+\DoxyCodeLine{00069 \textcolor{comment}{\}}}
+\DoxyCodeLine{00070 \textcolor{comment}{***/}}
+\DoxyCodeLine{00071       \textcolor{keyword}{const} \textcolor{keywordtype}{double} xr = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(xx);}
+\DoxyCodeLine{00072       \textcolor{keyword}{const} \textcolor{keywordtype}{double} yr = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(yy);}
+\DoxyCodeLine{00073       \textcolor{keywordflow}{if} ((xr * xr + yr * yr) <= (radius * radius + 1e-\/6)) \{}
+\DoxyCodeLine{00074         this-\/>xp.at(ii) = xx;}
+\DoxyCodeLine{00075         this-\/>yp.at(ii) = yy;}
+\DoxyCodeLine{00076         ++ii;}
+\DoxyCodeLine{00077       \}}
+\DoxyCodeLine{00078     \}}
+\DoxyCodeLine{00079   \}}
+\DoxyCodeLine{00080 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classigs_1_1median__filter_1_1pixrender_a785edba829df0f8c059e6494a3663a38}\label{classigs_1_1median__filter_1_1pixrender_a785edba829df0f8c059e6494a3663a38}} 
+\index{igs::median\_filter::pixrender@{igs::median\_filter::pixrender}!clear@{clear}}
+\index{clear@{clear}!igs::median\_filter::pixrender@{igs::median\_filter::pixrender}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void igs\+::median\+\_\+filter\+::pixrender\+::clear (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00081                                           \{}
+\DoxyCodeLine{00082   this-\/>around.clear();}
+\DoxyCodeLine{00083   this-\/>yp.clear();}
+\DoxyCodeLine{00084   this-\/>xp.clear();}
+\DoxyCodeLine{00085 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classigs_1_1median__filter_1_1pixrender_ac2673039251532fb2e31b8c8692a8663}\label{classigs_1_1median__filter_1_1pixrender_ac2673039251532fb2e31b8c8692a8663}} 
+\index{igs::median\_filter::pixrender@{igs::median\_filter::pixrender}!position@{position}}
+\index{position@{position}!igs::median\_filter::pixrender@{igs::median\_filter::pixrender}}
+\doxysubsubsection{\texorpdfstring{position()}{position()}}
+{\footnotesize\ttfamily void igs\+::median\+\_\+filter\+::pixrender\+::position (\begin{DoxyParamCaption}\item[{const int}]{ww,  }\item[{const int}]{hh,  }\item[{int \&}]{xx,  }\item[{int \&}]{yy }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00088                                                                \{}
+\DoxyCodeLine{00089   \textcolor{keywordflow}{switch} (this-\/>type\_) \{}
+\DoxyCodeLine{00090   \textcolor{keywordflow}{case} igs::median\_filter::is\_spread\_edge:}
+\DoxyCodeLine{00091     xx = (xx < 0) ? 0 : ((ww <= xx) ? ww -\/ 1 : xx);}
+\DoxyCodeLine{00092     yy = (yy < 0) ? 0 : ((hh <= yy) ? hh -\/ 1 : yy);}
+\DoxyCodeLine{00093     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00094   \textcolor{keywordflow}{case} igs::median\_filter::is\_flip\_repeat:}
+\DoxyCodeLine{00095     \textcolor{keywordflow}{if} (xx < 0) \{}
+\DoxyCodeLine{00096       \textcolor{keywordflow}{while} (xx < 0) \{}
+\DoxyCodeLine{00097         xx += ww;}
+\DoxyCodeLine{00098       \}}
+\DoxyCodeLine{00099       xx = ww -\/ 1 -\/ xx;}
+\DoxyCodeLine{00100     \}}
+\DoxyCodeLine{00101     \textcolor{keywordflow}{if} (ww <= xx) \{}
+\DoxyCodeLine{00102       \textcolor{keywordflow}{while} (ww <= xx) \{}
+\DoxyCodeLine{00103         xx -\/= ww;}
+\DoxyCodeLine{00104       \}}
+\DoxyCodeLine{00105       xx = ww -\/ 1 -\/ xx;}
+\DoxyCodeLine{00106     \}}
+\DoxyCodeLine{00107     \textcolor{keywordflow}{if} (yy < 0) \{}
+\DoxyCodeLine{00108       \textcolor{keywordflow}{while} (yy < 0) \{}
+\DoxyCodeLine{00109         yy += hh;}
+\DoxyCodeLine{00110       \}}
+\DoxyCodeLine{00111       yy = hh -\/ 1 -\/ yy;}
+\DoxyCodeLine{00112     \}}
+\DoxyCodeLine{00113     \textcolor{keywordflow}{if} (hh <= yy) \{}
+\DoxyCodeLine{00114       \textcolor{keywordflow}{while} (hh <= yy) \{}
+\DoxyCodeLine{00115         yy -\/= hh;}
+\DoxyCodeLine{00116       \}}
+\DoxyCodeLine{00117       yy = hh -\/ 1 -\/ yy;}
+\DoxyCodeLine{00118     \}}
+\DoxyCodeLine{00119     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00120   \textcolor{keywordflow}{case} igs::median\_filter::is\_black: \textcolor{comment}{/* 必要か?????? */}}
+\DoxyCodeLine{00121     \textcolor{keywordflow}{if} (xx < 0 || ww <= xx) \{}
+\DoxyCodeLine{00122       xx = -\/1;}
+\DoxyCodeLine{00123     \}}
+\DoxyCodeLine{00124     \textcolor{keywordflow}{if} (yy < 0 || hh <= yy) \{}
+\DoxyCodeLine{00125       yy = -\/1;}
+\DoxyCodeLine{00126     \}}
+\DoxyCodeLine{00127     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00128   \textcolor{keywordflow}{case} igs::median\_filter::is\_repeat: \textcolor{comment}{/* 必要か?????? */}}
+\DoxyCodeLine{00129     \textcolor{keywordflow}{while} (xx < 0) \{}
+\DoxyCodeLine{00130       xx += ww;}
+\DoxyCodeLine{00131     \}}
+\DoxyCodeLine{00132     \textcolor{keywordflow}{while} (ww <= xx) \{}
+\DoxyCodeLine{00133       xx -\/= ww;}
+\DoxyCodeLine{00134     \}}
+\DoxyCodeLine{00135     \textcolor{keywordflow}{while} (yy < 0) \{}
+\DoxyCodeLine{00136       yy += hh;}
+\DoxyCodeLine{00137     \}}
+\DoxyCodeLine{00138     \textcolor{keywordflow}{while} (hh <= yy) \{}
+\DoxyCodeLine{00139       yy -\/= hh;}
+\DoxyCodeLine{00140     \}}
+\DoxyCodeLine{00141     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00142   \}}
+\DoxyCodeLine{00143 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classigs_1_1median__filter_1_1pixrender_a0130e010eef0aa59b76142e2bdbc9828}\label{classigs_1_1median__filter_1_1pixrender_a0130e010eef0aa59b76142e2bdbc9828}} 
+\index{igs::median\_filter::pixrender@{igs::median\_filter::pixrender}!around@{around}}
+\index{around@{around}!igs::median\_filter::pixrender@{igs::median\_filter::pixrender}}
+\doxysubsubsection{\texorpdfstring{around}{around}}
+{\footnotesize\ttfamily std\+::vector$<$int$>$ igs\+::median\+\_\+filter\+::pixrender\+::around}
+
+\mbox{\Hypertarget{classigs_1_1median__filter_1_1pixrender_a2d0616759f96139f48b775ae0621a5ae}\label{classigs_1_1median__filter_1_1pixrender_a2d0616759f96139f48b775ae0621a5ae}} 
+\index{igs::median\_filter::pixrender@{igs::median\_filter::pixrender}!xp@{xp}}
+\index{xp@{xp}!igs::median\_filter::pixrender@{igs::median\_filter::pixrender}}
+\doxysubsubsection{\texorpdfstring{xp}{xp}}
+{\footnotesize\ttfamily std\+::vector$<$int$>$ igs\+::median\+\_\+filter\+::pixrender\+::xp}
+
+\mbox{\Hypertarget{classigs_1_1median__filter_1_1pixrender_a013208419c24cf4d7efaacc18ff8a273}\label{classigs_1_1median__filter_1_1pixrender_a013208419c24cf4d7efaacc18ff8a273}} 
+\index{igs::median\_filter::pixrender@{igs::median\_filter::pixrender}!yp@{yp}}
+\index{yp@{yp}!igs::median\_filter::pixrender@{igs::median\_filter::pixrender}}
+\doxysubsubsection{\texorpdfstring{yp}{yp}}
+{\footnotesize\ttfamily std\+::vector$<$int$>$ igs\+::median\+\_\+filter\+::pixrender\+::yp}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/igs\+\_\+median\+\_\+filter.\+cpp\end{DoxyCompactItemize}

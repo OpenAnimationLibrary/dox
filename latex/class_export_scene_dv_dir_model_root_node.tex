@@ -1,0 +1,137 @@
+\hypertarget{class_export_scene_dv_dir_model_root_node}{}\doxysection{Export\+Scene\+Dv\+Dir\+Model\+Root\+Node Class Reference}
+\label{class_export_scene_dv_dir_model_root_node}\index{ExportSceneDvDirModelRootNode@{ExportSceneDvDirModelRootNode}}
+Inheritance diagram for Export\+Scene\+Dv\+Dir\+Model\+Root\+Node\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_export_scene_dv_dir_model_root_node}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_export_scene_dv_dir_model_root_node_a7e21f10c10f4342155ad8bc19404516b}{refresh\+Children}} () override
+\item 
+\mbox{\hyperlink{class_dv_dir_model_node}{Dv\+Dir\+Model\+Node}} $\ast$ \mbox{\hyperlink{class_export_scene_dv_dir_model_root_node_ab8c3c9623b4d88e61592d031e4fa6938}{get\+Node\+By\+Path}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_export_scene_dv_dir_model_root_node_a8ba0b95d1db8e332fb79c3a4090dcff9}\label{class_export_scene_dv_dir_model_root_node_a8ba0b95d1db8e332fb79c3a4090dcff9}} 
+\index{ExportSceneDvDirModelRootNode@{ExportSceneDvDirModelRootNode}!ExportSceneDvDirModelRootNode@{ExportSceneDvDirModelRootNode}}
+\index{ExportSceneDvDirModelRootNode@{ExportSceneDvDirModelRootNode}!ExportSceneDvDirModelRootNode@{ExportSceneDvDirModelRootNode}}
+\doxysubsubsection{\texorpdfstring{ExportSceneDvDirModelRootNode()}{ExportSceneDvDirModelRootNode()}}
+{\footnotesize\ttfamily Export\+Scene\+Dv\+Dir\+Model\+Root\+Node\+::\+Export\+Scene\+Dv\+Dir\+Model\+Root\+Node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00164     : \mbox{\hyperlink{class_dv_dir_model_node}{DvDirModelNode}}(0, L\textcolor{stringliteral}{"{}Root"{}}) \{}
+\DoxyCodeLine{00165   m\_nodeType = \textcolor{stringliteral}{"{}Root"{}};}
+\DoxyCodeLine{00166 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_export_scene_dv_dir_model_root_node_ab8c3c9623b4d88e61592d031e4fa6938}\label{class_export_scene_dv_dir_model_root_node_ab8c3c9623b4d88e61592d031e4fa6938}} 
+\index{ExportSceneDvDirModelRootNode@{ExportSceneDvDirModelRootNode}!getNodeByPath@{getNodeByPath}}
+\index{getNodeByPath@{getNodeByPath}!ExportSceneDvDirModelRootNode@{ExportSceneDvDirModelRootNode}}
+\doxysubsubsection{\texorpdfstring{getNodeByPath()}{getNodeByPath()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_dv_dir_model_node}{Dv\+Dir\+Model\+Node}} $\ast$ Export\+Scene\+Dv\+Dir\+Model\+Root\+Node\+::get\+Node\+By\+Path (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+path could be the sandbox project or in the sandbox project
+
+or it could be a different project, under some project root
+
+it could be a regular folder, somewhere in the file system
+
+Reimplemented from \mbox{\hyperlink{class_dv_dir_model_node}{Dv\+Dir\+Model\+Node}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00226                            \{}
+\DoxyCodeLine{00227   \mbox{\hyperlink{class_dv_dir_model_node}{DvDirModelNode}} *node = 0;}
+\DoxyCodeLine{00228   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00230   \textcolor{keywordflow}{if} (m\_sandboxProjectNode \&\& m\_sandboxProjectNode-\/>getPath() == path)}
+\DoxyCodeLine{00231     \textcolor{keywordflow}{return} m\_sandboxProjectNode;}
+\DoxyCodeLine{00232   \textcolor{keywordflow}{if} (m\_sandboxProjectNode) \{}
+\DoxyCodeLine{00233     \textcolor{keywordflow}{for} (i = 0; i < m\_sandboxProjectNode-\/>getChildCount(); i++) \{}
+\DoxyCodeLine{00234       \mbox{\hyperlink{class_dv_dir_model_node}{DvDirModelNode}} *node =}
+\DoxyCodeLine{00235           m\_sandboxProjectNode-\/>getChild(i)-\/>getNodeByPath(path);}
+\DoxyCodeLine{00236       \textcolor{keywordflow}{if} (node) \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{00237     \}}
+\DoxyCodeLine{00238   \}}
+\DoxyCodeLine{00240   \textcolor{keywordflow}{for} (i = 0; i < (int)m\_projectRootNodes.size(); i++) \{}
+\DoxyCodeLine{00241     node = m\_projectRootNodes[i]-\/>getNodeByPath(path);}
+\DoxyCodeLine{00242     \textcolor{keywordflow}{if} (node) \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{00243   \}}
+\DoxyCodeLine{00245 }
+\DoxyCodeLine{00246   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00247 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_scene_dv_dir_model_root_node_a7e21f10c10f4342155ad8bc19404516b}\label{class_export_scene_dv_dir_model_root_node_a7e21f10c10f4342155ad8bc19404516b}} 
+\index{ExportSceneDvDirModelRootNode@{ExportSceneDvDirModelRootNode}!refreshChildren@{refreshChildren}}
+\index{refreshChildren@{refreshChildren}!ExportSceneDvDirModelRootNode@{ExportSceneDvDirModelRootNode}}
+\doxysubsubsection{\texorpdfstring{refreshChildren()}{refreshChildren()}}
+{\footnotesize\ttfamily void Export\+Scene\+Dv\+Dir\+Model\+Root\+Node\+::refresh\+Children (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_dv_dir_model_node}{Dv\+Dir\+Model\+Node}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00180                                                     \{}
+\DoxyCodeLine{00181   m\_childrenValid = \textcolor{keyword}{true};}
+\DoxyCodeLine{00182   m\_children.clear();}
+\DoxyCodeLine{00183   \textcolor{comment}{// if(m\_children.empty())}}
+\DoxyCodeLine{00184   \textcolor{comment}{//\{}}
+\DoxyCodeLine{00185   \mbox{\hyperlink{class_t_project_manager}{TProjectManager}} *pm = \mbox{\hyperlink{class_t_project_manager_a150ca0d6e2eb171b8117b0c5f03dbfad}{TProjectManager::instance}}();}
+\DoxyCodeLine{00186   std::vector<TFilePath> projectRoots;}
+\DoxyCodeLine{00187   pm-\/>getProjectRoots(projectRoots);}
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00190   \textcolor{keywordflow}{for} (i = 0; i < (int)projectRoots.size(); i++) \{}
+\DoxyCodeLine{00191     \mbox{\hyperlink{class_t_file_path}{TFilePath}} projectRoot = projectRoots[i];}
+\DoxyCodeLine{00192     \mbox{\hyperlink{class_export_scene_dv_dir_model_special_file_folder_node}{ExportSceneDvDirModelSpecialFileFolderNode}} *projectRootNode =}
+\DoxyCodeLine{00193         \textcolor{keyword}{new} \mbox{\hyperlink{class_export_scene_dv_dir_model_special_file_folder_node}{ExportSceneDvDirModelSpecialFileFolderNode}}(\textcolor{keyword}{this}, L\textcolor{stringliteral}{"{}Project root"{}},}
+\DoxyCodeLine{00194                                                        projectRoot);}
+\DoxyCodeLine{00195     projectRootNode-\/>setPixmap(QPixmap(recolorPixmap(}
+\DoxyCodeLine{00196         svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}actions/18/folder\_project\_root.svg"{}})))));}
+\DoxyCodeLine{00197     m\_projectRootNodes.push\_back(projectRootNode);}
+\DoxyCodeLine{00198     addChild(projectRootNode);}
+\DoxyCodeLine{00199   \}}
+\DoxyCodeLine{00200 }
+\DoxyCodeLine{00201   \mbox{\hyperlink{class_t_file_path}{TFilePath}} sandboxProjectPath = pm-\/>\mbox{\hyperlink{class_t_project_manager_a0d1225a791e21a77b9c7aba42146a122}{getSandboxProjectFolder}}();}
+\DoxyCodeLine{00202   m\_sandboxProjectNode =}
+\DoxyCodeLine{00203       \textcolor{keyword}{new} \mbox{\hyperlink{class_export_scene_dv_dir_model_project_node}{ExportSceneDvDirModelProjectNode}}(\textcolor{keyword}{this}, sandboxProjectPath);}
+\DoxyCodeLine{00204   addChild(m\_sandboxProjectNode);}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206   \textcolor{comment}{// SVN Repository}}
+\DoxyCodeLine{00207   QList<SVNRepository> repositories =}
+\DoxyCodeLine{00208       VersionControl::instance()-\/>getRepositories();}
+\DoxyCodeLine{00209   \textcolor{keywordtype}{int} count = repositories.size();}
+\DoxyCodeLine{00210   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; i++) \{}
+\DoxyCodeLine{00211     \mbox{\hyperlink{struct_s_v_n_repository}{SVNRepository}} repo = repositories.at(i);}
+\DoxyCodeLine{00212 }
+\DoxyCodeLine{00213     \mbox{\hyperlink{class_export_scene_dv_dir_model_special_file_folder_node}{ExportSceneDvDirModelSpecialFileFolderNode}} *node =}
+\DoxyCodeLine{00214         \textcolor{keyword}{new} \mbox{\hyperlink{class_export_scene_dv_dir_model_special_file_folder_node}{ExportSceneDvDirModelSpecialFileFolderNode}}(}
+\DoxyCodeLine{00215             \textcolor{keyword}{this}, repo.m\_name.toStdWString(),}
+\DoxyCodeLine{00216             \mbox{\hyperlink{class_t_file_path}{TFilePath}}(repo.m\_localPath.toStdWString()));}
+\DoxyCodeLine{00217     node-\/>setPixmap(QPixmap(svgToPixmap(\textcolor{stringliteral}{"{}:Resources/vcroot.svg"{}})));}
+\DoxyCodeLine{00218     addChild(node);}
+\DoxyCodeLine{00219   \}}
+\DoxyCodeLine{00220   \textcolor{comment}{//\}}}
+\DoxyCodeLine{00221 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/exportscenepopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/exportscenepopup.\+cpp\end{DoxyCompactItemize}

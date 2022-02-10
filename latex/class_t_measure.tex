@@ -1,0 +1,239 @@
+\hypertarget{class_t_measure}{}\doxysection{TMeasure Class Reference}
+\label{class_t_measure}\index{TMeasure@{TMeasure}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_measure_ab91316e423fdf90bc39af84e2f3b500f}{TMeasure}} (std\+::string name, \mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$main\+Unit)
+\item 
+\mbox{\hyperlink{class_t_measure_add864e8a3bab200ebcc8385ba485e0dd}{TMeasure}} (const \mbox{\hyperlink{class_t_measure}{TMeasure}} \&)
+\item 
+std\+::string \mbox{\hyperlink{class_t_measure_a866930ab380c76ab31b88f5748712ce8}{get\+Name}} () const
+\item 
+void \mbox{\hyperlink{class_t_measure_a3a8a8439d44ce7e58312c83a4bc15c71}{set\+Name}} (std\+::string name)
+\item 
+void \mbox{\hyperlink{class_t_measure_aaa1561335b0123a60713b8a4ff4ac5ad}{add}} (\mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$unit)
+\item 
+const \mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$ \mbox{\hyperlink{class_t_measure_ae0dbca0505540a51d0cb87424281164f}{get\+Main\+Unit}} () const
+\item 
+const \mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$ \mbox{\hyperlink{class_t_measure_abae8c0d30f29d891da71e9deaf6b7947}{get\+Current\+Unit}} () const
+\item 
+void \mbox{\hyperlink{class_t_measure_a7b855ed3424b55eb7019d8572d5bbcc2}{set\+Current\+Unit}} (\mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$unit)
+\item 
+const \mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$ \mbox{\hyperlink{class_t_measure_a4d6dbbcb2c3d6eabd5747cc1b4d9162f}{get\+Standard\+Unit}} () const
+\item 
+void \mbox{\hyperlink{class_t_measure_a3e5422ad01357d2327204e288ef5fece}{set\+Standard\+Unit}} (\mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$unit)
+\item 
+\mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$ \mbox{\hyperlink{class_t_measure_ac76fbdb924982c7ca71047d4b6bea7fc}{get\+Unit}} (std\+::wstring ext) const
+\item 
+double \mbox{\hyperlink{class_t_measure_a3e5b6e962d05db579d5e29903e7664f2}{get\+Default\+Value}} () const
+\item 
+void \mbox{\hyperlink{class_t_measure_a502c94f59ab3f101f536f5f250fbe561}{set\+Default\+Value}} (double v)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_measure_ab91316e423fdf90bc39af84e2f3b500f}\label{class_t_measure_ab91316e423fdf90bc39af84e2f3b500f}} 
+\index{TMeasure@{TMeasure}!TMeasure@{TMeasure}}
+\index{TMeasure@{TMeasure}!TMeasure@{TMeasure}}
+\doxysubsubsection{\texorpdfstring{TMeasure()}{TMeasure()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily TMeasure\+::\+TMeasure (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{\mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$}]{main\+Unit }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00161     : m\_name(name)}
+\DoxyCodeLine{00162     , m\_mainUnit(0)}
+\DoxyCodeLine{00163     , m\_standardUnit(0)}
+\DoxyCodeLine{00164     , m\_currentUnit(0)}
+\DoxyCodeLine{00165     , m\_defaultValue(0) \{}
+\DoxyCodeLine{00166   add(mainUnit);}
+\DoxyCodeLine{00167   m\_mainUnit = m\_currentUnit = m\_standardUnit = mainUnit;}
+\DoxyCodeLine{00168 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_add864e8a3bab200ebcc8385ba485e0dd}\label{class_t_measure_add864e8a3bab200ebcc8385ba485e0dd}} 
+\index{TMeasure@{TMeasure}!TMeasure@{TMeasure}}
+\index{TMeasure@{TMeasure}!TMeasure@{TMeasure}}
+\doxysubsubsection{\texorpdfstring{TMeasure()}{TMeasure()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily TMeasure\+::\+TMeasure (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_measure}{TMeasure}} \&}]{src }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00173     : m\_name(src.m\_name)}
+\DoxyCodeLine{00174     , m\_mainUnit(src.m\_mainUnit)}
+\DoxyCodeLine{00175     , m\_currentUnit(src.m\_currentUnit)}
+\DoxyCodeLine{00176     , m\_standardUnit(src.m\_standardUnit)}
+\DoxyCodeLine{00177     , m\_defaultValue(src.m\_defaultValue) \{}
+\DoxyCodeLine{00178   std::map<std::wstring, TUnit *>::const\_iterator it;}
+\DoxyCodeLine{00179   \textcolor{keywordflow}{for} (it = src.m\_extensions.begin(); it != src.m\_extensions.end(); ++it) \{}
+\DoxyCodeLine{00180     \mbox{\hyperlink{class_t_unit}{TUnit}} *u = it-\/>second;}
+\DoxyCodeLine{00181     assert(u);}
+\DoxyCodeLine{00182     \textcolor{keyword}{const} std::vector<std::wstring> \&e = u-\/>getExtensions();}
+\DoxyCodeLine{00183     assert(std::find(e.begin(), e.end(), it-\/>first) != e.end());}
+\DoxyCodeLine{00184     m\_extensions[it-\/>first] = u;}
+\DoxyCodeLine{00185   \}}
+\DoxyCodeLine{00186 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_adfd7f3ee387b61b57437d990cf57501b}\label{class_t_measure_adfd7f3ee387b61b57437d990cf57501b}} 
+\index{TMeasure@{TMeasure}!````~TMeasure@{$\sim$TMeasure}}
+\index{````~TMeasure@{$\sim$TMeasure}!TMeasure@{TMeasure}}
+\doxysubsubsection{\texorpdfstring{$\sim$TMeasure()}{~TMeasure()}}
+{\footnotesize\ttfamily TMeasure\+::$\sim$\+TMeasure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00190 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_measure_aaa1561335b0123a60713b8a4ff4ac5ad}\label{class_t_measure_aaa1561335b0123a60713b8a4ff4ac5ad}} 
+\index{TMeasure@{TMeasure}!add@{add}}
+\index{add@{add}!TMeasure@{TMeasure}}
+\doxysubsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily void TMeasure\+::add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$}]{unit }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00194                               \{}
+\DoxyCodeLine{00195   \textcolor{keyword}{const} std::vector<std::wstring> \&e = unit-\/>getExtensions();}
+\DoxyCodeLine{00196   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)e.size(); i++) \{}
+\DoxyCodeLine{00197     std::wstring ext = e[i];}
+\DoxyCodeLine{00198     assert(m\_extensions.count(ext) == 0);}
+\DoxyCodeLine{00199     m\_extensions[ext] = unit;}
+\DoxyCodeLine{00200   \}}
+\DoxyCodeLine{00201 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_abae8c0d30f29d891da71e9deaf6b7947}\label{class_t_measure_abae8c0d30f29d891da71e9deaf6b7947}} 
+\index{TMeasure@{TMeasure}!getCurrentUnit@{getCurrentUnit}}
+\index{getCurrentUnit@{getCurrentUnit}!TMeasure@{TMeasure}}
+\doxysubsubsection{\texorpdfstring{getCurrentUnit()}{getCurrentUnit()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$ TMeasure\+::get\+Current\+Unit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00103 \{ \textcolor{keywordflow}{return} m\_currentUnit; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_a3e5b6e962d05db579d5e29903e7664f2}\label{class_t_measure_a3e5b6e962d05db579d5e29903e7664f2}} 
+\index{TMeasure@{TMeasure}!getDefaultValue@{getDefaultValue}}
+\index{getDefaultValue@{getDefaultValue}!TMeasure@{TMeasure}}
+\doxysubsubsection{\texorpdfstring{getDefaultValue()}{getDefaultValue()}}
+{\footnotesize\ttfamily double TMeasure\+::get\+Default\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00113 \{ \textcolor{keywordflow}{return} m\_defaultValue; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_ae0dbca0505540a51d0cb87424281164f}\label{class_t_measure_ae0dbca0505540a51d0cb87424281164f}} 
+\index{TMeasure@{TMeasure}!getMainUnit@{getMainUnit}}
+\index{getMainUnit@{getMainUnit}!TMeasure@{TMeasure}}
+\doxysubsubsection{\texorpdfstring{getMainUnit()}{getMainUnit()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$ TMeasure\+::get\+Main\+Unit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00100 \{ \textcolor{keywordflow}{return} m\_mainUnit; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_a866930ab380c76ab31b88f5748712ce8}\label{class_t_measure_a866930ab380c76ab31b88f5748712ce8}} 
+\index{TMeasure@{TMeasure}!getName@{getName}}
+\index{getName@{getName}!TMeasure@{TMeasure}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily std\+::string TMeasure\+::get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00094 \{ \textcolor{keywordflow}{return} m\_name; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_a4d6dbbcb2c3d6eabd5747cc1b4d9162f}\label{class_t_measure_a4d6dbbcb2c3d6eabd5747cc1b4d9162f}} 
+\index{TMeasure@{TMeasure}!getStandardUnit@{getStandardUnit}}
+\index{getStandardUnit@{getStandardUnit}!TMeasure@{TMeasure}}
+\doxysubsubsection{\texorpdfstring{getStandardUnit()}{getStandardUnit()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$ TMeasure\+::get\+Standard\+Unit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107 \{ \textcolor{keywordflow}{return} m\_standardUnit; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_ac76fbdb924982c7ca71047d4b6bea7fc}\label{class_t_measure_ac76fbdb924982c7ca71047d4b6bea7fc}} 
+\index{TMeasure@{TMeasure}!getUnit@{getUnit}}
+\index{getUnit@{getUnit}!TMeasure@{TMeasure}}
+\doxysubsubsection{\texorpdfstring{getUnit()}{getUnit()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$ TMeasure\+::get\+Unit (\begin{DoxyParamCaption}\item[{std\+::wstring}]{ext }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00205                                              \{}
+\DoxyCodeLine{00206   std::map<std::wstring, TUnit *>::const\_iterator it;}
+\DoxyCodeLine{00207   it = m\_extensions.find(ext);}
+\DoxyCodeLine{00208   \textcolor{keywordflow}{return} it == m\_extensions.end() ? 0 : it-\/>second;}
+\DoxyCodeLine{00209 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_a7b855ed3424b55eb7019d8572d5bbcc2}\label{class_t_measure_a7b855ed3424b55eb7019d8572d5bbcc2}} 
+\index{TMeasure@{TMeasure}!setCurrentUnit@{setCurrentUnit}}
+\index{setCurrentUnit@{setCurrentUnit}!TMeasure@{TMeasure}}
+\doxysubsubsection{\texorpdfstring{setCurrentUnit()}{setCurrentUnit()}}
+{\footnotesize\ttfamily void TMeasure\+::set\+Current\+Unit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$}]{unit }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00213                                          \{}
+\DoxyCodeLine{00214   assert(unit);}
+\DoxyCodeLine{00215   assert(m\_extensions.count(unit-\/>getDefaultExtension()) > 0);}
+\DoxyCodeLine{00216   m\_currentUnit = unit;}
+\DoxyCodeLine{00217 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_a502c94f59ab3f101f536f5f250fbe561}\label{class_t_measure_a502c94f59ab3f101f536f5f250fbe561}} 
+\index{TMeasure@{TMeasure}!setDefaultValue@{setDefaultValue}}
+\index{setDefaultValue@{setDefaultValue}!TMeasure@{TMeasure}}
+\doxysubsubsection{\texorpdfstring{setDefaultValue()}{setDefaultValue()}}
+{\footnotesize\ttfamily void TMeasure\+::set\+Default\+Value (\begin{DoxyParamCaption}\item[{double}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00114 \{ m\_defaultValue = v; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_a3a8a8439d44ce7e58312c83a4bc15c71}\label{class_t_measure_a3a8a8439d44ce7e58312c83a4bc15c71}} 
+\index{TMeasure@{TMeasure}!setName@{setName}}
+\index{setName@{setName}!TMeasure@{TMeasure}}
+\doxysubsubsection{\texorpdfstring{setName()}{setName()}}
+{\footnotesize\ttfamily void TMeasure\+::set\+Name (\begin{DoxyParamCaption}\item[{std\+::string}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00095 \{ m\_name = name; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_measure_a3e5422ad01357d2327204e288ef5fece}\label{class_t_measure_a3e5422ad01357d2327204e288ef5fece}} 
+\index{TMeasure@{TMeasure}!setStandardUnit@{setStandardUnit}}
+\index{setStandardUnit@{setStandardUnit}!TMeasure@{TMeasure}}
+\doxysubsubsection{\texorpdfstring{setStandardUnit()}{setStandardUnit()}}
+{\footnotesize\ttfamily void TMeasure\+::set\+Standard\+Unit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_unit}{TUnit}} $\ast$}]{unit }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00221                                           \{}
+\DoxyCodeLine{00222   assert(unit);}
+\DoxyCodeLine{00223   assert(m\_extensions.count(unit-\/>getDefaultExtension()) > 0);}
+\DoxyCodeLine{00224   m\_standardUnit = unit;}
+\DoxyCodeLine{00225 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tunit.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tunit/tunit.\+cpp\end{DoxyCompactItemize}

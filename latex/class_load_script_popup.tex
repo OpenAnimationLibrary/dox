@@ -1,0 +1,133 @@
+\hypertarget{class_load_script_popup}{}\doxysection{Load\+Script\+Popup Class Reference}
+\label{class_load_script_popup}\index{LoadScriptPopup@{LoadScriptPopup}}
+Inheritance diagram for Load\+Script\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_load_script_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_load_script_popup_a562138d8ffb1b3fadfc7cd2041b1b4aa}{init\+Folder}} ()
+\item 
+bool \mbox{\hyperlink{class_load_script_popup_a2781c1943fb790be5fe680559c490c9b}{execute}} ()
+\item 
+void \mbox{\hyperlink{class_load_script_popup_a42ef70d3a55aeefed45d93fa2a219102}{go}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_load_script_popup_a5ad5ad8451eedba900cf75bc0ce97ce8}\label{class_load_script_popup_a5ad5ad8451eedba900cf75bc0ce97ce8}} 
+\index{LoadScriptPopup@{LoadScriptPopup}!LoadScriptPopup@{LoadScriptPopup}}
+\index{LoadScriptPopup@{LoadScriptPopup}!LoadScriptPopup@{LoadScriptPopup}}
+\doxysubsubsection{\texorpdfstring{LoadScriptPopup()}{LoadScriptPopup()}}
+{\footnotesize\ttfamily Load\+Script\+Popup\+::\+Load\+Script\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00081                     : \mbox{\hyperlink{class_file_browser_popup}{FileBrowserPopup}}(tr(\textcolor{stringliteral}{"{}Load script"{}})) \{}
+\DoxyCodeLine{00082     QStringList sl;}
+\DoxyCodeLine{00083     sl << \textcolor{stringliteral}{"{}qs"{}};}
+\DoxyCodeLine{00084     setFilterTypes(sl);}
+\DoxyCodeLine{00085   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_load_script_popup_a7f31b4466f7d6f30efb5ef9f6eb53033}\label{class_load_script_popup_a7f31b4466f7d6f30efb5ef9f6eb53033}} 
+\index{LoadScriptPopup@{LoadScriptPopup}!````~LoadScriptPopup@{$\sim$LoadScriptPopup}}
+\index{````~LoadScriptPopup@{$\sim$LoadScriptPopup}!LoadScriptPopup@{LoadScriptPopup}}
+\doxysubsubsection{\texorpdfstring{$\sim$LoadScriptPopup()}{~LoadScriptPopup()}}
+{\footnotesize\ttfamily Load\+Script\+Popup\+::$\sim$\+Load\+Script\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_load_script_popup_a2781c1943fb790be5fe680559c490c9b}\label{class_load_script_popup_a2781c1943fb790be5fe680559c490c9b}} 
+\index{LoadScriptPopup@{LoadScriptPopup}!execute@{execute}}
+\index{execute@{execute}!LoadScriptPopup@{LoadScriptPopup}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily bool Load\+Script\+Popup\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Performs some action on m\+\_\+paths and returns whether the action was successful (accepted) -\/ in which case the popup closes. 
+
+Implements \mbox{\hyperlink{class_file_browser_popup_a8158b9b8756ac5dfa893b78cdc2fd9af}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00091                  \{}
+\DoxyCodeLine{00092     \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp;}
+\DoxyCodeLine{00093     QString fileName = \textcolor{stringliteral}{"{}helloworld.qs"{}};}
+\DoxyCodeLine{00094     QFile scriptFile(QString::fromStdWString(fp.getWideString()));}
+\DoxyCodeLine{00095     \textcolor{keywordflow}{if} (!scriptFile.open(QIODevice::ReadOnly)) \{}
+\DoxyCodeLine{00096       DVGui::MsgBox(DVGui::WARNING, QObject::tr(\textcolor{stringliteral}{"{}File not found"{}}));}
+\DoxyCodeLine{00097       \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00098     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00099       QTextStream stream(\&scriptFile);}
+\DoxyCodeLine{00100       QString contents = stream.readAll();}
+\DoxyCodeLine{00101       scriptFile.close();}
+\DoxyCodeLine{00102       QScriptEngine myEngine;}
+\DoxyCodeLine{00103       QScriptEngineDebugger debugger;}
+\DoxyCodeLine{00104       debugger.attachTo(\&myEngine);}
+\DoxyCodeLine{00105 }
+\DoxyCodeLine{00106       QScriptValue fFoo      = myEngine.newFunction(foo);}
+\DoxyCodeLine{00107       QScriptValue fGetLevel = myEngine.newFunction(getLevel);}
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00109       myEngine.globalObject().setProperty(\textcolor{stringliteral}{"{}foo"{}}, fFoo);}
+\DoxyCodeLine{00110       myEngine.globalObject().setProperty(\textcolor{stringliteral}{"{}getLevel"{}}, fGetLevel);}
+\DoxyCodeLine{00111       debugger.action(QScriptEngineDebugger::InterruptAction)-\/>trigger();}
+\DoxyCodeLine{00112       myEngine.evaluate(contents, fileName);}
+\DoxyCodeLine{00113     \}}
+\DoxyCodeLine{00114     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00115   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_load_script_popup_a42ef70d3a55aeefed45d93fa2a219102}\label{class_load_script_popup_a42ef70d3a55aeefed45d93fa2a219102}} 
+\index{LoadScriptPopup@{LoadScriptPopup}!go@{go}}
+\index{go@{go}!LoadScriptPopup@{LoadScriptPopup}}
+\doxysubsubsection{\texorpdfstring{go()}{go()}}
+{\footnotesize\ttfamily void Load\+Script\+Popup\+::go (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00116             \{}
+\DoxyCodeLine{00117     exec();}
+\DoxyCodeLine{00118     \textcolor{comment}{/*}}
+\DoxyCodeLine{00119 \textcolor{comment}{show();}}
+\DoxyCodeLine{00120 \textcolor{comment}{raise();}}
+\DoxyCodeLine{00121 \textcolor{comment}{activateWindow();}}
+\DoxyCodeLine{00122 \textcolor{comment}{*/}}
+\DoxyCodeLine{00123   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_load_script_popup_a562138d8ffb1b3fadfc7cd2041b1b4aa}\label{class_load_script_popup_a562138d8ffb1b3fadfc7cd2041b1b4aa}} 
+\index{LoadScriptPopup@{LoadScriptPopup}!initFolder@{initFolder}}
+\index{initFolder@{initFolder}!LoadScriptPopup@{LoadScriptPopup}}
+\doxysubsubsection{\texorpdfstring{initFolder()}{initFolder()}}
+{\footnotesize\ttfamily void Load\+Script\+Popup\+::init\+Folder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_file_browser_popup}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087                     \{}
+\DoxyCodeLine{00088     setFolder(ToonzFolder::getLibraryFolder());}
+\DoxyCodeLine{00089     \textcolor{comment}{// setFolder("{}"{});}}
+\DoxyCodeLine{00090   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/scriptengine.\+cpp\end{DoxyCompactItemize}

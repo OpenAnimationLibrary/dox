@@ -1,0 +1,225 @@
+\hypertarget{class_gizmo_undo}{}\doxysection{Gizmo\+Undo Class Reference}
+\label{class_gizmo_undo}\index{GizmoUndo@{GizmoUndo}}
+Inheritance diagram for Gizmo\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_gizmo_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_gizmo_undo_aa5ccc586a0fd02724904b64b7ac7f7b9}{Gizmo\+Undo}} (const \mbox{\hyperlink{class_t_style_selection}{TStyle\+Selection}} \&selection)
+\item 
+int \mbox{\hyperlink{class_gizmo_undo_ab6a409a3c97954f53dd1beddc10aabfb}{get\+Size}} () const override
+\item 
+void \mbox{\hyperlink{class_gizmo_undo_a57d881eaa8f54cc16c8d4256aacb66fc}{on\+Add}} () override
+\item 
+void \mbox{\hyperlink{class_gizmo_undo_a20a7a79e260e737761bbf70af69e1e36}{get\+Colors}} (std\+::vector$<$ TPixel32 $>$ \&colors, std\+::vector$<$ bool $>$ \&flags) const
+\item 
+void \mbox{\hyperlink{class_gizmo_undo_a0084549628ec6196a0c9097b8cb9f230}{set\+Colors}} (const std\+::vector$<$ TPixel32 $>$ \&colors, const std\+::vector$<$ bool $>$ \&flags) const
+\item 
+void \mbox{\hyperlink{class_gizmo_undo_ab5b5d557c50c5c9dd61eea21bc87cf06}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_gizmo_undo_aa653628e01b6755f206b62fb3f980a36}{redo}} () const override
+\item 
+QString \mbox{\hyperlink{class_gizmo_undo_a0282e3724d46923c58da4901d92a31a3}{get\+History\+String}} () override
+\item 
+int \mbox{\hyperlink{class_gizmo_undo_a1454c283e1fe681357c428e80afbc17a}{get\+History\+Type}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_gizmo_undo_aa5ccc586a0fd02724904b64b7ac7f7b9}\label{class_gizmo_undo_aa5ccc586a0fd02724904b64b7ac7f7b9}} 
+\index{GizmoUndo@{GizmoUndo}!GizmoUndo@{GizmoUndo}}
+\index{GizmoUndo@{GizmoUndo}!GizmoUndo@{GizmoUndo}}
+\doxysubsubsection{\texorpdfstring{GizmoUndo()}{GizmoUndo()}}
+{\footnotesize\ttfamily Gizmo\+Undo\+::\+Gizmo\+Undo (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_style_selection}{TStyle\+Selection}} \&}]{selection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00081       : m\_selection(selection), m\_palette(selection.getPalette()) \{}
+\DoxyCodeLine{00082     getColors(m\_oldColors, m\_oldEditedFlags);}
+\DoxyCodeLine{00083   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_gizmo_undo_ad249cd8395fd5e55a8f932dcf3cbd523}\label{class_gizmo_undo_ad249cd8395fd5e55a8f932dcf3cbd523}} 
+\index{GizmoUndo@{GizmoUndo}!````~GizmoUndo@{$\sim$GizmoUndo}}
+\index{````~GizmoUndo@{$\sim$GizmoUndo}!GizmoUndo@{GizmoUndo}}
+\doxysubsubsection{\texorpdfstring{$\sim$GizmoUndo()}{~GizmoUndo()}}
+{\footnotesize\ttfamily Gizmo\+Undo\+::$\sim$\+Gizmo\+Undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00085 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_gizmo_undo_a20a7a79e260e737761bbf70af69e1e36}\label{class_gizmo_undo_a20a7a79e260e737761bbf70af69e1e36}} 
+\index{GizmoUndo@{GizmoUndo}!getColors@{getColors}}
+\index{getColors@{getColors}!GizmoUndo@{GizmoUndo}}
+\doxysubsubsection{\texorpdfstring{getColors()}{getColors()}}
+{\footnotesize\ttfamily void Gizmo\+Undo\+::get\+Colors (\begin{DoxyParamCaption}\item[{std\+::vector$<$ TPixel32 $>$ \&}]{colors,  }\item[{std\+::vector$<$ bool $>$ \&}]{flags }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00095                                                \{}
+\DoxyCodeLine{00096     std::vector<TColorStyle *> styles;}
+\DoxyCodeLine{00097     getStyles(styles, m\_selection, m\_palette);}
+\DoxyCodeLine{00098     colors.resize(styles.size());}
+\DoxyCodeLine{00099     flags.resize(styles.size());}
+\DoxyCodeLine{00100     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)styles.size(); i++) \{}
+\DoxyCodeLine{00101       colors[i] = styles[i]-\/>getMainColor();}
+\DoxyCodeLine{00102       flags[i]  = styles[i]-\/>getIsEditedFlag();}
+\DoxyCodeLine{00103     \}}
+\DoxyCodeLine{00104   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_gizmo_undo_a0282e3724d46923c58da4901d92a31a3}\label{class_gizmo_undo_a0282e3724d46923c58da4901d92a31a3}} 
+\index{GizmoUndo@{GizmoUndo}!getHistoryString@{getHistoryString}}
+\index{getHistoryString@{getHistoryString}!GizmoUndo@{GizmoUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryString()}{getHistoryString()}}
+{\footnotesize\ttfamily QString Gizmo\+Undo\+::get\+History\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00129                                       \{}
+\DoxyCodeLine{00130     QString str =}
+\DoxyCodeLine{00131         QObject::tr(\textcolor{stringliteral}{"{}Palette Gizmo  \%1"{}})}
+\DoxyCodeLine{00132             .arg(QString::fromStdWString(m\_palette-\/>\mbox{\hyperlink{class_t_palette_af0bb56df19af40d1a729482efc85f492}{getPaletteName}}()));}
+\DoxyCodeLine{00133 }
+\DoxyCodeLine{00134     \mbox{\hyperlink{class_t_palette_1_1_page}{TPalette::Page}} *page = m\_palette-\/>\mbox{\hyperlink{class_t_palette_a25f83b7baf3eb774e50c726fa702056c}{getPage}}(m\_selection.getPageIndex());}
+\DoxyCodeLine{00135     \textcolor{keywordflow}{if} (!page) \textcolor{keywordflow}{return} str;}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137     str.append(\textcolor{stringliteral}{"{}  ("{}});}
+\DoxyCodeLine{00138     std::set<int> indices = m\_selection.getIndicesInPage();}
+\DoxyCodeLine{00139     \textcolor{keywordflow}{for} (std::set<int>::iterator it = indices.begin(); it != indices.end();}
+\DoxyCodeLine{00140          ++it)}
+\DoxyCodeLine{00141       str.append(QString(\textcolor{stringliteral}{"{}\#\%1, "{}}).arg(page-\/>\mbox{\hyperlink{class_t_palette_1_1_page_a3d6eed995ee8b1c22d50a73911a45786}{getStyleId}}(*it)));}
+\DoxyCodeLine{00142     str.chop(2);}
+\DoxyCodeLine{00143     str.append(\textcolor{stringliteral}{"{})"{}});}
+\DoxyCodeLine{00144     \textcolor{keywordflow}{return} str;}
+\DoxyCodeLine{00145   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_gizmo_undo_a1454c283e1fe681357c428e80afbc17a}\label{class_gizmo_undo_a1454c283e1fe681357c428e80afbc17a}} 
+\index{GizmoUndo@{GizmoUndo}!getHistoryType@{getHistoryType}}
+\index{getHistoryType@{getHistoryType}!GizmoUndo@{GizmoUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryType()}{getHistoryType()}}
+{\footnotesize\ttfamily int Gizmo\+Undo\+::get\+History\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00146 \{ \textcolor{keywordflow}{return} HistoryType::Palette; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_gizmo_undo_ab6a409a3c97954f53dd1beddc10aabfb}\label{class_gizmo_undo_ab6a409a3c97954f53dd1beddc10aabfb}} 
+\index{GizmoUndo@{GizmoUndo}!getSize@{getSize}}
+\index{getSize@{getSize}!GizmoUndo@{GizmoUndo}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Gizmo\+Undo\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087                                \{}
+\DoxyCodeLine{00088     \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof} *\textcolor{keyword}{this} +}
+\DoxyCodeLine{00089            (m\_oldColors.size() + m\_newColors.size()) * \textcolor{keyword}{sizeof}(TPixel32);}
+\DoxyCodeLine{00090   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_gizmo_undo_a57d881eaa8f54cc16c8d4256aacb66fc}\label{class_gizmo_undo_a57d881eaa8f54cc16c8d4256aacb66fc}} 
+\index{GizmoUndo@{GizmoUndo}!onAdd@{onAdd}}
+\index{onAdd@{onAdd}!GizmoUndo@{GizmoUndo}}
+\doxysubsubsection{\texorpdfstring{onAdd()}{onAdd()}}
+{\footnotesize\ttfamily void Gizmo\+Undo\+::on\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00092 \{ getColors(m\_newColors, m\_newEditedFlags); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_gizmo_undo_aa653628e01b6755f206b62fb3f980a36}\label{class_gizmo_undo_aa653628e01b6755f206b62fb3f980a36}} 
+\index{GizmoUndo@{GizmoUndo}!redo@{redo}}
+\index{redo@{redo}!GizmoUndo@{GizmoUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Gizmo\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00127 \{ setColors(m\_newColors, m\_newEditedFlags); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_gizmo_undo_a0084549628ec6196a0c9097b8cb9f230}\label{class_gizmo_undo_a0084549628ec6196a0c9097b8cb9f230}} 
+\index{GizmoUndo@{GizmoUndo}!setColors@{setColors}}
+\index{setColors@{setColors}!GizmoUndo@{GizmoUndo}}
+\doxysubsubsection{\texorpdfstring{setColors()}{setColors()}}
+{\footnotesize\ttfamily void Gizmo\+Undo\+::set\+Colors (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ TPixel32 $>$ \&}]{colors,  }\item[{const std\+::vector$<$ bool $>$ \&}]{flags }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107                                                      \{}
+\DoxyCodeLine{00108     std::vector<TColorStyle *> styles;}
+\DoxyCodeLine{00109     getStyles(styles, m\_selection, m\_palette);}
+\DoxyCodeLine{00110     \textcolor{keywordtype}{int} n = std::min(styles.size(), colors.size());}
+\DoxyCodeLine{00111     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++) \{}
+\DoxyCodeLine{00112       QString gname = QString::fromStdWString(styles[i]-\/>getGlobalName());}
+\DoxyCodeLine{00113       \textcolor{keywordflow}{if} (!gname.isEmpty() \&\& gname[0] != L\textcolor{charliteral}{'-\/'}) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00114       styles[i]-\/>setMainColor(colors[i]);}
+\DoxyCodeLine{00115       styles[i]-\/>setIsEditedFlag(flags[i]);}
+\DoxyCodeLine{00116       styles[i]-\/>invalidateIcon();}
+\DoxyCodeLine{00117     \}}
+\DoxyCodeLine{00118     \textcolor{comment}{/*-\/-\/ m\_palette が currentPaletteでない可能性があるため、DirtyFlagは立てない}}
+\DoxyCodeLine{00119 \textcolor{comment}{     * -\/-\/*/}}
+\DoxyCodeLine{00120     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00121         -\/>getPaletteController()}
+\DoxyCodeLine{00122         -\/>getCurrentPalette()}
+\DoxyCodeLine{00123         -\/>notifyColorStyleChanged(\textcolor{keyword}{false}, \textcolor{keyword}{false});}
+\DoxyCodeLine{00124   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_gizmo_undo_ab5b5d557c50c5c9dd61eea21bc87cf06}\label{class_gizmo_undo_ab5b5d557c50c5c9dd61eea21bc87cf06}} 
+\index{GizmoUndo@{GizmoUndo}!undo@{undo}}
+\index{undo@{undo}!GizmoUndo@{GizmoUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Gizmo\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00126 \{ setColors(m\_oldColors, m\_oldEditedFlags); \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/pltgizmopopup.\+cpp\end{DoxyCompactItemize}

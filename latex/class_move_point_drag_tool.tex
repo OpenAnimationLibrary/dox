@@ -1,0 +1,277 @@
+\hypertarget{class_move_point_drag_tool}{}\doxysection{Move\+Point\+Drag\+Tool Class Reference}
+\label{class_move_point_drag_tool}\index{MovePointDragTool@{MovePointDragTool}}
+Inheritance diagram for Move\+Point\+Drag\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_move_point_drag_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_move_point_drag_tool_a7149878f8fea75fbd36feb601ce030da}{Move\+Point\+Drag\+Tool}} (\mbox{\hyperlink{class_function_panel}{Function\+Panel}} $\ast$panel, \mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$curve)
+\item 
+void \mbox{\hyperlink{class_move_point_drag_tool_a01e13779654089fe1e9f0eefd0cb7646}{add\+Keyframe2}} (int k\+Index)
+\item 
+void \mbox{\hyperlink{class_move_point_drag_tool_a3bbb01b6a48f944f81f00d88ad213e55}{create\+Keyframe}} (double frame)
+\item 
+void \mbox{\hyperlink{class_move_point_drag_tool_ae44ceacbfb0ace54c84f63a351c4db31}{select\+Keyframes}} (double frame)
+\item 
+void \mbox{\hyperlink{class_move_point_drag_tool_acfca82d557698a612c673caedd48915c}{set\+Selection}} (\mbox{\hyperlink{class_function_selection}{Function\+Selection}} $\ast$selection)
+\item 
+void \mbox{\hyperlink{class_move_point_drag_tool_a1cfffc438bd94004a1c17e8c665ea0a0}{click}} (QMouse\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_move_point_drag_tool_ac666479d5b4868f13fd8f03a9b224f6c}{drag}} (QMouse\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_move_point_drag_tool_ad75f151ee15b2b7b6126ede162d3a0b0}{release}} (QMouse\+Event $\ast$e) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_move_point_drag_tool_a7149878f8fea75fbd36feb601ce030da}\label{class_move_point_drag_tool_a7149878f8fea75fbd36feb601ce030da}} 
+\index{MovePointDragTool@{MovePointDragTool}!MovePointDragTool@{MovePointDragTool}}
+\index{MovePointDragTool@{MovePointDragTool}!MovePointDragTool@{MovePointDragTool}}
+\doxysubsubsection{\texorpdfstring{MovePointDragTool()}{MovePointDragTool()}}
+{\footnotesize\ttfamily Move\+Point\+Drag\+Tool\+::\+Move\+Point\+Drag\+Tool (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_function_panel}{Function\+Panel}} $\ast$}]{panel,  }\item[{\mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$}]{curve }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00101     : m\_panel(panel)}
+\DoxyCodeLine{00102     , m\_deltaFrame(0)}
+\DoxyCodeLine{00103     , m\_speed0Length(0)}
+\DoxyCodeLine{00104     , m\_speed0Index(-\/1)}
+\DoxyCodeLine{00105     , m\_speed1Length(0)}
+\DoxyCodeLine{00106     , m\_speed1Index(-\/1)}
+\DoxyCodeLine{00107     , m\_groupEnabled(\textcolor{keyword}{false})}
+\DoxyCodeLine{00108     , m\_selection(0) \{}
+\DoxyCodeLine{00109   \textcolor{comment}{// This undo block is closed in the destructor}}
+\DoxyCodeLine{00110   TUndoManager::manager()-\/>beginBlock();}
+\DoxyCodeLine{00111 }
+\DoxyCodeLine{00112   \textcolor{keywordflow}{if} (curve) \{}
+\DoxyCodeLine{00113     \mbox{\hyperlink{class_keyframe_setter}{KeyframeSetter}} *setter = \textcolor{keyword}{new} \mbox{\hyperlink{class_keyframe_setter}{KeyframeSetter}}(curve);}
+\DoxyCodeLine{00114     m\_setters.push\_back(setter);}
+\DoxyCodeLine{00115   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00116     m\_groupEnabled           = \textcolor{keyword}{true};}
+\DoxyCodeLine{00117     \mbox{\hyperlink{class_function_tree_model}{FunctionTreeModel}} *model = panel-\/>getModel();}
+\DoxyCodeLine{00118     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < model-\/>getActiveChannelCount(); i++) \{}
+\DoxyCodeLine{00119       \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *channel = model-\/>getActiveChannel(i);}
+\DoxyCodeLine{00120       \textcolor{keywordflow}{if} (channel \&\& channel-\/>getParam()) \{}
+\DoxyCodeLine{00121         \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve    = channel-\/>getParam();}
+\DoxyCodeLine{00122         \mbox{\hyperlink{class_keyframe_setter}{KeyframeSetter}} *setter = \textcolor{keyword}{new} \mbox{\hyperlink{class_keyframe_setter}{KeyframeSetter}}(curve);}
+\DoxyCodeLine{00123         m\_setters.push\_back(setter);}
+\DoxyCodeLine{00124       \}}
+\DoxyCodeLine{00125     \}}
+\DoxyCodeLine{00126   \}}
+\DoxyCodeLine{00127 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_move_point_drag_tool_a468a46cf9e1f470966581ccbea1818f4}\label{class_move_point_drag_tool_a468a46cf9e1f470966581ccbea1818f4}} 
+\index{MovePointDragTool@{MovePointDragTool}!````~MovePointDragTool@{$\sim$MovePointDragTool}}
+\index{````~MovePointDragTool@{$\sim$MovePointDragTool}!MovePointDragTool@{MovePointDragTool}}
+\doxysubsubsection{\texorpdfstring{$\sim$MovePointDragTool()}{~MovePointDragTool()}}
+{\footnotesize\ttfamily Move\+Point\+Drag\+Tool\+::$\sim$\+Move\+Point\+Drag\+Tool (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00131                                       \{}
+\DoxyCodeLine{00132   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_setters.size(); i++) \textcolor{keyword}{delete} m\_setters[i];}
+\DoxyCodeLine{00133   m\_setters.clear();}
+\DoxyCodeLine{00134   TUndoManager::manager()-\/>endBlock();}
+\DoxyCodeLine{00135 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_move_point_drag_tool_a01e13779654089fe1e9f0eefd0cb7646}\label{class_move_point_drag_tool_a01e13779654089fe1e9f0eefd0cb7646}} 
+\index{MovePointDragTool@{MovePointDragTool}!addKeyframe2@{addKeyframe2}}
+\index{addKeyframe2@{addKeyframe2}!MovePointDragTool@{MovePointDragTool}}
+\doxysubsubsection{\texorpdfstring{addKeyframe2()}{addKeyframe2()}}
+{\footnotesize\ttfamily void Move\+Point\+Drag\+Tool\+::add\+Keyframe2 (\begin{DoxyParamCaption}\item[{int}]{k\+Index }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00139                                                \{}
+\DoxyCodeLine{00140   assert(m\_setters.size() == 1);}
+\DoxyCodeLine{00141   \textcolor{keywordflow}{if} (m\_setters.size() == 1) m\_setters[0]-\/>selectKeyframe(kIndex);}
+\DoxyCodeLine{00142 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_move_point_drag_tool_a1cfffc438bd94004a1c17e8c665ea0a0}\label{class_move_point_drag_tool_a1cfffc438bd94004a1c17e8c665ea0a0}} 
+\index{MovePointDragTool@{MovePointDragTool}!click@{click}}
+\index{click@{click}!MovePointDragTool@{MovePointDragTool}}
+\doxysubsubsection{\texorpdfstring{click()}{click()}}
+{\footnotesize\ttfamily void Move\+Point\+Drag\+Tool\+::click (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_function_panel_1_1_drag_tool}{Function\+Panel\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00189                                             \{}
+\DoxyCodeLine{00190   m\_startPos = m\_oldPos = e-\/>pos();}
+\DoxyCodeLine{00191   m\_deltaFrame          = 0;}
+\DoxyCodeLine{00192   \textcolor{keywordtype}{double} frame          = m\_panel-\/>xToFrame(e-\/>pos().x());}
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00194   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_setters.size(); i++) \{}
+\DoxyCodeLine{00195     \mbox{\hyperlink{class_keyframe_setter}{KeyframeSetter}} *setter = m\_setters[i];}
+\DoxyCodeLine{00196     \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve    = setter-\/>getCurve();}
+\DoxyCodeLine{00197     setter-\/>setPixelRatio(m\_panel-\/>getPixelRatio(curve));}
+\DoxyCodeLine{00198     \textcolor{keywordflow}{if} (!m\_groupEnabled) \{}
+\DoxyCodeLine{00199       \textcolor{keywordtype}{int} kIndex = curve-\/>getClosestKeyframe(frame);}
+\DoxyCodeLine{00200       \textcolor{keywordflow}{if} (kIndex >= 0) \{}
+\DoxyCodeLine{00201         \textcolor{keywordtype}{double} kf = curve-\/>\mbox{\hyperlink{class_t_double_param_af08442b9fd968fddada028a6f07983d5}{keyframeIndexToFrame}}(kIndex);}
+\DoxyCodeLine{00202         \textcolor{keywordflow}{if} (fabs(kf -\/ frame) < 1) setter-\/>selectKeyframe(kIndex);}
+\DoxyCodeLine{00203       \}}
+\DoxyCodeLine{00204     \}}
+\DoxyCodeLine{00205   \}}
+\DoxyCodeLine{00206 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_move_point_drag_tool_a3bbb01b6a48f944f81f00d88ad213e55}\label{class_move_point_drag_tool_a3bbb01b6a48f944f81f00d88ad213e55}} 
+\index{MovePointDragTool@{MovePointDragTool}!createKeyframe@{createKeyframe}}
+\index{createKeyframe@{createKeyframe}!MovePointDragTool@{MovePointDragTool}}
+\doxysubsubsection{\texorpdfstring{createKeyframe()}{createKeyframe()}}
+{\footnotesize\ttfamily void Move\+Point\+Drag\+Tool\+::create\+Keyframe (\begin{DoxyParamCaption}\item[{double}]{frame }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00146                                                    \{}
+\DoxyCodeLine{00147   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_setters.size(); i++) \{}
+\DoxyCodeLine{00148     \mbox{\hyperlink{class_keyframe_setter}{KeyframeSetter}} *setter = m\_setters[i];}
+\DoxyCodeLine{00149     \textcolor{keywordtype}{int} kIndex             = setter-\/>createKeyframe(tround(frame));}
+\DoxyCodeLine{00150     setter-\/>selectKeyframe(kIndex);}
+\DoxyCodeLine{00151   \}}
+\DoxyCodeLine{00152 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_move_point_drag_tool_ac666479d5b4868f13fd8f03a9b224f6c}\label{class_move_point_drag_tool_ac666479d5b4868f13fd8f03a9b224f6c}} 
+\index{MovePointDragTool@{MovePointDragTool}!drag@{drag}}
+\index{drag@{drag}!MovePointDragTool@{MovePointDragTool}}
+\doxysubsubsection{\texorpdfstring{drag()}{drag()}}
+{\footnotesize\ttfamily void Move\+Point\+Drag\+Tool\+::drag (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_function_panel_1_1_drag_tool}{Function\+Panel\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00210                                            \{}
+\DoxyCodeLine{00211   QPoint pos = e-\/>pos();}
+\DoxyCodeLine{00212 }
+\DoxyCodeLine{00213   \textcolor{comment}{// if shift is pressed then apply constraints (only horizontal or vertical}}
+\DoxyCodeLine{00214   \textcolor{comment}{// moves)}}
+\DoxyCodeLine{00215   \textcolor{keywordflow}{if} (e-\/>modifiers() \& Qt::ShiftModifier) \{}
+\DoxyCodeLine{00216     QPoint delta = e-\/>pos() -\/ m\_startPos;}
+\DoxyCodeLine{00217     \textcolor{keywordflow}{if} (abs(delta.x()) > abs(delta.y()))}
+\DoxyCodeLine{00218       pos.setY(m\_startPos.y());}
+\DoxyCodeLine{00219     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00220       pos.setX(m\_startPos.x());}
+\DoxyCodeLine{00221   \}}
+\DoxyCodeLine{00222 }
+\DoxyCodeLine{00223   \textcolor{keywordflow}{if} (m\_groupEnabled) pos.setY(m\_startPos.y());}
+\DoxyCodeLine{00224 }
+\DoxyCodeLine{00225   QPoint oldPos = m\_oldPos;}
+\DoxyCodeLine{00226   m\_oldPos      = pos;}
+\DoxyCodeLine{00227 }
+\DoxyCodeLine{00228   \textcolor{comment}{// compute frame increment. it must be an integer}}
+\DoxyCodeLine{00229   \textcolor{keywordtype}{double} totalDFrame =}
+\DoxyCodeLine{00230       tround(m\_panel-\/>xToFrame(pos.x()) -\/ m\_panel-\/>xToFrame(m\_startPos.x()));}
+\DoxyCodeLine{00231   \textcolor{keywordtype}{double} dFrame = totalDFrame -\/ m\_deltaFrame;}
+\DoxyCodeLine{00232   m\_deltaFrame  = totalDFrame;}
+\DoxyCodeLine{00233 }
+\DoxyCodeLine{00234   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_setters.size(); i++) \{}
+\DoxyCodeLine{00235     \mbox{\hyperlink{class_keyframe_setter}{KeyframeSetter}} *setter = m\_setters[i];}
+\DoxyCodeLine{00236     \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve    = setter-\/>getCurve();}
+\DoxyCodeLine{00237 }
+\DoxyCodeLine{00238     \textcolor{comment}{// compute value increment}}
+\DoxyCodeLine{00239     \textcolor{keywordtype}{double} dValue = m\_panel-\/>yToValue(curve, pos.y()) -\/}
+\DoxyCodeLine{00240                     m\_panel-\/>yToValue(curve, oldPos.y());}
+\DoxyCodeLine{00241 }
+\DoxyCodeLine{00242     setter-\/>moveKeyframes(dFrame, dValue);}
+\DoxyCodeLine{00243   \}}
+\DoxyCodeLine{00244   \textcolor{keywordflow}{if} (m\_selection != 0 \&\& m\_setters.size() == 1) \{}
+\DoxyCodeLine{00245     \mbox{\hyperlink{class_keyframe_setter}{KeyframeSetter}} *setter = m\_setters[0];}
+\DoxyCodeLine{00246 }
+\DoxyCodeLine{00247     m\_selection-\/>deselectAllKeyframes();}
+\DoxyCodeLine{00248     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < setter-\/>getCurve()-\/>getKeyframeCount(); i++)}
+\DoxyCodeLine{00249       \textcolor{keywordflow}{if} (setter-\/>isSelected(i)) m\_selection-\/>select(setter-\/>getCurve(), i);}
+\DoxyCodeLine{00250   \}}
+\DoxyCodeLine{00251 }
+\DoxyCodeLine{00252   m\_panel-\/>update();}
+\DoxyCodeLine{00253 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_move_point_drag_tool_ad75f151ee15b2b7b6126ede162d3a0b0}\label{class_move_point_drag_tool_ad75f151ee15b2b7b6126ede162d3a0b0}} 
+\index{MovePointDragTool@{MovePointDragTool}!release@{release}}
+\index{release@{release}!MovePointDragTool@{MovePointDragTool}}
+\doxysubsubsection{\texorpdfstring{release()}{release()}}
+{\footnotesize\ttfamily void Move\+Point\+Drag\+Tool\+::release (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_function_panel_1_1_drag_tool}{Function\+Panel\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00257 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_move_point_drag_tool_ae44ceacbfb0ace54c84f63a351c4db31}\label{class_move_point_drag_tool_ae44ceacbfb0ace54c84f63a351c4db31}} 
+\index{MovePointDragTool@{MovePointDragTool}!selectKeyframes@{selectKeyframes}}
+\index{selectKeyframes@{selectKeyframes}!MovePointDragTool@{MovePointDragTool}}
+\doxysubsubsection{\texorpdfstring{selectKeyframes()}{selectKeyframes()}}
+{\footnotesize\ttfamily void Move\+Point\+Drag\+Tool\+::select\+Keyframes (\begin{DoxyParamCaption}\item[{double}]{frame }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00156                                                     \{}
+\DoxyCodeLine{00157   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_setters.size(); i++) \{}
+\DoxyCodeLine{00158     \mbox{\hyperlink{class_keyframe_setter}{KeyframeSetter}} *setter = m\_setters[i];}
+\DoxyCodeLine{00159     \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve    = setter-\/>getCurve();}
+\DoxyCodeLine{00160     setter-\/>setPixelRatio(m\_panel-\/>getPixelRatio(curve));}
+\DoxyCodeLine{00161     \textcolor{keywordtype}{int} kIndex = curve-\/>getClosestKeyframe(frame);}
+\DoxyCodeLine{00162     \textcolor{keywordflow}{if} (kIndex >= 0) \{}
+\DoxyCodeLine{00163       \textcolor{keywordtype}{double} kf = curve-\/>\mbox{\hyperlink{class_t_double_param_af08442b9fd968fddada028a6f07983d5}{keyframeIndexToFrame}}(kIndex);}
+\DoxyCodeLine{00164       \textcolor{keywordflow}{if} (fabs(kf -\/ frame) < 0.01) setter-\/>selectKeyframe(kIndex);}
+\DoxyCodeLine{00165     \}}
+\DoxyCodeLine{00166   \}}
+\DoxyCodeLine{00167 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_move_point_drag_tool_acfca82d557698a612c673caedd48915c}\label{class_move_point_drag_tool_acfca82d557698a612c673caedd48915c}} 
+\index{MovePointDragTool@{MovePointDragTool}!setSelection@{setSelection}}
+\index{setSelection@{setSelection}!MovePointDragTool@{MovePointDragTool}}
+\doxysubsubsection{\texorpdfstring{setSelection()}{setSelection()}}
+{\footnotesize\ttfamily void Move\+Point\+Drag\+Tool\+::set\+Selection (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_function_selection}{Function\+Selection}} $\ast$}]{selection }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00171                                                                  \{}
+\DoxyCodeLine{00172   \textcolor{keywordflow}{if} (selection) \{}
+\DoxyCodeLine{00173     assert(m\_setters.size() == 1);}
+\DoxyCodeLine{00174     \textcolor{keywordflow}{if} (m\_setters.size() == 1) \{}
+\DoxyCodeLine{00175       \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve = m\_setters[0]-\/>getCurve();}
+\DoxyCodeLine{00176       assert(curve);}
+\DoxyCodeLine{00177       \textcolor{keywordflow}{if} (curve) \{}
+\DoxyCodeLine{00178         m\_selection = selection;}
+\DoxyCodeLine{00179         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < curve-\/>getKeyframeCount(); i++)}
+\DoxyCodeLine{00180           \textcolor{keywordflow}{if} (selection-\/>isSelected(curve, i)) addKeyframe2(i);}
+\DoxyCodeLine{00181       \}}
+\DoxyCodeLine{00182     \}}
+\DoxyCodeLine{00183   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00184     m\_selection = selection;}
+\DoxyCodeLine{00185 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/functionpaneltools.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/functionpaneltools.\+cpp\end{DoxyCompactItemize}

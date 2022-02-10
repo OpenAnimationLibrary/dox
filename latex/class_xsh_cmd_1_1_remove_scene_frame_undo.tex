@@ -1,0 +1,179 @@
+\hypertarget{class_xsh_cmd_1_1_remove_scene_frame_undo}{}\doxysection{Xsh\+Cmd\+::Remove\+Scene\+Frame\+Undo Class Reference}
+\label{class_xsh_cmd_1_1_remove_scene_frame_undo}\index{XshCmd::RemoveSceneFrameUndo@{XshCmd::RemoveSceneFrameUndo}}
+Inheritance diagram for Xsh\+Cmd\+::Remove\+Scene\+Frame\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_xsh_cmd_1_1_remove_scene_frame_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_xsh_cmd_1_1_remove_scene_frame_undo_acfa34c58c70ed85c2979ac0a65d71933}{Remove\+Scene\+Frame\+Undo}} (int frame)
+\item 
+void \mbox{\hyperlink{class_xsh_cmd_1_1_remove_scene_frame_undo_ae119c889b16277d0282ac715cd61c816}{redo}} () const override
+\item 
+void \mbox{\hyperlink{class_xsh_cmd_1_1_remove_scene_frame_undo_a67a00a9604d7a27f8a72f51ca2a7c9ad}{undo}} () const override
+\item 
+int \mbox{\hyperlink{class_xsh_cmd_1_1_remove_scene_frame_undo_ad618c8e3045208de9b32e85a4ccc4a21}{get\+Size}} () const override
+\item 
+QString \mbox{\hyperlink{class_xsh_cmd_1_1_remove_scene_frame_undo_a277e6bee1da900492a6ff42f84f1e05c}{get\+History\+String}} () override
+\item 
+int \mbox{\hyperlink{class_xsh_cmd_1_1_remove_scene_frame_undo_a95d63c3114c284c59dbebeb78ea829ad}{get\+History\+Type}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_remove_scene_frame_undo_acfa34c58c70ed85c2979ac0a65d71933}\label{class_xsh_cmd_1_1_remove_scene_frame_undo_acfa34c58c70ed85c2979ac0a65d71933}} 
+\index{XshCmd::RemoveSceneFrameUndo@{XshCmd::RemoveSceneFrameUndo}!RemoveSceneFrameUndo@{RemoveSceneFrameUndo}}
+\index{RemoveSceneFrameUndo@{RemoveSceneFrameUndo}!XshCmd::RemoveSceneFrameUndo@{XshCmd::RemoveSceneFrameUndo}}
+\doxysubsubsection{\texorpdfstring{RemoveSceneFrameUndo()}{RemoveSceneFrameUndo()}}
+{\footnotesize\ttfamily Xsh\+Cmd\+::\+Remove\+Scene\+Frame\+Undo\+::\+Remove\+Scene\+Frame\+Undo (\begin{DoxyParamCaption}\item[{int}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00247                                   : InsertSceneFrameUndo(frame) \{}
+\DoxyCodeLine{00248     \textcolor{comment}{// Store cells and TStageObject::Keyframe that will be canceled}}
+\DoxyCodeLine{00249 }
+\DoxyCodeLine{00250     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh  = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00251     \textcolor{keywordtype}{int} colsCount = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a17464dc5617cf87a46f03e1a52d36cc1}{getColumnCount}}();}
+\DoxyCodeLine{00252 }
+\DoxyCodeLine{00253     m\_cells.resize(colsCount);}
+\DoxyCodeLine{00254     m\_keyframes.resize(colsCount + 1);}
+\DoxyCodeLine{00255 }
+\DoxyCodeLine{00256     \textcolor{comment}{// Inserting the eventual camera keyframe at the end}}
+\DoxyCodeLine{00257     \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *cameraObj = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(}
+\DoxyCodeLine{00258         TStageObjectId::CameraId(xsh-\/>getCameraColumnIndex()));}
+\DoxyCodeLine{00259     \textcolor{keywordflow}{if} (cameraObj-\/>\mbox{\hyperlink{class_t_stage_object_af2c8c37f71b2b2e2c2a15c6eb73b8b38}{isKeyframe}}(m\_frame))}
+\DoxyCodeLine{00260       m\_keyframes[colsCount] = cameraObj-\/>\mbox{\hyperlink{class_t_stage_object_aacff624691523109a01d3039b8aae432}{getKeyframe}}(m\_frame);}
+\DoxyCodeLine{00261 }
+\DoxyCodeLine{00262     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c != colsCount; ++c) \{}
+\DoxyCodeLine{00263       \textcolor{comment}{// Store cell}}
+\DoxyCodeLine{00264       m\_cells[c] = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(m\_frame, c);}
+\DoxyCodeLine{00265 }
+\DoxyCodeLine{00266       \textcolor{comment}{// Store stage object keyframes}}
+\DoxyCodeLine{00267       \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *obj = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(TStageObjectId::ColumnId(c));}
+\DoxyCodeLine{00268       \textcolor{keywordflow}{if} (obj-\/>\mbox{\hyperlink{class_t_stage_object_af2c8c37f71b2b2e2c2a15c6eb73b8b38}{isKeyframe}}(m\_frame)) m\_keyframes[c] = obj-\/>\mbox{\hyperlink{class_t_stage_object_aacff624691523109a01d3039b8aae432}{getKeyframe}}(m\_frame);}
+\DoxyCodeLine{00269     \}}
+\DoxyCodeLine{00270   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_remove_scene_frame_undo_a277e6bee1da900492a6ff42f84f1e05c}\label{class_xsh_cmd_1_1_remove_scene_frame_undo_a277e6bee1da900492a6ff42f84f1e05c}} 
+\index{XshCmd::RemoveSceneFrameUndo@{XshCmd::RemoveSceneFrameUndo}!getHistoryString@{getHistoryString}}
+\index{getHistoryString@{getHistoryString}!XshCmd::RemoveSceneFrameUndo@{XshCmd::RemoveSceneFrameUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryString()}{getHistoryString()}}
+{\footnotesize\ttfamily QString Xsh\+Cmd\+::\+Remove\+Scene\+Frame\+Undo\+::get\+History\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsh_cmd_1_1_insert_scene_frame_undo}{Xsh\+Cmd\+::\+Insert\+Scene\+Frame\+Undo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00307                                       \{}
+\DoxyCodeLine{00308     \textcolor{keywordflow}{return} QObject::tr(\textcolor{stringliteral}{"{}Remove Frame  at Frame \%1"{}})}
+\DoxyCodeLine{00309         .arg(QString::number(m\_frame + 1));}
+\DoxyCodeLine{00310   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_remove_scene_frame_undo_a95d63c3114c284c59dbebeb78ea829ad}\label{class_xsh_cmd_1_1_remove_scene_frame_undo_a95d63c3114c284c59dbebeb78ea829ad}} 
+\index{XshCmd::RemoveSceneFrameUndo@{XshCmd::RemoveSceneFrameUndo}!getHistoryType@{getHistoryType}}
+\index{getHistoryType@{getHistoryType}!XshCmd::RemoveSceneFrameUndo@{XshCmd::RemoveSceneFrameUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryType()}{getHistoryType()}}
+{\footnotesize\ttfamily int Xsh\+Cmd\+::\+Remove\+Scene\+Frame\+Undo\+::get\+History\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsh_cmd_1_1_insert_scene_frame_undo}{Xsh\+Cmd\+::\+Insert\+Scene\+Frame\+Undo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00311 \{ \textcolor{keywordflow}{return} HistoryType::Xsheet; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_remove_scene_frame_undo_ad618c8e3045208de9b32e85a4ccc4a21}\label{class_xsh_cmd_1_1_remove_scene_frame_undo_ad618c8e3045208de9b32e85a4ccc4a21}} 
+\index{XshCmd::RemoveSceneFrameUndo@{XshCmd::RemoveSceneFrameUndo}!getSize@{getSize}}
+\index{getSize@{getSize}!XshCmd::RemoveSceneFrameUndo@{XshCmd::RemoveSceneFrameUndo}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Xsh\+Cmd\+::\+Remove\+Scene\+Frame\+Undo\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsh_cmd_1_1_insert_scene_frame_undo}{Xsh\+Cmd\+::\+Insert\+Scene\+Frame\+Undo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00303                                \{}
+\DoxyCodeLine{00304     \textcolor{keywordflow}{return} 10 << 10;}
+\DoxyCodeLine{00305   \}  \textcolor{comment}{// Gave up exact calculation. Say \string~ 10 kB?}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_remove_scene_frame_undo_ae119c889b16277d0282ac715cd61c816}\label{class_xsh_cmd_1_1_remove_scene_frame_undo_ae119c889b16277d0282ac715cd61c816}} 
+\index{XshCmd::RemoveSceneFrameUndo@{XshCmd::RemoveSceneFrameUndo}!redo@{redo}}
+\index{redo@{redo}!XshCmd::RemoveSceneFrameUndo@{XshCmd::RemoveSceneFrameUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Xsh\+Cmd\+::\+Remove\+Scene\+Frame\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsh_cmd_1_1_insert_scene_frame_undo}{Xsh\+Cmd\+::\+Insert\+Scene\+Frame\+Undo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00272 \{ InsertSceneFrameUndo::undo(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_remove_scene_frame_undo_a67a00a9604d7a27f8a72f51ca2a7c9ad}\label{class_xsh_cmd_1_1_remove_scene_frame_undo_a67a00a9604d7a27f8a72f51ca2a7c9ad}} 
+\index{XshCmd::RemoveSceneFrameUndo@{XshCmd::RemoveSceneFrameUndo}!undo@{undo}}
+\index{undo@{undo}!XshCmd::RemoveSceneFrameUndo@{XshCmd::RemoveSceneFrameUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Xsh\+Cmd\+::\+Remove\+Scene\+Frame\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsh_cmd_1_1_insert_scene_frame_undo}{Xsh\+Cmd\+::\+Insert\+Scene\+Frame\+Undo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00274                              \{}
+\DoxyCodeLine{00275     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00276 }
+\DoxyCodeLine{00277     \textcolor{comment}{// Insert an empty frame, need space for our stored stuff}}
+\DoxyCodeLine{00278     doInsertSceneFrame(m\_frame);}
+\DoxyCodeLine{00279 }
+\DoxyCodeLine{00280     \textcolor{comment}{// Insert cells}}
+\DoxyCodeLine{00281     \textcolor{keywordtype}{int} cellsCount = m\_cells.size();}
+\DoxyCodeLine{00282 }
+\DoxyCodeLine{00283     \textcolor{comment}{// Deal with the eventual camera keyframe}}
+\DoxyCodeLine{00284     \textcolor{keywordflow}{if} (m\_keyframes[cellsCount].m\_isKeyframe) \{}
+\DoxyCodeLine{00285       \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *cameraObj = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(}
+\DoxyCodeLine{00286           TStageObjectId::CameraId(xsh-\/>getCameraColumnIndex()));}
+\DoxyCodeLine{00287       cameraObj-\/>setKeyframeWithoutUndo(m\_frame, m\_keyframes[cellsCount]);}
+\DoxyCodeLine{00288     \}}
+\DoxyCodeLine{00289 }
+\DoxyCodeLine{00290     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c != cellsCount; ++c) \{}
+\DoxyCodeLine{00291       xsh-\/>setCell(m\_frame, c, m\_cells[c]);}
+\DoxyCodeLine{00292 }
+\DoxyCodeLine{00293       \textcolor{keywordflow}{if} (m\_keyframes[c].m\_isKeyframe) \{}
+\DoxyCodeLine{00294         \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *obj = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(TStageObjectId::ColumnId(c));}
+\DoxyCodeLine{00295         obj-\/>setKeyframeWithoutUndo(m\_frame, m\_keyframes[c]);}
+\DoxyCodeLine{00296       \}}
+\DoxyCodeLine{00297     \}}
+\DoxyCodeLine{00298 }
+\DoxyCodeLine{00299     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{00300     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00301   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xsheetcmd.\+cpp\end{DoxyCompactItemize}

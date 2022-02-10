@@ -1,0 +1,207 @@
+This software can be built using Visual Studio 2019 and Qt 5.\+x\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md49}{}\doxysection{Required Software}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md49}
+\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md50}{}\doxysubsection{Visual Studio Community 2019}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md50}
+
+\begin{DoxyItemize}
+\item \href{https://www.visualstudio.microsoft.com}{\texttt{ https\+://www.\+visualstudio.\+microsoft.\+com}}
+\item During the installation, make sure to select all the Visual C++ packages.
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md51}{}\doxysubsection{CMake}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md51}
+
+\begin{DoxyItemize}
+\item \href{https://cmake.org/download/}{\texttt{ https\+://cmake.\+org/download/}}
+\item This will be used to create the {\ttfamily MSVC 2019} project file.
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md52}{}\doxysubsection{Qt}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md52}
+
+\begin{DoxyItemize}
+\item \href{https://www.qt.io/download-open-source/}{\texttt{ https\+://www.\+qt.\+io/download-\/open-\/source/}}
+\item Qt is a cross-\/platform GUI framework.
+\item Install Qt 5.\+9 or higher (64-\/bit version, tested up to 5.\+15.\+2) with the \href{http://download.qt.io/official_releases/online_installers/qt-unified-windows-x86-online.exe}{\texttt{ Qt Online Installer for Windows}}.
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md53}{}\doxysubsubsection{Customized Qt v5.\+15.\+2 with Win\+Tab support}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md53}
+
+\begin{DoxyItemize}
+\item Qt have started to support Windows Ink from 5.\+12. Unlike Win\+Tab API used in Qt 5.\+9 the tablet behaviors are different and are (at least, for OT) problematic.
+\item The customized Qt5.\+15.\+2 are made with cherry-\/picking the Win\+Tab feature to be officially introduced from 6.\+0.
+\item You can build OT with Win\+Tab support by using the prebuilt package of the customized version of Qt for MSVC2019-\/x64 provided \href{https://github.com/shun-iwasawa/qt5/releases/tag/v5.15.2_wintab}{\texttt{ here}} and checking the {\ttfamily WITH\+\_\+\+WINTAB} checkbox in CMake to build.
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md54}{}\doxysubsection{boost}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md54}
+
+\begin{DoxyItemize}
+\item Boost 1.\+55.\+0 or later is required (tested up to 1.\+73.\+0).
+\item \href{http://www.boost.org/users/history/version_1_73_0.html}{\texttt{ http\+://www.\+boost.\+org/users/history/version\+\_\+1\+\_\+73\+\_\+0.\+html}}
+\item Download boost\+\_\+1\+\_\+73\+\_\+0.\+zip from the above link. Extract all contents to the -\/ \textquotesingle{}\$opentoonz/thirdparty/boost\textquotesingle{} directory.
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md55}{}\doxysubsection{Open\+CV}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md55}
+
+\begin{DoxyItemize}
+\item v4.\+1.\+0 and later
+\item \href{https://opencv.org/}{\texttt{ https\+://opencv.\+org/}}
+\item On configuring with CMake or in the environmental variables, specify {\ttfamily Open\+CV\+\_\+\+DIR} to the {\ttfamily build} folder in the install folder of Open\+CV (like {\ttfamily C\+:/opencv/build}).
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md56}{}\doxysection{Acquiring the Source Code}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md56}
+
+\begin{DoxyItemize}
+\item Note\+: You can also perform these next commands with Github for Desktop client.
+\item Clone the base repository.
+\item Throughout the explanation {\ttfamily \$opentoonz} will represent the root for the base repository.
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md57}{}\doxysubsection{lib and dll}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md57}
+
+\begin{DoxyItemize}
+\item {\ttfamily lib} and {\ttfamily dll} files are tracked by \href{https://git-lfs.github.com/}{\texttt{ Git Large File Storage}}.
+\item Note\+: git-\/lfs is also installed with Github Desktop.
+\item Visual Studio cannot recognize UTF-\/8 without BOM source code properly. Furthermore, since the endline character is represented with only the LF character, one line comments in Japanese will often cause the following line to be treated as a comment by {\ttfamily MSVS} as well.
+\item In order to prevent this, please change the following setting in git so that it will preserve the proper endline characters\+:
+\item {\ttfamily git config core.\+safecrlf true}
+\item Execute {\ttfamily git lfs pull} after {\ttfamily git clone} by using the lfs client.
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md58}{}\doxysubsection{Using CMake to Create a Visual Studio Project}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md58}
+
+\begin{DoxyItemize}
+\item Launch CMake
+\item In {\ttfamily Where is the source code}, navigate to {\ttfamily \$opentoonz/toonz/sources}
+\item In {\ttfamily Where to build the binaries}, navigate to {\ttfamily \$opentoonz/toonz/build}
+\item Or to wherever you usually build to.
+\item If the build directory is in the git repository, be sure to add the directory to .gitignore
+\item If the build directory is different from the one above, be sure to change to the specified directory where appropriate below. -\/Click on Configure and select the version of Visual Studio you are using. -\/If Qt was installed to a directory other than the default, and the error Specify QT\+\_\+\+PATH properly appears, navigate to the {\ttfamily QT\+\_\+\+DIR} install folder and specify the path to {\ttfamily msvc2019\+\_\+64}. Rerun Configure. -\/If red lines appear in the bottom box, you can safely ignore them. -\/Click Generate -\/Should the CMake\+Lists.\+txt file change, such as during automatic build cleanup, there is no need to rerun CMake.
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md59}{}\doxysection{Setting Up Libraries}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md59}
+Rename the following files\+:
+\begin{DoxyItemize}
+\item {\ttfamily \$opentoonz/thirdparty/\+Lib\+JPEG/jpeg-\/9/jconfig.vc} to {\ttfamily \$opentoonz/thirdparty/\+Lib\+JPEG/jpeg-\/9/jconfig.h}
+\item {\ttfamily \$opentoonz/thirdparty/tiff-\/4.0.\+3/libtiff/tif\+\_\+config.vc.\+h} to {\ttfamily \$opentoonz/thirdparty/tiff-\/4.0.\+3/libtiff/tif\+\_\+config.h}
+\item {\ttfamily \$opentoonz/thirdparty/tiff-\/4.0.\+3/libtiff/tiffconf.vc.\+h to \$opentoonz/thirdparty/tiff-\/4.0.\+3/libtiff/tiffconf.h}
+\item {\ttfamily \$opentoonz/thirdparty/libpng-\/1.6.\+21/scripts/pnglibconf.h.\+prebuilt to \$opentoonz/thirdparty/libpng-\/1.6.\+21/pnglibconf.h}
+\item Note that the destination is a different folder for the last file.
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md60}{}\doxysection{Building}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md60}
+
+\begin{DoxyItemize}
+\item Open {\ttfamily \$opentoonz/toonz/build/\+Open\+Toonz.sln} and change to {\ttfamily Debug} or {\ttfamily Release} in the top bar.
+\item Compile the build.
+\item The output will be in the corresponding folder in {\ttfamily \$opentoonz/toonz/build/}
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md61}{}\doxysection{Building with Canon DSLR camera support}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md61}
+You will need the \mbox{\hyperlink{class_canon}{Canon}} SDK. This requires applying for the \mbox{\hyperlink{class_canon}{Canon}} developer program and downloading the SDK.
+
+
+\begin{DoxyItemize}
+\item Copy the Header and library folders from the \mbox{\hyperlink{class_canon}{Canon}} SDK to {\ttfamily \$opentoonz/thirdparty/canon}
+\begin{DoxyItemize}
+\item Make sure that the library is the one from the EDSDK\+\_\+64 folder.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+Check the {\ttfamily WITH\+\_\+\+CANON} checkbox in CMake to build with \mbox{\hyperlink{class_canon}{Canon}} DSLR camera support.
+
+To run the program with \mbox{\hyperlink{class_canon}{Canon}} DSLR camera support, you will need to copy the .dll files from the \mbox{\hyperlink{class_canon}{Canon}} SDK into the folder where your project is built.\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md62}{}\doxysection{Running the Program}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md62}
+\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md63}{}\doxysubsection{Setting Up the Program\textquotesingle{}s Path}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md63}
+
+\begin{DoxyEnumerate}
+\item Copy the entire contents of \$opentoonz/toonz/build/\+Release to an appropriate folder.
+\item Open a Command Prompt and navigate to {\ttfamily QT\+\_\+\+DIR/msvc2015\+\_\+64/bin}. Run the Qt program {\ttfamily windeployqt.\+exe} with the path for {\ttfamily Open\+Toonz.\+exe} as an argument. (Another way to do this is navigate to the exe that was created in your Release folder and drag and drop the Opentoonz.\+exe on top of the windeployqt.\+exe This will automatically generate the QT files and folders you will need.)
+\begin{DoxyItemize}
+\item The necessary Qt library files should be in the same folder as {\ttfamily Open\+Toonz.\+exe}
+\begin{DoxyItemize}
+\item These include\+:
+\begin{DoxyItemize}
+\item {\ttfamily Qt5\+Core.\+dll}
+\item {\ttfamily Qt5\+Gui.\+dll}
+\item {\ttfamily Qt5\+Network.\+dll}
+\item {\ttfamily Qt5\+Open\+GL.\+dll}
+\item {\ttfamily Qt5\+Print\+Support.\+dll}
+\item {\ttfamily Qt5\+Script.\+dll}
+\item {\ttfamily Qt5\+Svg.\+dll}
+\item {\ttfamily Qt5\+Widgets.\+dll}
+\item {\ttfamily Qt5\+Multimedia.\+dll}
+\end{DoxyItemize}
+\item These files should be in the corresponding folders in the same folder {\ttfamily Open\+Toonz.\+exe}
+\begin{DoxyItemize}
+\item {\ttfamily /bearer/qgenericbearer.dll}
+\item {\ttfamily /bearer/qnativewifibearer.dll}
+\item {\ttfamily /iconengines/qsvgicon.dll}
+\item {\ttfamily /imageformats/qdds.dll}
+\item {\ttfamily /imageformats/qgif.dll}
+\item {\ttfamily /imageformats/qicns.dll}
+\item {\ttfamily /imageformats/qico.dll}
+\item {\ttfamily /imageformats/qjpeg.dll}
+\item {\ttfamily /imageformats/qsvg.dll}
+\item {\ttfamily /imageformats/qtga.dll}
+\item {\ttfamily /imageformats/qtiff.dll}
+\item {\ttfamily /imageformats/qwbmp.dll}
+\item {\ttfamily /imageformats/qwebp.dll}
+\item {\ttfamily /platforms/qwindows.dll}
+\end{DoxyItemize}
+\end{DoxyItemize}
+\end{DoxyItemize}
+\item Copy the following files to the same folder as {\ttfamily Open\+Toonz.\+exe}
+\begin{DoxyItemize}
+\item {\ttfamily \$opentoonz/thirdparty/glut/3.7.\+6/lib/glut64.dll}
+\item {\ttfamily \$opentoonz/thirdparty/glew/glew-\/1.9.\+0/bin/64bit/glew32.dll}
+\item {\ttfamily turbojpeg.\+dll} from libjpeg-\/turbo package
+\item {\ttfamily opencv\+\_\+world$\ast$$\ast$$\ast$.dll} from Open\+CV package
+\end{DoxyItemize}
+\item Copy the {\ttfamily srv} folder from the previous Open\+Toonz installation to the same folder as {\ttfamily Open\+Toonz.\+exe}
+\begin{DoxyItemize}
+\item If there is no {\ttfamily srv} folder, Open\+Toonz can still be used. However, various file formats such as {\ttfamily mov} cannot be used.
+\item Creating the files for {\ttfamily srv} is discussed later.
+\end{DoxyItemize}
+\end{DoxyEnumerate}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md64}{}\doxysubsection{Creating the stuff Folder}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md64}
+If a previous binary of Open\+Toonz was already installed, this step and the following about creating a registry key has already been dealt with. So feel free to skip these parts.
+
+
+\begin{DoxyEnumerate}
+\item Copy the files from {\ttfamily \$opentoonz/stuff} to an appropriate folder.
+\end{DoxyEnumerate}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md65}{}\doxysubsection{Creating Registry Keys}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md65}
+
+\begin{DoxyEnumerate}
+\item Using the registry editor, create the following key and copy the path of the {\ttfamily \$opentoonz/stuff} folder from above to it.
+\begin{DoxyItemize}
+\item HKEY\+\_\+\+LOCAL\+\_\+\+MACHINE\textbackslash{}\+SOFTWARE\textbackslash{}\+Open\+Toonz\textbackslash{}\+Open\+Toonz\textbackslash{}\+TOONZROOT
+\end{DoxyItemize}
+\end{DoxyEnumerate}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md66}{}\doxysubsection{Running}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md66}
+{\ttfamily Open\+Toonz.\+exe} can now be run. Congratulations!\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md67}{}\doxysection{Debugging}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md67}
+
+\begin{DoxyEnumerate}
+\item In the Solution Explorer, select the Open\+Toonz project within the Open\+Toonz solution.
+\item In the Project menu, choose Set as Start\+Up Project.
+\end{DoxyEnumerate}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md68}{}\doxysection{Creating the Files for the $<$tt$>$srv$<$/tt$>$ Folder}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md68}
+Open\+Toonz utilizes the Quick\+Time SDK\textquotesingle{}s {\ttfamily mov} and associated file formats. Since the Quick\+Time SDK only comes in 32-\/bit versions, the 32-\/bit file {\ttfamily t32bitsrv.\+exe} from the Quick\+Time SDK is used in both the 64-\/bit and 32-\/bit versions of Open\+Toonz. As a result, the following instructions apply to both the 32 and 64-\/bit versions of Open\+Toonz.\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md69}{}\doxysubsection{Qt}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md69}
+
+\begin{DoxyItemize}
+\item \href{https://www.qt.io/download-open-source/}{\texttt{ https\+://www.\+qt.\+io/download-\/open-\/source/}}
+\item Install Qt 5.\+x (32-\/bit version) by the by \href{http://download.qt.io/official_releases/online_installers/qt-unified-windows-x86-online.exe}{\texttt{ Qt Online Installer for Windows}}.
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md70}{}\doxysubsection{Quick\+Time SDK}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md70}
+
+\begin{DoxyEnumerate}
+\item Sign in using your Apple developer ID and download {\ttfamily Quick\+Time 7.\+3 SDK for Windows.\+zip} from the following url.
+\begin{DoxyItemize}
+\item \href{https://developer.apple.com/downloads/?q=quicktime}{\texttt{ https\+://developer.\+apple.\+com/downloads/?q=quicktime}}
+\end{DoxyItemize}
+\item After installing the Quick\+Time SDK, copy the contents of {\ttfamily C\+:\textbackslash{}Program Files (x86)\textbackslash{}Quick\+Time SDK} to {\ttfamily \$opentoonz/thirdparty/quicktime/\+QT73\+SDK}
+\end{DoxyEnumerate}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md71}{}\doxysubsection{Using CMake to Create a Visual Studio 32-\/bit Project}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md71}
+
+\begin{DoxyItemize}
+\item Follow the same instructions as for the 64-\/bit version, but change the following\+:
+\begin{DoxyItemize}
+\item {\ttfamily \$opentoonz/toonz/build} to {\ttfamily \$opentoonz/toonz/build32}
+\item {\ttfamily Visual Studio 16 2019 x64} to {\ttfamily Visual Studio 16 2019 Win32}
+\end{DoxyItemize}
+\item Change {\ttfamily QT\+\_\+\+PATH} to the path of your 32-\/bit version of Qt
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md72}{}\doxysubsection{Building the 32-\/bit Version}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md72}
+
+\begin{DoxyEnumerate}
+\item Open {\ttfamily \$opentoonz/toonz/build32/\+Open\+Toonz.sln}
+\end{DoxyEnumerate}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md73}{}\doxysubsection{Layout of the $<$tt$>$srv$<$/tt$>$ Folder}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md73}
+
+\begin{DoxyItemize}
+\item For the 64-\/bit version, copy the following files to the {\ttfamily srv} folder\+:
+\begin{DoxyItemize}
+\item From {\ttfamily \$opentoonz/toonz/build32/\+Release}
+\begin{DoxyItemize}
+\item t32bitsrv.\+exe
+\item image.\+dll
+\item tnzbase.\+dll
+\item tnzcore.\+dll
+\item tnzext.\+dll
+\item toonzlib.\+dll
+\end{DoxyItemize}
+\item From the 32-\/bit version of Qt
+\begin{DoxyItemize}
+\item run {\ttfamily windeployqt} to obtain required libraries
+\item additionally, Qt5\+Gui.\+dll
+\end{DoxyItemize}
+\item {\ttfamily \$opentoonz/thirdparty/glut/3.7.\+6/lib/glut32.dll}
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md__e__opentoonz_doc_how_to_build_win_autotoc_md74}{}\doxysection{Creating Translation Files}\label{md__e__opentoonz_doc_how_to_build_win_autotoc_md74}
+Qt translation files are generated first from the source code to .ts files, then from .ts files to a .qm file. These files can be created in Visual Studio if the {\ttfamily translation\+\_\+} project and {\ttfamily Build translation\+\_\+??? only} ({\ttfamily translation\+\_\+???}のみをビルド」) is used. These files are not created in the default {\ttfamily Build Project Solution}. 

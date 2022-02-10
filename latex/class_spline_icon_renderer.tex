@@ -1,0 +1,110 @@
+\hypertarget{class_spline_icon_renderer}{}\doxysection{Spline\+Icon\+Renderer Class Reference}
+\label{class_spline_icon_renderer}\index{SplineIconRenderer@{SplineIconRenderer}}
+Inheritance diagram for Spline\+Icon\+Renderer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_spline_icon_renderer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_spline_icon_renderer_ad4b50b88663955c7a8834277f851e474}{Spline\+Icon\+Renderer}} (const std\+::string \&id, const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&icon\+Size, \mbox{\hyperlink{class_t_stage_object_spline}{TStage\+Object\+Spline}} $\ast$spline)
+\item 
+\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \mbox{\hyperlink{class_spline_icon_renderer_a06adcccd3a65baf5813f3f3a9593914b}{generate\+Raster}} (const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&icon\+Size) const
+\item 
+void \mbox{\hyperlink{class_spline_icon_renderer_a053c9e5d86ba8bb7b0430ad1d0879d69}{run}} () override
+\begin{DoxyCompactList}\small\item\em The central code of the task that is executed by a worker thread. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_spline_icon_renderer_ad4b50b88663955c7a8834277f851e474}\label{class_spline_icon_renderer_ad4b50b88663955c7a8834277f851e474}} 
+\index{SplineIconRenderer@{SplineIconRenderer}!SplineIconRenderer@{SplineIconRenderer}}
+\index{SplineIconRenderer@{SplineIconRenderer}!SplineIconRenderer@{SplineIconRenderer}}
+\doxysubsubsection{\texorpdfstring{SplineIconRenderer()}{SplineIconRenderer()}}
+{\footnotesize\ttfamily Spline\+Icon\+Renderer\+::\+Spline\+Icon\+Renderer (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id,  }\item[{const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&}]{icon\+Size,  }\item[{\mbox{\hyperlink{class_t_stage_object_spline}{TStage\+Object\+Spline}} $\ast$}]{spline }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00581       : \mbox{\hyperlink{class_icon_renderer}{IconRenderer}}(\textcolor{keywordtype}{id}, iconSize), m\_spline(spline) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_spline_icon_renderer_a06adcccd3a65baf5813f3f3a9593914b}\label{class_spline_icon_renderer_a06adcccd3a65baf5813f3f3a9593914b}} 
+\index{SplineIconRenderer@{SplineIconRenderer}!generateRaster@{generateRaster}}
+\index{generateRaster@{generateRaster}!SplineIconRenderer@{SplineIconRenderer}}
+\doxysubsubsection{\texorpdfstring{generateRaster()}{generateRaster()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} Spline\+Icon\+Renderer\+::generate\+Raster (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&}]{icon\+Size }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00590                                       \{}
+\DoxyCodeLine{00591   \textcolor{comment}{// get the glContext}}
+\DoxyCodeLine{00592   \mbox{\hyperlink{class_t_offline_g_l}{TOfflineGL}} *glContext = IconGenerator::instance()-\/>getOfflineGLContext();}
+\DoxyCodeLine{00593   glContext-\/>makeCurrent();}
+\DoxyCodeLine{00594   glContext-\/>clear(TPixel32::White);}
+\DoxyCodeLine{00595 }
+\DoxyCodeLine{00596   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_stroke}{TStroke}} *stroke = m\_spline-\/>\mbox{\hyperlink{class_t_stage_object_spline_a68345d3697e0c20003d9b497d8ccacda}{getStroke}}();}
+\DoxyCodeLine{00597   assert(stroke);}
+\DoxyCodeLine{00598   \textcolor{keywordflow}{if} (!stroke) \{}
+\DoxyCodeLine{00599     glContext-\/>doneCurrent();}
+\DoxyCodeLine{00600     \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}();}
+\DoxyCodeLine{00601   \}}
+\DoxyCodeLine{00602   \mbox{\hyperlink{class_t_rect_t}{TRectD}} sbbox = stroke-\/>\mbox{\hyperlink{class_t_stroke_a456bedcae5e8af3a84823cb251584957}{getBBox}}();}
+\DoxyCodeLine{00603 }
+\DoxyCodeLine{00604   glColor3d(0, 0, 0);}
+\DoxyCodeLine{00605   \textcolor{keywordtype}{double} scaleX = 1, scaleY = 1;}
+\DoxyCodeLine{00606   \textcolor{keywordflow}{if} (sbbox.getLx() > 0.0) scaleX = (double)iconSize.lx / sbbox.getLx();}
+\DoxyCodeLine{00607   \textcolor{keywordflow}{if} (sbbox.getLy() > 0.0) scaleY = (\textcolor{keywordtype}{double})iconSize.ly / sbbox.getLy();}
+\DoxyCodeLine{00608   \textcolor{keywordtype}{double} scale         = 0.8 * std::min(scaleX, scaleY);}
+\DoxyCodeLine{00609   \mbox{\hyperlink{class_t_point_t}{TPointD}} centerStroke = 0.5 * (sbbox.getP00() + sbbox.getP11());}
+\DoxyCodeLine{00610   \mbox{\hyperlink{class_t_point_t}{TPointD}} centerPixmap(iconSize.lx * 0.5, iconSize.ly * 0.5);}
+\DoxyCodeLine{00611   glPushMatrix();}
+\DoxyCodeLine{00612   tglMultMatrix(\mbox{\hyperlink{class_t_scale}{TScale}}(scale).place(centerStroke, centerPixmap));}
+\DoxyCodeLine{00613   \textcolor{keywordtype}{int} n = 50;}
+\DoxyCodeLine{00614   glBegin(GL\_LINE\_STRIP);}
+\DoxyCodeLine{00615   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{00616     tglVertex(stroke-\/>\mbox{\hyperlink{class_t_stroke_ace861e064b925c5d41a6d7381ae6ada5}{getPoint}}((\textcolor{keywordtype}{double})i / (\textcolor{keywordtype}{double})(n -\/ 1)));}
+\DoxyCodeLine{00617   glEnd();}
+\DoxyCodeLine{00618   glPopMatrix();}
+\DoxyCodeLine{00619 }
+\DoxyCodeLine{00620   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras(iconSize);}
+\DoxyCodeLine{00621   glContext-\/>getRaster(ras);}
+\DoxyCodeLine{00622   glContext-\/>doneCurrent();}
+\DoxyCodeLine{00623   \textcolor{keywordflow}{return} ras;}
+\DoxyCodeLine{00624 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_spline_icon_renderer_a053c9e5d86ba8bb7b0430ad1d0879d69}\label{class_spline_icon_renderer_a053c9e5d86ba8bb7b0430ad1d0879d69}} 
+\index{SplineIconRenderer@{SplineIconRenderer}!run@{run}}
+\index{run@{run}!SplineIconRenderer@{SplineIconRenderer}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Spline\+Icon\+Renderer\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The central code of the task that is executed by a worker thread. 
+
+
+
+Implements \mbox{\hyperlink{class_icon_renderer_a0861b8f15a0a79a11c5675807537c230}{Icon\+Renderer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00628                              \{}
+\DoxyCodeLine{00629   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} raster = generateRaster(getIconSize());}
+\DoxyCodeLine{00630   \textcolor{keywordflow}{if} (raster) setIcon(raster);}
+\DoxyCodeLine{00631 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/icongenerator.\+cpp\end{DoxyCompactItemize}

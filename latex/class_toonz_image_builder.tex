@@ -1,0 +1,84 @@
+\hypertarget{class_toonz_image_builder}{}\doxysection{Toonz\+Image\+Builder Class Reference}
+\label{class_toonz_image_builder}\index{ToonzImageBuilder@{ToonzImageBuilder}}
+Inheritance diagram for Toonz\+Image\+Builder\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_toonz_image_builder}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_image_builder}{Image\+Builder}} $\ast$ \mbox{\hyperlink{class_toonz_image_builder_a4f3078f849d2ba5655cd63a5ecf0ceb9}{clone}} () override
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \mbox{\hyperlink{class_toonz_image_builder_a998e88ceee8f674611f51ae861d09969}{build}} (\mbox{\hyperlink{class_image_info}{Image\+Info}} $\ast$info, const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&ras) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_toonz_image_builder_a998e88ceee8f674611f51ae861d09969}\label{class_toonz_image_builder_a998e88ceee8f674611f51ae861d09969}} 
+\index{ToonzImageBuilder@{ToonzImageBuilder}!build@{build}}
+\index{build@{build}!ToonzImageBuilder@{ToonzImageBuilder}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} Toonz\+Image\+Builder\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_image_info}{Image\+Info}} $\ast$}]{info,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&}]{ras }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_image_builder}{Image\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00276                                                                      \{}
+\DoxyCodeLine{00277   \mbox{\hyperlink{class_toonz_image_info}{ToonzImageInfo}} *tiInfo = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_toonz_image_info}{ToonzImageInfo}} *\textcolor{keyword}{>}(info);}
+\DoxyCodeLine{00278   assert(tiInfo);}
+\DoxyCodeLine{00279 }
+\DoxyCodeLine{00280   \mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}} rasCM32 = ras;}
+\DoxyCodeLine{00281   assert(rasCM32);}
+\DoxyCodeLine{00282 }
+\DoxyCodeLine{00283   \mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}} imgRasCM32;}
+\DoxyCodeLine{00284 }
+\DoxyCodeLine{00285   assert(\mbox{\hyperlink{class_t_rect_t}{TRect}}(tiInfo-\/>m\_size).contains(tiInfo-\/>m\_savebox));}
+\DoxyCodeLine{00286 }
+\DoxyCodeLine{00287   \textcolor{keywordflow}{if} (ras-\/>getSize() != tiInfo-\/>m\_size) \{}
+\DoxyCodeLine{00288     \mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}} fullRas(tiInfo-\/>m\_size);}
+\DoxyCodeLine{00289     \mbox{\hyperlink{class_t_rect_t}{TRect}} rectToExtract(tiInfo-\/>m\_savebox);}
+\DoxyCodeLine{00290     \mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}} bgColor;}
+\DoxyCodeLine{00291     fullRas-\/>fillOutside(tiInfo-\/>m\_savebox, bgColor);}
+\DoxyCodeLine{00292     fullRas-\/>extractT(rectToExtract)-\/>copy(ras);}
+\DoxyCodeLine{00293     assert(rectToExtract == tiInfo-\/>m\_savebox);}
+\DoxyCodeLine{00294     imgRasCM32 = fullRas;}
+\DoxyCodeLine{00295   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00296     imgRasCM32 = rasCM32;}
+\DoxyCodeLine{00297 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00298   imgRasCM32-\/>m\_cashed = \textcolor{keyword}{true};}
+\DoxyCodeLine{00299 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00300   \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} ti = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_toonz_image}{TToonzImage}}(imgRasCM32, tiInfo-\/>m\_savebox);}
+\DoxyCodeLine{00301   tiInfo-\/>setInfo(ti);}
+\DoxyCodeLine{00302   \textcolor{keywordflow}{return} ti;}
+\DoxyCodeLine{00303 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_toonz_image_builder_a4f3078f849d2ba5655cd63a5ecf0ceb9}\label{class_toonz_image_builder_a4f3078f849d2ba5655cd63a5ecf0ceb9}} 
+\index{ToonzImageBuilder@{ToonzImageBuilder}!clone@{clone}}
+\index{clone@{clone}!ToonzImageBuilder@{ToonzImageBuilder}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_image_builder}{Image\+Builder}} $\ast$ Toonz\+Image\+Builder\+::clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_image_builder}{Image\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00271 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_toonz_image_builder}{ToonzImageBuilder}}(*\textcolor{keyword}{this}); \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tcache/timagecache.\+cpp\end{DoxyCompactItemize}

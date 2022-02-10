@@ -1,0 +1,237 @@
+\hypertarget{class_iwa___corridor_gradient_fx}{}\doxysection{Iwa\+\_\+\+Corridor\+Gradient\+Fx Class Reference}
+\label{class_iwa___corridor_gradient_fx}\index{Iwa\_CorridorGradientFx@{Iwa\_CorridorGradientFx}}
+Inheritance diagram for Iwa\+\_\+\+Corridor\+Gradient\+Fx\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_iwa___corridor_gradient_fx}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_iwa___corridor_gradient_fx_adfc3301244ee2f612e711320d1b4d6ba}{can\+Handle}} (const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&info, double frame) override
+\item 
+bool \mbox{\hyperlink{class_iwa___corridor_gradient_fx_a5d651391dec9881349d324c74750ecca}{do\+Get\+BBox}} (double frame, \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&b\+Box, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&ri) override
+\item 
+void \mbox{\hyperlink{class_iwa___corridor_gradient_fx_a4520d90ecaffd4e7e5550a9113889042}{do\+Compute}} (\mbox{\hyperlink{class_t_tile}{TTile}} \&tile, double frame, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&ri) override
+\item 
+void \mbox{\hyperlink{class_iwa___corridor_gradient_fx_a2ab8dc1095e96fc6f25c0a66038e850c}{get\+Param\+UIs}} (\mbox{\hyperlink{class_t_param_u_i_concept}{TParam\+UIConcept}} $\ast$\&concepts, int \&length) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_iwa___corridor_gradient_fx_af6f17cc535b130c2f2401bc7cc0ad678}\label{class_iwa___corridor_gradient_fx_af6f17cc535b130c2f2401bc7cc0ad678}} 
+\index{Iwa\_CorridorGradientFx@{Iwa\_CorridorGradientFx}!Iwa\_CorridorGradientFx@{Iwa\_CorridorGradientFx}}
+\index{Iwa\_CorridorGradientFx@{Iwa\_CorridorGradientFx}!Iwa\_CorridorGradientFx@{Iwa\_CorridorGradientFx}}
+\doxysubsubsection{\texorpdfstring{Iwa\_CorridorGradientFx()}{Iwa\_CorridorGradientFx()}}
+{\footnotesize\ttfamily Iwa\+\_\+\+Corridor\+Gradient\+Fx\+::\+Iwa\+\_\+\+Corridor\+Gradient\+Fx (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00016     : m\_shape(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_enum_param}{TIntEnumParam}}(0, \textcolor{stringliteral}{"{}Quadrangle"{}}))}
+\DoxyCodeLine{00017     , m\_innerColor(TPixel32::White)}
+\DoxyCodeLine{00018     , m\_outerColor(TPixel32::Black)}
+\DoxyCodeLine{00019     , m\_curveType(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_enum_param}{TIntEnumParam}}()) \{}
+\DoxyCodeLine{00020   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} inout = 0; inout < 2; inout++) \{}
+\DoxyCodeLine{00021     \textcolor{keywordtype}{double} size           = (inout == 0) ? 50. : 400.;}
+\DoxyCodeLine{00022     std::string inout\_str = (inout == 0) ? \textcolor{stringliteral}{"{}\_in"{}} : \textcolor{stringliteral}{"{}\_out"{}};}
+\DoxyCodeLine{00023 }
+\DoxyCodeLine{00024     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < 4; c++) \{}
+\DoxyCodeLine{00025       Qt::Corner corner = (Qt::Corner)c;}
+\DoxyCodeLine{00026       \mbox{\hyperlink{class_t_point_t}{TPointD}} basePos(1, 1);}
+\DoxyCodeLine{00027       \textcolor{keywordflow}{if} (corner == Qt::TopLeftCorner || corner == Qt::BottomLeftCorner)}
+\DoxyCodeLine{00028         basePos.x *= -\/1;}
+\DoxyCodeLine{00029       \textcolor{keywordflow}{if} (corner == Qt::BottomLeftCorner || corner == Qt::BottomRightCorner)}
+\DoxyCodeLine{00030         basePos.y *= -\/1;}
+\DoxyCodeLine{00031 }
+\DoxyCodeLine{00032       m\_points[inout][corner] = basePos * size;}
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034       m\_points[inout][corner]-\/>getX()-\/>setMeasureName(\textcolor{stringliteral}{"{}fxLength"{}});}
+\DoxyCodeLine{00035       m\_points[inout][corner]-\/>getY()-\/>setMeasureName(\textcolor{stringliteral}{"{}fxLength"{}});}
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{00037       std::string TB\_str =}
+\DoxyCodeLine{00038           (corner == Qt::TopLeftCorner || corner == Qt::TopRightCorner)}
+\DoxyCodeLine{00039               ? \textcolor{stringliteral}{"{}top"{}}}
+\DoxyCodeLine{00040               : \textcolor{stringliteral}{"{}bottom"{}};}
+\DoxyCodeLine{00041       std::string LR\_str =}
+\DoxyCodeLine{00042           (corner == Qt::TopLeftCorner || corner == Qt::BottomLeftCorner)}
+\DoxyCodeLine{00043               ? \textcolor{stringliteral}{"{}\_left"{}}}
+\DoxyCodeLine{00044               : \textcolor{stringliteral}{"{}\_right"{}};}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046       bindParam(\textcolor{keyword}{this}, TB\_str + LR\_str + inout\_str, m\_points[inout][corner]);}
+\DoxyCodeLine{00047     \}}
+\DoxyCodeLine{00048   \}}
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00050   m\_shape-\/>addItem(1, \textcolor{stringliteral}{"{}Circle"{}});}
+\DoxyCodeLine{00051   bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}shape"{}}, m\_shape);}
+\DoxyCodeLine{00052 }
+\DoxyCodeLine{00053   m\_curveType-\/>addItem(EaseInOut, \textcolor{stringliteral}{"{}Ease In-\/Out"{}});}
+\DoxyCodeLine{00054   m\_curveType-\/>addItem(Linear, \textcolor{stringliteral}{"{}Linear"{}});}
+\DoxyCodeLine{00055   m\_curveType-\/>addItem(EaseIn, \textcolor{stringliteral}{"{}Ease In"{}});}
+\DoxyCodeLine{00056   m\_curveType-\/>addItem(EaseOut, \textcolor{stringliteral}{"{}Ease Out"{}});}
+\DoxyCodeLine{00057   m\_curveType-\/>setDefaultValue(Linear);}
+\DoxyCodeLine{00058   m\_curveType-\/>setValue(Linear);}
+\DoxyCodeLine{00059   bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}curveType"{}}, m\_curveType);}
+\DoxyCodeLine{00060 }
+\DoxyCodeLine{00061   bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}inner\_color"{}}, m\_innerColor);}
+\DoxyCodeLine{00062   bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}outer\_color"{}}, m\_outerColor);}
+\DoxyCodeLine{00063 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_iwa___corridor_gradient_fx_adfc3301244ee2f612e711320d1b4d6ba}\label{class_iwa___corridor_gradient_fx_adfc3301244ee2f612e711320d1b4d6ba}} 
+\index{Iwa\_CorridorGradientFx@{Iwa\_CorridorGradientFx}!canHandle@{canHandle}}
+\index{canHandle@{canHandle}!Iwa\_CorridorGradientFx@{Iwa\_CorridorGradientFx}}
+\doxysubsubsection{\texorpdfstring{canHandle()}{canHandle()}}
+{\footnotesize\ttfamily bool Iwa\+\_\+\+Corridor\+Gradient\+Fx\+::can\+Handle (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{info,  }\item[{double}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022                                                                      \{}
+\DoxyCodeLine{00023     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00024   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_iwa___corridor_gradient_fx_a4520d90ecaffd4e7e5550a9113889042}\label{class_iwa___corridor_gradient_fx_a4520d90ecaffd4e7e5550a9113889042}} 
+\index{Iwa\_CorridorGradientFx@{Iwa\_CorridorGradientFx}!doCompute@{doCompute}}
+\index{doCompute@{doCompute}!Iwa\_CorridorGradientFx@{Iwa\_CorridorGradientFx}}
+\doxysubsubsection{\texorpdfstring{doCompute()}{doCompute()}}
+{\footnotesize\ttfamily void Iwa\+\_\+\+Corridor\+Gradient\+Fx\+::do\+Compute (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_tile}{TTile}} \&}]{tile,  }\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{ri }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00297                                                                   \{}
+\DoxyCodeLine{00298   \textcolor{keywordflow}{if} (!((\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}})tile.getRaster()) \&\& !((\mbox{\hyperlink{class_t_raster_p_t}{TRaster64P}})tile.getRaster())) \{}
+\DoxyCodeLine{00299     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_rop_exception}{TRopException}}(\textcolor{stringliteral}{"{}unsupported input pixel type"{}});}
+\DoxyCodeLine{00300   \}}
+\DoxyCodeLine{00301 }
+\DoxyCodeLine{00302   \textcolor{comment}{// convert shape position to render region coordinate}}
+\DoxyCodeLine{00303   \mbox{\hyperlink{class_t_point_t}{TPointD}} pos[2][4];}
+\DoxyCodeLine{00304   \mbox{\hyperlink{class_t_affine}{TAffine}} aff = ri.\mbox{\hyperlink{class_t_render_settings_a1250181bf3fe8e05db005d5faa76b3ea}{m\_affine}};}
+\DoxyCodeLine{00305   \mbox{\hyperlink{class_t_dimension_t}{TDimensionI}} dimOut(tile.getRaster()-\/>getLx(), tile.getRaster()-\/>getLy());}
+\DoxyCodeLine{00306   \mbox{\hyperlink{class_t_point_t}{TPointD}} dimOffset((\textcolor{keywordtype}{float})dimOut.lx / 2.0f, (\textcolor{keywordtype}{float})dimOut.ly / 2.0f);}
+\DoxyCodeLine{00307   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} inout = 0; inout < 2; inout++) \{}
+\DoxyCodeLine{00308     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < 4; c++) \{}
+\DoxyCodeLine{00309       \mbox{\hyperlink{class_t_point_t}{TPointD}} \_point = m\_points[inout][c]-\/>getValue(frame);}
+\DoxyCodeLine{00310       pos[inout][c]  = aff * \_point -\/}
+\DoxyCodeLine{00311                       (tile.m\_pos + tile.getRaster()-\/>getCenterD()) + dimOffset;}
+\DoxyCodeLine{00312     \}}
+\DoxyCodeLine{00313   \}}
+\DoxyCodeLine{00314 }
+\DoxyCodeLine{00315   std::vector<TSpectrum::ColorKey> colors = \{}
+\DoxyCodeLine{00316       TSpectrum::ColorKey(0, m\_innerColor-\/>getValue(frame)),}
+\DoxyCodeLine{00317       TSpectrum::ColorKey(1, m\_outerColor-\/>getValue(frame))\};}
+\DoxyCodeLine{00318   \mbox{\hyperlink{class_t_spectrum_param_p}{TSpectrumParamP}} m\_colors = \mbox{\hyperlink{class_t_spectrum_param_p}{TSpectrumParamP}}(colors);}
+\DoxyCodeLine{00319 }
+\DoxyCodeLine{00320   tile.getRaster()-\/>clear();}
+\DoxyCodeLine{00321   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} outRas32 = (\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}})tile.getRaster();}
+\DoxyCodeLine{00322   \mbox{\hyperlink{class_t_raster_p_t}{TRaster64P}} outRas64 = (\mbox{\hyperlink{class_t_raster_p_t}{TRaster64P}})tile.getRaster();}
+\DoxyCodeLine{00323   \textcolor{keywordflow}{if} (m\_shape-\/>getValue() == 0) \{  \textcolor{comment}{// Quadrangle}}
+\DoxyCodeLine{00324     \textcolor{keywordflow}{if} (outRas32)}
+\DoxyCodeLine{00325       doQuadrangleT<TRaster32P, TPixel32>(}
+\DoxyCodeLine{00326           outRas32, dimOut, pos, m\_colors-\/>getValue(frame),}
+\DoxyCodeLine{00327           (GradientCurveType)m\_curveType-\/>getValue());}
+\DoxyCodeLine{00328     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (outRas64)}
+\DoxyCodeLine{00329       doQuadrangleT<TRaster64P, TPixel64>(}
+\DoxyCodeLine{00330           outRas64, dimOut, pos, m\_colors-\/>getValue64(frame),}
+\DoxyCodeLine{00331           (GradientCurveType)m\_curveType-\/>getValue());}
+\DoxyCodeLine{00332   \} \textcolor{keywordflow}{else} \{  \textcolor{comment}{// m\_shape == 1 : Circle}}
+\DoxyCodeLine{00333     \textcolor{keywordflow}{if} (outRas32)}
+\DoxyCodeLine{00334       doCircleT<TRaster32P, TPixel32>(}
+\DoxyCodeLine{00335           outRas32, dimOut, pos, m\_colors-\/>getValue(frame),}
+\DoxyCodeLine{00336           (GradientCurveType)m\_curveType-\/>getValue());}
+\DoxyCodeLine{00337     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (outRas64)}
+\DoxyCodeLine{00338       doCircleT<TRaster64P, TPixel64>(}
+\DoxyCodeLine{00339           outRas64, dimOut, pos, m\_colors-\/>getValue64(frame),}
+\DoxyCodeLine{00340           (GradientCurveType)m\_curveType-\/>getValue());}
+\DoxyCodeLine{00341   \}}
+\DoxyCodeLine{00342 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_iwa___corridor_gradient_fx_a5d651391dec9881349d324c74750ecca}\label{class_iwa___corridor_gradient_fx_a5d651391dec9881349d324c74750ecca}} 
+\index{Iwa\_CorridorGradientFx@{Iwa\_CorridorGradientFx}!doGetBBox@{doGetBBox}}
+\index{doGetBBox@{doGetBBox}!Iwa\_CorridorGradientFx@{Iwa\_CorridorGradientFx}}
+\doxysubsubsection{\texorpdfstring{doGetBBox()}{doGetBBox()}}
+{\footnotesize\ttfamily bool Iwa\+\_\+\+Corridor\+Gradient\+Fx\+::do\+Get\+BBox (\begin{DoxyParamCaption}\item[{double}]{frame,  }\item[{\mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{b\+Box,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{ri }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068                                                                   \{}
+\DoxyCodeLine{00069   bBox = TConsts::infiniteRectD;}
+\DoxyCodeLine{00070   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00071 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_iwa___corridor_gradient_fx_a2ab8dc1095e96fc6f25c0a66038e850c}\label{class_iwa___corridor_gradient_fx_a2ab8dc1095e96fc6f25c0a66038e850c}} 
+\index{Iwa\_CorridorGradientFx@{Iwa\_CorridorGradientFx}!getParamUIs@{getParamUIs}}
+\index{getParamUIs@{getParamUIs}!Iwa\_CorridorGradientFx@{Iwa\_CorridorGradientFx}}
+\doxysubsubsection{\texorpdfstring{getParamUIs()}{getParamUIs()}}
+{\footnotesize\ttfamily void Iwa\+\_\+\+Corridor\+Gradient\+Fx\+::get\+Param\+UIs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_param_u_i_concept}{TParam\+UIConcept}} $\ast$\&}]{params,  }\item[{int \&}]{length }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Returns a list of User Interface Concepts to be displayed when editing the fx parameters. \begin{DoxyNote}{Note}
+Ownership of the returned array allocated with new\mbox{[}\mbox{]} is passed to callers. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{class_t_fx_a18766b107b77772d67c5678e7d832b18}{TFx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00347                                                       \{}
+\DoxyCodeLine{00348   concepts = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_param_u_i_concept}{TParamUIConcept}}[length = 6];}
+\DoxyCodeLine{00349 }
+\DoxyCodeLine{00350   \textcolor{keywordtype}{int} vectorUiIdOffset = 2;}
+\DoxyCodeLine{00351 }
+\DoxyCodeLine{00352   std::array<Qt::Corner, 4> loopIds\{Qt::TopLeftCorner, Qt::TopRightCorner,}
+\DoxyCodeLine{00353                                     Qt::BottomRightCorner,}
+\DoxyCodeLine{00354                                     Qt::BottomLeftCorner\};}
+\DoxyCodeLine{00355 }
+\DoxyCodeLine{00356   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} inout = 0; inout < 2; inout++) \{}
+\DoxyCodeLine{00357     concepts[inout].\mbox{\hyperlink{class_t_param_u_i_concept_a2dbb7c954ca5f2441a6931945cf004a5}{m\_type}} = TParamUIConcept::QUAD;}
+\DoxyCodeLine{00358 }
+\DoxyCodeLine{00359     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < 4; c++) \{}
+\DoxyCodeLine{00360       Qt::Corner corner = loopIds[c];}
+\DoxyCodeLine{00361 }
+\DoxyCodeLine{00362       \textcolor{comment}{// quad ui}}
+\DoxyCodeLine{00363       concepts[inout].m\_params.push\_back(m\_points[inout][(\textcolor{keywordtype}{int})corner]);}
+\DoxyCodeLine{00364       concepts[inout].m\_label = (inout == 0) ? \textcolor{stringliteral}{"{} In"{}} : \textcolor{stringliteral}{"{} Out"{}};}
+\DoxyCodeLine{00365 }
+\DoxyCodeLine{00366       \textcolor{comment}{// vector ui}}
+\DoxyCodeLine{00367       \textcolor{keywordflow}{if} (inout == 0)}
+\DoxyCodeLine{00368         concepts[vectorUiIdOffset + (int)corner].m\_type =}
+\DoxyCodeLine{00369             TParamUIConcept::VECTOR;}
+\DoxyCodeLine{00370       concepts[vectorUiIdOffset + (int)corner].m\_params.push\_back(}
+\DoxyCodeLine{00371           m\_points[inout][(\textcolor{keywordtype}{int})corner]);}
+\DoxyCodeLine{00372     \}}
+\DoxyCodeLine{00373   \}}
+\DoxyCodeLine{00374 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00078}{TParam\+UIConcept\+::m\+\_\+label}}, \mbox{\hyperlink{l00079}{TParam\+UIConcept\+::m\+\_\+params}}, and \mbox{\hyperlink{l00077}{TParam\+UIConcept\+::m\+\_\+type}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/iwa\+\_\+corridorgradientfx.\+h\item 
+E\+:/opentoonz/toonz/sources/stdfx/iwa\+\_\+corridorgradientfx.\+cpp\end{DoxyCompactItemize}

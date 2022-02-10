@@ -1,0 +1,244 @@
+\hypertarget{class_compass_fx_gadget}{}\doxysection{Compass\+Fx\+Gadget Class Reference}
+\label{class_compass_fx_gadget}\index{CompassFxGadget@{CompassFxGadget}}
+Inheritance diagram for Compass\+Fx\+Gadget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_compass_fx_gadget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_compass_fx_gadget_a7cae018c3e7884f0c23d163ef43f0f54}{Compass\+Fx\+Gadget}} (\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$controller, const TPoint\+ParamP \&center\+Point, bool is\+Spin=false)
+\item 
+void \mbox{\hyperlink{class_compass_fx_gadget_a4a6dc2f3a66718e8527fe97d859fe44c}{draw}} (bool picking) override
+\item 
+void \mbox{\hyperlink{class_compass_fx_gadget_ab441fa52f54046b0be11b59aec8cdce2}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+void \mbox{\hyperlink{class_compass_fx_gadget_aae63d076c053a0acfee7bd9982f0b9e1}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+void \mbox{\hyperlink{class_compass_fx_gadget_a0f8f27776f71e9ac8e3e5f573f94c20d}{left\+Button\+Up}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_compass_fx_gadget_a7cae018c3e7884f0c23d163ef43f0f54}\label{class_compass_fx_gadget_a7cae018c3e7884f0c23d163ef43f0f54}} 
+\index{CompassFxGadget@{CompassFxGadget}!CompassFxGadget@{CompassFxGadget}}
+\index{CompassFxGadget@{CompassFxGadget}!CompassFxGadget@{CompassFxGadget}}
+\doxysubsubsection{\texorpdfstring{CompassFxGadget()}{CompassFxGadget()}}
+{\footnotesize\ttfamily Compass\+Fx\+Gadget\+::\+Compass\+Fx\+Gadget (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$}]{controller,  }\item[{const TPoint\+ParamP \&}]{center\+Point,  }\item[{bool}]{is\+Spin = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01527     : \mbox{\hyperlink{class_fx_gadget}{FxGadget}}(controller, 3), m\_center(centerPoint), m\_isSpin(isSpin) \{}
+\DoxyCodeLine{01528   addParam(centerPoint-\/>getX());}
+\DoxyCodeLine{01529   addParam(centerPoint-\/>getY());}
+\DoxyCodeLine{01530 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_compass_fx_gadget_a4a6dc2f3a66718e8527fe97d859fe44c}\label{class_compass_fx_gadget_a4a6dc2f3a66718e8527fe97d859fe44c}} 
+\index{CompassFxGadget@{CompassFxGadget}!draw@{draw}}
+\index{draw@{draw}!CompassFxGadget@{CompassFxGadget}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Compass\+Fx\+Gadget\+::draw (\begin{DoxyParamCaption}\item[{bool}]{picking }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01534                                        \{}
+\DoxyCodeLine{01535   \textcolor{keyword}{auto} setColorById = [\&](\textcolor{keywordtype}{int} id) \{}
+\DoxyCodeLine{01536     \textcolor{keywordflow}{if} (isSelected(\textcolor{keywordtype}{id}))}
+\DoxyCodeLine{01537       glColor3dv(m\_selectedColor);}
+\DoxyCodeLine{01538     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01539       glColor3d(0, 0, 1);}
+\DoxyCodeLine{01540   \};}
+\DoxyCodeLine{01541 }
+\DoxyCodeLine{01542   \textcolor{keyword}{auto} drawArrow = [\&]() \{}
+\DoxyCodeLine{01543     \textcolor{keywordtype}{double} arrowLength = getPixelSize() * 20;}
+\DoxyCodeLine{01544     \textcolor{keywordtype}{double} arrowTip    = getPixelSize() * 5;}
+\DoxyCodeLine{01545 }
+\DoxyCodeLine{01546     glBegin(GL\_LINES);}
+\DoxyCodeLine{01547     glVertex2d(-\/arrowLength, 0.0);}
+\DoxyCodeLine{01548     glVertex2d(arrowLength, 0.0);}
+\DoxyCodeLine{01549 }
+\DoxyCodeLine{01550     glVertex2d(-\/arrowLength + arrowTip, arrowTip);}
+\DoxyCodeLine{01551     glVertex2d(-\/arrowLength, 0.0);}
+\DoxyCodeLine{01552 }
+\DoxyCodeLine{01553     glVertex2d(-\/arrowLength + arrowTip, -\/arrowTip);}
+\DoxyCodeLine{01554     glVertex2d(-\/arrowLength, 0.0);}
+\DoxyCodeLine{01555 }
+\DoxyCodeLine{01556     glVertex2d(arrowLength -\/ arrowTip, arrowTip);}
+\DoxyCodeLine{01557     glVertex2d(arrowLength, 0.0);}
+\DoxyCodeLine{01558 }
+\DoxyCodeLine{01559     glVertex2d(arrowLength -\/ arrowTip, -\/arrowTip);}
+\DoxyCodeLine{01560     glVertex2d(arrowLength, 0.0);}
+\DoxyCodeLine{01561     glEnd();}
+\DoxyCodeLine{01562   \};}
+\DoxyCodeLine{01563 }
+\DoxyCodeLine{01564   setPixelSize();}
+\DoxyCodeLine{01565   \textcolor{keywordtype}{double} lineHalf     = getPixelSize() * 100;}
+\DoxyCodeLine{01566   \textcolor{keywordtype}{double} lineInterval = getPixelSize() * 50;}
+\DoxyCodeLine{01567   \textcolor{keywordtype}{double} r            = getPixelSize() * 3;}
+\DoxyCodeLine{01568 }
+\DoxyCodeLine{01569   glPushMatrix();}
+\DoxyCodeLine{01570 }
+\DoxyCodeLine{01571   \mbox{\hyperlink{class_t_point_t}{TPointD}} center = getValue(m\_center);}
+\DoxyCodeLine{01572   \textcolor{keywordtype}{double} dCenter = norm(center);}
+\DoxyCodeLine{01573   \mbox{\hyperlink{class_t_point_t}{TPointD}} handleVec;}
+\DoxyCodeLine{01574   \textcolor{keywordflow}{if} (dCenter > lineHalf) \{}
+\DoxyCodeLine{01575     handleVec = normalize(center) * lineHalf;}
+\DoxyCodeLine{01576     setColorById(Body);}
+\DoxyCodeLine{01577     glPushName(getId() + Body);}
+\DoxyCodeLine{01578     glBegin(GL\_LINES);}
+\DoxyCodeLine{01579     glVertex2d(handleVec.x * 0.95, handleVec.y * 0.95);}
+\DoxyCodeLine{01580     glVertex2d(-\/handleVec.x * 0.95, -\/handleVec.y * 0.95);}
+\DoxyCodeLine{01581     glEnd();}
+\DoxyCodeLine{01582     glPopName();}
+\DoxyCodeLine{01583 }
+\DoxyCodeLine{01584     \textcolor{keywordtype}{double} angle = std::atan2(-\/center.y, -\/center.x) * M\_180\_PI;}
+\DoxyCodeLine{01585     \textcolor{keywordtype}{double} theta = M\_180\_PI * lineInterval / dCenter;}
+\DoxyCodeLine{01586 }
+\DoxyCodeLine{01587     \textcolor{comment}{// draw guides}}
+\DoxyCodeLine{01588     glColor3d(0, 0, 1);}
+\DoxyCodeLine{01589     glLineStipple(1, 0x00FF);}
+\DoxyCodeLine{01590     glEnable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{01591     glPushMatrix();}
+\DoxyCodeLine{01592     glTranslated(center.x, center.y, 0);}
+\DoxyCodeLine{01593     glRotated(angle, 0, 0, 1);}
+\DoxyCodeLine{01594     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = -\/3; i <= 3; i++) \{}
+\DoxyCodeLine{01595       \textcolor{keywordflow}{if} (!m\_isSpin) \{  \textcolor{comment}{// radial direction}}
+\DoxyCodeLine{01596         \textcolor{keywordflow}{if} (i == 0) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01597         glPushMatrix();}
+\DoxyCodeLine{01598         glRotated(theta * (\textcolor{keywordtype}{double})i, 0, 0, 1);}
+\DoxyCodeLine{01599         glBegin(GL\_LINES);}
+\DoxyCodeLine{01600         glVertex2d(dCenter -\/ lineHalf, 0.0);}
+\DoxyCodeLine{01601         glVertex2d(dCenter + lineHalf, 0.0);}
+\DoxyCodeLine{01602         glEnd();}
+\DoxyCodeLine{01603         glPopMatrix();}
+\DoxyCodeLine{01604       \} \textcolor{keywordflow}{else} \{  \textcolor{comment}{// rotational direction}}
+\DoxyCodeLine{01605         \textcolor{keywordflow}{if} (i == 3 || i == -\/3) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01606         \textcolor{keywordtype}{double} tmpRad  = dCenter + (double)i * lineInterval;}
+\DoxyCodeLine{01607         \textcolor{keywordtype}{double} d\_angle = (lineInterval / dCenter) * 6.0 / 10.0;}
+\DoxyCodeLine{01608         glBegin(GL\_LINE\_STRIP);}
+\DoxyCodeLine{01609         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} r = -\/5; r <= 5; r++) \{}
+\DoxyCodeLine{01610           \textcolor{keywordtype}{double} tmpAngle = (double)r * d\_angle;}
+\DoxyCodeLine{01611           glVertex2d(tmpRad * std::cos(tmpAngle), tmpRad * std::sin(tmpAngle));}
+\DoxyCodeLine{01612         \}}
+\DoxyCodeLine{01613         glEnd();}
+\DoxyCodeLine{01614       \}}
+\DoxyCodeLine{01615     \}}
+\DoxyCodeLine{01616 }
+\DoxyCodeLine{01617     glPopMatrix();}
+\DoxyCodeLine{01618     glDisable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{01619 }
+\DoxyCodeLine{01620     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} \textcolor{keywordtype}{id} = Near; \textcolor{keywordtype}{id} <= Far; \textcolor{keywordtype}{id}++) \{}
+\DoxyCodeLine{01621       \mbox{\hyperlink{class_t_point_t}{TPointD}} hPos = (\textcolor{keywordtype}{id} == Near) ? handleVec : -\/handleVec;}
+\DoxyCodeLine{01622       setColorById(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{01623       glPushName(getId() + \textcolor{keywordtype}{id});}
+\DoxyCodeLine{01624       glPushMatrix();}
+\DoxyCodeLine{01625       glTranslated(hPos.x, hPos.y, 0);}
+\DoxyCodeLine{01626       tglDrawRect(-\/r, -\/r, r, r);}
+\DoxyCodeLine{01627       glPopMatrix();}
+\DoxyCodeLine{01628       glPopName();}
+\DoxyCodeLine{01629     \}}
+\DoxyCodeLine{01630   \}}
+\DoxyCodeLine{01631 }
+\DoxyCodeLine{01632   \textcolor{keywordflow}{if} (m\_handle == Body) \{}
+\DoxyCodeLine{01633     glPushMatrix();}
+\DoxyCodeLine{01634     \mbox{\hyperlink{class_t_point_t}{TPointD}} centerOffset = center -\/ m\_targetPos;}
+\DoxyCodeLine{01635     handleVec            = normalize(m\_targetPos) * lineHalf;}
+\DoxyCodeLine{01636     glTranslated(centerOffset.x, centerOffset.y, 0);}
+\DoxyCodeLine{01637     glBegin(GL\_LINES);}
+\DoxyCodeLine{01638     glVertex2d(handleVec.x, handleVec.y);}
+\DoxyCodeLine{01639     glVertex2d(-\/handleVec.x, -\/handleVec.y);}
+\DoxyCodeLine{01640     glEnd();}
+\DoxyCodeLine{01641     glPopMatrix();}
+\DoxyCodeLine{01642   \}}
+\DoxyCodeLine{01643   glPopMatrix();}
+\DoxyCodeLine{01644 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_compass_fx_gadget_ab441fa52f54046b0be11b59aec8cdce2}\label{class_compass_fx_gadget_ab441fa52f54046b0be11b59aec8cdce2}} 
+\index{CompassFxGadget@{CompassFxGadget}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!CompassFxGadget@{CompassFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Compass\+Fx\+Gadget\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01648                                                                             \{}
+\DoxyCodeLine{01649   m\_handle = (HANDLE)m\_selected;}
+\DoxyCodeLine{01650   \textcolor{keywordflow}{if} (m\_handle == None) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01651   m\_clickedPos = pos;}
+\DoxyCodeLine{01652   m\_targetPos  = getValue(m\_center);}
+\DoxyCodeLine{01653 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_compass_fx_gadget_aae63d076c053a0acfee7bd9982f0b9e1}\label{class_compass_fx_gadget_aae63d076c053a0acfee7bd9982f0b9e1}} 
+\index{CompassFxGadget@{CompassFxGadget}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!CompassFxGadget@{CompassFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Compass\+Fx\+Gadget\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01657                                                                              \{}
+\DoxyCodeLine{01658   \textcolor{keywordflow}{if} (m\_handle == None) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01659   \mbox{\hyperlink{class_t_point_t}{TPointD}} d = pos -\/ m\_clickedPos;}
+\DoxyCodeLine{01660 }
+\DoxyCodeLine{01661   \textcolor{keywordflow}{if} (m\_handle == Body) \{}
+\DoxyCodeLine{01662     setValue(m\_center, m\_targetPos + d);}
+\DoxyCodeLine{01663     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01664   \}}
+\DoxyCodeLine{01665 }
+\DoxyCodeLine{01666   \textcolor{keywordtype}{double} angle =}
+\DoxyCodeLine{01667       std::atan2(pos.y, pos.x) -\/ std::atan2(m\_clickedPos.y, m\_clickedPos.x);}
+\DoxyCodeLine{01668   \textcolor{keywordtype}{double} scale = norm(pos) / norm(m\_clickedPos);}
+\DoxyCodeLine{01669 }
+\DoxyCodeLine{01670   QTransform transform;}
+\DoxyCodeLine{01671   QPointF p = transform.rotateRadians(angle)}
+\DoxyCodeLine{01672                   .scale(scale, scale)}
+\DoxyCodeLine{01673                   .map(QPointF(m\_targetPos.x, m\_targetPos.y));}
+\DoxyCodeLine{01674 }
+\DoxyCodeLine{01675   setValue(m\_center, \mbox{\hyperlink{class_t_point_t}{TPointD}}(p.x(), p.y()));}
+\DoxyCodeLine{01676 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_compass_fx_gadget_a0f8f27776f71e9ac8e3e5f573f94c20d}\label{class_compass_fx_gadget_a0f8f27776f71e9ac8e3e5f573f94c20d}} 
+\index{CompassFxGadget@{CompassFxGadget}!leftButtonUp@{leftButtonUp}}
+\index{leftButtonUp@{leftButtonUp}!CompassFxGadget@{CompassFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonUp()}{leftButtonUp()}}
+{\footnotesize\ttfamily void Compass\+Fx\+Gadget\+::left\+Button\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01680 \{ m\_handle = None; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/edittoolgadgets.\+cpp\end{DoxyCompactItemize}

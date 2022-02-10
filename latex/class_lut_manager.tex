@@ -1,0 +1,395 @@
+\hypertarget{class_lut_manager}{}\doxysection{Lut\+Manager Class Reference}
+\label{class_lut_manager}\index{LutManager@{LutManager}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_lut_manager_a025fcaa1244a49de08989f386404cf8e}{is\+Valid}} ()
+\item 
+int \mbox{\hyperlink{class_lut_manager_a1144b97b68dd87c57f1752e6781fd6b0}{mesh\+Size}} () const
+\item 
+float $\ast$ \mbox{\hyperlink{class_lut_manager_a2bfa05e2d7f75329ffb91c0c2b155960}{data}} () const
+\item 
+bool \mbox{\hyperlink{class_lut_manager_af4507d68b657ced068aaee933a3db018}{load\+Lut\+File}} (const QString \&fp)
+\item 
+void \mbox{\hyperlink{class_lut_manager_a2e8af161335755af38125a761cad1a9c}{convert}} (float \&, float \&, float \&)
+\item 
+void \mbox{\hyperlink{class_lut_manager_a4981f933ffcf400cfd6d5f4211688b28}{convert}} (QColor \&)
+\item 
+void \mbox{\hyperlink{class_lut_manager_a47ff300d361f20c83f455dd4451cf0dc}{convert}} (TPixel32 \&)
+\item 
+QString \& \mbox{\hyperlink{class_lut_manager_a56dc6da4b4fb8910286e01544ece7799}{get\+Monitor\+Name}} () const
+\item 
+void \mbox{\hyperlink{class_lut_manager_ab4ec06df68fb5c651ea882ec1ae9859a}{register\+Calibrator}} (\mbox{\hyperlink{class_lut_calibrator}{Lut\+Calibrator}} $\ast$calibrator)
+\item 
+void \mbox{\hyperlink{class_lut_manager_afc7ee43a33ca63bddc7f0403eebe15a1}{remove\+Calibrator}} (\mbox{\hyperlink{class_lut_calibrator}{Lut\+Calibrator}} $\ast$calibrator)
+\item 
+void \mbox{\hyperlink{class_lut_manager_a8d330e57ab8a4ddaf4d4c1af443447f5}{update}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_lut_manager}{Lut\+Manager}} $\ast$ \mbox{\hyperlink{class_lut_manager_a15768bd26e5eaa978d9ec4c8577f799a}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_lut_manager_a444523abedcead35206551ce7956c430}\label{class_lut_manager_a444523abedcead35206551ce7956c430}} 
+\index{LutManager@{LutManager}!````~LutManager@{$\sim$LutManager}}
+\index{````~LutManager@{$\sim$LutManager}!LutManager@{LutManager}}
+\doxysubsubsection{\texorpdfstring{$\sim$LutManager()}{~LutManager()}}
+{\footnotesize\ttfamily Lut\+Manager\+::$\sim$\+Lut\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00437                         \{}
+\DoxyCodeLine{00438   \textcolor{keywordflow}{if} (m\_lut.data) \textcolor{keyword}{delete}[] m\_lut.data;}
+\DoxyCodeLine{00439 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_lut_manager_a2e8af161335755af38125a761cad1a9c}\label{class_lut_manager_a2e8af161335755af38125a761cad1a9c}} 
+\index{LutManager@{LutManager}!convert@{convert}}
+\index{convert@{convert}!LutManager@{LutManager}}
+\doxysubsubsection{\texorpdfstring{convert()}{convert()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void Lut\+Manager\+::convert (\begin{DoxyParamCaption}\item[{float \&}]{r,  }\item[{float \&}]{g,  }\item[{float \&}]{b }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00554                                                      \{}
+\DoxyCodeLine{00555   \textcolor{keyword}{struct }locals \{}
+\DoxyCodeLine{00556     \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{float} \mbox{\hyperlink{namespacetcg_1_1numeric__ops_a67ec0c3653cded4a00218678558477f5}{lerp}}(\textcolor{keywordtype}{float} val1, \textcolor{keywordtype}{float} val2, \textcolor{keywordtype}{float} ratio) \{}
+\DoxyCodeLine{00557       \textcolor{keywordflow}{return} val1 * (1.0f -\/ ratio) + val2 * ratio;}
+\DoxyCodeLine{00558     \}}
+\DoxyCodeLine{00559     \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{int} getCoord(\textcolor{keywordtype}{int} r, \textcolor{keywordtype}{int} g, \textcolor{keywordtype}{int} b, \textcolor{keywordtype}{int} meshSize) \{}
+\DoxyCodeLine{00560       \textcolor{keywordflow}{return} b * meshSize * meshSize * 3 + g * meshSize * 3 + r * 3;}
+\DoxyCodeLine{00561     \}}
+\DoxyCodeLine{00562   \};}
+\DoxyCodeLine{00563 }
+\DoxyCodeLine{00564   \textcolor{keywordflow}{if} (!m\_isValid) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00565 }
+\DoxyCodeLine{00566   \textcolor{keywordtype}{float} ratio[3];   \textcolor{comment}{// RGB軸}}
+\DoxyCodeLine{00567   \textcolor{keywordtype}{int} index[3][2];  \textcolor{comment}{// rgb インデックス}}
+\DoxyCodeLine{00568   \textcolor{keywordtype}{float} rawVal[3] = \{r, g, b\};}
+\DoxyCodeLine{00569 }
+\DoxyCodeLine{00570   \textcolor{keywordtype}{float} vertex\_color[2][2][2][3];  \textcolor{comment}{//補間用の１ボクセルの頂点色}}
+\DoxyCodeLine{00571 }
+\DoxyCodeLine{00572   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < 3; c++) \{}
+\DoxyCodeLine{00573     \textcolor{keywordtype}{float} val   = rawVal[c] * (float)(m\_lut.meshSize -\/ 1);}
+\DoxyCodeLine{00574     index[c][0] = (int)val;}
+\DoxyCodeLine{00575     \textcolor{comment}{// boundary condition: if rawVal == 1 the value will not be interpolated}}
+\DoxyCodeLine{00576     index[c][1] = (rawVal[c] >= 1.0f) ? index[c][0] : index[c][0] + 1;}
+\DoxyCodeLine{00577     ratio[c]    = val -\/ (float)index[c][0];}
+\DoxyCodeLine{00578   \}}
+\DoxyCodeLine{00579 }
+\DoxyCodeLine{00580   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} rr = 0; rr < 2; rr++)}
+\DoxyCodeLine{00581     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} gg = 0; gg < 2; gg++)}
+\DoxyCodeLine{00582       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} bb = 0; bb < 2; bb++) \{}
+\DoxyCodeLine{00583         \textcolor{keywordtype}{float}* val = \&m\_lut.data[locals::getCoord(}
+\DoxyCodeLine{00584             index[0][rr], index[1][gg], index[2][bb], m\_lut.meshSize)];}
+\DoxyCodeLine{00585         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} chan = 0; chan < 3; chan++, val++)}
+\DoxyCodeLine{00586           vertex\_color[rr][gg][bb][chan] = *val;}
+\DoxyCodeLine{00587       \}}
+\DoxyCodeLine{00588   \textcolor{keywordtype}{float} result[3];}
+\DoxyCodeLine{00589 }
+\DoxyCodeLine{00590   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} chan = 0; chan < 3; chan++) \{}
+\DoxyCodeLine{00591     result[chan] = locals::lerp(}
+\DoxyCodeLine{00592         locals::lerp(locals::lerp(vertex\_color[0][0][0][chan],}
+\DoxyCodeLine{00593                                   vertex\_color[0][0][1][chan], ratio[2]),}
+\DoxyCodeLine{00594                      locals::lerp(vertex\_color[0][1][0][chan],}
+\DoxyCodeLine{00595                                   vertex\_color[0][1][1][chan], ratio[2]),}
+\DoxyCodeLine{00596                      ratio[1]),}
+\DoxyCodeLine{00597         locals::lerp(locals::lerp(vertex\_color[1][0][0][chan],}
+\DoxyCodeLine{00598                                   vertex\_color[1][0][1][chan], ratio[2]),}
+\DoxyCodeLine{00599                      locals::lerp(vertex\_color[1][1][0][chan],}
+\DoxyCodeLine{00600                                   vertex\_color[1][1][1][chan], ratio[2]),}
+\DoxyCodeLine{00601                      ratio[1]),}
+\DoxyCodeLine{00602         ratio[0]);}
+\DoxyCodeLine{00603   \}}
+\DoxyCodeLine{00604 }
+\DoxyCodeLine{00605   r = result[0];}
+\DoxyCodeLine{00606   g = result[1];}
+\DoxyCodeLine{00607   b = result[2];}
+\DoxyCodeLine{00608 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_manager_a4981f933ffcf400cfd6d5f4211688b28}\label{class_lut_manager_a4981f933ffcf400cfd6d5f4211688b28}} 
+\index{LutManager@{LutManager}!convert@{convert}}
+\index{convert@{convert}!LutManager@{LutManager}}
+\doxysubsubsection{\texorpdfstring{convert()}{convert()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void Lut\+Manager\+::convert (\begin{DoxyParamCaption}\item[{QColor \&}]{col }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00612                                     \{}
+\DoxyCodeLine{00613   \textcolor{keywordflow}{if} (!m\_isValid) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00614   \textcolor{keywordtype}{float} r = col.redF();}
+\DoxyCodeLine{00615   \textcolor{keywordtype}{float} g = col.greenF();}
+\DoxyCodeLine{00616   \textcolor{keywordtype}{float} b = col.blueF();}
+\DoxyCodeLine{00617   convert(r, g, b);}
+\DoxyCodeLine{00618   \textcolor{comment}{// 0.5 offset is necessary for converting to 255 grading}}
+\DoxyCodeLine{00619   col = QColor((\textcolor{keywordtype}{int})(r * 255.0 + 0.5), (\textcolor{keywordtype}{int})(g * 255.0 + 0.5),}
+\DoxyCodeLine{00620                (\textcolor{keywordtype}{int})(b * 255.0 + 0.5), col.alpha());}
+\DoxyCodeLine{00621 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_manager_a47ff300d361f20c83f455dd4451cf0dc}\label{class_lut_manager_a47ff300d361f20c83f455dd4451cf0dc}} 
+\index{LutManager@{LutManager}!convert@{convert}}
+\index{convert@{convert}!LutManager@{LutManager}}
+\doxysubsubsection{\texorpdfstring{convert()}{convert()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void Lut\+Manager\+::convert (\begin{DoxyParamCaption}\item[{TPixel32 \&}]{col }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00625                                       \{}
+\DoxyCodeLine{00626   \textcolor{keywordflow}{if} (!m\_isValid) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00627   \textcolor{keywordtype}{float} r = (float)col.r / 255.0;}
+\DoxyCodeLine{00628   \textcolor{keywordtype}{float} g = (\textcolor{keywordtype}{float})col.g / 255.0;}
+\DoxyCodeLine{00629   \textcolor{keywordtype}{float} b = (float)col.b / 255.0;}
+\DoxyCodeLine{00630   convert(r, g, b);}
+\DoxyCodeLine{00631   col = TPixel32((\textcolor{keywordtype}{int})(r * 255.0 + 0.5), (\textcolor{keywordtype}{int})(g * 255.0 + 0.5),}
+\DoxyCodeLine{00632                  (\textcolor{keywordtype}{int})(b * 255.0 + 0.5), col.m);}
+\DoxyCodeLine{00633 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_manager_a2bfa05e2d7f75329ffb91c0c2b155960}\label{class_lut_manager_a2bfa05e2d7f75329ffb91c0c2b155960}} 
+\index{LutManager@{LutManager}!data@{data}}
+\index{data@{data}!LutManager@{LutManager}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}}
+{\footnotesize\ttfamily float $\ast$ Lut\+Manager\+::data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00092 \{ \textcolor{keywordflow}{return} m\_lut.data; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_manager_a56dc6da4b4fb8910286e01544ece7799}\label{class_lut_manager_a56dc6da4b4fb8910286e01544ece7799}} 
+\index{LutManager@{LutManager}!getMonitorName@{getMonitorName}}
+\index{getMonitorName@{getMonitorName}!LutManager@{LutManager}}
+\doxysubsubsection{\texorpdfstring{getMonitorName()}{getMonitorName()}}
+{\footnotesize\ttfamily QString \& Lut\+Manager\+::get\+Monitor\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00443                                           \{}
+\DoxyCodeLine{00444   \textcolor{keyword}{static} QString monitorName;}
+\DoxyCodeLine{00445   \textcolor{keywordflow}{if} (!monitorName.isEmpty()) \textcolor{keywordflow}{return} monitorName;}
+\DoxyCodeLine{00446 }
+\DoxyCodeLine{00447 \textcolor{preprocessor}{\#ifdef WIN32}}
+\DoxyCodeLine{00448   QStringList list = getMonitorNames();}
+\DoxyCodeLine{00449   \textcolor{keywordflow}{if} (list.isEmpty())}
+\DoxyCodeLine{00450     monitorName = \textcolor{stringliteral}{"{}Any Monitor"{}};  \textcolor{comment}{// this should not be translated}}
+\DoxyCodeLine{00451   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00452     monitorName = list.at(0);  \textcolor{comment}{// for now only the first monitor is handled}}
+\DoxyCodeLine{00453 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00454   monitorName = \textcolor{stringliteral}{"{}Any Monitor"{}};  \textcolor{comment}{// this should not be translated}}
+\DoxyCodeLine{00455 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00456 }
+\DoxyCodeLine{00457   \textcolor{keywordflow}{return} monitorName;}
+\DoxyCodeLine{00458 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_manager_a15768bd26e5eaa978d9ec4c8577f799a}\label{class_lut_manager_a15768bd26e5eaa978d9ec4c8577f799a}} 
+\index{LutManager@{LutManager}!instance@{instance}}
+\index{instance@{instance}!LutManager@{LutManager}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_lut_manager}{Lut\+Manager}} $\ast$ Lut\+Manager\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00408                                  \{}
+\DoxyCodeLine{00409   \textcolor{keyword}{static} \mbox{\hyperlink{class_lut_manager}{LutManager}} \_instance;}
+\DoxyCodeLine{00410   \textcolor{keywordflow}{return} \&\_instance;}
+\DoxyCodeLine{00411 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_manager_a025fcaa1244a49de08989f386404cf8e}\label{class_lut_manager_a025fcaa1244a49de08989f386404cf8e}} 
+\index{LutManager@{LutManager}!isValid@{isValid}}
+\index{isValid@{isValid}!LutManager@{LutManager}}
+\doxysubsubsection{\texorpdfstring{isValid()}{isValid()}}
+{\footnotesize\ttfamily bool Lut\+Manager\+::is\+Valid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00090 \{ \textcolor{keywordflow}{return} m\_isValid; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_manager_af4507d68b657ced068aaee933a3db018}\label{class_lut_manager_af4507d68b657ced068aaee933a3db018}} 
+\index{LutManager@{LutManager}!loadLutFile@{loadLutFile}}
+\index{loadLutFile@{loadLutFile}!LutManager@{LutManager}}
+\doxysubsubsection{\texorpdfstring{loadLutFile()}{loadLutFile()}}
+{\footnotesize\ttfamily bool Lut\+Manager\+::load\+Lut\+File (\begin{DoxyParamCaption}\item[{const QString \&}]{fp }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00462                                               \{}
+\DoxyCodeLine{00463   \textcolor{keyword}{struct }locals \{}
+\DoxyCodeLine{00464     \textcolor{comment}{// skip empty or comment lines}}
+\DoxyCodeLine{00465     \textcolor{keyword}{static} \textcolor{keyword}{inline} QString readDataLine(QTextStream\& stream) \{}
+\DoxyCodeLine{00466       \textcolor{keywordflow}{while} (1) \{}
+\DoxyCodeLine{00467         \textcolor{keywordflow}{if} (stream.atEnd()) \textcolor{keywordflow}{return} QString();}
+\DoxyCodeLine{00468         QString ret = stream.readLine();}
+\DoxyCodeLine{00469         \textcolor{keywordflow}{if} (!ret.isEmpty() \&\& ret[0] != QChar(\textcolor{charliteral}{'\#'})) \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{00470       \}}
+\DoxyCodeLine{00471     \}}
+\DoxyCodeLine{00472 }
+\DoxyCodeLine{00473     \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{int} lutCoords(\textcolor{keywordtype}{int} r, \textcolor{keywordtype}{int} g, \textcolor{keywordtype}{int} b, \textcolor{keywordtype}{int} meshSize) \{}
+\DoxyCodeLine{00474       \textcolor{keywordflow}{return} b * meshSize * meshSize * 3 + g * meshSize * 3 + r * 3;}
+\DoxyCodeLine{00475     \}}
+\DoxyCodeLine{00476   \};}
+\DoxyCodeLine{00477 }
+\DoxyCodeLine{00478   QFile file(fp);}
+\DoxyCodeLine{00479   \textcolor{keywordflow}{if} (!file.open(QIODevice::ReadOnly | QIODevice::Text))}
+\DoxyCodeLine{00480     \textcolor{keywordflow}{return} execWarning(QObject::tr(\textcolor{stringliteral}{"{}Failed to Open 3DLUT File."{}}));}
+\DoxyCodeLine{00481 }
+\DoxyCodeLine{00482   QTextStream stream(\&file);}
+\DoxyCodeLine{00483   QString line;}
+\DoxyCodeLine{00484 }
+\DoxyCodeLine{00485   \textcolor{comment}{//-\/-\/-\/-\/ read the 3DLUT files}}
+\DoxyCodeLine{00486 }
+\DoxyCodeLine{00487   \textcolor{comment}{// The first line should start from "{}3DMESH"{} keyword (case sensitive)}}
+\DoxyCodeLine{00488   line = locals::readDataLine(stream);}
+\DoxyCodeLine{00489   \textcolor{keywordflow}{if} (line != \textcolor{stringliteral}{"{}3DMESH"{}}) \{}
+\DoxyCodeLine{00490     file.close();}
+\DoxyCodeLine{00491     \textcolor{keywordflow}{return} execWarning(}
+\DoxyCodeLine{00492         QObject::tr(\textcolor{stringliteral}{"{}Failed to Load 3DLUT File.\(\backslash\)nIt should start with "{}}}
+\DoxyCodeLine{00493                     \textcolor{stringliteral}{"{}\(\backslash\)"{}3DMESH\(\backslash\)"{} keyword."{}}));}
+\DoxyCodeLine{00494   \}}
+\DoxyCodeLine{00495 }
+\DoxyCodeLine{00496   \textcolor{comment}{// The second line is "{}Mesh [Input bit depth] [Output bit depth]"{}}}
+\DoxyCodeLine{00497   \textcolor{comment}{// "{}Mesh"{} is a keyword (case sensitive) }}
+\DoxyCodeLine{00498   line             = locals::readDataLine(stream);}
+\DoxyCodeLine{00499   QStringList list = line.split(\textcolor{stringliteral}{"{} "{}});}
+\DoxyCodeLine{00500   \textcolor{keywordflow}{if} (list.size() != 3 || list.at(0) != \textcolor{stringliteral}{"{}Mesh"{}}) \{}
+\DoxyCodeLine{00501     file.close();}
+\DoxyCodeLine{00502     \textcolor{keywordflow}{return} execWarning(}
+\DoxyCodeLine{00503         QObject::tr(\textcolor{stringliteral}{"{}Failed to Load 3DLUT File.\(\backslash\)nThe second line should be "{}}}
+\DoxyCodeLine{00504                     \textcolor{stringliteral}{"{}\(\backslash\)"{}Mesh [Input bit depth] [Output bit depth]\(\backslash\)"{}"{}}));}
+\DoxyCodeLine{00505   \}}
+\DoxyCodeLine{00506 }
+\DoxyCodeLine{00507   \textcolor{keywordtype}{int} inputBitDepth  = list.at(1).toInt();}
+\DoxyCodeLine{00508   \textcolor{keywordtype}{int} outputBitDepth = list.at(2).toInt();}
+\DoxyCodeLine{00509 }
+\DoxyCodeLine{00510   m\_lut.meshSize = (int)pow(2.0, inputBitDepth) + 1;}
+\DoxyCodeLine{00511 }
+\DoxyCodeLine{00512   \textcolor{keywordtype}{float} maxValue = pow(2.0, outputBitDepth) -\/ 1.0f;}
+\DoxyCodeLine{00513 }
+\DoxyCodeLine{00514   \textcolor{comment}{// The third line is corrections of values at each LUT grid}}
+\DoxyCodeLine{00515   line = locals::readDataLine(stream);}
+\DoxyCodeLine{00516   list = line.split(\textcolor{stringliteral}{"{} "{}}, QString::SkipEmptyParts);}
+\DoxyCodeLine{00517   \textcolor{keywordflow}{if} (list.size() != m\_lut.meshSize) \{}
+\DoxyCodeLine{00518     file.close();}
+\DoxyCodeLine{00519     \textcolor{keywordflow}{return} execWarning(QObject::tr(\textcolor{stringliteral}{"{}Failed to Load 3DLUT File."{}}));}
+\DoxyCodeLine{00520   \}}
+\DoxyCodeLine{00521 }
+\DoxyCodeLine{00522   \textcolor{keywordflow}{if} (m\_lut.data) \textcolor{keyword}{delete}[] m\_lut.data;}
+\DoxyCodeLine{00523   m\_lut.data = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[m\_lut.meshSize * m\_lut.meshSize * m\_lut.meshSize * 3];}
+\DoxyCodeLine{00524 }
+\DoxyCodeLine{00525   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} k = 0; k < m\_lut.meshSize; ++k)  \textcolor{comment}{// r}}
+\DoxyCodeLine{00526   \{}
+\DoxyCodeLine{00527     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < m\_lut.meshSize; ++j)  \textcolor{comment}{// g}}
+\DoxyCodeLine{00528     \{}
+\DoxyCodeLine{00529       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_lut.meshSize; ++i)  \textcolor{comment}{// b}}
+\DoxyCodeLine{00530       \{}
+\DoxyCodeLine{00531         line = locals::readDataLine(stream);}
+\DoxyCodeLine{00532         list = line.split(\textcolor{stringliteral}{"{} "{}}, QString::SkipEmptyParts);}
+\DoxyCodeLine{00533         \textcolor{keywordflow}{if} (list.size() != 3) \{}
+\DoxyCodeLine{00534           file.close();}
+\DoxyCodeLine{00535           \textcolor{keyword}{delete}[] m\_lut.data;}
+\DoxyCodeLine{00536           \textcolor{keywordflow}{return} execWarning(QObject::tr(\textcolor{stringliteral}{"{}Failed to Load 3DLUT File."{}}));}
+\DoxyCodeLine{00537         \}}
+\DoxyCodeLine{00538         \textcolor{keywordtype}{float}* lut = m\_lut.data + locals::lutCoords(k, j, i, m\_lut.meshSize);}
+\DoxyCodeLine{00539         *lut       = (float)(list.at(0).toInt()) / maxValue;}
+\DoxyCodeLine{00540         lut++;}
+\DoxyCodeLine{00541         *lut = (float)(list.at(1).toInt()) / maxValue;}
+\DoxyCodeLine{00542         lut++;}
+\DoxyCodeLine{00543         *lut = (float)(list.at(2).toInt()) / maxValue;}
+\DoxyCodeLine{00544       \}}
+\DoxyCodeLine{00545     \}}
+\DoxyCodeLine{00546   \}}
+\DoxyCodeLine{00547 }
+\DoxyCodeLine{00548   file.close();}
+\DoxyCodeLine{00549   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00550 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_manager_a1144b97b68dd87c57f1752e6781fd6b0}\label{class_lut_manager_a1144b97b68dd87c57f1752e6781fd6b0}} 
+\index{LutManager@{LutManager}!meshSize@{meshSize}}
+\index{meshSize@{meshSize}!LutManager@{LutManager}}
+\doxysubsubsection{\texorpdfstring{meshSize()}{meshSize()}}
+{\footnotesize\ttfamily int Lut\+Manager\+::mesh\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00091 \{ \textcolor{keywordflow}{return} m\_lut.meshSize; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_manager_ab4ec06df68fb5c651ea882ec1ae9859a}\label{class_lut_manager_ab4ec06df68fb5c651ea882ec1ae9859a}} 
+\index{LutManager@{LutManager}!registerCalibrator@{registerCalibrator}}
+\index{registerCalibrator@{registerCalibrator}!LutManager@{LutManager}}
+\doxysubsubsection{\texorpdfstring{registerCalibrator()}{registerCalibrator()}}
+{\footnotesize\ttfamily void Lut\+Manager\+::register\+Calibrator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_lut_calibrator}{Lut\+Calibrator}} $\ast$}]{calibrator }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00637                                                              \{}
+\DoxyCodeLine{00638   assert(!m\_calibrators.contains(calibrator));}
+\DoxyCodeLine{00639   m\_calibrators.insert(calibrator);}
+\DoxyCodeLine{00640 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_manager_afc7ee43a33ca63bddc7f0403eebe15a1}\label{class_lut_manager_afc7ee43a33ca63bddc7f0403eebe15a1}} 
+\index{LutManager@{LutManager}!removeCalibrator@{removeCalibrator}}
+\index{removeCalibrator@{removeCalibrator}!LutManager@{LutManager}}
+\doxysubsubsection{\texorpdfstring{removeCalibrator()}{removeCalibrator()}}
+{\footnotesize\ttfamily void Lut\+Manager\+::remove\+Calibrator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_lut_calibrator}{Lut\+Calibrator}} $\ast$}]{calibrator }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00644                                                            \{}
+\DoxyCodeLine{00645   assert(m\_calibrators.contains(calibrator));}
+\DoxyCodeLine{00646   m\_calibrators.remove(calibrator);}
+\DoxyCodeLine{00647 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lut_manager_a8d330e57ab8a4ddaf4d4c1af443447f5}\label{class_lut_manager_a8d330e57ab8a4ddaf4d4c1af443447f5}} 
+\index{LutManager@{LutManager}!update@{update}}
+\index{update@{update}!LutManager@{LutManager}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Lut\+Manager\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00651                         \{}
+\DoxyCodeLine{00652   m\_isValid           = \textcolor{keyword}{false};}
+\DoxyCodeLine{00653   \textcolor{keywordtype}{bool} textureChanged = \textcolor{keyword}{false};}
+\DoxyCodeLine{00654   \textcolor{keywordflow}{if} (Preferences::instance()-\/>isColorCalibrationEnabled()) \{}
+\DoxyCodeLine{00655     \textcolor{comment}{// obtain current monitor name}}
+\DoxyCodeLine{00656     QString monitorName = getMonitorName();}
+\DoxyCodeLine{00657     \textcolor{comment}{// obtain 3dlut path associated to the monitor name}}
+\DoxyCodeLine{00658     QString lutPath =}
+\DoxyCodeLine{00659         Preferences::instance()-\/>getColorCalibrationLutPath(monitorName);}
+\DoxyCodeLine{00660     \textcolor{keywordflow}{if} (m\_currentLutPath == lutPath)}
+\DoxyCodeLine{00661       m\_isValid = \textcolor{keyword}{true};}
+\DoxyCodeLine{00662     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (loadLutFile(lutPath)) \{}
+\DoxyCodeLine{00663       m\_isValid        = \textcolor{keyword}{true};}
+\DoxyCodeLine{00664       m\_currentLutPath = lutPath;}
+\DoxyCodeLine{00665       textureChanged   = \textcolor{keyword}{true};}
+\DoxyCodeLine{00666     \}}
+\DoxyCodeLine{00667   \}}
+\DoxyCodeLine{00668 }
+\DoxyCodeLine{00669   \textcolor{comment}{// update textures for all calibrators}}
+\DoxyCodeLine{00670   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} calibrator : m\_calibrators) calibrator-\/>update(textureChanged);}
+\DoxyCodeLine{00671 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/lutcalibrator.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/lutcalibrator.\+cpp\end{DoxyCompactItemize}

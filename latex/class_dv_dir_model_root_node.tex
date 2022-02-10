@@ -1,0 +1,295 @@
+\hypertarget{class_dv_dir_model_root_node}{}\doxysection{Dv\+Dir\+Model\+Root\+Node Class Reference}
+\label{class_dv_dir_model_root_node}\index{DvDirModelRootNode@{DvDirModelRootNode}}
+Inheritance diagram for Dv\+Dir\+Model\+Root\+Node\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_dv_dir_model_root_node}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_dv_dir_model_root_node_af755a05795d4120f2921cf8b2554b59b}{refresh\+Children}} () override
+\item 
+\mbox{\hyperlink{class_dv_dir_model_node}{Dv\+Dir\+Model\+Node}} $\ast$ \mbox{\hyperlink{class_dv_dir_model_root_node_a7716d9defd4a3983112e6bf9b054c397}{get\+Node\+By\+Path}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path) override
+\item 
+void \mbox{\hyperlink{class_dv_dir_model_root_node_a3ba4f20de3e257b28c02616e3d21059a}{set\+Scene\+Location}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path)
+\item 
+void \mbox{\hyperlink{class_dv_dir_model_root_node_a2c83a7b3ef5d61454a9484f71efc4c32}{update\+Scene\+Folder\+Node\+Visibility}} (bool force\+Hide=false)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_dv_dir_model_root_node_a16fb7c53cf4b3b92978a0d36e58f8b83}\label{class_dv_dir_model_root_node_a16fb7c53cf4b3b92978a0d36e58f8b83}} 
+\index{DvDirModelRootNode@{DvDirModelRootNode}!DvDirModelRootNode@{DvDirModelRootNode}}
+\index{DvDirModelRootNode@{DvDirModelRootNode}!DvDirModelRootNode@{DvDirModelRootNode}}
+\doxysubsubsection{\texorpdfstring{DvDirModelRootNode()}{DvDirModelRootNode()}}
+{\footnotesize\ttfamily Dv\+Dir\+Model\+Root\+Node\+::\+Dv\+Dir\+Model\+Root\+Node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01028     : \mbox{\hyperlink{class_dv_dir_model_node}{DvDirModelNode}}(0, L\textcolor{stringliteral}{"{}Root"{}})}
+\DoxyCodeLine{01029     , m\_myComputerNode(0)}
+\DoxyCodeLine{01030     , m\_networkNode(0)}
+\DoxyCodeLine{01031     , m\_sandboxProjectNode(0) \{}
+\DoxyCodeLine{01032   m\_nodeType = \textcolor{stringliteral}{"{}Root"{}};}
+\DoxyCodeLine{01033 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_dv_dir_model_root_node_a7716d9defd4a3983112e6bf9b054c397}\label{class_dv_dir_model_root_node_a7716d9defd4a3983112e6bf9b054c397}} 
+\index{DvDirModelRootNode@{DvDirModelRootNode}!getNodeByPath@{getNodeByPath}}
+\index{getNodeByPath@{getNodeByPath}!DvDirModelRootNode@{DvDirModelRootNode}}
+\doxysubsubsection{\texorpdfstring{getNodeByPath()}{getNodeByPath()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_dv_dir_model_node}{Dv\+Dir\+Model\+Node}} $\ast$ Dv\+Dir\+Model\+Root\+Node\+::get\+Node\+By\+Path (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_dv_dir_model_node}{Dv\+Dir\+Model\+Node}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01123                                                                        \{}
+\DoxyCodeLine{01124   \textcolor{comment}{// Check first for version control nodes}}
+\DoxyCodeLine{01125   \mbox{\hyperlink{class_dv_dir_model_node}{DvDirModelNode}} *node = 0;}
+\DoxyCodeLine{01126   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{01127 }
+\DoxyCodeLine{01128   \textcolor{comment}{// search in \#1 the project folders, \#2 sandbox, \#3 other folders in file}}
+\DoxyCodeLine{01129   \textcolor{comment}{// system}}
+\DoxyCodeLine{01130 }
+\DoxyCodeLine{01131   \textcolor{comment}{// check for the scene folder if it is the first priority}}
+\DoxyCodeLine{01132   Preferences::PathAliasPriority priority =}
+\DoxyCodeLine{01133       Preferences::instance()-\/>getPathAliasPriority();}
+\DoxyCodeLine{01134   \textcolor{keywordflow}{if} (priority == Preferences::SceneFolderAlias \&\&}
+\DoxyCodeLine{01135       !m\_sceneFolderNode-\/>getPath().isEmpty()) \{}
+\DoxyCodeLine{01136     node = m\_sceneFolderNode-\/>getNodeByPath(path);}
+\DoxyCodeLine{01137     \textcolor{keywordflow}{if} (node) \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{01138   \}}
+\DoxyCodeLine{01139 }
+\DoxyCodeLine{01140   \textcolor{comment}{// path could be a project, under some project root}}
+\DoxyCodeLine{01141   \textcolor{keywordflow}{for} (i = 0; i < (int)m\_projectRootNodes.size(); i++) \{}
+\DoxyCodeLine{01142     node = m\_projectRootNodes[i]-\/>getNodeByPath(path);}
+\DoxyCodeLine{01143     \textcolor{keywordflow}{if} (node) \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{01144     \textcolor{comment}{// search in the project folders}}
+\DoxyCodeLine{01145     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < m\_projectRootNodes[i]-\/>getChildCount(); j++) \{}
+\DoxyCodeLine{01146       \mbox{\hyperlink{class_dv_dir_model_project_node}{DvDirModelProjectNode}} *projectNode =}
+\DoxyCodeLine{01147           \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_dv_dir_model_project_node}{DvDirModelProjectNode}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{01148               m\_projectRootNodes[i]-\/>getChild(j));}
+\DoxyCodeLine{01149       \textcolor{keywordflow}{if} (projectNode) \{}
+\DoxyCodeLine{01150         \textcolor{comment}{// for the normal folder in the project folder}}
+\DoxyCodeLine{01151         node = projectNode-\/>getNodeByPath(path);}
+\DoxyCodeLine{01152         \textcolor{keywordflow}{if} (node) \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{01153 }
+\DoxyCodeLine{01154         \textcolor{keywordflow}{if} (projectNode-\/>isCurrent()) \{}
+\DoxyCodeLine{01155           \textcolor{comment}{// for the aliases in the project folder ("{}+drawings"{} etc.)}}
+\DoxyCodeLine{01156           \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} k = 0; k < projectNode-\/>getChildCount(); k++) \{}
+\DoxyCodeLine{01157             node = projectNode-\/>getChild(k)-\/>getNodeByPath(path);}
+\DoxyCodeLine{01158             \textcolor{keywordflow}{if} (node) \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{01159           \}}
+\DoxyCodeLine{01160         \}}
+\DoxyCodeLine{01161       \} \textcolor{keywordflow}{else}  \textcolor{comment}{// for the normal folder in the project root}}
+\DoxyCodeLine{01162       \{}
+\DoxyCodeLine{01163         node = m\_projectRootNodes[i]-\/>getChild(j)-\/>getNodeByPath(path);}
+\DoxyCodeLine{01164         \textcolor{keywordflow}{if} (node) \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{01165       \}}
+\DoxyCodeLine{01166     \}}
+\DoxyCodeLine{01167   \}}
+\DoxyCodeLine{01168 }
+\DoxyCodeLine{01169   \textcolor{comment}{// it could be on a repository, under version control}}
+\DoxyCodeLine{01170   \textcolor{keywordflow}{for} (i = 0; i < (int)m\_versionControlNodes.size(); i++) \{}
+\DoxyCodeLine{01171     node = m\_versionControlNodes[i]-\/>getNodeByPath(path);}
+\DoxyCodeLine{01172     \textcolor{keywordflow}{if} (node) \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{01173   \}}
+\DoxyCodeLine{01174 }
+\DoxyCodeLine{01175   \textcolor{comment}{// or it could be the sandbox project or in the sandbox project}}
+\DoxyCodeLine{01176   \textcolor{keywordflow}{if} (m\_sandboxProjectNode \&\& m\_sandboxProjectNode-\/>getPath() == path)}
+\DoxyCodeLine{01177     \textcolor{keywordflow}{return} m\_sandboxProjectNode;}
+\DoxyCodeLine{01178   \textcolor{keywordflow}{if} (m\_sandboxProjectNode) \{}
+\DoxyCodeLine{01179     \textcolor{keywordflow}{for} (i = 0; i < m\_sandboxProjectNode-\/>getChildCount(); i++) \{}
+\DoxyCodeLine{01180       \mbox{\hyperlink{class_dv_dir_model_node}{DvDirModelNode}} *node =}
+\DoxyCodeLine{01181           m\_sandboxProjectNode-\/>getChild(i)-\/>getNodeByPath(path);}
+\DoxyCodeLine{01182       \textcolor{keywordflow}{if} (node) \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{01183     \}}
+\DoxyCodeLine{01184   \}}
+\DoxyCodeLine{01185 }
+\DoxyCodeLine{01186   \textcolor{comment}{// check for the scene folder if it is the second priority}}
+\DoxyCodeLine{01187   \textcolor{keywordflow}{if} (priority == Preferences::ProjectFolderAliases \&\&}
+\DoxyCodeLine{01188       !m\_sceneFolderNode-\/>getPath().isEmpty()) \{}
+\DoxyCodeLine{01189     node = m\_sceneFolderNode-\/>getNodeByPath(path);}
+\DoxyCodeLine{01190     \textcolor{keywordflow}{if} (node) \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{01191   \}}
+\DoxyCodeLine{01192 }
+\DoxyCodeLine{01193   \textcolor{comment}{// check for the special folders (My Documents / Desktop / Library)}}
+\DoxyCodeLine{01194   \textcolor{keywordflow}{for} (\mbox{\hyperlink{class_dv_dir_model_special_file_folder_node}{DvDirModelSpecialFileFolderNode}} *specialNode : m\_specialNodes) \{}
+\DoxyCodeLine{01195     \mbox{\hyperlink{class_dv_dir_model_node}{DvDirModelNode}} *node = specialNode-\/>getNodeByPath(path);}
+\DoxyCodeLine{01196     \textcolor{keywordflow}{if} (node) \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{01197   \}}
+\DoxyCodeLine{01198 }
+\DoxyCodeLine{01199   \textcolor{comment}{// it could be a regular folder, somewhere in the file system}}
+\DoxyCodeLine{01200   \textcolor{keywordflow}{if} (m\_myComputerNode) \{}
+\DoxyCodeLine{01201     \textcolor{keywordflow}{for} (i = 0; i < m\_myComputerNode-\/>getChildCount(); i++) \{}
+\DoxyCodeLine{01202       \mbox{\hyperlink{class_dv_dir_model_node}{DvDirModelNode}} *node = m\_myComputerNode-\/>getChild(i)-\/>getNodeByPath(path);}
+\DoxyCodeLine{01203       \textcolor{keywordflow}{if} (node) \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{01204     \}}
+\DoxyCodeLine{01205   \}}
+\DoxyCodeLine{01206 }
+\DoxyCodeLine{01207   \textcolor{comment}{// it could be a network folder}}
+\DoxyCodeLine{01208   \textcolor{keywordflow}{if} (m\_networkNode) \{}
+\DoxyCodeLine{01209     \textcolor{keywordflow}{for} (i = 0; i < m\_networkNode-\/>getChildCount(); i++) \{}
+\DoxyCodeLine{01210       \mbox{\hyperlink{class_dv_dir_model_node}{DvDirModelNode}} *node = m\_networkNode-\/>getChild(i)-\/>getNodeByPath(path);}
+\DoxyCodeLine{01211       \textcolor{keywordflow}{if} (node) \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{01212     \}}
+\DoxyCodeLine{01213   \}}
+\DoxyCodeLine{01214 }
+\DoxyCodeLine{01215   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{01216 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_dv_dir_model_root_node_af755a05795d4120f2921cf8b2554b59b}\label{class_dv_dir_model_root_node_af755a05795d4120f2921cf8b2554b59b}} 
+\index{DvDirModelRootNode@{DvDirModelRootNode}!refreshChildren@{refreshChildren}}
+\index{refreshChildren@{refreshChildren}!DvDirModelRootNode@{DvDirModelRootNode}}
+\doxysubsubsection{\texorpdfstring{refreshChildren()}{refreshChildren()}}
+{\footnotesize\ttfamily void Dv\+Dir\+Model\+Root\+Node\+::refresh\+Children (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_dv_dir_model_node}{Dv\+Dir\+Model\+Node}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01045                                          \{}
+\DoxyCodeLine{01046   m\_childrenValid = \textcolor{keyword}{true};}
+\DoxyCodeLine{01047   \textcolor{keywordflow}{if} (m\_children.empty()) \{}
+\DoxyCodeLine{01048     addChild(m\_myComputerNode = \textcolor{keyword}{new} \mbox{\hyperlink{class_dv_dir_model_my_computer_node}{DvDirModelMyComputerNode}}(\textcolor{keyword}{this}));}
+\DoxyCodeLine{01049 }
+\DoxyCodeLine{01050 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{01051     addChild(m\_networkNode = \textcolor{keyword}{new} \mbox{\hyperlink{class_dv_dir_model_network_node}{DvDirModelNetworkNode}}(\textcolor{keyword}{this}));}
+\DoxyCodeLine{01052 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01053     \mbox{\hyperlink{class_dv_dir_model_special_file_folder_node}{DvDirModelSpecialFileFolderNode}} *child;}
+\DoxyCodeLine{01054     child = \textcolor{keyword}{new} \mbox{\hyperlink{class_dv_dir_model_special_file_folder_node}{DvDirModelSpecialFileFolderNode}}(\textcolor{keyword}{this}, L\textcolor{stringliteral}{"{}My Documents"{}},}
+\DoxyCodeLine{01055                                                 getMyDocumentsPath());}
+\DoxyCodeLine{01056     child-\/>setPixmap(recolorPixmap(}
+\DoxyCodeLine{01057         svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}actions/16/my\_documents.svg"{}}))));}
+\DoxyCodeLine{01058     m\_specialNodes.push\_back(child);}
+\DoxyCodeLine{01059     addChild(child);}
+\DoxyCodeLine{01060 }
+\DoxyCodeLine{01061     child =}
+\DoxyCodeLine{01062         \textcolor{keyword}{new} \mbox{\hyperlink{class_dv_dir_model_special_file_folder_node}{DvDirModelSpecialFileFolderNode}}(\textcolor{keyword}{this}, L\textcolor{stringliteral}{"{}Desktop"{}}, getDesktopPath());}
+\DoxyCodeLine{01063     child-\/>setPixmap(}
+\DoxyCodeLine{01064         recolorPixmap(svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}actions/16/desktop.svg"{}}))));}
+\DoxyCodeLine{01065     m\_specialNodes.push\_back(child);}
+\DoxyCodeLine{01066     addChild(child);}
+\DoxyCodeLine{01067 }
+\DoxyCodeLine{01068     child = \textcolor{keyword}{new} \mbox{\hyperlink{class_dv_dir_model_special_file_folder_node}{DvDirModelSpecialFileFolderNode}}(}
+\DoxyCodeLine{01069         \textcolor{keyword}{this}, L\textcolor{stringliteral}{"{}Library"{}}, ToonzFolder::getLibraryFolder());}
+\DoxyCodeLine{01070     child-\/>setPixmap(}
+\DoxyCodeLine{01071         recolorPixmap(svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}actions/16/library.svg"{}}))));}
+\DoxyCodeLine{01072     m\_specialNodes.push\_back(child);}
+\DoxyCodeLine{01073     addChild(child);}
+\DoxyCodeLine{01074 }
+\DoxyCodeLine{01075     addChild(\textcolor{keyword}{new} \mbox{\hyperlink{class_dv_dir_model_history_node}{DvDirModelHistoryNode}}(\textcolor{keyword}{this}));}
+\DoxyCodeLine{01076 }
+\DoxyCodeLine{01077     \mbox{\hyperlink{class_t_project_manager}{TProjectManager}} *pm = \mbox{\hyperlink{class_t_project_manager_a150ca0d6e2eb171b8117b0c5f03dbfad}{TProjectManager::instance}}();}
+\DoxyCodeLine{01078     std::vector<TFilePath> projectRoots;}
+\DoxyCodeLine{01079     pm-\/>getProjectRoots(projectRoots);}
+\DoxyCodeLine{01080 }
+\DoxyCodeLine{01081     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{01082     \textcolor{keywordflow}{for} (i = 0; i < (int)projectRoots.size(); i++) \{}
+\DoxyCodeLine{01083       \mbox{\hyperlink{class_t_file_path}{TFilePath}} projectRoot = projectRoots[i];}
+\DoxyCodeLine{01084       std::wstring roothDir = projectRoot.getWideString();}
+\DoxyCodeLine{01085       \mbox{\hyperlink{class_dv_dir_model_special_file_folder_node}{DvDirModelSpecialFileFolderNode}} *projectRootNode =}
+\DoxyCodeLine{01086           \textcolor{keyword}{new} \mbox{\hyperlink{class_dv_dir_model_special_file_folder_node}{DvDirModelSpecialFileFolderNode}}(}
+\DoxyCodeLine{01087               \textcolor{keyword}{this}, L\textcolor{stringliteral}{"{}Project root ("{}} + roothDir + L\textcolor{stringliteral}{"{})"{}}, projectRoot);}
+\DoxyCodeLine{01088       projectRootNode-\/>setPixmap(QPixmap(recolorPixmap(svgToPixmap(}
+\DoxyCodeLine{01089           getIconThemePath(\textcolor{stringliteral}{"{}actions/18/folder\_project\_root.svg"{}})))));}
+\DoxyCodeLine{01090       m\_projectRootNodes.push\_back(projectRootNode);}
+\DoxyCodeLine{01091       addChild(projectRootNode);}
+\DoxyCodeLine{01092     \}}
+\DoxyCodeLine{01093 }
+\DoxyCodeLine{01094     \mbox{\hyperlink{class_t_file_path}{TFilePath}} sandboxProjectPath = pm-\/>\mbox{\hyperlink{class_t_project_manager_a0d1225a791e21a77b9c7aba42146a122}{getSandboxProjectFolder}}();}
+\DoxyCodeLine{01095     m\_sandboxProjectNode = \textcolor{keyword}{new} \mbox{\hyperlink{class_dv_dir_model_project_node}{DvDirModelProjectNode}}(\textcolor{keyword}{this}, sandboxProjectPath);}
+\DoxyCodeLine{01096     addChild(m\_sandboxProjectNode);}
+\DoxyCodeLine{01097 }
+\DoxyCodeLine{01098     \textcolor{comment}{// SVN Repositories}}
+\DoxyCodeLine{01099     QList<SVNRepository> repositories =}
+\DoxyCodeLine{01100         VersionControl::instance()-\/>getRepositories();}
+\DoxyCodeLine{01101     \textcolor{keywordtype}{int} count = repositories.size();}
+\DoxyCodeLine{01102     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; i++) \{}
+\DoxyCodeLine{01103       \mbox{\hyperlink{struct_s_v_n_repository}{SVNRepository}} repo                = repositories.at(i);}
+\DoxyCodeLine{01104       \mbox{\hyperlink{class_dv_dir_version_control_root_node}{DvDirVersionControlRootNode}} *node = \textcolor{keyword}{new} \mbox{\hyperlink{class_dv_dir_version_control_root_node}{DvDirVersionControlRootNode}}(}
+\DoxyCodeLine{01105           \textcolor{keyword}{this}, repo.m\_name.toStdWString(),}
+\DoxyCodeLine{01106           \mbox{\hyperlink{class_t_file_path}{TFilePath}}(repo.m\_localPath.toStdWString()));}
+\DoxyCodeLine{01107       node-\/>setRepositoryPath(repo.m\_repoPath.toStdWString());}
+\DoxyCodeLine{01108       node-\/>setLocalPath(repo.m\_localPath.toStdWString());}
+\DoxyCodeLine{01109       node-\/>setUserName(repo.m\_username.toStdWString());}
+\DoxyCodeLine{01110       node-\/>setPassword(repo.m\_password.toStdWString());}
+\DoxyCodeLine{01111       m\_versionControlNodes.push\_back(node);}
+\DoxyCodeLine{01112       addChild(node);}
+\DoxyCodeLine{01113     \}}
+\DoxyCodeLine{01114 }
+\DoxyCodeLine{01115     \textcolor{comment}{// scenefolder node (access to the parent folder of the current scene file)}}
+\DoxyCodeLine{01116     m\_sceneFolderNode =}
+\DoxyCodeLine{01117         \textcolor{keyword}{new} \mbox{\hyperlink{class_dv_dir_model_scene_folder_node}{DvDirModelSceneFolderNode}}(\textcolor{keyword}{this}, L\textcolor{stringliteral}{"{}Scene Folder"{}}, \mbox{\hyperlink{class_t_file_path}{TFilePath}}());}
+\DoxyCodeLine{01118     m\_sceneFolderNode-\/>setPixmap(QPixmap(\textcolor{stringliteral}{"{}:Resources/clapboard.png"{}}));}
+\DoxyCodeLine{01119   \}}
+\DoxyCodeLine{01120 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_dv_dir_model_root_node_a3ba4f20de3e257b28c02616e3d21059a}\label{class_dv_dir_model_root_node_a3ba4f20de3e257b28c02616e3d21059a}} 
+\index{DvDirModelRootNode@{DvDirModelRootNode}!setSceneLocation@{setSceneLocation}}
+\index{setSceneLocation@{setSceneLocation}!DvDirModelRootNode@{DvDirModelRootNode}}
+\doxysubsubsection{\texorpdfstring{setSceneLocation()}{setSceneLocation()}}
+{\footnotesize\ttfamily void Dv\+Dir\+Model\+Root\+Node\+::set\+Scene\+Location (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01221                                                                \{}
+\DoxyCodeLine{01222   \textcolor{keywordflow}{if} (path == m\_sceneFolderNode-\/>getPath()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01223   m\_sceneFolderNode-\/>setPath(path);}
+\DoxyCodeLine{01224 }
+\DoxyCodeLine{01225   Preferences::PathAliasPriority priority =}
+\DoxyCodeLine{01226       Preferences::instance()-\/>getPathAliasPriority();}
+\DoxyCodeLine{01227   \textcolor{keywordflow}{if} (priority == Preferences::ProjectFolderOnly) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01228 }
+\DoxyCodeLine{01229   updateSceneFolderNodeVisibility();}
+\DoxyCodeLine{01230 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_dv_dir_model_root_node_a2c83a7b3ef5d61454a9484f71efc4c32}\label{class_dv_dir_model_root_node_a2c83a7b3ef5d61454a9484f71efc4c32}} 
+\index{DvDirModelRootNode@{DvDirModelRootNode}!updateSceneFolderNodeVisibility@{updateSceneFolderNodeVisibility}}
+\index{updateSceneFolderNodeVisibility@{updateSceneFolderNodeVisibility}!DvDirModelRootNode@{DvDirModelRootNode}}
+\doxysubsubsection{\texorpdfstring{updateSceneFolderNodeVisibility()}{updateSceneFolderNodeVisibility()}}
+{\footnotesize\ttfamily void Dv\+Dir\+Model\+Root\+Node\+::update\+Scene\+Folder\+Node\+Visibility (\begin{DoxyParamCaption}\item[{bool}]{force\+Hide = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01234                                                                        \{}
+\DoxyCodeLine{01235   \textcolor{keywordtype}{bool} show = (forceHide) ? \textcolor{keyword}{false} : !m\_sceneFolderNode-\/>getPath().isEmpty();}
+\DoxyCodeLine{01236   \textcolor{keywordflow}{if} (show \&\& m\_sceneFolderNode-\/>getRow() == -\/1) \{}
+\DoxyCodeLine{01237     \textcolor{keywordtype}{int} row = getChildCount();}
+\DoxyCodeLine{01238     DvDirModel::instance()-\/>notifyBeginInsertRows(QModelIndex(), row, row + 1);}
+\DoxyCodeLine{01239     addChild(m\_sceneFolderNode);}
+\DoxyCodeLine{01240     DvDirModel::instance()-\/>notifyEndInsertRows();}
+\DoxyCodeLine{01241   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!show \&\& m\_sceneFolderNode-\/>getRow() != -\/1) \{}
+\DoxyCodeLine{01242     \textcolor{keywordtype}{int} row = m\_sceneFolderNode-\/>getRow();}
+\DoxyCodeLine{01243     DvDirModel::instance()-\/>notifyBeginRemoveRows(QModelIndex(), row, row + 1);}
+\DoxyCodeLine{01244     \textcolor{comment}{// remove the last child of the root node}}
+\DoxyCodeLine{01245     m\_children.erase(m\_children.begin() + row, m\_children.begin() + row + 1);}
+\DoxyCodeLine{01246     DvDirModel::instance()-\/>notifyEndRemoveRows();}
+\DoxyCodeLine{01247     m\_sceneFolderNode-\/>setRow(-\/1);}
+\DoxyCodeLine{01248   \}}
+\DoxyCodeLine{01249 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowsermodel.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowsermodel.\+cpp\end{DoxyCompactItemize}

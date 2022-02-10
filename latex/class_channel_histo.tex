@@ -1,0 +1,170 @@
+\hypertarget{class_channel_histo}{}\doxysection{Channel\+Histo Class Reference}
+\label{class_channel_histo}\index{ChannelHisto@{ChannelHisto}}
+Inheritance diagram for Channel\+Histo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_channel_histo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_channel_histo_a8a33a9bc019ce9ea8d660133ab8f5549}{Channel\+Histo}} (int channel\+Index, bool $\ast$show\+Compare\+Ptr, QWidget $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_channel_histo_a3e73b7b56ecd7d80f7ef24d250ce7603}{reflesh\+Value}} (int $\ast$buf, bool is\+Comp=false)
+\item 
+void \mbox{\hyperlink{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}{show\+Current\+Channel\+Value}} (int val)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_channel_histo_a4bd1917f35600de8d89533bdbf2a4af5}{on\+Show\+Alpha\+Button\+Toggled}} (bool visible)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_channel_histo_a8a33a9bc019ce9ea8d660133ab8f5549}\label{class_channel_histo_a8a33a9bc019ce9ea8d660133ab8f5549}} 
+\index{ChannelHisto@{ChannelHisto}!ChannelHisto@{ChannelHisto}}
+\index{ChannelHisto@{ChannelHisto}!ChannelHisto@{ChannelHisto}}
+\doxysubsubsection{\texorpdfstring{ChannelHisto()}{ChannelHisto()}}
+{\footnotesize\ttfamily Channel\+Histo\+::\+Channel\+Histo (\begin{DoxyParamCaption}\item[{int}]{channel\+Index,  }\item[{bool $\ast$}]{show\+Compare\+Ptr,  }\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00257                                             \{}
+\DoxyCodeLine{00258   QString label;}
+\DoxyCodeLine{00259   QColor color;}
+\DoxyCodeLine{00260   \textcolor{keywordflow}{switch} (channelIndex) \{}
+\DoxyCodeLine{00261   \textcolor{keywordflow}{case} 0:}
+\DoxyCodeLine{00262     label = tr(\textcolor{stringliteral}{"{}Red"{}});}
+\DoxyCodeLine{00263     color = Qt::red;}
+\DoxyCodeLine{00264     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00265   \textcolor{keywordflow}{case} 1:}
+\DoxyCodeLine{00266     label = tr(\textcolor{stringliteral}{"{}Green"{}});}
+\DoxyCodeLine{00267     color = Qt::green;}
+\DoxyCodeLine{00268     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00269   \textcolor{keywordflow}{case} 2:}
+\DoxyCodeLine{00270     label = tr(\textcolor{stringliteral}{"{}Blue"{}});}
+\DoxyCodeLine{00271     color = Qt::blue;}
+\DoxyCodeLine{00272     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00273   \textcolor{keywordflow}{case} 3:}
+\DoxyCodeLine{00274     label = tr(\textcolor{stringliteral}{"{}Alpha"{}});}
+\DoxyCodeLine{00275     color = QColor(0, 0, 0, 0);}
+\DoxyCodeLine{00276     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00277   \textcolor{keywordflow}{case} 4:}
+\DoxyCodeLine{00278     label = tr(\textcolor{stringliteral}{"{}RGB"{}});}
+\DoxyCodeLine{00279     color = Qt::white;}
+\DoxyCodeLine{00280     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00281   \}}
+\DoxyCodeLine{00282 }
+\DoxyCodeLine{00283   \textcolor{keywordflow}{if} (channelIndex != 4)}
+\DoxyCodeLine{00284     m\_histogramGraph =}
+\DoxyCodeLine{00285         \textcolor{keyword}{new} \mbox{\hyperlink{class_channel_histo_graph}{ChannelHistoGraph}}(channelIndex, \textcolor{keyword}{this}, showComparePtr);}
+\DoxyCodeLine{00286   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00287     m\_histogramGraph = \textcolor{keyword}{new} \mbox{\hyperlink{class_r_g_b_histo_graph}{RGBHistoGraph}}(channelIndex, \textcolor{keyword}{this});}
+\DoxyCodeLine{00288 }
+\DoxyCodeLine{00289   m\_colorBar = \textcolor{keyword}{new} \mbox{\hyperlink{class_channel_color_bar}{ChannelColorBar}}(\textcolor{keyword}{this}, color);}
+\DoxyCodeLine{00290 }
+\DoxyCodeLine{00291   \textcolor{comment}{// show/hide the alpha channel}}
+\DoxyCodeLine{00292   QPushButton *showAlphaChannelButton = 0;}
+\DoxyCodeLine{00293   \textcolor{keywordflow}{if} (channelIndex == 3) \{}
+\DoxyCodeLine{00294     showAlphaChannelButton = \textcolor{keyword}{new} QPushButton(\textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{00295     showAlphaChannelButton-\/>setObjectName(\textcolor{stringliteral}{"{}menuToggleButton"{}});}
+\DoxyCodeLine{00296     showAlphaChannelButton-\/>setFixedSize(15, 15);}
+\DoxyCodeLine{00297     showAlphaChannelButton-\/>setIcon(createQIcon(\textcolor{stringliteral}{"{}menu\_toggle"{}}));}
+\DoxyCodeLine{00298     showAlphaChannelButton-\/>setCheckable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00299     showAlphaChannelButton-\/>setChecked(\textcolor{keyword}{false});}
+\DoxyCodeLine{00300     showAlphaChannelButton-\/>setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{00301   \}}
+\DoxyCodeLine{00302 }
+\DoxyCodeLine{00303   \textcolor{comment}{// layout}}
+\DoxyCodeLine{00304   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout(\textcolor{keyword}{this});}
+\DoxyCodeLine{00305   mainLayout-\/>setMargin(0);}
+\DoxyCodeLine{00306   mainLayout-\/>setSpacing(2);}
+\DoxyCodeLine{00307   \{}
+\DoxyCodeLine{00308     QHBoxLayout *titleLay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00309     titleLay-\/>setMargin(0);}
+\DoxyCodeLine{00310     titleLay-\/>setSpacing(2);}
+\DoxyCodeLine{00311     \{}
+\DoxyCodeLine{00312       titleLay-\/>addWidget(\textcolor{keyword}{new} QLabel(label, \textcolor{keyword}{this}), 0);}
+\DoxyCodeLine{00313       \textcolor{keywordflow}{if} (channelIndex == 3) titleLay-\/>addWidget(showAlphaChannelButton, 0);}
+\DoxyCodeLine{00314       titleLay-\/>addStretch(1);}
+\DoxyCodeLine{00315     \}}
+\DoxyCodeLine{00316     mainLayout-\/>addLayout(titleLay);}
+\DoxyCodeLine{00317     mainLayout-\/>addSpacing(3);}
+\DoxyCodeLine{00318     mainLayout-\/>addWidget(m\_histogramGraph);}
+\DoxyCodeLine{00319     mainLayout-\/>addWidget(m\_colorBar);}
+\DoxyCodeLine{00320   \}}
+\DoxyCodeLine{00321   setLayout(mainLayout);}
+\DoxyCodeLine{00322 }
+\DoxyCodeLine{00323   \textcolor{keywordflow}{if} (channelIndex == 3) \{}
+\DoxyCodeLine{00324     connect(showAlphaChannelButton, SIGNAL(toggled(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00325             SLOT(onShowAlphaButtonToggled(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00326     onShowAlphaButtonToggled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00327   \}}
+\DoxyCodeLine{00328 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_channel_histo_a23bb03689603ef8a89a1cdd424f10f30}\label{class_channel_histo_a23bb03689603ef8a89a1cdd424f10f30}} 
+\index{ChannelHisto@{ChannelHisto}!````~ChannelHisto@{$\sim$ChannelHisto}}
+\index{````~ChannelHisto@{$\sim$ChannelHisto}!ChannelHisto@{ChannelHisto}}
+\doxysubsubsection{\texorpdfstring{$\sim$ChannelHisto()}{~ChannelHisto()}}
+{\footnotesize\ttfamily Channel\+Histo\+::$\sim$\+Channel\+Histo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00135 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_channel_histo_a4bd1917f35600de8d89533bdbf2a4af5}\label{class_channel_histo_a4bd1917f35600de8d89533bdbf2a4af5}} 
+\index{ChannelHisto@{ChannelHisto}!onShowAlphaButtonToggled@{onShowAlphaButtonToggled}}
+\index{onShowAlphaButtonToggled@{onShowAlphaButtonToggled}!ChannelHisto@{ChannelHisto}}
+\doxysubsubsection{\texorpdfstring{onShowAlphaButtonToggled}{onShowAlphaButtonToggled}}
+{\footnotesize\ttfamily void Channel\+Histo\+::on\+Show\+Alpha\+Button\+Toggled (\begin{DoxyParamCaption}\item[{bool}]{visible }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00339                                                         \{}
+\DoxyCodeLine{00340   m\_histogramGraph-\/>setVisible(visible);}
+\DoxyCodeLine{00341   m\_colorBar-\/>setVisible(visible);}
+\DoxyCodeLine{00342 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_channel_histo_a3e73b7b56ecd7d80f7ef24d250ce7603}\label{class_channel_histo_a3e73b7b56ecd7d80f7ef24d250ce7603}} 
+\index{ChannelHisto@{ChannelHisto}!refleshValue@{refleshValue}}
+\index{refleshValue@{refleshValue}!ChannelHisto@{ChannelHisto}}
+\doxysubsubsection{\texorpdfstring{refleshValue()}{refleshValue()}}
+{\footnotesize\ttfamily void Channel\+Histo\+::reflesh\+Value (\begin{DoxyParamCaption}\item[{int $\ast$}]{buf,  }\item[{bool}]{is\+Comp = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00137                                                    \{}
+\DoxyCodeLine{00138     m\_histogramGraph-\/>setValues(buf, isComp);}
+\DoxyCodeLine{00139   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}\label{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}} 
+\index{ChannelHisto@{ChannelHisto}!showCurrentChannelValue@{showCurrentChannelValue}}
+\index{showCurrentChannelValue@{showCurrentChannelValue}!ChannelHisto@{ChannelHisto}}
+\doxysubsubsection{\texorpdfstring{showCurrentChannelValue()}{showCurrentChannelValue()}}
+{\footnotesize\ttfamily void Channel\+Histo\+::show\+Current\+Channel\+Value (\begin{DoxyParamCaption}\item[{int}]{val }\end{DoxyParamCaption})}
+
+update the picked color\textquotesingle{}s channel value 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00333                                                   \{}
+\DoxyCodeLine{00334   m\_histogramGraph-\/>showCurrentChannelValue(val);}
+\DoxyCodeLine{00335 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/combohistogram.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/combohistogram.\+cpp\end{DoxyCompactItemize}

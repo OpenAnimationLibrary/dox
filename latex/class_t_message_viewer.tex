@@ -1,0 +1,216 @@
+\hypertarget{class_t_message_viewer}{}\doxysection{TMessage\+Viewer Class Reference}
+\label{class_t_message_viewer}\index{TMessageViewer@{TMessageViewer}}
+Inheritance diagram for TMessage\+Viewer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_t_message_viewer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_message_viewer_a000da7a16db11cc078c5ba74f726d1be}{on\+Clicked}} (bool)
+\item 
+void \mbox{\hyperlink{class_t_message_viewer_ad8071c9f5b7942ad13a6ddf45369f3ad}{refresh\+Filter}} (int)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_message_viewer_a1c5e937baa5bea9ee4c0da7ae6cda249}{TMessage\+Viewer}} (QWidget $\ast$)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{class_t_message_viewer_a1eb1988c58e14cb906f54f72b5766a0a}{is\+TMsg\+Visible}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QCheck\+Box $\ast$ \mbox{\hyperlink{class_t_message_viewer_acc29ea0383cd49e7eebfbda4a40a704e}{m\+\_\+red\+Check}}
+\item 
+QCheck\+Box $\ast$ \mbox{\hyperlink{class_t_message_viewer_ac62936e74770123c5db1b9fef43dfd41}{m\+\_\+green\+Check}}
+\item 
+QCheck\+Box $\ast$ \mbox{\hyperlink{class_t_message_viewer_a334f54b42a9ec2c2317130685b83dcef}{m\+\_\+yellow\+Check}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_t_message_viewer_aa76305f8ce63baba32bf6eb4aed319e9}\label{class_t_message_viewer_aa76305f8ce63baba32bf6eb4aed319e9}} 
+void {\bfseries rows\+Inserted} (const QModel\+Index \&parent, int start, int end)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_my_sort_filter_proxy_model}{My\+Sort\+Filter\+Proxy\+Model}} $\ast$ \mbox{\hyperlink{class_t_message_viewer_abc14f019bfacf65984d824180d50cd71}{m\+\_\+proxy\+Model}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::vector$<$ \mbox{\hyperlink{class_t_message_viewer}{TMessage\+Viewer}} $\ast$ $>$ \mbox{\hyperlink{class_t_message_viewer_ab948f58ceeac8f038382250b8f60274d}{m\+\_\+tmsg\+Viewers}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_message_viewer_a1c5e937baa5bea9ee4c0da7ae6cda249}\label{class_t_message_viewer_a1c5e937baa5bea9ee4c0da7ae6cda249}} 
+\index{TMessageViewer@{TMessageViewer}!TMessageViewer@{TMessageViewer}}
+\index{TMessageViewer@{TMessageViewer}!TMessageViewer@{TMessageViewer}}
+\doxysubsubsection{\texorpdfstring{TMessageViewer()}{TMessageViewer()}}
+{\footnotesize\ttfamily TMessage\+Viewer\+::\+TMessage\+Viewer (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00134                                               : QFrame(parent) \{}
+\DoxyCodeLine{00135   m\_tmsgViewers.push\_back(\textcolor{keyword}{this});}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00138   setFrameStyle(QFrame::StyledPanel);}
+\DoxyCodeLine{00139   setObjectName(\textcolor{stringliteral}{"{}OnePixelMarginFrame"{}});}
+\DoxyCodeLine{00140   QVBoxLayout *vLayout = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00141   vLayout-\/>setMargin(0);}
+\DoxyCodeLine{00142   QFrame *fr = \textcolor{keyword}{new} QFrame();}
+\DoxyCodeLine{00143 }
+\DoxyCodeLine{00144   QHBoxLayout *hLayout = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00145   hLayout-\/>setMargin(0);}
+\DoxyCodeLine{00146   fr-\/>setLayout(hLayout);}
+\DoxyCodeLine{00147   fr-\/>setFixedHeight(24);}
+\DoxyCodeLine{00148   fr-\/>setStyleSheet(\textcolor{stringliteral}{"{}background-\/color: rgb(210,210,210); color: black;"{}});}
+\DoxyCodeLine{00149   hLayout-\/>addSpacing(4);}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   hLayout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Display:  "{}})));}
+\DoxyCodeLine{00152 }
+\DoxyCodeLine{00153   m\_redCheck = \textcolor{keyword}{new} QCheckBox(tr(\textcolor{stringliteral}{"{}Errors"{}}));}
+\DoxyCodeLine{00154   m\_redCheck-\/>setChecked(\textcolor{keyword}{true});}
+\DoxyCodeLine{00155   ret = ret \&\& connect(m\_redCheck, SIGNAL(stateChanged(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00156                        SLOT(refreshFilter(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00157   hLayout-\/>addWidget(m\_redCheck);}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159   m\_yellowCheck = \textcolor{keyword}{new} QCheckBox(tr(\textcolor{stringliteral}{"{}Warnings"{}}));}
+\DoxyCodeLine{00160   m\_yellowCheck-\/>setChecked(\textcolor{keyword}{true});}
+\DoxyCodeLine{00161   ret = ret \&\& connect(m\_yellowCheck, SIGNAL(stateChanged(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00162                        SLOT(refreshFilter(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00163   hLayout-\/>addWidget(m\_yellowCheck);}
+\DoxyCodeLine{00164 }
+\DoxyCodeLine{00165   m\_greenCheck = \textcolor{keyword}{new} QCheckBox(tr(\textcolor{stringliteral}{"{}Info"{}}));}
+\DoxyCodeLine{00166   m\_greenCheck-\/>setChecked(\textcolor{keyword}{true});}
+\DoxyCodeLine{00167   ret = ret \&\& connect(m\_greenCheck, SIGNAL(stateChanged(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00168                        SLOT(refreshFilter(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00169   hLayout-\/>addWidget(m\_greenCheck);}
+\DoxyCodeLine{00170 }
+\DoxyCodeLine{00171   hLayout-\/>addStretch();}
+\DoxyCodeLine{00172 }
+\DoxyCodeLine{00173   QPushButton *pb = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{} Clear "{}}));}
+\DoxyCodeLine{00174   ret = ret \&\& connect(pb, SIGNAL(clicked(\textcolor{keywordtype}{bool})), SLOT(onClicked(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00175   hLayout-\/>addWidget(pb);}
+\DoxyCodeLine{00176 }
+\DoxyCodeLine{00177   hLayout-\/>addSpacing(4);}
+\DoxyCodeLine{00178 }
+\DoxyCodeLine{00179   vLayout-\/>addWidget(fr);}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181   MyQListView *lv = \textcolor{keyword}{new} MyQListView(\textcolor{keyword}{this});}
+\DoxyCodeLine{00182   lv-\/>setAlternatingRowColors(\textcolor{keyword}{true});}
+\DoxyCodeLine{00183   lv-\/>setEditTriggers(QAbstractItemView::NoEditTriggers);}
+\DoxyCodeLine{00184   lv-\/>setAutoScroll(\textcolor{keyword}{true});}
+\DoxyCodeLine{00185 }
+\DoxyCodeLine{00186   m\_proxyModel = \textcolor{keyword}{new} \mbox{\hyperlink{class_my_sort_filter_proxy_model}{MySortFilterProxyModel}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00187   m\_proxyModel-\/>setDynamicSortFilter(\textcolor{keyword}{true});}
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189   m\_proxyModel-\/>setSourceModel(TMessageRepository::instance()-\/>getModel());}
+\DoxyCodeLine{00190   lv-\/>setModel(m\_proxyModel);}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192   vLayout-\/>addWidget(lv);}
+\DoxyCodeLine{00193   setLayout(vLayout);}
+\DoxyCodeLine{00194 }
+\DoxyCodeLine{00195   assert(ret);}
+\DoxyCodeLine{00196 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_message_viewer_a1eb1988c58e14cb906f54f72b5766a0a}\label{class_t_message_viewer_a1eb1988c58e14cb906f54f72b5766a0a}} 
+\index{TMessageViewer@{TMessageViewer}!isTMsgVisible@{isTMsgVisible}}
+\index{isTMsgVisible@{isTMsgVisible}!TMessageViewer@{TMessageViewer}}
+\doxysubsubsection{\texorpdfstring{isTMsgVisible()}{isTMsgVisible()}}
+{\footnotesize\ttfamily bool TMessage\+Viewer\+::is\+TMsg\+Visible (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00126                                    \{}
+\DoxyCodeLine{00127   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_tmsgViewers.size(); i++)}
+\DoxyCodeLine{00128     \textcolor{keywordflow}{if} (m\_tmsgViewers[i]-\/>isVisible()) \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00129   \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00130 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_message_viewer_a000da7a16db11cc078c5ba74f726d1be}\label{class_t_message_viewer_a000da7a16db11cc078c5ba74f726d1be}} 
+\index{TMessageViewer@{TMessageViewer}!onClicked@{onClicked}}
+\index{onClicked@{onClicked}!TMessageViewer@{TMessageViewer}}
+\doxysubsubsection{\texorpdfstring{onClicked}{onClicked}}
+{\footnotesize\ttfamily void TMessage\+Viewer\+::on\+Clicked (\begin{DoxyParamCaption}\item[{bool}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059                                    \{}
+\DoxyCodeLine{00060   TMessageRepository::instance()-\/>clear();}
+\DoxyCodeLine{00061 }
+\DoxyCodeLine{00062   \textcolor{comment}{/*return;}}
+\DoxyCodeLine{00063 \textcolor{comment}{  static int count=0;}}
+\DoxyCodeLine{00064 \textcolor{comment}{  count++;}}
+\DoxyCodeLine{00065 \textcolor{comment}{  DVGui::MsgBox((count\%3)==1?INFORMATION:(count\%3)==2?WARNING:CRITICAL,}}
+\DoxyCodeLine{00066 \textcolor{comment}{  "{}messaggio "{}+QString::number(count));*/}}
+\DoxyCodeLine{00067 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_message_viewer_ad8071c9f5b7942ad13a6ddf45369f3ad}\label{class_t_message_viewer_ad8071c9f5b7942ad13a6ddf45369f3ad}} 
+\index{TMessageViewer@{TMessageViewer}!refreshFilter@{refreshFilter}}
+\index{refreshFilter@{refreshFilter}!TMessageViewer@{TMessageViewer}}
+\doxysubsubsection{\texorpdfstring{refreshFilter}{refreshFilter}}
+{\footnotesize\ttfamily void TMessage\+Viewer\+::refresh\+Filter (\begin{DoxyParamCaption}\item[{int}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00071 \{ m\_proxyModel-\/>invalidate(); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_message_viewer_ac62936e74770123c5db1b9fef43dfd41}\label{class_t_message_viewer_ac62936e74770123c5db1b9fef43dfd41}} 
+\index{TMessageViewer@{TMessageViewer}!m\_greenCheck@{m\_greenCheck}}
+\index{m\_greenCheck@{m\_greenCheck}!TMessageViewer@{TMessageViewer}}
+\doxysubsubsection{\texorpdfstring{m\_greenCheck}{m\_greenCheck}}
+{\footnotesize\ttfamily QCheck\+Box $\ast$ TMessage\+Viewer\+::m\+\_\+green\+Check}
+
+\mbox{\Hypertarget{class_t_message_viewer_abc14f019bfacf65984d824180d50cd71}\label{class_t_message_viewer_abc14f019bfacf65984d824180d50cd71}} 
+\index{TMessageViewer@{TMessageViewer}!m\_proxyModel@{m\_proxyModel}}
+\index{m\_proxyModel@{m\_proxyModel}!TMessageViewer@{TMessageViewer}}
+\doxysubsubsection{\texorpdfstring{m\_proxyModel}{m\_proxyModel}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_my_sort_filter_proxy_model}{My\+Sort\+Filter\+Proxy\+Model}}$\ast$ TMessage\+Viewer\+::m\+\_\+proxy\+Model\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_t_message_viewer_acc29ea0383cd49e7eebfbda4a40a704e}\label{class_t_message_viewer_acc29ea0383cd49e7eebfbda4a40a704e}} 
+\index{TMessageViewer@{TMessageViewer}!m\_redCheck@{m\_redCheck}}
+\index{m\_redCheck@{m\_redCheck}!TMessageViewer@{TMessageViewer}}
+\doxysubsubsection{\texorpdfstring{m\_redCheck}{m\_redCheck}}
+{\footnotesize\ttfamily QCheck\+Box$\ast$ TMessage\+Viewer\+::m\+\_\+red\+Check}
+
+\mbox{\Hypertarget{class_t_message_viewer_ab948f58ceeac8f038382250b8f60274d}\label{class_t_message_viewer_ab948f58ceeac8f038382250b8f60274d}} 
+\index{TMessageViewer@{TMessageViewer}!m\_tmsgViewers@{m\_tmsgViewers}}
+\index{m\_tmsgViewers@{m\_tmsgViewers}!TMessageViewer@{TMessageViewer}}
+\doxysubsubsection{\texorpdfstring{m\_tmsgViewers}{m\_tmsgViewers}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_t_message_viewer}{TMessage\+Viewer}} $\ast$ $>$ TMessage\+Viewer\+::m\+\_\+tmsg\+Viewers\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_t_message_viewer_a334f54b42a9ec2c2317130685b83dcef}\label{class_t_message_viewer_a334f54b42a9ec2c2317130685b83dcef}} 
+\index{TMessageViewer@{TMessageViewer}!m\_yellowCheck@{m\_yellowCheck}}
+\index{m\_yellowCheck@{m\_yellowCheck}!TMessageViewer@{TMessageViewer}}
+\doxysubsubsection{\texorpdfstring{m\_yellowCheck}{m\_yellowCheck}}
+{\footnotesize\ttfamily QCheck\+Box $\ast$ TMessage\+Viewer\+::m\+\_\+yellow\+Check}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/tmessageviewer.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/tmessageviewer.\+cpp\end{DoxyCompactItemize}

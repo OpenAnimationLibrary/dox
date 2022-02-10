@@ -1,0 +1,129 @@
+\hypertarget{class_t_cli_1_1_multi_argument}{}\doxysection{TCli\+::Multi\+Argument Class Reference}
+\label{class_t_cli_1_1_multi_argument}\index{TCli::MultiArgument@{TCli::MultiArgument}}
+Inheritance diagram for TCli\+::Multi\+Argument\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_t_cli_1_1_multi_argument}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_cli_1_1_multi_argument_a623ae267c1bfce442e64fad2b881c928}{Multi\+Argument}} (std\+::string name, std\+::string help)
+\item 
+int \mbox{\hyperlink{class_t_cli_1_1_multi_argument_a417f968f99af4b85f3405beaab36a5d5}{get\+Count}} () const
+\item 
+void \mbox{\hyperlink{class_t_cli_1_1_multi_argument_a596aa34b21685ea6fac3b9ff929f60db}{fetch}} (int index, int \&argc, char $\ast$argv\mbox{[}$\,$\mbox{]}) override
+\item 
+bool \mbox{\hyperlink{class_t_cli_1_1_multi_argument_acf1855afbf108fb72d3d7e498d3623a5}{is\+Multi\+Argument}} () const override
+\item 
+\mbox{\Hypertarget{class_t_cli_1_1_multi_argument_aff275b86ea9372618f0928cd4b0ed1b4}\label{class_t_cli_1_1_multi_argument_aff275b86ea9372618f0928cd4b0ed1b4}} 
+virtual void {\bfseries allocate} (int count)=0
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_t_cli_1_1_multi_argument_a8e8bd639cd9263c45529fe60434912c0}{m\+\_\+count}}
+\item 
+int \mbox{\hyperlink{class_t_cli_1_1_multi_argument_a24fffb4f63cd7bb78097860d22f7335b}{m\+\_\+index}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_cli_1_1_multi_argument_a623ae267c1bfce442e64fad2b881c928}\label{class_t_cli_1_1_multi_argument_a623ae267c1bfce442e64fad2b881c928}} 
+\index{TCli::MultiArgument@{TCli::MultiArgument}!MultiArgument@{MultiArgument}}
+\index{MultiArgument@{MultiArgument}!TCli::MultiArgument@{TCli::MultiArgument}}
+\doxysubsubsection{\texorpdfstring{MultiArgument()}{MultiArgument()}}
+{\footnotesize\ttfamily TCli\+::\+Multi\+Argument\+::\+Multi\+Argument (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{std\+::string}]{help }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00213       : Argument(name, help), m\_count(0), m\_index(0)\{\};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_cli_1_1_multi_argument_a5b63bf728f01c42e2c69795706407763}\label{class_t_cli_1_1_multi_argument_a5b63bf728f01c42e2c69795706407763}} 
+\index{TCli::MultiArgument@{TCli::MultiArgument}!````~MultiArgument@{$\sim$MultiArgument}}
+\index{````~MultiArgument@{$\sim$MultiArgument}!TCli::MultiArgument@{TCli::MultiArgument}}
+\doxysubsubsection{\texorpdfstring{$\sim$MultiArgument()}{~MultiArgument()}}
+{\footnotesize\ttfamily TCli\+::\+Multi\+Argument\+::$\sim$\+Multi\+Argument (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00214 \{\};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_cli_1_1_multi_argument_a596aa34b21685ea6fac3b9ff929f60db}\label{class_t_cli_1_1_multi_argument_a596aa34b21685ea6fac3b9ff929f60db}} 
+\index{TCli::MultiArgument@{TCli::MultiArgument}!fetch@{fetch}}
+\index{fetch@{fetch}!TCli::MultiArgument@{TCli::MultiArgument}}
+\doxysubsubsection{\texorpdfstring{fetch()}{fetch()}}
+{\footnotesize\ttfamily void Multi\+Argument\+::fetch (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{int \&}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_cli_1_1_argument}{TCli\+::\+Argument}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00170                                                             \{}
+\DoxyCodeLine{00171   \textcolor{keywordflow}{if} (index >= argc) \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_cli_1_1_usage_error}{UsageError}}(\textcolor{stringliteral}{"{}missing argument(s)"{}});}
+\DoxyCodeLine{00172   allocate(argc -\/ index);}
+\DoxyCodeLine{00173   \textcolor{keywordflow}{for} (m\_index = 0; m\_index < m\_count; m\_index++)}
+\DoxyCodeLine{00174     \textcolor{keywordflow}{if} (!assign(argv[index + m\_index]))}
+\DoxyCodeLine{00175       \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_cli_1_1_usage_error}{UsageError}}(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"{}bad argument type :"{}}) + argv[index + m\_index]);}
+\DoxyCodeLine{00176   argc -\/= m\_count;}
+\DoxyCodeLine{00177 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_cli_1_1_multi_argument_a417f968f99af4b85f3405beaab36a5d5}\label{class_t_cli_1_1_multi_argument_a417f968f99af4b85f3405beaab36a5d5}} 
+\index{TCli::MultiArgument@{TCli::MultiArgument}!getCount@{getCount}}
+\index{getCount@{getCount}!TCli::MultiArgument@{TCli::MultiArgument}}
+\doxysubsubsection{\texorpdfstring{getCount()}{getCount()}}
+{\footnotesize\ttfamily int TCli\+::\+Multi\+Argument\+::get\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00215 \{ \textcolor{keywordflow}{return} m\_count; \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_cli_1_1_multi_argument_acf1855afbf108fb72d3d7e498d3623a5}\label{class_t_cli_1_1_multi_argument_acf1855afbf108fb72d3d7e498d3623a5}} 
+\index{TCli::MultiArgument@{TCli::MultiArgument}!isMultiArgument@{isMultiArgument}}
+\index{isMultiArgument@{isMultiArgument}!TCli::MultiArgument@{TCli::MultiArgument}}
+\doxysubsubsection{\texorpdfstring{isMultiArgument()}{isMultiArgument()}}
+{\footnotesize\ttfamily bool TCli\+::\+Multi\+Argument\+::is\+Multi\+Argument (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_cli_1_1_usage_element}{TCli\+::\+Usage\+Element}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00218 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{true}; \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_cli_1_1_multi_argument_a8e8bd639cd9263c45529fe60434912c0}\label{class_t_cli_1_1_multi_argument_a8e8bd639cd9263c45529fe60434912c0}} 
+\index{TCli::MultiArgument@{TCli::MultiArgument}!m\_count@{m\_count}}
+\index{m\_count@{m\_count}!TCli::MultiArgument@{TCli::MultiArgument}}
+\doxysubsubsection{\texorpdfstring{m\_count}{m\_count}}
+{\footnotesize\ttfamily int TCli\+::\+Multi\+Argument\+::m\+\_\+count\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_t_cli_1_1_multi_argument_a24fffb4f63cd7bb78097860d22f7335b}\label{class_t_cli_1_1_multi_argument_a24fffb4f63cd7bb78097860d22f7335b}} 
+\index{TCli::MultiArgument@{TCli::MultiArgument}!m\_index@{m\_index}}
+\index{m\_index@{m\_index}!TCli::MultiArgument@{TCli::MultiArgument}}
+\doxysubsubsection{\texorpdfstring{m\_index}{m\_index}}
+{\footnotesize\ttfamily int TCli\+::\+Multi\+Argument\+::m\+\_\+index\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tcli.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tapptools/tcli.\+cpp\end{DoxyCompactItemize}

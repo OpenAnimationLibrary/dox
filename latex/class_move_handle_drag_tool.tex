@@ -1,0 +1,243 @@
+\hypertarget{class_move_handle_drag_tool}{}\doxysection{Move\+Handle\+Drag\+Tool Class Reference}
+\label{class_move_handle_drag_tool}\index{MoveHandleDragTool@{MoveHandleDragTool}}
+Inheritance diagram for Move\+Handle\+Drag\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_move_handle_drag_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef Function\+Panel\+::\+Handle \mbox{\hyperlink{class_move_handle_drag_tool_aba0cb465bdcb722e50371bd8fb010081}{Handle}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_move_handle_drag_tool_a8f108f1cceb20f26e808abb073c1b31b}{Move\+Handle\+Drag\+Tool}} (\mbox{\hyperlink{class_function_panel}{Function\+Panel}} $\ast$panel, \mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$curve, int k\+Index, Handle handle)
+\item 
+void \mbox{\hyperlink{class_move_handle_drag_tool_afac7014b3c6a8bddc8042786ef83c6d7}{click}} (QMouse\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_move_handle_drag_tool_a61e4eb638edee3e96ba25a31638e82cb}{drag}} (QMouse\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_move_handle_drag_tool_a2f10283b5cc573a46db0a744588e3673}{release}} (QMouse\+Event $\ast$e) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_function_tree_model_1_1_channel_group}{Function\+Tree\+Model\+::\+Channel\+Group}} $\ast$ \mbox{\hyperlink{class_move_handle_drag_tool_a36daf89df7618f7d0142058d2825b3da}{m\+\_\+channel\+Group}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{class_move_handle_drag_tool_aba0cb465bdcb722e50371bd8fb010081}\label{class_move_handle_drag_tool_aba0cb465bdcb722e50371bd8fb010081}} 
+\index{MoveHandleDragTool@{MoveHandleDragTool}!Handle@{Handle}}
+\index{Handle@{Handle}!MoveHandleDragTool@{MoveHandleDragTool}}
+\doxysubsubsection{\texorpdfstring{Handle}{Handle}}
+{\footnotesize\ttfamily typedef Function\+Panel\+::\+Handle Move\+Handle\+Drag\+Tool\+::\+Handle}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_move_handle_drag_tool_a8f108f1cceb20f26e808abb073c1b31b}\label{class_move_handle_drag_tool_a8f108f1cceb20f26e808abb073c1b31b}} 
+\index{MoveHandleDragTool@{MoveHandleDragTool}!MoveHandleDragTool@{MoveHandleDragTool}}
+\index{MoveHandleDragTool@{MoveHandleDragTool}!MoveHandleDragTool@{MoveHandleDragTool}}
+\doxysubsubsection{\texorpdfstring{MoveHandleDragTool()}{MoveHandleDragTool()}}
+{\footnotesize\ttfamily Move\+Handle\+Drag\+Tool\+::\+Move\+Handle\+Drag\+Tool (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_function_panel}{Function\+Panel}} $\ast$}]{panel,  }\item[{\mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$}]{curve,  }\item[{int}]{k\+Index,  }\item[{Handle}]{handle }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00264     : m\_panel(panel)}
+\DoxyCodeLine{00265     , m\_curve(curve)}
+\DoxyCodeLine{00266     , m\_kIndex(kIndex)}
+\DoxyCodeLine{00267     , m\_handle(handle)}
+\DoxyCodeLine{00268     , m\_deltaFrame(0)}
+\DoxyCodeLine{00269     , m\_setter(curve, kIndex)}
+\DoxyCodeLine{00270     , m\_segmentWidth(0)}
+\DoxyCodeLine{00271     , m\_channelGroup(0) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_move_handle_drag_tool_afac7014b3c6a8bddc8042786ef83c6d7}\label{class_move_handle_drag_tool_afac7014b3c6a8bddc8042786ef83c6d7}} 
+\index{MoveHandleDragTool@{MoveHandleDragTool}!click@{click}}
+\index{click@{click}!MoveHandleDragTool@{MoveHandleDragTool}}
+\doxysubsubsection{\texorpdfstring{click()}{click()}}
+{\footnotesize\ttfamily void Move\+Handle\+Drag\+Tool\+::click (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_function_panel_1_1_drag_tool}{Function\+Panel\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00275                                              \{}
+\DoxyCodeLine{00276   m\_startPos = e-\/>pos();}
+\DoxyCodeLine{00277   \textcolor{comment}{// m\_startPos = m\_oldPos = e-\/>pos();}}
+\DoxyCodeLine{00278   m\_deltaFrame       = 0;}
+\DoxyCodeLine{00279   m\_keyframe         = m\_curve-\/>getKeyframe(m\_kIndex);}
+\DoxyCodeLine{00280   m\_keyframe.m\_value = m\_curve-\/>getValue(m\_keyframe.m\_frame);}
+\DoxyCodeLine{00281   \textcolor{keywordflow}{if} (m\_handle == FunctionPanel::SpeedIn)}
+\DoxyCodeLine{00282     m\_keyframe.m\_value = m\_curve-\/>getValue(m\_keyframe.m\_frame, \textcolor{keyword}{true});}
+\DoxyCodeLine{00283 }
+\DoxyCodeLine{00284   \textcolor{keywordflow}{if} (m\_channelGroup) \{}
+\DoxyCodeLine{00285     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_channelGroup-\/>getChildCount(); i++) \{}
+\DoxyCodeLine{00286       \mbox{\hyperlink{class_tree_model_1_1_item}{TreeModel::Item}} *child = m\_channelGroup-\/>getChild(i);}
+\DoxyCodeLine{00287       \mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *channel =}
+\DoxyCodeLine{00288           \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_function_tree_model_1_1_channel}{FunctionTreeModel::Channel}} *\textcolor{keyword}{>}(child);}
+\DoxyCodeLine{00289       \textcolor{keywordflow}{if} (channel \&\& m\_curve != channel-\/>getParam()) \{}
+\DoxyCodeLine{00290         \textcolor{keywordflow}{if} (channel-\/>getParam()-\/>\mbox{\hyperlink{class_t_double_param_a2be2db8a6849e4619940ff37a0948574}{isKeyframe}}(m\_keyframe.m\_frame)) \{}
+\DoxyCodeLine{00291         \}}
+\DoxyCodeLine{00292       \}}
+\DoxyCodeLine{00293     \}}
+\DoxyCodeLine{00294   \}}
+\DoxyCodeLine{00295 }
+\DoxyCodeLine{00296   \textcolor{keywordflow}{if} (m\_handle == FunctionPanel::EaseInPercentage \&\& m\_kIndex > 0) \{}
+\DoxyCodeLine{00297     \textcolor{keywordtype}{double} previousFrame = m\_curve-\/>\mbox{\hyperlink{class_t_double_param_af08442b9fd968fddada028a6f07983d5}{keyframeIndexToFrame}}(m\_kIndex -\/ 1);}
+\DoxyCodeLine{00298     m\_segmentWidth       = m\_keyframe.m\_frame -\/ previousFrame;}
+\DoxyCodeLine{00299   \}}
+\DoxyCodeLine{00300   \textcolor{keywordflow}{if} (m\_handle == FunctionPanel::EaseOutPercentage \&\&}
+\DoxyCodeLine{00301       m\_kIndex + 1 < m\_curve-\/>getKeyframeCount()) \{}
+\DoxyCodeLine{00302     \textcolor{keywordtype}{double} nextFrame = m\_curve-\/>\mbox{\hyperlink{class_t_double_param_af08442b9fd968fddada028a6f07983d5}{keyframeIndexToFrame}}(m\_kIndex + 1);}
+\DoxyCodeLine{00303     m\_segmentWidth   = nextFrame -\/ m\_keyframe.m\_frame;}
+\DoxyCodeLine{00304   \}}
+\DoxyCodeLine{00305   \mbox{\hyperlink{class_t_point_t}{TPointD}} speed;}
+\DoxyCodeLine{00306 }
+\DoxyCodeLine{00307   \textcolor{keywordflow}{if} (m\_keyframe.m\_linkedHandles) \{}
+\DoxyCodeLine{00308     \textcolor{keywordflow}{if} (m\_handle == FunctionPanel::SpeedIn \&\&}
+\DoxyCodeLine{00309         m\_kIndex + 1 < m\_curve-\/>getKeyframeCount() \&\&}
+\DoxyCodeLine{00310         (m\_keyframe.m\_type != TDoubleKeyframe::SpeedInOut \&\&}
+\DoxyCodeLine{00311          (m\_keyframe.m\_type != TDoubleKeyframe::Expression ||}
+\DoxyCodeLine{00312           m\_keyframe.m\_expressionText.find(\textcolor{stringliteral}{"{}cycle"{}}) == std::string::npos)))}
+\DoxyCodeLine{00313       speed = m\_curve-\/>getSpeedIn(m\_kIndex);}
+\DoxyCodeLine{00314     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_handle == FunctionPanel::SpeedOut \&\&}
+\DoxyCodeLine{00315              m\_keyframe.m\_prevType != TDoubleKeyframe::SpeedInOut \&\&}
+\DoxyCodeLine{00316              m\_kIndex > 0)}
+\DoxyCodeLine{00317       speed = m\_curve-\/>getSpeedOut(m\_kIndex);}
+\DoxyCodeLine{00318   \}}
+\DoxyCodeLine{00319   \textcolor{keywordflow}{if} (norm2(speed) > 0.001) \{}
+\DoxyCodeLine{00320     QPointF a = m\_panel-\/>getWinPos(m\_curve, speed) -\/}
+\DoxyCodeLine{00321                 m\_panel-\/>getWinPos(m\_curve, \mbox{\hyperlink{class_t_point_t}{TPointD}}());}
+\DoxyCodeLine{00322     \textcolor{keywordtype}{double} aa = 1.0 / sqrt(a.x() * a.x() + a.y() * a.y());}
+\DoxyCodeLine{00323     m\_nSpeed  = QPointF(-\/a.y() * aa, a.x() * aa);}
+\DoxyCodeLine{00324   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00325     m\_nSpeed = QPointF();}
+\DoxyCodeLine{00326   m\_setter.setPixelRatio(m\_panel-\/>getPixelRatio(m\_curve));}
+\DoxyCodeLine{00327 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_move_handle_drag_tool_a61e4eb638edee3e96ba25a31638e82cb}\label{class_move_handle_drag_tool_a61e4eb638edee3e96ba25a31638e82cb}} 
+\index{MoveHandleDragTool@{MoveHandleDragTool}!drag@{drag}}
+\index{drag@{drag}!MoveHandleDragTool@{MoveHandleDragTool}}
+\doxysubsubsection{\texorpdfstring{drag()}{drag()}}
+{\footnotesize\ttfamily void Move\+Handle\+Drag\+Tool\+::drag (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_function_panel_1_1_drag_tool}{Function\+Panel\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00331                                             \{}
+\DoxyCodeLine{00332   \textcolor{keywordflow}{if} (!m\_curve) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00333   QPoint pos = e-\/>pos();}
+\DoxyCodeLine{00334 }
+\DoxyCodeLine{00335   \textcolor{comment}{// if shift is pressed then apply constraints (only horizontal or vertical}}
+\DoxyCodeLine{00336   \textcolor{comment}{// moves)}}
+\DoxyCodeLine{00337   \textcolor{keywordflow}{if} (e-\/>modifiers() \& Qt::ShiftModifier) \{}
+\DoxyCodeLine{00338     QPoint delta = e-\/>pos() -\/ m\_startPos;}
+\DoxyCodeLine{00339     \textcolor{keywordflow}{if} (abs(delta.x()) > abs(delta.y()))}
+\DoxyCodeLine{00340       pos.setY(m\_startPos.y());}
+\DoxyCodeLine{00341     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00342       pos.setX(m\_startPos.x());}
+\DoxyCodeLine{00343   \}}
+\DoxyCodeLine{00344 }
+\DoxyCodeLine{00345   \textcolor{comment}{// QPoint oldPos = m\_oldPos;}}
+\DoxyCodeLine{00346   \textcolor{comment}{// m\_oldPos = pos;}}
+\DoxyCodeLine{00347 }
+\DoxyCodeLine{00348   QPointF p0 = m\_panel-\/>getWinPos(m\_curve, m\_keyframe);}
+\DoxyCodeLine{00349   QPointF posF(pos);}
+\DoxyCodeLine{00350 }
+\DoxyCodeLine{00351   \textcolor{keywordflow}{if} (m\_nSpeed != QPointF(0, 0)) \{}
+\DoxyCodeLine{00352     QPointF delta = posF -\/ p0;}
+\DoxyCodeLine{00353     posF -\/= m\_nSpeed * (delta.x() * m\_nSpeed.x() + delta.y() * m\_nSpeed.y());}
+\DoxyCodeLine{00354     \textcolor{keywordflow}{if} ((m\_handle == FunctionPanel::SpeedIn \&\& posF.x() > p0.x()) ||}
+\DoxyCodeLine{00355         (m\_handle == FunctionPanel::SpeedOut \&\& posF.x() < p0.x()))}
+\DoxyCodeLine{00356       posF = p0;}
+\DoxyCodeLine{00357   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00358     \textcolor{keywordflow}{if} ((m\_handle == FunctionPanel::SpeedIn \&\& posF.x() > p0.x()) ||}
+\DoxyCodeLine{00359         (m\_handle == FunctionPanel::SpeedOut \&\& posF.x() < p0.x()))}
+\DoxyCodeLine{00360       posF.setX(p0.x());}
+\DoxyCodeLine{00361   \}}
+\DoxyCodeLine{00362 }
+\DoxyCodeLine{00363   \textcolor{keywordtype}{double} frame = m\_panel-\/>xToFrame(posF.x());}
+\DoxyCodeLine{00364   \textcolor{keywordtype}{double} value = m\_panel-\/>yToValue(m\_curve, posF.y());}
+\DoxyCodeLine{00365   \mbox{\hyperlink{class_t_point_t}{TPointD}} handlePos(frame -\/ m\_keyframe.m\_frame, value -\/ m\_keyframe.m\_value);}
+\DoxyCodeLine{00366   \textcolor{keywordflow}{switch} (m\_handle) \{}
+\DoxyCodeLine{00367   \textcolor{keywordflow}{case} FunctionPanel::SpeedIn:}
+\DoxyCodeLine{00368     \textcolor{keywordflow}{if} (m\_keyframe.m\_type != TDoubleKeyframe::SpeedInOut) \{}
+\DoxyCodeLine{00369     \}}
+\DoxyCodeLine{00370     m\_setter.setSpeedIn(handlePos);}
+\DoxyCodeLine{00371     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00372   \textcolor{keywordflow}{case} FunctionPanel::SpeedOut:}
+\DoxyCodeLine{00373     m\_setter.setSpeedOut(handlePos);}
+\DoxyCodeLine{00374     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00375   \textcolor{keywordflow}{case} FunctionPanel::EaseIn:}
+\DoxyCodeLine{00376     m\_setter.setEaseIn(handlePos.x);}
+\DoxyCodeLine{00377     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00378   \textcolor{keywordflow}{case} FunctionPanel::EaseOut:}
+\DoxyCodeLine{00379     m\_setter.setEaseOut(handlePos.x);}
+\DoxyCodeLine{00380     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00381   \textcolor{keywordflow}{case} FunctionPanel::EaseInPercentage:}
+\DoxyCodeLine{00382     \textcolor{keywordflow}{if} (m\_segmentWidth > 0)}
+\DoxyCodeLine{00383       m\_setter.setEaseIn(100.0 * handlePos.x / m\_segmentWidth);}
+\DoxyCodeLine{00384     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00385   \textcolor{keywordflow}{case} FunctionPanel::EaseOutPercentage:}
+\DoxyCodeLine{00386     \textcolor{keywordflow}{if} (m\_segmentWidth > 0)}
+\DoxyCodeLine{00387       m\_setter.setEaseOut(100.0 * handlePos.x / m\_segmentWidth);}
+\DoxyCodeLine{00388     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00389   \textcolor{keywordflow}{case} 100:}
+\DoxyCodeLine{00390   \textcolor{keywordflow}{case} 101:}
+\DoxyCodeLine{00391   \textcolor{keywordflow}{case} 102:}
+\DoxyCodeLine{00392     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00393   \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00394     assert(0);}
+\DoxyCodeLine{00395   \}}
+\DoxyCodeLine{00396   m\_panel-\/>update();}
+\DoxyCodeLine{00397 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_move_handle_drag_tool_a2f10283b5cc573a46db0a744588e3673}\label{class_move_handle_drag_tool_a2f10283b5cc573a46db0a744588e3673}} 
+\index{MoveHandleDragTool@{MoveHandleDragTool}!release@{release}}
+\index{release@{release}!MoveHandleDragTool@{MoveHandleDragTool}}
+\doxysubsubsection{\texorpdfstring{release()}{release()}}
+{\footnotesize\ttfamily void Move\+Handle\+Drag\+Tool\+::release (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_function_panel_1_1_drag_tool}{Function\+Panel\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00401 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_move_handle_drag_tool_a36daf89df7618f7d0142058d2825b3da}\label{class_move_handle_drag_tool_a36daf89df7618f7d0142058d2825b3da}} 
+\index{MoveHandleDragTool@{MoveHandleDragTool}!m\_channelGroup@{m\_channelGroup}}
+\index{m\_channelGroup@{m\_channelGroup}!MoveHandleDragTool@{MoveHandleDragTool}}
+\doxysubsubsection{\texorpdfstring{m\_channelGroup}{m\_channelGroup}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_function_tree_model_1_1_channel_group}{Function\+Tree\+Model\+::\+Channel\+Group}}$\ast$ Move\+Handle\+Drag\+Tool\+::m\+\_\+channel\+Group}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/functionpaneltools.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/functionpaneltools.\+cpp\end{DoxyCompactItemize}

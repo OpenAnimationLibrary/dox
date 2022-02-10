@@ -1,0 +1,245 @@
+\hypertarget{class_swatch_cache_manager}{}\doxysection{Swatch\+Cache\+Manager Class Reference}
+\label{class_swatch_cache_manager}\index{SwatchCacheManager@{SwatchCacheManager}}
+Inheritance diagram for Swatch\+Cache\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_swatch_cache_manager}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_swatch_cache_manager_a46115a875ba194955bce7a18f4a3a083}{set\+Fx}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} \&actual\+Fx)
+\item 
+void \mbox{\hyperlink{class_swatch_cache_manager_a6f65791ebee6f430e0192b98408522fe}{clear\+Swatch\+Results}} ()
+\item 
+void \mbox{\hyperlink{class_swatch_cache_manager_ad9dd145834b2dfe5cfd3970309ed1799}{get\+Resource}} (\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}} \&resource, const std\+::string \&alias, const \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} \&fx, double frame, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&rs, \mbox{\hyperlink{struct_resource_declaration}{Resource\+Declaration}} $\ast$res\+Data) override
+\item 
+bool \mbox{\hyperlink{class_swatch_cache_manager_a823767e18dfec120165cd84945d18802}{render\+Has\+Ownership}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_swatch_cache_manager}{Swatch\+Cache\+Manager}} $\ast$ \mbox{\hyperlink{class_swatch_cache_manager_a7886866ea2228012cdf3c091f4135076}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The swatch cache delegate is used to temporary store intermediate rendering results in cache when an fx is being edited. Input fxs of an edited fx are typically requested to produce the same results multiple times as parameters of their schematic parent change -\/ so, caching these results is a remunerative practice as long as the fx is open for edit.
+
+This delegate stores resources on two different levels\+: one is directly related to swatch rendering, while the other is used to cache results on the other rendering contexts.
+
+In the swatch case, we store the above mentioned input results associated with the current scene scale, releasing them when the scene scale changes; plus, the resource associated with the current output is also stored.
+
+In other rendering contexts, the scene scale can be assumed constant -\/ so the above distinction is unnecessary. All results from the input fxs are stored until the edited fx is unset from the swatch.
+
+Please observe that variations in the scene context -\/ such as frame change, schematic changes, scene changes and so on -\/ actually cause the fx to be re-\/set for edit in the swatch. Once this happens, the previously stored results are conveniently flushed from the cache. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_swatch_cache_manager_a59b924d9aaa54354f65ba16a4b336006}\label{class_swatch_cache_manager_a59b924d9aaa54354f65ba16a4b336006}} 
+\index{SwatchCacheManager@{SwatchCacheManager}!SwatchCacheManager@{SwatchCacheManager}}
+\index{SwatchCacheManager@{SwatchCacheManager}!SwatchCacheManager@{SwatchCacheManager}}
+\doxysubsubsection{\texorpdfstring{SwatchCacheManager()}{SwatchCacheManager()}}
+{\footnotesize\ttfamily Swatch\+Cache\+Manager\+::\+Swatch\+Cache\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00089 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_swatch_cache_manager_ac938bf84c3f8346bb365504de229bb87}\label{class_swatch_cache_manager_ac938bf84c3f8346bb365504de229bb87}} 
+\index{SwatchCacheManager@{SwatchCacheManager}!````~SwatchCacheManager@{$\sim$SwatchCacheManager}}
+\index{````~SwatchCacheManager@{$\sim$SwatchCacheManager}!SwatchCacheManager@{SwatchCacheManager}}
+\doxysubsubsection{\texorpdfstring{$\sim$SwatchCacheManager()}{~SwatchCacheManager()}}
+{\footnotesize\ttfamily Swatch\+Cache\+Manager\+::$\sim$\+Swatch\+Cache\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00090 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_swatch_cache_manager_a6f65791ebee6f430e0192b98408522fe}\label{class_swatch_cache_manager_a6f65791ebee6f430e0192b98408522fe}} 
+\index{SwatchCacheManager@{SwatchCacheManager}!clearSwatchResults@{clearSwatchResults}}
+\index{clearSwatchResults@{clearSwatchResults}!SwatchCacheManager@{SwatchCacheManager}}
+\doxysubsubsection{\texorpdfstring{clearSwatchResults()}{clearSwatchResults()}}
+{\footnotesize\ttfamily void Swatch\+Cache\+Manager\+::clear\+Swatch\+Results (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01192                                             \{}
+\DoxyCodeLine{01193   QMutexLocker locker(\&m\_mutex);}
+\DoxyCodeLine{01194 }
+\DoxyCodeLine{01195   \textcolor{keywordflow}{if} (m\_currEditedFxResult) m\_currEditedFxResult-\/>releaseLock();}
+\DoxyCodeLine{01196   m\_currEditedFxResult = \mbox{\hyperlink{class_t_cache_resource_p}{TCacheResourceP}}();}
+\DoxyCodeLine{01197 }
+\DoxyCodeLine{01198   std::set<TCacheResourceP>::iterator it;}
+\DoxyCodeLine{01199   \textcolor{keywordflow}{for} (it = m\_swatchCacheContainer.begin(); it != m\_swatchCacheContainer.end();}
+\DoxyCodeLine{01200        ++it)}
+\DoxyCodeLine{01201     (*it)-\/>releaseLock();}
+\DoxyCodeLine{01202   m\_swatchCacheContainer.clear();}
+\DoxyCodeLine{01203 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_swatch_cache_manager_ad9dd145834b2dfe5cfd3970309ed1799}\label{class_swatch_cache_manager_ad9dd145834b2dfe5cfd3970309ed1799}} 
+\index{SwatchCacheManager@{SwatchCacheManager}!getResource@{getResource}}
+\index{getResource@{getResource}!SwatchCacheManager@{SwatchCacheManager}}
+\doxysubsubsection{\texorpdfstring{getResource()}{getResource()}}
+{\footnotesize\ttfamily void Swatch\+Cache\+Manager\+::get\+Resource (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}} \&}]{resource,  }\item[{const std\+::string \&}]{alias,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} \&}]{fx,  }\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{rs,  }\item[{\mbox{\hyperlink{struct_resource_declaration}{Resource\+Declaration}} $\ast$}]{res\+Data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_fx_cache_manager_delegate}{TFx\+Cache\+Manager\+Delegate}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01210                                                                    \{}
+\DoxyCodeLine{01211   \textcolor{comment}{// Only FX RESULTS are interesting -\/ plus, avoid if we're not currently}}
+\DoxyCodeLine{01212   \textcolor{comment}{// editing an fx.}}
+\DoxyCodeLine{01213   \textcolor{keywordflow}{if} (!(fx \&\& m\_setFxId > 0)) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01214 }
+\DoxyCodeLine{01215   QMutexLocker locker(\&m\_mutex);}
+\DoxyCodeLine{01216 }
+\DoxyCodeLine{01217   \textcolor{comment}{// Cache the result in case the fx's id is among the stored ones.}}
+\DoxyCodeLine{01218   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} fxId = fx-\/>getIdentifier();}
+\DoxyCodeLine{01219 }
+\DoxyCodeLine{01220   \textcolor{keywordflow}{if} (fxId == m\_setFxId \&\& rs.\mbox{\hyperlink{class_t_render_settings_a4903fdcd70fc5cc539133ac3d7c53316}{m\_isSwatch}}) \{}
+\DoxyCodeLine{01221     \textcolor{keywordflow}{if} (!resource) resource = \mbox{\hyperlink{class_t_cache_resource_p}{TCacheResourceP}}(alias, \textcolor{keyword}{true});}
+\DoxyCodeLine{01222 }
+\DoxyCodeLine{01223     resource-\/>addLock();}
+\DoxyCodeLine{01224     \textcolor{keywordflow}{if} (m\_currEditedFxResult) m\_currEditedFxResult-\/>releaseLock();}
+\DoxyCodeLine{01225 }
+\DoxyCodeLine{01226     m\_currEditedFxResult = resource;}
+\DoxyCodeLine{01227     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01228   \}}
+\DoxyCodeLine{01229 }
+\DoxyCodeLine{01230   \textcolor{keywordflow}{if} (m\_childrenFxIds.find(fxId) != m\_childrenFxIds.end()) \{}
+\DoxyCodeLine{01231     \textcolor{keywordflow}{if} (!resource) resource = \mbox{\hyperlink{class_t_cache_resource_p}{TCacheResourceP}}(alias, \textcolor{keyword}{true});}
+\DoxyCodeLine{01232 }
+\DoxyCodeLine{01233     \textcolor{keywordflow}{if} (rs.\mbox{\hyperlink{class_t_render_settings_a4903fdcd70fc5cc539133ac3d7c53316}{m\_isSwatch}}) \{}
+\DoxyCodeLine{01234       std::set<TCacheResourceP>::iterator it =}
+\DoxyCodeLine{01235           m\_swatchCacheContainer.find(resource);}
+\DoxyCodeLine{01236 }
+\DoxyCodeLine{01237       \textcolor{keywordflow}{if} (it == m\_swatchCacheContainer.end()) \{}
+\DoxyCodeLine{01238         resource-\/>addLock();}
+\DoxyCodeLine{01239         m\_swatchCacheContainer.insert(resource);}
+\DoxyCodeLine{01240       \}}
+\DoxyCodeLine{01241     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01242 \textcolor{preprocessor}{\#ifdef USE\_SQLITE\_HDPOOL}}
+\DoxyCodeLine{01243       resource-\/>enableBackup();}
+\DoxyCodeLine{01244       TCacheResourcePool::instance()-\/>addReference(resource, \textcolor{stringliteral}{"{}S"{}});}
+\DoxyCodeLine{01245 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{01246       std::set<TCacheResourceP>::iterator it =}
+\DoxyCodeLine{01247           m\_genericCacheContainer.find(resource);}
+\DoxyCodeLine{01248 }
+\DoxyCodeLine{01249       \textcolor{keywordflow}{if} (it == m\_genericCacheContainer.end()) \{}
+\DoxyCodeLine{01250         resource-\/>addLock();}
+\DoxyCodeLine{01251         m\_genericCacheContainer.insert(resource);}
+\DoxyCodeLine{01252       \}}
+\DoxyCodeLine{01253 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01254     \}}
+\DoxyCodeLine{01255   \}}
+\DoxyCodeLine{01256 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_swatch_cache_manager_a7886866ea2228012cdf3c091f4135076}\label{class_swatch_cache_manager_a7886866ea2228012cdf3c091f4135076}} 
+\index{SwatchCacheManager@{SwatchCacheManager}!instance@{instance}}
+\index{instance@{instance}!SwatchCacheManager@{SwatchCacheManager}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_swatch_cache_manager}{Swatch\+Cache\+Manager}} $\ast$ Swatch\+Cache\+Manager\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01125                                                  \{}
+\DoxyCodeLine{01126   \textcolor{keyword}{static} \mbox{\hyperlink{class_swatch_cache_manager}{SwatchCacheManager}} theInstance;}
+\DoxyCodeLine{01127   \textcolor{keywordflow}{return} \&theInstance;}
+\DoxyCodeLine{01128 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_swatch_cache_manager_a823767e18dfec120165cd84945d18802}\label{class_swatch_cache_manager_a823767e18dfec120165cd84945d18802}} 
+\index{SwatchCacheManager@{SwatchCacheManager}!renderHasOwnership@{renderHasOwnership}}
+\index{renderHasOwnership@{renderHasOwnership}!SwatchCacheManager@{SwatchCacheManager}}
+\doxysubsubsection{\texorpdfstring{renderHasOwnership()}{renderHasOwnership()}}
+{\footnotesize\ttfamily bool Swatch\+Cache\+Manager\+::render\+Has\+Ownership (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_render_resource_manager}{TRender\+Resource\+Manager}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00105 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_swatch_cache_manager_a46115a875ba194955bce7a18f4a3a083}\label{class_swatch_cache_manager_a46115a875ba194955bce7a18f4a3a083}} 
+\index{SwatchCacheManager@{SwatchCacheManager}!setFx@{setFx}}
+\index{setFx@{setFx}!SwatchCacheManager@{SwatchCacheManager}}
+\doxysubsubsection{\texorpdfstring{setFx()}{setFx()}}
+{\footnotesize\ttfamily void Swatch\+Cache\+Manager\+::set\+Fx (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} \&}]{actual\+Fx }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01132                                              \{}
+\DoxyCodeLine{01133   QMutexLocker locker(\&m\_mutex);}
+\DoxyCodeLine{01134 }
+\DoxyCodeLine{01135   \textcolor{comment}{// Update the fxs id data}}
+\DoxyCodeLine{01136   \textcolor{keywordflow}{if} (fx == \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}}()) \{}
+\DoxyCodeLine{01137     \textcolor{comment}{// Clear if no fx is set}}
+\DoxyCodeLine{01138     m\_setFxId = 0;}
+\DoxyCodeLine{01139     m\_childrenFxIds.clear();}
+\DoxyCodeLine{01140   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01141     m\_setFxId = fx-\/>getIdentifier();}
+\DoxyCodeLine{01142     m\_childrenFxIds.clear();}
+\DoxyCodeLine{01143     assert(m\_setFxId != 0);}
+\DoxyCodeLine{01144 }
+\DoxyCodeLine{01145     \mbox{\hyperlink{class_t_raster_fx}{TRasterFx}} *rfx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_raster_fx}{TRasterFx}} *\textcolor{keyword}{>}(fx.getPointer());}
+\DoxyCodeLine{01146     assert(rfx);}
+\DoxyCodeLine{01147 }
+\DoxyCodeLine{01148     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < fx-\/>getInputPortCount(); ++i) \{}
+\DoxyCodeLine{01149       \textcolor{comment}{// Fxs not allowing cache on the input port are skipped}}
+\DoxyCodeLine{01150       \textcolor{keywordflow}{if} (!rfx-\/>allowUserCacheOnPort(i)) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01151 }
+\DoxyCodeLine{01152       \mbox{\hyperlink{class_t_fx_port}{TFxPort}} *iport = fx-\/>getInputPort(i);}
+\DoxyCodeLine{01153       \textcolor{keywordflow}{if} (iport \&\& iport-\/>isConnected()) \{}
+\DoxyCodeLine{01154         \mbox{\hyperlink{class_t_fx}{TFx}} *child = iport-\/>getFx();}
+\DoxyCodeLine{01155 }
+\DoxyCodeLine{01156         \textcolor{comment}{// In the zerary case, extract the actual fx}}
+\DoxyCodeLine{01157         \mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *zcfx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *\textcolor{keyword}{>}(child);}
+\DoxyCodeLine{01158         \textcolor{keywordflow}{if} (zcfx) child       = zcfx-\/>getZeraryFx();}
+\DoxyCodeLine{01159 }
+\DoxyCodeLine{01160         assert(child \&\& child-\/>getIdentifier() != 0);}
+\DoxyCodeLine{01161         m\_childrenFxIds.insert(child-\/>getIdentifier());}
+\DoxyCodeLine{01162       \}}
+\DoxyCodeLine{01163     \}}
+\DoxyCodeLine{01164   \}}
+\DoxyCodeLine{01165 }
+\DoxyCodeLine{01166   \textcolor{comment}{// NOTE: Check if this should be avoided in some case...}}
+\DoxyCodeLine{01167 }
+\DoxyCodeLine{01168   \textcolor{comment}{// Release the locks and clear the resources}}
+\DoxyCodeLine{01169   \textcolor{keywordflow}{if} (m\_currEditedFxResult) m\_currEditedFxResult-\/>releaseLock();}
+\DoxyCodeLine{01170   m\_currEditedFxResult = \mbox{\hyperlink{class_t_cache_resource_p}{TCacheResourceP}}();}
+\DoxyCodeLine{01171 }
+\DoxyCodeLine{01172   std::set<TCacheResourceP>::iterator it;}
+\DoxyCodeLine{01173   \textcolor{keywordflow}{for} (it = m\_swatchCacheContainer.begin(); it != m\_swatchCacheContainer.end();}
+\DoxyCodeLine{01174        ++it)}
+\DoxyCodeLine{01175     (*it)-\/>releaseLock();}
+\DoxyCodeLine{01176   m\_swatchCacheContainer.clear();}
+\DoxyCodeLine{01177 }
+\DoxyCodeLine{01178 \textcolor{preprocessor}{\#ifdef USE\_SQLITE\_HDPOOL}}
+\DoxyCodeLine{01179   TCacheResourcePool::instance()-\/>releaseReferences(\textcolor{stringliteral}{"{}S"{}});}
+\DoxyCodeLine{01180 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{01181   \textcolor{keywordflow}{for} (it = m\_genericCacheContainer.begin();}
+\DoxyCodeLine{01182        it != m\_genericCacheContainer.end(); ++it)}
+\DoxyCodeLine{01183     (*it)-\/>releaseLock();}
+\DoxyCodeLine{01184   m\_genericCacheContainer.clear();}
+\DoxyCodeLine{01185 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01186 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/swatchviewer.\+cpp\end{DoxyCompactItemize}

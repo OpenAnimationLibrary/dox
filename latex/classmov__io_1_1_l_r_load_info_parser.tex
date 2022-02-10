@@ -1,0 +1,114 @@
+\hypertarget{classmov__io_1_1_l_r_load_info_parser}{}\doxysection{mov\+\_\+io\+::LRLoad\+Info\+Parser Class Reference}
+\label{classmov__io_1_1_l_r_load_info_parser}\index{mov\_io::LRLoadInfoParser@{mov\_io::LRLoadInfoParser}}
+Inheritance diagram for mov\+\_\+io\+::LRLoad\+Info\+Parser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmov__io_1_1_l_r_load_info_parser}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{classmov__io_1_1_l_r_load_info_parser_abd91332535303a5c1b30f1265b6e25dd}{header}} () const override
+\item 
+void \mbox{\hyperlink{classmov__io_1_1_l_r_load_info_parser_ac80b03f8798de21f05ff6b0338845e1f}{operator()}} (\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&stream) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmov__io_1_1_l_r_load_info_parser_abd91332535303a5c1b30f1265b6e25dd}\label{classmov__io_1_1_l_r_load_info_parser_abd91332535303a5c1b30f1265b6e25dd}} 
+\index{mov\_io::LRLoadInfoParser@{mov\_io::LRLoadInfoParser}!header@{header}}
+\index{header@{header}!mov\_io::LRLoadInfoParser@{mov\_io::LRLoadInfoParser}}
+\doxysubsubsection{\texorpdfstring{header()}{header()}}
+{\footnotesize\ttfamily QString mov\+\_\+io\+::\+LRLoad\+Info\+Parser\+::header (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00140 \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$LRMovLoadInfo"{}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmov__io_1_1_l_r_load_info_parser_ac80b03f8798de21f05ff6b0338845e1f}\label{classmov__io_1_1_l_r_load_info_parser_ac80b03f8798de21f05ff6b0338845e1f}} 
+\index{mov\_io::LRLoadInfoParser@{mov\_io::LRLoadInfoParser}!operator()@{operator()}}
+\index{operator()@{operator()}!mov\_io::LRLoadInfoParser@{mov\_io::LRLoadInfoParser}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily void mov\+\_\+io\+::\+LRLoad\+Info\+Parser\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00336                                               \{}
+\DoxyCodeLine{00337   \textcolor{comment}{// Read command data}}
+\DoxyCodeLine{00338   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} id;}
+\DoxyCodeLine{00339   QString shMemId;}
+\DoxyCodeLine{00340   msg >> \textcolor{keywordtype}{id} >> shMemId >> clr;}
+\DoxyCodeLine{00341 }
+\DoxyCodeLine{00342   QHash<unsigned int, TLevelReaderP>::iterator it = readers.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00343   \textcolor{keywordflow}{if} (it == readers.end()) \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00344 }
+\DoxyCodeLine{00345   \textcolor{comment}{// Read level infos}}
+\DoxyCodeLine{00346   \{}
+\DoxyCodeLine{00347     \mbox{\hyperlink{class_t_level_p}{TLevelP}} level;}
+\DoxyCodeLine{00348     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00349       level = it.value()-\/>loadInfo();}
+\DoxyCodeLine{00350     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00351       \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00352     \}}
+\DoxyCodeLine{00353 }
+\DoxyCodeLine{00354     \textcolor{keywordtype}{int} frameCount = level-\/>getFrameCount();}
+\DoxyCodeLine{00355     \textcolor{keywordflow}{if} (!shMemId.isEmpty()) \{}
+\DoxyCodeLine{00356       \textcolor{comment}{// Create a shared memory segment to transfer the infos to}}
+\DoxyCodeLine{00357       \mbox{\hyperlink{classtipc_1_1_default_message_parser}{tipc::DefaultMessageParser<SHMEM\_REQUEST>}} msgParser;}
+\DoxyCodeLine{00358       \mbox{\hyperlink{classtipc_1_1_message}{Message}} shMsg;}
+\DoxyCodeLine{00359 }
+\DoxyCodeLine{00360       shMsg << shMemId << frameCount * (int)\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}) << reset;}
+\DoxyCodeLine{00361       msgParser(shMsg);}
+\DoxyCodeLine{00362 }
+\DoxyCodeLine{00363       QString str;}
+\DoxyCodeLine{00364       shMsg >> reset >> str;}
+\DoxyCodeLine{00365       \textcolor{keywordflow}{if} (str != QString(\textcolor{stringliteral}{"{}ok"{}})) \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00366 }
+\DoxyCodeLine{00367       \textcolor{comment}{// Copy level data to the shared memory segment}}
+\DoxyCodeLine{00368       \{}
+\DoxyCodeLine{00369         QSharedMemory shmem(shMemId);}
+\DoxyCodeLine{00370         shmem.attach();}
+\DoxyCodeLine{00371         shmem.lock();}
+\DoxyCodeLine{00372 }
+\DoxyCodeLine{00373         TLevel::Table *table = level-\/>getTable();}
+\DoxyCodeLine{00374 }
+\DoxyCodeLine{00375         TLevel::Table::const\_iterator jt;}
+\DoxyCodeLine{00376         \textcolor{keywordtype}{int} *f = (\textcolor{keywordtype}{int} *)shmem.data();}
+\DoxyCodeLine{00377         \textcolor{keywordflow}{for} (jt = table-\/>begin(); jt != table-\/>end(); ++jt, ++f)}
+\DoxyCodeLine{00378           *f = jt-\/>first.getNumber();}
+\DoxyCodeLine{00379 }
+\DoxyCodeLine{00380         shmem.unlock();}
+\DoxyCodeLine{00381         shmem.detach();}
+\DoxyCodeLine{00382       \}}
+\DoxyCodeLine{00383     \}}
+\DoxyCodeLine{00384 }
+\DoxyCodeLine{00385     msg << QString(\textcolor{stringliteral}{"{}ok"{}}) << frameCount;}
+\DoxyCodeLine{00386   \}}
+\DoxyCodeLine{00387 }
+\DoxyCodeLine{00388   \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00389 }
+\DoxyCodeLine{00390 err:}
+\DoxyCodeLine{00391 }
+\DoxyCodeLine{00392   msg << QString(\textcolor{stringliteral}{"{}err"{}});}
+\DoxyCodeLine{00393 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+h\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+cpp\end{DoxyCompactItemize}

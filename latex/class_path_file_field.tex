@@ -1,0 +1,118 @@
+\hypertarget{class_path_file_field}{}\doxysection{Path\+File\+Field Class Reference}
+\label{class_path_file_field}\index{PathFileField@{PathFileField}}
+Inheritance diagram for Path\+File\+Field\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_path_file_field}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_path_file_field_ad8de6d2ab75df96d085f6ad3ec70b79b}{Path\+File\+Field}} (\mbox{\hyperlink{class_t_widget}{TWidget}} $\ast$parent, string name=\char`\"{}\char`\"{})
+\item 
+void \mbox{\hyperlink{class_path_file_field_a6320a97922ba5d32bfc010c6779d43a2}{on\+Focus\+Change}} (bool on)
+\item 
+void \mbox{\hyperlink{class_path_file_field_a231460c2f7454a76f43a11b4de19c336}{close}} ()
+\item 
+void \mbox{\hyperlink{class_path_file_field_a8404858063039782bdb09d995c82290d}{key\+Down}} (int key, unsigned long flags, const \mbox{\hyperlink{class_t_point_t}{TPoint}} \&p)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_path_file_field_ad8de6d2ab75df96d085f6ad3ec70b79b}\label{class_path_file_field_ad8de6d2ab75df96d085f6ad3ec70b79b}} 
+\index{PathFileField@{PathFileField}!PathFileField@{PathFileField}}
+\index{PathFileField@{PathFileField}!PathFileField@{PathFileField}}
+\doxysubsubsection{\texorpdfstring{PathFileField()}{PathFileField()}}
+{\footnotesize\ttfamily Path\+File\+Field\+::\+Path\+File\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_widget}{TWidget}} $\ast$}]{parent,  }\item[{string}]{name = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022     : \mbox{\hyperlink{class_t_text_field}{TTextField}}(parent, name) \{}
+\DoxyCodeLine{00023   m\_page = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_script_config_panel}{ScriptConfigPanel}} *\textcolor{keyword}{>}(parent);}
+\DoxyCodeLine{00024 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_path_file_field_a231460c2f7454a76f43a11b4de19c336}\label{class_path_file_field_a231460c2f7454a76f43a11b4de19c336}} 
+\index{PathFileField@{PathFileField}!close@{close}}
+\index{close@{close}!PathFileField@{PathFileField}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily void Path\+File\+Field\+::close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035                           \{}
+\DoxyCodeLine{00036   \textcolor{keyword}{static} wstring oldText;}
+\DoxyCodeLine{00037   \textcolor{keywordflow}{if} (oldText != m\_text) \{}
+\DoxyCodeLine{00038     \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp(m\_text);}
+\DoxyCodeLine{00039     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00040       wstring uncString;}
+\DoxyCodeLine{00041       \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00042         uncString = toWideString(convertToUncString(fp));}
+\DoxyCodeLine{00043         m\_text    = uncString;}
+\DoxyCodeLine{00044         m\_page-\/>loadScript(\mbox{\hyperlink{class_t_file_path}{TFilePath}}(uncString));}
+\DoxyCodeLine{00045       \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&) \{}
+\DoxyCodeLine{00046         \mbox{\hyperlink{class_t_file_status}{TFileStatus}} fs(fp);}
+\DoxyCodeLine{00047         \textcolor{keywordflow}{if} (fs.doesExist() \&\& !fs.isDirectory())}
+\DoxyCodeLine{00048           m\_page-\/>loadScript(fp);}
+\DoxyCodeLine{00049         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00050           \mbox{\hyperlink{class_script_task}{ScriptTask}} *task = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_script_task}{ScriptTask}} *\textcolor{keyword}{>}(m\_page-\/>getTask());}
+\DoxyCodeLine{00051           \textcolor{keywordflow}{if} (task) task-\/>m\_arg1 = toString(m\_text);}
+\DoxyCodeLine{00052         \}}
+\DoxyCodeLine{00053       \}}
+\DoxyCodeLine{00054       oldText = m\_text;}
+\DoxyCodeLine{00055     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00056       TMessage::error(\textcolor{stringliteral}{"{}boh"{}});}
+\DoxyCodeLine{00057     \}}
+\DoxyCodeLine{00058   \}}
+\DoxyCodeLine{00059   invalidate();}
+\DoxyCodeLine{00060 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_path_file_field_a8404858063039782bdb09d995c82290d}\label{class_path_file_field_a8404858063039782bdb09d995c82290d}} 
+\index{PathFileField@{PathFileField}!keyDown@{keyDown}}
+\index{keyDown@{keyDown}!PathFileField@{PathFileField}}
+\doxysubsubsection{\texorpdfstring{keyDown()}{keyDown()}}
+{\footnotesize\ttfamily void Path\+File\+Field\+::key\+Down (\begin{DoxyParamCaption}\item[{int}]{key,  }\item[{unsigned long}]{flags,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPoint}} \&}]{p }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00064                                                                          \{}
+\DoxyCodeLine{00065   \textcolor{keywordflow}{if} (key == TK\_Return)}
+\DoxyCodeLine{00066     close();}
+\DoxyCodeLine{00067   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00068     TTextField::keyDown(key, flags, p);}
+\DoxyCodeLine{00069 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_path_file_field_a6320a97922ba5d32bfc010c6779d43a2}\label{class_path_file_field_a6320a97922ba5d32bfc010c6779d43a2}} 
+\index{PathFileField@{PathFileField}!onFocusChange@{onFocusChange}}
+\index{onFocusChange@{onFocusChange}!PathFileField@{PathFileField}}
+\doxysubsubsection{\texorpdfstring{onFocusChange()}{onFocusChange()}}
+{\footnotesize\ttfamily void Path\+File\+Field\+::on\+Focus\+Change (\begin{DoxyParamCaption}\item[{bool}]{on }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_text_field}{TText\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028                                          \{}
+\DoxyCodeLine{00029   \textcolor{keywordflow}{if} (!on) close();}
+\DoxyCodeLine{00030   TWidget::onFocusChange(on);}
+\DoxyCodeLine{00031 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tfarmclient/scriptconfigpanel.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tfarmclient/scriptconfigpanel.\+cpp\end{DoxyCompactItemize}

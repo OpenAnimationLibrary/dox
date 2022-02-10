@@ -1,0 +1,84 @@
+\hypertarget{class_select_previous_keys_in_row_command}{}\doxysection{Select\+Previous\+Keys\+In\+Row\+Command Class Reference}
+\label{class_select_previous_keys_in_row_command}\index{SelectPreviousKeysInRowCommand@{SelectPreviousKeysInRowCommand}}
+Inheritance diagram for Select\+Previous\+Keys\+In\+Row\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_select_previous_keys_in_row_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_select_previous_keys_in_row_command_a6cebdaa77f34f8de07533ff30924ea53}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_select_previous_keys_in_row_command_a314d76750fe0aebcc569ae8d952c0fcc}\label{class_select_previous_keys_in_row_command_a314d76750fe0aebcc569ae8d952c0fcc}} 
+\index{SelectPreviousKeysInRowCommand@{SelectPreviousKeysInRowCommand}!SelectPreviousKeysInRowCommand@{SelectPreviousKeysInRowCommand}}
+\index{SelectPreviousKeysInRowCommand@{SelectPreviousKeysInRowCommand}!SelectPreviousKeysInRowCommand@{SelectPreviousKeysInRowCommand}}
+\doxysubsubsection{\texorpdfstring{SelectPreviousKeysInRowCommand()}{SelectPreviousKeysInRowCommand()}}
+{\footnotesize\ttfamily Select\+Previous\+Keys\+In\+Row\+Command\+::\+Select\+Previous\+Keys\+In\+Row\+Command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01330       : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(MI\_SelectPreviousKeysInRow) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_select_previous_keys_in_row_command_a6cebdaa77f34f8de07533ff30924ea53}\label{class_select_previous_keys_in_row_command_a6cebdaa77f34f8de07533ff30924ea53}} 
+\index{SelectPreviousKeysInRowCommand@{SelectPreviousKeysInRowCommand}!execute@{execute}}
+\index{execute@{execute}!SelectPreviousKeysInRowCommand@{SelectPreviousKeysInRowCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Select\+Previous\+Keys\+In\+Row\+Command\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01332                           \{}
+\DoxyCodeLine{01333     \mbox{\hyperlink{class_t_app}{TApp}} *app                     = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{01334     \mbox{\hyperlink{class_t_keyframe_selection}{TKeyframeSelection}} *selection = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_keyframe_selection}{TKeyframeSelection}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{01335         app-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}()-\/>getSelection());}
+\DoxyCodeLine{01336     \textcolor{keywordflow}{if} (!selection) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01337     \textcolor{keywordtype}{int} currentRow    = app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>getFrame();}
+\DoxyCodeLine{01338     \textcolor{keywordtype}{int} currentColumn = app-\/>\mbox{\hyperlink{class_t_app_a1e294e7cff300851d12a8c3d196943f6}{getCurrentColumn}}()-\/>getColumnIndex();}
+\DoxyCodeLine{01339 }
+\DoxyCodeLine{01340     selection-\/>selectNone();}
+\DoxyCodeLine{01341     \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = app-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{01342     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh      = scene-\/>\mbox{\hyperlink{class_toonz_scene_ae3c828e3223fd809fd59189233d0576a}{getXsheet}}();}
+\DoxyCodeLine{01343     \textcolor{keywordtype}{int} col;}
+\DoxyCodeLine{01344     \textcolor{keywordflow}{for} (col = -\/1; col <= currentColumn; col++) \{}
+\DoxyCodeLine{01345       \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} objectId;}
+\DoxyCodeLine{01346       \textcolor{keywordflow}{if} (col == -\/1 \&\& Preferences::instance()-\/>isXsheetCameraColumnVisible())}
+\DoxyCodeLine{01347         objectId = TStageObjectId::CameraId(xsh-\/>getCameraColumnIndex());}
+\DoxyCodeLine{01348       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01349         objectId = TStageObjectId::ColumnId(col);}
+\DoxyCodeLine{01350       \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *pegbar = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(objectId);}
+\DoxyCodeLine{01351       \mbox{\hyperlink{class_t_stage_object_aeb7ffeab4e2feefb1248eab636199872}{TStageObject::KeyframeMap}} keyframes;}
+\DoxyCodeLine{01352       pegbar-\/>\mbox{\hyperlink{class_t_stage_object_abd07edf36366eeefd6f6f68e58b147bc}{getKeyframes}}(keyframes);}
+\DoxyCodeLine{01353       \textcolor{keywordflow}{for} (TStageObject::KeyframeMap::iterator it = keyframes.begin();}
+\DoxyCodeLine{01354            it != keyframes.end(); ++it) \{}
+\DoxyCodeLine{01355         \textcolor{keywordtype}{int} row = it-\/>first;}
+\DoxyCodeLine{01356         \textcolor{keywordflow}{if} (row != currentRow) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01357         assert(pegbar-\/>\mbox{\hyperlink{class_t_stage_object_af2c8c37f71b2b2e2c2a15c6eb73b8b38}{isKeyframe}}(row));}
+\DoxyCodeLine{01358         selection-\/>select(row, col);}
+\DoxyCodeLine{01359       \}}
+\DoxyCodeLine{01360     \}}
+\DoxyCodeLine{01361     app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{01362     app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{01363   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xsheetcmd.\+cpp\end{DoxyCompactItemize}

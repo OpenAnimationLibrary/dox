@@ -1,0 +1,285 @@
+\hypertarget{class_t_stroke_param_deformation}{}\doxysection{TStroke\+Param\+Deformation Class Reference}
+\label{class_t_stroke_param_deformation}\index{TStrokeParamDeformation@{TStrokeParamDeformation}}
+
+
+{\ttfamily \#include $<$tstrokedeformations.\+h$>$}
+
+Inheritance diagram for TStroke\+Param\+Deformation\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_t_stroke_param_deformation}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_stroke_param_deformation_af1d6d84d5e2cf4b9f6ed90779ab19d26}{TStroke\+Param\+Deformation}} (const \mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$stroke, double parameter\+Of\+Nearest, double length\+Of\+Deformation=100)
+\item 
+\mbox{\hyperlink{class_t_stroke_param_deformation_ac0f371c2873de217b40875ca482f160f}{TStroke\+Param\+Deformation}} (const \mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$stroke, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&vect, double parameter\+Of\+Nearest, double length\+Of\+Deformation=100)
+\item 
+\mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} \mbox{\hyperlink{class_t_stroke_param_deformation_a7a4e3383b4b9c65959333e6f379a6ca5}{get\+Displacement}} (const \mbox{\hyperlink{class_t_stroke}{TStroke}} \&, double) const override
+\item 
+\mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} \mbox{\hyperlink{class_t_stroke_param_deformation_aa0253a314816e0f497a09255741700f7}{get\+Displacement\+For\+Control\+Point}} (const \mbox{\hyperlink{class_t_stroke}{TStroke}} \&stroke, UINT n) const override
+\item 
+\mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} \mbox{\hyperlink{class_t_stroke_param_deformation_a2da6b40726d97b3b0847c799ff1c4f8c}{get\+Displacement\+For\+Control\+Point\+Len}} (const \mbox{\hyperlink{class_t_stroke}{TStroke}} \&stroke, double cp\+Len) const override
+\item 
+double \mbox{\hyperlink{class_t_stroke_param_deformation_a3198b6545fef5b1a547dffcd47821bff}{get\+Delta}} (const \mbox{\hyperlink{class_t_stroke}{TStroke}} \&, double) const override
+\item 
+double \mbox{\hyperlink{class_t_stroke_param_deformation_ac77e8cf1cb292373ee94b8f5a239e7c5}{get\+Max\+Diff}} () const override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manage deformation of a stroke using a gaussian potential.
+
+Function is b$\ast$exp( -\/((x-\/a)$^\wedge$2)/c ). 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_stroke_param_deformation_af1d6d84d5e2cf4b9f6ed90779ab19d26}\label{class_t_stroke_param_deformation_af1d6d84d5e2cf4b9f6ed90779ab19d26}} 
+\index{TStrokeParamDeformation@{TStrokeParamDeformation}!TStrokeParamDeformation@{TStrokeParamDeformation}}
+\index{TStrokeParamDeformation@{TStrokeParamDeformation}!TStrokeParamDeformation@{TStrokeParamDeformation}}
+\doxysubsubsection{\texorpdfstring{TStrokeParamDeformation()}{TStrokeParamDeformation()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily TStroke\+Param\+Deformation\+::\+TStroke\+Param\+Deformation (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$}]{stroke,  }\item[{double}]{parameter\+Of\+Nearest,  }\item[{double}]{length\+Of\+Deformation = {\ttfamily 100} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00267     : m\_pRef(ref), m\_startParameter(s), m\_lengthOfDeformation(l), m\_vect(0) \{}
+\DoxyCodeLine{00268   assert(m\_lengthOfDeformation >= 0);}
+\DoxyCodeLine{00269   \textcolor{keywordflow}{if} (isAlmostZero(m\_lengthOfDeformation))}
+\DoxyCodeLine{00270     m\_lengthOfDeformation = TConsts::epsilon;}
+\DoxyCodeLine{00271 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_stroke_param_deformation_ac0f371c2873de217b40875ca482f160f}\label{class_t_stroke_param_deformation_ac0f371c2873de217b40875ca482f160f}} 
+\index{TStrokeParamDeformation@{TStrokeParamDeformation}!TStrokeParamDeformation@{TStrokeParamDeformation}}
+\index{TStrokeParamDeformation@{TStrokeParamDeformation}!TStrokeParamDeformation@{TStrokeParamDeformation}}
+\doxysubsubsection{\texorpdfstring{TStrokeParamDeformation()}{TStrokeParamDeformation()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily TStroke\+Param\+Deformation\+::\+TStroke\+Param\+Deformation (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$}]{stroke,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{vect,  }\item[{double}]{parameter\+Of\+Nearest,  }\item[{double}]{length\+Of\+Deformation = {\ttfamily 100} }\end{DoxyParamCaption})}
+
+Use this constructor with move\+Points. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00254     : m\_pRef(ref)}
+\DoxyCodeLine{00255     , m\_startParameter(s)}
+\DoxyCodeLine{00256     , m\_lengthOfDeformation(l)}
+\DoxyCodeLine{00257     , m\_vect(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_point_t}{TPointD}}(vect)) \{}
+\DoxyCodeLine{00258   assert(m\_lengthOfDeformation >= 0);}
+\DoxyCodeLine{00259   \textcolor{keywordflow}{if} (isAlmostZero(m\_lengthOfDeformation))}
+\DoxyCodeLine{00260     m\_lengthOfDeformation = TConsts::epsilon;}
+\DoxyCodeLine{00261 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_stroke_param_deformation_ac8f183b7fe223ffb46d7ba90c9846741}\label{class_t_stroke_param_deformation_ac8f183b7fe223ffb46d7ba90c9846741}} 
+\index{TStrokeParamDeformation@{TStrokeParamDeformation}!````~TStrokeParamDeformation@{$\sim$TStrokeParamDeformation}}
+\index{````~TStrokeParamDeformation@{$\sim$TStrokeParamDeformation}!TStrokeParamDeformation@{TStrokeParamDeformation}}
+\doxysubsubsection{\texorpdfstring{$\sim$TStrokeParamDeformation()}{~TStrokeParamDeformation()}}
+{\footnotesize\ttfamily TStroke\+Param\+Deformation\+::$\sim$\+TStroke\+Param\+Deformation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00380 \{ \textcolor{keyword}{delete} m\_vect; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_stroke_param_deformation_a3198b6545fef5b1a547dffcd47821bff}\label{class_t_stroke_param_deformation_a3198b6545fef5b1a547dffcd47821bff}} 
+\index{TStrokeParamDeformation@{TStrokeParamDeformation}!getDelta@{getDelta}}
+\index{getDelta@{getDelta}!TStrokeParamDeformation@{TStrokeParamDeformation}}
+\doxysubsubsection{\texorpdfstring{getDelta()}{getDelta()}}
+{\footnotesize\ttfamily double TStroke\+Param\+Deformation\+::get\+Delta (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_stroke}{TStroke}} \&}]{stroke,  }\item[{double}]{w }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+$\vert$ d \mbox{\hyperlink{class_t_stroke_param_deformation_a7a4e3383b4b9c65959333e6f379a6ca5}{get\+Displacement()}} / dw $\vert$ \begin{DoxyParagraph}{stroke to test}
+
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{w stroke parameter}
+\textbackslash{}ret $\vert$ d \mbox{\hyperlink{class_t_stroke_param_deformation_a7a4e3383b4b9c65959333e6f379a6ca5}{get\+Displacement()}} / dw $\vert$ 
+\end{DoxyParagraph}
+
+
+Implements \mbox{\hyperlink{class_t_stroke_deformation_a7b9fd2eadfddc3e599222d8cdd21533d}{TStroke\+Deformation}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00355                                                          \{}
+\DoxyCodeLine{00356   \textcolor{comment}{// potenziale exp\string^(-\/x\string^2) limitato tra}}
+\DoxyCodeLine{00357   \textcolor{comment}{// [-\/c\_maxLengthOfGaussian,c\_maxLengthOfGaussian]}}
+\DoxyCodeLine{00358   \textcolor{keywordtype}{double} diff = stroke.\mbox{\hyperlink{class_t_stroke_a079a513cb8a60d9a759b4f0c8211eab4}{getLength}}(w);}
+\DoxyCodeLine{00359 }
+\DoxyCodeLine{00360   diff = diff -\/ m\_startParameter;}
+\DoxyCodeLine{00361   \textcolor{keywordflow}{if} (fabs(diff) <= m\_lengthOfDeformation) \{}
+\DoxyCodeLine{00362     \textcolor{comment}{// modulo il vettore spostamento in funzione  del potenziale}}
+\DoxyCodeLine{00363     \textcolor{comment}{//  il termine (1.0/m\_lengthOfDeformation) * 3 scala}}
+\DoxyCodeLine{00364     \textcolor{comment}{//  il punto in diff su un sistema di coordinate}}
+\DoxyCodeLine{00365     \textcolor{comment}{//  normalizzato, associato con la curva exp\string^(-\/x\string^2)}}
+\DoxyCodeLine{00366     diff *= (1.0 / m\_lengthOfDeformation) * c\_maxLengthOfGaussian;}
+\DoxyCodeLine{00367 }
+\DoxyCodeLine{00368     \textcolor{keywordflow}{return} derivateOfGaussianPotential(diff);}
+\DoxyCodeLine{00369   \}}
+\DoxyCodeLine{00370 }
+\DoxyCodeLine{00371   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00372 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01591}{TStroke\+::get\+Length()}}.
+
+\mbox{\Hypertarget{class_t_stroke_param_deformation_a7a4e3383b4b9c65959333e6f379a6ca5}\label{class_t_stroke_param_deformation_a7a4e3383b4b9c65959333e6f379a6ca5}} 
+\index{TStrokeParamDeformation@{TStrokeParamDeformation}!getDisplacement@{getDisplacement}}
+\index{getDisplacement@{getDisplacement}!TStrokeParamDeformation@{TStrokeParamDeformation}}
+\doxysubsubsection{\texorpdfstring{getDisplacement()}{getDisplacement()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} TStroke\+Param\+Deformation\+::get\+Displacement (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_stroke}{TStroke}} \&}]{stroke,  }\item[{double}]{w }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+return displacement to use with function increase\+Control\+Points \begin{DoxyParagraph}{stroke to test}
+
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{w stroke parameter}
+\textbackslash{}ret displacement to apply to obtain deformation 
+\end{DoxyParagraph}
+\begin{DoxySeeAlso}{See also}
+increase\+Control\+Points 
+\end{DoxySeeAlso}
+
+
+Implements \mbox{\hyperlink{class_t_stroke_deformation_a14016df3f46a20f16313dd725a514d63}{TStroke\+Deformation}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00328                                                                      \{}
+\DoxyCodeLine{00329   \textcolor{comment}{// potenziale exp\string^(-\/x\string^2) limitato tra}}
+\DoxyCodeLine{00330   \textcolor{comment}{// [-\/c\_maxLengthOfGaussian,c\_maxLengthOfGaussian]}}
+\DoxyCodeLine{00331   \textcolor{keywordtype}{double} diff = stroke.\mbox{\hyperlink{class_t_stroke_a079a513cb8a60d9a759b4f0c8211eab4}{getLength}}(w);}
+\DoxyCodeLine{00332 }
+\DoxyCodeLine{00333   diff = diff -\/ m\_startParameter;}
+\DoxyCodeLine{00334   \textcolor{keywordflow}{if} (fabs(diff) <= m\_lengthOfDeformation) \{}
+\DoxyCodeLine{00335     \textcolor{comment}{// modulo il vettore spostamento in funzione  del potenziale}}
+\DoxyCodeLine{00336     \textcolor{comment}{//  il termine (1.0/m\_lengthOfDeformation) * 3 scala}}
+\DoxyCodeLine{00337     \textcolor{comment}{//  il punto in diff su un sistema di coordinate}}
+\DoxyCodeLine{00338     \textcolor{comment}{//  normalizzato, associato con la curva exp\string^(-\/x\string^2)}}
+\DoxyCodeLine{00339     diff *= (1.0 / m\_lengthOfDeformation) * c\_maxLengthOfGaussian;}
+\DoxyCodeLine{00340 }
+\DoxyCodeLine{00341     \textcolor{keywordflow}{if} (m\_vect)}
+\DoxyCodeLine{00342       \textcolor{keywordflow}{return} gaussianPotential(diff) * \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(*m\_vect, 0);}
+\DoxyCodeLine{00343     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00344       \textcolor{keywordtype}{double} outVal = gaussianPotential(diff);}
+\DoxyCodeLine{00345       \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(outVal, outVal, 0);}
+\DoxyCodeLine{00346     \}}
+\DoxyCodeLine{00347   \}}
+\DoxyCodeLine{00348 }
+\DoxyCodeLine{00349   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}();}
+\DoxyCodeLine{00350 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01591}{TStroke\+::get\+Length()}}.
+
+\mbox{\Hypertarget{class_t_stroke_param_deformation_aa0253a314816e0f497a09255741700f7}\label{class_t_stroke_param_deformation_aa0253a314816e0f497a09255741700f7}} 
+\index{TStrokeParamDeformation@{TStrokeParamDeformation}!getDisplacementForControlPoint@{getDisplacementForControlPoint}}
+\index{getDisplacementForControlPoint@{getDisplacementForControlPoint}!TStrokeParamDeformation@{TStrokeParamDeformation}}
+\doxysubsubsection{\texorpdfstring{getDisplacementForControlPoint()}{getDisplacementForControlPoint()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} TStroke\+Param\+Deformation\+::get\+Displacement\+For\+Control\+Point (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_stroke}{TStroke}} \&}]{stroke,  }\item[{UINT}]{n }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+return displacement to use with function modify\+Control\+Points \begin{DoxyParagraph}{stroke to test}
+
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{n control point to get}
+\textbackslash{}ret displacement to apply to obtain deformation 
+\end{DoxyParagraph}
+\begin{DoxySeeAlso}{See also}
+modify\+Control\+Points 
+\end{DoxySeeAlso}
+
+
+Implements \mbox{\hyperlink{class_t_stroke_deformation_ac566a93f9396d25548059ea993d3224d}{TStroke\+Deformation}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00275                                          \{}
+\DoxyCodeLine{00276   \textcolor{comment}{// potenziale exp\string^(-\/x\string^2) limitato tra}}
+\DoxyCodeLine{00277   \textcolor{comment}{// [-\/c\_maxLengthOfGaussian,c\_maxLengthOfGaussian]}}
+\DoxyCodeLine{00278   \textcolor{keywordtype}{double} diff = stroke.\mbox{\hyperlink{class_t_stroke_a18abce70ef2b2ecd88a50ac9bc8d6d7b}{getLengthAtControlPoint}}(n);}
+\DoxyCodeLine{00279 }
+\DoxyCodeLine{00280   diff = diff -\/ m\_startParameter;}
+\DoxyCodeLine{00281   \textcolor{keywordflow}{if} (fabs(diff) <= m\_lengthOfDeformation) \{}
+\DoxyCodeLine{00282     \textcolor{comment}{// modulo il vettore spostamento in funzione  del potenziale}}
+\DoxyCodeLine{00283     \textcolor{comment}{//  il termine (1.0/m\_lengthOfDeformation) * 3 scala}}
+\DoxyCodeLine{00284     \textcolor{comment}{//  il punto in diff su un sistema di coordinate}}
+\DoxyCodeLine{00285     \textcolor{comment}{//  normalizzato, associato con la curva exp\string^(-\/x\string^2)}}
+\DoxyCodeLine{00286     diff *= (1.0 / m\_lengthOfDeformation) * c\_maxLengthOfGaussian;}
+\DoxyCodeLine{00287 }
+\DoxyCodeLine{00288     \textcolor{keywordflow}{if} (m\_vect)}
+\DoxyCodeLine{00289       \textcolor{keywordflow}{return} gaussianPotential(diff) * \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(*m\_vect, 0);}
+\DoxyCodeLine{00290     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00291       \textcolor{keywordtype}{double} outVal = gaussianPotential(diff);}
+\DoxyCodeLine{00292       \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(outVal, outVal, 0);}
+\DoxyCodeLine{00293     \}}
+\DoxyCodeLine{00294   \}}
+\DoxyCodeLine{00295 }
+\DoxyCodeLine{00296   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}();}
+\DoxyCodeLine{00297 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l02181}{TStroke\+::get\+Length\+At\+Control\+Point()}}.
+
+\mbox{\Hypertarget{class_t_stroke_param_deformation_a2da6b40726d97b3b0847c799ff1c4f8c}\label{class_t_stroke_param_deformation_a2da6b40726d97b3b0847c799ff1c4f8c}} 
+\index{TStrokeParamDeformation@{TStrokeParamDeformation}!getDisplacementForControlPointLen@{getDisplacementForControlPointLen}}
+\index{getDisplacementForControlPointLen@{getDisplacementForControlPointLen}!TStrokeParamDeformation@{TStrokeParamDeformation}}
+\doxysubsubsection{\texorpdfstring{getDisplacementForControlPointLen()}{getDisplacementForControlPointLen()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_thick_point}{TThick\+Point}} TStroke\+Param\+Deformation\+::get\+Displacement\+For\+Control\+Point\+Len (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_stroke}{TStroke}} \&}]{stroke,  }\item[{double}]{cp\+Len }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_stroke_deformation}{TStroke\+Deformation}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00300                                                    \{}
+\DoxyCodeLine{00301   \textcolor{comment}{// potenziale exp\string^(-\/x\string^2) limitato tra}}
+\DoxyCodeLine{00302   \textcolor{comment}{// [-\/c\_maxLengthOfGaussian,c\_maxLengthOfGaussian]}}
+\DoxyCodeLine{00303   \textcolor{comment}{// double  diff =  stroke.getLengthAtControlPoint(n);}}
+\DoxyCodeLine{00304   \textcolor{comment}{// double  diff =  cpLen;}}
+\DoxyCodeLine{00305 }
+\DoxyCodeLine{00306   \textcolor{keywordtype}{double} diff = cpLenDiff;}
+\DoxyCodeLine{00307   \textcolor{keywordflow}{if} (fabs(diff) <= m\_lengthOfDeformation) \{}
+\DoxyCodeLine{00308     \textcolor{comment}{// modulo il vettore spostamento in funzione  del potenziale}}
+\DoxyCodeLine{00309     \textcolor{comment}{//  il termine (1.0/m\_lengthOfDeformation) * 3 scala}}
+\DoxyCodeLine{00310     \textcolor{comment}{//  il punto in diff su un sistema di coordinate}}
+\DoxyCodeLine{00311     \textcolor{comment}{//  normalizzato, associato con la curva exp\string^(-\/x\string^2)}}
+\DoxyCodeLine{00312     diff *= (1.0 / m\_lengthOfDeformation) * c\_maxLengthOfGaussian;}
+\DoxyCodeLine{00313 }
+\DoxyCodeLine{00314     \textcolor{keywordflow}{if} (m\_vect)}
+\DoxyCodeLine{00315       \textcolor{keywordflow}{return} gaussianPotential(diff) * \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(*m\_vect, 0);}
+\DoxyCodeLine{00316     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00317       \textcolor{keywordtype}{double} outVal = gaussianPotential(diff);}
+\DoxyCodeLine{00318       \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(outVal, outVal, 0);}
+\DoxyCodeLine{00319     \}}
+\DoxyCodeLine{00320   \}}
+\DoxyCodeLine{00321 }
+\DoxyCodeLine{00322   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}();}
+\DoxyCodeLine{00323 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_stroke_param_deformation_ac77e8cf1cb292373ee94b8f5a239e7c5}\label{class_t_stroke_param_deformation_ac77e8cf1cb292373ee94b8f5a239e7c5}} 
+\index{TStrokeParamDeformation@{TStrokeParamDeformation}!getMaxDiff@{getMaxDiff}}
+\index{getMaxDiff@{getMaxDiff}!TStrokeParamDeformation@{TStrokeParamDeformation}}
+\doxysubsubsection{\texorpdfstring{getMaxDiff()}{getMaxDiff()}}
+{\footnotesize\ttfamily double TStroke\+Param\+Deformation\+::get\+Max\+Diff (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Max diff of delta (This value indicates when it\textquotesingle{}s necessary to insert control point) \textbackslash{}ret max displacement permitted 
+
+Implements \mbox{\hyperlink{class_t_stroke_deformation_a45f44de3e2a465e262b7a3a8a71a02e6}{TStroke\+Deformation}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00376 \{ \textcolor{keywordflow}{return} 0.09; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tstrokedeformations.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tvrender/tstrokedeformations.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,383 @@
+\hypertarget{class_t_thread_1_1_executor}{}\doxysection{TThread\+::Executor Class Reference}
+\label{class_t_thread_1_1_executor}\index{TThread::Executor@{TThread::Executor}}
+
+
+{\ttfamily \#include $<$tthread.\+h$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_t_thread_1_1_executor_1_1_imp}{Imp}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_executor_af31c8db8ac72df4c342e7769e95e2135}{add\+Task}} (\mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} task)
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_executor_a6aabf03f90569a0fceb86f5a3d054c9b}{remove\+Task}} (\mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} task)
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_executor_a3ebba69410a233ff1e5774d7e4d1246f}{cancel\+All}} ()
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_executor_a85231531a2fa273db401f090c9aba4ea}{set\+Max\+Active\+Tasks}} (int count)
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_executor_a260fbe2faa1ee57f2042a03aaf30ec1b}{set\+Max\+Active\+Load}} (int load)
+\item 
+int \mbox{\hyperlink{class_t_thread_1_1_executor_a966129289d00b7539df5f1b85c41a369}{max\+Active\+Tasks}} () const
+\item 
+int \mbox{\hyperlink{class_t_thread_1_1_executor_a114387a08ab8e53bdbbc30e2f53a336b}{max\+Active\+Load}} () const
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_executor_a02c4c637864647ce22be391919049d3a}{set\+Dedicated\+Threads}} (bool dedicated, bool persistent=true)
+\begin{DoxyCompactList}\small\item\em Specifies the use of dedicated threads for the \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}}\textquotesingle{}s task group. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_t_thread_1_1_executor_ab4f19cebb2e9ffa04ef22aec42d402b7}{init}} ()
+\item 
+static void \mbox{\hyperlink{class_t_thread_1_1_executor_ad11a0430a6be6601a2e5aa34a10c3b60}{shutdown}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_t_thread_1_1_executor_af022abc71323b07be5460515acab8737}{Executor\+Imp}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} class provides an effective way for planning the execution of user-\/defined tasks that require separate working threads.
+
+When an application needs to perform a resource-\/consuming task, it is often a good idea to dedicate a separate thread for it, especially in GUI applications; however, doing so eventually raises the problem of managing such intensive tasks in a way that constantly ensures the correct use of the machine resources -\/ so that in any given time the CPU usage is maximal, but not overloaded. Additional requests by the user may arise, including preferenced ordering among tasks, the necessity of salvaging some CPU resources or threads for incoming tasks, and so on. ~\newline
+ ~\newline
+ The TThread namespace API contains two main classes, {\bfseries{\mbox{\hyperlink{class_t_thread_1_1_runnable}{Runnable}}}} and {\bfseries{\mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}}}}, which provide a way for implementing consistent threading strategies. ~\newline
+ ~\newline
+ In order to use the \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} class it is first necessary to install the thread manager into application code by calling the static method \mbox{\hyperlink{class_t_thread_1_1_executor_ab4f19cebb2e9ffa04ef22aec42d402b7}{init()}} appropriately. ~\newline
+ ~\newline
+ Executors are then used to submit -\/ or eventually remove -\/ tasks for execution into a separate working thread, by means of the {\bfseries{\mbox{\hyperlink{class_t_thread_1_1_executor_af31c8db8ac72df4c342e7769e95e2135}{add\+Task()}}}}, {\bfseries{\mbox{\hyperlink{class_t_thread_1_1_executor_a6aabf03f90569a0fceb86f5a3d054c9b}{remove\+Task()}}}} and {\bfseries{\mbox{\hyperlink{class_t_thread_1_1_executor_a3ebba69410a233ff1e5774d7e4d1246f}{cancel\+All()}}}} methods. Each \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}}\textquotesingle{}s visibility is always limited to the tasks that it submits -\/ so calling \mbox{\hyperlink{class_t_thread_1_1_executor_a6aabf03f90569a0fceb86f5a3d054c9b}{remove\+Task()}} or \mbox{\hyperlink{class_t_thread_1_1_executor_a3ebba69410a233ff1e5774d7e4d1246f}{cancel\+All()}} only affects the tasks previously added by that same \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} -\/ which easily reflects the idea of an \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} representing a group of tasks. ~\newline
+ ~\newline
+ Basic control over the execution strategy for the group of tasks submitted by an \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} can be acquired using the \mbox{\hyperlink{class_t_thread_1_1_executor_a85231531a2fa273db401f090c9aba4ea}{set\+Max\+Active\+Tasks()}} and \mbox{\hyperlink{class_t_thread_1_1_executor_a260fbe2faa1ee57f2042a03aaf30ec1b}{set\+Max\+Active\+Load()}} methods, both granting the possibility to bound the execution of tasks to custom maximum conditions. For example, use set\+Max\+Active\+Tasks(1) to force the execution of 1 task only at a time, or set\+Max\+Active\+Load(100) to set a single CPU core available for the group.
+
+\begin{DoxySeeAlso}{See also}
+{\bfseries{\mbox{\hyperlink{class_t_thread_1_1_runnable}{Runnable}}}} class documentation. 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_af10e2be4ceafc43c65cb888d14a519de}\label{class_t_thread_1_1_executor_af10e2be4ceafc43c65cb888d14a519de}} 
+\index{TThread::Executor@{TThread::Executor}!Executor@{Executor}}
+\index{Executor@{Executor}!TThread::Executor@{TThread::Executor}}
+\doxysubsubsection{\texorpdfstring{Executor()}{Executor()}}
+{\footnotesize\ttfamily Executor\+::\+Executor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00667 : m\_id(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_thread_1_1_executor_id}{ExecutorId}}) \{ m\_id-\/>addRef(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_aa963f22d195d6cf6f410b27243c58194}\label{class_t_thread_1_1_executor_aa963f22d195d6cf6f410b27243c58194}} 
+\index{TThread::Executor@{TThread::Executor}!````~Executor@{$\sim$Executor}}
+\index{````~Executor@{$\sim$Executor}!TThread::Executor@{TThread::Executor}}
+\doxysubsubsection{\texorpdfstring{$\sim$Executor()}{~Executor()}}
+{\footnotesize\ttfamily TThread\+::\+Executor\+::$\sim$\+Executor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00671 \{ m\_id-\/>release(); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_af31c8db8ac72df4c342e7769e95e2135}\label{class_t_thread_1_1_executor_af31c8db8ac72df4c342e7769e95e2135}} 
+\index{TThread::Executor@{TThread::Executor}!addTask@{addTask}}
+\index{addTask@{addTask}!TThread::Executor@{TThread::Executor}}
+\doxysubsubsection{\texorpdfstring{addTask()}{addTask()}}
+{\footnotesize\ttfamily void TThread\+::\+Executor\+::add\+Task (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}}}]{task }\end{DoxyParamCaption})}
+
+Submits a task for execution. The task is executed according to its task load, insertion time and scheduling priority. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00804                                      \{}
+\DoxyCodeLine{00805   \{}
+\DoxyCodeLine{00806     \textcolor{keywordflow}{if} (task-\/>m\_id)  \textcolor{comment}{// Must be done outside transition lock, since eventually}}
+\DoxyCodeLine{00807       task-\/>m\_id-\/>release();  \textcolor{comment}{// invoked \string~ExecutorId will lock it}}
+\DoxyCodeLine{00808 }
+\DoxyCodeLine{00809     \textcolor{comment}{// Updating tasks and workers list -\/ lock against state transitions}}
+\DoxyCodeLine{00810     QMutexLocker transitionLocker(\&globalImp-\/>m\_transitionMutex);}
+\DoxyCodeLine{00811 }
+\DoxyCodeLine{00812     task-\/>m\_id = m\_id;}
+\DoxyCodeLine{00813     m\_id-\/>addRef();}
+\DoxyCodeLine{00814 }
+\DoxyCodeLine{00815     globalImp-\/>insertTask(task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_a7e52533850da5433f3075d3d032182c1}{schedulingPriority}}(), task);}
+\DoxyCodeLine{00816   \}}
+\DoxyCodeLine{00817 }
+\DoxyCodeLine{00818   \textcolor{comment}{// If addTask is called in the main thread, the emit works directly -\/}}
+\DoxyCodeLine{00819   \textcolor{comment}{// so it is necessary to unlock the mutex *before* emitting the refresh.}}
+\DoxyCodeLine{00820   globalImpSlots-\/>emitRefreshAssignments();}
+\DoxyCodeLine{00821 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00394}{TThread\+::\+Runnable\+::scheduling\+Priority()}}.
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_a3ebba69410a233ff1e5774d7e4d1246f}\label{class_t_thread_1_1_executor_a3ebba69410a233ff1e5774d7e4d1246f}} 
+\index{TThread::Executor@{TThread::Executor}!cancelAll@{cancelAll}}
+\index{cancelAll@{cancelAll}!TThread::Executor@{TThread::Executor}}
+\doxysubsubsection{\texorpdfstring{cancelAll()}{cancelAll()}}
+{\footnotesize\ttfamily void Executor\+::cancel\+All (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Clears the task manager of all tasks added by this \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} and emits the \mbox{\hyperlink{class_t_thread_1_1_runnable_a87a003e7e55636146017bd05df73531a}{Runnable\+::canceled}} signal for each of them. The same specifications described in the {\bfseries{remove\+Task}} method apply here. \begin{DoxySeeAlso}{See also}
+{\bfseries{\mbox{\hyperlink{class_t_thread_1_1_runnable_a87a003e7e55636146017bd05df73531a}{Runnable\+::canceled}}}} signal and the {\bfseries{\mbox{\hyperlink{class_t_thread_1_1_executor_a6aabf03f90569a0fceb86f5a3d054c9b}{remove\+Task}}}} method. 
+\end{DoxySeeAlso}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00860                          \{}
+\DoxyCodeLine{00861   \textcolor{comment}{// Updating tasks list -\/ lock against state transitions}}
+\DoxyCodeLine{00862   QMutexLocker transitionLocker(\&globalImp-\/>m\_transitionMutex);}
+\DoxyCodeLine{00863 }
+\DoxyCodeLine{00864   \textcolor{comment}{// Clear the tasks chronologically. So, first check currently working}}
+\DoxyCodeLine{00865   \textcolor{comment}{// tasks.}}
+\DoxyCodeLine{00866   std::set<Worker *>::iterator it;}
+\DoxyCodeLine{00867   \textcolor{keywordflow}{for} (it = globalImp-\/>m\_workers.begin(); it != globalImp-\/>m\_workers.end();}
+\DoxyCodeLine{00868        ++it) \{}
+\DoxyCodeLine{00869     \mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} task = (*it)-\/>m\_task;}
+\DoxyCodeLine{00870     \textcolor{keywordflow}{if} (task \&\& task-\/>m\_id == m\_id) Q\_EMIT task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_a87a003e7e55636146017bd05df73531a}{canceled}}(task);}
+\DoxyCodeLine{00871   \}}
+\DoxyCodeLine{00872 }
+\DoxyCodeLine{00873   \textcolor{comment}{// Finally, clear the global tasks list from all tasks inserted by this}}
+\DoxyCodeLine{00874   \textcolor{comment}{// executor}}
+\DoxyCodeLine{00875   \textcolor{comment}{// NOTE: An easier way here?}}
+\DoxyCodeLine{00876   QMutableMapIterator<int, RunnableP> jt(globalImp-\/>m\_tasks);}
+\DoxyCodeLine{00877   \textcolor{keywordflow}{while} (jt.hasNext()) \{}
+\DoxyCodeLine{00878     jt.next();}
+\DoxyCodeLine{00879     \textcolor{keywordflow}{if} (jt.value()-\/>m\_id == m\_id) \{}
+\DoxyCodeLine{00880       \mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} task = jt.value();}
+\DoxyCodeLine{00881       Q\_EMIT task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_a87a003e7e55636146017bd05df73531a}{canceled}}(task);}
+\DoxyCodeLine{00882       jt.remove();}
+\DoxyCodeLine{00883     \}}
+\DoxyCodeLine{00884   \}}
+\DoxyCodeLine{00885 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{class_t_thread_1_1_runnable_a87a003e7e55636146017bd05df73531a}{TThread\+::\+Runnable\+::canceled()}}.
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_ab4f19cebb2e9ffa04ef22aec42d402b7}\label{class_t_thread_1_1_executor_ab4f19cebb2e9ffa04ef22aec42d402b7}} 
+\index{TThread::Executor@{TThread::Executor}!init@{init}}
+\index{init@{init}!TThread::Executor@{TThread::Executor}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void Executor\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+This static method declares the use of the \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}}\textquotesingle{}s task manager into the application code. Be sure to use it according to the following rules\+: 
+\begin{DoxyItemize}
+\item Only QCore\+Applications or QApplications may use Executors. 
+\item This method must be invoked in a thread which performs constant Qt event processing -\/ like the main loop of interactive GUI applications. 
+\item No task processing is allowed after event processing stops. 
+\end{DoxyItemize}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00684                     \{}
+\DoxyCodeLine{00685   \textcolor{comment}{// If no global ExecutorImp exists, allocate it now. You may not move this}}
+\DoxyCodeLine{00686   \textcolor{comment}{// to a static declaration, since ExecutorImpSlots's connections must be}}
+\DoxyCodeLine{00687   \textcolor{comment}{// made once the QCoreApplication has been constructed.}}
+\DoxyCodeLine{00688   \textcolor{keywordflow}{if} (!globalImp) \{}
+\DoxyCodeLine{00689     globalImp      = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_thread_1_1_executor_imp}{ExecutorImp}};}
+\DoxyCodeLine{00690     globalImpSlots = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_thread_1_1_executor_imp_slots}{ExecutorImpSlots}};}
+\DoxyCodeLine{00691   \}}
+\DoxyCodeLine{00692 }
+\DoxyCodeLine{00693   qRegisterMetaType<TThread::RunnableP>(\textcolor{stringliteral}{"{}TThread::RunnableP"{}});}
+\DoxyCodeLine{00694 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_a114387a08ab8e53bdbbc30e2f53a336b}\label{class_t_thread_1_1_executor_a114387a08ab8e53bdbbc30e2f53a336b}} 
+\index{TThread::Executor@{TThread::Executor}!maxActiveLoad@{maxActiveLoad}}
+\index{maxActiveLoad@{maxActiveLoad}!TThread::Executor@{TThread::Executor}}
+\doxysubsubsection{\texorpdfstring{maxActiveLoad()}{maxActiveLoad()}}
+{\footnotesize\ttfamily int Executor\+::max\+Active\+Load (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00925                                   \{}
+\DoxyCodeLine{00926   QMutexLocker transitionLocker(\&globalImp-\/>m\_transitionMutex);}
+\DoxyCodeLine{00927   \textcolor{keywordflow}{return} m\_id-\/>m\_maxActiveLoad;}
+\DoxyCodeLine{00928 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_a966129289d00b7539df5f1b85c41a369}\label{class_t_thread_1_1_executor_a966129289d00b7539df5f1b85c41a369}} 
+\index{TThread::Executor@{TThread::Executor}!maxActiveTasks@{maxActiveTasks}}
+\index{maxActiveTasks@{maxActiveTasks}!TThread::Executor@{TThread::Executor}}
+\doxysubsubsection{\texorpdfstring{maxActiveTasks()}{maxActiveTasks()}}
+{\footnotesize\ttfamily int Executor\+::max\+Active\+Tasks (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00908                                    \{}
+\DoxyCodeLine{00909   QMutexLocker transitionLocker(\&globalImp-\/>m\_transitionMutex);}
+\DoxyCodeLine{00910   \textcolor{keywordflow}{return} m\_id-\/>m\_maxActiveTasks;}
+\DoxyCodeLine{00911 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_a6aabf03f90569a0fceb86f5a3d054c9b}\label{class_t_thread_1_1_executor_a6aabf03f90569a0fceb86f5a3d054c9b}} 
+\index{TThread::Executor@{TThread::Executor}!removeTask@{removeTask}}
+\index{removeTask@{removeTask}!TThread::Executor@{TThread::Executor}}
+\doxysubsubsection{\texorpdfstring{removeTask()}{removeTask()}}
+{\footnotesize\ttfamily void Executor\+::remove\+Task (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}}}]{task }\end{DoxyParamCaption})}
+
+Removes the given task from scheduled execution and emits its \mbox{\hyperlink{class_t_thread_1_1_runnable_a87a003e7e55636146017bd05df73531a}{Runnable\+::canceled}} signal. Tasks already under execution are not stopped by this method -\/ although the canceled signal is still emitted. It has no effect if the task is not currently under the task manager\textquotesingle{}s control. \begin{DoxySeeAlso}{See also}
+{\bfseries{\mbox{\hyperlink{class_t_thread_1_1_runnable_a87a003e7e55636146017bd05df73531a}{Runnable\+::canceled}}}} signal and the {\bfseries{\mbox{\hyperlink{class_t_thread_1_1_executor_a3ebba69410a233ff1e5774d7e4d1246f}{cancel\+All}}}} method. 
+\end{DoxySeeAlso}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00831                                         \{}
+\DoxyCodeLine{00832   \textcolor{comment}{// If the task does not belong to this Executor, quit.}}
+\DoxyCodeLine{00833   \textcolor{keywordflow}{if} (task-\/>m\_id != m\_id) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00834 }
+\DoxyCodeLine{00835   \textcolor{comment}{// Updating tasks list -\/ lock against state transitions}}
+\DoxyCodeLine{00836   QMutexLocker transitionLocker(\&globalImp-\/>m\_transitionMutex);}
+\DoxyCodeLine{00837 }
+\DoxyCodeLine{00838   \textcolor{comment}{// Then, look in the global queue -\/ if it is found, emiminate the task and}}
+\DoxyCodeLine{00839   \textcolor{comment}{// send the canceled signal.}}
+\DoxyCodeLine{00840   \textcolor{keywordflow}{if} (globalImp-\/>m\_tasks.remove(task-\/>m\_schedulingPriority, task)) \{}
+\DoxyCodeLine{00841     Q\_EMIT task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_a87a003e7e55636146017bd05df73531a}{canceled}}(task);}
+\DoxyCodeLine{00842     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00843   \}}
+\DoxyCodeLine{00844 }
+\DoxyCodeLine{00845   \textcolor{comment}{// Finally, the task may be running -\/ look in workers.}}
+\DoxyCodeLine{00846   std::set<Worker *> \&workers = globalImp-\/>m\_workers;}
+\DoxyCodeLine{00847   std::set<Worker *>::iterator it;}
+\DoxyCodeLine{00848   \textcolor{keywordflow}{for} (it = workers.begin(); it != workers.end(); ++it)}
+\DoxyCodeLine{00849     \textcolor{keywordflow}{if} (task \&\& (*it)-\/>m\_task == task) Q\_EMIT task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_a87a003e7e55636146017bd05df73531a}{canceled}}(task);}
+\DoxyCodeLine{00850 }
+\DoxyCodeLine{00851   \textcolor{comment}{// No need to refresh -\/ tasks were eventually decremented...}}
+\DoxyCodeLine{00852 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{class_t_thread_1_1_runnable_a87a003e7e55636146017bd05df73531a}{TThread\+::\+Runnable\+::canceled()}}.
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_a02c4c637864647ce22be391919049d3a}\label{class_t_thread_1_1_executor_a02c4c637864647ce22be391919049d3a}} 
+\index{TThread::Executor@{TThread::Executor}!setDedicatedThreads@{setDedicatedThreads}}
+\index{setDedicatedThreads@{setDedicatedThreads}!TThread::Executor@{TThread::Executor}}
+\doxysubsubsection{\texorpdfstring{setDedicatedThreads()}{setDedicatedThreads()}}
+{\footnotesize\ttfamily void Executor\+::set\+Dedicated\+Threads (\begin{DoxyParamCaption}\item[{bool}]{dedicated,  }\item[{bool}]{persistent = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Specifies the use of dedicated threads for the \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}}\textquotesingle{}s task group. 
+
+By default a worker thread attempts adoption of \mbox{\hyperlink{class_t_thread_1_1_runnable}{Runnable}} tasks without regard to the \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} that performed the submission. This helps in stabilizing the number of threads that are created and destroyed by the task manager -\/ but may be a problem in some cases. Using this method the user can explicitly tell the \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} to seize the ownership of worker threads assigned to its tasks, so that they will not try adoption of external tasks but instead remain focused on \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}}\textquotesingle{}s tasks only. An optional {\bfseries{persistent}} parameter may be passed, which specifies if dedicated threads should remain sleeping or should rather die when no processable tasks from the \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} are found. This method is especially helpful in two occasions\+: 
+\begin{DoxyItemize}
+\item The \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}}\textquotesingle{}s tasks use thread-\/specific data such as QThread\+Storages, which may be recycled among different tasks. 
+\item The \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} receives tasks at a frequent rate, but mostly ends each one before another one is submitted -\/ resulting in a continuous thread turnover. 
+\end{DoxyItemize}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00791                                                                   \{}
+\DoxyCodeLine{00792   QMutexLocker transitionLocker(\&globalImp-\/>m\_transitionMutex);}
+\DoxyCodeLine{00793 }
+\DoxyCodeLine{00794   m\_id-\/>m\_dedicatedThreads  = dedicated;}
+\DoxyCodeLine{00795   m\_id-\/>m\_persistentThreads = persistent;}
+\DoxyCodeLine{00796 }
+\DoxyCodeLine{00797   m\_id-\/>refreshDedicatedList();}
+\DoxyCodeLine{00798 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_a260fbe2faa1ee57f2042a03aaf30ec1b}\label{class_t_thread_1_1_executor_a260fbe2faa1ee57f2042a03aaf30ec1b}} 
+\index{TThread::Executor@{TThread::Executor}!setMaxActiveLoad@{setMaxActiveLoad}}
+\index{setMaxActiveLoad@{setMaxActiveLoad}!TThread::Executor@{TThread::Executor}}
+\doxysubsubsection{\texorpdfstring{setMaxActiveLoad()}{setMaxActiveLoad()}}
+{\footnotesize\ttfamily void Executor\+::set\+Max\+Active\+Load (\begin{DoxyParamCaption}\item[{int}]{max\+Active\+Load }\end{DoxyParamCaption})}
+
+Declares a maximum overall task load for the tasks added by this \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}}. {\bfseries{NOTE\+:}} The same remark for \mbox{\hyperlink{class_t_thread_1_1_executor_a85231531a2fa273db401f090c9aba4ea}{set\+Max\+Active\+Tasks()}} holds here. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00917                                                  \{}
+\DoxyCodeLine{00918   QMutexLocker transitionLocker(\&globalImp-\/>m\_transitionMutex);}
+\DoxyCodeLine{00919 }
+\DoxyCodeLine{00920   m\_id-\/>m\_maxActiveLoad = maxActiveLoad;}
+\DoxyCodeLine{00921 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_a85231531a2fa273db401f090c9aba4ea}\label{class_t_thread_1_1_executor_a85231531a2fa273db401f090c9aba4ea}} 
+\index{TThread::Executor@{TThread::Executor}!setMaxActiveTasks@{setMaxActiveTasks}}
+\index{setMaxActiveTasks@{setMaxActiveTasks}!TThread::Executor@{TThread::Executor}}
+\doxysubsubsection{\texorpdfstring{setMaxActiveTasks()}{setMaxActiveTasks()}}
+{\footnotesize\ttfamily void Executor\+::set\+Max\+Active\+Tasks (\begin{DoxyParamCaption}\item[{int}]{max\+Active\+Tasks }\end{DoxyParamCaption})}
+
+Declares that only a certain number of tasks added by this \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} may be processed simultaneously. The default is 1 -\/ meaning that tasks added to the executor are completely serialized. A negative task number disables any form of task serialization. {\bfseries{NOTE\+:}} Currently, tasks that do not satisfy this condition avoid blocking execution of tasks not added by the same \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} -\/ even if they were scheduled for later execution. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00897                                                    \{}
+\DoxyCodeLine{00898   QMutexLocker transitionLocker(\&globalImp-\/>m\_transitionMutex);}
+\DoxyCodeLine{00899 }
+\DoxyCodeLine{00900   \textcolor{keywordflow}{if} (maxActiveTasks <= 0)}
+\DoxyCodeLine{00901     m\_id-\/>m\_maxActiveTasks = (std::numeric\_limits<int>::max)();}
+\DoxyCodeLine{00902   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00903     m\_id-\/>m\_maxActiveTasks = maxActiveTasks;}
+\DoxyCodeLine{00904 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_ad11a0430a6be6601a2e5aa34a10c3b60}\label{class_t_thread_1_1_executor_ad11a0430a6be6601a2e5aa34a10c3b60}} 
+\index{TThread::Executor@{TThread::Executor}!shutdown@{shutdown}}
+\index{shutdown@{shutdown}!TThread::Executor@{TThread::Executor}}
+\doxysubsubsection{\texorpdfstring{shutdown()}{shutdown()}}
+{\footnotesize\ttfamily void Executor\+::shutdown (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+This static method, which {\bfseries{must}} be invoked in the controller thread, declares termination of all Executor-\/based components, forcing the execution of tasks submitted by any \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} to quit as soon as possible in a safe way. When the shutdown method is invoked, the task manager first emits a canceled() signal for all the tasks that were submitted to it, independently from the \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} that performed the submission; then, tasks that are still active once all the cancellation signals were delivered further receive a terminated() signal informing them that they must provide code termination (or at least remain silent in a safe state until the application quits). {\bfseries{NOTE\+:}} Observe that this method does not explicitly wait for all the tasks to terminate -\/ this depends on the code connected to the terminated() signal and is under the user\textquotesingle{}s responsibility (see the remarks specified in started() signal description); if this is the intent and the terminated slot is invoked in the controller thread, you should remember to implement a local event loop in it (so that event processing is still performed) and wait there until the first finished() or catched() slot make it quit. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00725                         \{}
+\DoxyCodeLine{00726   \{}
+\DoxyCodeLine{00727     \textcolor{comment}{// Updating tasks list -\/ lock against state transitions}}
+\DoxyCodeLine{00728     QMutexLocker transitionLocker(\&globalImp-\/>m\_transitionMutex);}
+\DoxyCodeLine{00729 }
+\DoxyCodeLine{00730     shutdownVar = \textcolor{keyword}{true};}
+\DoxyCodeLine{00731 }
+\DoxyCodeLine{00732     \textcolor{comment}{// Cancel all tasks  -\/ first the active ones}}
+\DoxyCodeLine{00733     std::set<Worker *>::iterator it;}
+\DoxyCodeLine{00734     \textcolor{keywordflow}{for} (it = globalImp-\/>m\_workers.begin(); it != globalImp-\/>m\_workers.end();}
+\DoxyCodeLine{00735          ++it) \{}
+\DoxyCodeLine{00736       \mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} task = (*it)-\/>m\_task;}
+\DoxyCodeLine{00737       \textcolor{keywordflow}{if} (task) Q\_EMIT task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_a87a003e7e55636146017bd05df73531a}{canceled}}(task);}
+\DoxyCodeLine{00738     \}}
+\DoxyCodeLine{00739 }
+\DoxyCodeLine{00740     \textcolor{comment}{// Finally, deal with the global queue tasks}}
+\DoxyCodeLine{00741     QMutableMapIterator<int, RunnableP> jt(globalImp-\/>m\_tasks);}
+\DoxyCodeLine{00742     \textcolor{keywordflow}{while} (jt.hasNext()) \{}
+\DoxyCodeLine{00743       jt.next();}
+\DoxyCodeLine{00744       \mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} task = jt.value();}
+\DoxyCodeLine{00745       Q\_EMIT task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_a87a003e7e55636146017bd05df73531a}{canceled}}(task);}
+\DoxyCodeLine{00746       jt.remove();}
+\DoxyCodeLine{00747     \}}
+\DoxyCodeLine{00748 }
+\DoxyCodeLine{00749     \textcolor{comment}{// Now, send the terminate() signal to all active tasks}}
+\DoxyCodeLine{00750     \textcolor{keywordflow}{for} (it = globalImp-\/>m\_workers.begin(); it != globalImp-\/>m\_workers.end();}
+\DoxyCodeLine{00751          ++it) \{}
+\DoxyCodeLine{00752       \mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} task = (*it)-\/>m\_task;}
+\DoxyCodeLine{00753       \textcolor{keywordflow}{if} (task) Q\_EMIT task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_afda69c2f2eb6df8d30d7668a4cdd60da}{terminated}}(task);}
+\DoxyCodeLine{00754     \}}
+\DoxyCodeLine{00755   \}}
+\DoxyCodeLine{00756 }
+\DoxyCodeLine{00757   \textcolor{comment}{// Just placing a convenience processEvents() to make sure that queued slots}}
+\DoxyCodeLine{00758   \textcolor{comment}{// invoked by the}}
+\DoxyCodeLine{00759   \textcolor{comment}{// signals above are effectively invoked in this method -\/ without having to}}
+\DoxyCodeLine{00760   \textcolor{comment}{// return to an event loop.}}
+\DoxyCodeLine{00761   QCoreApplication::processEvents();}
+\DoxyCodeLine{00762 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{class_t_thread_1_1_runnable_a87a003e7e55636146017bd05df73531a}{TThread\+::\+Runnable\+::canceled()}}, and \mbox{\hyperlink{class_t_thread_1_1_runnable_afda69c2f2eb6df8d30d7668a4cdd60da}{TThread\+::\+Runnable\+::terminated()}}.
+
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_af022abc71323b07be5460515acab8737}\label{class_t_thread_1_1_executor_af022abc71323b07be5460515acab8737}} 
+\index{TThread::Executor@{TThread::Executor}!ExecutorImp@{ExecutorImp}}
+\index{ExecutorImp@{ExecutorImp}!TThread::Executor@{TThread::Executor}}
+\doxysubsubsection{\texorpdfstring{ExecutorImp}{ExecutorImp}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{class_t_thread_1_1_executor_imp}{Executor\+Imp}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tthread.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tcore/tthread.\+cpp\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tnzcore\+\_\+stuff/tthread.\+cpp\end{DoxyCompactItemize}

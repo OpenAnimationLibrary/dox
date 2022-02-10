@@ -1,0 +1,374 @@
+\hypertarget{class_set_scan_cropbox_tool}{}\doxysection{Set\+Scan\+Cropbox\+Tool Class Reference}
+\label{class_set_scan_cropbox_tool}\index{SetScanCropboxTool@{SetScanCropboxTool}}
+Inheritance diagram for Set\+Scan\+Cropbox\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_set_scan_cropbox_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296c}{Tool\+Type}} \mbox{\hyperlink{class_set_scan_cropbox_tool_a12518de2e5fbb26d642522fbc5103ef4}{get\+Tool\+Type}} () const override
+\item 
+void \mbox{\hyperlink{class_set_scan_cropbox_tool_ae04421192aef4a454bfe60391708f8bd}{draw}} () override
+\begin{DoxyCompactList}\small\item\em Draws the tool on the viewer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_set_scan_cropbox_tool_adc080caadce6d55cdbe8be6fa84aafde}{mouse\+Move}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_set_scan_cropbox_tool_ad0aa15cb4497da9ec9921f06c5d71b95}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_set_scan_cropbox_tool_a5ef74819415219cb2a5494941e4803a3}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+int \mbox{\hyperlink{class_set_scan_cropbox_tool_a965586356b0cab3447992eadfcbb3b5e}{get\+Cursor\+Id}} () const override
+\begin{DoxyCompactList}\small\item\em Returns the type of cursor used by the tool. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_set_scan_cropbox_tool_a5d9e21210b6a8540e2d96c279b8387e1}{on\+Activate}} () override
+\begin{DoxyCompactList}\small\item\em Callback invoked whenever the tool activates. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_set_scan_cropbox_tool_a35e51519ed9550ae726506248aece722}{on\+Enter}} () override
+\begin{DoxyCompactList}\small\item\em Callback for the mouse entering the viewer area. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_set_scan_cropbox_tool_af8b3b58e036a390e52b310f7a77b5228}\label{class_set_scan_cropbox_tool_af8b3b58e036a390e52b310f7a77b5228}} 
+\index{SetScanCropboxTool@{SetScanCropboxTool}!SetScanCropboxTool@{SetScanCropboxTool}}
+\index{SetScanCropboxTool@{SetScanCropboxTool}!SetScanCropboxTool@{SetScanCropboxTool}}
+\doxysubsubsection{\texorpdfstring{SetScanCropboxTool()}{SetScanCropboxTool()}}
+{\footnotesize\ttfamily Set\+Scan\+Cropbox\+Tool\+::\+Set\+Scan\+Cropbox\+Tool (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00989       : \mbox{\hyperlink{class_t_tool_a9c63ec35f606e755d0d036bf4fed62ab}{TTool}}(\textcolor{stringliteral}{"{}T\_SetScanCropbox"{}})}
+\DoxyCodeLine{00990       , m\_imgId(\textcolor{stringliteral}{"{}setScanCropboxId"{}})}
+\DoxyCodeLine{00991       , m\_scaling(eNone)}
+\DoxyCodeLine{00992       , m\_lastPos() \{}
+\DoxyCodeLine{00993     bind(TTool::AllTargets);  \textcolor{comment}{// Deals with tool deactivation internally}}
+\DoxyCodeLine{00994   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_set_scan_cropbox_tool_ae04421192aef4a454bfe60391708f8bd}\label{class_set_scan_cropbox_tool_ae04421192aef4a454bfe60391708f8bd}} 
+\index{SetScanCropboxTool@{SetScanCropboxTool}!draw@{draw}}
+\index{draw@{draw}!SetScanCropboxTool@{SetScanCropboxTool}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Set\+Scan\+Cropbox\+Tool\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Draws the tool on the viewer. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_a058bf656d73bf3cd63b9826cbaaf48e0}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01002                        \{}
+\DoxyCodeLine{01003     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} ri = TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_aea3ac2752efd6fa9689f5a7c1e895e41}{get}}(m\_imgId, \textcolor{keyword}{false});}
+\DoxyCodeLine{01004     \textcolor{keywordflow}{if} (ri) \{}
+\DoxyCodeLine{01005       \mbox{\hyperlink{class_t_point_t}{TPointD}} center = ri-\/>getRaster()-\/>getCenterD();}
+\DoxyCodeLine{01006       GLRasterPainter::drawRaster(}
+\DoxyCodeLine{01007           \mbox{\hyperlink{class_t_scale}{TScale}}(\mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}} / previewDPI, \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}} / previewDPI), ri, \textcolor{keyword}{true});}
+\DoxyCodeLine{01008     \}}
+\DoxyCodeLine{01009 }
+\DoxyCodeLine{01010     \mbox{\hyperlink{class_t_rect_t}{TRectD}} cropBox   = rect2pix(m\_parameters-\/>getCropBox());}
+\DoxyCodeLine{01011     \textcolor{keywordtype}{double} pixelSize = getPixelSize();}
+\DoxyCodeLine{01012 }
+\DoxyCodeLine{01013     tglColor(TPixel::Red);}
+\DoxyCodeLine{01014     glLineStipple(1, 0xFFFF);}
+\DoxyCodeLine{01015     glEnable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{01016 }
+\DoxyCodeLine{01017     tglDrawRect(cropBox);}
+\DoxyCodeLine{01018 }
+\DoxyCodeLine{01019     \mbox{\hyperlink{class_t_point_t}{TPointD}} size(10, 10);}
+\DoxyCodeLine{01020     tglColor(TPixel::Red);}
+\DoxyCodeLine{01021     ToolUtils::drawSquare(cropBox.getP00(), pixelSize * 4, TPixel::Red);}
+\DoxyCodeLine{01022     ToolUtils::drawSquare(cropBox.getP01(), pixelSize * 4, TPixel::Red);}
+\DoxyCodeLine{01023     ToolUtils::drawSquare(cropBox.getP10(), pixelSize * 4, TPixel::Red);}
+\DoxyCodeLine{01024     ToolUtils::drawSquare(cropBox.getP11(), pixelSize * 4, TPixel::Red);}
+\DoxyCodeLine{01025 }
+\DoxyCodeLine{01026     \mbox{\hyperlink{class_t_point_t}{TPointD}} center = (cropBox.getP00() + cropBox.getP11()) * 0.5;}
+\DoxyCodeLine{01027 }
+\DoxyCodeLine{01028     ToolUtils::drawSquare(\mbox{\hyperlink{class_t_point_t}{TPointD}}(center.x, cropBox.y0), pixelSize * 4,}
+\DoxyCodeLine{01029                           TPixel::Red);  \textcolor{comment}{// draw M0 handle}}
+\DoxyCodeLine{01030     ToolUtils::drawSquare(\mbox{\hyperlink{class_t_point_t}{TPointD}}(cropBox.x1, center.y), pixelSize * 4,}
+\DoxyCodeLine{01031                           TPixel::Red);  \textcolor{comment}{// draw 1M handle}}
+\DoxyCodeLine{01032     ToolUtils::drawSquare(\mbox{\hyperlink{class_t_point_t}{TPointD}}(center.x, cropBox.y1), pixelSize * 4,}
+\DoxyCodeLine{01033                           TPixel::Red);  \textcolor{comment}{// draw M1 handle}}
+\DoxyCodeLine{01034     ToolUtils::drawSquare(\mbox{\hyperlink{class_t_point_t}{TPointD}}(cropBox.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}, center.y), pixelSize * 4,}
+\DoxyCodeLine{01035                           TPixel::Red);  \textcolor{comment}{// draw 0M handle}}
+\DoxyCodeLine{01036 }
+\DoxyCodeLine{01037     glDisable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{01038   \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01672}{TImage\+Cache\+::get()}}, \mbox{\hyperlink{l00037}{Stage\+::inch}}, and \mbox{\hyperlink{l00557}{TRect\+T$<$ T $>$\+::x0}}.
+
+\mbox{\Hypertarget{class_set_scan_cropbox_tool_a965586356b0cab3447992eadfcbb3b5e}\label{class_set_scan_cropbox_tool_a965586356b0cab3447992eadfcbb3b5e}} 
+\index{SetScanCropboxTool@{SetScanCropboxTool}!getCursorId@{getCursorId}}
+\index{getCursorId@{getCursorId}!SetScanCropboxTool@{SetScanCropboxTool}}
+\doxysubsubsection{\texorpdfstring{getCursorId()}{getCursorId()}}
+{\footnotesize\ttfamily int Set\+Scan\+Cropbox\+Tool\+::get\+Cursor\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns the type of cursor used by the tool. 
+
+\begin{DoxySeeAlso}{See also}
+For a list of cursor ids \mbox{\hyperlink{}{cursor.\+h}} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_a1768a57b8b6d1480618fd923fad15f1d}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01149                                    \{}
+\DoxyCodeLine{01150     \textcolor{keywordflow}{switch} (m\_scaling) \{}
+\DoxyCodeLine{01151     \textcolor{keywordflow}{case} eNone:}
+\DoxyCodeLine{01152       \textcolor{keywordflow}{return} ToolCursor::StrokeSelectCursor;}
+\DoxyCodeLine{01153     \textcolor{keywordflow}{case} eMove:}
+\DoxyCodeLine{01154       \textcolor{keywordflow}{return} ToolCursor::MoveCursor;}
+\DoxyCodeLine{01155     \textcolor{keywordflow}{case} e11:}
+\DoxyCodeLine{01156     \textcolor{keywordflow}{case} e00:}
+\DoxyCodeLine{01157       \textcolor{keywordflow}{return} ToolCursor::ScaleCursor;}
+\DoxyCodeLine{01158     \textcolor{keywordflow}{case} e10:}
+\DoxyCodeLine{01159     \textcolor{keywordflow}{case} e01:}
+\DoxyCodeLine{01160       \textcolor{keywordflow}{return} ToolCursor::ScaleInvCursor;}
+\DoxyCodeLine{01161     \textcolor{keywordflow}{case} e1M:}
+\DoxyCodeLine{01162     \textcolor{keywordflow}{case} e0M:}
+\DoxyCodeLine{01163       \textcolor{keywordflow}{return} ToolCursor::ScaleHCursor;}
+\DoxyCodeLine{01164     \textcolor{keywordflow}{case} eM1:}
+\DoxyCodeLine{01165     \textcolor{keywordflow}{case} eM0:}
+\DoxyCodeLine{01166       \textcolor{keywordflow}{return} ToolCursor::ScaleVCursor;}
+\DoxyCodeLine{01167     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{01168       assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{01169     \}}
+\DoxyCodeLine{01170     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{01171   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_set_scan_cropbox_tool_a12518de2e5fbb26d642522fbc5103ef4}\label{class_set_scan_cropbox_tool_a12518de2e5fbb26d642522fbc5103ef4}} 
+\index{SetScanCropboxTool@{SetScanCropboxTool}!getToolType@{getToolType}}
+\index{getToolType@{getToolType}!SetScanCropboxTool@{SetScanCropboxTool}}
+\doxysubsubsection{\texorpdfstring{getToolType()}{getToolType()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296c}{Tool\+Type}} Set\+Scan\+Cropbox\+Tool\+::get\+Tool\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00998 \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296caa8f6293eab5817f82f74f031c0724f28}{TTool::GenericTool}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_set_scan_cropbox_tool_ad0aa15cb4497da9ec9921f06c5d71b95}\label{class_set_scan_cropbox_tool_ad0aa15cb4497da9ec9921f06c5d71b95}} 
+\index{SetScanCropboxTool@{SetScanCropboxTool}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!SetScanCropboxTool@{SetScanCropboxTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Set\+Scan\+Cropbox\+Tool\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01080                                                                          \{}
+\DoxyCodeLine{01081     m\_lastPos = pos;}
+\DoxyCodeLine{01082   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_set_scan_cropbox_tool_a5ef74819415219cb2a5494941e4803a3}\label{class_set_scan_cropbox_tool_a5ef74819415219cb2a5494941e4803a3}} 
+\index{SetScanCropboxTool@{SetScanCropboxTool}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!SetScanCropboxTool@{SetScanCropboxTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Set\+Scan\+Cropbox\+Tool\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01086                                                                          \{}
+\DoxyCodeLine{01087     \mbox{\hyperlink{class_t_point_t}{TPointD}} dp         = pos -\/ m\_lastPos;}
+\DoxyCodeLine{01088     \textcolor{keywordtype}{double} scaleFactor = \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}} / previewDPI;}
+\DoxyCodeLine{01089     dp.x               = ((dp.x / scaleFactor) * 25.4) / previewDPI;}
+\DoxyCodeLine{01090     dp.y               = ((dp.y / scaleFactor) * 25.4) / previewDPI;}
+\DoxyCodeLine{01091 }
+\DoxyCodeLine{01092     \mbox{\hyperlink{class_t_rect_t}{TRectD}} scanArea = m\_parameters-\/>getScanArea();}
+\DoxyCodeLine{01093     \mbox{\hyperlink{class_t_rect_t}{TRectD}} cropBox  = m\_parameters-\/>getCropBox();}
+\DoxyCodeLine{01094     \textcolor{keywordflow}{if} (m\_scaling != eNone \&\& m\_scaling != eMove) \{}
+\DoxyCodeLine{01095       \textcolor{keywordflow}{if} ((m\_scaling == eM1 ||}
+\DoxyCodeLine{01096            ((m\_scaling == e11 || m\_scaling == e01) \&\& !e.isShiftPressed())) \&\&}
+\DoxyCodeLine{01097           cropBox.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} -\/ dp.y < cropBox.x1)}
+\DoxyCodeLine{01098         cropBox.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} -\/= dp.y;}
+\DoxyCodeLine{01099       if ((m\_scaling == eM0 ||}
+\DoxyCodeLine{01100            ((m\_scaling == e10 || m\_scaling == e00) \&\& !e.isShiftPressed())) \&\&}
+\DoxyCodeLine{01101           cropBox.x1 -\/ dp.y > cropBox.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}})}
+\DoxyCodeLine{01102         cropBox.x1 -\/= dp.y;}
+\DoxyCodeLine{01103       if ((m\_scaling == e0M ||}
+\DoxyCodeLine{01104            ((m\_scaling == e00 || m\_scaling == e01) \&\& !e.isShiftPressed())) \&\&}
+\DoxyCodeLine{01105           cropBox.y1 -\/ dp.x > cropBox.y0)}
+\DoxyCodeLine{01106         cropBox.y1 -\/= dp.x;}
+\DoxyCodeLine{01107       if ((m\_scaling == e1M ||}
+\DoxyCodeLine{01108            ((m\_scaling == e11 || m\_scaling == e10) \&\& !e.isShiftPressed())) \&\&}
+\DoxyCodeLine{01109           cropBox.y0 -\/ dp.x < cropBox.y1)}
+\DoxyCodeLine{01110         cropBox.y0 -\/= dp.x;}
+\DoxyCodeLine{01111 }
+\DoxyCodeLine{01112       if (e.isShiftPressed()) \{}
+\DoxyCodeLine{01113         \mbox{\hyperlink{class_t_point_t}{TPointD}} delta;}
+\DoxyCodeLine{01114         delta.x = (fabs(dp.x) > fabs(dp.y)) ? dp.x : dp.y;}
+\DoxyCodeLine{01115         delta.y = delta.x * scanArea.getLx() / scanArea.getLy();}
+\DoxyCodeLine{01116 }
+\DoxyCodeLine{01117         \textcolor{keywordflow}{if} (m\_scaling == e11) \{}
+\DoxyCodeLine{01118           \textcolor{keywordflow}{if} (cropBox.y0 -\/ delta.x < cropBox.y1) cropBox.y0 -\/= delta.x;}
+\DoxyCodeLine{01119           \textcolor{keywordflow}{if} (cropBox.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} -\/ delta.y < cropBox.x1) cropBox.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} -\/= delta.y;}
+\DoxyCodeLine{01120         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_scaling == e00) \{}
+\DoxyCodeLine{01121           \textcolor{keywordflow}{if} (cropBox.y1 -\/ delta.x > cropBox.y0) cropBox.y1 -\/= delta.x;}
+\DoxyCodeLine{01122           \textcolor{keywordflow}{if} (cropBox.x1 -\/ delta.y > cropBox.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}) cropBox.x1 -\/= delta.y;}
+\DoxyCodeLine{01123         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_scaling == e01) \{}
+\DoxyCodeLine{01124           \textcolor{keywordflow}{if} (cropBox.y1 -\/ delta.x > cropBox.y0) cropBox.y1 -\/= delta.x;}
+\DoxyCodeLine{01125           \textcolor{keywordflow}{if} (cropBox.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} -\/ delta.y < cropBox.x1) cropBox.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} -\/= delta.y;}
+\DoxyCodeLine{01126         \}}
+\DoxyCodeLine{01127         \textcolor{keywordflow}{if} (m\_scaling == e10) \{}
+\DoxyCodeLine{01128           \textcolor{keywordflow}{if} (cropBox.y0 -\/ delta.x < cropBox.y1) cropBox.y0 -\/= delta.x;}
+\DoxyCodeLine{01129           \textcolor{keywordflow}{if} (cropBox.x1 -\/ delta.y > cropBox.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}}) cropBox.x1 -\/= delta.y;}
+\DoxyCodeLine{01130         \}}
+\DoxyCodeLine{01131       \}}
+\DoxyCodeLine{01132       cropBox *= scanArea;}
+\DoxyCodeLine{01133       \textcolor{keywordflow}{if} (cropBox != m\_parameters-\/>getCropBox()) \{}
+\DoxyCodeLine{01134         m\_parameters-\/>setCropBox(cropBox);}
+\DoxyCodeLine{01135         m\_lastPos = pos;}
+\DoxyCodeLine{01136       \}}
+\DoxyCodeLine{01137     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_scaling == eMove) \{}
+\DoxyCodeLine{01138       cropBox += \mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/dp.y, 0);}
+\DoxyCodeLine{01139       \textcolor{keywordflow}{if} (scanArea.contains(cropBox)) m\_parameters-\/>setCropBox(cropBox);}
+\DoxyCodeLine{01140       cropBox += \mbox{\hyperlink{class_t_point_t}{TPointD}}(0, -\/dp.x);}
+\DoxyCodeLine{01141       \textcolor{keywordflow}{if} (scanArea.contains(cropBox)) m\_parameters-\/>setCropBox(cropBox);}
+\DoxyCodeLine{01142       m\_lastPos = pos;}
+\DoxyCodeLine{01143     \}}
+\DoxyCodeLine{01144     \mbox{\hyperlink{class_t_tool_a3e791336c642542c5648aa8ea86e2348}{invalidate}}();}
+\DoxyCodeLine{01145   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_set_scan_cropbox_tool_adc080caadce6d55cdbe8be6fa84aafde}\label{class_set_scan_cropbox_tool_adc080caadce6d55cdbe8be6fa84aafde}} 
+\index{SetScanCropboxTool@{SetScanCropboxTool}!mouseMove@{mouseMove}}
+\index{mouseMove@{mouseMove}!SetScanCropboxTool@{SetScanCropboxTool}}
+\doxysubsubsection{\texorpdfstring{mouseMove()}{mouseMove()}}
+{\footnotesize\ttfamily void Set\+Scan\+Cropbox\+Tool\+::mouse\+Move (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01042                                                                   \{}
+\DoxyCodeLine{01043     \textcolor{keywordtype}{double} pixelSize = getPixelSize();}
+\DoxyCodeLine{01044     \mbox{\hyperlink{class_t_point_t}{TPointD}} size(10 * pixelSize, 10 * pixelSize);}
+\DoxyCodeLine{01045     \mbox{\hyperlink{class_t_rect_t}{TRectD}} cropBox = rect2pix(m\_parameters-\/>getCropBox());}
+\DoxyCodeLine{01046 }
+\DoxyCodeLine{01047     \textcolor{keywordtype}{double} maxDist = 5 * pixelSize;}
+\DoxyCodeLine{01048 }
+\DoxyCodeLine{01049     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_rect_t}{TRectD}}(cropBox.getP00() -\/ size, cropBox.getP00() + size).contains(p))}
+\DoxyCodeLine{01050       m\_scaling = e00;}
+\DoxyCodeLine{01051     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_rect_t}{TRectD}}(cropBox.getP01() -\/ size, cropBox.getP01() + size)}
+\DoxyCodeLine{01052                  .contains(p))}
+\DoxyCodeLine{01053       m\_scaling = e01;}
+\DoxyCodeLine{01054     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_rect_t}{TRectD}}(cropBox.getP11() -\/ size, cropBox.getP11() + size)}
+\DoxyCodeLine{01055                  .contains(p))}
+\DoxyCodeLine{01056       m\_scaling = e11;}
+\DoxyCodeLine{01057     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_rect_t}{TRectD}}(cropBox.getP10() -\/ size, cropBox.getP10() + size)}
+\DoxyCodeLine{01058                  .contains(p))}
+\DoxyCodeLine{01059       m\_scaling = e10;}
+\DoxyCodeLine{01060     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isCloseToSegment(p, \mbox{\hyperlink{class_t_segment}{TSegment}}(cropBox.getP00(), cropBox.getP10()),}
+\DoxyCodeLine{01061                               maxDist))}
+\DoxyCodeLine{01062       m\_scaling = eM0;}
+\DoxyCodeLine{01063     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isCloseToSegment(p, \mbox{\hyperlink{class_t_segment}{TSegment}}(cropBox.getP10(), cropBox.getP11()),}
+\DoxyCodeLine{01064                               maxDist))}
+\DoxyCodeLine{01065       m\_scaling = e1M;}
+\DoxyCodeLine{01066     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isCloseToSegment(p, \mbox{\hyperlink{class_t_segment}{TSegment}}(cropBox.getP11(), cropBox.getP01()),}
+\DoxyCodeLine{01067                               maxDist))}
+\DoxyCodeLine{01068       m\_scaling = eM1;}
+\DoxyCodeLine{01069     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isCloseToSegment(p, \mbox{\hyperlink{class_t_segment}{TSegment}}(cropBox.getP01(), cropBox.getP00()),}
+\DoxyCodeLine{01070                               maxDist))}
+\DoxyCodeLine{01071       m\_scaling = e0M;}
+\DoxyCodeLine{01072     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (cropBox.contains(p))}
+\DoxyCodeLine{01073       m\_scaling = eMove;}
+\DoxyCodeLine{01074     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01075       m\_scaling = eNone;}
+\DoxyCodeLine{01076   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_set_scan_cropbox_tool_a5d9e21210b6a8540e2d96c279b8387e1}\label{class_set_scan_cropbox_tool_a5d9e21210b6a8540e2d96c279b8387e1}} 
+\index{SetScanCropboxTool@{SetScanCropboxTool}!onActivate@{onActivate}}
+\index{onActivate@{onActivate}!SetScanCropboxTool@{SetScanCropboxTool}}
+\doxysubsubsection{\texorpdfstring{onActivate()}{onActivate()}}
+{\footnotesize\ttfamily void Set\+Scan\+Cropbox\+Tool\+::on\+Activate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Callback invoked whenever the tool activates. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_ac286a2681633b4db6106596b4f54e53b}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01175                              \{}
+\DoxyCodeLine{01176     m\_parameters = TTool::getApplication()}
+\DoxyCodeLine{01177                        -\/>getCurrentScene()}
+\DoxyCodeLine{01178                        -\/>getScene()}
+\DoxyCodeLine{01179                        -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{01180                        -\/>\mbox{\hyperlink{class_t_scene_properties_a2e4fb1abfbf34970a670e16e15ac5ed6}{getScanParameters}}();}
+\DoxyCodeLine{01181   \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00087}{Toonz\+Scene\+::get\+Properties()}}, and \mbox{\hyperlink{l00166}{TScene\+Properties\+::get\+Scan\+Parameters()}}.
+
+\mbox{\Hypertarget{class_set_scan_cropbox_tool_a35e51519ed9550ae726506248aece722}\label{class_set_scan_cropbox_tool_a35e51519ed9550ae726506248aece722}} 
+\index{SetScanCropboxTool@{SetScanCropboxTool}!onEnter@{onEnter}}
+\index{onEnter@{onEnter}!SetScanCropboxTool@{SetScanCropboxTool}}
+\doxysubsubsection{\texorpdfstring{onEnter()}{onEnter()}}
+{\footnotesize\ttfamily void Set\+Scan\+Cropbox\+Tool\+::on\+Enter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Callback for the mouse entering the viewer area. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_a3e775cfcd05aa3c35048b11fa40ab3e4}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01183                           \{}
+\DoxyCodeLine{01184     m\_parameters = TTool::getApplication()}
+\DoxyCodeLine{01185                        -\/>getCurrentScene()}
+\DoxyCodeLine{01186                        -\/>getScene()}
+\DoxyCodeLine{01187                        -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{01188                        -\/>\mbox{\hyperlink{class_t_scene_properties_a2e4fb1abfbf34970a670e16e15ac5ed6}{getScanParameters}}();}
+\DoxyCodeLine{01189   \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00087}{Toonz\+Scene\+::get\+Properties()}}, and \mbox{\hyperlink{l00166}{TScene\+Properties\+::get\+Scan\+Parameters()}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/scanpopup.\+cpp\end{DoxyCompactItemize}

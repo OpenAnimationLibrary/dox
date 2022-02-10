@@ -1,0 +1,615 @@
+\hypertarget{class_t_sound_input_device}{}\doxysection{TSound\+Input\+Device Class Reference}
+\label{class_t_sound_input_device}\index{TSoundInputDevice@{TSoundInputDevice}}
+
+
+{\ttfamily \#include $<$tsound.\+h$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries Source} \{ {\bfseries Mic} = 0
+, {\bfseries Line\+In}
+, {\bfseries Digital\+In}
+, {\bfseries Cd\+Audio}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_sound_track_format}{TSound\+Track\+Format}} \mbox{\hyperlink{class_t_sound_input_device_a30cd0779baff7aa1060efd3ac370e624}{get\+Preferred\+Format}} (TUINT32 sample\+Rate, int channel\+Count, int bit\+Per\+Sample)
+\begin{DoxyCompactList}\small\item\em Returns the best format supported near the given parameters. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_t_sound_track_format}{TSound\+Track\+Format}} \mbox{\hyperlink{class_t_sound_input_device_a1952b89ea6dbadc74baa7212157e7d32}{get\+Preferred\+Format}} (const \mbox{\hyperlink{class_t_sound_track_format}{TSound\+Track\+Format}} \&)
+\begin{DoxyCompactList}\small\item\em Returns the best format supported near the given format. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_t_sound_input_device_a20f9c5dba9872fb5b34f39556ffc7c6d}{supports\+Volume}} ()
+\item 
+void \mbox{\hyperlink{class_t_sound_input_device_a2b8c0c91217cb9161e0d52e88ac99ea1}{record}} (const \mbox{\hyperlink{class_t_sound_track_format}{TSound\+Track\+Format}} \&format, Source devtype=Mic)
+\item 
+void \mbox{\hyperlink{class_t_sound_input_device_a122b3c59f1a4f900a191a943df06de79}{record}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TSound\+TrackP}} \&st, Source src=Mic)
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TSound\+TrackP}} \mbox{\hyperlink{class_t_sound_input_device_a82d298619922a95a868bd4417590ff75}{stop}} ()
+\begin{DoxyCompactList}\small\item\em Stops the recording and returns the result of recording. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_t_sound_input_device_a610d415aebaaee1ea255cd535de474a5}{get\+Volume}} ()
+\begin{DoxyCompactList}\small\item\em Return the current value of the volume. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_t_sound_input_device_a9ede6e0a368f7d9c771f06acb17c9e43}{set\+Volume}} (double value)
+\begin{DoxyCompactList}\small\item\em Set the value of the volume. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_t_sound_input_device_aceafed32099c76e57527bc42d2308d9e}{is\+Recording}} ()
+\begin{DoxyCompactList}\small\item\em Returns true if and only if the device is recording. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{class_t_sound_input_device_a455af2ec237ec8eda4501da35892fb39}{installed}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+
+
+The class \mbox{\hyperlink{class_t_sound_input_device}{TSound\+Input\+Device}} permits the recording of a new sound track 
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_t_sound_input_device_aaed02e6cf6ab5c62d665185c7e05d84e}\label{class_t_sound_input_device_aaed02e6cf6ab5c62d665185c7e05d84e}} 
+\index{TSoundInputDevice@{TSoundInputDevice}!Source@{Source}}
+\index{Source@{Source}!TSoundInputDevice@{TSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{Source}{Source}}
+{\footnotesize\ttfamily enum TSound\+Input\+Device\+::\+Source}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00288 \{ Mic = 0, LineIn, DigitalIn, CdAudio \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_sound_input_device_a7059013b15771bd29c66f4f651e60b41}\label{class_t_sound_input_device_a7059013b15771bd29c66f4f651e60b41}} 
+\index{TSoundInputDevice@{TSoundInputDevice}!TSoundInputDevice@{TSoundInputDevice}}
+\index{TSoundInputDevice@{TSoundInputDevice}!TSoundInputDevice@{TSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{TSoundInputDevice()}{TSoundInputDevice()}}
+{\footnotesize\ttfamily TSound\+Input\+Device\+::\+TSound\+Input\+Device (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01154                                      : m\_imp(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_sound_input_device_imp}{TSoundInputDeviceImp}}()) \{}
+\DoxyCodeLine{01155   m\_imp-\/>insertAllRate();}
+\DoxyCodeLine{01156   \textcolor{keywordflow}{if} (!m\_imp-\/>verifyRate())}
+\DoxyCodeLine{01157     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::FailedInit,}
+\DoxyCodeLine{01158                                 \textcolor{stringliteral}{"{}Unable to verify supported rates"{}});}
+\DoxyCodeLine{01159   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_sound_input_device_a20f9c5dba9872fb5b34f39556ffc7c6d}{supportsVolume}}()) m\_imp-\/>m\_supportVolume = \textcolor{keyword}{true};}
+\DoxyCodeLine{01160 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_sound_input_device_abe02437de20d04cfa94fc5861574fe83}\label{class_t_sound_input_device_abe02437de20d04cfa94fc5861574fe83}} 
+\index{TSoundInputDevice@{TSoundInputDevice}!````~TSoundInputDevice@{$\sim$TSoundInputDevice}}
+\index{````~TSoundInputDevice@{$\sim$TSoundInputDevice}!TSoundInputDevice@{TSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{$\sim$TSoundInputDevice()}{~TSoundInputDevice()}}
+{\footnotesize\ttfamily TSound\+Input\+Device\+::$\sim$\+TSound\+Input\+Device (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01164 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_sound_input_device_a1952b89ea6dbadc74baa7212157e7d32}\label{class_t_sound_input_device_a1952b89ea6dbadc74baa7212157e7d32}} 
+\index{TSoundInputDevice@{TSoundInputDevice}!getPreferredFormat@{getPreferredFormat}}
+\index{getPreferredFormat@{getPreferredFormat}!TSoundInputDevice@{TSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{getPreferredFormat()}{getPreferredFormat()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_sound_track_format}{TSound\+Track\+Format}} TSound\+Input\+Device\+::get\+Preferred\+Format (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_sound_track_format}{TSound\+Track\+Format}} \&}]{format }\end{DoxyParamCaption})}
+
+
+
+Returns the best format supported near the given format. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01742                                      \{}
+\DoxyCodeLine{01743   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{01744     \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_sound_input_device_a30cd0779baff7aa1060efd3ac370e624}{getPreferredFormat}}(format.m\_sampleRate, format.m\_channelCount,}
+\DoxyCodeLine{01745                               format.m\_bitPerSample);}
+\DoxyCodeLine{01746   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}} \&e) \{}
+\DoxyCodeLine{01747     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnsupportedFormat,}
+\DoxyCodeLine{01748                                 e.getMessage());}
+\DoxyCodeLine{01749   \}}
+\DoxyCodeLine{01750 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01697}{get\+Preferred\+Format()}}.
+
+\mbox{\Hypertarget{class_t_sound_input_device_a30cd0779baff7aa1060efd3ac370e624}\label{class_t_sound_input_device_a30cd0779baff7aa1060efd3ac370e624}} 
+\index{TSoundInputDevice@{TSoundInputDevice}!getPreferredFormat@{getPreferredFormat}}
+\index{getPreferredFormat@{getPreferredFormat}!TSoundInputDevice@{TSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{getPreferredFormat()}{getPreferredFormat()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_sound_track_format}{TSound\+Track\+Format}} TSound\+Input\+Device\+::get\+Preferred\+Format (\begin{DoxyParamCaption}\item[{TUINT32}]{sample\+Rate,  }\item[{int}]{channel\+Count,  }\item[{int}]{bit\+Per\+Sample }\end{DoxyParamCaption})}
+
+
+
+Returns the best format supported near the given parameters. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01699                                                                           \{}
+\DoxyCodeLine{01700   \mbox{\hyperlink{class_t_sound_track_format}{TSoundTrackFormat}} fmt;}
+\DoxyCodeLine{01701 }
+\DoxyCodeLine{01702   \textcolor{comment}{// avvvicinarsi al sample rate => dovrebbe esser OK avendo selezionato i piu'}}
+\DoxyCodeLine{01703   \textcolor{comment}{// vicini}}
+\DoxyCodeLine{01704   std::set<int>::iterator it = m\_imp-\/>m\_supportedRate.lower\_bound(sampleRate);}
+\DoxyCodeLine{01705   \textcolor{keywordflow}{if} (it == m\_imp-\/>m\_supportedRate.end()) \{}
+\DoxyCodeLine{01706     it = std::max\_element(m\_imp-\/>m\_supportedRate.begin(),}
+\DoxyCodeLine{01707                           m\_imp-\/>m\_supportedRate.end());}
+\DoxyCodeLine{01708     \textcolor{keywordflow}{if} (it != m\_imp-\/>m\_supportedRate.end())}
+\DoxyCodeLine{01709       sampleRate = *(m\_imp-\/>m\_supportedRate.rbegin());}
+\DoxyCodeLine{01710     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01711       \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnsupportedFormat,}
+\DoxyCodeLine{01712                                   \textcolor{stringliteral}{"{}There isn't a supported format"{}});}
+\DoxyCodeLine{01713   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01714     sampleRate = *it;}
+\DoxyCodeLine{01715 }
+\DoxyCodeLine{01716   \textcolor{keywordflow}{if} (bitPerSample <= 8)}
+\DoxyCodeLine{01717     bitPerSample = 8;}
+\DoxyCodeLine{01718   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((bitPerSample > 8 \&\& bitPerSample < 16) || bitPerSample >= 16)}
+\DoxyCodeLine{01719     bitPerSample = 16;}
+\DoxyCodeLine{01720 }
+\DoxyCodeLine{01721   \textcolor{keywordflow}{if} (bitPerSample >= 16)}
+\DoxyCodeLine{01722     fmt.m\_signedSample = \textcolor{keyword}{true};}
+\DoxyCodeLine{01723   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01724     fmt.m\_signedSample = \textcolor{keyword}{false};}
+\DoxyCodeLine{01725 }
+\DoxyCodeLine{01726   \textcolor{comment}{// switch mono/stereo}}
+\DoxyCodeLine{01727   \textcolor{keywordflow}{if} (channelCount <= 1)}
+\DoxyCodeLine{01728     channelCount = 1;}
+\DoxyCodeLine{01729   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01730     channelCount = 2;}
+\DoxyCodeLine{01731 }
+\DoxyCodeLine{01732   fmt.m\_bitPerSample = bitPerSample;}
+\DoxyCodeLine{01733   fmt.m\_channelCount = channelCount;}
+\DoxyCodeLine{01734   fmt.m\_sampleRate   = sampleRate;}
+\DoxyCodeLine{01735 }
+\DoxyCodeLine{01736   \textcolor{keywordflow}{return} fmt;}
+\DoxyCodeLine{01737 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l01741}{get\+Preferred\+Format()}}, and \mbox{\hyperlink{l01178}{record()}}.
+
+\mbox{\Hypertarget{class_t_sound_input_device_a610d415aebaaee1ea255cd535de474a5}\label{class_t_sound_input_device_a610d415aebaaee1ea255cd535de474a5}} 
+\index{TSoundInputDevice@{TSoundInputDevice}!getVolume@{getVolume}}
+\index{getVolume@{getVolume}!TSoundInputDevice@{TSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{getVolume()}{getVolume()}}
+{\footnotesize\ttfamily double TSound\+Input\+Device\+::get\+Volume (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Return the current value of the volume. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01460                                     \{}
+\DoxyCodeLine{01461   DWORD dwVolumeControlID;}
+\DoxyCodeLine{01462 }
+\DoxyCodeLine{01463   UINT nNumMixers;}
+\DoxyCodeLine{01464   MMRESULT ret;}
+\DoxyCodeLine{01465   MIXERLINE mxl;}
+\DoxyCodeLine{01466 }
+\DoxyCodeLine{01467   nNumMixers = mixerGetNumDevs();}
+\DoxyCodeLine{01468 }
+\DoxyCodeLine{01469   \textcolor{keywordflow}{if} (nNumMixers == 0)}
+\DoxyCodeLine{01470     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::NoMixer,}
+\DoxyCodeLine{01471                                 \textcolor{stringliteral}{"{}Doesn't exist a audio mixer device"{}});}
+\DoxyCodeLine{01472 }
+\DoxyCodeLine{01473   \textcolor{comment}{// get dwLineID}}
+\DoxyCodeLine{01474   ret = getLineInfo((HMIXEROBJ)0, MIXERLINE\_COMPONENTTYPE\_DST\_WAVEIN, mxl);}
+\DoxyCodeLine{01475   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR)}
+\DoxyCodeLine{01476     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnableVolume,}
+\DoxyCodeLine{01477                                 \textcolor{stringliteral}{"{}Error to obtain info by mixer"{}});}
+\DoxyCodeLine{01478 }
+\DoxyCodeLine{01479   \textcolor{comment}{// get dwControlID}}
+\DoxyCodeLine{01480   MIXERCONTROL mxc;}
+\DoxyCodeLine{01481   ret = getLineControl(mxc, (HMIXEROBJ)0, mxl.dwLineID,}
+\DoxyCodeLine{01482                        MIXERCONTROL\_CONTROLTYPE\_VOLUME);}
+\DoxyCodeLine{01483   \textcolor{keywordflow}{if} (ret == MIXERR\_INVALCONTROL)}
+\DoxyCodeLine{01484     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(}
+\DoxyCodeLine{01485         TSoundDeviceException::UnableVolume,}
+\DoxyCodeLine{01486         \textcolor{stringliteral}{"{}Is not possible to obtain info of volume by mixer"{}});}
+\DoxyCodeLine{01487 }
+\DoxyCodeLine{01488   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR)}
+\DoxyCodeLine{01489     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnableVolume,}
+\DoxyCodeLine{01490                                 \textcolor{stringliteral}{"{}Error to obtain info by mixer"{}});}
+\DoxyCodeLine{01491 }
+\DoxyCodeLine{01492   dwVolumeControlID = mxc.dwControlID;}
+\DoxyCodeLine{01493 }
+\DoxyCodeLine{01494   MIXERCONTROLDETAILS\_UNSIGNED mxcdVolume;}
+\DoxyCodeLine{01495 }
+\DoxyCodeLine{01496   ret = getControlDetails((HMIXEROBJ)0, dwVolumeControlID, mxc.cMultipleItems,}
+\DoxyCodeLine{01497                           \&mxcdVolume);}
+\DoxyCodeLine{01498   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR)}
+\DoxyCodeLine{01499     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnableVolume,}
+\DoxyCodeLine{01500                                 \textcolor{stringliteral}{"{}Error to obtain info by mixer"{}});}
+\DoxyCodeLine{01501 }
+\DoxyCodeLine{01502   DWORD dwVal = mxcdVolume.dwValue;}
+\DoxyCodeLine{01503 }
+\DoxyCodeLine{01504   \textcolor{keywordflow}{return} (\textcolor{keywordtype}{double})dwVal * 10.0 / (double)mxc.Bounds.dwMaximum;}
+\DoxyCodeLine{01505 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_sound_input_device_a455af2ec237ec8eda4501da35892fb39}\label{class_t_sound_input_device_a455af2ec237ec8eda4501da35892fb39}} 
+\index{TSoundInputDevice@{TSoundInputDevice}!installed@{installed}}
+\index{installed@{installed}!TSoundInputDevice@{TSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{installed()}{installed()}}
+{\footnotesize\ttfamily bool TSound\+Input\+Device\+::installed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Returns true if on the machine there is an audio card installed correctly 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01168                                   \{}
+\DoxyCodeLine{01169   \textcolor{keywordtype}{int} ndev = waveInGetNumDevs();}
+\DoxyCodeLine{01170   \textcolor{keywordflow}{if} (ndev <= 0) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01171   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{01172 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_sound_input_device_aceafed32099c76e57527bc42d2308d9e}\label{class_t_sound_input_device_aceafed32099c76e57527bc42d2308d9e}} 
+\index{TSoundInputDevice@{TSoundInputDevice}!isRecording@{isRecording}}
+\index{isRecording@{isRecording}!TSoundInputDevice@{TSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{isRecording()}{isRecording()}}
+{\footnotesize\ttfamily bool TSound\+Input\+Device\+::is\+Recording (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns true if and only if the device is recording. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01586 \{ \textcolor{keywordflow}{return} m\_imp-\/>m\_isRecording; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_sound_input_device_a2b8c0c91217cb9161e0d52e88ac99ea1}\label{class_t_sound_input_device_a2b8c0c91217cb9161e0d52e88ac99ea1}} 
+\index{TSoundInputDevice@{TSoundInputDevice}!record@{record}}
+\index{record@{record}!TSoundInputDevice@{TSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{record()}{record()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void TSound\+Input\+Device\+::record (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_sound_track_format}{TSound\+Track\+Format}} \&}]{format,  }\item[{TSound\+Input\+Device\+::\+Source}]{type = {\ttfamily Mic} }\end{DoxyParamCaption})}
+
+Starts the recording of a soundtrack with the given format from the given source. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01179                                                \{}
+\DoxyCodeLine{01180   \textcolor{keywordflow}{if} (m\_imp-\/>m\_isRecording)}
+\DoxyCodeLine{01181     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::Busy,}
+\DoxyCodeLine{01182                                 \textcolor{stringliteral}{"{}Just another recoding is in progress"{}});}
+\DoxyCodeLine{01183 }
+\DoxyCodeLine{01184   \textcolor{comment}{/*if ((format.m\_bitPerSample == 8 \&\& format.m\_signedSample) ||}}
+\DoxyCodeLine{01185 \textcolor{comment}{(format.m\_bitPerSample == 24))}}
+\DoxyCodeLine{01186 \textcolor{comment}{throw TException("{}This format is not supported for recording"{});*/}}
+\DoxyCodeLine{01187   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{01188     \mbox{\hyperlink{class_t_sound_track_format}{TSoundTrackFormat}} fmt = \mbox{\hyperlink{class_t_sound_input_device_a30cd0779baff7aa1060efd3ac370e624}{getPreferredFormat}}(format);}
+\DoxyCodeLine{01189     \textcolor{keywordflow}{if} (fmt != format) \{}
+\DoxyCodeLine{01190       \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnsupportedFormat,}
+\DoxyCodeLine{01191                                   \textcolor{stringliteral}{"{}Unsupported Format"{}});}
+\DoxyCodeLine{01192     \}}
+\DoxyCodeLine{01193   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}} \&e) \{}
+\DoxyCodeLine{01194     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnsupportedFormat,}
+\DoxyCodeLine{01195                                 e.getMessage());}
+\DoxyCodeLine{01196   \}}
+\DoxyCodeLine{01197 }
+\DoxyCodeLine{01198   \textcolor{keywordflow}{if} (!setRecordLine(devtype))}
+\DoxyCodeLine{01199     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnableSetDevice,}
+\DoxyCodeLine{01200                                 \textcolor{stringliteral}{"{}Problems to set input source line to record"{}});}
+\DoxyCodeLine{01201 }
+\DoxyCodeLine{01202   m\_imp-\/>m\_format = format;}
+\DoxyCodeLine{01203   m\_imp-\/>m\_st     = 0;}
+\DoxyCodeLine{01204   ResetEvent(m\_imp-\/>m\_hLastBlockDone);}
+\DoxyCodeLine{01205   ResetEvent(m\_imp-\/>m\_hBlockDone);}
+\DoxyCodeLine{01206   m\_imp-\/>m\_allocateBuff = \textcolor{keyword}{true};}
+\DoxyCodeLine{01207   m\_imp-\/>m\_isRecording  = \textcolor{keyword}{true};}
+\DoxyCodeLine{01208   m\_imp-\/>m\_index        = 0;}
+\DoxyCodeLine{01209   m\_imp-\/>m\_recordedBlocks.clear();}
+\DoxyCodeLine{01210   m\_imp-\/>m\_byteRecorded = 0;}
+\DoxyCodeLine{01211   TINT32 bytePerSec     = format.m\_sampleRate *}
+\DoxyCodeLine{01212                       ((format.m\_bitPerSample * format.m\_channelCount) >> 3);}
+\DoxyCodeLine{01213 }
+\DoxyCodeLine{01214   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{01215     \mbox{\hyperlink{class_wave_format}{WaveFormat}} wf(m\_imp-\/>m\_format.m\_channelCount, m\_imp-\/>m\_format.m\_sampleRate,}
+\DoxyCodeLine{01216                   m\_imp-\/>m\_format.m\_bitPerSample);}
+\DoxyCodeLine{01217 }
+\DoxyCodeLine{01218     m\_imp-\/>open(wf);}
+\DoxyCodeLine{01219   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{01220     m\_imp-\/>m\_isRecording = \textcolor{keyword}{false};}
+\DoxyCodeLine{01221     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnableOpenDevice,}
+\DoxyCodeLine{01222                                 e.getMessage());}
+\DoxyCodeLine{01223   \}}
+\DoxyCodeLine{01224   \textcolor{keywordflow}{for} (; m\_imp-\/>m\_index < (int)(m\_imp-\/>m\_whdr.size() -\/ 1); ++m\_imp-\/>m\_index) \{}
+\DoxyCodeLine{01225     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{01226       m\_imp-\/>prepareHeader(\textcolor{keyword}{new} \textcolor{keywordtype}{char}[bytePerSec], bytePerSec,}
+\DoxyCodeLine{01227                            m\_imp-\/>m\_whdr[m\_imp-\/>m\_index]);}
+\DoxyCodeLine{01228       m\_imp-\/>addBlock(m\_imp-\/>m\_whdr[m\_imp-\/>m\_index]);}
+\DoxyCodeLine{01229     \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{01230       m\_imp-\/>m\_isRecording = \textcolor{keyword}{false};}
+\DoxyCodeLine{01231       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < (int)(m\_imp-\/>m\_whdr.size() -\/ 1); ++j) \{}
+\DoxyCodeLine{01232         \textcolor{keywordflow}{if} (m\_imp-\/>m\_whdr[j].dwFlags \& WHDR\_PREPARED) \{}
+\DoxyCodeLine{01233           \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{01234             m\_imp-\/>unprepareHeader(m\_imp-\/>m\_whdr[j]);}
+\DoxyCodeLine{01235           \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{01236             \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(}
+\DoxyCodeLine{01237                 TSoundDeviceException::UnableCloseDevice, e.getMessage());}
+\DoxyCodeLine{01238           \}}
+\DoxyCodeLine{01239           \textcolor{keyword}{delete}[] m\_imp-\/>m\_whdr[j].lpData;}
+\DoxyCodeLine{01240         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (j == m\_imp-\/>m\_index)}
+\DoxyCodeLine{01241           \textcolor{keyword}{delete}[] m\_imp-\/>m\_whdr[j].lpData;}
+\DoxyCodeLine{01242       \}}
+\DoxyCodeLine{01243       \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnablePrepare,}
+\DoxyCodeLine{01244                                   e.getMessage());}
+\DoxyCodeLine{01245     \}}
+\DoxyCodeLine{01246   \}}
+\DoxyCodeLine{01247 }
+\DoxyCodeLine{01248   m\_imp-\/>m\_executor.addTask(\textcolor{keyword}{new} \mbox{\hyperlink{class_record_task}{RecordTask}}(m\_imp));}
+\DoxyCodeLine{01249 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01697}{get\+Preferred\+Format()}}.
+
+\mbox{\Hypertarget{class_t_sound_input_device_a122b3c59f1a4f900a191a943df06de79}\label{class_t_sound_input_device_a122b3c59f1a4f900a191a943df06de79}} 
+\index{TSoundInputDevice@{TSoundInputDevice}!record@{record}}
+\index{record@{record}!TSoundInputDevice@{TSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{record()}{record()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void TSound\+Input\+Device\+::record (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TSound\+TrackP}} \&}]{st,  }\item[{TSound\+Input\+Device\+::\+Source}]{type = {\ttfamily Mic} }\end{DoxyParamCaption})}
+
+Starts the recording over the soundtrack st from the given source. If not stopped before, recording ends when the whole soundtrack has been overwritten. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01253                                                                      \{}
+\DoxyCodeLine{01254   \textcolor{keywordflow}{if} (m\_imp-\/>m\_isRecording)}
+\DoxyCodeLine{01255     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::Busy,}
+\DoxyCodeLine{01256                                 \textcolor{stringliteral}{"{}Just another recoding is in progress"{}});}
+\DoxyCodeLine{01257 }
+\DoxyCodeLine{01258   m\_imp-\/>m\_format = st-\/>\mbox{\hyperlink{class_t_sound_track_aa58db0cee313f7174bc023e295b701a9}{getFormat}}();}
+\DoxyCodeLine{01259   \textcolor{comment}{/*if ((m\_imp-\/>m\_format.m\_bitPerSample == 8 \&\& m\_imp-\/>m\_format.m\_signedSample)}}
+\DoxyCodeLine{01260 \textcolor{comment}{||}}
+\DoxyCodeLine{01261 \textcolor{comment}{(m\_imp-\/>m\_format.m\_bitPerSample == 24))}}
+\DoxyCodeLine{01262 \textcolor{comment}{throw TException("{}This format is not supported for recording"{});*/}}
+\DoxyCodeLine{01263   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{01264     \mbox{\hyperlink{class_t_sound_track_format}{TSoundTrackFormat}} fmt = \mbox{\hyperlink{class_t_sound_input_device_a30cd0779baff7aa1060efd3ac370e624}{getPreferredFormat}}(st-\/>\mbox{\hyperlink{class_t_sound_track_aa58db0cee313f7174bc023e295b701a9}{getFormat}}());}
+\DoxyCodeLine{01265     \textcolor{keywordflow}{if} (fmt != st-\/>\mbox{\hyperlink{class_t_sound_track_aa58db0cee313f7174bc023e295b701a9}{getFormat}}()) \{}
+\DoxyCodeLine{01266       \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnsupportedFormat,}
+\DoxyCodeLine{01267                                   \textcolor{stringliteral}{"{}Unsupported Format"{}});}
+\DoxyCodeLine{01268     \}}
+\DoxyCodeLine{01269   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}} \&e) \{}
+\DoxyCodeLine{01270     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnsupportedFormat,}
+\DoxyCodeLine{01271                                 e.getMessage());}
+\DoxyCodeLine{01272   \}}
+\DoxyCodeLine{01273 }
+\DoxyCodeLine{01274   \textcolor{keywordflow}{if} (!setRecordLine(devtype))}
+\DoxyCodeLine{01275     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnableSetDevice,}
+\DoxyCodeLine{01276                                 \textcolor{stringliteral}{"{}Problems to set input source line to record"{}});}
+\DoxyCodeLine{01277 }
+\DoxyCodeLine{01278   m\_imp-\/>m\_st           = st;}
+\DoxyCodeLine{01279   m\_imp-\/>m\_allocateBuff = \textcolor{keyword}{false};}
+\DoxyCodeLine{01280   m\_imp-\/>m\_isRecording  = \textcolor{keyword}{true};}
+\DoxyCodeLine{01281   ResetEvent(m\_imp-\/>m\_hLastBlockDone);}
+\DoxyCodeLine{01282   ResetEvent(m\_imp-\/>m\_hBlockDone);}
+\DoxyCodeLine{01283   m\_imp-\/>m\_index = 0;}
+\DoxyCodeLine{01284   m\_imp-\/>m\_recordedBlocks.clear();}
+\DoxyCodeLine{01285   m\_imp-\/>m\_byteRecorded = 0;}
+\DoxyCodeLine{01286   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{01287     \mbox{\hyperlink{class_wave_format}{WaveFormat}} wf(m\_imp-\/>m\_format.m\_channelCount, m\_imp-\/>m\_format.m\_sampleRate,}
+\DoxyCodeLine{01288                   m\_imp-\/>m\_format.m\_bitPerSample);}
+\DoxyCodeLine{01289 }
+\DoxyCodeLine{01290     m\_imp-\/>open(wf);}
+\DoxyCodeLine{01291     m\_imp-\/>prepareHeader(}
+\DoxyCodeLine{01292         (\textcolor{keywordtype}{char} *)st-\/>\mbox{\hyperlink{class_t_sound_track_ae47a8e255a18ddbc83d31b6c0c834e68}{getRawData}}(),}
+\DoxyCodeLine{01293         st-\/>getSampleCount() *}
+\DoxyCodeLine{01294             ((st-\/>getBitPerSample() * st-\/>getChannelCount()) >> 3),}
+\DoxyCodeLine{01295         m\_imp-\/>m\_whdr[m\_imp-\/>m\_index]);}
+\DoxyCodeLine{01296     m\_imp-\/>addBlock(m\_imp-\/>m\_whdr[m\_imp-\/>m\_index]);}
+\DoxyCodeLine{01297   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{01298     m\_imp-\/>m\_isRecording = \textcolor{keyword}{false};}
+\DoxyCodeLine{01299     \textcolor{keywordflow}{if} (m\_imp-\/>m\_whdr[m\_imp-\/>m\_index].dwFlags \& WHDR\_PREPARED)}
+\DoxyCodeLine{01300       m\_imp-\/>unprepareHeader(m\_imp-\/>m\_whdr[m\_imp-\/>m\_index]);}
+\DoxyCodeLine{01301 }
+\DoxyCodeLine{01302     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnablePrepare,}
+\DoxyCodeLine{01303                                 e.getMessage());}
+\DoxyCodeLine{01304   \}}
+\DoxyCodeLine{01305 }
+\DoxyCodeLine{01306   m\_imp-\/>m\_executor.addTask(\textcolor{keyword}{new} \mbox{\hyperlink{class_record_task}{RecordTask}}(m\_imp));}
+\DoxyCodeLine{01307 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00250}{TSound\+Track\+::get\+Format()}}, \mbox{\hyperlink{l01697}{get\+Preferred\+Format()}}, and \mbox{\hyperlink{l00150}{TSound\+Track\+::get\+Raw\+Data()}}.
+
+\mbox{\Hypertarget{class_t_sound_input_device_a9ede6e0a368f7d9c771f06acb17c9e43}\label{class_t_sound_input_device_a9ede6e0a368f7d9c771f06acb17c9e43}} 
+\index{TSoundInputDevice@{TSoundInputDevice}!setVolume@{setVolume}}
+\index{setVolume@{setVolume}!TSoundInputDevice@{TSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{setVolume()}{setVolume()}}
+{\footnotesize\ttfamily bool TSound\+Input\+Device\+::set\+Volume (\begin{DoxyParamCaption}\item[{double}]{value }\end{DoxyParamCaption})}
+
+
+
+Set the value of the volume. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01509                                               \{}
+\DoxyCodeLine{01510   DWORD dwVolumeControlID, dwMaximum;}
+\DoxyCodeLine{01511 }
+\DoxyCodeLine{01512   UINT nNumMixers;}
+\DoxyCodeLine{01513   MMRESULT ret;}
+\DoxyCodeLine{01514   MIXERLINE mxl;}
+\DoxyCodeLine{01515 }
+\DoxyCodeLine{01516   nNumMixers = mixerGetNumDevs();}
+\DoxyCodeLine{01517 }
+\DoxyCodeLine{01518   \textcolor{keywordflow}{if} (nNumMixers == 0)}
+\DoxyCodeLine{01519     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::NoMixer,}
+\DoxyCodeLine{01520                                 \textcolor{stringliteral}{"{}Doesn't exist a audio mixer device"{}});}
+\DoxyCodeLine{01521 }
+\DoxyCodeLine{01522   \textcolor{comment}{// get dwLineID}}
+\DoxyCodeLine{01523   ret = getLineInfo((HMIXEROBJ)0, MIXERLINE\_COMPONENTTYPE\_DST\_WAVEIN, mxl);}
+\DoxyCodeLine{01524   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR)}
+\DoxyCodeLine{01525     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Error to obtain info by mixer"{}});}
+\DoxyCodeLine{01526 }
+\DoxyCodeLine{01527   \textcolor{comment}{// get dwControlID}}
+\DoxyCodeLine{01528   MIXERCONTROL mxc;}
+\DoxyCodeLine{01529   ret = getLineControl(mxc, (HMIXEROBJ)0, mxl.dwLineID,}
+\DoxyCodeLine{01530                        MIXERCONTROL\_CONTROLTYPE\_VOLUME);}
+\DoxyCodeLine{01531   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR)}
+\DoxyCodeLine{01532     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnableVolume,}
+\DoxyCodeLine{01533                                 \textcolor{stringliteral}{"{}Error to obtain info by mixer"{}});}
+\DoxyCodeLine{01534 }
+\DoxyCodeLine{01535   dwMaximum         = mxc.Bounds.dwMaximum;}
+\DoxyCodeLine{01536   dwVolumeControlID = mxc.dwControlID;}
+\DoxyCodeLine{01537 }
+\DoxyCodeLine{01538   \textcolor{keywordtype}{int} newValue;}
+\DoxyCodeLine{01539   \textcolor{keywordtype}{double} fattProp = ((double)(mxc.Metrics.cSteps -\/ 1) * value) / 10;}
+\DoxyCodeLine{01540   \textcolor{keywordtype}{double} delta    = (double)(dwMaximum / (mxc.Metrics.cSteps -\/ 1));}
+\DoxyCodeLine{01541   newValue        = (int)(tround(fattProp) * delta);}
+\DoxyCodeLine{01542 }
+\DoxyCodeLine{01543   MIXERCONTROLDETAILS\_UNSIGNED mxcdVolume = \{newValue\};}
+\DoxyCodeLine{01544   ret = setControlDetails((HMIXEROBJ)0, dwVolumeControlID, mxc.cMultipleItems,}
+\DoxyCodeLine{01545                           \&mxcdVolume);}
+\DoxyCodeLine{01546   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR)}
+\DoxyCodeLine{01547     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnableVolume,}
+\DoxyCodeLine{01548                                 \textcolor{stringliteral}{"{}Error to obtain info by mixer"{}});}
+\DoxyCodeLine{01549   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{01550 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_sound_input_device_a82d298619922a95a868bd4417590ff75}\label{class_t_sound_input_device_a82d298619922a95a868bd4417590ff75}} 
+\index{TSoundInputDevice@{TSoundInputDevice}!stop@{stop}}
+\index{stop@{stop}!TSoundInputDevice@{TSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TSound\+TrackP}} TSound\+Input\+Device\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stops the recording and returns the result of recording. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01312                                      \{}
+\DoxyCodeLine{01313   \textcolor{keywordflow}{if} (!m\_imp-\/>m\_isRecording) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{01314 }
+\DoxyCodeLine{01315   m\_imp-\/>m\_isRecording = \textcolor{keyword}{false};}
+\DoxyCodeLine{01316   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{01317     m\_imp-\/>reset();}
+\DoxyCodeLine{01318   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{01319     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < (int)m\_imp-\/>m\_whdr.size(); ++j) \{}
+\DoxyCodeLine{01320       \textcolor{keywordflow}{if} (m\_imp-\/>m\_whdr[j].dwFlags \& WHDR\_PREPARED) \{}
+\DoxyCodeLine{01321         \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{01322           m\_imp-\/>unprepareHeader(m\_imp-\/>m\_whdr[j]);}
+\DoxyCodeLine{01323         \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{01324           \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnablePrepare,}
+\DoxyCodeLine{01325                                       e.getMessage());}
+\DoxyCodeLine{01326         \}}
+\DoxyCodeLine{01327         \textcolor{keyword}{delete}[] m\_imp-\/>m\_whdr[j].lpData;}
+\DoxyCodeLine{01328       \}}
+\DoxyCodeLine{01329     \}}
+\DoxyCodeLine{01330     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnableCloseDevice,}
+\DoxyCodeLine{01331                                 e.getMessage());}
+\DoxyCodeLine{01332   \}}
+\DoxyCodeLine{01333 }
+\DoxyCodeLine{01334   \textcolor{keywordflow}{if} (m\_imp-\/>m\_allocateBuff) \{}
+\DoxyCodeLine{01335     WaitForSingleObject(m\_imp-\/>m\_hLastBlockDone, INFINITE);}
+\DoxyCodeLine{01336 }
+\DoxyCodeLine{01337     \mbox{\hyperlink{class_t_smart_pointer_t}{TSoundTrackP}} st = \mbox{\hyperlink{class_t_sound_track_a9a83177a9a5b9a7470f32b87e7f21f3d}{TSoundTrack::create}}(}
+\DoxyCodeLine{01338         m\_imp-\/>m\_format,}
+\DoxyCodeLine{01339         m\_imp-\/>m\_byteRecorded / ((m\_imp-\/>m\_format.m\_bitPerSample *}
+\DoxyCodeLine{01340                                   m\_imp-\/>m\_format.m\_channelCount) >>}
+\DoxyCodeLine{01341                                  3));}
+\DoxyCodeLine{01342 }
+\DoxyCodeLine{01343     TINT32 bytePerSec =}
+\DoxyCodeLine{01344         m\_imp-\/>m\_format.m\_sampleRate *}
+\DoxyCodeLine{01345         ((m\_imp-\/>m\_format.m\_bitPerSample * m\_imp-\/>m\_format.m\_channelCount) >>}
+\DoxyCodeLine{01346          3);}
+\DoxyCodeLine{01347 }
+\DoxyCodeLine{01348     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{01349     \textcolor{keywordflow}{for} (i = 0; i < (int)(m\_imp-\/>m\_recordedBlocks.size() -\/ 1); ++i) \{}
+\DoxyCodeLine{01350       memcpy((\textcolor{keywordtype}{void} *)(st-\/>\mbox{\hyperlink{class_t_sound_track_ae47a8e255a18ddbc83d31b6c0c834e68}{getRawData}}() + bytePerSec * i),}
+\DoxyCodeLine{01351              m\_imp-\/>m\_recordedBlocks[i], bytePerSec);}
+\DoxyCodeLine{01352       \textcolor{keyword}{delete}[] m\_imp-\/>m\_recordedBlocks[i];}
+\DoxyCodeLine{01353     \}}
+\DoxyCodeLine{01354 }
+\DoxyCodeLine{01355     TINT32 lastBlockSize = m\_imp-\/>m\_byteRecorded -\/ (bytePerSec * i);}
+\DoxyCodeLine{01356 }
+\DoxyCodeLine{01357     \textcolor{keywordflow}{if} (lastBlockSize != 0) \{}
+\DoxyCodeLine{01358       memcpy((\textcolor{keywordtype}{void} *)(st-\/>\mbox{\hyperlink{class_t_sound_track_ae47a8e255a18ddbc83d31b6c0c834e68}{getRawData}}() + bytePerSec * i),}
+\DoxyCodeLine{01359              m\_imp-\/>m\_recordedBlocks[i], lastBlockSize);}
+\DoxyCodeLine{01360       \textcolor{keyword}{delete}[] m\_imp-\/>m\_recordedBlocks[i];}
+\DoxyCodeLine{01361     \}}
+\DoxyCodeLine{01362 }
+\DoxyCodeLine{01363     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{01364       m\_imp-\/>close();}
+\DoxyCodeLine{01365     \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{01366       \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnableCloseDevice,}
+\DoxyCodeLine{01367                                   e.getMessage());}
+\DoxyCodeLine{01368     \}}
+\DoxyCodeLine{01369     \textcolor{keywordflow}{return} st;}
+\DoxyCodeLine{01370   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01371     WaitForSingleObject(m\_imp-\/>m\_hLastBlockDone, INFINITE);}
+\DoxyCodeLine{01372     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{01373       m\_imp-\/>close();}
+\DoxyCodeLine{01374     \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{01375       \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnableCloseDevice,}
+\DoxyCodeLine{01376                                   e.getMessage());}
+\DoxyCodeLine{01377     \}}
+\DoxyCodeLine{01378     \textcolor{keywordflow}{return} m\_imp-\/>m\_st;}
+\DoxyCodeLine{01379   \}}
+\DoxyCodeLine{01380 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00078}{TSound\+Track\+::create()}}, and \mbox{\hyperlink{l00150}{TSound\+Track\+::get\+Raw\+Data()}}.
+
+\mbox{\Hypertarget{class_t_sound_input_device_a20f9c5dba9872fb5b34f39556ffc7c6d}\label{class_t_sound_input_device_a20f9c5dba9872fb5b34f39556ffc7c6d}} 
+\index{TSoundInputDevice@{TSoundInputDevice}!supportsVolume@{supportsVolume}}
+\index{supportsVolume@{supportsVolume}!TSoundInputDevice@{TSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{supportsVolume()}{supportsVolume()}}
+{\footnotesize\ttfamily bool TSound\+Input\+Device\+::supports\+Volume (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Returns true if is possible to change volume setting on current input interface 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01554                                        \{}
+\DoxyCodeLine{01555   UINT nNumMixers;}
+\DoxyCodeLine{01556   MMRESULT ret;}
+\DoxyCodeLine{01557   MIXERLINE mxl;}
+\DoxyCodeLine{01558 }
+\DoxyCodeLine{01559   nNumMixers = mixerGetNumDevs();}
+\DoxyCodeLine{01560 }
+\DoxyCodeLine{01561   \textcolor{keywordflow}{if} (nNumMixers == 0)}
+\DoxyCodeLine{01562     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::NoMixer,}
+\DoxyCodeLine{01563                                 \textcolor{stringliteral}{"{}Doesn't exist a audio mixer device"{}});}
+\DoxyCodeLine{01564 }
+\DoxyCodeLine{01565   \textcolor{comment}{// get dwLineID}}
+\DoxyCodeLine{01566   ret = getLineInfo((HMIXEROBJ)0, MIXERLINE\_COMPONENTTYPE\_DST\_WAVEIN, mxl);}
+\DoxyCodeLine{01567   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR)}
+\DoxyCodeLine{01568     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnableVolume,}
+\DoxyCodeLine{01569                                 \textcolor{stringliteral}{"{}Error to obtain info by mixer"{}});}
+\DoxyCodeLine{01570 }
+\DoxyCodeLine{01571   \textcolor{comment}{// get dwControlID}}
+\DoxyCodeLine{01572   MIXERCONTROL mxc;}
+\DoxyCodeLine{01573   ret = getLineControl(mxc, (HMIXEROBJ)0, mxl.dwLineID,}
+\DoxyCodeLine{01574                        MIXERCONTROL\_CONTROLTYPE\_VOLUME);}
+\DoxyCodeLine{01575   \textcolor{keywordflow}{if} (ret == MIXERR\_INVALCONTROL) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01576 }
+\DoxyCodeLine{01577   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR)}
+\DoxyCodeLine{01578     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_sound_device_exception}{TSoundDeviceException}}(TSoundDeviceException::UnableVolume,}
+\DoxyCodeLine{01579                                 \textcolor{stringliteral}{"{}Error to obtain info by mixer"{}});}
+\DoxyCodeLine{01580 }
+\DoxyCodeLine{01581   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{01582 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tsound.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tsound/tsound\+\_\+nt.\+cpp\item 
+E\+:/opentoonz/toonz/sources/common/tsound/tsound\+\_\+qt.\+cpp\end{DoxyCompactItemize}

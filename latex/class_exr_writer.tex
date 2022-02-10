@@ -1,0 +1,281 @@
+\hypertarget{class_exr_writer}{}\doxysection{Exr\+Writer Class Reference}
+\label{class_exr_writer}\index{ExrWriter@{ExrWriter}}
+Inheritance diagram for Exr\+Writer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_exr_writer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_exr_writer_a041b6f5a68810f7eafc2ed66dd2ad564}{open}} (FILE $\ast$file, const \mbox{\hyperlink{class_t_image_info}{TImage\+Info}} \&info) override
+\item 
+void \mbox{\hyperlink{class_exr_writer_a583ae65dde76d7ce31e85eba7c8ead2c}{write\+Line}} (char $\ast$buffer) override
+\item 
+void \mbox{\hyperlink{class_exr_writer_ae25d916f1ef2d77aec0b062d2bc9044f}{write\+Line}} (short $\ast$buffer) override
+\item 
+void \mbox{\hyperlink{class_exr_writer_a5183c441a2951ed33ae35647584eac1b}{flush}} () override
+\item 
+Tiio\+::\+Row\+Order \mbox{\hyperlink{class_exr_writer_a03fa28c9efbce18cba1ebbaa11c4484a}{get\+Row\+Order}} () const override
+\item 
+bool \mbox{\hyperlink{class_exr_writer_a0e6bcc861a4341266803e7d54a923029}{write\+Alpha\+Supported}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_exr_writer_ae2250b69d00dd83895f416fb097ebf0b}\label{class_exr_writer_ae2250b69d00dd83895f416fb097ebf0b}} 
+\index{ExrWriter@{ExrWriter}!ExrWriter@{ExrWriter}}
+\index{ExrWriter@{ExrWriter}!ExrWriter@{ExrWriter}}
+\doxysubsubsection{\texorpdfstring{ExrWriter()}{ExrWriter()}}
+{\footnotesize\ttfamily Exr\+Writer\+::\+Exr\+Writer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00278 : m\_row(0), m\_bpp(64) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_exr_writer_a28e60175498e96108275a8a40b293988}\label{class_exr_writer_a28e60175498e96108275a8a40b293988}} 
+\index{ExrWriter@{ExrWriter}!````~ExrWriter@{$\sim$ExrWriter}}
+\index{````~ExrWriter@{$\sim$ExrWriter}!ExrWriter@{ExrWriter}}
+\doxysubsubsection{\texorpdfstring{$\sim$ExrWriter()}{~ExrWriter()}}
+{\footnotesize\ttfamily Exr\+Writer\+::$\sim$\+Exr\+Writer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00280                       \{}
+\DoxyCodeLine{00281   free(m\_header.channels);}
+\DoxyCodeLine{00282   free(m\_header.pixel\_types);}
+\DoxyCodeLine{00283   free(m\_header.requested\_pixel\_types);}
+\DoxyCodeLine{00284 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_exr_writer_a5183c441a2951ed33ae35647584eac1b}\label{class_exr_writer_a5183c441a2951ed33ae35647584eac1b}} 
+\index{ExrWriter@{ExrWriter}!flush@{flush}}
+\index{flush@{flush}!ExrWriter@{ExrWriter}}
+\doxysubsubsection{\texorpdfstring{flush()}{flush()}}
+{\footnotesize\ttfamily void Exr\+Writer\+::flush (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00393                       \{}
+\DoxyCodeLine{00394   \textcolor{keywordflow}{if} (m\_bpp == 64) \{}
+\DoxyCodeLine{00395     \textcolor{keywordtype}{float}* image\_ptr[4];}
+\DoxyCodeLine{00396     image\_ptr[0]   = \&(m\_imageBuf[3].at(0));  \textcolor{comment}{// B}}
+\DoxyCodeLine{00397     image\_ptr[1]   = \&(m\_imageBuf[2].at(0));  \textcolor{comment}{// G}}
+\DoxyCodeLine{00398     image\_ptr[2]   = \&(m\_imageBuf[1].at(0));  \textcolor{comment}{// R}}
+\DoxyCodeLine{00399     image\_ptr[3]   = \&(m\_imageBuf[0].at(0));  \textcolor{comment}{// A}}
+\DoxyCodeLine{00400     m\_image.images = (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}**)image\_ptr;}
+\DoxyCodeLine{00401     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* err;}
+\DoxyCodeLine{00402     \textcolor{keywordtype}{int} ret = SaveEXRImageToFileHandle(\&m\_image, \&m\_header, m\_fp, \&err);}
+\DoxyCodeLine{00403     \textcolor{keywordflow}{if} (ret != TINYEXR\_SUCCESS) \{}
+\DoxyCodeLine{00404       \textcolor{keywordflow}{throw}(std::string(err));}
+\DoxyCodeLine{00405     \}}
+\DoxyCodeLine{00406   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00407     \textcolor{keywordtype}{float}* image\_ptr[3];}
+\DoxyCodeLine{00408     image\_ptr[0]   = \&(m\_imageBuf[2].at(0));  \textcolor{comment}{// B}}
+\DoxyCodeLine{00409     image\_ptr[1]   = \&(m\_imageBuf[1].at(0));  \textcolor{comment}{// G}}
+\DoxyCodeLine{00410     image\_ptr[2]   = \&(m\_imageBuf[0].at(0));  \textcolor{comment}{// R}}
+\DoxyCodeLine{00411     m\_image.images = (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}**)image\_ptr;}
+\DoxyCodeLine{00412     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* err;}
+\DoxyCodeLine{00413     \textcolor{keywordtype}{int} ret = SaveEXRImageToFileHandle(\&m\_image, \&m\_header, m\_fp, \&err);}
+\DoxyCodeLine{00414     \textcolor{keywordflow}{if} (ret != TINYEXR\_SUCCESS) \{}
+\DoxyCodeLine{00415       \textcolor{keywordflow}{throw}(std::string(err));}
+\DoxyCodeLine{00416     \}}
+\DoxyCodeLine{00417   \}}
+\DoxyCodeLine{00418 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_exr_writer_a03fa28c9efbce18cba1ebbaa11c4484a}\label{class_exr_writer_a03fa28c9efbce18cba1ebbaa11c4484a}} 
+\index{ExrWriter@{ExrWriter}!getRowOrder@{getRowOrder}}
+\index{getRowOrder@{getRowOrder}!ExrWriter@{ExrWriter}}
+\doxysubsubsection{\texorpdfstring{getRowOrder()}{getRowOrder()}}
+{\footnotesize\ttfamily Tiio\+::\+Row\+Order Exr\+Writer\+::get\+Row\+Order (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00272 \{ \textcolor{keywordflow}{return} Tiio::TOP2BOTTOM; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_exr_writer_a041b6f5a68810f7eafc2ed66dd2ad564}\label{class_exr_writer_a041b6f5a68810f7eafc2ed66dd2ad564}} 
+\index{ExrWriter@{ExrWriter}!open@{open}}
+\index{open@{open}!ExrWriter@{ExrWriter}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily void Exr\+Writer\+::open (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{file,  }\item[{const \mbox{\hyperlink{class_t_image_info}{TImage\+Info}} \&}]{info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00286                                                        \{}
+\DoxyCodeLine{00287   m\_fp   = file;}
+\DoxyCodeLine{00288   m\_info = info;}
+\DoxyCodeLine{00289   InitEXRHeader(\&m\_header);}
+\DoxyCodeLine{00290   InitEXRImage(\&m\_image);}
+\DoxyCodeLine{00291 }
+\DoxyCodeLine{00292   \textcolor{keywordflow}{if} (!m\_properties) m\_properties = \textcolor{keyword}{new} \mbox{\hyperlink{class_tiio_1_1_exr_writer_properties}{Tiio::ExrWriterProperties}}();}
+\DoxyCodeLine{00293 }
+\DoxyCodeLine{00294   \mbox{\hyperlink{class_t_enum_property}{TEnumProperty}}* bitsPerPixel =}
+\DoxyCodeLine{00295       (\mbox{\hyperlink{class_t_enum_property}{TEnumProperty}}*)(m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Bits Per Pixel"{}}));}
+\DoxyCodeLine{00296   m\_bpp = bitsPerPixel ? std::stoi(bitsPerPixel-\/>getValue()) : 64;}
+\DoxyCodeLine{00297   assert(m\_bpp == 48 || m\_bpp == 64);}
+\DoxyCodeLine{00298 }
+\DoxyCodeLine{00299   std::wstring compressionType =}
+\DoxyCodeLine{00300       ((\mbox{\hyperlink{class_t_enum_property}{TEnumProperty}}*)(m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Compression Type"{}})))}
+\DoxyCodeLine{00301           -\/>getValue();}
+\DoxyCodeLine{00302   m\_header.compression\_type = ExrCompTypeStr.key(compressionType);}
+\DoxyCodeLine{00303 }
+\DoxyCodeLine{00304   std::wstring storageType =}
+\DoxyCodeLine{00305       ((\mbox{\hyperlink{class_t_enum_property}{TEnumProperty}}*)(m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Storage Type"{}})))-\/>getValue();}
+\DoxyCodeLine{00306   \textcolor{keywordflow}{if} (storageType == EXR\_STORAGETYPE\_TILE) \{}
+\DoxyCodeLine{00307     m\_header.tiled           = 1;}
+\DoxyCodeLine{00308     m\_header.tile\_size\_x     = 128;}
+\DoxyCodeLine{00309     m\_header.tile\_size\_y     = 128;}
+\DoxyCodeLine{00310     m\_header.tile\_level\_mode = TINYEXR\_TILE\_ONE\_LEVEL;}
+\DoxyCodeLine{00311   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00312     m\_header.tiled = 0;}
+\DoxyCodeLine{00313 }
+\DoxyCodeLine{00314   m\_image.num\_channels = (m\_bpp == 64) ? 4 : 3;}
+\DoxyCodeLine{00315 }
+\DoxyCodeLine{00316   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < m\_image.num\_channels; c++)}
+\DoxyCodeLine{00317     m\_imageBuf[c].resize(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} * m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}});}
+\DoxyCodeLine{00318 }
+\DoxyCodeLine{00319   m\_image.width  = m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}};}
+\DoxyCodeLine{00320   m\_image.height = m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}};}
+\DoxyCodeLine{00321 }
+\DoxyCodeLine{00322   m\_header.num\_channels = m\_image.num\_channels;}
+\DoxyCodeLine{00323   m\_header.channels =}
+\DoxyCodeLine{00324       (EXRChannelInfo*)malloc(\textcolor{keyword}{sizeof}(EXRChannelInfo) * m\_header.num\_channels);}
+\DoxyCodeLine{00325   \textcolor{comment}{// Must be BGR(A) order, since most of EXR viewers expect this channel order.}}
+\DoxyCodeLine{00326   \textcolor{keywordflow}{if} (m\_bpp == 64) \{}
+\DoxyCodeLine{00327     strncpy(m\_header.channels[0].name, \textcolor{stringliteral}{"{}A"{}}, 255);}
+\DoxyCodeLine{00328     m\_header.channels[0].name[strlen(\textcolor{stringliteral}{"{}A"{}})] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00329     strncpy(m\_header.channels[1].name, \textcolor{stringliteral}{"{}B"{}}, 255);}
+\DoxyCodeLine{00330     m\_header.channels[1].name[strlen(\textcolor{stringliteral}{"{}B"{}})] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00331     strncpy(m\_header.channels[2].name, \textcolor{stringliteral}{"{}G"{}}, 255);}
+\DoxyCodeLine{00332     m\_header.channels[2].name[strlen(\textcolor{stringliteral}{"{}G"{}})] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00333     strncpy(m\_header.channels[3].name, \textcolor{stringliteral}{"{}R"{}}, 255);}
+\DoxyCodeLine{00334     m\_header.channels[3].name[strlen(\textcolor{stringliteral}{"{}R"{}})] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00335   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00336     strncpy(m\_header.channels[0].name, \textcolor{stringliteral}{"{}B"{}}, 255);}
+\DoxyCodeLine{00337     m\_header.channels[0].name[strlen(\textcolor{stringliteral}{"{}B"{}})] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00338     strncpy(m\_header.channels[1].name, \textcolor{stringliteral}{"{}G"{}}, 255);}
+\DoxyCodeLine{00339     m\_header.channels[1].name[strlen(\textcolor{stringliteral}{"{}G"{}})] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00340     strncpy(m\_header.channels[2].name, \textcolor{stringliteral}{"{}R"{}}, 255);}
+\DoxyCodeLine{00341     m\_header.channels[2].name[strlen(\textcolor{stringliteral}{"{}R"{}})] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00342   \}}
+\DoxyCodeLine{00343 }
+\DoxyCodeLine{00344   m\_header.pixel\_types = (\textcolor{keywordtype}{int}*)malloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}) * m\_header.num\_channels);}
+\DoxyCodeLine{00345   m\_header.requested\_pixel\_types =}
+\DoxyCodeLine{00346       (\textcolor{keywordtype}{int}*)malloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}) * m\_header.num\_channels);}
+\DoxyCodeLine{00347   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_header.num\_channels; i++) \{}
+\DoxyCodeLine{00348     m\_header.pixel\_types[i] =}
+\DoxyCodeLine{00349         TINYEXR\_PIXELTYPE\_FLOAT;  \textcolor{comment}{// pixel type of input image}}
+\DoxyCodeLine{00350     m\_header.requested\_pixel\_types[i] =}
+\DoxyCodeLine{00351         TINYEXR\_PIXELTYPE\_HALF;  \textcolor{comment}{// pixel type of output image to be stored in}}
+\DoxyCodeLine{00352                                  \textcolor{comment}{// .EXR}}
+\DoxyCodeLine{00353   \}}
+\DoxyCodeLine{00354 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_exr_writer_a0e6bcc861a4341266803e7d54a923029}\label{class_exr_writer_a0e6bcc861a4341266803e7d54a923029}} 
+\index{ExrWriter@{ExrWriter}!writeAlphaSupported@{writeAlphaSupported}}
+\index{writeAlphaSupported@{writeAlphaSupported}!ExrWriter@{ExrWriter}}
+\doxysubsubsection{\texorpdfstring{writeAlphaSupported()}{writeAlphaSupported()}}
+{\footnotesize\ttfamily bool Exr\+Writer\+::write\+Alpha\+Supported (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00275 \{ \textcolor{keywordflow}{return} m\_bpp == 64; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_exr_writer_a583ae65dde76d7ce31e85eba7c8ead2c}\label{class_exr_writer_a583ae65dde76d7ce31e85eba7c8ead2c}} 
+\index{ExrWriter@{ExrWriter}!writeLine@{writeLine}}
+\index{writeLine@{writeLine}!ExrWriter@{ExrWriter}}
+\doxysubsubsection{\texorpdfstring{writeLine()}{writeLine()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Exr\+Writer\+::write\+Line (\begin{DoxyParamCaption}\item[{char $\ast$}]{buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00356                                       \{}
+\DoxyCodeLine{00357   TPixel32* pix    = (TPixel32*)buffer;}
+\DoxyCodeLine{00358   TPixel32* endPix = pix + m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}};}
+\DoxyCodeLine{00359 }
+\DoxyCodeLine{00360   \textcolor{keywordtype}{float}* r\_p = \&m\_imageBuf[0][m\_row * m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}];}
+\DoxyCodeLine{00361   \textcolor{keywordtype}{float}* g\_p = \&m\_imageBuf[1][m\_row * m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}];}
+\DoxyCodeLine{00362   \textcolor{keywordtype}{float}* b\_p = \&m\_imageBuf[2][m\_row * m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}];}
+\DoxyCodeLine{00363   \textcolor{keywordtype}{float}* a\_p;}
+\DoxyCodeLine{00364   \textcolor{keywordflow}{if} (m\_bpp == 64) a\_p = \&m\_imageBuf[3][m\_row * m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}];}
+\DoxyCodeLine{00365   \textcolor{keywordflow}{while} (pix < endPix) \{}
+\DoxyCodeLine{00366     *r\_p++ = uctof(pix-\/>r);}
+\DoxyCodeLine{00367     *g\_p++ = uctof(pix-\/>g);}
+\DoxyCodeLine{00368     *b\_p++ = uctof(pix-\/>b);}
+\DoxyCodeLine{00369     \textcolor{keywordflow}{if} (m\_bpp == 64) *a\_p++ = uctof(pix-\/>m, 1.0f);}
+\DoxyCodeLine{00370     pix++;}
+\DoxyCodeLine{00371   \}}
+\DoxyCodeLine{00372   m\_row++;}
+\DoxyCodeLine{00373 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_exr_writer_ae25d916f1ef2d77aec0b062d2bc9044f}\label{class_exr_writer_ae25d916f1ef2d77aec0b062d2bc9044f}} 
+\index{ExrWriter@{ExrWriter}!writeLine@{writeLine}}
+\index{writeLine@{writeLine}!ExrWriter@{ExrWriter}}
+\doxysubsubsection{\texorpdfstring{writeLine()}{writeLine()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Exr\+Writer\+::write\+Line (\begin{DoxyParamCaption}\item[{short $\ast$}]{buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00374                                        \{}
+\DoxyCodeLine{00375   TPixel64* pix    = (TPixel64*)buffer;}
+\DoxyCodeLine{00376   TPixel64* endPix = pix + m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}};}
+\DoxyCodeLine{00377 }
+\DoxyCodeLine{00378   \textcolor{keywordtype}{float}* r\_p = \&m\_imageBuf[0][m\_row * m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}];}
+\DoxyCodeLine{00379   \textcolor{keywordtype}{float}* g\_p = \&m\_imageBuf[1][m\_row * m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}];}
+\DoxyCodeLine{00380   \textcolor{keywordtype}{float}* b\_p = \&m\_imageBuf[2][m\_row * m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}];}
+\DoxyCodeLine{00381   \textcolor{keywordtype}{float}* a\_p;}
+\DoxyCodeLine{00382   \textcolor{keywordflow}{if} (m\_bpp == 64) a\_p = \&m\_imageBuf[3][m\_row * m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}];}
+\DoxyCodeLine{00383   \textcolor{keywordflow}{while} (pix < endPix) \{}
+\DoxyCodeLine{00384     *r\_p++ = ustof(pix-\/>r);}
+\DoxyCodeLine{00385     *g\_p++ = ustof(pix-\/>g);}
+\DoxyCodeLine{00386     *b\_p++ = ustof(pix-\/>b);}
+\DoxyCodeLine{00387     \textcolor{keywordflow}{if} (m\_bpp == 64) *a\_p++ = ustof(pix-\/>m, 1.0f);}
+\DoxyCodeLine{00388     pix++;}
+\DoxyCodeLine{00389   \}}
+\DoxyCodeLine{00390   m\_row++;}
+\DoxyCodeLine{00391 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/exr/tiio\+\_\+exr.\+cpp\end{DoxyCompactItemize}

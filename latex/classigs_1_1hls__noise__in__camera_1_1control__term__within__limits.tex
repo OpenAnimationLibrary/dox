@@ -1,0 +1,128 @@
+\hypertarget{classigs_1_1hls__noise__in__camera_1_1control__term__within__limits}{}\doxysection{igs\+::hls\+\_\+noise\+\_\+in\+\_\+camera\+::control\+\_\+term\+\_\+within\+\_\+limits Class Reference}
+\label{classigs_1_1hls__noise__in__camera_1_1control__term__within__limits}\index{igs::hls\_noise\_in\_camera::control\_term\_within\_limits@{igs::hls\_noise\_in\_camera::control\_term\_within\_limits}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classigs_1_1hls__noise__in__camera_1_1control__term__within__limits_a266a424c8699be6564e13b18a990a692}{control\+\_\+term\+\_\+within\+\_\+limits}} (const double effective\+\_\+low=0.\+0, const double effective\+\_\+high=0.\+0, const double center=0.\+5, const int type=0, const double noise\+\_\+range=0.\+0)
+\item 
+void \mbox{\hyperlink{classigs_1_1hls__noise__in__camera_1_1control__term__within__limits_a442ecf51191ae4f6fe188cac1dc75f58}{exec}} (const double current\+\_\+value, double \&noise, double \&shift\+\_\+value)
+\item 
+double \mbox{\hyperlink{classigs_1_1hls__noise__in__camera_1_1control__term__within__limits_aaa9bfe3fa6f93397848b23d7bfd12805}{noise\+\_\+range}} (void) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classigs_1_1hls__noise__in__camera_1_1control__term__within__limits_a266a424c8699be6564e13b18a990a692}\label{classigs_1_1hls__noise__in__camera_1_1control__term__within__limits_a266a424c8699be6564e13b18a990a692}} 
+\index{igs::hls\_noise\_in\_camera::control\_term\_within\_limits@{igs::hls\_noise\_in\_camera::control\_term\_within\_limits}!control\_term\_within\_limits@{control\_term\_within\_limits}}
+\index{control\_term\_within\_limits@{control\_term\_within\_limits}!igs::hls\_noise\_in\_camera::control\_term\_within\_limits@{igs::hls\_noise\_in\_camera::control\_term\_within\_limits}}
+\doxysubsubsection{\texorpdfstring{control\_term\_within\_limits()}{control\_term\_within\_limits()}}
+{\footnotesize\ttfamily igs\+::hls\+\_\+noise\+\_\+in\+\_\+camera\+::control\+\_\+term\+\_\+within\+\_\+limits\+::control\+\_\+term\+\_\+within\+\_\+limits (\begin{DoxyParamCaption}\item[{const double}]{effective\+\_\+low = {\ttfamily 0.0},  }\item[{const double}]{effective\+\_\+high = {\ttfamily 0.0},  }\item[{const double}]{center = {\ttfamily 0.5},  }\item[{const int}]{type = {\ttfamily 0},  }\item[{const double}]{noise\+\_\+range = {\ttfamily 0.0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00232       : effective\_low\_(effective\_low)}
+\DoxyCodeLine{00233       , effective\_high\_(effective\_high)}
+\DoxyCodeLine{00234       , center\_(center)}
+\DoxyCodeLine{00235       , type\_(\textcolor{keyword}{static\_cast<}term\_type\_\textcolor{keyword}{>}(type))}
+\DoxyCodeLine{00236       , noise\_range\_(noise\_range) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classigs_1_1hls__noise__in__camera_1_1control__term__within__limits_a442ecf51191ae4f6fe188cac1dc75f58}\label{classigs_1_1hls__noise__in__camera_1_1control__term__within__limits_a442ecf51191ae4f6fe188cac1dc75f58}} 
+\index{igs::hls\_noise\_in\_camera::control\_term\_within\_limits@{igs::hls\_noise\_in\_camera::control\_term\_within\_limits}!exec@{exec}}
+\index{exec@{exec}!igs::hls\_noise\_in\_camera::control\_term\_within\_limits@{igs::hls\_noise\_in\_camera::control\_term\_within\_limits}}
+\doxysubsubsection{\texorpdfstring{exec()}{exec()}}
+{\footnotesize\ttfamily void igs\+::hls\+\_\+noise\+\_\+in\+\_\+camera\+::control\+\_\+term\+\_\+within\+\_\+limits\+::exec (\begin{DoxyParamCaption}\item[{const double}]{current\+\_\+value,  }\item[{double \&}]{noise,  }\item[{double \&}]{shift\+\_\+value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00241                                  \{}
+\DoxyCodeLine{00242     \textcolor{keywordflow}{if} ((0.0 < this-\/>effective\_low\_) \&\& (current\_value < this-\/>center\_)) \{}
+\DoxyCodeLine{00243       \textcolor{keyword}{const} \textcolor{keywordtype}{double} cen = this-\/>center\_;}
+\DoxyCodeLine{00244       \textcolor{keyword}{const} \textcolor{keywordtype}{double} val = current\_value;}
+\DoxyCodeLine{00245       \textcolor{keyword}{const} \textcolor{keywordtype}{double} ran = this-\/>noise\_range\_;}
+\DoxyCodeLine{00246       \textcolor{keyword}{const} \textcolor{keywordtype}{double} eff = this-\/>effective\_low\_;}
+\DoxyCodeLine{00247       \textcolor{keywordflow}{switch} (this-\/>type\_) \{}
+\DoxyCodeLine{00248       \textcolor{keywordflow}{case} shift\_all\_:}
+\DoxyCodeLine{00249         shift\_value = ((cen -\/ val) / cen) * (ran / 2.0) * eff;}
+\DoxyCodeLine{00250         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00251       \textcolor{keywordflow}{case} shift\_term\_:}
+\DoxyCodeLine{00252         \textcolor{keywordflow}{if} (val < ran) \{}
+\DoxyCodeLine{00253           shift\_value = (((cen < ran) ? cen : ran) -\/ val) / 2.0 * eff;}
+\DoxyCodeLine{00254         \}}
+\DoxyCodeLine{00255         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00256       \textcolor{keywordflow}{case} decrease\_all\_: \{}
+\DoxyCodeLine{00257         \textcolor{keyword}{const} \textcolor{keywordtype}{double} tmp = (cen -\/ val) / cen * eff;}
+\DoxyCodeLine{00258         \textcolor{keywordflow}{if} (0.0 < tmp) \{}
+\DoxyCodeLine{00259           noise *= 1.0 -\/ tmp;}
+\DoxyCodeLine{00260         \}}
+\DoxyCodeLine{00261       \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00262       \textcolor{keywordflow}{case} decrease\_term\_:}
+\DoxyCodeLine{00263         \textcolor{keywordflow}{if} (val < (ran / 2.0)) \{}
+\DoxyCodeLine{00264           \textcolor{keyword}{const} \textcolor{keywordtype}{double} stop = (cen < (ran / 2.0)) ? cen : ran / 2.0;}
+\DoxyCodeLine{00265           \textcolor{keyword}{const} \textcolor{keywordtype}{double} tmp  = (stop -\/ val) / stop * eff;}
+\DoxyCodeLine{00266           \textcolor{keywordflow}{if} (0.0 < tmp) \{}
+\DoxyCodeLine{00267             noise *= 1.0 -\/ tmp;}
+\DoxyCodeLine{00268           \}}
+\DoxyCodeLine{00269         \}}
+\DoxyCodeLine{00270         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00271       \}}
+\DoxyCodeLine{00272     \}}
+\DoxyCodeLine{00273 }
+\DoxyCodeLine{00274     \textcolor{keywordflow}{if} ((0.0 < this-\/>effective\_high\_) \&\& (this-\/>center\_ < current\_value)) \{}
+\DoxyCodeLine{00275       \textcolor{keyword}{const} \textcolor{keywordtype}{double} cen = this-\/>center\_;}
+\DoxyCodeLine{00276       \textcolor{keyword}{const} \textcolor{keywordtype}{double} val = current\_value;}
+\DoxyCodeLine{00277       \textcolor{keyword}{const} \textcolor{keywordtype}{double} ran = this-\/>noise\_range\_;}
+\DoxyCodeLine{00278       \textcolor{keyword}{const} \textcolor{keywordtype}{double} eff = this-\/>effective\_high\_;}
+\DoxyCodeLine{00279       \textcolor{keywordflow}{switch} (this-\/>type\_) \{}
+\DoxyCodeLine{00280       \textcolor{keywordflow}{case} shift\_all\_:}
+\DoxyCodeLine{00281         shift\_value = ((cen -\/ val) / (1.0 -\/ cen)) * (ran / 2.0) * eff;}
+\DoxyCodeLine{00282         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00283       \textcolor{keywordflow}{case} shift\_term\_:}
+\DoxyCodeLine{00284         \textcolor{keywordflow}{if} ((1.0 -\/ ran) < val) \{}
+\DoxyCodeLine{00285           \textcolor{keyword}{const} \textcolor{keywordtype}{double} ira = 1.0 -\/ ran;}
+\DoxyCodeLine{00286           shift\_value      = (((cen < ira) ? ira : cen) -\/ val) / 2.0 * eff;}
+\DoxyCodeLine{00287         \}}
+\DoxyCodeLine{00288         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00289       \textcolor{keywordflow}{case} decrease\_all\_: \{}
+\DoxyCodeLine{00290         \textcolor{keyword}{const} \textcolor{keywordtype}{double} tmp = (val -\/ cen) / (1.0 -\/ cen) * eff;}
+\DoxyCodeLine{00291         \textcolor{keywordflow}{if} (0.0 < tmp) \{}
+\DoxyCodeLine{00292           noise *= 1.0 -\/ tmp;}
+\DoxyCodeLine{00293         \}}
+\DoxyCodeLine{00294       \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00295       \textcolor{keywordflow}{case} decrease\_term\_:}
+\DoxyCodeLine{00296         \textcolor{keywordflow}{if} ((1.0 -\/ (ran / 2.0)) < val) \{}
+\DoxyCodeLine{00297           \textcolor{keyword}{const} \textcolor{keywordtype}{double} rpos = 1.0 -\/ (ran / 2.0);}
+\DoxyCodeLine{00298           \textcolor{keyword}{const} \textcolor{keywordtype}{double} stop = (cen < rpos) ? rpos : cen;}
+\DoxyCodeLine{00299           \textcolor{keyword}{const} \textcolor{keywordtype}{double} tmp  = (val -\/ stop) / (1.0 -\/ stop) * eff;}
+\DoxyCodeLine{00300           \textcolor{keywordflow}{if} (0.0 < tmp) \{}
+\DoxyCodeLine{00301             noise *= 1.0 -\/ tmp;}
+\DoxyCodeLine{00302           \}}
+\DoxyCodeLine{00303         \}}
+\DoxyCodeLine{00304         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00305       \}}
+\DoxyCodeLine{00306     \}}
+\DoxyCodeLine{00307   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classigs_1_1hls__noise__in__camera_1_1control__term__within__limits_aaa9bfe3fa6f93397848b23d7bfd12805}\label{classigs_1_1hls__noise__in__camera_1_1control__term__within__limits_aaa9bfe3fa6f93397848b23d7bfd12805}} 
+\index{igs::hls\_noise\_in\_camera::control\_term\_within\_limits@{igs::hls\_noise\_in\_camera::control\_term\_within\_limits}!noise\_range@{noise\_range}}
+\index{noise\_range@{noise\_range}!igs::hls\_noise\_in\_camera::control\_term\_within\_limits@{igs::hls\_noise\_in\_camera::control\_term\_within\_limits}}
+\doxysubsubsection{\texorpdfstring{noise\_range()}{noise\_range()}}
+{\footnotesize\ttfamily double igs\+::hls\+\_\+noise\+\_\+in\+\_\+camera\+::control\+\_\+term\+\_\+within\+\_\+limits\+::noise\+\_\+range (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00308 \{ \textcolor{keywordflow}{return} this-\/>noise\_range\_; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/igs\+\_\+hls\+\_\+noise\+\_\+in\+\_\+camera.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,564 @@
+\hypertarget{class_s_v_n_commit_frame_range_dialog}{}\doxysection{SVNCommit\+Frame\+Range\+Dialog Class Reference}
+\label{class_s_v_n_commit_frame_range_dialog}\index{SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}}
+Inheritance diagram for SVNCommit\+Frame\+Range\+Dialog\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_s_v_n_commit_frame_range_dialog}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_s_v_n_commit_frame_range_dialog_a5642497b631de2f288a1ba497a8d1321}\label{class_s_v_n_commit_frame_range_dialog_a5642497b631de2f288a1ba497a8d1321}} 
+void {\bfseries done} (const QString\+List \&)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_v_n_commit_frame_range_dialog_ac682c4fdeb79c87f32def79afb64c08c}{SVNCommit\+Frame\+Range\+Dialog}} (QWidget $\ast$parent, const QString \&working\+Dir, const QString \&file)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_v_n_commit_frame_range_dialog_aa49689a9090ea2305c4eac43a2586004}{on\+Error}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_s_v_n_commit_frame_range_dialog_a6a989fbea32319c75da4f15bd03626d0}{on\+Prop\+Get\+Done}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_s_v_n_commit_frame_range_dialog_ac804033855fa751420da6673a0181e45}{on\+Prop\+Set\+Done}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_commit_frame_range_dialog_a95942fb2df281b3a25717c717d034a28}{on\+Hook\+File\+Added}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_commit_frame_range_dialog_ad98f806784a7190cd476077ee1313fa5}{on\+Put\+Button\+Clicked}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_commit_frame_range_dialog_a2e63d39d7e3bc8e48a3d4926141df882}{commit}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_commit_frame_range_dialog_a7f36980793c5ffa93796aea1263ae73d}{on\+Commit\+Done}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_commit_frame_range_dialog_ae329617606f7b09bbafea95d5a6d6b64}{on\+Update\+Done}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_commit_frame_range_dialog_a7623ea2331112597e4696fa87264eb02}{on\+Lock\+Done}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_v_n_commit_frame_range_dialog_ac682c4fdeb79c87f32def79afb64c08c}\label{class_s_v_n_commit_frame_range_dialog_ac682c4fdeb79c87f32def79afb64c08c}} 
+\index{SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}!SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}}
+\index{SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}!SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{SVNCommitFrameRangeDialog()}{SVNCommitFrameRangeDialog()}}
+{\footnotesize\ttfamily SVNCommit\+Frame\+Range\+Dialog\+::\+SVNCommit\+Frame\+Range\+Dialog (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{const QString \&}]{working\+Dir,  }\item[{const QString \&}]{file }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00916     : Dialog(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false})}
+\DoxyCodeLine{00917     , m\_workingDir(workingDir)}
+\DoxyCodeLine{00918     , m\_file(file)}
+\DoxyCodeLine{00919     , m\_hasError(\textcolor{keyword}{false})}
+\DoxyCodeLine{00920     , m\_hookFileName(QString())}
+\DoxyCodeLine{00921     , m\_newHookFileName(QString())}
+\DoxyCodeLine{00922     , m\_isOVLLevel(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00923   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00924   setAttribute(Qt::WA\_DeleteOnClose, \textcolor{keyword}{true});}
+\DoxyCodeLine{00925 }
+\DoxyCodeLine{00926   setWindowTitle(tr(\textcolor{stringliteral}{"{}Version Control: Put"{}}));}
+\DoxyCodeLine{00927 }
+\DoxyCodeLine{00928   setMinimumSize(350, 150);}
+\DoxyCodeLine{00929   QWidget *container = \textcolor{keyword}{new} QWidget;}
+\DoxyCodeLine{00930 }
+\DoxyCodeLine{00931   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout;}
+\DoxyCodeLine{00932   mainLayout-\/>setAlignment(Qt::AlignHCenter);}
+\DoxyCodeLine{00933   mainLayout-\/>setMargin(0);}
+\DoxyCodeLine{00934 }
+\DoxyCodeLine{00935   QHBoxLayout *hLayout = \textcolor{keyword}{new} QHBoxLayout;}
+\DoxyCodeLine{00936 }
+\DoxyCodeLine{00937   m\_waitingLabel      = \textcolor{keyword}{new} QLabel;}
+\DoxyCodeLine{00938   QMovie *waitingMove = \textcolor{keyword}{new} QMovie(\textcolor{stringliteral}{"{}:Resources/waiting.gif"{}});}
+\DoxyCodeLine{00939   waitingMove-\/>setParent(\textcolor{keyword}{this});}
+\DoxyCodeLine{00940 }
+\DoxyCodeLine{00941   m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{00942 }
+\DoxyCodeLine{00943   m\_waitingLabel-\/>setMovie(waitingMove);}
+\DoxyCodeLine{00944   waitingMove-\/>setCacheMode(QMovie::CacheAll);}
+\DoxyCodeLine{00945   waitingMove-\/>start();}
+\DoxyCodeLine{00946 }
+\DoxyCodeLine{00947   m\_textLabel = \textcolor{keyword}{new} QLabel;}
+\DoxyCodeLine{00948   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Note: the file will be updated too."{}}));}
+\DoxyCodeLine{00949 }
+\DoxyCodeLine{00950   hLayout-\/>addStretch();}
+\DoxyCodeLine{00951   hLayout-\/>addWidget(m\_waitingLabel);}
+\DoxyCodeLine{00952   hLayout-\/>addWidget(m\_textLabel);}
+\DoxyCodeLine{00953   hLayout-\/>addStretch();}
+\DoxyCodeLine{00954 }
+\DoxyCodeLine{00955   mainLayout-\/>addLayout(hLayout);}
+\DoxyCodeLine{00956 }
+\DoxyCodeLine{00957   mainLayout-\/>addSpacing(10);}
+\DoxyCodeLine{00958 }
+\DoxyCodeLine{00959   QHBoxLayout *commentLayout = \textcolor{keyword}{new} QHBoxLayout;}
+\DoxyCodeLine{00960 }
+\DoxyCodeLine{00961   m\_commentTextEdit = \textcolor{keyword}{new} QPlainTextEdit;}
+\DoxyCodeLine{00962   m\_commentTextEdit-\/>setMaximumHeight(50);}
+\DoxyCodeLine{00963 }
+\DoxyCodeLine{00964   m\_commentLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Comment:"{}}));}
+\DoxyCodeLine{00965   m\_commentLabel-\/>setFixedWidth(55);}
+\DoxyCodeLine{00966 }
+\DoxyCodeLine{00967   commentLayout-\/>addWidget(m\_commentLabel, Qt::AlignTop);}
+\DoxyCodeLine{00968   commentLayout-\/>addWidget(m\_commentTextEdit);}
+\DoxyCodeLine{00969 }
+\DoxyCodeLine{00970   mainLayout-\/>addLayout(commentLayout);}
+\DoxyCodeLine{00971 }
+\DoxyCodeLine{00972   container-\/>setLayout(mainLayout);}
+\DoxyCodeLine{00973 }
+\DoxyCodeLine{00974   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a21628a44d453352094b61b62b4407c6b}{beginHLayout}}();}
+\DoxyCodeLine{00975   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(container, \textcolor{keyword}{false});}
+\DoxyCodeLine{00976   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_abe29ee90829fe5e0351fbdee41089252}{endHLayout}}();}
+\DoxyCodeLine{00977 }
+\DoxyCodeLine{00978   \textcolor{comment}{// Check if the hook file still exist}}
+\DoxyCodeLine{00979   \mbox{\hyperlink{class_t_file_path}{TFilePath}} path =}
+\DoxyCodeLine{00980       \mbox{\hyperlink{class_t_file_path}{TFilePath}}(m\_workingDir.toStdWString()) + m\_file.toStdWString();}
+\DoxyCodeLine{00981   \mbox{\hyperlink{class_t_file_path}{TFilePath}} hookFile = \mbox{\hyperlink{class_t_xsh_simple_level_a543f442eca762915046bf52bccc2b4fc}{TXshSimpleLevel::getExistingHookFile}}(path);}
+\DoxyCodeLine{00982 }
+\DoxyCodeLine{00983   \textcolor{keywordflow}{if} (!hookFile.isEmpty())}
+\DoxyCodeLine{00984     m\_hookFileName =}
+\DoxyCodeLine{00985         QString::fromStdWString(hookFile.\mbox{\hyperlink{class_t_file_path_ac17d65d827432f0fae28fed699bf4afa}{withoutParentDir}}().getWideString());}
+\DoxyCodeLine{00986 }
+\DoxyCodeLine{00987   m\_isOVLLevel = path.\mbox{\hyperlink{class_t_file_path_a698bbf714436eb6923359044900cde2b}{getDots}}() == \textcolor{stringliteral}{"{}.."{}};}
+\DoxyCodeLine{00988 }
+\DoxyCodeLine{00989   m\_commitButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Put"{}}));}
+\DoxyCodeLine{00990   connect(m\_commitButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onPutButtonClicked()));}
+\DoxyCodeLine{00991 }
+\DoxyCodeLine{00992   m\_cancelButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cancel"{}}));}
+\DoxyCodeLine{00993   connect(m\_cancelButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(reject()));}
+\DoxyCodeLine{00994 }
+\DoxyCodeLine{00995   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(m\_commitButton, m\_cancelButton);}
+\DoxyCodeLine{00996 }
+\DoxyCodeLine{00997   \textcolor{comment}{// 0. Connect for svn errors (that may occur)}}
+\DoxyCodeLine{00998   connect(\&m\_thread, SIGNAL(error(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00999           SLOT(onError(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{01000 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_v_n_commit_frame_range_dialog_a2e63d39d7e3bc8e48a3d4926141df882}\label{class_s_v_n_commit_frame_range_dialog_a2e63d39d7e3bc8e48a3d4926141df882}} 
+\index{SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}!commit@{commit}}
+\index{commit@{commit}!SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{commit}{commit}}
+{\footnotesize\ttfamily void SVNCommit\+Frame\+Range\+Dialog\+::commit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01285                                        \{}
+\DoxyCodeLine{01286   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Putting changes..."{}}));}
+\DoxyCodeLine{01287 }
+\DoxyCodeLine{01288   \textcolor{comment}{// Explode, if needed the m\_file (OVL)}}
+\DoxyCodeLine{01289   \mbox{\hyperlink{class_t_file_path}{TFilePath}} path =}
+\DoxyCodeLine{01290       \mbox{\hyperlink{class_t_file_path}{TFilePath}}(m\_workingDir.toStdWString()) + m\_file.toStdWString();}
+\DoxyCodeLine{01291   \textcolor{keywordflow}{if} (path.\mbox{\hyperlink{class_t_file_path_a698bbf714436eb6923359044900cde2b}{getDots}}() == \textcolor{stringliteral}{"{}.."{}}) \{}
+\DoxyCodeLine{01292     \mbox{\hyperlink{class_t_file_path}{TFilePath}} dir = path.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}();}
+\DoxyCodeLine{01293     QDir qDir(QString::fromStdWString(dir.getWideString()));}
+\DoxyCodeLine{01294     QString levelName =}
+\DoxyCodeLine{01295         QRegExp::escape(QString::fromStdWString(path.getWideName()));}
+\DoxyCodeLine{01296     QString levelType = QString::fromStdString(path.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}());}
+\DoxyCodeLine{01297     QString exp(levelName + \textcolor{stringliteral}{"{}.[0-\/9]\{1,4\}."{}} + levelType);}
+\DoxyCodeLine{01298     QRegExp regExp(exp);}
+\DoxyCodeLine{01299     QStringList list = qDir.entryList(QDir::Files);}
+\DoxyCodeLine{01300     m\_filesToCommit  = list.filter(regExp);}
+\DoxyCodeLine{01301   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01302     m\_filesToCommit = QStringList(m\_file);}
+\DoxyCodeLine{01303 }
+\DoxyCodeLine{01304   \textcolor{comment}{// Add also hook file name (if needed)}}
+\DoxyCodeLine{01305   \textcolor{keywordflow}{if} (!m\_hookFileName.isEmpty())}
+\DoxyCodeLine{01306     m\_filesToCommit.append(m\_hookFileName);}
+\DoxyCodeLine{01307   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!m\_newHookFileName.isEmpty())}
+\DoxyCodeLine{01308     m\_filesToCommit.append(m\_newHookFileName);}
+\DoxyCodeLine{01309 }
+\DoxyCodeLine{01310   \textcolor{comment}{// Step 5: commit}}
+\DoxyCodeLine{01311   QStringList args;}
+\DoxyCodeLine{01312   args << \textcolor{stringliteral}{"{}commit"{}};}
+\DoxyCodeLine{01313   \textcolor{keywordtype}{int} size = m\_filesToCommit.size();}
+\DoxyCodeLine{01314   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < size; i++) args << m\_filesToCommit.at(i);}
+\DoxyCodeLine{01315 }
+\DoxyCodeLine{01316   \textcolor{comment}{// Comment}}
+\DoxyCodeLine{01317   \textcolor{keywordflow}{if} (!m\_commentTextEdit-\/>toPlainText().isEmpty())}
+\DoxyCodeLine{01318     args << QString(\textcolor{stringliteral}{"{}-\/m"{}}).append(m\_commentTextEdit-\/>toPlainText());}
+\DoxyCodeLine{01319   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01320     args << QString(\textcolor{stringliteral}{"{}-\/m"{}}).append(VersionControl::instance()-\/>getUserName() +}
+\DoxyCodeLine{01321                                  \textcolor{stringliteral}{"{} commit changes."{}});}
+\DoxyCodeLine{01322 }
+\DoxyCodeLine{01323   m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{01324   connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this}, SLOT(onCommitDone()));}
+\DoxyCodeLine{01325   m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args, \textcolor{keyword}{true});}
+\DoxyCodeLine{01326 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_commit_frame_range_dialog_a7f36980793c5ffa93796aea1263ae73d}\label{class_s_v_n_commit_frame_range_dialog_a7f36980793c5ffa93796aea1263ae73d}} 
+\index{SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}!onCommitDone@{onCommitDone}}
+\index{onCommitDone@{onCommitDone}!SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{onCommitDone}{onCommitDone}}
+{\footnotesize\ttfamily void SVNCommit\+Frame\+Range\+Dialog\+::on\+Commit\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01004                                              \{}
+\DoxyCodeLine{01005   m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{01006   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Put done successfully."{}}));}
+\DoxyCodeLine{01007 }
+\DoxyCodeLine{01008   QStringList files;}
+\DoxyCodeLine{01009   files.append(m\_file);}
+\DoxyCodeLine{01010   emit done(files);}
+\DoxyCodeLine{01011   switchToCloseButton();}
+\DoxyCodeLine{01012 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_commit_frame_range_dialog_aa49689a9090ea2305c4eac43a2586004}\label{class_s_v_n_commit_frame_range_dialog_aa49689a9090ea2305c4eac43a2586004}} 
+\index{SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}!onError@{onError}}
+\index{onError@{onError}!SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{onError}{onError}}
+{\footnotesize\ttfamily void SVNCommit\+Frame\+Range\+Dialog\+::on\+Error (\begin{DoxyParamCaption}\item[{const QString \&}]{text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01066                                                            \{}
+\DoxyCodeLine{01067   m\_textLabel-\/>setText(text);}
+\DoxyCodeLine{01068   switchToCloseButton();}
+\DoxyCodeLine{01069   update();}
+\DoxyCodeLine{01070   m\_hasError = \textcolor{keyword}{true};}
+\DoxyCodeLine{01071 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_commit_frame_range_dialog_a95942fb2df281b3a25717c717d034a28}\label{class_s_v_n_commit_frame_range_dialog_a95942fb2df281b3a25717c717d034a28}} 
+\index{SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}!onHookFileAdded@{onHookFileAdded}}
+\index{onHookFileAdded@{onHookFileAdded}!SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{onHookFileAdded}{onHookFileAdded}}
+{\footnotesize\ttfamily void SVNCommit\+Frame\+Range\+Dialog\+::on\+Hook\+File\+Added (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01269                                                 \{}
+\DoxyCodeLine{01270   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Setting the needs-\/lock property to hook file..."{}}));}
+\DoxyCodeLine{01271   \textcolor{comment}{// Step 4b: set needs-\/lock property}}
+\DoxyCodeLine{01272   QStringList args;}
+\DoxyCodeLine{01273   args << \textcolor{stringliteral}{"{}propset"{}}}
+\DoxyCodeLine{01274        << \textcolor{stringliteral}{"{}svn:needs-\/lock"{}}}
+\DoxyCodeLine{01275        << \textcolor{stringliteral}{"{}'*'"{}};}
+\DoxyCodeLine{01276   args << m\_newHookFileName;}
+\DoxyCodeLine{01277 }
+\DoxyCodeLine{01278   m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{01279   connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), SLOT(commit()));}
+\DoxyCodeLine{01280   m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args);}
+\DoxyCodeLine{01281 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_commit_frame_range_dialog_a7623ea2331112597e4696fa87264eb02}\label{class_s_v_n_commit_frame_range_dialog_a7623ea2331112597e4696fa87264eb02}} 
+\index{SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}!onLockDone@{onLockDone}}
+\index{onLockDone@{onLockDone}!SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{onLockDone}{onLockDone}}
+{\footnotesize\ttfamily void SVNCommit\+Frame\+Range\+Dialog\+::on\+Lock\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01043                                            \{}
+\DoxyCodeLine{01044   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Getting frame range edit information..."{}}));}
+\DoxyCodeLine{01045 }
+\DoxyCodeLine{01046   \textcolor{keywordflow}{if} (m\_isOVLLevel) \{}
+\DoxyCodeLine{01047     onPropSetDone();}
+\DoxyCodeLine{01048     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01049   \}}
+\DoxyCodeLine{01050 }
+\DoxyCodeLine{01051   \textcolor{comment}{// Step 3: propget}}
+\DoxyCodeLine{01052   QStringList args;}
+\DoxyCodeLine{01053   args << \textcolor{stringliteral}{"{}proplist"{}};}
+\DoxyCodeLine{01054   args << m\_file;}
+\DoxyCodeLine{01055   args << \textcolor{stringliteral}{"{}-\/-\/xml"{}};}
+\DoxyCodeLine{01056   args << \textcolor{stringliteral}{"{}-\/v"{}};}
+\DoxyCodeLine{01057 }
+\DoxyCodeLine{01058   m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{01059   connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{01060           SLOT(onPropGetDone(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{01061   m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args, \textcolor{keyword}{true});}
+\DoxyCodeLine{01062 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_commit_frame_range_dialog_a6a989fbea32319c75da4f15bd03626d0}\label{class_s_v_n_commit_frame_range_dialog_a6a989fbea32319c75da4f15bd03626d0}} 
+\index{SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}!onPropGetDone@{onPropGetDone}}
+\index{onPropGetDone@{onPropGetDone}!SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{onPropGetDone}{onPropGetDone}}
+{\footnotesize\ttfamily void SVNCommit\+Frame\+Range\+Dialog\+::on\+Prop\+Get\+Done (\begin{DoxyParamCaption}\item[{const QString \&}]{xml\+Response }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01075                                                                         \{}
+\DoxyCodeLine{01076   \mbox{\hyperlink{class_s_v_n_partial_lock_reader}{SVNPartialLockReader}} reader(xmlResponse);}
+\DoxyCodeLine{01077   QList<SVNPartialLock> lockList = reader.getPartialLock();}
+\DoxyCodeLine{01078   \textcolor{keywordflow}{if} (lockList.isEmpty()) \{}
+\DoxyCodeLine{01079     m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}No frame range edited."{}}));}
+\DoxyCodeLine{01080     switchToCloseButton();}
+\DoxyCodeLine{01081     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01082   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01083     m\_lockInfos = lockList.at(0).m\_partialLockList;}
+\DoxyCodeLine{01084     \textcolor{keywordflow}{if} (m\_lockInfos.isEmpty()) \{}
+\DoxyCodeLine{01085       m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}No frame range edited."{}}));}
+\DoxyCodeLine{01086       switchToCloseButton();}
+\DoxyCodeLine{01087       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01088     \}}
+\DoxyCodeLine{01089   \}}
+\DoxyCodeLine{01090 }
+\DoxyCodeLine{01091   QString partialLockString;}
+\DoxyCodeLine{01092 }
+\DoxyCodeLine{01093   QString userName = VersionControl::instance()-\/>getUserName();}
+\DoxyCodeLine{01094   QString hostName = QHostInfo::localHostName();}
+\DoxyCodeLine{01095 }
+\DoxyCodeLine{01096   \textcolor{keywordtype}{int} count = m\_lockInfos.size();}
+\DoxyCodeLine{01097 }
+\DoxyCodeLine{01098   \textcolor{keywordtype}{int} entryAdded = 0;}
+\DoxyCodeLine{01099   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; i++) \{}
+\DoxyCodeLine{01100     \mbox{\hyperlink{struct_s_v_n_partial_lock_info}{SVNPartialLockInfo}} lockInfo = m\_lockInfos.at(i);}
+\DoxyCodeLine{01101     \textcolor{keywordtype}{bool} isMe =}
+\DoxyCodeLine{01102         lockInfo.m\_userName == userName \&\& lockInfo.m\_hostName == hostName;}
+\DoxyCodeLine{01103     \textcolor{keywordflow}{if} (!isMe) \{}
+\DoxyCodeLine{01104       \textcolor{keywordflow}{if} (i != 0) partialLockString.append(\textcolor{stringliteral}{"{};"{}});}
+\DoxyCodeLine{01105       partialLockString.append(lockInfo.m\_userName + \textcolor{stringliteral}{"{}@"{}} + lockInfo.m\_hostName +}
+\DoxyCodeLine{01106                                \textcolor{stringliteral}{"{}:"{}} + QString::number(lockInfo.m\_from) + \textcolor{stringliteral}{"{}:"{}} +}
+\DoxyCodeLine{01107                                QString::number(lockInfo.m\_to));}
+\DoxyCodeLine{01108       entryAdded++;}
+\DoxyCodeLine{01109     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01110       m\_myInfo = lockInfo;}
+\DoxyCodeLine{01111   \}}
+\DoxyCodeLine{01112 }
+\DoxyCodeLine{01113   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Updating frame range edit information..."{}}));}
+\DoxyCodeLine{01114 }
+\DoxyCodeLine{01115   \textcolor{comment}{// There is no more partial-\/lock > propdel}}
+\DoxyCodeLine{01116   \textcolor{keywordflow}{if} (entryAdded == 0) \{}
+\DoxyCodeLine{01117     \textcolor{comment}{// Step 4: propdel}}
+\DoxyCodeLine{01118     QStringList args;}
+\DoxyCodeLine{01119     args << \textcolor{stringliteral}{"{}propdel"{}};}
+\DoxyCodeLine{01120     args << \textcolor{stringliteral}{"{}partial-\/lock"{}};}
+\DoxyCodeLine{01121     args << m\_file;}
+\DoxyCodeLine{01122 }
+\DoxyCodeLine{01123     m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{01124     connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{01125             SLOT(onPropSetDone()));}
+\DoxyCodeLine{01126     m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args, \textcolor{keyword}{true});}
+\DoxyCodeLine{01127   \}}
+\DoxyCodeLine{01128   \textcolor{comment}{// Set the partial-\/lock property}}
+\DoxyCodeLine{01129   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01130     \textcolor{comment}{// Step 4: propset}}
+\DoxyCodeLine{01131     QStringList args;}
+\DoxyCodeLine{01132     args << \textcolor{stringliteral}{"{}propset"{}};}
+\DoxyCodeLine{01133     args << \textcolor{stringliteral}{"{}partial-\/lock"{}};}
+\DoxyCodeLine{01134     args << partialLockString;}
+\DoxyCodeLine{01135     args << m\_file;}
+\DoxyCodeLine{01136 }
+\DoxyCodeLine{01137     m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{01138     connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{01139             SLOT(onPropSetDone()));}
+\DoxyCodeLine{01140     m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args, \textcolor{keyword}{true});}
+\DoxyCodeLine{01141   \}}
+\DoxyCodeLine{01142 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_commit_frame_range_dialog_ac804033855fa751420da6673a0181e45}\label{class_s_v_n_commit_frame_range_dialog_ac804033855fa751420da6673a0181e45}} 
+\index{SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}!onPropSetDone@{onPropSetDone}}
+\index{onPropSetDone@{onPropSetDone}!SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{onPropSetDone}{onPropSetDone}}
+{\footnotesize\ttfamily void SVNCommit\+Frame\+Range\+Dialog\+::on\+Prop\+Set\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01146                                               \{}
+\DoxyCodeLine{01147   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Putting changes..."{}}));}
+\DoxyCodeLine{01148 }
+\DoxyCodeLine{01149   \textcolor{comment}{// Merge Level}}
+\DoxyCodeLine{01150   \mbox{\hyperlink{class_t_file_path}{TFilePath}} levelPath =}
+\DoxyCodeLine{01151       \mbox{\hyperlink{class_t_file_path}{TFilePath}}(m\_workingDir.toStdWString()) + m\_file.toStdWString();}
+\DoxyCodeLine{01152 }
+\DoxyCodeLine{01153   \textcolor{comment}{// OVL level could only merge the temporary hook file (if exist)}}
+\DoxyCodeLine{01154   \textcolor{keywordflow}{if} (m\_isOVLLevel) \{}
+\DoxyCodeLine{01155     QDir dir(m\_workingDir);}
+\DoxyCodeLine{01156     dir.setNameFilters(QStringList(\textcolor{stringliteral}{"{}*.xml"{}}));}
+\DoxyCodeLine{01157     QStringList list = dir.entryList(QDir::Files | QDir::Hidden);}
+\DoxyCodeLine{01158     \textcolor{keywordtype}{int} listCount    = list.size();}
+\DoxyCodeLine{01159 }
+\DoxyCodeLine{01160     \textcolor{keywordflow}{if} (listCount > 0) \{}
+\DoxyCodeLine{01161       QString prefix = QString::fromStdWString(levelPath.getWideName()) + \textcolor{stringliteral}{"{}\_"{}} +}
+\DoxyCodeLine{01162                        VersionControl::instance()-\/>getUserName() + \textcolor{stringliteral}{"{}\_"{}} +}
+\DoxyCodeLine{01163                        TSystem::getHostName();}
+\DoxyCodeLine{01164 }
+\DoxyCodeLine{01165       QString tempFile;}
+\DoxyCodeLine{01166       QString hookFileName;}
+\DoxyCodeLine{01167       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < listCount; i++) \{}
+\DoxyCodeLine{01168         QString str = list.at(i);}
+\DoxyCodeLine{01169         \textcolor{keywordflow}{if} (str.startsWith(prefix)) \{}
+\DoxyCodeLine{01170           hookFileName = str;}
+\DoxyCodeLine{01171           tempFile     = QString(hookFileName);}
+\DoxyCodeLine{01172           tempFile.remove(\textcolor{stringliteral}{"{}\_hooks"{}});}
+\DoxyCodeLine{01173           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01174         \}}
+\DoxyCodeLine{01175       \}}
+\DoxyCodeLine{01176 }
+\DoxyCodeLine{01177       QStringList temp = tempFile.split(\textcolor{stringliteral}{"{}\_"{}});}
+\DoxyCodeLine{01178 }
+\DoxyCodeLine{01179       \textcolor{keywordflow}{if} (temp.size() >= 4) \{}
+\DoxyCodeLine{01180         QString frameRangeString = temp.at(3);}
+\DoxyCodeLine{01181         frameRangeString = frameRangeString.left(frameRangeString.indexOf(\textcolor{stringliteral}{"{}."{}}));}
+\DoxyCodeLine{01182 }
+\DoxyCodeLine{01183         QStringList rangeString = frameRangeString.split(\textcolor{stringliteral}{"{}-\/"{}});}
+\DoxyCodeLine{01184         \textcolor{keywordflow}{if} (rangeString.size() == 2) \{}
+\DoxyCodeLine{01185           \mbox{\hyperlink{class_t_file_path}{TFilePath}} hookFile =}
+\DoxyCodeLine{01186               levelPath.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() + hookFileName.toStdWString();}
+\DoxyCodeLine{01187 }
+\DoxyCodeLine{01188           \textcolor{comment}{// Merge and then delete temporary hook file}}
+\DoxyCodeLine{01189           \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(hookFile).doesExist()) \{}
+\DoxyCodeLine{01190             m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a023065559cff76164ecb6344c586ba27}{getSimpleLevel}}()-\/>mergeTemporaryHookFile(}
+\DoxyCodeLine{01191                 rangeString.at(0).toInt() -\/ 1, rangeString.at(1).toInt() -\/ 1,}
+\DoxyCodeLine{01192                 hookFile);}
+\DoxyCodeLine{01193             TSystem::removeFileOrLevel(hookFile);}
+\DoxyCodeLine{01194           \}}
+\DoxyCodeLine{01195 }
+\DoxyCodeLine{01196           m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_aeafe88c104827f8c27a33a79e7f7ee7d}{setDirtyFlag}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{01197           m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_adcc40df0ea3e4d51a59e58c029675968}{save}}();}
+\DoxyCodeLine{01198           \textcolor{keyword}{delete} m\_scene;}
+\DoxyCodeLine{01199           m\_scene = 0;}
+\DoxyCodeLine{01200         \}}
+\DoxyCodeLine{01201       \}}
+\DoxyCodeLine{01202     \}}
+\DoxyCodeLine{01203   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01204     m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a023065559cff76164ecb6344c586ba27}{getSimpleLevel}}()-\/>\mbox{\hyperlink{class_t_xsh_simple_level_ae74a8922e3cfb3356ae9042e58856c01}{setEditableRange}}(}
+\DoxyCodeLine{01205         m\_myInfo.m\_from -\/ 1, m\_myInfo.m\_to -\/ 1,}
+\DoxyCodeLine{01206         m\_myInfo.m\_userName.toStdWString());}
+\DoxyCodeLine{01207     m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_aeafe88c104827f8c27a33a79e7f7ee7d}{setDirtyFlag}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{01208     m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_adcc40df0ea3e4d51a59e58c029675968}{save}}();}
+\DoxyCodeLine{01209     \textcolor{keyword}{delete} m\_scene;}
+\DoxyCodeLine{01210     m\_scene = 0;}
+\DoxyCodeLine{01211 }
+\DoxyCodeLine{01212     \textcolor{comment}{// Delete temporary file}}
+\DoxyCodeLine{01213     QString tempFileName = QString::fromStdWString(levelPath.getWideName()) +}
+\DoxyCodeLine{01214                            \textcolor{stringliteral}{"{}\_"{}} + m\_myInfo.m\_userName + \textcolor{stringliteral}{"{}\_"{}} +}
+\DoxyCodeLine{01215                            m\_myInfo.m\_hostName + \textcolor{stringliteral}{"{}\_"{}} +}
+\DoxyCodeLine{01216                            QString::number(m\_myInfo.m\_from) + \textcolor{stringliteral}{"{}-\/"{}} +}
+\DoxyCodeLine{01217                            QString::number(m\_myInfo.m\_to) + \textcolor{stringliteral}{"{}."{}} +}
+\DoxyCodeLine{01218                            QString::fromStdString(levelPath.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}());}
+\DoxyCodeLine{01219 }
+\DoxyCodeLine{01220     \mbox{\hyperlink{class_t_file_path}{TFilePath}} pathToRemove =}
+\DoxyCodeLine{01221         \mbox{\hyperlink{class_t_file_path}{TFilePath}}(levelPath.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() + tempFileName.toStdWString());}
+\DoxyCodeLine{01222     \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(pathToRemove))}
+\DoxyCodeLine{01223       TSystem::removeFileOrLevel(pathToRemove);}
+\DoxyCodeLine{01224     \textcolor{keywordflow}{if} (pathToRemove.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}tlv"{}}) \{}
+\DoxyCodeLine{01225       pathToRemove = pathToRemove.\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(\textcolor{stringliteral}{"{}tpl"{}});}
+\DoxyCodeLine{01226       \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(pathToRemove))}
+\DoxyCodeLine{01227         TSystem::removeFileOrLevel(pathToRemove);}
+\DoxyCodeLine{01228     \}}
+\DoxyCodeLine{01229 }
+\DoxyCodeLine{01230     \textcolor{comment}{// Delete temporary hook file}}
+\DoxyCodeLine{01231     \mbox{\hyperlink{class_t_file_path}{TFilePath}} hookFilePath = \mbox{\hyperlink{class_t_xsh_simple_level_a23704b0d8be9290a8ab9c72c3139958b}{TXshSimpleLevel::getHookPath}}(pathToRemove);}
+\DoxyCodeLine{01232     \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(hookFilePath))}
+\DoxyCodeLine{01233       TSystem::removeFileOrLevel(hookFilePath);}
+\DoxyCodeLine{01234   \}}
+\DoxyCodeLine{01235 }
+\DoxyCodeLine{01236   \textcolor{comment}{// If, after saving the level, a new hook file has been created (and}}
+\DoxyCodeLine{01237   \textcolor{comment}{// previously there isn't an hook file)}}
+\DoxyCodeLine{01238   \textcolor{comment}{// we have to add the new hook file to the repository and set its needs-\/lock}}
+\DoxyCodeLine{01239   \textcolor{comment}{// property before committing}}
+\DoxyCodeLine{01240   \textcolor{keywordflow}{if} (m\_hookFileName.isEmpty()) \{}
+\DoxyCodeLine{01241     \textcolor{comment}{// Check if a new hook file exist}}
+\DoxyCodeLine{01242     \mbox{\hyperlink{class_t_file_path}{TFilePath}} path =}
+\DoxyCodeLine{01243         \mbox{\hyperlink{class_t_file_path}{TFilePath}}(m\_workingDir.toStdWString()) + m\_file.toStdWString();}
+\DoxyCodeLine{01244     \mbox{\hyperlink{class_t_file_path}{TFilePath}} hookFile = \mbox{\hyperlink{class_t_xsh_simple_level_a23704b0d8be9290a8ab9c72c3139958b}{TXshSimpleLevel::getHookPath}}(path);}
+\DoxyCodeLine{01245     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(hookFile).doesExist()) \{}
+\DoxyCodeLine{01246       m\_newHookFileName =}
+\DoxyCodeLine{01247           QString::fromStdWString(hookFile.\mbox{\hyperlink{class_t_file_path_ac17d65d827432f0fae28fed699bf4afa}{withoutParentDir}}().getWideString());}
+\DoxyCodeLine{01248 }
+\DoxyCodeLine{01249       m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Adding hook file to repository..."{}}));}
+\DoxyCodeLine{01250 }
+\DoxyCodeLine{01251       \textcolor{comment}{// Step 4a: Add hookFile to repository}}
+\DoxyCodeLine{01252       QStringList args;}
+\DoxyCodeLine{01253       args << \textcolor{stringliteral}{"{}add"{}};}
+\DoxyCodeLine{01254       args << \textcolor{stringliteral}{"{}-\/-\/parents"{}};}
+\DoxyCodeLine{01255       args << m\_newHookFileName;}
+\DoxyCodeLine{01256 }
+\DoxyCodeLine{01257       m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{01258       connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{01259               SLOT(onHookFileAdded()));}
+\DoxyCodeLine{01260       m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args, \textcolor{keyword}{true});}
+\DoxyCodeLine{01261     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01262       commit();}
+\DoxyCodeLine{01263   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01264     commit();}
+\DoxyCodeLine{01265 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_commit_frame_range_dialog_ad98f806784a7190cd476077ee1313fa5}\label{class_s_v_n_commit_frame_range_dialog_ad98f806784a7190cd476077ee1313fa5}} 
+\index{SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}!onPutButtonClicked@{onPutButtonClicked}}
+\index{onPutButtonClicked@{onPutButtonClicked}!SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{onPutButtonClicked}{onPutButtonClicked}}
+{\footnotesize\ttfamily void SVNCommit\+Frame\+Range\+Dialog\+::on\+Put\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01330                                                    \{}
+\DoxyCodeLine{01331   m\_commentLabel-\/>hide();}
+\DoxyCodeLine{01332   m\_commentTextEdit-\/>hide();}
+\DoxyCodeLine{01333 }
+\DoxyCodeLine{01334   m\_waitingLabel-\/>show();}
+\DoxyCodeLine{01335   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Updating file..."{}}));}
+\DoxyCodeLine{01336 }
+\DoxyCodeLine{01337   \textcolor{keywordflow}{if} (m\_isOVLLevel \&\& m\_hookFileName.isEmpty()) \{}
+\DoxyCodeLine{01338     onUpdateDone();}
+\DoxyCodeLine{01339     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01340   \}}
+\DoxyCodeLine{01341 }
+\DoxyCodeLine{01342   \textcolor{comment}{// Step 1: Update}}
+\DoxyCodeLine{01343   QStringList args;}
+\DoxyCodeLine{01344   args << \textcolor{stringliteral}{"{}update"{}};}
+\DoxyCodeLine{01345   \textcolor{keywordflow}{if} (!m\_isOVLLevel) args << m\_file;}
+\DoxyCodeLine{01346   \textcolor{keywordflow}{if} (!m\_hookFileName.isEmpty()) args << m\_hookFileName;}
+\DoxyCodeLine{01347 }
+\DoxyCodeLine{01348   connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this}, SLOT(onUpdateDone()));}
+\DoxyCodeLine{01349   m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args, \textcolor{keyword}{false});}
+\DoxyCodeLine{01350 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_commit_frame_range_dialog_ae329617606f7b09bbafea95d5a6d6b64}\label{class_s_v_n_commit_frame_range_dialog_ae329617606f7b09bbafea95d5a6d6b64}} 
+\index{SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}!onUpdateDone@{onUpdateDone}}
+\index{onUpdateDone@{onUpdateDone}!SVNCommitFrameRangeDialog@{SVNCommitFrameRangeDialog}}
+\doxysubsubsection{\texorpdfstring{onUpdateDone}{onUpdateDone}}
+{\footnotesize\ttfamily void SVNCommit\+Frame\+Range\+Dialog\+::on\+Update\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01016                                              \{}
+\DoxyCodeLine{01017   \textcolor{comment}{// Load Level}}
+\DoxyCodeLine{01018   m\_scene = \textcolor{keyword}{new} \mbox{\hyperlink{class_toonz_scene}{ToonzScene}}();}
+\DoxyCodeLine{01019   \mbox{\hyperlink{class_t_file_path}{TFilePath}} levelPath =}
+\DoxyCodeLine{01020       \mbox{\hyperlink{class_t_file_path}{TFilePath}}(m\_workingDir.toStdWString()) + m\_file.toStdWString();}
+\DoxyCodeLine{01021   m\_level = m\_scene-\/>\mbox{\hyperlink{class_toonz_scene_ae6bd7d22f6310011d48dfb5176344015}{loadLevel}}(levelPath);}
+\DoxyCodeLine{01022 }
+\DoxyCodeLine{01023   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Locking file..."{}}));}
+\DoxyCodeLine{01024 }
+\DoxyCodeLine{01025   \textcolor{keywordflow}{if} (m\_isOVLLevel \&\& m\_hookFileName.isEmpty()) \{}
+\DoxyCodeLine{01026     onLockDone();}
+\DoxyCodeLine{01027     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01028   \}}
+\DoxyCodeLine{01029 }
+\DoxyCodeLine{01030   \textcolor{comment}{// Step 2: Lock}}
+\DoxyCodeLine{01031   QStringList args;}
+\DoxyCodeLine{01032   args << \textcolor{stringliteral}{"{}lock"{}};}
+\DoxyCodeLine{01033   \textcolor{keywordflow}{if} (!m\_isOVLLevel) args << m\_file;}
+\DoxyCodeLine{01034   \textcolor{keywordflow}{if} (!m\_hookFileName.isEmpty()) args << m\_hookFileName;}
+\DoxyCodeLine{01035 }
+\DoxyCodeLine{01036   m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{01037   connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this}, SLOT(onLockDone()));}
+\DoxyCodeLine{01038   m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args, \textcolor{keyword}{false});}
+\DoxyCodeLine{01039 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/svncommitdialog.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/svncommitdialog.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,186 @@
+\hypertarget{class_t_thread_1_1_executor_imp}{}\doxysection{TThread\+::Executor\+Imp Class Reference}
+\label{class_t_thread_1_1_executor_imp}\index{TThread::ExecutorImp@{TThread::ExecutorImp}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_executor_imp_ad8bf1fdf269836de7b5abcfdec3a8184}{insert\+Task}} (int scheduling\+Priority, \mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} \&task)
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_executor_imp_a6d54c7be19743b5efc6532fec3bd4aa3}{refresh\+Assignments}} ()
+\item 
+bool \mbox{\hyperlink{class_t_thread_1_1_executor_imp_a242f9585b51b99f6e132da6787815765}{is\+Executable}} (\mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} \&task)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QMulti\+Map$<$ int, \mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} $>$ \mbox{\hyperlink{class_t_thread_1_1_executor_imp_a1bb6a471651d807f931bf00e82059773}{m\+\_\+tasks}}
+\item 
+std\+::set$<$ \mbox{\hyperlink{class_t_thread_1_1_worker}{Worker}} $\ast$ $>$ \mbox{\hyperlink{class_t_thread_1_1_executor_imp_ae5e80f6cd739d5de5e998616f23e184e}{m\+\_\+workers}}
+\item 
+\mbox{\hyperlink{classtcg_1_1indices__pool}{tcg\+::indices\+\_\+pool}} \mbox{\hyperlink{class_t_thread_1_1_executor_imp_ac4ac098750b14a9f94349e77933ae2c9}{m\+\_\+executor\+Id\+Pool}}
+\item 
+std\+::vector$<$ UCHAR $>$ \mbox{\hyperlink{class_t_thread_1_1_executor_imp_a218fdfe913abcf4ef55879e88d40663e}{m\+\_\+waiting\+Flags\+Pool}}
+\item 
+int \mbox{\hyperlink{class_t_thread_1_1_executor_imp_abb94d1a67475e6cc93d76c199c071b93}{m\+\_\+active\+Load}}
+\item 
+int \mbox{\hyperlink{class_t_thread_1_1_executor_imp_a22ff20a2ae67eb7c87bbc4dd9805d2ca}{m\+\_\+max\+Load}}
+\item 
+QMutex \mbox{\hyperlink{class_t_thread_1_1_executor_imp_ad0206663e8f74f7162aaac3a85f8af1d}{m\+\_\+transition\+Mutex}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_t_thread_1_1_executor_imp}{Executor\+Imp}} both manages the allocation of worker threads for the execution of \mbox{\hyperlink{class_t_thread_1_1_runnable}{Runnable}} tasks and centralizes the tasks collection. One process only hosts one instance of the \mbox{\hyperlink{class_t_thread_1_1_executor_imp}{Executor\+Imp}} class as a a global variable that needs to be allocated in an application-\/lasting and event-\/looped thread -\/ typically the main thread in GUI applications. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_imp_a334f6c67c9e4facee2d75fd2fcb97ebb}\label{class_t_thread_1_1_executor_imp_a334f6c67c9e4facee2d75fd2fcb97ebb}} 
+\index{TThread::ExecutorImp@{TThread::ExecutorImp}!ExecutorImp@{ExecutorImp}}
+\index{ExecutorImp@{ExecutorImp}!TThread::ExecutorImp@{TThread::ExecutorImp}}
+\doxysubsubsection{\texorpdfstring{ExecutorImp()}{ExecutorImp()}}
+{\footnotesize\ttfamily Executor\+Imp\+::\+Executor\+Imp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00303     : m\_activeLoad(0)}
+\DoxyCodeLine{00304     , m\_maxLoad(TSystem::getProcessorCount() * 100)}
+\DoxyCodeLine{00305     , m\_transitionMutex()  \textcolor{comment}{// NOTE: We'll wait on this mutex -\/ so it can't be}}
+\DoxyCodeLine{00306                            \textcolor{comment}{// recursive}}
+\DoxyCodeLine{00307 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_imp_a2a11e27673ce4a37957fd65d70ea064e}\label{class_t_thread_1_1_executor_imp_a2a11e27673ce4a37957fd65d70ea064e}} 
+\index{TThread::ExecutorImp@{TThread::ExecutorImp}!````~ExecutorImp@{$\sim$ExecutorImp}}
+\index{````~ExecutorImp@{$\sim$ExecutorImp}!TThread::ExecutorImp@{TThread::ExecutorImp}}
+\doxysubsubsection{\texorpdfstring{$\sim$ExecutorImp()}{~ExecutorImp()}}
+{\footnotesize\ttfamily Executor\+Imp\+::$\sim$\+Executor\+Imp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00311 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_imp_ad8bf1fdf269836de7b5abcfdec3a8184}\label{class_t_thread_1_1_executor_imp_ad8bf1fdf269836de7b5abcfdec3a8184}} 
+\index{TThread::ExecutorImp@{TThread::ExecutorImp}!insertTask@{insertTask}}
+\index{insertTask@{insertTask}!TThread::ExecutorImp@{TThread::ExecutorImp}}
+\doxysubsubsection{\texorpdfstring{insertTask()}{insertTask()}}
+{\footnotesize\ttfamily void Executor\+Imp\+::insert\+Task (\begin{DoxyParamCaption}\item[{int}]{scheduling\+Priority,  }\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} \&}]{task }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00324                                                                            \{}
+\DoxyCodeLine{00325   task-\/>m\_schedulingPriority = schedulingPriority;}
+\DoxyCodeLine{00326   m\_tasks.insert(schedulingPriority, task);}
+\DoxyCodeLine{00327 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_imp_a242f9585b51b99f6e132da6787815765}\label{class_t_thread_1_1_executor_imp_a242f9585b51b99f6e132da6787815765}} 
+\index{TThread::ExecutorImp@{TThread::ExecutorImp}!isExecutable@{isExecutable}}
+\index{isExecutable@{isExecutable}!TThread::ExecutorImp@{TThread::ExecutorImp}}
+\doxysubsubsection{\texorpdfstring{isExecutable()}{isExecutable()}}
+{\footnotesize\ttfamily bool Executor\+Imp\+::is\+Executable (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} \&}]{task }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00318                                                      \{}
+\DoxyCodeLine{00319   \textcolor{keywordflow}{return} m\_activeLoad + task-\/>m\_load <= m\_maxLoad;}
+\DoxyCodeLine{00320 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_imp_a6d54c7be19743b5efc6532fec3bd4aa3}\label{class_t_thread_1_1_executor_imp_a6d54c7be19743b5efc6532fec3bd4aa3}} 
+\index{TThread::ExecutorImp@{TThread::ExecutorImp}!refreshAssignments@{refreshAssignments}}
+\index{refreshAssignments@{refreshAssignments}!TThread::ExecutorImp@{TThread::ExecutorImp}}
+\doxysubsubsection{\texorpdfstring{refreshAssignments()}{refreshAssignments()}}
+{\footnotesize\ttfamily void Executor\+Imp\+::refresh\+Assignments (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01020                                      \{}
+\DoxyCodeLine{01021   \textcolor{comment}{// QMutexLocker transitionLocker(\&globalImp-\/>m\_transitionMutex);  //Already}}
+\DoxyCodeLine{01022   \textcolor{comment}{// covered}}
+\DoxyCodeLine{01023 }
+\DoxyCodeLine{01024   \textcolor{keywordflow}{if} (m\_tasks.isEmpty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01025 }
+\DoxyCodeLine{01026   \textcolor{comment}{// Erase the id vector data}}
+\DoxyCodeLine{01027   assert(m\_executorIdPool.size() == m\_waitingFlagsPool.size());}
+\DoxyCodeLine{01028   memset(\&m\_waitingFlagsPool.front(), 0, m\_waitingFlagsPool.size());}
+\DoxyCodeLine{01029 }
+\DoxyCodeLine{01030   \textcolor{comment}{// c) Try with the global queue}}
+\DoxyCodeLine{01031   \textcolor{keywordtype}{int} e, executorsCount = m\_executorIdPool.acquiredSize();}
+\DoxyCodeLine{01032 }
+\DoxyCodeLine{01033   \textcolor{keywordtype}{int} i, tasksCount = m\_tasks.size();}
+\DoxyCodeLine{01034   QMultiMap<int, RunnableP>::iterator it;}
+\DoxyCodeLine{01035   \textcolor{keywordflow}{for} (i = 0, e = 0, it = m\_tasks.end() -\/ 1;}
+\DoxyCodeLine{01036        i < tasksCount \&\& e < executorsCount; ++i, -\/-\/it) \{}
+\DoxyCodeLine{01037     \textcolor{comment}{// std::cout<< "{}global tasks-\/refreshAss"{} << std::endl;}}
+\DoxyCodeLine{01038     \textcolor{comment}{// Take the task}}
+\DoxyCodeLine{01039     \mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} task = it.value();}
+\DoxyCodeLine{01040     task-\/>m\_load   = task-\/>\mbox{\hyperlink{class_t_thread_1_1_runnable_a9c08dc36ed7b4c9e35809ea696c91e95}{taskLoad}}();}
+\DoxyCodeLine{01041 }
+\DoxyCodeLine{01042     UCHAR \&idWaitingForAnotherTask = m\_waitingFlagsPool[task-\/>m\_id-\/>m\_id];}
+\DoxyCodeLine{01043     \textcolor{keywordflow}{if} (idWaitingForAnotherTask) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01044 }
+\DoxyCodeLine{01045     \textcolor{keywordflow}{if} (!isExecutable(task)) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01046 }
+\DoxyCodeLine{01047     \textcolor{keywordflow}{if} (!task-\/>customConditions()) \{}
+\DoxyCodeLine{01048       ++e;}
+\DoxyCodeLine{01049       idWaitingForAnotherTask = 1;}
+\DoxyCodeLine{01050     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01051       task-\/>m\_id-\/>newWorker(task);}
+\DoxyCodeLine{01052       it = m\_tasks.erase(it);}
+\DoxyCodeLine{01053     \}}
+\DoxyCodeLine{01054   \}}
+\DoxyCodeLine{01055 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_imp_abb94d1a67475e6cc93d76c199c071b93}\label{class_t_thread_1_1_executor_imp_abb94d1a67475e6cc93d76c199c071b93}} 
+\index{TThread::ExecutorImp@{TThread::ExecutorImp}!m\_activeLoad@{m\_activeLoad}}
+\index{m\_activeLoad@{m\_activeLoad}!TThread::ExecutorImp@{TThread::ExecutorImp}}
+\doxysubsubsection{\texorpdfstring{m\_activeLoad}{m\_activeLoad}}
+{\footnotesize\ttfamily int TThread\+::\+Executor\+Imp\+::m\+\_\+active\+Load}
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_imp_ac4ac098750b14a9f94349e77933ae2c9}\label{class_t_thread_1_1_executor_imp_ac4ac098750b14a9f94349e77933ae2c9}} 
+\index{TThread::ExecutorImp@{TThread::ExecutorImp}!m\_executorIdPool@{m\_executorIdPool}}
+\index{m\_executorIdPool@{m\_executorIdPool}!TThread::ExecutorImp@{TThread::ExecutorImp}}
+\doxysubsubsection{\texorpdfstring{m\_executorIdPool}{m\_executorIdPool}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classtcg_1_1indices__pool}{tcg\+::indices\+\_\+pool}} TThread\+::\+Executor\+Imp\+::m\+\_\+executor\+Id\+Pool}
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_imp_a22ff20a2ae67eb7c87bbc4dd9805d2ca}\label{class_t_thread_1_1_executor_imp_a22ff20a2ae67eb7c87bbc4dd9805d2ca}} 
+\index{TThread::ExecutorImp@{TThread::ExecutorImp}!m\_maxLoad@{m\_maxLoad}}
+\index{m\_maxLoad@{m\_maxLoad}!TThread::ExecutorImp@{TThread::ExecutorImp}}
+\doxysubsubsection{\texorpdfstring{m\_maxLoad}{m\_maxLoad}}
+{\footnotesize\ttfamily int TThread\+::\+Executor\+Imp\+::m\+\_\+max\+Load}
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_imp_a1bb6a471651d807f931bf00e82059773}\label{class_t_thread_1_1_executor_imp_a1bb6a471651d807f931bf00e82059773}} 
+\index{TThread::ExecutorImp@{TThread::ExecutorImp}!m\_tasks@{m\_tasks}}
+\index{m\_tasks@{m\_tasks}!TThread::ExecutorImp@{TThread::ExecutorImp}}
+\doxysubsubsection{\texorpdfstring{m\_tasks}{m\_tasks}}
+{\footnotesize\ttfamily QMulti\+Map$<$int, \mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}}$>$ TThread\+::\+Executor\+Imp\+::m\+\_\+tasks}
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_imp_ad0206663e8f74f7162aaac3a85f8af1d}\label{class_t_thread_1_1_executor_imp_ad0206663e8f74f7162aaac3a85f8af1d}} 
+\index{TThread::ExecutorImp@{TThread::ExecutorImp}!m\_transitionMutex@{m\_transitionMutex}}
+\index{m\_transitionMutex@{m\_transitionMutex}!TThread::ExecutorImp@{TThread::ExecutorImp}}
+\doxysubsubsection{\texorpdfstring{m\_transitionMutex}{m\_transitionMutex}}
+{\footnotesize\ttfamily QMutex TThread\+::\+Executor\+Imp\+::m\+\_\+transition\+Mutex}
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_imp_a218fdfe913abcf4ef55879e88d40663e}\label{class_t_thread_1_1_executor_imp_a218fdfe913abcf4ef55879e88d40663e}} 
+\index{TThread::ExecutorImp@{TThread::ExecutorImp}!m\_waitingFlagsPool@{m\_waitingFlagsPool}}
+\index{m\_waitingFlagsPool@{m\_waitingFlagsPool}!TThread::ExecutorImp@{TThread::ExecutorImp}}
+\doxysubsubsection{\texorpdfstring{m\_waitingFlagsPool}{m\_waitingFlagsPool}}
+{\footnotesize\ttfamily std\+::vector$<$UCHAR$>$ TThread\+::\+Executor\+Imp\+::m\+\_\+waiting\+Flags\+Pool}
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_imp_ae5e80f6cd739d5de5e998616f23e184e}\label{class_t_thread_1_1_executor_imp_ae5e80f6cd739d5de5e998616f23e184e}} 
+\index{TThread::ExecutorImp@{TThread::ExecutorImp}!m\_workers@{m\_workers}}
+\index{m\_workers@{m\_workers}!TThread::ExecutorImp@{TThread::ExecutorImp}}
+\doxysubsubsection{\texorpdfstring{m\_workers}{m\_workers}}
+{\footnotesize\ttfamily std\+::set$<$\mbox{\hyperlink{class_t_thread_1_1_worker}{Worker}} $\ast$$>$ TThread\+::\+Executor\+Imp\+::m\+\_\+workers}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tcore/tthread.\+cpp\end{DoxyCompactItemize}

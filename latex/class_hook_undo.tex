@@ -1,0 +1,155 @@
+\hypertarget{class_hook_undo}{}\doxysection{Hook\+Undo Class Reference}
+\label{class_hook_undo}\index{HookUndo@{HookUndo}}
+Inheritance diagram for Hook\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_hook_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_hook_undo_accee20f1f7bfec1643f0d1bee796912b}{Hook\+Undo}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TXsh\+LevelP}} \&level)
+\item 
+void \mbox{\hyperlink{class_hook_undo_a62f445fe1e0d287a27257e7ccaa32d8f}{on\+Add}} () override
+\item 
+void \mbox{\hyperlink{class_hook_undo_a581df2a838e59c76fa6f3944b497d302}{assign\+Hook\+Set}} (const \mbox{\hyperlink{class_hook_set}{Hook\+Set}} \&src) const
+\item 
+void \mbox{\hyperlink{class_hook_undo_a7f1c1c5bc5b6eb83ca2af4198ee0021e}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_hook_undo_a4f26313be7ad597fce18902337978300}{redo}} () const override
+\item 
+int \mbox{\hyperlink{class_hook_undo_a7fdc4eb5eb95c72537ccbc2953a3329e}{get\+Size}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_hook_undo_accee20f1f7bfec1643f0d1bee796912b}\label{class_hook_undo_accee20f1f7bfec1643f0d1bee796912b}} 
+\index{HookUndo@{HookUndo}!HookUndo@{HookUndo}}
+\index{HookUndo@{HookUndo}!HookUndo@{HookUndo}}
+\doxysubsubsection{\texorpdfstring{HookUndo()}{HookUndo()}}
+{\footnotesize\ttfamily Hook\+Undo\+::\+Hook\+Undo (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TXsh\+LevelP}} \&}]{level }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00024                                           : m\_level(level) \{}
+\DoxyCodeLine{00025   \mbox{\hyperlink{class_hook_set}{HookSet}} *hookSet = m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a6e1f2998c39699adbe9133f87109a104}{getHookSet}}();}
+\DoxyCodeLine{00026   assert(hookSet);}
+\DoxyCodeLine{00027   \textcolor{keywordflow}{if} (hookSet) m\_oldHooks = *hookSet;}
+\DoxyCodeLine{00028 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_hook_undo_a5db80bf4514af6bb9683e52c73762d0b}\label{class_hook_undo_a5db80bf4514af6bb9683e52c73762d0b}} 
+\index{HookUndo@{HookUndo}!````~HookUndo@{$\sim$HookUndo}}
+\index{````~HookUndo@{$\sim$HookUndo}!HookUndo@{HookUndo}}
+\doxysubsubsection{\texorpdfstring{$\sim$HookUndo()}{~HookUndo()}}
+{\footnotesize\ttfamily Hook\+Undo\+::$\sim$\+Hook\+Undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00032 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_hook_undo_a581df2a838e59c76fa6f3944b497d302}\label{class_hook_undo_a581df2a838e59c76fa6f3944b497d302}} 
+\index{HookUndo@{HookUndo}!assignHookSet@{assignHookSet}}
+\index{assignHookSet@{assignHookSet}!HookUndo@{HookUndo}}
+\doxysubsubsection{\texorpdfstring{assignHookSet()}{assignHookSet()}}
+{\footnotesize\ttfamily void Hook\+Undo\+::assign\+Hook\+Set (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_hook_set}{Hook\+Set}} \&}]{src }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044                                                      \{}
+\DoxyCodeLine{00045   \mbox{\hyperlink{class_hook_set}{HookSet}} *hookSet = m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a6e1f2998c39699adbe9133f87109a104}{getHookSet}}();}
+\DoxyCodeLine{00046   assert(hookSet);}
+\DoxyCodeLine{00047   \textcolor{keywordflow}{if} (hookSet) *hookSet = src;}
+\DoxyCodeLine{00048 }
+\DoxyCodeLine{00049   TTool::getApplication()}
+\DoxyCodeLine{00050       -\/>getCurrentXsheet()}
+\DoxyCodeLine{00051       -\/>getXsheet()}
+\DoxyCodeLine{00052       -\/>\mbox{\hyperlink{class_t_xsheet_a5dc925584e35e1678f5678b79c470959}{getStageObjectTree}}()}
+\DoxyCodeLine{00053       -\/>\mbox{\hyperlink{class_t_stage_object_tree_aa88239ff5581af5d748d822d1f01cd9d}{invalidateAll}}();}
+\DoxyCodeLine{00054   \mbox{\hyperlink{class_t_tool}{TTool}} *tool = TTool::getApplication()-\/>getCurrentTool()-\/>getTool();}
+\DoxyCodeLine{00055   \textcolor{keywordflow}{if} (tool) \{}
+\DoxyCodeLine{00056     tool-\/>\mbox{\hyperlink{class_t_tool_a1a5f380464a6b36947212e2f8d5b314c}{updateMatrix}}();}
+\DoxyCodeLine{00057     tool-\/>\mbox{\hyperlink{class_t_tool_a3e791336c642542c5648aa8ea86e2348}{invalidate}}();}
+\DoxyCodeLine{00058   \}}
+\DoxyCodeLine{00059 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_hook_undo_a7fdc4eb5eb95c72537ccbc2953a3329e}\label{class_hook_undo_a7fdc4eb5eb95c72537ccbc2953a3329e}} 
+\index{HookUndo@{HookUndo}!getSize@{getSize}}
+\index{getSize@{getSize}!HookUndo@{HookUndo}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Hook\+Undo\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00071 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(*this) + 2 * \textcolor{keyword}{sizeof}(\mbox{\hyperlink{class_hook_set}{HookSet}}); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_hook_undo_a62f445fe1e0d287a27257e7ccaa32d8f}\label{class_hook_undo_a62f445fe1e0d287a27257e7ccaa32d8f}} 
+\index{HookUndo@{HookUndo}!onAdd@{onAdd}}
+\index{onAdd@{onAdd}!HookUndo@{HookUndo}}
+\doxysubsubsection{\texorpdfstring{onAdd()}{onAdd()}}
+{\footnotesize\ttfamily void Hook\+Undo\+::on\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00036                      \{}
+\DoxyCodeLine{00037   \mbox{\hyperlink{class_hook_set}{HookSet}} *hookSet = m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a6e1f2998c39699adbe9133f87109a104}{getHookSet}}();}
+\DoxyCodeLine{00038   assert(hookSet);}
+\DoxyCodeLine{00039   \textcolor{keywordflow}{if} (hookSet) m\_newHooks = *hookSet;}
+\DoxyCodeLine{00040 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_hook_undo_a4f26313be7ad597fce18902337978300}\label{class_hook_undo_a4f26313be7ad597fce18902337978300}} 
+\index{HookUndo@{HookUndo}!redo@{redo}}
+\index{redo@{redo}!HookUndo@{HookUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Hook\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067 \{ assignHookSet(m\_newHooks); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_hook_undo_a7f1c1c5bc5b6eb83ca2af4198ee0021e}\label{class_hook_undo_a7f1c1c5bc5b6eb83ca2af4198ee0021e}} 
+\index{HookUndo@{HookUndo}!undo@{undo}}
+\index{undo@{undo}!HookUndo@{HookUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Hook\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00063 \{ assignHookSet(m\_oldHooks); \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/hookselection.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/hookselection.\+cpp\end{DoxyCompactItemize}

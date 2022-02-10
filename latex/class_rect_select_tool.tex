@@ -1,0 +1,123 @@
+\hypertarget{class_rect_select_tool}{}\doxysection{Rect\+Select\+Tool Class Reference}
+\label{class_rect_select_tool}\index{RectSelectTool@{RectSelectTool}}
+Inheritance diagram for Rect\+Select\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_rect_select_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_rect_select_tool_a2c9983db04f57c8baf3879fcc37c07ee}{Rect\+Select\+Tool}} (\mbox{\hyperlink{class_function_panel}{Function\+Panel}} $\ast$panel, \mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$curve)
+\item 
+void \mbox{\hyperlink{class_rect_select_tool_a662a34b2fa13aa62dcf997dad50806a8}{click}} (QMouse\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_rect_select_tool_a64d67fd6f4e4944fe60770f719043103}{drag}} (QMouse\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_rect_select_tool_a7fbbc167edbce024c973e60c5bc9183c}{release}} (QMouse\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_rect_select_tool_a3f570a4393e44f34961b7aa969315df5}{draw}} (QPainter \&painter) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_rect_select_tool_a2c9983db04f57c8baf3879fcc37c07ee}\label{class_rect_select_tool_a2c9983db04f57c8baf3879fcc37c07ee}} 
+\index{RectSelectTool@{RectSelectTool}!RectSelectTool@{RectSelectTool}}
+\index{RectSelectTool@{RectSelectTool}!RectSelectTool@{RectSelectTool}}
+\doxysubsubsection{\texorpdfstring{RectSelectTool()}{RectSelectTool()}}
+{\footnotesize\ttfamily Rect\+Select\+Tool\+::\+Rect\+Select\+Tool (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_function_panel}{Function\+Panel}} $\ast$}]{panel,  }\item[{\mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$}]{curve }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068       : m\_panel(panel), m\_curve(curve) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_rect_select_tool_a662a34b2fa13aa62dcf997dad50806a8}\label{class_rect_select_tool_a662a34b2fa13aa62dcf997dad50806a8}} 
+\index{RectSelectTool@{RectSelectTool}!click@{click}}
+\index{click@{click}!RectSelectTool@{RectSelectTool}}
+\doxysubsubsection{\texorpdfstring{click()}{click()}}
+{\footnotesize\ttfamily void Rect\+Select\+Tool\+::click (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_function_panel_1_1_drag_tool}{Function\+Panel\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00074                                          \{}
+\DoxyCodeLine{00075   m\_startPos = e-\/>pos();}
+\DoxyCodeLine{00076   m\_rect     = QRect();}
+\DoxyCodeLine{00077 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_rect_select_tool_a64d67fd6f4e4944fe60770f719043103}\label{class_rect_select_tool_a64d67fd6f4e4944fe60770f719043103}} 
+\index{RectSelectTool@{RectSelectTool}!drag@{drag}}
+\index{drag@{drag}!RectSelectTool@{RectSelectTool}}
+\doxysubsubsection{\texorpdfstring{drag()}{drag()}}
+{\footnotesize\ttfamily void Rect\+Select\+Tool\+::drag (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_function_panel_1_1_drag_tool}{Function\+Panel\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00079                                         \{}
+\DoxyCodeLine{00080   m\_rect = QRect(m\_startPos, e-\/>pos()).normalized();}
+\DoxyCodeLine{00081   m\_panel-\/>getSelection()-\/>deselectAllKeyframes();}
+\DoxyCodeLine{00082   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_curve-\/>getKeyframeCount(); i++) \{}
+\DoxyCodeLine{00083     QPointF p = m\_panel-\/>getWinPos(m\_curve, m\_curve-\/>getKeyframe(i));}
+\DoxyCodeLine{00084     \textcolor{keywordflow}{if} (m\_rect.contains(tround(p.x()), tround(p.y())))}
+\DoxyCodeLine{00085       m\_panel-\/>getSelection()-\/>select(m\_curve, i);}
+\DoxyCodeLine{00086   \}}
+\DoxyCodeLine{00087   m\_panel-\/>update();}
+\DoxyCodeLine{00088 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_rect_select_tool_a3f570a4393e44f34961b7aa969315df5}\label{class_rect_select_tool_a3f570a4393e44f34961b7aa969315df5}} 
+\index{RectSelectTool@{RectSelectTool}!draw@{draw}}
+\index{draw@{draw}!RectSelectTool@{RectSelectTool}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Rect\+Select\+Tool\+::draw (\begin{DoxyParamCaption}\item[{QPainter \&}]{painter }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_function_panel_1_1_drag_tool}{Function\+Panel\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00092                                            \{}
+\DoxyCodeLine{00093   painter.setPen(Qt::white);}
+\DoxyCodeLine{00094   painter.setBrush(QColor(255, 255, 255, 127));}
+\DoxyCodeLine{00095   \textcolor{keywordflow}{if} (!m\_rect.isEmpty()) painter.drawRect(m\_rect);}
+\DoxyCodeLine{00096 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_rect_select_tool_a7fbbc167edbce024c973e60c5bc9183c}\label{class_rect_select_tool_a7fbbc167edbce024c973e60c5bc9183c}} 
+\index{RectSelectTool@{RectSelectTool}!release@{release}}
+\index{release@{release}!RectSelectTool@{RectSelectTool}}
+\doxysubsubsection{\texorpdfstring{release()}{release()}}
+{\footnotesize\ttfamily void Rect\+Select\+Tool\+::release (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_function_panel_1_1_drag_tool}{Function\+Panel\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00090 \{ m\_panel-\/>update(); \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/functionpaneltools.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/functionpaneltools.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,349 @@
+\hypertarget{class_style_editor_g_u_i_1_1_settings_page}{}\doxysection{Style\+Editor\+GUI\+::Settings\+Page Class Reference}
+\label{class_style_editor_g_u_i_1_1_settings_page}\index{StyleEditorGUI::SettingsPage@{StyleEditorGUI::SettingsPage}}
+
+
+The \mbox{\hyperlink{class_style_editor_g_u_i_1_1_settings_page}{Settings\+Page}} is used to show/edit style parameters.  
+
+
+
+
+{\ttfamily \#include $<$styleeditor.\+h$>$}
+
+Inheritance diagram for Style\+Editor\+GUI\+::Settings\+Page\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_style_editor_g_u_i_1_1_settings_page}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_settings_page_aafdfec00579f025b1ed2680d2b5b4004}\label{class_style_editor_g_u_i_1_1_settings_page_aafdfec00579f025b1ed2680d2b5b4004}} 
+void {\bfseries param\+Style\+Changed} (bool is\+Dragging)
+\begin{DoxyCompactList}\small\item\em Signals that the edited style has changed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_style_editor_g_u_i_1_1_settings_page_a64383ad5af59f80fdfe1cae076d14cd1}{Settings\+Page}} (QWidget $\ast$parent)
+\item 
+void \mbox{\hyperlink{class_style_editor_g_u_i_1_1_settings_page_a3aa628190512df005d6be858cf6b1271}{set\+Style}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TColor\+StyleP}} \&edited\+Style)
+\item 
+void \mbox{\hyperlink{class_style_editor_g_u_i_1_1_settings_page_a90c8412087ca322d936b09b1651458cd}{update\+Values}} ()
+\item 
+void \mbox{\hyperlink{class_style_editor_g_u_i_1_1_settings_page_af1518daa0dcaa91adb30b3d0d6142df0}{enable\+Autopaint\+Toggle}} (bool enabled)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_style_editor_g_u_i_1_1_settings_page}{Settings\+Page}} is used to show/edit style parameters. 
+
+This class stores the GUI for editing a {\itshape copy} of the current color style. Updates of the actual current color style are {\itshape not} performed directly by this class. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_settings_page_a64383ad5af59f80fdfe1cae076d14cd1}\label{class_style_editor_g_u_i_1_1_settings_page_a64383ad5af59f80fdfe1cae076d14cd1}} 
+\index{StyleEditorGUI::SettingsPage@{StyleEditorGUI::SettingsPage}!SettingsPage@{SettingsPage}}
+\index{SettingsPage@{SettingsPage}!StyleEditorGUI::SettingsPage@{StyleEditorGUI::SettingsPage}}
+\doxysubsubsection{\texorpdfstring{SettingsPage()}{SettingsPage()}}
+{\footnotesize\ttfamily Settings\+Page\+::\+Settings\+Page (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02824     : QScrollArea(parent), m\_updating(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{02825   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{02826 }
+\DoxyCodeLine{02827   setObjectName(\textcolor{stringliteral}{"{}styleEditorPage"{}});  \textcolor{comment}{// It is necessary for the styleSheet}}
+\DoxyCodeLine{02828   setFrameStyle(QFrame::StyledPanel);}
+\DoxyCodeLine{02829 }
+\DoxyCodeLine{02830   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);}
+\DoxyCodeLine{02831   setWidgetResizable(\textcolor{keyword}{true});}
+\DoxyCodeLine{02832 }
+\DoxyCodeLine{02833   \textcolor{comment}{// Build the scrolled widget}}
+\DoxyCodeLine{02834   QFrame *paramsContainer = \textcolor{keyword}{new} QFrame(\textcolor{keyword}{this});}
+\DoxyCodeLine{02835   setWidget(paramsContainer);}
+\DoxyCodeLine{02836 }
+\DoxyCodeLine{02837   QVBoxLayout *paramsContainerLayout = \textcolor{keyword}{new} QVBoxLayout(\textcolor{keyword}{this});}
+\DoxyCodeLine{02838   paramsContainerLayout-\/>setMargin(10);}
+\DoxyCodeLine{02839   paramsContainerLayout-\/>setSpacing(10);}
+\DoxyCodeLine{02840   paramsContainer-\/>setLayout(paramsContainerLayout);}
+\DoxyCodeLine{02841 }
+\DoxyCodeLine{02842   \textcolor{comment}{// Add a vertical layout to store the "{}autofill"{} checkbox widgets}}
+\DoxyCodeLine{02843   m\_autoFillCheckBox = \textcolor{keyword}{new} QCheckBox(tr(\textcolor{stringliteral}{"{}Autopaint for Lines"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{02844   paramsContainerLayout-\/>addWidget(m\_autoFillCheckBox, 0,}
+\DoxyCodeLine{02845                                    Qt::AlignLeft | Qt::AlignVCenter);}
+\DoxyCodeLine{02846 }
+\DoxyCodeLine{02847   ret = connect(m\_autoFillCheckBox, SIGNAL(stateChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{02848                 SLOT(onAutofillChanged()));}
+\DoxyCodeLine{02849   assert(ret);}
+\DoxyCodeLine{02850 }
+\DoxyCodeLine{02851   \textcolor{comment}{// Prepare the style parameters layout}}
+\DoxyCodeLine{02852   m\_paramsLayout = \textcolor{keyword}{new} QGridLayout;}
+\DoxyCodeLine{02853   m\_paramsLayout-\/>setMargin(0);}
+\DoxyCodeLine{02854   m\_paramsLayout-\/>setVerticalSpacing(8);}
+\DoxyCodeLine{02855   m\_paramsLayout-\/>setHorizontalSpacing(5);}
+\DoxyCodeLine{02856   paramsContainerLayout-\/>addLayout(m\_paramsLayout);}
+\DoxyCodeLine{02857 }
+\DoxyCodeLine{02858   paramsContainerLayout-\/>addStretch(1);}
+\DoxyCodeLine{02859 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_settings_page_af1518daa0dcaa91adb30b3d0d6142df0}\label{class_style_editor_g_u_i_1_1_settings_page_af1518daa0dcaa91adb30b3d0d6142df0}} 
+\index{StyleEditorGUI::SettingsPage@{StyleEditorGUI::SettingsPage}!enableAutopaintToggle@{enableAutopaintToggle}}
+\index{enableAutopaintToggle@{enableAutopaintToggle}!StyleEditorGUI::SettingsPage@{StyleEditorGUI::SettingsPage}}
+\doxysubsubsection{\texorpdfstring{enableAutopaintToggle()}{enableAutopaintToggle()}}
+{\footnotesize\ttfamily void Settings\+Page\+::enable\+Autopaint\+Toggle (\begin{DoxyParamCaption}\item[{bool}]{enabled }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02863                                                      \{}
+\DoxyCodeLine{02864   m\_autoFillCheckBox-\/>setVisible(enabled);}
+\DoxyCodeLine{02865 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_settings_page_a3aa628190512df005d6be858cf6b1271}\label{class_style_editor_g_u_i_1_1_settings_page_a3aa628190512df005d6be858cf6b1271}} 
+\index{StyleEditorGUI::SettingsPage@{StyleEditorGUI::SettingsPage}!setStyle@{setStyle}}
+\index{setStyle@{setStyle}!StyleEditorGUI::SettingsPage@{StyleEditorGUI::SettingsPage}}
+\doxysubsubsection{\texorpdfstring{setStyle()}{setStyle()}}
+{\footnotesize\ttfamily void Settings\+Page\+::set\+Style (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TColor\+StyleP}} \&}]{edited\+Style }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02869                                                            \{}
+\DoxyCodeLine{02870   \textcolor{keyword}{struct }locals \{}
+\DoxyCodeLine{02871     \textcolor{keyword}{inline} \textcolor{keyword}{static} \textcolor{keywordtype}{void} clearLayout(QLayout *layout) \{}
+\DoxyCodeLine{02872       QLayoutItem *item;}
+\DoxyCodeLine{02873       \textcolor{keywordflow}{while} ((item = layout-\/>takeAt(0)) != 0) \{}
+\DoxyCodeLine{02874         \textcolor{keyword}{delete} item-\/>layout();}
+\DoxyCodeLine{02875         \textcolor{keyword}{delete} item-\/>spacerItem();}
+\DoxyCodeLine{02876         \textcolor{keyword}{delete} item-\/>widget();}
+\DoxyCodeLine{02877         \textcolor{keyword}{delete} item;}
+\DoxyCodeLine{02878       \}}
+\DoxyCodeLine{02879     \}}
+\DoxyCodeLine{02880   \};  \textcolor{comment}{// locals}}
+\DoxyCodeLine{02881 }
+\DoxyCodeLine{02882   \textcolor{comment}{// NOTE: Layout reubilds must be avoided whenever possible. In particular, be}}
+\DoxyCodeLine{02883   \textcolor{comment}{// warned that this}}
+\DoxyCodeLine{02884   \textcolor{comment}{// function may be invoked when signals emitted from this function are still}}
+\DoxyCodeLine{02885   \textcolor{comment}{// "{}flying"{}...}}
+\DoxyCodeLine{02886 }
+\DoxyCodeLine{02887   \textcolor{keywordtype}{bool} clearLayout =}
+\DoxyCodeLine{02888       m\_editedStyle \&\&}
+\DoxyCodeLine{02889       !(editedStyle \&\& \textcolor{keyword}{typeid}(*m\_editedStyle) == \textcolor{keyword}{typeid}(*editedStyle));}
+\DoxyCodeLine{02890   \textcolor{keywordtype}{bool} buildLayout =}
+\DoxyCodeLine{02891       editedStyle \&\&}
+\DoxyCodeLine{02892       !(m\_editedStyle \&\& \textcolor{keyword}{typeid}(*m\_editedStyle) == \textcolor{keyword}{typeid}(*editedStyle));}
+\DoxyCodeLine{02893 }
+\DoxyCodeLine{02894   m\_editedStyle = editedStyle;}
+\DoxyCodeLine{02895 }
+\DoxyCodeLine{02896   \textcolor{keywordflow}{if} (clearLayout) locals::clearLayout(m\_paramsLayout);}
+\DoxyCodeLine{02897 }
+\DoxyCodeLine{02898   \textcolor{keywordflow}{if} (buildLayout) \{}
+\DoxyCodeLine{02899     assert(m\_paramsLayout-\/>count() == 0);}
+\DoxyCodeLine{02900 }
+\DoxyCodeLine{02901     \textcolor{comment}{// Assign new settings widgets -\/ one label/editor for each parameter}}
+\DoxyCodeLine{02902     \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{02903 }
+\DoxyCodeLine{02904     \textcolor{keywordtype}{int} p, pCount = editedStyle-\/>\mbox{\hyperlink{class_t_color_style_a9c8b7ea7e90ffbb1f7a2b765efdf5a29}{getParamCount}}();}
+\DoxyCodeLine{02905     \textcolor{keywordflow}{for} (p = 0; p != pCount; ++p) \{}
+\DoxyCodeLine{02906       \textcolor{comment}{// Assign label}}
+\DoxyCodeLine{02907       QLabel *label = \textcolor{keyword}{new} QLabel(editedStyle-\/>\mbox{\hyperlink{class_t_color_style_aff20bdf0b332cca7730a2192200c3f65}{getParamNames}}(p));}
+\DoxyCodeLine{02908       m\_paramsLayout-\/>addWidget(label, p, 0);}
+\DoxyCodeLine{02909 }
+\DoxyCodeLine{02910       \textcolor{comment}{// Assign parameter}}
+\DoxyCodeLine{02911       \textcolor{keywordflow}{switch} (editedStyle-\/>\mbox{\hyperlink{class_t_color_style_a7f59a431a38e3fb69ff5161cae9ab5f8}{getParamType}}(p)) \{}
+\DoxyCodeLine{02912       \textcolor{keywordflow}{case} \mbox{\hyperlink{class_t_color_style_ac6c07b7775d90cb214a0a048102e9940a4c545eb287c82ab23aef817056e72065}{TColorStyle::BOOL}}: \{}
+\DoxyCodeLine{02913         QCheckBox *checkBox = \textcolor{keyword}{new} QCheckBox;}
+\DoxyCodeLine{02914         m\_paramsLayout-\/>addWidget(checkBox, p, 1);}
+\DoxyCodeLine{02915 }
+\DoxyCodeLine{02916         ret = QObject::connect(checkBox, SIGNAL(toggled(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{02917                                SLOT(onValueChanged())) \&\&}
+\DoxyCodeLine{02918               ret;}
+\DoxyCodeLine{02919 }
+\DoxyCodeLine{02920         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{02921       \}}
+\DoxyCodeLine{02922 }
+\DoxyCodeLine{02923       \textcolor{keywordflow}{case} \mbox{\hyperlink{class_t_color_style_ac6c07b7775d90cb214a0a048102e9940ace09485c4a7290735fc13c8ad2afd402}{TColorStyle::INT}}: \{}
+\DoxyCodeLine{02924         \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{DVGui::IntField}} *intField = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{DVGui::IntField}};}
+\DoxyCodeLine{02925         m\_paramsLayout-\/>addWidget(intField, p, 1);}
+\DoxyCodeLine{02926 }
+\DoxyCodeLine{02927         \textcolor{keywordtype}{int} min, max;}
+\DoxyCodeLine{02928         m\_editedStyle-\/>getParamRange(p, min, max);}
+\DoxyCodeLine{02929 }
+\DoxyCodeLine{02930         intField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_a055d473a8dde4481be33a83c9fa04c96}{setRange}}(min, max);}
+\DoxyCodeLine{02931 }
+\DoxyCodeLine{02932         ret = QObject::connect(intField, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{02933                                SLOT(onValueChanged(\textcolor{keywordtype}{bool}))) \&\&}
+\DoxyCodeLine{02934               ret;}
+\DoxyCodeLine{02935 }
+\DoxyCodeLine{02936         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{02937       \}}
+\DoxyCodeLine{02938 }
+\DoxyCodeLine{02939       \textcolor{keywordflow}{case} \mbox{\hyperlink{class_t_color_style_ac6c07b7775d90cb214a0a048102e9940a61befcb2846cf4dd9b871f628b0edfb9}{TColorStyle::ENUM}}: \{}
+\DoxyCodeLine{02940         QComboBox *comboBox = \textcolor{keyword}{new} QComboBox;}
+\DoxyCodeLine{02941         m\_paramsLayout-\/>addWidget(comboBox, p, 1);}
+\DoxyCodeLine{02942 }
+\DoxyCodeLine{02943         QStringList items;}
+\DoxyCodeLine{02944         m\_editedStyle-\/>getParamRange(p, items);}
+\DoxyCodeLine{02945 }
+\DoxyCodeLine{02946         comboBox-\/>addItems(items);}
+\DoxyCodeLine{02947 }
+\DoxyCodeLine{02948         ret = QObject::connect(comboBox, SIGNAL(currentIndexChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{02949                                SLOT(onValueChanged())) \&\&}
+\DoxyCodeLine{02950               ret;}
+\DoxyCodeLine{02951 }
+\DoxyCodeLine{02952         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{02953       \}}
+\DoxyCodeLine{02954 }
+\DoxyCodeLine{02955       \textcolor{keywordflow}{case} \mbox{\hyperlink{class_t_color_style_ac6c07b7775d90cb214a0a048102e9940a31030f4cc998ecac230c589b93fd776b}{TColorStyle::DOUBLE}}: \{}
+\DoxyCodeLine{02956         \mbox{\hyperlink{class_d_v_gui_1_1_double_field}{DVGui::DoubleField}} *doubleField = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_double_field}{DVGui::DoubleField}};}
+\DoxyCodeLine{02957         m\_paramsLayout-\/>addWidget(doubleField, p, 1);}
+\DoxyCodeLine{02958 }
+\DoxyCodeLine{02959         \textcolor{keywordtype}{double} min, max;}
+\DoxyCodeLine{02960         m\_editedStyle-\/>getParamRange(p, min, max);}
+\DoxyCodeLine{02961 }
+\DoxyCodeLine{02962         doubleField-\/>setRange(min, max);}
+\DoxyCodeLine{02963 }
+\DoxyCodeLine{02964         ret = QObject::connect(doubleField, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{02965                                SLOT(onValueChanged(\textcolor{keywordtype}{bool}))) \&\&}
+\DoxyCodeLine{02966               ret;}
+\DoxyCodeLine{02967 }
+\DoxyCodeLine{02968         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{02969       \}}
+\DoxyCodeLine{02970 }
+\DoxyCodeLine{02971       \textcolor{keywordflow}{case} \mbox{\hyperlink{class_t_color_style_ac6c07b7775d90cb214a0a048102e9940adc233311100385633aaaa48fa45aa509}{TColorStyle::FILEPATH}}: \{}
+\DoxyCodeLine{02972         \mbox{\hyperlink{class_d_v_gui_1_1_file_field}{DVGui::FileField}} *fileField = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_file_field}{DVGui::FileField}};}
+\DoxyCodeLine{02973         m\_paramsLayout-\/>addWidget(fileField, p, 1);}
+\DoxyCodeLine{02974 }
+\DoxyCodeLine{02975         QStringList extensions;}
+\DoxyCodeLine{02976         m\_editedStyle-\/>getParamRange(p, extensions);}
+\DoxyCodeLine{02977 }
+\DoxyCodeLine{02978         fileField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_file_field_aa7a756fa242d0b6dbcf80994ee59c79e}{setFileMode}}(QFileDialog::AnyFile);}
+\DoxyCodeLine{02979         fileField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_file_field_aad79aa2cfdb79a5e1a1753f3fefb7957}{setFilters}}(extensions);}
+\DoxyCodeLine{02980 }
+\DoxyCodeLine{02981         fileField-\/>setPath(QString::fromStdWString(}
+\DoxyCodeLine{02982             editedStyle-\/>\mbox{\hyperlink{class_t_color_style_a5d66285ca16773862399ae70ebd8c52b}{getParamValue}}(\mbox{\hyperlink{struct_t_color_style_1_1_t_file_path__tag}{TColorStyle::TFilePath\_tag}}(), p)}
+\DoxyCodeLine{02983                 .getWideString()));}
+\DoxyCodeLine{02984 }
+\DoxyCodeLine{02985         ret = QObject::connect(fileField, SIGNAL(pathChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{02986                                SLOT(onValueChanged())) \&\&}
+\DoxyCodeLine{02987               ret;}
+\DoxyCodeLine{02988 }
+\DoxyCodeLine{02989         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{02990       \}}
+\DoxyCodeLine{02991       \}}
+\DoxyCodeLine{02992 }
+\DoxyCodeLine{02993       \textcolor{comment}{// "{}reset to default"{} button}}
+\DoxyCodeLine{02994       \textcolor{keywordflow}{if} (m\_editedStyle-\/>hasParamDefault(p)) \{}
+\DoxyCodeLine{02995         QPushButton *pushButton = \textcolor{keyword}{new} QPushButton;}
+\DoxyCodeLine{02996         pushButton-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Reset to default"{}}));}
+\DoxyCodeLine{02997         pushButton-\/>setIcon(createQIcon(\textcolor{stringliteral}{"{}delete"{}}));}
+\DoxyCodeLine{02998         pushButton-\/>setFixedSize(24, 24);}
+\DoxyCodeLine{02999         m\_paramsLayout-\/>addWidget(pushButton, p, 2);}
+\DoxyCodeLine{03000         ret = QObject::connect(pushButton, SIGNAL(clicked(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{03001                                SLOT(onValueReset())) \&\&}
+\DoxyCodeLine{03002               ret;}
+\DoxyCodeLine{03003       \}}
+\DoxyCodeLine{03004 }
+\DoxyCodeLine{03005       assert(ret);}
+\DoxyCodeLine{03006     \}}
+\DoxyCodeLine{03007   \}}
+\DoxyCodeLine{03008 }
+\DoxyCodeLine{03009   updateValues();}
+\DoxyCodeLine{03010 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_settings_page_a90c8412087ca322d936b09b1651458cd}\label{class_style_editor_g_u_i_1_1_settings_page_a90c8412087ca322d936b09b1651458cd}} 
+\index{StyleEditorGUI::SettingsPage@{StyleEditorGUI::SettingsPage}!updateValues@{updateValues}}
+\index{updateValues@{updateValues}!StyleEditorGUI::SettingsPage@{StyleEditorGUI::SettingsPage}}
+\doxysubsubsection{\texorpdfstring{updateValues()}{updateValues()}}
+{\footnotesize\ttfamily void Settings\+Page\+::update\+Values (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{03014                                 \{}
+\DoxyCodeLine{03015   \textcolor{keywordflow}{if} (!m\_editedStyle) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{03016 }
+\DoxyCodeLine{03017   \textcolor{keyword}{struct }Updating \{}
+\DoxyCodeLine{03018     \mbox{\hyperlink{class_style_editor_g_u_i_1_1_settings_page}{SettingsPage}} *m\_this;  \textcolor{comment}{// Prevent 'param changed' signals from being}}
+\DoxyCodeLine{03019     \string~Updating() \{}
+\DoxyCodeLine{03020       m\_this-\/>m\_updating = \textcolor{keyword}{false};}
+\DoxyCodeLine{03021     \}  \textcolor{comment}{// sent when updating editor widgets -\/ this is}}
+\DoxyCodeLine{03022   \} updating = \{(m\_updating = \textcolor{keyword}{true}, \textcolor{keyword}{this})\};  \textcolor{comment}{// just a view REFRESH function.}}
+\DoxyCodeLine{03023 }
+\DoxyCodeLine{03024   \textcolor{comment}{// Deal with the autofill}}
+\DoxyCodeLine{03025   m\_autoFillCheckBox-\/>setChecked(m\_editedStyle-\/>\mbox{\hyperlink{class_t_color_style_aa91dc1e9c6827df92c7f56a61c9c6b39}{getFlags}}() \& 1);}
+\DoxyCodeLine{03026 }
+\DoxyCodeLine{03027   \textcolor{keywordtype}{int} p, pCount = m\_editedStyle-\/>\mbox{\hyperlink{class_t_color_style_a9c8b7ea7e90ffbb1f7a2b765efdf5a29}{getParamCount}}();}
+\DoxyCodeLine{03028   \textcolor{keywordflow}{for} (p = 0; p != pCount; ++p) \{}
+\DoxyCodeLine{03029     \textcolor{comment}{// Update state of "{}reset to default"{} button}}
+\DoxyCodeLine{03030     \textcolor{keywordflow}{if} (m\_editedStyle-\/>\mbox{\hyperlink{class_t_color_style_a5c6464ff8cd3af1e2b1b5867eda6492f}{hasParamDefault}}(p)) \{}
+\DoxyCodeLine{03031       QPushButton *pushButton = \textcolor{keyword}{static\_cast<}QPushButton *\textcolor{keyword}{>}(}
+\DoxyCodeLine{03032           m\_paramsLayout-\/>itemAtPosition(p, 2)-\/>widget());}
+\DoxyCodeLine{03033       pushButton-\/>setEnabled(m\_editedStyle-\/>\mbox{\hyperlink{class_t_color_style_a9792a07a2f7c33b5cae1e9e3b3c8aee7}{isParamDefault}}(p));}
+\DoxyCodeLine{03034     \}}
+\DoxyCodeLine{03035 }
+\DoxyCodeLine{03036     \textcolor{comment}{// Update editor values}}
+\DoxyCodeLine{03037     \textcolor{keywordflow}{switch} (m\_editedStyle-\/>\mbox{\hyperlink{class_t_color_style_a7f59a431a38e3fb69ff5161cae9ab5f8}{getParamType}}(p)) \{}
+\DoxyCodeLine{03038     \textcolor{keywordflow}{case} \mbox{\hyperlink{class_t_color_style_ac6c07b7775d90cb214a0a048102e9940a4c545eb287c82ab23aef817056e72065}{TColorStyle::BOOL}}: \{}
+\DoxyCodeLine{03039       QCheckBox *checkBox = \textcolor{keyword}{static\_cast<}QCheckBox *\textcolor{keyword}{>}(}
+\DoxyCodeLine{03040           m\_paramsLayout-\/>itemAtPosition(p, 1)-\/>widget());}
+\DoxyCodeLine{03041 }
+\DoxyCodeLine{03042       checkBox-\/>setChecked(}
+\DoxyCodeLine{03043           m\_editedStyle-\/>\mbox{\hyperlink{class_t_color_style_a5d66285ca16773862399ae70ebd8c52b}{getParamValue}}(\mbox{\hyperlink{struct_t_color_style_1_1bool__tag}{TColorStyle::bool\_tag}}(), p));}
+\DoxyCodeLine{03044 }
+\DoxyCodeLine{03045       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{03046     \}}
+\DoxyCodeLine{03047 }
+\DoxyCodeLine{03048     \textcolor{keywordflow}{case} \mbox{\hyperlink{class_t_color_style_ac6c07b7775d90cb214a0a048102e9940ace09485c4a7290735fc13c8ad2afd402}{TColorStyle::INT}}: \{}
+\DoxyCodeLine{03049       \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{DVGui::IntField}} *intField = \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{class_d_v_gui_1_1_int_field}{DVGui::IntField}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{03050           m\_paramsLayout-\/>itemAtPosition(p, 1)-\/>widget());}
+\DoxyCodeLine{03051 }
+\DoxyCodeLine{03052       intField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_aed421e2c52946f2c7643534b4f6f13f7}{setValue}}(}
+\DoxyCodeLine{03053           m\_editedStyle-\/>\mbox{\hyperlink{class_t_color_style_a5d66285ca16773862399ae70ebd8c52b}{getParamValue}}(\mbox{\hyperlink{struct_t_color_style_1_1int__tag}{TColorStyle::int\_tag}}(), p));}
+\DoxyCodeLine{03054 }
+\DoxyCodeLine{03055       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{03056     \}}
+\DoxyCodeLine{03057 }
+\DoxyCodeLine{03058     \textcolor{keywordflow}{case} \mbox{\hyperlink{class_t_color_style_ac6c07b7775d90cb214a0a048102e9940a61befcb2846cf4dd9b871f628b0edfb9}{TColorStyle::ENUM}}: \{}
+\DoxyCodeLine{03059       QComboBox *comboBox = \textcolor{keyword}{static\_cast<}QComboBox *\textcolor{keyword}{>}(}
+\DoxyCodeLine{03060           m\_paramsLayout-\/>itemAtPosition(p, 1)-\/>widget());}
+\DoxyCodeLine{03061 }
+\DoxyCodeLine{03062       comboBox-\/>setCurrentIndex(}
+\DoxyCodeLine{03063           m\_editedStyle-\/>\mbox{\hyperlink{class_t_color_style_a5d66285ca16773862399ae70ebd8c52b}{getParamValue}}(\mbox{\hyperlink{struct_t_color_style_1_1int__tag}{TColorStyle::int\_tag}}(), p));}
+\DoxyCodeLine{03064 }
+\DoxyCodeLine{03065       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{03066     \}}
+\DoxyCodeLine{03067 }
+\DoxyCodeLine{03068     \textcolor{keywordflow}{case} \mbox{\hyperlink{class_t_color_style_ac6c07b7775d90cb214a0a048102e9940a31030f4cc998ecac230c589b93fd776b}{TColorStyle::DOUBLE}}: \{}
+\DoxyCodeLine{03069       \mbox{\hyperlink{class_d_v_gui_1_1_double_field}{DVGui::DoubleField}} *doubleField = \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{class_d_v_gui_1_1_double_field}{DVGui::DoubleField}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{03070           m\_paramsLayout-\/>itemAtPosition(p, 1)-\/>widget());}
+\DoxyCodeLine{03071 }
+\DoxyCodeLine{03072       doubleField-\/>setValue(}
+\DoxyCodeLine{03073           m\_editedStyle-\/>\mbox{\hyperlink{class_t_color_style_a5d66285ca16773862399ae70ebd8c52b}{getParamValue}}(\mbox{\hyperlink{struct_t_color_style_1_1double__tag}{TColorStyle::double\_tag}}(), p));}
+\DoxyCodeLine{03074 }
+\DoxyCodeLine{03075       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{03076     \}}
+\DoxyCodeLine{03077 }
+\DoxyCodeLine{03078     \textcolor{keywordflow}{case} \mbox{\hyperlink{class_t_color_style_ac6c07b7775d90cb214a0a048102e9940adc233311100385633aaaa48fa45aa509}{TColorStyle::FILEPATH}}: \{}
+\DoxyCodeLine{03079       \mbox{\hyperlink{class_d_v_gui_1_1_file_field}{DVGui::FileField}} *fileField = \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{class_d_v_gui_1_1_file_field}{DVGui::FileField}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{03080           m\_paramsLayout-\/>itemAtPosition(p, 1)-\/>widget());}
+\DoxyCodeLine{03081 }
+\DoxyCodeLine{03082       fileField-\/>setPath(QString::fromStdWString(}
+\DoxyCodeLine{03083           m\_editedStyle-\/>\mbox{\hyperlink{class_t_color_style_a5d66285ca16773862399ae70ebd8c52b}{getParamValue}}(\mbox{\hyperlink{struct_t_color_style_1_1_t_file_path__tag}{TColorStyle::TFilePath\_tag}}(), p)}
+\DoxyCodeLine{03084               .getWideString()));}
+\DoxyCodeLine{03085 }
+\DoxyCodeLine{03086       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{03087     \}}
+\DoxyCodeLine{03088     \}}
+\DoxyCodeLine{03089   \}}
+\DoxyCodeLine{03090 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/styleeditor.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/styleeditor.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,108 @@
+\hypertarget{class_color_card_fx}{}\doxysection{Color\+Card\+Fx Class Reference}
+\label{class_color_card_fx}\index{ColorCardFx@{ColorCardFx}}
+Inheritance diagram for Color\+Card\+Fx\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_color_card_fx}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_color_card_fx_a379e1b75b2dfe95638b18305c29df74f}{can\+Handle}} (const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&info, double frame) override
+\item 
+bool \mbox{\hyperlink{class_color_card_fx_a8c9efe7ae4ae4002fa3a222f34f457b4}{do\+Get\+BBox}} (double frame, \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&b\+Box, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&info) override
+\item 
+void \mbox{\hyperlink{class_color_card_fx_a585cd3d13c0e83063e6ebc5b07ca8527}{do\+Compute}} (\mbox{\hyperlink{class_t_tile}{TTile}} \&tile, double frame, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_color_card_fx_a7e54c8e64e146b4d4ccc2eca3fc46b30}\label{class_color_card_fx_a7e54c8e64e146b4d4ccc2eca3fc46b30}} 
+\index{ColorCardFx@{ColorCardFx}!ColorCardFx@{ColorCardFx}}
+\index{ColorCardFx@{ColorCardFx}!ColorCardFx@{ColorCardFx}}
+\doxysubsubsection{\texorpdfstring{ColorCardFx()}{ColorCardFx()}}
+{\footnotesize\ttfamily Color\+Card\+Fx\+::\+Color\+Card\+Fx (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00024                 : m\_color(TPixel32::Green) \{}
+\DoxyCodeLine{00025     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}color"{}}, m\_color);}
+\DoxyCodeLine{00026     m\_color-\/>setDefaultValue(TPixel32::Green);}
+\DoxyCodeLine{00027     setName(L\textcolor{stringliteral}{"{}ColorCardFx"{}});}
+\DoxyCodeLine{00028   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_color_card_fx_a379e1b75b2dfe95638b18305c29df74f}\label{class_color_card_fx_a379e1b75b2dfe95638b18305c29df74f}} 
+\index{ColorCardFx@{ColorCardFx}!canHandle@{canHandle}}
+\index{canHandle@{canHandle}!ColorCardFx@{ColorCardFx}}
+\doxysubsubsection{\texorpdfstring{canHandle()}{canHandle()}}
+{\footnotesize\ttfamily bool Color\+Card\+Fx\+::can\+Handle (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{info,  }\item[{double}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00030                                                                      \{}
+\DoxyCodeLine{00031     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00032   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_color_card_fx_a585cd3d13c0e83063e6ebc5b07ca8527}\label{class_color_card_fx_a585cd3d13c0e83063e6ebc5b07ca8527}} 
+\index{ColorCardFx@{ColorCardFx}!doCompute@{doCompute}}
+\index{doCompute@{doCompute}!ColorCardFx@{ColorCardFx}}
+\doxysubsubsection{\texorpdfstring{doCompute()}{doCompute()}}
+{\footnotesize\ttfamily void Color\+Card\+Fx\+::do\+Compute (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_tile}{TTile}} \&}]{tile,  }\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040                                                                               \{}
+\DoxyCodeLine{00041     \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} raster32 = tile.getRaster();}
+\DoxyCodeLine{00042     \textcolor{keywordflow}{if} (raster32)}
+\DoxyCodeLine{00043       raster32-\/>fill(m\_color-\/>getPremultipliedValue(frame));}
+\DoxyCodeLine{00044     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00045       \mbox{\hyperlink{class_t_raster_p_t}{TRaster64P}} ras64 = tile.getRaster();}
+\DoxyCodeLine{00046       \textcolor{keywordflow}{if} (ras64)}
+\DoxyCodeLine{00047         ras64-\/>fill(toPixel64(m\_color-\/>getPremultipliedValue(frame)));}
+\DoxyCodeLine{00048       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00049         \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}ColorCardFx unsupported pixel type"{}});}
+\DoxyCodeLine{00050     \}}
+\DoxyCodeLine{00051   \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_color_card_fx_a8c9efe7ae4ae4002fa3a222f34f457b4}\label{class_color_card_fx_a8c9efe7ae4ae4002fa3a222f34f457b4}} 
+\index{ColorCardFx@{ColorCardFx}!doGetBBox@{doGetBBox}}
+\index{doGetBBox@{doGetBBox}!ColorCardFx@{ColorCardFx}}
+\doxysubsubsection{\texorpdfstring{doGetBBox()}{doGetBBox()}}
+{\footnotesize\ttfamily bool Color\+Card\+Fx\+::do\+Get\+BBox (\begin{DoxyParamCaption}\item[{double}]{frame,  }\item[{\mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{b\+Box,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035                                                        \{}
+\DoxyCodeLine{00036     bBox = TConsts::infiniteRectD;}
+\DoxyCodeLine{00037     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00038   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tfx/zerary\+Fx.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,133 @@
+\hypertarget{class_table_painter}{}\doxysection{Table\+Painter Class Reference}
+\label{class_table_painter}\index{TablePainter@{TablePainter}}
+Inheritance diagram for Table\+Painter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_table_painter}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_table_painter_acea1ac65b48638823495baa500fa72ef}{Table\+Painter}} (\mbox{\hyperlink{class_stage_schematic_table_node}{Stage\+Schematic\+Table\+Node}} $\ast$parent, double width, double height)
+\item 
+QRectF \mbox{\hyperlink{class_table_painter_abf1f34b08975773863592c2a1657bd03}{bounding\+Rect}} () const override
+\item 
+void \mbox{\hyperlink{class_table_painter_ac9bb08258582a818f26512226b8466e7}{paint}} (QPainter $\ast$painter, const QStyle\+Option\+Graphics\+Item $\ast$option, QWidget $\ast$widget=0) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_table_painter_a8950da66be09f57ef67792e6c0386a2d}{context\+Menu\+Event}} (QGraphics\+Scene\+Context\+Menu\+Event $\ast$cme) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_table_painter_acea1ac65b48638823495baa500fa72ef}\label{class_table_painter_acea1ac65b48638823495baa500fa72ef}} 
+\index{TablePainter@{TablePainter}!TablePainter@{TablePainter}}
+\index{TablePainter@{TablePainter}!TablePainter@{TablePainter}}
+\doxysubsubsection{\texorpdfstring{TablePainter()}{TablePainter()}}
+{\footnotesize\ttfamily Table\+Painter\+::\+Table\+Painter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_stage_schematic_table_node}{Stage\+Schematic\+Table\+Node}} $\ast$}]{parent,  }\item[{double}]{width,  }\item[{double}]{height }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00542     : QGraphicsItem(parent)}
+\DoxyCodeLine{00543     , m\_width(width)}
+\DoxyCodeLine{00544     , m\_height(height)}
+\DoxyCodeLine{00545     , m\_parent(parent) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_table_painter_a45e861cdf48b3505e34aeb1106094bf9}\label{class_table_painter_a45e861cdf48b3505e34aeb1106094bf9}} 
+\index{TablePainter@{TablePainter}!````~TablePainter@{$\sim$TablePainter}}
+\index{````~TablePainter@{$\sim$TablePainter}!TablePainter@{TablePainter}}
+\doxysubsubsection{\texorpdfstring{$\sim$TablePainter()}{~TablePainter()}}
+{\footnotesize\ttfamily Table\+Painter\+::$\sim$\+Table\+Painter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00549 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_table_painter_abf1f34b08975773863592c2a1657bd03}\label{class_table_painter_abf1f34b08975773863592c2a1657bd03}} 
+\index{TablePainter@{TablePainter}!boundingRect@{boundingRect}}
+\index{boundingRect@{boundingRect}!TablePainter@{TablePainter}}
+\doxysubsubsection{\texorpdfstring{boundingRect()}{boundingRect()}}
+{\footnotesize\ttfamily QRectF Table\+Painter\+::bounding\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00553                                         \{}
+\DoxyCodeLine{00554   \textcolor{keywordflow}{return} QRectF(-\/5, -\/5, m\_width + 10, m\_height + 10);}
+\DoxyCodeLine{00555 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_table_painter_a8950da66be09f57ef67792e6c0386a2d}\label{class_table_painter_a8950da66be09f57ef67792e6c0386a2d}} 
+\index{TablePainter@{TablePainter}!contextMenuEvent@{contextMenuEvent}}
+\index{contextMenuEvent@{contextMenuEvent}!TablePainter@{TablePainter}}
+\doxysubsubsection{\texorpdfstring{contextMenuEvent()}{contextMenuEvent()}}
+{\footnotesize\ttfamily void Table\+Painter\+::context\+Menu\+Event (\begin{DoxyParamCaption}\item[{QGraphics\+Scene\+Context\+Menu\+Event $\ast$}]{cme }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00591                                                                        \{}
+\DoxyCodeLine{00592   \mbox{\hyperlink{class_stage_schematic_scene}{StageSchematicScene}} *stageScene =}
+\DoxyCodeLine{00593       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_stage_schematic_scene}{StageSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{00594   QMenu menu(stageScene-\/>views()[0]);}
+\DoxyCodeLine{00595 }
+\DoxyCodeLine{00596   QAction *resetCenter = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Reset Center"{}}), \&menu);}
+\DoxyCodeLine{00597   connect(resetCenter, SIGNAL(triggered()), stageScene, SLOT(onResetCenter()));}
+\DoxyCodeLine{00598 }
+\DoxyCodeLine{00599   menu.addAction(resetCenter);}
+\DoxyCodeLine{00600   menu.exec(cme-\/>screenPos());}
+\DoxyCodeLine{00601 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_table_painter_ac9bb08258582a818f26512226b8466e7}\label{class_table_painter_ac9bb08258582a818f26512226b8466e7}} 
+\index{TablePainter@{TablePainter}!paint@{paint}}
+\index{paint@{paint}!TablePainter@{TablePainter}}
+\doxysubsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Table\+Painter\+::paint (\begin{DoxyParamCaption}\item[{QPainter $\ast$}]{painter,  }\item[{const QStyle\+Option\+Graphics\+Item $\ast$}]{option,  }\item[{QWidget $\ast$}]{widget = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00561                                           \{}
+\DoxyCodeLine{00562   QPixmap tablePm = QPixmap(\textcolor{stringliteral}{"{}:Resources/schematic\_tablenode.png"{}});}
+\DoxyCodeLine{00563 }
+\DoxyCodeLine{00564   \mbox{\hyperlink{class_stage_schematic_scene}{StageSchematicScene}} *stageScene =}
+\DoxyCodeLine{00565       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_stage_schematic_scene}{StageSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{00566   \textcolor{keywordflow}{if} (!stageScene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00567 }
+\DoxyCodeLine{00568   \mbox{\hyperlink{class_schematic_viewer}{SchematicViewer}} *viewer = stageScene-\/>getSchematicViewer();}
+\DoxyCodeLine{00569 }
+\DoxyCodeLine{00570   painter-\/>setBrush(viewer-\/>getTableColor());}
+\DoxyCodeLine{00571   painter-\/>setPen(Qt::NoPen);}
+\DoxyCodeLine{00572   painter-\/>drawRect(QRectF(0, 0, m\_width, m\_height));}
+\DoxyCodeLine{00573 }
+\DoxyCodeLine{00574   QRect imgRect(3, -\/3, 24, 24);}
+\DoxyCodeLine{00575 }
+\DoxyCodeLine{00576   painter-\/>drawPixmap(imgRect, tablePm);}
+\DoxyCodeLine{00577 }
+\DoxyCodeLine{00578   \textcolor{keywordflow}{if} (stageScene-\/>getCurrentObject() == m\_parent-\/>getStageObject()-\/>\mbox{\hyperlink{class_t_stage_object_a7acac7f9d2b8aabae125a81cc4ac5b10}{getId}}())}
+\DoxyCodeLine{00579     painter-\/>setPen(viewer-\/>getSelectedNodeTextColor());}
+\DoxyCodeLine{00580   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00581     painter-\/>setPen(viewer-\/>getTextColor());}
+\DoxyCodeLine{00582 }
+\DoxyCodeLine{00583   \textcolor{comment}{// Draw the name}}
+\DoxyCodeLine{00584   QRectF rect(30, 0, 42, 18);}
+\DoxyCodeLine{00585   painter-\/>drawText(rect, Qt::AlignLeft | Qt::AlignVCenter,}
+\DoxyCodeLine{00586                     QString(tr(\textcolor{stringliteral}{"{}Table"{}})));}
+\DoxyCodeLine{00587 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/stageschematicnode.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/stageschematicnode.\+cpp\end{DoxyCompactItemize}

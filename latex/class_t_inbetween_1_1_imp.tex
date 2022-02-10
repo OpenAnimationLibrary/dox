@@ -1,0 +1,964 @@
+\hypertarget{class_t_inbetween_1_1_imp}{}\doxysection{TInbetween\+::Imp Class Reference}
+\label{class_t_inbetween_1_1_imp}\index{TInbetween::Imp@{TInbetween::Imp}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_t_inbetween_1_1_imp_1_1_stroke_transform}{Stroke\+Transform}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_inbetween_1_1_imp_a5bad5c0878940bbb1b3ff6389be938f8}{compute\+Transformation}} ()
+\item 
+void \mbox{\hyperlink{class_t_inbetween_1_1_imp_a9d3f6735f918019ac5446468187153ae}{transfer\+Color}} (const \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \&destination) const
+\item 
+\mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \mbox{\hyperlink{class_t_inbetween_1_1_imp_ab9dc889db4cf3c6998deee9f4543550a}{tween}} (double t) const
+\item 
+\mbox{\hyperlink{class_t_inbetween_1_1_imp_aa0e44b063c8f41161e17769399e5a6f1}{Imp}} (const \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} first\+Image, const \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} last\+Image)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \mbox{\hyperlink{class_t_inbetween_1_1_imp_a53608fabb6ec9c3cc76349f37de5b409}{m\+\_\+first\+Image}}
+\item 
+\mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \mbox{\hyperlink{class_t_inbetween_1_1_imp_adf45afcd077dfbbb421f152b2b290e96}{m\+\_\+last\+Image}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_t_inbetween_1_1_imp_1_1_stroke_transform}{Stroke\+Transform}} $>$ \mbox{\hyperlink{class_t_inbetween_1_1_imp_a8e7599588d83d065476e14508c4499f9}{m\+\_\+transformation}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_inbetween_1_1_imp_aa0e44b063c8f41161e17769399e5a6f1}\label{class_t_inbetween_1_1_imp_aa0e44b063c8f41161e17769399e5a6f1}} 
+\index{TInbetween::Imp@{TInbetween::Imp}!Imp@{Imp}}
+\index{Imp@{Imp}!TInbetween::Imp@{TInbetween::Imp}}
+\doxysubsubsection{\texorpdfstring{Imp()}{Imp()}}
+{\footnotesize\ttfamily TInbetween\+::\+Imp\+::\+Imp (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}}}]{first\+Image,  }\item[{const \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}}}]{last\+Image }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00664       : m\_firstImage(firstImage), m\_lastImage(lastImage) \{}
+\DoxyCodeLine{00665     \mbox{\hyperlink{class_t_inbetween_1_1_imp_a5bad5c0878940bbb1b3ff6389be938f8}{computeTransformation}}();}
+\DoxyCodeLine{00666   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_inbetween_1_1_imp_a5bad5c0878940bbb1b3ff6389be938f8}\label{class_t_inbetween_1_1_imp_a5bad5c0878940bbb1b3ff6389be938f8}} 
+\index{TInbetween::Imp@{TInbetween::Imp}!computeTransformation@{computeTransformation}}
+\index{computeTransformation@{computeTransformation}!TInbetween::Imp@{TInbetween::Imp}}
+\doxysubsubsection{\texorpdfstring{computeTransformation()}{computeTransformation()}}
+{\footnotesize\ttfamily void TInbetween\+::\+Imp\+::compute\+Transformation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+compute centre of Rotation and Scaling
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00680                                           \{}
+\DoxyCodeLine{00681   \textcolor{keyword}{const} UINT samplingPointNumber = 10;}
+\DoxyCodeLine{00682   \textcolor{keyword}{const} UINT bboxSamplingWeight  = samplingPointNumber / 2;}
+\DoxyCodeLine{00683 }
+\DoxyCodeLine{00684   StrokeTransform transform;}
+\DoxyCodeLine{00685   \textcolor{keywordtype}{double} cs, sn, totalLen1, totalLen2, constK, constQ, constB, constD, constA;}
+\DoxyCodeLine{00686   UINT cpCount1, cpCount2;}
+\DoxyCodeLine{00687   \mbox{\hyperlink{class_t_point_t}{TPointD}} stroke1Centroid, stroke2Centroid, stroke1Begin, stroke2Begin,}
+\DoxyCodeLine{00688       stroke1End, stroke2End, versor1, versor2;}
+\DoxyCodeLine{00689   std::vector<TPointD> samplingPoint1(samplingPointNumber),}
+\DoxyCodeLine{00690       samplingPoint2(samplingPointNumber);}
+\DoxyCodeLine{00691   \mbox{\hyperlink{class_t_stroke}{TStroke}} *stroke1, *stroke2;}
+\DoxyCodeLine{00692   std::vector<double> ratioSampling, weights, subStrokeXScaling,}
+\DoxyCodeLine{00693       subStrokeYScaling;}
+\DoxyCodeLine{00694 }
+\DoxyCodeLine{00695   UINT strokeCount1 = m\_firstImage-\/>getStrokeCount();}
+\DoxyCodeLine{00696   UINT strokeCount2 = m\_lastImage-\/>getStrokeCount();}
+\DoxyCodeLine{00697   \textcolor{keywordflow}{if} (strokeCount1 > strokeCount2) strokeCount1 = strokeCount2;}
+\DoxyCodeLine{00698 }
+\DoxyCodeLine{00699   m\_transformation.clear();}
+\DoxyCodeLine{00700   m\_transformation.reserve(strokeCount1);}
+\DoxyCodeLine{00701 }
+\DoxyCodeLine{00702   \textcolor{keyword}{const} \textcolor{keywordtype}{int} maxSubSetNum = (strokeCount1) ? 1000 / strokeCount1 : 1;}
+\DoxyCodeLine{00703 }
+\DoxyCodeLine{00704   UINT j, p;}
+\DoxyCodeLine{00705 }
+\DoxyCodeLine{00706   \textcolor{keywordflow}{for} (UINT i = 0; i < strokeCount1; i++) \{}
+\DoxyCodeLine{00707     stroke1 = m\_firstImage-\/>getStroke(i);}
+\DoxyCodeLine{00708     stroke2 = m\_lastImage-\/>getStroke(i);}
+\DoxyCodeLine{00709 }
+\DoxyCodeLine{00710     \textcolor{comment}{// check if the strokes are equal}}
+\DoxyCodeLine{00711     cpCount1 = stroke1-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}();}
+\DoxyCodeLine{00712     cpCount2 = stroke2-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}();}
+\DoxyCodeLine{00713 }
+\DoxyCodeLine{00714     transform.m\_firstStrokeCornerIndexes.clear();}
+\DoxyCodeLine{00715     transform.m\_secondStrokeCornerIndexes.clear();}
+\DoxyCodeLine{00716     transform.m\_translate              = \mbox{\hyperlink{class_t_point_t}{TPointD}}();}
+\DoxyCodeLine{00717     transform.m\_rotationAndScaleCenter = \mbox{\hyperlink{class_t_point_t}{TPointD}}();}
+\DoxyCodeLine{00718     transform.m\_scaleX                 = 0;}
+\DoxyCodeLine{00719     transform.m\_scaleY                 = 0;}
+\DoxyCodeLine{00720     transform.m\_rotation               = 0;}
+\DoxyCodeLine{00721 }
+\DoxyCodeLine{00722     \textcolor{keywordtype}{bool} isEqual = \textcolor{keyword}{true};}
+\DoxyCodeLine{00723 }
+\DoxyCodeLine{00724     \textcolor{keywordflow}{if} (cpCount1 == cpCount2) \{}
+\DoxyCodeLine{00725       \textcolor{keywordflow}{for} (j = 0; j < cpCount1 \&\& isEqual; j++) \{}
+\DoxyCodeLine{00726         isEqual = (stroke1-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(j) == stroke2-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(j));}
+\DoxyCodeLine{00727       \}}
+\DoxyCodeLine{00728     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00729       isEqual = \textcolor{keyword}{false};}
+\DoxyCodeLine{00730 }
+\DoxyCodeLine{00731     \textcolor{keywordflow}{if} (isEqual) \{}
+\DoxyCodeLine{00732       transform.m\_type = StrokeTransform::EQUAL;}
+\DoxyCodeLine{00733     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00734       totalLen1 = stroke1-\/>\mbox{\hyperlink{class_t_stroke_a079a513cb8a60d9a759b4f0c8211eab4}{getLength}}();}
+\DoxyCodeLine{00735       totalLen2 = stroke2-\/>\mbox{\hyperlink{class_t_stroke_a079a513cb8a60d9a759b4f0c8211eab4}{getLength}}();}
+\DoxyCodeLine{00736 }
+\DoxyCodeLine{00737       \textcolor{keywordflow}{if} (totalLen1 == 0 || totalLen2 == 0) \{}
+\DoxyCodeLine{00738         \textcolor{keywordflow}{if} (totalLen1 == 0 \&\& totalLen2 == 0) \{}
+\DoxyCodeLine{00739           transform.m\_type = StrokeTransform::POINT;}
+\DoxyCodeLine{00740         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00741           transform.m\_inverse = \mbox{\hyperlink{class_t_affine}{TAffine}}();}
+\DoxyCodeLine{00742           transform.m\_firstStrokeCornerIndexes.resize(2);}
+\DoxyCodeLine{00743           transform.m\_firstStrokeCornerIndexes[0] = 0;}
+\DoxyCodeLine{00744           transform.m\_firstStrokeCornerIndexes[1] = stroke1-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}();}
+\DoxyCodeLine{00745           transform.m\_secondStrokeCornerIndexes.resize(2);}
+\DoxyCodeLine{00746           transform.m\_secondStrokeCornerIndexes[0] = 0;}
+\DoxyCodeLine{00747           transform.m\_secondStrokeCornerIndexes[1] = stroke2-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}();}
+\DoxyCodeLine{00748         \}}
+\DoxyCodeLine{00749       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00750         \textcolor{keyword}{const} \textcolor{keywordtype}{double} startMinAngle = 30.0;}
+\DoxyCodeLine{00751         std::vector<std::pair<int, double>> angles1, angles2;}
+\DoxyCodeLine{00752 }
+\DoxyCodeLine{00753         transform.m\_type = StrokeTransform::GENERAL;}
+\DoxyCodeLine{00754 }
+\DoxyCodeLine{00755         \textcolor{keywordtype}{double} minAngle, maxAngle;}
+\DoxyCodeLine{00756         \textcolor{keywordtype}{int} minAngle1, maxAngle1, minAngle2, maxAngle2;}
+\DoxyCodeLine{00757 }
+\DoxyCodeLine{00758         angles1.clear();}
+\DoxyCodeLine{00759         angles2.clear();}
+\DoxyCodeLine{00760 }
+\DoxyCodeLine{00761         \textcolor{comment}{//        TDebugMessage::getStream()<<j<<"{} stroke1 corner detection"{};}}
+\DoxyCodeLine{00762         \textcolor{comment}{//        TDebugMessage::flush();}}
+\DoxyCodeLine{00763 }
+\DoxyCodeLine{00764         detectCorners(stroke1, startMinAngle, angles1, minAngle, maxAngle);}
+\DoxyCodeLine{00765         minAngle1 = (int)minAngle;}
+\DoxyCodeLine{00766         maxAngle1 = (int)maxAngle;}
+\DoxyCodeLine{00767 }
+\DoxyCodeLine{00768         \textcolor{comment}{//        TDebugMessage::getStream()<<j<<"{} stroke2 corner detection"{};}}
+\DoxyCodeLine{00769         \textcolor{comment}{//        TDebugMessage::flush();}}
+\DoxyCodeLine{00770 }
+\DoxyCodeLine{00771         detectCorners(stroke2, startMinAngle, angles2, minAngle, maxAngle);}
+\DoxyCodeLine{00772         minAngle2 = (int)minAngle;}
+\DoxyCodeLine{00773         maxAngle2 = (int)maxAngle;}
+\DoxyCodeLine{00774 }
+\DoxyCodeLine{00775         \textcolor{keywordflow}{if} (angles1.empty()) angles2.clear();}
+\DoxyCodeLine{00776         \textcolor{keywordflow}{if} (angles2.empty()) angles1.clear();}
+\DoxyCodeLine{00777 }
+\DoxyCodeLine{00778         \textcolor{comment}{/*}}
+\DoxyCodeLine{00779 \textcolor{comment}{debugStream.open("{}c:\(\backslash\)\(\backslash\)temp\(\backslash\)\(\backslash\)inbetween.txt"{}, ios\_base::out);}}
+\DoxyCodeLine{00780 \textcolor{comment}{debugStream <<"{}num angoli 1: "{}<< angles1.size() << endl;}}
+\DoxyCodeLine{00781 \textcolor{comment}{debugStream <<"{}num angoli 2: "{}<< angles2.size() << endl;}}
+\DoxyCodeLine{00782 \textcolor{comment}{*/}}
+\DoxyCodeLine{00783 }
+\DoxyCodeLine{00784         \textcolor{keywordtype}{double} bestValue = (std::numeric\_limits<double>::max)();}
+\DoxyCodeLine{00785 }
+\DoxyCodeLine{00786         \textcolor{keywordflow}{if} (angles1.size() != angles2.size()) \{}
+\DoxyCodeLine{00787           bestValue = (std::numeric\_limits<double>::max)();}
+\DoxyCodeLine{00788 }
+\DoxyCodeLine{00789           \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00790 }
+\DoxyCodeLine{00791           \textcolor{keywordflow}{if} (isTooComplex(angles1.size(), angles2.size(), maxSubSetNum)) \{}
+\DoxyCodeLine{00792             \textcolor{comment}{// debugStream <<"{}is too complex"{} << endl;}}
+\DoxyCodeLine{00793             \textcolor{keywordtype}{int} firstAngle =}
+\DoxyCodeLine{00794                 (int)((angles1.size() < angles2.size()) ? minAngle2}
+\DoxyCodeLine{00795                                                         : minAngle1);}
+\DoxyCodeLine{00796             \textcolor{keywordtype}{int} lastAngle =}
+\DoxyCodeLine{00797                 (int)((angles1.size() < angles2.size()) ? maxAngle1}
+\DoxyCodeLine{00798                                                         : maxAngle2);}
+\DoxyCodeLine{00799             \textcolor{keywordtype}{int} bestAngle = (int)startMinAngle;}
+\DoxyCodeLine{00800 }
+\DoxyCodeLine{00801             \textcolor{keywordflow}{if} ((\textcolor{keywordtype}{int})(angles1.size() + angles2.size()) <}
+\DoxyCodeLine{00802                 lastAngle -\/ firstAngle + 1) \{}
+\DoxyCodeLine{00803               \textcolor{keywordtype}{double} tempAngle;}
+\DoxyCodeLine{00804               std::vector<double> sortedAngles1, sortedAngles2;}
+\DoxyCodeLine{00805               sortedAngles1.reserve(angles1.size());}
+\DoxyCodeLine{00806               sortedAngles2.reserve(angles2.size());}
+\DoxyCodeLine{00807               \textcolor{keywordflow}{for} (j = 0; j < angles1.size(); j++) \{}
+\DoxyCodeLine{00808                 tempAngle = angles1[j].second;}
+\DoxyCodeLine{00809                 \textcolor{keywordflow}{if} (tempAngle >= firstAngle \&\& tempAngle <= lastAngle)}
+\DoxyCodeLine{00810                   sortedAngles1.push\_back(tempAngle);}
+\DoxyCodeLine{00811               \}}
+\DoxyCodeLine{00812               \textcolor{keywordflow}{for} (j = 0; j < angles2.size(); j++) \{}
+\DoxyCodeLine{00813                 tempAngle = angles2[j].second;}
+\DoxyCodeLine{00814                 \textcolor{keywordflow}{if} (tempAngle >= firstAngle \&\& tempAngle <= lastAngle)}
+\DoxyCodeLine{00815                   sortedAngles2.push\_back(tempAngle);}
+\DoxyCodeLine{00816               \}}
+\DoxyCodeLine{00817               std::vector<double> sortedAngles(sortedAngles1.size() +}
+\DoxyCodeLine{00818                                                sortedAngles2.size());}
+\DoxyCodeLine{00819 }
+\DoxyCodeLine{00820               std::sort(sortedAngles1.begin(), sortedAngles1.end());}
+\DoxyCodeLine{00821               std::sort(sortedAngles2.begin(), sortedAngles2.end());}
+\DoxyCodeLine{00822               std::merge(sortedAngles1.begin(), sortedAngles1.end(),}
+\DoxyCodeLine{00823                          sortedAngles2.begin(), sortedAngles2.end(),}
+\DoxyCodeLine{00824                          sortedAngles.begin());}
+\DoxyCodeLine{00825 }
+\DoxyCodeLine{00826               \textcolor{keywordflow}{for} (j = 0; j < sortedAngles.size(); j++) \{}
+\DoxyCodeLine{00827                 \textcolor{keywordtype}{int} numAng1 = angleNumber(angles1, sortedAngles[j]);}
+\DoxyCodeLine{00828                 \textcolor{keywordtype}{int} numAng2 = angleNumber(angles2, sortedAngles[j]);}
+\DoxyCodeLine{00829                 \textcolor{keywordtype}{double} val  = (numAng1 == numAng2)}
+\DoxyCodeLine{00830                                  ? 0}
+\DoxyCodeLine{00831                                  : fabs((\textcolor{keywordtype}{float})(numAng1 -\/ numAng2)) /}
+\DoxyCodeLine{00832                                        (numAng1 + numAng2);}
+\DoxyCodeLine{00833                 \textcolor{keywordflow}{if} (val < bestValue) \{}
+\DoxyCodeLine{00834                   bestValue = val;}
+\DoxyCodeLine{00835                   bestAngle = (int)(sortedAngles[j]);}
+\DoxyCodeLine{00836                   \textcolor{keywordflow}{if} (bestValue == 0 ||}
+\DoxyCodeLine{00837                       !isTooComplex(numAng1, numAng2, maxSubSetNum))}
+\DoxyCodeLine{00838                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00839                 \}}
+\DoxyCodeLine{00840               \}}
+\DoxyCodeLine{00841 }
+\DoxyCodeLine{00842             \} \textcolor{keywordflow}{else}  \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00843             \{}
+\DoxyCodeLine{00844               \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} angle = firstAngle; angle <= lastAngle; angle++) \{}
+\DoxyCodeLine{00845                 \textcolor{keywordtype}{int} numAng1 = angleNumber(angles1, angle);}
+\DoxyCodeLine{00846                 \textcolor{keywordtype}{int} numAng2 = angleNumber(angles2, angle);}
+\DoxyCodeLine{00847                 \textcolor{keywordtype}{double} val  = (numAng1 == numAng2)}
+\DoxyCodeLine{00848                                  ? 0}
+\DoxyCodeLine{00849                                  : fabs((\textcolor{keywordtype}{float})(numAng1 -\/ numAng2)) /}
+\DoxyCodeLine{00850                                        (numAng1 + numAng2);}
+\DoxyCodeLine{00851                 \textcolor{keywordflow}{if} (val < bestValue) \{}
+\DoxyCodeLine{00852                   bestValue = val;}
+\DoxyCodeLine{00853                   bestAngle = angle;}
+\DoxyCodeLine{00854                   \textcolor{keywordflow}{if} (bestValue == 0 ||}
+\DoxyCodeLine{00855                       !isTooComplex(numAng1, numAng2, maxSubSetNum))}
+\DoxyCodeLine{00856                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00857                 \}}
+\DoxyCodeLine{00858               \}}
+\DoxyCodeLine{00859             \}}
+\DoxyCodeLine{00860 }
+\DoxyCodeLine{00861             eraseSmallAngles(angles1, bestAngle);}
+\DoxyCodeLine{00862             eraseSmallAngles(angles2, bestAngle);}
+\DoxyCodeLine{00863 }
+\DoxyCodeLine{00864             \textcolor{comment}{/*}}
+\DoxyCodeLine{00865 \textcolor{comment}{debugStream <<"{}bestAngle: "{}<< bestAngle << endl;}}
+\DoxyCodeLine{00866 \textcolor{comment}{debugStream <<"{}num angoli 1: "{}<< angles1.size() << endl;}}
+\DoxyCodeLine{00867 \textcolor{comment}{debugStream <<"{}num angoli 2: "{}<< angles2.size() << endl;}}
+\DoxyCodeLine{00868 \textcolor{comment}{*/}}
+\DoxyCodeLine{00869           \}}
+\DoxyCodeLine{00870           \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00871 }
+\DoxyCodeLine{00872           bestValue = (std::numeric\_limits<double>::max)();}
+\DoxyCodeLine{00873 }
+\DoxyCodeLine{00874           \textcolor{keywordflow}{if} (angles1.size() == angles2.size()) \{}
+\DoxyCodeLine{00875             transform.m\_firstStrokeCornerIndexes.push\_back(0);}
+\DoxyCodeLine{00876             \textcolor{keywordflow}{for} (j = 0; j < angles1.size(); j++)}
+\DoxyCodeLine{00877               transform.m\_firstStrokeCornerIndexes.push\_back(angles1[j].first);}
+\DoxyCodeLine{00878             transform.m\_firstStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00879                 stroke1-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00880 }
+\DoxyCodeLine{00881             transform.m\_secondStrokeCornerIndexes.push\_back(0);}
+\DoxyCodeLine{00882             \textcolor{keywordflow}{for} (j = 0; j < angles2.size(); j++)}
+\DoxyCodeLine{00883               transform.m\_secondStrokeCornerIndexes.push\_back(angles2[j].first);}
+\DoxyCodeLine{00884             transform.m\_secondStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00885                 stroke2-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00886           \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00887             \textcolor{keywordflow}{if} (isTooComplex(angles1.size(), angles2.size(), maxSubSetNum)) \{}
+\DoxyCodeLine{00888               \textcolor{keywordflow}{if} (angles1.size() > angles2.size()) \{}
+\DoxyCodeLine{00889                 transform.m\_firstStrokeCornerIndexes.resize(angles2.size());}
+\DoxyCodeLine{00890                 trivialSolution(stroke1, stroke2, angles1, angles2,}
+\DoxyCodeLine{00891                                 transform.m\_firstStrokeCornerIndexes);}
+\DoxyCodeLine{00892                 transform.m\_firstStrokeCornerIndexes.insert(}
+\DoxyCodeLine{00893                     transform.m\_firstStrokeCornerIndexes.begin(), 0);}
+\DoxyCodeLine{00894                 transform.m\_firstStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00895                     stroke1-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00896 }
+\DoxyCodeLine{00897                 transform.m\_secondStrokeCornerIndexes.push\_back(0);}
+\DoxyCodeLine{00898                 \textcolor{keywordflow}{for} (j = 0; j < angles2.size(); j++)}
+\DoxyCodeLine{00899                   transform.m\_secondStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00900                       angles2[j].first);}
+\DoxyCodeLine{00901                 transform.m\_secondStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00902                     stroke2-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00903               \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00904                 transform.m\_firstStrokeCornerIndexes.push\_back(0);}
+\DoxyCodeLine{00905                 \textcolor{keywordflow}{for} (j = 0; j < angles1.size(); j++)}
+\DoxyCodeLine{00906                   transform.m\_firstStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00907                       angles1[j].first);}
+\DoxyCodeLine{00908                 transform.m\_firstStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00909                     stroke1-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00910 }
+\DoxyCodeLine{00911                 transform.m\_secondStrokeCornerIndexes.resize(angles1.size());}
+\DoxyCodeLine{00912                 trivialSolution(stroke2, stroke1, angles2, angles1,}
+\DoxyCodeLine{00913                                 transform.m\_secondStrokeCornerIndexes);}
+\DoxyCodeLine{00914                 transform.m\_secondStrokeCornerIndexes.insert(}
+\DoxyCodeLine{00915                     transform.m\_secondStrokeCornerIndexes.begin(), 0);}
+\DoxyCodeLine{00916                 transform.m\_secondStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00917                     stroke2-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00918               \}}
+\DoxyCodeLine{00919             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00920               \textcolor{keywordflow}{if} (angles1.size() > angles2.size()) \{}
+\DoxyCodeLine{00921                 transform.m\_firstStrokeCornerIndexes.resize(angles2.size());}
+\DoxyCodeLine{00922                 findBestSolution(stroke1, stroke2, angles1, angles2, bestValue,}
+\DoxyCodeLine{00923                                  transform.m\_firstStrokeCornerIndexes);}
+\DoxyCodeLine{00924                 transform.m\_firstStrokeCornerIndexes.insert(}
+\DoxyCodeLine{00925                     transform.m\_firstStrokeCornerIndexes.begin(), 0);}
+\DoxyCodeLine{00926                 transform.m\_firstStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00927                     stroke1-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00928 }
+\DoxyCodeLine{00929                 transform.m\_secondStrokeCornerIndexes.push\_back(0);}
+\DoxyCodeLine{00930                 \textcolor{keywordflow}{for} (j = 0; j < angles2.size(); j++)}
+\DoxyCodeLine{00931                   transform.m\_secondStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00932                       angles2[j].first);}
+\DoxyCodeLine{00933                 transform.m\_secondStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00934                     stroke2-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00935               \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00936                 transform.m\_firstStrokeCornerIndexes.push\_back(0);}
+\DoxyCodeLine{00937                 \textcolor{keywordflow}{for} (j = 0; j < angles1.size(); j++)}
+\DoxyCodeLine{00938                   transform.m\_firstStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00939                       angles1[j].first);}
+\DoxyCodeLine{00940                 transform.m\_firstStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00941                     stroke1-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00942 }
+\DoxyCodeLine{00943                 transform.m\_secondStrokeCornerIndexes.resize(angles1.size());}
+\DoxyCodeLine{00944                 findBestSolution(stroke2, stroke1, angles2, angles1, bestValue,}
+\DoxyCodeLine{00945                                  transform.m\_secondStrokeCornerIndexes);}
+\DoxyCodeLine{00946                 transform.m\_secondStrokeCornerIndexes.insert(}
+\DoxyCodeLine{00947                     transform.m\_secondStrokeCornerIndexes.begin(), 0);}
+\DoxyCodeLine{00948                 transform.m\_secondStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00949                     stroke2-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00950               \}}
+\DoxyCodeLine{00951             \}}
+\DoxyCodeLine{00952           \}}
+\DoxyCodeLine{00953         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00954           transform.m\_firstStrokeCornerIndexes.push\_back(0);}
+\DoxyCodeLine{00955           \textcolor{keywordflow}{for} (j = 0; j < angles1.size(); j++)}
+\DoxyCodeLine{00956             transform.m\_firstStrokeCornerIndexes.push\_back(angles1[j].first);}
+\DoxyCodeLine{00957           transform.m\_firstStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00958               stroke1-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00959 }
+\DoxyCodeLine{00960           transform.m\_secondStrokeCornerIndexes.push\_back(0);}
+\DoxyCodeLine{00961           \textcolor{keywordflow}{for} (j = 0; j < angles2.size(); j++)}
+\DoxyCodeLine{00962             transform.m\_secondStrokeCornerIndexes.push\_back(angles2[j].first);}
+\DoxyCodeLine{00963           transform.m\_secondStrokeCornerIndexes.push\_back(}
+\DoxyCodeLine{00964               stroke2-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00965         \}}
+\DoxyCodeLine{00966 }
+\DoxyCodeLine{00967         UINT cornerSize = transform.m\_firstStrokeCornerIndexes.size();}
+\DoxyCodeLine{00968         assert(cornerSize == transform.m\_secondStrokeCornerIndexes.size());}
+\DoxyCodeLine{00969         assert(cornerSize >= 2);}
+\DoxyCodeLine{00970 }
+\DoxyCodeLine{00971         \textcolor{keywordtype}{double} totalRadRotation = 0;}
+\DoxyCodeLine{00972 }
+\DoxyCodeLine{00973         \mbox{\hyperlink{class_t_stroke}{TStroke}} *subStroke1 = 0;}
+\DoxyCodeLine{00974         \mbox{\hyperlink{class_t_stroke}{TStroke}} *subStroke2 = 0;}
+\DoxyCodeLine{00975 }
+\DoxyCodeLine{00976         stroke1Centroid = stroke1-\/>getCentroid();}
+\DoxyCodeLine{00977         stroke2Centroid = stroke2-\/>getCentroid();}
+\DoxyCodeLine{00978 }
+\DoxyCodeLine{00979 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00980         assert(transform.m\_firstStrokeCornerIndexes[0] == 0);}
+\DoxyCodeLine{00981         assert(transform.m\_secondStrokeCornerIndexes[0] == 0);}
+\DoxyCodeLine{00982         assert(transform.m\_firstStrokeCornerIndexes[cornerSize -\/ 1] ==}
+\DoxyCodeLine{00983                stroke1-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00984         assert(transform.m\_secondStrokeCornerIndexes[cornerSize -\/ 1] ==}
+\DoxyCodeLine{00985                stroke2-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00986         \textcolor{keywordflow}{for} (j = 0; j < cornerSize -\/ 1; j++) \{}
+\DoxyCodeLine{00987           assert(transform.m\_firstStrokeCornerIndexes[j] <}
+\DoxyCodeLine{00988                  transform.m\_firstStrokeCornerIndexes[j + 1]);}
+\DoxyCodeLine{00989           assert(transform.m\_secondStrokeCornerIndexes[j] <}
+\DoxyCodeLine{00990                  transform.m\_secondStrokeCornerIndexes[j + 1]);}
+\DoxyCodeLine{00991 }
+\DoxyCodeLine{00992           assert(transform.m\_firstStrokeCornerIndexes[j] <}
+\DoxyCodeLine{00993                  stroke1-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00994           assert(transform.m\_secondStrokeCornerIndexes[j] <}
+\DoxyCodeLine{00995                  stroke2-\/>\mbox{\hyperlink{class_t_stroke_a81b63663a798724333d8de692fdbcac0}{getChunkCount}}());}
+\DoxyCodeLine{00996         \}}
+\DoxyCodeLine{00997 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00998 }
+\DoxyCodeLine{00999         \textcolor{keywordflow}{for} (j = 0; j < cornerSize -\/ 1; j++) \{}
+\DoxyCodeLine{01001 }
+\DoxyCodeLine{01002           subStroke1 = extract(stroke1, transform.m\_firstStrokeCornerIndexes[j],}
+\DoxyCodeLine{01003                                transform.m\_firstStrokeCornerIndexes[j + 1] -\/ 1);}
+\DoxyCodeLine{01004           sample(subStroke1, samplingPointNumber, samplingPoint1);}
+\DoxyCodeLine{01005           subStroke2 =}
+\DoxyCodeLine{01006               extract(stroke2, transform.m\_secondStrokeCornerIndexes[j],}
+\DoxyCodeLine{01007                       transform.m\_secondStrokeCornerIndexes[j + 1] -\/ 1);}
+\DoxyCodeLine{01008           sample(subStroke2, samplingPointNumber, samplingPoint2);}
+\DoxyCodeLine{01009 }
+\DoxyCodeLine{01011 }
+\DoxyCodeLine{01012           ratioSampling.clear();}
+\DoxyCodeLine{01013           ratioSampling.reserve(samplingPointNumber);}
+\DoxyCodeLine{01014           weights.clear();}
+\DoxyCodeLine{01015           weights.reserve(samplingPointNumber);}
+\DoxyCodeLine{01016 }
+\DoxyCodeLine{01017           \mbox{\hyperlink{class_t_point_t}{TPointD}} pOld, pNew;}
+\DoxyCodeLine{01018           \textcolor{comment}{// double totalW=0;}}
+\DoxyCodeLine{01019 }
+\DoxyCodeLine{01020           \textcolor{keywordflow}{for} (p = 0; p < samplingPointNumber; p++) \{}
+\DoxyCodeLine{01021             pOld = samplingPoint1[p];}
+\DoxyCodeLine{01022             pNew = samplingPoint2[p];}
+\DoxyCodeLine{01023             \textcolor{keywordflow}{if} (pOld == stroke1Centroid) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01024             \textcolor{keywordflow}{if} (pNew == stroke2Centroid) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01025             versor1 = normalize(pOld -\/ stroke1Centroid);}
+\DoxyCodeLine{01026             versor2 = normalize(pNew -\/ stroke2Centroid);}
+\DoxyCodeLine{01027             weights.push\_back(tdistance(pOld, stroke1Centroid) +}
+\DoxyCodeLine{01028                               tdistance(pNew, stroke2Centroid));}
+\DoxyCodeLine{01029             cs       = versor1 * versor2;}
+\DoxyCodeLine{01030             sn       = cross(versor1, versor2);}
+\DoxyCodeLine{01031             \textcolor{keywordtype}{double} v = atan2(sn, cs);}
+\DoxyCodeLine{01032             ratioSampling.push\_back(v);}
+\DoxyCodeLine{01033           \}}
+\DoxyCodeLine{01034           \textcolor{keyword}{delete} subStroke1;}
+\DoxyCodeLine{01035           \textcolor{keyword}{delete} subStroke2;}
+\DoxyCodeLine{01036           subStroke1 = 0;}
+\DoxyCodeLine{01037           subStroke2 = 0;}
+\DoxyCodeLine{01038 }
+\DoxyCodeLine{01039           \textcolor{keywordtype}{double} radRotation = weightedAverage(ratioSampling, weights);}
+\DoxyCodeLine{01040 }
+\DoxyCodeLine{01041           totalRadRotation += radRotation;}
+\DoxyCodeLine{01042         \}}
+\DoxyCodeLine{01043         totalRadRotation /= (cornerSize -\/ 1);}
+\DoxyCodeLine{01044         transform.m\_rotation = totalRadRotation * M\_180\_PI;}
+\DoxyCodeLine{01045 }
+\DoxyCodeLine{01046         \textcolor{keywordflow}{if} (isAlmostZero(transform.m\_rotation, 2)) \{}
+\DoxyCodeLine{01047           transform.m\_rotation = 0.0;}
+\DoxyCodeLine{01048           totalRadRotation     = 0.0;}
+\DoxyCodeLine{01049         \}}
+\DoxyCodeLine{01050 }
+\DoxyCodeLine{01051 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{01052 \textcolor{comment}{//        TDebugMessage::getStream()<<"{}rotation "{}<< transform.m\_rotation;}}
+\DoxyCodeLine{01053 \textcolor{comment}{//        TDebugMessage::flush();}}
+\DoxyCodeLine{01054 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01055 }
+\DoxyCodeLine{01057 }
+\DoxyCodeLine{01058         \textcolor{keywordflow}{if} (transform.m\_rotation == 0.0) \{}
+\DoxyCodeLine{01059           subStrokeXScaling.clear();}
+\DoxyCodeLine{01060           subStrokeXScaling.reserve(cornerSize -\/ 1);}
+\DoxyCodeLine{01061           subStrokeYScaling.clear();}
+\DoxyCodeLine{01062           subStrokeYScaling.reserve(cornerSize -\/ 1);}
+\DoxyCodeLine{01063 }
+\DoxyCodeLine{01064           \textcolor{keywordflow}{for} (j = 0; j < cornerSize -\/ 1; j++) \{}
+\DoxyCodeLine{01066 }
+\DoxyCodeLine{01067             subStroke1 =}
+\DoxyCodeLine{01068                 extract(stroke1, transform.m\_firstStrokeCornerIndexes[j],}
+\DoxyCodeLine{01069                         transform.m\_firstStrokeCornerIndexes[j + 1] -\/ 1);}
+\DoxyCodeLine{01070             sample(subStroke1, samplingPointNumber, samplingPoint1);}
+\DoxyCodeLine{01071             subStroke2 =}
+\DoxyCodeLine{01072                 extract(stroke2, transform.m\_secondStrokeCornerIndexes[j],}
+\DoxyCodeLine{01073                         transform.m\_secondStrokeCornerIndexes[j + 1] -\/ 1);}
+\DoxyCodeLine{01074             sample(subStroke2, samplingPointNumber, samplingPoint2);}
+\DoxyCodeLine{01075 }
+\DoxyCodeLine{01077 }
+\DoxyCodeLine{01078             ratioSampling.clear();}
+\DoxyCodeLine{01079             ratioSampling.reserve(samplingPointNumber + bboxSamplingWeight);}
+\DoxyCodeLine{01080             \textcolor{keywordtype}{double} appX, appY;}
+\DoxyCodeLine{01081 }
+\DoxyCodeLine{01082             \mbox{\hyperlink{class_t_point_t}{TPointD}} appPoint;}
+\DoxyCodeLine{01083             \textcolor{keywordtype}{double} bboxXMin, bboxYMin, bboxXMax, bboxYMax;}
+\DoxyCodeLine{01084             bboxXMin = bboxYMin = (std::numeric\_limits<double>::max)();}
+\DoxyCodeLine{01085             bboxXMax = bboxYMax = -\/(std::numeric\_limits<double>::max)();}
+\DoxyCodeLine{01086             \textcolor{keywordtype}{int} h;}
+\DoxyCodeLine{01087 }
+\DoxyCodeLine{01088             \textcolor{keywordflow}{for} (h = 0; h < subStroke1-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}(); ++h) \{}
+\DoxyCodeLine{01089               appPoint = subStroke1-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(h);}
+\DoxyCodeLine{01090               \textcolor{keywordflow}{if} (appPoint.x < bboxXMin) bboxXMin = appPoint.x;}
+\DoxyCodeLine{01091               \textcolor{keywordflow}{if} (appPoint.x > bboxXMax) bboxXMax = appPoint.x;}
+\DoxyCodeLine{01092               \textcolor{keywordflow}{if} (appPoint.y < bboxYMin) bboxYMin = appPoint.y;}
+\DoxyCodeLine{01093               \textcolor{keywordflow}{if} (appPoint.y > bboxYMax) bboxYMax = appPoint.y;}
+\DoxyCodeLine{01094             \}}
+\DoxyCodeLine{01095 }
+\DoxyCodeLine{01096             appX = bboxXMax -\/ bboxXMin;}
+\DoxyCodeLine{01097             appY = bboxYMax -\/ bboxYMin;}
+\DoxyCodeLine{01098 }
+\DoxyCodeLine{01099             \textcolor{keywordflow}{if} (appX) \{}
+\DoxyCodeLine{01100               bboxXMin = (std::numeric\_limits<double>::max)();}
+\DoxyCodeLine{01101               bboxXMax = -\/(std::numeric\_limits<double>::max)();}
+\DoxyCodeLine{01102               \textcolor{keywordflow}{for} (h = 0; h < subStroke2-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}(); ++h) \{}
+\DoxyCodeLine{01103                 appPoint = subStroke2-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(h);}
+\DoxyCodeLine{01104                 \textcolor{keywordflow}{if} (appPoint.x < bboxXMin) bboxXMin = appPoint.x;}
+\DoxyCodeLine{01105                 \textcolor{keywordflow}{if} (appPoint.x > bboxXMax) bboxXMax = appPoint.x;}
+\DoxyCodeLine{01106               \}}
+\DoxyCodeLine{01107               appX = (isAlmostZero(appX, 1e-\/01)) ? -\/1}
+\DoxyCodeLine{01108                                                  : (bboxXMax -\/ bboxXMin) / appX;}
+\DoxyCodeLine{01109               \textcolor{keywordflow}{for} (UINT tms = 0; tms < bboxSamplingWeight \&\& appX >= 0; tms++)}
+\DoxyCodeLine{01110                 ratioSampling.push\_back(appX);}
+\DoxyCodeLine{01111 }
+\DoxyCodeLine{01112               \textcolor{keywordflow}{for} (p = 0; p < samplingPointNumber; p++) \{}
+\DoxyCodeLine{01113                 appX = fabs(samplingPoint1[p].x -\/ stroke1Centroid.x);}
+\DoxyCodeLine{01114                 \textcolor{keywordflow}{if} (appX)}
+\DoxyCodeLine{01115                   ratioSampling.push\_back(}
+\DoxyCodeLine{01116                       fabs(samplingPoint2[p].x -\/ stroke2Centroid.x) / appX);}
+\DoxyCodeLine{01117               \}}
+\DoxyCodeLine{01118 }
+\DoxyCodeLine{01119               \textcolor{keywordflow}{if} (!ratioSampling.empty()) \{}
+\DoxyCodeLine{01120                 subStrokeXScaling.push\_back(average(ratioSampling));}
+\DoxyCodeLine{01121               \}}
+\DoxyCodeLine{01122             \}}
+\DoxyCodeLine{01123 }
+\DoxyCodeLine{01125 }
+\DoxyCodeLine{01126             ratioSampling.clear();}
+\DoxyCodeLine{01127             ratioSampling.reserve(samplingPointNumber + bboxSamplingWeight);}
+\DoxyCodeLine{01128 }
+\DoxyCodeLine{01129             \textcolor{keywordflow}{if} (appY) \{}
+\DoxyCodeLine{01130               bboxYMin = (std::numeric\_limits<double>::max)();}
+\DoxyCodeLine{01131               bboxYMax = -\/(std::numeric\_limits<double>::max)();}
+\DoxyCodeLine{01132               \textcolor{keywordflow}{for} (h = 0; h < subStroke2-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}(); ++h) \{}
+\DoxyCodeLine{01133                 appPoint = subStroke2-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(h);}
+\DoxyCodeLine{01134                 \textcolor{keywordflow}{if} (appPoint.y < bboxYMin) bboxYMin = appPoint.y;}
+\DoxyCodeLine{01135                 \textcolor{keywordflow}{if} (appPoint.y > bboxYMax) bboxYMax = appPoint.y;}
+\DoxyCodeLine{01136               \}}
+\DoxyCodeLine{01137 }
+\DoxyCodeLine{01138               appY = (isAlmostZero(appY, 1e-\/01)) ? -\/1}
+\DoxyCodeLine{01139                                                  : (bboxYMax -\/ bboxYMin) / appY;}
+\DoxyCodeLine{01140               \textcolor{keywordflow}{for} (UINT tms = 0; tms < bboxSamplingWeight \&\& appY >= 0; tms++)}
+\DoxyCodeLine{01141                 ratioSampling.push\_back(appY);}
+\DoxyCodeLine{01142 }
+\DoxyCodeLine{01143               \textcolor{keywordflow}{for} (p = 0; p < samplingPointNumber; p++) \{}
+\DoxyCodeLine{01144                 appY = fabs(samplingPoint1[p].y -\/ stroke1Centroid.y);}
+\DoxyCodeLine{01145                 \textcolor{keywordflow}{if} (appY)}
+\DoxyCodeLine{01146                   ratioSampling.push\_back(}
+\DoxyCodeLine{01147                       fabs(samplingPoint2[p].y -\/ stroke2Centroid.y) / appY);}
+\DoxyCodeLine{01148               \}}
+\DoxyCodeLine{01149 }
+\DoxyCodeLine{01150               \textcolor{keywordflow}{if} (!ratioSampling.empty()) \{}
+\DoxyCodeLine{01151                 subStrokeYScaling.push\_back(average(ratioSampling));}
+\DoxyCodeLine{01152               \}}
+\DoxyCodeLine{01153             \}}
+\DoxyCodeLine{01154 }
+\DoxyCodeLine{01155             \textcolor{keyword}{delete} subStroke1;}
+\DoxyCodeLine{01156             \textcolor{keyword}{delete} subStroke2;}
+\DoxyCodeLine{01157             subStroke1 = 0;}
+\DoxyCodeLine{01158             subStroke2 = 0;}
+\DoxyCodeLine{01159           \}}
+\DoxyCodeLine{01160 }
+\DoxyCodeLine{01161           \textcolor{keywordflow}{if} (subStrokeXScaling.empty()) \{}
+\DoxyCodeLine{01162             transform.m\_scaleX = 1.0;}
+\DoxyCodeLine{01163           \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01164             transform.m\_scaleX = average(subStrokeXScaling);}
+\DoxyCodeLine{01165             \textcolor{keywordflow}{if} (isAlmostZero(transform.m\_scaleX -\/ 1.0))}
+\DoxyCodeLine{01166               transform.m\_scaleX = 1.0;}
+\DoxyCodeLine{01167           \}}
+\DoxyCodeLine{01168 }
+\DoxyCodeLine{01169           \textcolor{keywordflow}{if} (subStrokeYScaling.empty()) \{}
+\DoxyCodeLine{01170             transform.m\_scaleY = 1.0;}
+\DoxyCodeLine{01171           \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01172             transform.m\_scaleY = average(subStrokeYScaling);}
+\DoxyCodeLine{01173             \textcolor{keywordflow}{if} (isAlmostZero(transform.m\_scaleY -\/ 1.0))}
+\DoxyCodeLine{01174               transform.m\_scaleY = 1.0;}
+\DoxyCodeLine{01175           \}}
+\DoxyCodeLine{01176           \textcolor{comment}{/*}}
+\DoxyCodeLine{01177 \textcolor{comment}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{01178 \textcolor{comment}{}}
+\DoxyCodeLine{01179 \textcolor{comment}{TDebugMessage::getStream()<<"{}x scale "{}<< transform.m\_scaleX ;}}
+\DoxyCodeLine{01180 \textcolor{comment}{TDebugMessage::flush();}}
+\DoxyCodeLine{01181 \textcolor{comment}{TDebugMessage::getStream()<<"{}y scale "{}<< transform.m\_scaleY ;}}
+\DoxyCodeLine{01182 \textcolor{comment}{TDebugMessage::flush();}}
+\DoxyCodeLine{01183 \textcolor{comment}{\#endif}}
+\DoxyCodeLine{01184 \textcolor{comment}{*/}}
+\DoxyCodeLine{01185         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01186           subStrokeXScaling.clear();}
+\DoxyCodeLine{01187           subStrokeXScaling.reserve(cornerSize -\/ 1);}
+\DoxyCodeLine{01188 }
+\DoxyCodeLine{01189           \textcolor{keywordflow}{for} (j = 0; j < cornerSize -\/ 1; j++) \{}
+\DoxyCodeLine{01191 }
+\DoxyCodeLine{01192             subStroke1 =}
+\DoxyCodeLine{01193                 extract(stroke1, transform.m\_firstStrokeCornerIndexes[j],}
+\DoxyCodeLine{01194                         transform.m\_firstStrokeCornerIndexes[j + 1] -\/ 1);}
+\DoxyCodeLine{01195             sample(subStroke1, samplingPointNumber, samplingPoint1);}
+\DoxyCodeLine{01196             subStroke2 =}
+\DoxyCodeLine{01197                 extract(stroke2, transform.m\_secondStrokeCornerIndexes[j],}
+\DoxyCodeLine{01198                         transform.m\_secondStrokeCornerIndexes[j + 1] -\/ 1);}
+\DoxyCodeLine{01199             sample(subStroke2, samplingPointNumber, samplingPoint2);}
+\DoxyCodeLine{01200 }
+\DoxyCodeLine{01202 }
+\DoxyCodeLine{01203             ratioSampling.clear();}
+\DoxyCodeLine{01204             ratioSampling.reserve(samplingPointNumber + bboxSamplingWeight);}
+\DoxyCodeLine{01205 }
+\DoxyCodeLine{01206             \mbox{\hyperlink{class_t_rect_t}{TRectD}} bbox1 = subStroke1-\/>\mbox{\hyperlink{class_t_stroke_a456bedcae5e8af3a84823cb251584957}{getBBox}}();}
+\DoxyCodeLine{01207             \textcolor{keywordtype}{double} app   = tdistance2(bbox1.getP00(), bbox1.getP11());}
+\DoxyCodeLine{01208             \textcolor{keywordflow}{if} (app) \{}
+\DoxyCodeLine{01209               \mbox{\hyperlink{class_t_rect_t}{TRectD}} bbox2 =}
+\DoxyCodeLine{01210                   \mbox{\hyperlink{class_t_rotation}{TRotation}}(transform.m\_rotation).\mbox{\hyperlink{class_t_affine_a570529b96b1ec5abc711aaa9aac09ff9}{inv}}() * subStroke2-\/>\mbox{\hyperlink{class_t_stroke_a456bedcae5e8af3a84823cb251584957}{getBBox}}();}
+\DoxyCodeLine{01211               app = sqrt(tdistance2(bbox2.getP00(), bbox2.getP11()) / app);}
+\DoxyCodeLine{01212 }
+\DoxyCodeLine{01213               \textcolor{keywordflow}{for} (UINT tms = 0; tms < bboxSamplingWeight; tms++)}
+\DoxyCodeLine{01214                 ratioSampling.push\_back(app);}
+\DoxyCodeLine{01215 }
+\DoxyCodeLine{01216               \textcolor{keywordtype}{double} app;}
+\DoxyCodeLine{01217               \textcolor{keywordflow}{for} (p = 0; p < samplingPointNumber; p++) \{}
+\DoxyCodeLine{01218                 app = tdistance(samplingPoint1[p], stroke1Centroid);}
+\DoxyCodeLine{01219                 \textcolor{keywordflow}{if} (app) \{}
+\DoxyCodeLine{01220                   ratioSampling.push\_back(}
+\DoxyCodeLine{01221                       tdistance(samplingPoint2[p], stroke2Centroid) / app);}
+\DoxyCodeLine{01222                 \}}
+\DoxyCodeLine{01223               \}}
+\DoxyCodeLine{01224             \}}
+\DoxyCodeLine{01225             \textcolor{keywordflow}{if} (!ratioSampling.empty()) \{}
+\DoxyCodeLine{01226               subStrokeXScaling.push\_back(average(ratioSampling));}
+\DoxyCodeLine{01227             \}}
+\DoxyCodeLine{01228 }
+\DoxyCodeLine{01229             \textcolor{keyword}{delete} subStroke1;}
+\DoxyCodeLine{01230             \textcolor{keyword}{delete} subStroke2;}
+\DoxyCodeLine{01231             subStroke1 = 0;}
+\DoxyCodeLine{01232             subStroke2 = 0;}
+\DoxyCodeLine{01233           \}}
+\DoxyCodeLine{01234 }
+\DoxyCodeLine{01235           \textcolor{keywordflow}{if} (subStrokeXScaling.empty()) \{}
+\DoxyCodeLine{01236             transform.m\_scaleX = transform.m\_scaleY = 1.0;}
+\DoxyCodeLine{01237           \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01238             transform.m\_scaleX = transform.m\_scaleY =}
+\DoxyCodeLine{01239                 average(subStrokeXScaling);}
+\DoxyCodeLine{01240             \textcolor{keywordflow}{if} (isAlmostZero(transform.m\_scaleX -\/ 1.0, 0.00001))}
+\DoxyCodeLine{01241               transform.m\_scaleX = transform.m\_scaleY = 1.0;}
+\DoxyCodeLine{01242           \}}
+\DoxyCodeLine{01243           \textcolor{comment}{/*}}
+\DoxyCodeLine{01244 \textcolor{comment}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{01245 \textcolor{comment}{}}
+\DoxyCodeLine{01246 \textcolor{comment}{TDebugMessage::getStream()<<"{}scale "{}<< transform.m\_scaleX ;}}
+\DoxyCodeLine{01247 \textcolor{comment}{TDebugMessage::flush();}}
+\DoxyCodeLine{01248 \textcolor{comment}{\#endif}}
+\DoxyCodeLine{01249 \textcolor{comment}{*/}}
+\DoxyCodeLine{01250         \}}
+\DoxyCodeLine{01251 }
+\DoxyCodeLine{01254 }
+\DoxyCodeLine{01255         std::vector<TPointD> vpOld(cornerSize), vpNew(cornerSize);}
+\DoxyCodeLine{01256         \mbox{\hyperlink{class_t_point_t}{TPointD}} pOld, pNew;}
+\DoxyCodeLine{01257 }
+\DoxyCodeLine{01258         \textcolor{keywordflow}{for} (j = 0; j < cornerSize -\/ 1; j++) \{}
+\DoxyCodeLine{01259           vpOld[j] = stroke1-\/>\mbox{\hyperlink{class_t_stroke_a06b18ffed330411aad73ef1748a3f263}{getChunk}}(transform.m\_firstStrokeCornerIndexes[j])}
+\DoxyCodeLine{01260                          -\/>\mbox{\hyperlink{class_t_quadratic_a1ee0984c7cd5c818840f6e688727ddcf}{getP0}}();}
+\DoxyCodeLine{01261           vpNew[j] = stroke2-\/>\mbox{\hyperlink{class_t_stroke_a06b18ffed330411aad73ef1748a3f263}{getChunk}}(transform.m\_secondStrokeCornerIndexes[j])}
+\DoxyCodeLine{01262                          -\/>\mbox{\hyperlink{class_t_quadratic_a1ee0984c7cd5c818840f6e688727ddcf}{getP0}}();}
+\DoxyCodeLine{01263         \}}
+\DoxyCodeLine{01264         vpOld[j] = stroke1-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(stroke1-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}());}
+\DoxyCodeLine{01265         vpNew[j] = stroke2-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(stroke2-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}());}
+\DoxyCodeLine{01266 }
+\DoxyCodeLine{01267         \textcolor{keywordflow}{if} (transform.m\_rotation == 0.0) \{}
+\DoxyCodeLine{01268           \textcolor{keywordflow}{if} (transform.m\_scaleX == 1.0 \&\& transform.m\_scaleY == 1.0) \{}
+\DoxyCodeLine{01269             transform.m\_translate = stroke2Centroid -\/ stroke1Centroid;}
+\DoxyCodeLine{01270             transform.m\_rotationAndScaleCenter = \mbox{\hyperlink{class_t_point_t}{TPointD}}();}
+\DoxyCodeLine{01271           \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01272             \textcolor{keywordflow}{if} (transform.m\_scaleX == 1.0) \{}
+\DoxyCodeLine{01273               transform.m\_rotationAndScaleCenter.x = 0;}
+\DoxyCodeLine{01274               transform.m\_translate.x              = 0;}
+\DoxyCodeLine{01275               \textcolor{keywordflow}{for} (j = 0; j < cornerSize; j++) \{}
+\DoxyCodeLine{01276                 transform.m\_translate.x += vpNew[j].x -\/ vpOld[j].x;}
+\DoxyCodeLine{01277               \}}
+\DoxyCodeLine{01278               transform.m\_translate.x = transform.m\_translate.x / cornerSize;}
+\DoxyCodeLine{01279             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01280               transform.m\_rotationAndScaleCenter.x = 0;}
+\DoxyCodeLine{01281 }
+\DoxyCodeLine{01282               \textcolor{keywordflow}{for} (j = 0; j < cornerSize; j++) \{}
+\DoxyCodeLine{01283                 pOld = vpOld[j];}
+\DoxyCodeLine{01284                 pNew = vpNew[j];}
+\DoxyCodeLine{01285                 transform.m\_rotationAndScaleCenter.x +=}
+\DoxyCodeLine{01286                     (transform.m\_scaleX * pOld.x -\/ pNew.x) /}
+\DoxyCodeLine{01287                     (transform.m\_scaleX -\/ 1.0);}
+\DoxyCodeLine{01288               \}}
+\DoxyCodeLine{01289               transform.m\_rotationAndScaleCenter.x =}
+\DoxyCodeLine{01290                   transform.m\_rotationAndScaleCenter.x / cornerSize;}
+\DoxyCodeLine{01291               transform.m\_translate.x = 0;}
+\DoxyCodeLine{01292             \}}
+\DoxyCodeLine{01293 }
+\DoxyCodeLine{01294             \textcolor{keywordflow}{if} (transform.m\_scaleY == 1.0) \{}
+\DoxyCodeLine{01295               transform.m\_rotationAndScaleCenter.y = 0;}
+\DoxyCodeLine{01296               transform.m\_translate.y              = 0;}
+\DoxyCodeLine{01297               \textcolor{keywordflow}{for} (j = 0; j < cornerSize; j++) \{}
+\DoxyCodeLine{01298                 transform.m\_translate.y += vpNew[j].y -\/ vpOld[j].y;}
+\DoxyCodeLine{01299               \}}
+\DoxyCodeLine{01300               transform.m\_translate.y = transform.m\_translate.y / cornerSize;}
+\DoxyCodeLine{01301             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01302               transform.m\_rotationAndScaleCenter.y = 0;}
+\DoxyCodeLine{01303 }
+\DoxyCodeLine{01304               \textcolor{keywordflow}{for} (j = 0; j < cornerSize; j++) \{}
+\DoxyCodeLine{01305                 pOld = vpOld[j];}
+\DoxyCodeLine{01306                 pNew = vpNew[j];}
+\DoxyCodeLine{01307                 transform.m\_rotationAndScaleCenter.y +=}
+\DoxyCodeLine{01308                     (transform.m\_scaleY * pOld.y -\/ pNew.y) /}
+\DoxyCodeLine{01309                     (transform.m\_scaleY -\/ 1.0);}
+\DoxyCodeLine{01310               \}}
+\DoxyCodeLine{01311               transform.m\_rotationAndScaleCenter.y =}
+\DoxyCodeLine{01312                   transform.m\_rotationAndScaleCenter.y / cornerSize;}
+\DoxyCodeLine{01313               transform.m\_translate.y = 0;}
+\DoxyCodeLine{01314             \}}
+\DoxyCodeLine{01315           \}}
+\DoxyCodeLine{01316 }
+\DoxyCodeLine{01317         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01318           assert(transform.m\_scaleX == transform.m\_scaleY);}
+\DoxyCodeLine{01319 }
+\DoxyCodeLine{01320           cs = transform.m\_scaleX * cos(totalRadRotation);}
+\DoxyCodeLine{01321           sn = transform.m\_scaleX * sin(totalRadRotation);}
+\DoxyCodeLine{01322 }
+\DoxyCodeLine{01323           \textcolor{comment}{// scelgo punti da usare come vincolo, per ottenere la translazione,}}
+\DoxyCodeLine{01324           \textcolor{comment}{// dato un centro di rotazione}}
+\DoxyCodeLine{01325 }
+\DoxyCodeLine{01326           \textcolor{comment}{// dato il punto pOld e pNew si calcola analiticamnete il punto di}}
+\DoxyCodeLine{01327           \textcolor{comment}{// rotazione e scala}}
+\DoxyCodeLine{01328           \textcolor{comment}{// che minimizza la traslazione aggiuntiva e la traslazione stessa}}
+\DoxyCodeLine{01329 }
+\DoxyCodeLine{01330           \textcolor{keywordflow}{for} (j = 0; j < cornerSize; j++) \{}
+\DoxyCodeLine{01331             pOld   = vpOld[j];}
+\DoxyCodeLine{01332             pNew   = vpNew[j];}
+\DoxyCodeLine{01333             constK = pNew.x -\/ cs * pOld.x + sn * pOld.y;}
+\DoxyCodeLine{01334             constQ = pNew.y -\/ sn * pOld.x -\/ cs * pOld.y;}
+\DoxyCodeLine{01335             constB = 2 * (constK * (cs -\/ 1.) + sn * constQ);}
+\DoxyCodeLine{01336             constD = 2 * (constQ * (cs -\/ 1.) -\/ sn * constK);}
+\DoxyCodeLine{01337             constA = transform.m\_scaleX * transform.m\_scaleX + 1 -\/ 2 * cs;}
+\DoxyCodeLine{01338             assert(constA > 0);}
+\DoxyCodeLine{01339             constA = 1.0 / (2 * constA);}
+\DoxyCodeLine{01340             transform.m\_rotationAndScaleCenter.x += -\/constB * constA;}
+\DoxyCodeLine{01341             transform.m\_rotationAndScaleCenter.y += -\/constD * constA;}
+\DoxyCodeLine{01342           \}}
+\DoxyCodeLine{01343 }
+\DoxyCodeLine{01344           transform.m\_rotationAndScaleCenter =}
+\DoxyCodeLine{01345               transform.m\_rotationAndScaleCenter * (1.0 / (double)cornerSize);}
+\DoxyCodeLine{01346 }
+\DoxyCodeLine{01347           transform.m\_translate.x =}
+\DoxyCodeLine{01348               (cs -\/ 1.0) * transform.m\_rotationAndScaleCenter.x -\/}
+\DoxyCodeLine{01349               sn * transform.m\_rotationAndScaleCenter.y + constK;}
+\DoxyCodeLine{01350 }
+\DoxyCodeLine{01351           transform.m\_translate.y =}
+\DoxyCodeLine{01352               sn * transform.m\_rotationAndScaleCenter.x +}
+\DoxyCodeLine{01353               (cs -\/ 1.0) * transform.m\_rotationAndScaleCenter.y + constQ;}
+\DoxyCodeLine{01354         \}}
+\DoxyCodeLine{01355 }
+\DoxyCodeLine{01357 }
+\DoxyCodeLine{01358         transform.m\_inverse = (\mbox{\hyperlink{class_t_translation}{TTranslation}}(transform.m\_translate) *}
+\DoxyCodeLine{01359                                \mbox{\hyperlink{class_t_scale}{TScale}}(transform.m\_rotationAndScaleCenter,}
+\DoxyCodeLine{01360                                       transform.m\_scaleX, transform.m\_scaleY) *}
+\DoxyCodeLine{01361                                \mbox{\hyperlink{class_t_rotation}{TRotation}}(transform.m\_rotationAndScaleCenter,}
+\DoxyCodeLine{01362                                          transform.m\_rotation))}
+\DoxyCodeLine{01363                                   .inv();}
+\DoxyCodeLine{01364 }
+\DoxyCodeLine{01365         \textcolor{comment}{// debugStream.close();}}
+\DoxyCodeLine{01366       \}  \textcolor{comment}{// end if !isPoint}}
+\DoxyCodeLine{01367 }
+\DoxyCodeLine{01368     \}  \textcolor{comment}{// end if !isEqual}}
+\DoxyCodeLine{01369 }
+\DoxyCodeLine{01370     m\_transformation.push\_back(transform);}
+\DoxyCodeLine{01371 }
+\DoxyCodeLine{01372   \}  \textcolor{comment}{// end for each stroke}}
+\DoxyCodeLine{01373 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01861}{TStroke\+::get\+BBox()}}, \mbox{\hyperlink{l01855}{TStroke\+::get\+Chunk()}}, \mbox{\hyperlink{l01845}{TStroke\+::get\+Chunk\+Count()}}, \mbox{\hyperlink{l01352}{TStroke\+::get\+Control\+Point()}}, \mbox{\hyperlink{l01849}{TStroke\+::get\+Control\+Point\+Count()}}, \mbox{\hyperlink{l01591}{TStroke\+::get\+Length()}}, \mbox{\hyperlink{l00138}{TQuadratic\+::get\+P0()}}, and \mbox{\hyperlink{l00055}{TAffine\+::inv()}}.
+
+\mbox{\Hypertarget{class_t_inbetween_1_1_imp_a9d3f6735f918019ac5446468187153ae}\label{class_t_inbetween_1_1_imp_a9d3f6735f918019ac5446468187153ae}} 
+\index{TInbetween::Imp@{TInbetween::Imp}!transferColor@{transferColor}}
+\index{transferColor@{transferColor}!TInbetween::Imp@{TInbetween::Imp}}
+\doxysubsubsection{\texorpdfstring{transferColor()}{transferColor()}}
+{\footnotesize\ttfamily void TInbetween\+::\+Imp\+::transfer\+Color (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \&}]{destination }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01536                                                                         \{}
+\DoxyCodeLine{01537   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} \&original = m\_firstImage;}
+\DoxyCodeLine{01538   destination-\/>setPalette(original-\/>getPalette());}
+\DoxyCodeLine{01539 }
+\DoxyCodeLine{01540   destination-\/>findRegions();}
+\DoxyCodeLine{01541 }
+\DoxyCodeLine{01542   \textcolor{keywordflow}{if} (destination-\/>getRegionCount()) \{}
+\DoxyCodeLine{01543     UINT strokeCount1 = original-\/>getStrokeCount();}
+\DoxyCodeLine{01544     UINT strokeCount2 = destination-\/>getStrokeCount();}
+\DoxyCodeLine{01545     \textcolor{keywordflow}{if} (strokeCount1 > strokeCount2) strokeCount1 = strokeCount2;}
+\DoxyCodeLine{01546 }
+\DoxyCodeLine{01547     \textcolor{keywordflow}{for} (UINT i = 0; i < strokeCount1; i++) \{}
+\DoxyCodeLine{01548       \mbox{\hyperlink{class_t_vector_image_a484c802b55b763ae00e5e44706055b09}{TVectorImage::transferStrokeColors}}(original, i, destination, i);}
+\DoxyCodeLine{01549     \}}
+\DoxyCodeLine{01550   \}}
+\DoxyCodeLine{01551 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_inbetween_1_1_imp_ab9dc889db4cf3c6998deee9f4543550a}\label{class_t_inbetween_1_1_imp_ab9dc889db4cf3c6998deee9f4543550a}} 
+\index{TInbetween::Imp@{TInbetween::Imp}!tween@{tween}}
+\index{tween@{tween}!TInbetween::Imp@{TInbetween::Imp}}
+\doxysubsubsection{\texorpdfstring{tween()}{tween()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} TInbetween\+::\+Imp\+::tween (\begin{DoxyParamCaption}\item[{double}]{t }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01377                                                  \{}
+\DoxyCodeLine{01378   \textcolor{keyword}{const} \textcolor{keywordtype}{double} step             = 5.0;}
+\DoxyCodeLine{01379   \textcolor{keyword}{const} \textcolor{keywordtype}{double} interpolateError = 1.0;}
+\DoxyCodeLine{01380 }
+\DoxyCodeLine{01381   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_vector_image}{TVectorImage}};}
+\DoxyCodeLine{01382 }
+\DoxyCodeLine{01383   UINT strokeCount1 = m\_firstImage-\/>getStrokeCount();}
+\DoxyCodeLine{01384   UINT strokeCount2 = m\_lastImage-\/>getStrokeCount();}
+\DoxyCodeLine{01385   vi-\/>setPalette(m\_firstImage-\/>getPalette());}
+\DoxyCodeLine{01386   \textcolor{keywordflow}{if} (strokeCount1 > strokeCount2) strokeCount1 = strokeCount2;}
+\DoxyCodeLine{01387 }
+\DoxyCodeLine{01388   assert(m\_transformation.size() == strokeCount1);}
+\DoxyCodeLine{01389 }
+\DoxyCodeLine{01390   \textcolor{keywordtype}{double} totalLen1, totalLen2, len1, len2, step1, step2;}
+\DoxyCodeLine{01391   std::vector<TThickPoint> points;}
+\DoxyCodeLine{01392   \mbox{\hyperlink{class_t_stroke}{TStroke}} *stroke1, *stroke2, *subStroke1, *subStroke2, *stroke;}
+\DoxyCodeLine{01393 }
+\DoxyCodeLine{01394   \mbox{\hyperlink{class_t_affine}{TAffine}} mt, invMatrix;}
+\DoxyCodeLine{01395   \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} point2, finalPoint;}
+\DoxyCodeLine{01396   UINT i, j, cp, cpSize;}
+\DoxyCodeLine{01397 }
+\DoxyCodeLine{01398   \textcolor{keywordflow}{for} (i = 0; i < strokeCount1; i++) \{}
+\DoxyCodeLine{01399     stroke1 = m\_firstImage-\/>getStroke(i);}
+\DoxyCodeLine{01400     stroke2 = m\_lastImage-\/>getStroke(i);}
+\DoxyCodeLine{01401 }
+\DoxyCodeLine{01402     \textcolor{keywordflow}{if} (m\_transformation[i].m\_type == StrokeTransform::EQUAL) \{}
+\DoxyCodeLine{01403       stroke = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_stroke}{TStroke}}(*stroke1);}
+\DoxyCodeLine{01404     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01405       points.clear();}
+\DoxyCodeLine{01406       totalLen1 = stroke1-\/>\mbox{\hyperlink{class_t_stroke_a079a513cb8a60d9a759b4f0c8211eab4}{getLength}}();}
+\DoxyCodeLine{01407       totalLen2 = stroke2-\/>\mbox{\hyperlink{class_t_stroke_a079a513cb8a60d9a759b4f0c8211eab4}{getLength}}();}
+\DoxyCodeLine{01408       ;}
+\DoxyCodeLine{01409 }
+\DoxyCodeLine{01410       \textcolor{keywordflow}{if} (stroke1-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}() == stroke2-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}() \&\&}
+\DoxyCodeLine{01411           stroke1-\/>\mbox{\hyperlink{class_t_stroke_a3565d6c34d3eb02fb1a6993ca626425c}{isSelfLoop}}() \&\& stroke2-\/>\mbox{\hyperlink{class_t_stroke_a3565d6c34d3eb02fb1a6993ca626425c}{isSelfLoop}}()) \{}
+\DoxyCodeLine{01412         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < stroke1-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}(); i++) \{}
+\DoxyCodeLine{01413           \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} p0 = stroke1-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(i);}
+\DoxyCodeLine{01414           \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} p1 = stroke2-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(i);}
+\DoxyCodeLine{01415           points.push\_back(p0 * (1 -\/ t) + p1 * t);}
+\DoxyCodeLine{01416         \}}
+\DoxyCodeLine{01417         stroke = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_stroke}{TStroke}}(points);}
+\DoxyCodeLine{01418       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_transformation[i].m\_type == StrokeTransform::POINT) \{}
+\DoxyCodeLine{01419         \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} pOld = stroke1-\/>\mbox{\hyperlink{class_t_stroke_a08496981e0538356833d4c6513af38b0}{getThickPointAtLength}}(0.5 * totalLen1);}
+\DoxyCodeLine{01420         \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} pNew = stroke2-\/>\mbox{\hyperlink{class_t_stroke_a08496981e0538356833d4c6513af38b0}{getThickPointAtLength}}(0.5 * totalLen2);}
+\DoxyCodeLine{01421         points.push\_back(pOld * (1 -\/ t) + pNew * t);}
+\DoxyCodeLine{01422         points.push\_back(points[0]);}
+\DoxyCodeLine{01423         points.push\_back(points[0]);}
+\DoxyCodeLine{01424         stroke = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_stroke}{TStroke}}(points);}
+\DoxyCodeLine{01425       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01426         mt = (m\_transformation[i].m\_inverse.isIdentity())}
+\DoxyCodeLine{01427                  ? \mbox{\hyperlink{class_t_affine}{TAffine}}()}
+\DoxyCodeLine{01428                  : \mbox{\hyperlink{class_t_translation}{TTranslation}}(m\_transformation[i].m\_translate * t) *}
+\DoxyCodeLine{01429                        \mbox{\hyperlink{class_t_scale}{TScale}}(m\_transformation[i].m\_rotationAndScaleCenter,}
+\DoxyCodeLine{01430                               (1 -\/ t) + t * m\_transformation[i].m\_scaleX,}
+\DoxyCodeLine{01431                               (1 -\/ t) + t * m\_transformation[i].m\_scaleY) *}
+\DoxyCodeLine{01432                        \mbox{\hyperlink{class_t_rotation}{TRotation}}(m\_transformation[i].m\_rotationAndScaleCenter,}
+\DoxyCodeLine{01433                                  m\_transformation[i].m\_rotation * t);}
+\DoxyCodeLine{01434 }
+\DoxyCodeLine{01435         UINT cornerSize = m\_transformation[i].m\_firstStrokeCornerIndexes.size();}
+\DoxyCodeLine{01436         assert(cornerSize ==}
+\DoxyCodeLine{01437                m\_transformation[i].m\_secondStrokeCornerIndexes.size());}
+\DoxyCodeLine{01438         \textcolor{keywordflow}{if} (cornerSize > m\_transformation[i].m\_secondStrokeCornerIndexes.size())}
+\DoxyCodeLine{01439           cornerSize = m\_transformation[i].m\_secondStrokeCornerIndexes.size();}
+\DoxyCodeLine{01440 }
+\DoxyCodeLine{01441         assert(cornerSize >= 2);}
+\DoxyCodeLine{01442 }
+\DoxyCodeLine{01443         std::vector<TThickPoint> controlPoints;}
+\DoxyCodeLine{01444 }
+\DoxyCodeLine{01445         \textcolor{comment}{// if not m\_transformation[i].m\_findCorners => detect corner return}}
+\DoxyCodeLine{01446         \textcolor{comment}{// different size =>cornerSize==2}}
+\DoxyCodeLine{01447         \textcolor{comment}{// assert(!m\_transformation[i].m\_findCorners || cornerSize==2);}}
+\DoxyCodeLine{01448 }
+\DoxyCodeLine{01449         \textcolor{keywordflow}{for} (j = 0; j < cornerSize -\/ 1; j++) \{}
+\DoxyCodeLine{01450           points.clear();}
+\DoxyCodeLine{01451           subStroke1 = extract(}
+\DoxyCodeLine{01452               stroke1, m\_transformation[i].m\_firstStrokeCornerIndexes[j],}
+\DoxyCodeLine{01453               m\_transformation[i].m\_firstStrokeCornerIndexes[j + 1] -\/ 1);}
+\DoxyCodeLine{01454           subStroke2 = extract(}
+\DoxyCodeLine{01455               stroke2, m\_transformation[i].m\_secondStrokeCornerIndexes[j],}
+\DoxyCodeLine{01456               m\_transformation[i].m\_secondStrokeCornerIndexes[j + 1] -\/ 1);}
+\DoxyCodeLine{01457 }
+\DoxyCodeLine{01458           totalLen1 = subStroke1-\/>\mbox{\hyperlink{class_t_stroke_a079a513cb8a60d9a759b4f0c8211eab4}{getLength}}();}
+\DoxyCodeLine{01459           totalLen2 = subStroke2-\/>\mbox{\hyperlink{class_t_stroke_a079a513cb8a60d9a759b4f0c8211eab4}{getLength}}();}
+\DoxyCodeLine{01460 }
+\DoxyCodeLine{01461           \textcolor{keywordflow}{if} (totalLen1 > totalLen2) \{}
+\DoxyCodeLine{01462             step1 = step;}
+\DoxyCodeLine{01463             step2 = (totalLen2 / totalLen1) * step;}
+\DoxyCodeLine{01464           \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01465             step1 = (totalLen1 / totalLen2) * step;}
+\DoxyCodeLine{01466             step2 = step;}
+\DoxyCodeLine{01467           \}}
+\DoxyCodeLine{01468 }
+\DoxyCodeLine{01469           len1 = 0;}
+\DoxyCodeLine{01470           len2 = 0;}
+\DoxyCodeLine{01471 }
+\DoxyCodeLine{01472           \textcolor{keywordflow}{while} (len1 <= totalLen1 \&\& len2 <= totalLen2) \{}
+\DoxyCodeLine{01473             point2 = subStroke2-\/>\mbox{\hyperlink{class_t_stroke_a08496981e0538356833d4c6513af38b0}{getThickPointAtLength}}(len2);}
+\DoxyCodeLine{01474             point2 = \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(m\_transformation[i].m\_inverse *}
+\DoxyCodeLine{01475                                      subStroke2-\/>\mbox{\hyperlink{class_t_stroke_a08496981e0538356833d4c6513af38b0}{getThickPointAtLength}}(len2),}
+\DoxyCodeLine{01476                                  point2.thick);}
+\DoxyCodeLine{01477             finalPoint =}
+\DoxyCodeLine{01478                 subStroke1-\/>\mbox{\hyperlink{class_t_stroke_a08496981e0538356833d4c6513af38b0}{getThickPointAtLength}}(len1) * (1 -\/ t) + t * point2;}
+\DoxyCodeLine{01479 }
+\DoxyCodeLine{01480             points.push\_back(\mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(mt * (finalPoint), finalPoint.thick));}
+\DoxyCodeLine{01481             len1 += step1;}
+\DoxyCodeLine{01482             len2 += step2;}
+\DoxyCodeLine{01483           \}}
+\DoxyCodeLine{01484           point2     = subStroke2-\/>\mbox{\hyperlink{class_t_stroke_a08496981e0538356833d4c6513af38b0}{getThickPointAtLength}}(totalLen2);}
+\DoxyCodeLine{01485           point2     = \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(m\_transformation[i].m\_inverse *}
+\DoxyCodeLine{01486                                    subStroke2-\/>\mbox{\hyperlink{class_t_stroke_a08496981e0538356833d4c6513af38b0}{getThickPointAtLength}}(totalLen2),}
+\DoxyCodeLine{01487                                point2.thick);}
+\DoxyCodeLine{01488           finalPoint = subStroke1-\/>\mbox{\hyperlink{class_t_stroke_a08496981e0538356833d4c6513af38b0}{getThickPointAtLength}}(totalLen1) * (1 -\/ t) +}
+\DoxyCodeLine{01489                        t * point2;}
+\DoxyCodeLine{01490 }
+\DoxyCodeLine{01491           points.push\_back(\mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(mt * (finalPoint), finalPoint.thick));}
+\DoxyCodeLine{01492 }
+\DoxyCodeLine{01493           stroke = \mbox{\hyperlink{class_t_stroke_a4d47a76de56f5a121aeae50098d6cc8f}{TStroke::interpolate}}(points, interpolateError, \textcolor{keyword}{false}}
+\DoxyCodeLine{01494                                         \textcolor{comment}{/*m\_transformation[i].m\_findCorners*/});}
+\DoxyCodeLine{01495 }
+\DoxyCodeLine{01496           \textcolor{keywordflow}{if} (j == 0)}
+\DoxyCodeLine{01497             controlPoints.push\_back(stroke-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(0));}
+\DoxyCodeLine{01498           \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01499             controlPoints.back() =}
+\DoxyCodeLine{01500                 (controlPoints.back() + stroke-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(0)) * 0.5;}
+\DoxyCodeLine{01501 }
+\DoxyCodeLine{01502           cpSize = stroke-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}();}
+\DoxyCodeLine{01503           \textcolor{keywordflow}{for} (cp = 1; cp < cpSize; cp++) \{}
+\DoxyCodeLine{01504             controlPoints.push\_back(stroke-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(cp));}
+\DoxyCodeLine{01505           \}}
+\DoxyCodeLine{01506 }
+\DoxyCodeLine{01507           \textcolor{keyword}{delete} subStroke1;}
+\DoxyCodeLine{01508           \textcolor{keyword}{delete} subStroke2;}
+\DoxyCodeLine{01509           \textcolor{keyword}{delete} stroke;}
+\DoxyCodeLine{01510           subStroke1 = 0;}
+\DoxyCodeLine{01511           subStroke2 = 0;}
+\DoxyCodeLine{01512           stroke     = 0;}
+\DoxyCodeLine{01513         \}}
+\DoxyCodeLine{01514 }
+\DoxyCodeLine{01515         stroke = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_stroke}{TStroke}}(controlPoints);}
+\DoxyCodeLine{01516       \}}
+\DoxyCodeLine{01517     \}}
+\DoxyCodeLine{01518 }
+\DoxyCodeLine{01519     \textcolor{keywordflow}{if} (stroke1-\/>\mbox{\hyperlink{class_t_stroke_a3565d6c34d3eb02fb1a6993ca626425c}{isSelfLoop}}() \&\& stroke2-\/>\mbox{\hyperlink{class_t_stroke_a3565d6c34d3eb02fb1a6993ca626425c}{isSelfLoop}}()) stroke-\/>\mbox{\hyperlink{class_t_stroke_afa2c66ae11a70e68b3de3ce0b4cfb049}{setSelfLoop}}();}
+\DoxyCodeLine{01520 }
+\DoxyCodeLine{01521     stroke-\/>\mbox{\hyperlink{class_t_stroke_a33f59dfbed74b577700351eac8c2fc7b}{setStyle}}(stroke1-\/>\mbox{\hyperlink{class_t_stroke_ab77068d7894a29cc1878e173f46ed785}{getStyle}}());}
+\DoxyCodeLine{01522     stroke-\/>outlineOptions() = stroke1-\/>outlineOptions();}
+\DoxyCodeLine{01523     \mbox{\hyperlink{class_v_i_stroke}{VIStroke}} *vs =}
+\DoxyCodeLine{01524         \textcolor{keyword}{new} \mbox{\hyperlink{class_v_i_stroke}{VIStroke}}(stroke, m\_firstImage-\/>getVIStroke(i)-\/>m\_groupId);}
+\DoxyCodeLine{01525     vi-\/>m\_imp-\/>m\_strokes.push\_back(vs);}
+\DoxyCodeLine{01526 }
+\DoxyCodeLine{01527   \}  \textcolor{comment}{// end for each stroke}}
+\DoxyCodeLine{01528 }
+\DoxyCodeLine{01529   \textcolor{keywordflow}{if} (m\_firstImage-\/>isComputedRegionAlmostOnce()) transferColor(vi);}
+\DoxyCodeLine{01530 }
+\DoxyCodeLine{01531   \textcolor{keywordflow}{return} vi;}
+\DoxyCodeLine{01532 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_inbetween_1_1_imp_a53608fabb6ec9c3cc76349f37de5b409}\label{class_t_inbetween_1_1_imp_a53608fabb6ec9c3cc76349f37de5b409}} 
+\index{TInbetween::Imp@{TInbetween::Imp}!m\_firstImage@{m\_firstImage}}
+\index{m\_firstImage@{m\_firstImage}!TInbetween::Imp@{TInbetween::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_firstImage}{m\_firstImage}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} TInbetween\+::\+Imp\+::m\+\_\+first\+Image}
+
+\mbox{\Hypertarget{class_t_inbetween_1_1_imp_adf45afcd077dfbbb421f152b2b290e96}\label{class_t_inbetween_1_1_imp_adf45afcd077dfbbb421f152b2b290e96}} 
+\index{TInbetween::Imp@{TInbetween::Imp}!m\_lastImage@{m\_lastImage}}
+\index{m\_lastImage@{m\_lastImage}!TInbetween::Imp@{TInbetween::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_lastImage}{m\_lastImage}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} TInbetween\+::\+Imp\+::m\+\_\+last\+Image}
+
+\mbox{\Hypertarget{class_t_inbetween_1_1_imp_a8e7599588d83d065476e14508c4499f9}\label{class_t_inbetween_1_1_imp_a8e7599588d83d065476e14508c4499f9}} 
+\index{TInbetween::Imp@{TInbetween::Imp}!m\_transformation@{m\_transformation}}
+\index{m\_transformation@{m\_transformation}!TInbetween::Imp@{TInbetween::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_transformation}{m\_transformation}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{struct_t_inbetween_1_1_imp_1_1_stroke_transform}{Stroke\+Transform}}$>$ TInbetween\+::\+Imp\+::m\+\_\+transformation}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tvrender/tinbetween.\+cpp\end{DoxyCompactItemize}

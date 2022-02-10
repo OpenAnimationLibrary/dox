@@ -1,0 +1,272 @@
+\hypertarget{class_fx_schematic_pass_through_node}{}\doxysection{Fx\+Schematic\+Pass\+Through\+Node Class Reference}
+\label{class_fx_schematic_pass_through_node}\index{FxSchematicPassThroughNode@{FxSchematicPassThroughNode}}
+Inheritance diagram for Fx\+Schematic\+Pass\+Through\+Node\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_fx_schematic_pass_through_node}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_fx_schematic_pass_through_node_a1f91607f0f0bd776adf2d1426614e7f3}{Fx\+Schematic\+Pass\+Through\+Node}} (\mbox{\hyperlink{class_fx_schematic_scene}{Fx\+Schematic\+Scene}} $\ast$scene, \mbox{\hyperlink{class_t_fx}{TFx}} $\ast$fx)
+\item 
+QRectF \mbox{\hyperlink{class_fx_schematic_pass_through_node_a8c6ec3c74cc6989520e3cefc8d0c39a5}{bounding\+Rect}} () const override
+\item 
+void \mbox{\hyperlink{class_fx_schematic_pass_through_node_a87cf749bc781e150a93527ad35939fd2}{paint}} (QPainter $\ast$painter, const QStyle\+Option\+Graphics\+Item $\ast$option, QWidget $\ast$widget=0) override
+\item 
+bool \mbox{\hyperlink{class_fx_schematic_pass_through_node_abe801013e0ea750280ea177c355d6804}{is\+Opened}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_fx_schematic_pass_through_node_af62fb7fec952358ed9aff21ae2a47ea6}{on\+Name\+Changed}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_fx_schematic_pass_through_node_a2e855c09e9f2108ff1fcaaef76b5a5b8}{mouse\+Double\+Click\+Event}} (QGraphics\+Scene\+Mouse\+Event $\ast$me) override
+\item 
+void \mbox{\hyperlink{class_fx_schematic_pass_through_node_a6cd63b058b5fcf1c907c2bb07f76a22a}{mouse\+Press\+Event}} (QGraphics\+Scene\+Mouse\+Event $\ast$me) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_fx_schematic_pass_through_node_a1f91607f0f0bd776adf2d1426614e7f3}\label{class_fx_schematic_pass_through_node_a1f91607f0f0bd776adf2d1426614e7f3}} 
+\index{FxSchematicPassThroughNode@{FxSchematicPassThroughNode}!FxSchematicPassThroughNode@{FxSchematicPassThroughNode}}
+\index{FxSchematicPassThroughNode@{FxSchematicPassThroughNode}!FxSchematicPassThroughNode@{FxSchematicPassThroughNode}}
+\doxysubsubsection{\texorpdfstring{FxSchematicPassThroughNode()}{FxSchematicPassThroughNode()}}
+{\footnotesize\ttfamily Fx\+Schematic\+Pass\+Through\+Node\+::\+Fx\+Schematic\+Pass\+Through\+Node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_schematic_scene}{Fx\+Schematic\+Scene}} $\ast$}]{scene,  }\item[{\mbox{\hyperlink{class_t_fx}{TFx}} $\ast$}]{fx }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{03843     : \mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}}(scene, fx, 15, 15, eNormalFx) \{}
+\DoxyCodeLine{03844   \mbox{\hyperlink{class_schematic_viewer}{SchematicViewer}} *viewer = scene-\/>getSchematicViewer();}
+\DoxyCodeLine{03845 }
+\DoxyCodeLine{03846   m\_linkedNode = 0;}
+\DoxyCodeLine{03847   m\_linkDock   = 0;}
+\DoxyCodeLine{03848   m\_showName   = \textcolor{keyword}{false};}
+\DoxyCodeLine{03849 }
+\DoxyCodeLine{03850   \mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}} = QString::fromStdWString(fx-\/>getName());}
+\DoxyCodeLine{03851 }
+\DoxyCodeLine{03852   m\_nameItem              = \textcolor{keyword}{new} \mbox{\hyperlink{class_schematic_name}{SchematicName}}(\textcolor{keyword}{this}, 72, 20);  \textcolor{comment}{// for rename}}
+\DoxyCodeLine{03853   m\_outDock               = \textcolor{keyword}{new} \mbox{\hyperlink{class_fx_schematic_dock}{FxSchematicDock}}(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}"{}}, 0, eFxOutputPort);}
+\DoxyCodeLine{03854   \mbox{\hyperlink{class_fx_schematic_dock}{FxSchematicDock}} *inDock = \textcolor{keyword}{new} \mbox{\hyperlink{class_fx_schematic_dock}{FxSchematicDock}}(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}"{}}, 0, eFxInputPort);}
+\DoxyCodeLine{03855   m\_passThroughPainter =}
+\DoxyCodeLine{03856       \textcolor{keyword}{new} \mbox{\hyperlink{class_fx_pass_through_painter}{FxPassThroughPainter}}(\textcolor{keyword}{this}, m\_width, m\_height, \mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}}, \textcolor{keyword}{false});}
+\DoxyCodeLine{03857 }
+\DoxyCodeLine{03858   m\_outDock-\/>getPort()-\/>setIsPassThrough();}
+\DoxyCodeLine{03859   inDock-\/>getPort()-\/>setIsPassThrough();}
+\DoxyCodeLine{03860 }
+\DoxyCodeLine{03861   addPort(0, m\_outDock-\/>getPort());}
+\DoxyCodeLine{03862   addPort(1, inDock-\/>getPort());}
+\DoxyCodeLine{03863 }
+\DoxyCodeLine{03864   m\_inDocks.push\_back(inDock);}
+\DoxyCodeLine{03865 }
+\DoxyCodeLine{03866   m\_outDock-\/>setPos(15, 0);}
+\DoxyCodeLine{03867   inDock-\/>setPos(-\/15, 0);}
+\DoxyCodeLine{03868 }
+\DoxyCodeLine{03869   m\_outDock-\/>setZValue(2);}
+\DoxyCodeLine{03870   inDock-\/>setZValue(2);}
+\DoxyCodeLine{03871   m\_passThroughPainter-\/>setZValue(1);}
+\DoxyCodeLine{03872 }
+\DoxyCodeLine{03873   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}}.contains(\textcolor{stringliteral}{"{}PassThrough"{}})) \{}
+\DoxyCodeLine{03874     setToolTip(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}} + tr(\textcolor{stringliteral}{"{} (Pass Through)"{}}));}
+\DoxyCodeLine{03875     m\_showName = \textcolor{keyword}{true};}
+\DoxyCodeLine{03876   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{03877     setToolTip(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{03878     m\_showName = \textcolor{keyword}{false};}
+\DoxyCodeLine{03879   \}}
+\DoxyCodeLine{03880 }
+\DoxyCodeLine{03881   m\_passThroughPainter-\/>setShowName(m\_showName);}
+\DoxyCodeLine{03882 }
+\DoxyCodeLine{03883   \textcolor{comment}{//-\/-\/-\/}}
+\DoxyCodeLine{03884   m\_nameItem-\/>setDefaultTextColor(viewer-\/>getTextColor());}
+\DoxyCodeLine{03885   m\_nameItem-\/>setName(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{03886   m\_nameItem-\/>hide();}
+\DoxyCodeLine{03887 }
+\DoxyCodeLine{03888   \textcolor{comment}{// define positions}}
+\DoxyCodeLine{03889   \textcolor{keywordflow}{if} (m\_isNormalIconView) \{}
+\DoxyCodeLine{03890     QRectF recF = m\_nameItem-\/>boundingRect();}
+\DoxyCodeLine{03891     m\_nameItem-\/>setPos(-\/(recF.width() / 2) + 6, -\/30);}
+\DoxyCodeLine{03892   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{03893     QFont fnt = m\_nameItem-\/>font();}
+\DoxyCodeLine{03894     fnt.setPixelSize(fnt.pixelSize() * 2);}
+\DoxyCodeLine{03895     m\_nameItem-\/>setFont(fnt);}
+\DoxyCodeLine{03896 }
+\DoxyCodeLine{03897     m\_nameItem-\/>setPos(-\/1, 0);}
+\DoxyCodeLine{03898   \}}
+\DoxyCodeLine{03899 }
+\DoxyCodeLine{03900   m\_nameItem-\/>setZValue(3);}
+\DoxyCodeLine{03901 }
+\DoxyCodeLine{03902   connect(m\_nameItem, SIGNAL(focusOut()), \textcolor{keyword}{this}, SLOT(onNameChanged()));}
+\DoxyCodeLine{03903 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_pass_through_node_ae4b46dd1c29548dd15ad37a7fd37ca5a}\label{class_fx_schematic_pass_through_node_ae4b46dd1c29548dd15ad37a7fd37ca5a}} 
+\index{FxSchematicPassThroughNode@{FxSchematicPassThroughNode}!````~FxSchematicPassThroughNode@{$\sim$FxSchematicPassThroughNode}}
+\index{````~FxSchematicPassThroughNode@{$\sim$FxSchematicPassThroughNode}!FxSchematicPassThroughNode@{FxSchematicPassThroughNode}}
+\doxysubsubsection{\texorpdfstring{$\sim$FxSchematicPassThroughNode()}{~FxSchematicPassThroughNode()}}
+{\footnotesize\ttfamily Fx\+Schematic\+Pass\+Through\+Node\+::$\sim$\+Fx\+Schematic\+Pass\+Through\+Node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{03907 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_fx_schematic_pass_through_node_a8c6ec3c74cc6989520e3cefc8d0c39a5}\label{class_fx_schematic_pass_through_node_a8c6ec3c74cc6989520e3cefc8d0c39a5}} 
+\index{FxSchematicPassThroughNode@{FxSchematicPassThroughNode}!boundingRect@{boundingRect}}
+\index{boundingRect@{boundingRect}!FxSchematicPassThroughNode@{FxSchematicPassThroughNode}}
+\doxysubsubsection{\texorpdfstring{boundingRect()}{boundingRect()}}
+{\footnotesize\ttfamily QRectF Fx\+Schematic\+Pass\+Through\+Node\+::bounding\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{03911                                                       \{}
+\DoxyCodeLine{03912   \textcolor{keywordtype}{int} xAdj    = 0;}
+\DoxyCodeLine{03913   \textcolor{keywordtype}{int} yAdj    = 0;}
+\DoxyCodeLine{03914   qreal width = m\_width;}
+\DoxyCodeLine{03915   QRectF recF = m\_nameItem-\/>boundingRect();}
+\DoxyCodeLine{03916   \textcolor{keywordflow}{if} (m\_showName) \{}
+\DoxyCodeLine{03917     width                     = recF.width();}
+\DoxyCodeLine{03918     \textcolor{keywordflow}{if} (width > m\_width) xAdj = (width -\/ m\_width) / 2;}
+\DoxyCodeLine{03919     yAdj                      = 30;}
+\DoxyCodeLine{03920   \}}
+\DoxyCodeLine{03921   \textcolor{keywordflow}{return} QRectF(-\/5 -\/ xAdj, -\/5 -\/ yAdj, std::max(m\_width, width) + 10,}
+\DoxyCodeLine{03922                 m\_height + 10 + yAdj);}
+\DoxyCodeLine{03923 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_pass_through_node_abe801013e0ea750280ea177c355d6804}\label{class_fx_schematic_pass_through_node_abe801013e0ea750280ea177c355d6804}} 
+\index{FxSchematicPassThroughNode@{FxSchematicPassThroughNode}!isOpened@{isOpened}}
+\index{isOpened@{isOpened}!FxSchematicPassThroughNode@{FxSchematicPassThroughNode}}
+\doxysubsubsection{\texorpdfstring{isOpened()}{isOpened()}}
+{\footnotesize\ttfamily bool Fx\+Schematic\+Pass\+Through\+Node\+::is\+Opened (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_schematic_node}{Fx\+Schematic\+Node}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00650 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_pass_through_node_a2e855c09e9f2108ff1fcaaef76b5a5b8}\label{class_fx_schematic_pass_through_node_a2e855c09e9f2108ff1fcaaef76b5a5b8}} 
+\index{FxSchematicPassThroughNode@{FxSchematicPassThroughNode}!mouseDoubleClickEvent@{mouseDoubleClickEvent}}
+\index{mouseDoubleClickEvent@{mouseDoubleClickEvent}!FxSchematicPassThroughNode@{FxSchematicPassThroughNode}}
+\doxysubsubsection{\texorpdfstring{mouseDoubleClickEvent()}{mouseDoubleClickEvent()}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Pass\+Through\+Node\+::mouse\+Double\+Click\+Event (\begin{DoxyParamCaption}\item[{QGraphics\+Scene\+Mouse\+Event $\ast$}]{me }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{03936                                   \{}
+\DoxyCodeLine{03937   QString fontName = Preferences::instance()-\/>getInterfaceFont();}
+\DoxyCodeLine{03938   \textcolor{keywordflow}{if} (fontName == \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{03939 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{03940     fontName = \textcolor{stringliteral}{"{}Arial"{}};}
+\DoxyCodeLine{03941 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{03942     fontName = \textcolor{stringliteral}{"{}Helvetica"{}};}
+\DoxyCodeLine{03943 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{03944   \}}
+\DoxyCodeLine{03945   \textcolor{keyword}{static} QFont font(fontName, 10, QFont::Normal);}
+\DoxyCodeLine{03946   \textcolor{keywordtype}{int} width = QFontMetrics(font).width(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{03947   QRectF nameArea(0, 0, width, 14);}
+\DoxyCodeLine{03948 }
+\DoxyCodeLine{03949   m\_nameItem-\/>setPlainText(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{03950   m\_nameItem-\/>show();}
+\DoxyCodeLine{03951   m\_nameItem-\/>setFocus();}
+\DoxyCodeLine{03952   setFlag(QGraphicsItem::ItemIsSelectable, \textcolor{keyword}{false});}
+\DoxyCodeLine{03953 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_pass_through_node_a6cd63b058b5fcf1c907c2bb07f76a22a}\label{class_fx_schematic_pass_through_node_a6cd63b058b5fcf1c907c2bb07f76a22a}} 
+\index{FxSchematicPassThroughNode@{FxSchematicPassThroughNode}!mousePressEvent@{mousePressEvent}}
+\index{mousePressEvent@{mousePressEvent}!FxSchematicPassThroughNode@{FxSchematicPassThroughNode}}
+\doxysubsubsection{\texorpdfstring{mousePressEvent()}{mousePressEvent()}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Pass\+Through\+Node\+::mouse\+Press\+Event (\begin{DoxyParamCaption}\item[{QGraphics\+Scene\+Mouse\+Event $\ast$}]{me }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{03957                                                                              \{}
+\DoxyCodeLine{03958   FxSchematicNode::mousePressEvent(me);}
+\DoxyCodeLine{03959 }
+\DoxyCodeLine{03960   QAction *fxEditorPopup =}
+\DoxyCodeLine{03961       CommandManager::instance()-\/>getAction(MI\_FxParamEditor);}
+\DoxyCodeLine{03962   \textcolor{comment}{// this signal cause the update the contents of the FxSettings}}
+\DoxyCodeLine{03963   \textcolor{keywordflow}{if} (fxEditorPopup-\/>isVisible()) emit fxNodeDoubleClicked();}
+\DoxyCodeLine{03964 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_pass_through_node_af62fb7fec952358ed9aff21ae2a47ea6}\label{class_fx_schematic_pass_through_node_af62fb7fec952358ed9aff21ae2a47ea6}} 
+\index{FxSchematicPassThroughNode@{FxSchematicPassThroughNode}!onNameChanged@{onNameChanged}}
+\index{onNameChanged@{onNameChanged}!FxSchematicPassThroughNode@{FxSchematicPassThroughNode}}
+\doxysubsubsection{\texorpdfstring{onNameChanged}{onNameChanged}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Pass\+Through\+Node\+::on\+Name\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{03968                                                \{}
+\DoxyCodeLine{03969   m\_nameItem-\/>hide();}
+\DoxyCodeLine{03970   \mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}} = m\_nameItem-\/>toPlainText();}
+\DoxyCodeLine{03971 }
+\DoxyCodeLine{03972   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}}.isEmpty()) \{}
+\DoxyCodeLine{03973     \mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}} = QString::fromStdWString(\mbox{\hyperlink{class_fx_schematic_node_a29dd352ba75392963ebf0ecd0cd40c86}{m\_fx}}-\/>getFxId());}
+\DoxyCodeLine{03974     m\_nameItem-\/>setPlainText(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{03975   \}}
+\DoxyCodeLine{03976 }
+\DoxyCodeLine{03977   m\_passThroughPainter-\/>setName(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{03978 }
+\DoxyCodeLine{03979   \textcolor{keywordflow}{if} (m\_isNormalIconView) \{}
+\DoxyCodeLine{03980     QRectF recF = m\_nameItem-\/>boundingRect();}
+\DoxyCodeLine{03981     m\_nameItem-\/>setPos(-\/(recF.width() / 2) + 6, -\/30);}
+\DoxyCodeLine{03982   \}}
+\DoxyCodeLine{03983 }
+\DoxyCodeLine{03984   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}}.contains(\textcolor{stringliteral}{"{}PassThrough"{}})) \{}
+\DoxyCodeLine{03985     setToolTip(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}} + tr(\textcolor{stringliteral}{"{} (Pass Through)"{}}));}
+\DoxyCodeLine{03986     m\_showName = \textcolor{keyword}{true};}
+\DoxyCodeLine{03987   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{03988     setToolTip(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{03989     m\_showName = \textcolor{keyword}{false};}
+\DoxyCodeLine{03990   \}}
+\DoxyCodeLine{03991   m\_passThroughPainter-\/>setShowName(m\_showName);}
+\DoxyCodeLine{03992 }
+\DoxyCodeLine{03993   setFlag(QGraphicsItem::ItemIsSelectable, \textcolor{keyword}{true});}
+\DoxyCodeLine{03994 }
+\DoxyCodeLine{03995   \mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *fxScene = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{03996   \textcolor{keywordflow}{if} (!fxScene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{03997   TFxCommand::renameFx(\mbox{\hyperlink{class_fx_schematic_node_a29dd352ba75392963ebf0ecd0cd40c86}{m\_fx}}.getPointer(), \mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}}.toStdWString(),}
+\DoxyCodeLine{03998                        fxScene-\/>getXsheetHandle());}
+\DoxyCodeLine{03999   updateOutputDockToolTips(\mbox{\hyperlink{class_fx_schematic_node_aea8273019a22b96e567ee92ef00b67e1}{m\_name}});}
+\DoxyCodeLine{04000 }
+\DoxyCodeLine{04001   prepareGeometryChange();}
+\DoxyCodeLine{04002   update();}
+\DoxyCodeLine{04003 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_pass_through_node_a87cf749bc781e150a93527ad35939fd2}\label{class_fx_schematic_pass_through_node_a87cf749bc781e150a93527ad35939fd2}} 
+\index{FxSchematicPassThroughNode@{FxSchematicPassThroughNode}!paint@{paint}}
+\index{paint@{paint}!FxSchematicPassThroughNode@{FxSchematicPassThroughNode}}
+\doxysubsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Pass\+Through\+Node\+::paint (\begin{DoxyParamCaption}\item[{QPainter $\ast$}]{painter,  }\item[{const QStyle\+Option\+Graphics\+Item $\ast$}]{option,  }\item[{QWidget $\ast$}]{widget = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{03929                                                         \{}
+\DoxyCodeLine{03930   \mbox{\hyperlink{class_schematic_node_a587e509d56ea4bc2ad513f11509090cf}{FxSchematicNode::paint}}(painter, option, widget);}
+\DoxyCodeLine{03931 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/fxschematicnode.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/fxschematicnode.\+cpp\end{DoxyCompactItemize}

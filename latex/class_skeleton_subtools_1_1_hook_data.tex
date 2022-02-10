@@ -1,0 +1,111 @@
+\hypertarget{class_skeleton_subtools_1_1_hook_data}{}\doxysection{Skeleton\+Subtools\+::Hook\+Data Class Reference}
+\label{class_skeleton_subtools_1_1_hook_data}\index{SkeletonSubtools::HookData@{SkeletonSubtools::HookData}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_skeleton_subtools_1_1_hook_data_a8616f95782ef44c6839da3ebf85a673d}{Hook\+Data}} (\mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$xsh, int column\+Index, int hook\+Id, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos)
+\item 
+std\+::string \mbox{\hyperlink{class_skeleton_subtools_1_1_hook_data_aaf0bca52151cba56bbff457201c46da1}{get\+Handle}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_skeleton_subtools_1_1_hook_data_aa92b3b450a39388afb4bb1fa254a978e}{m\+\_\+column\+Index}}
+\item 
+int \mbox{\hyperlink{class_skeleton_subtools_1_1_hook_data_a8f81e04bdedbcedbb665c103a15362b2}{m\+\_\+hook\+Id}}
+\item 
+\mbox{\hyperlink{class_t_point_t}{TPointD}} \mbox{\hyperlink{class_skeleton_subtools_1_1_hook_data_aeabdab71765a4c43b981ea2a5ccb303d}{m\+\_\+pos}}
+\item 
+std\+::string \mbox{\hyperlink{class_skeleton_subtools_1_1_hook_data_a813806a74765f5100b48a75742a41ce6}{m\+\_\+name}}
+\item 
+bool \mbox{\hyperlink{class_skeleton_subtools_1_1_hook_data_a148e107740c44b836d9707b8be605159}{m\+\_\+is\+Pivot}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_skeleton_subtools_1_1_hook_data_a8616f95782ef44c6839da3ebf85a673d}\label{class_skeleton_subtools_1_1_hook_data_a8616f95782ef44c6839da3ebf85a673d}} 
+\index{SkeletonSubtools::HookData@{SkeletonSubtools::HookData}!HookData@{HookData}}
+\index{HookData@{HookData}!SkeletonSubtools::HookData@{SkeletonSubtools::HookData}}
+\doxysubsubsection{\texorpdfstring{HookData()}{HookData()}}
+{\footnotesize\ttfamily Hook\+Data\+::\+Hook\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$}]{xsh,  }\item[{int}]{column\+Index,  }\item[{int}]{hook\+Id,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00184     : m\_columnIndex(columnIndex)}
+\DoxyCodeLine{00185     , m\_hookId(hookId)}
+\DoxyCodeLine{00186     , m\_pos(pos)}
+\DoxyCodeLine{00187     , m\_isPivot(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00188   std::string handle =}
+\DoxyCodeLine{00189       xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(TStageObjectId::ColumnId(columnIndex))-\/>\mbox{\hyperlink{class_t_stage_object_aebee1ac99c0341fe053f272b93586ef2}{getHandle}}();}
+\DoxyCodeLine{00190   \textcolor{keywordflow}{if} (m\_hookId == 0) \{}
+\DoxyCodeLine{00191     \textcolor{comment}{// if the current handle is a hook the the hook\#0 should be the default}}
+\DoxyCodeLine{00192     \textcolor{comment}{// center, i.e. B}}
+\DoxyCodeLine{00193     \textcolor{keywordflow}{if} (handle.find(\textcolor{stringliteral}{"{}H"{}}) == 0)}
+\DoxyCodeLine{00194       m\_name = \textcolor{stringliteral}{"{}B"{}};}
+\DoxyCodeLine{00195     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00196       m\_name    = handle;}
+\DoxyCodeLine{00197       m\_isPivot = \textcolor{keyword}{true};}
+\DoxyCodeLine{00198     \}}
+\DoxyCodeLine{00199   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00200     m\_name    = std::to\_string(m\_hookId);}
+\DoxyCodeLine{00201     m\_isPivot = \textcolor{stringliteral}{"{}H"{}} + m\_name == handle;}
+\DoxyCodeLine{00202   \}}
+\DoxyCodeLine{00203 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_skeleton_subtools_1_1_hook_data_aaf0bca52151cba56bbff457201c46da1}\label{class_skeleton_subtools_1_1_hook_data_aaf0bca52151cba56bbff457201c46da1}} 
+\index{SkeletonSubtools::HookData@{SkeletonSubtools::HookData}!getHandle@{getHandle}}
+\index{getHandle@{getHandle}!SkeletonSubtools::HookData@{SkeletonSubtools::HookData}}
+\doxysubsubsection{\texorpdfstring{getHandle()}{getHandle()}}
+{\footnotesize\ttfamily std\+::string Skeleton\+Subtools\+::\+Hook\+Data\+::get\+Handle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027 \{ \textcolor{keywordflow}{return} m\_hookId > 0 ? \textcolor{stringliteral}{"{}H"{}} + m\_name : m\_name; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_skeleton_subtools_1_1_hook_data_aa92b3b450a39388afb4bb1fa254a978e}\label{class_skeleton_subtools_1_1_hook_data_aa92b3b450a39388afb4bb1fa254a978e}} 
+\index{SkeletonSubtools::HookData@{SkeletonSubtools::HookData}!m\_columnIndex@{m\_columnIndex}}
+\index{m\_columnIndex@{m\_columnIndex}!SkeletonSubtools::HookData@{SkeletonSubtools::HookData}}
+\doxysubsubsection{\texorpdfstring{m\_columnIndex}{m\_columnIndex}}
+{\footnotesize\ttfamily int Skeleton\+Subtools\+::\+Hook\+Data\+::m\+\_\+column\+Index}
+
+\mbox{\Hypertarget{class_skeleton_subtools_1_1_hook_data_a8f81e04bdedbcedbb665c103a15362b2}\label{class_skeleton_subtools_1_1_hook_data_a8f81e04bdedbcedbb665c103a15362b2}} 
+\index{SkeletonSubtools::HookData@{SkeletonSubtools::HookData}!m\_hookId@{m\_hookId}}
+\index{m\_hookId@{m\_hookId}!SkeletonSubtools::HookData@{SkeletonSubtools::HookData}}
+\doxysubsubsection{\texorpdfstring{m\_hookId}{m\_hookId}}
+{\footnotesize\ttfamily int Skeleton\+Subtools\+::\+Hook\+Data\+::m\+\_\+hook\+Id}
+
+\mbox{\Hypertarget{class_skeleton_subtools_1_1_hook_data_a148e107740c44b836d9707b8be605159}\label{class_skeleton_subtools_1_1_hook_data_a148e107740c44b836d9707b8be605159}} 
+\index{SkeletonSubtools::HookData@{SkeletonSubtools::HookData}!m\_isPivot@{m\_isPivot}}
+\index{m\_isPivot@{m\_isPivot}!SkeletonSubtools::HookData@{SkeletonSubtools::HookData}}
+\doxysubsubsection{\texorpdfstring{m\_isPivot}{m\_isPivot}}
+{\footnotesize\ttfamily bool Skeleton\+Subtools\+::\+Hook\+Data\+::m\+\_\+is\+Pivot}
+
+\mbox{\Hypertarget{class_skeleton_subtools_1_1_hook_data_a813806a74765f5100b48a75742a41ce6}\label{class_skeleton_subtools_1_1_hook_data_a813806a74765f5100b48a75742a41ce6}} 
+\index{SkeletonSubtools::HookData@{SkeletonSubtools::HookData}!m\_name@{m\_name}}
+\index{m\_name@{m\_name}!SkeletonSubtools::HookData@{SkeletonSubtools::HookData}}
+\doxysubsubsection{\texorpdfstring{m\_name}{m\_name}}
+{\footnotesize\ttfamily std\+::string Skeleton\+Subtools\+::\+Hook\+Data\+::m\+\_\+name}
+
+\mbox{\Hypertarget{class_skeleton_subtools_1_1_hook_data_aeabdab71765a4c43b981ea2a5ccb303d}\label{class_skeleton_subtools_1_1_hook_data_aeabdab71765a4c43b981ea2a5ccb303d}} 
+\index{SkeletonSubtools::HookData@{SkeletonSubtools::HookData}!m\_pos@{m\_pos}}
+\index{m\_pos@{m\_pos}!SkeletonSubtools::HookData@{SkeletonSubtools::HookData}}
+\doxysubsubsection{\texorpdfstring{m\_pos}{m\_pos}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_point_t}{TPointD}} Skeleton\+Subtools\+::\+Hook\+Data\+::m\+\_\+pos}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/skeletontool.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/skeletontool.\+cpp\end{DoxyCompactItemize}

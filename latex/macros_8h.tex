@@ -1,0 +1,159 @@
+\hypertarget{macros_8h}{}\doxysection{E\+:/opentoonz/toonz/sources/include/tcg/macros.h File Reference}
+\label{macros_8h}\index{E:/opentoonz/toonz/sources/include/tcg/macros.h@{E:/opentoonz/toonz/sources/include/tcg/macros.h}}
+
+
+This file contains some useful macros that can be used with tcg and generic C++ projects.  
+
+
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{macros_8h_a7538e67c2a72811f607d2bb9eb7e745c}{TCG\+\_\+\+MACROS\+\_\+H}}
+\item 
+\#define \mbox{\hyperlink{macros_8h_abcaf2f3bbaba74cf330e778baf26fb8a}{TCG\+\_\+\+ASSERT}}(assertion,  failure\+\_\+expr)
+\begin{DoxyCompactList}\small\item\em The TCG\+\_\+\+ASSERT instruction is an assertion that also provides a valid failure statement in case the asserted expression fails. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{macros_8h_aa33c870b5e8487a997155e31df0dc09c}{TCG\+\_\+\+DO\+\_\+\+JOIN2}}(A,  B)~A\#\#B
+\item 
+\#define \mbox{\hyperlink{macros_8h_a727c840f7a01ad105869322d00a4e506}{TCG\+\_\+\+DO\+\_\+\+JOIN}}(A,  B)~TCG\+\_\+\+DO\+\_\+\+JOIN2(A, B)
+\item 
+\#define \mbox{\hyperlink{macros_8h_a1c6fde04e925bd25039a541fa8086a94}{TCG\+\_\+\+JOIN}}(A,  B)~TCG\+\_\+\+DO\+\_\+\+JOIN(A, B)
+\begin{DoxyCompactList}\small\item\em Pastes the supplied arguments together, even when the arguments are macros themselves (typically seen with {\bfseries{LINE}}) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{macros_8h_afb05acd7751b0243f9571b72e13b29cc}{TCG\+\_\+\+STATIC\+\_\+\+ASSERT}}(expr)
+\begin{DoxyCompactList}\small\item\em Performs a compile-\/time check of the specified assertion. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{macros_8h_a8263141ef913ee69a3bb7bb6bca273c3}{TCG\+\_\+\+DEBUG}}(expr1)~expr1
+\begin{DoxyCompactList}\small\item\em Enables the specified expression in case NDEBUG is not defined, thus binding it to the behavior of the standard assert() macro. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{macros_8h_a6e26cf3c5a4c592ad86f0b47f1278dc7}{TCG\+\_\+\+DEBUG2}}(expr1,  expr2)~expr1, expr2
+\item 
+\#define \mbox{\hyperlink{macros_8h_a12a45b8bd03f35ec7eba19d5a73bc446}{TCG\+\_\+\+DEBUG3}}(expr1,  exrp2,  expr3)~expr1, expr2, expr3
+\item 
+\#define \mbox{\hyperlink{macros_8h_a53a8d432b228640bd60cbe3564d41969}{TCG\+\_\+\+DEBUG4}}(expr1,  expr2,  expr3,  expr4)~expr1, expr2, expr3, expr4
+\item 
+\#define \mbox{\hyperlink{macros_8h_a4b83d4ed15c3af3f3c39a925316b7062}{TCG\+\_\+\+DEBUG5}}(expr1,  expr2,  expr3,  expr4,  expr5)~  expr1, expr2, expr3, expr4, expr5
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file contains some useful macros that can be used with tcg and generic C++ projects. 
+
+
+
+Definition in file \mbox{\hyperlink{}{macros.\+h}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{macros_8h_abcaf2f3bbaba74cf330e778baf26fb8a}\label{macros_8h_abcaf2f3bbaba74cf330e778baf26fb8a}} 
+\index{macros.h@{macros.h}!TCG\_ASSERT@{TCG\_ASSERT}}
+\index{TCG\_ASSERT@{TCG\_ASSERT}!macros.h@{macros.h}}
+\doxysubsubsection{\texorpdfstring{TCG\_ASSERT}{TCG\_ASSERT}}
+{\footnotesize\ttfamily \#define TCG\+\_\+\+ASSERT(\begin{DoxyParamCaption}\item[{}]{assertion,  }\item[{}]{failure\+\_\+expr }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{                                                                               \(\backslash\)}
+\DoxyCodeLine{  if (!(assertion)) \{                                                          \(\backslash\)}
+\DoxyCodeLine{    assert(assertion);                                                         \(\backslash\)}
+\DoxyCodeLine{    failure\_expr;                                                              \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else}                                                                       \(\backslash\)}
+\DoxyCodeLine{    (void)0}
+
+\end{DoxyCode}
+
+
+The TCG\+\_\+\+ASSERT instruction is an assertion that also provides a valid failure statement in case the asserted expression fails. 
+
+Assert statements are used to enforce pre-\/ and post-\/conditions to algorithms, in a way that is {\bfseries{not}} intended to be broken -\/ in other words, after a failed assert statement we should expect nothing more than undefined behavior. The assert statement itself will signal a failed expression, {\itshape  and then will force the program to quit \texorpdfstring{$<$}{<}\textbackslash{}I\texorpdfstring{$>$}{>}.}
+
+{\itshape  However, there exist cases in which at the same time\+:}
+
+{\itshape  \begin{DoxyItemize}
+\item It is {\itshape known} that a pre/post-\/condition could be possibly broken \item It should still be considered an error \item Yet, a worst-\/case bail-\/out policy must be provided\end{DoxyItemize}
+When this happen, you should\+:}
+
+{\itshape  \begin{DoxyItemize}
+\item Feel offended -\/ it should {\bfseries{really not\texorpdfstring{$<$}{<}\textbackslash{}B\texorpdfstring{$>$}{>} happen. Errors in meeting requirements should never be tolerated }}\item {\bfseries{ Use TCG\+\_\+\+ASSERT. It does not solve things, but is a simple statement and defines a trackable (grep-\/able) string in the project }}\end{DoxyItemize}
+}\mbox{\Hypertarget{macros_8h_a8263141ef913ee69a3bb7bb6bca273c3}\label{macros_8h_a8263141ef913ee69a3bb7bb6bca273c3}} 
+\index{macros.h@{macros.h}!TCG\_DEBUG@{TCG\_DEBUG}}
+\index{TCG\_DEBUG@{TCG\_DEBUG}!macros.h@{macros.h}}
+\doxysubsubsection{\texorpdfstring{TCG\_DEBUG}{TCG\_DEBUG}}
+{\footnotesize\ttfamily \#define TCG\+\_\+\+DEBUG(\begin{DoxyParamCaption}\item[{}]{expr1 }\end{DoxyParamCaption})~expr1}
+
+
+
+Enables the specified expression in case NDEBUG is not defined, thus binding it to the behavior of the standard assert() macro. 
+
+\mbox{\Hypertarget{macros_8h_a6e26cf3c5a4c592ad86f0b47f1278dc7}\label{macros_8h_a6e26cf3c5a4c592ad86f0b47f1278dc7}} 
+\index{macros.h@{macros.h}!TCG\_DEBUG2@{TCG\_DEBUG2}}
+\index{TCG\_DEBUG2@{TCG\_DEBUG2}!macros.h@{macros.h}}
+\doxysubsubsection{\texorpdfstring{TCG\_DEBUG2}{TCG\_DEBUG2}}
+{\footnotesize\ttfamily \#define TCG\+\_\+\+DEBUG2(\begin{DoxyParamCaption}\item[{}]{expr1,  }\item[{}]{expr2 }\end{DoxyParamCaption})~expr1, expr2}
+
+\mbox{\Hypertarget{macros_8h_a12a45b8bd03f35ec7eba19d5a73bc446}\label{macros_8h_a12a45b8bd03f35ec7eba19d5a73bc446}} 
+\index{macros.h@{macros.h}!TCG\_DEBUG3@{TCG\_DEBUG3}}
+\index{TCG\_DEBUG3@{TCG\_DEBUG3}!macros.h@{macros.h}}
+\doxysubsubsection{\texorpdfstring{TCG\_DEBUG3}{TCG\_DEBUG3}}
+{\footnotesize\ttfamily \#define TCG\+\_\+\+DEBUG3(\begin{DoxyParamCaption}\item[{}]{expr1,  }\item[{}]{exrp2,  }\item[{}]{expr3 }\end{DoxyParamCaption})~expr1, expr2, expr3}
+
+\mbox{\Hypertarget{macros_8h_a53a8d432b228640bd60cbe3564d41969}\label{macros_8h_a53a8d432b228640bd60cbe3564d41969}} 
+\index{macros.h@{macros.h}!TCG\_DEBUG4@{TCG\_DEBUG4}}
+\index{TCG\_DEBUG4@{TCG\_DEBUG4}!macros.h@{macros.h}}
+\doxysubsubsection{\texorpdfstring{TCG\_DEBUG4}{TCG\_DEBUG4}}
+{\footnotesize\ttfamily \#define TCG\+\_\+\+DEBUG4(\begin{DoxyParamCaption}\item[{}]{expr1,  }\item[{}]{expr2,  }\item[{}]{expr3,  }\item[{}]{expr4 }\end{DoxyParamCaption})~expr1, expr2, expr3, expr4}
+
+\mbox{\Hypertarget{macros_8h_a4b83d4ed15c3af3f3c39a925316b7062}\label{macros_8h_a4b83d4ed15c3af3f3c39a925316b7062}} 
+\index{macros.h@{macros.h}!TCG\_DEBUG5@{TCG\_DEBUG5}}
+\index{TCG\_DEBUG5@{TCG\_DEBUG5}!macros.h@{macros.h}}
+\doxysubsubsection{\texorpdfstring{TCG\_DEBUG5}{TCG\_DEBUG5}}
+{\footnotesize\ttfamily \#define TCG\+\_\+\+DEBUG5(\begin{DoxyParamCaption}\item[{}]{expr1,  }\item[{}]{expr2,  }\item[{}]{expr3,  }\item[{}]{expr4,  }\item[{}]{expr5 }\end{DoxyParamCaption})~  expr1, expr2, expr3, expr4, expr5}
+
+\mbox{\Hypertarget{macros_8h_a727c840f7a01ad105869322d00a4e506}\label{macros_8h_a727c840f7a01ad105869322d00a4e506}} 
+\index{macros.h@{macros.h}!TCG\_DO\_JOIN@{TCG\_DO\_JOIN}}
+\index{TCG\_DO\_JOIN@{TCG\_DO\_JOIN}!macros.h@{macros.h}}
+\doxysubsubsection{\texorpdfstring{TCG\_DO\_JOIN}{TCG\_DO\_JOIN}}
+{\footnotesize\ttfamily \#define TCG\+\_\+\+DO\+\_\+\+JOIN(\begin{DoxyParamCaption}\item[{}]{A,  }\item[{}]{B }\end{DoxyParamCaption})~TCG\+\_\+\+DO\+\_\+\+JOIN2(A, B)}
+
+\mbox{\Hypertarget{macros_8h_aa33c870b5e8487a997155e31df0dc09c}\label{macros_8h_aa33c870b5e8487a997155e31df0dc09c}} 
+\index{macros.h@{macros.h}!TCG\_DO\_JOIN2@{TCG\_DO\_JOIN2}}
+\index{TCG\_DO\_JOIN2@{TCG\_DO\_JOIN2}!macros.h@{macros.h}}
+\doxysubsubsection{\texorpdfstring{TCG\_DO\_JOIN2}{TCG\_DO\_JOIN2}}
+{\footnotesize\ttfamily \#define TCG\+\_\+\+DO\+\_\+\+JOIN2(\begin{DoxyParamCaption}\item[{}]{A,  }\item[{}]{B }\end{DoxyParamCaption})~A\#\#B}
+
+\mbox{\Hypertarget{macros_8h_a1c6fde04e925bd25039a541fa8086a94}\label{macros_8h_a1c6fde04e925bd25039a541fa8086a94}} 
+\index{macros.h@{macros.h}!TCG\_JOIN@{TCG\_JOIN}}
+\index{TCG\_JOIN@{TCG\_JOIN}!macros.h@{macros.h}}
+\doxysubsubsection{\texorpdfstring{TCG\_JOIN}{TCG\_JOIN}}
+{\footnotesize\ttfamily \#define TCG\+\_\+\+JOIN(\begin{DoxyParamCaption}\item[{}]{A,  }\item[{}]{B }\end{DoxyParamCaption})~TCG\+\_\+\+DO\+\_\+\+JOIN(A, B)}
+
+
+
+Pastes the supplied arguments together, even when the arguments are macros themselves (typically seen with {\bfseries{LINE}}) 
+
+\begin{DoxySeeAlso}{See also}
+Taken from BOOST\+\_\+\+JOIN(\+A, B) 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{macros_8h_a7538e67c2a72811f607d2bb9eb7e745c}\label{macros_8h_a7538e67c2a72811f607d2bb9eb7e745c}} 
+\index{macros.h@{macros.h}!TCG\_MACROS\_H@{TCG\_MACROS\_H}}
+\index{TCG\_MACROS\_H@{TCG\_MACROS\_H}!macros.h@{macros.h}}
+\doxysubsubsection{\texorpdfstring{TCG\_MACROS\_H}{TCG\_MACROS\_H}}
+{\footnotesize\ttfamily \#define TCG\+\_\+\+MACROS\+\_\+H}
+
+\mbox{\Hypertarget{macros_8h_afb05acd7751b0243f9571b72e13b29cc}\label{macros_8h_afb05acd7751b0243f9571b72e13b29cc}} 
+\index{macros.h@{macros.h}!TCG\_STATIC\_ASSERT@{TCG\_STATIC\_ASSERT}}
+\index{TCG\_STATIC\_ASSERT@{TCG\_STATIC\_ASSERT}!macros.h@{macros.h}}
+\doxysubsubsection{\texorpdfstring{TCG\_STATIC\_ASSERT}{TCG\_STATIC\_ASSERT}}
+{\footnotesize\ttfamily \#define TCG\+\_\+\+STATIC\+\_\+\+ASSERT(\begin{DoxyParamCaption}\item[{}]{expr }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \textcolor{keyword}{struct }\mbox{\hyperlink{macros_8h_a1c6fde04e925bd25039a541fa8086a94}{TCG\_JOIN}}(\_tcg\_static\_assert\_, \_\_LINE\_\_) \{                             \(\backslash\)}
+\DoxyCodeLine{    int : -\/int(!(expr));                                                       \(\backslash\)}
+\DoxyCodeLine{  \}}
+
+\end{DoxyCode}
+
+
+Performs a compile-\/time check of the specified assertion. 
+
+\begin{DoxyWarning}{Warning}
+This macro uses the file\textquotesingle{}s line number to name a hidden structure. Please place {\bfseries{only}} {\bfseries{one}} static assert per line. 
+\end{DoxyWarning}

@@ -1,0 +1,282 @@
+\hypertarget{class_loader}{}\doxysection{Loader Class Reference}
+\label{class_loader}\index{Loader@{Loader}}
+Inheritance diagram for Loader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_loader}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_loader_a571a60d4ebcbd5d04088ad967b9af709}{walk\+Directory}} (const QString \&file)
+\item 
+void \mbox{\hyperlink{class_loader_aa33df37a85bf6f6e527e5989c4f7a1b2}{walk\+Dictionary}} (const QString \&file)
+\end{DoxyCompactItemize}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_loader_a81bbdac2406e1185225091dc286612d3}\label{class_loader_a81bbdac2406e1185225091dc286612d3}} 
+void {\bfseries load\+\_\+finished} (\mbox{\hyperlink{class_plugin_information}{Plugin\+Information}} $\ast$pi)
+\item 
+\mbox{\Hypertarget{class_loader_ac8ccd013bb29e13bd4c82c9f82590400}\label{class_loader_ac8ccd013bb29e13bd4c82c9f82590400}} 
+void {\bfseries fixup} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_loader_a88b29a86bacdb4fa0eac5c957bc21f48}{do\+Load}} (const QString \&file)
+\item 
+void \mbox{\hyperlink{class_loader_af03fc96e4201cd3ef01a4f341b933020}{walk\+Directory\+\_\+}} (const QString \&file)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_loader_a7bc9da9be2c78f9207d47fd43bb9a8c7}\label{class_loader_a7bc9da9be2c78f9207d47fd43bb9a8c7}} 
+\index{Loader@{Loader}!Loader@{Loader}}
+\index{Loader@{Loader}!Loader@{Loader}}
+\doxysubsubsection{\texorpdfstring{Loader()}{Loader()}}
+{\footnotesize\ttfamily Loader\+::\+Loader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01330 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_loader_a88b29a86bacdb4fa0eac5c957bc21f48}\label{class_loader_a88b29a86bacdb4fa0eac5c957bc21f48}} 
+\index{Loader@{Loader}!doLoad@{doLoad}}
+\index{doLoad@{doLoad}!Loader@{Loader}}
+\doxysubsubsection{\texorpdfstring{doLoad()}{doLoad()}}
+{\footnotesize\ttfamily void Loader\+::do\+Load (\begin{DoxyParamCaption}\item[{const QString \&}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01363                                        \{}
+\DoxyCodeLine{01364 \textcolor{preprocessor}{\#if defined(\_WIN32) || defined(\_CYGWIN\_)}}
+\DoxyCodeLine{01365   HMODULE handle = LoadLibraryA(file.toLocal8Bit().data());}
+\DoxyCodeLine{01366   printf(\textcolor{stringliteral}{"{}doLoad handle:\%p path:\%s\(\backslash\)n"{}}, handle, file.toLocal8Bit().data());}
+\DoxyCodeLine{01367 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{01368   \textcolor{keywordtype}{void} *handle = dlopen(file.toUtf8().data(), RTLD\_LOCAL);}
+\DoxyCodeLine{01369   printf(\textcolor{stringliteral}{"{}doLoad handle:\%p path:\%s\(\backslash\)n"{}}, handle, file.toUtf8().data());}
+\DoxyCodeLine{01370 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01371   \mbox{\hyperlink{class_plugin_information}{PluginInformation}} *pi = \textcolor{keyword}{new} \mbox{\hyperlink{class_plugin_information}{PluginInformation}};}
+\DoxyCodeLine{01372   \textcolor{keywordflow}{if} (handle) \{}
+\DoxyCodeLine{01373     pi-\/>library\_ = library\_t(handle, end\_library);  \textcolor{comment}{// shared\_ptr}}
+\DoxyCodeLine{01374                                                     \textcolor{comment}{/*}}
+\DoxyCodeLine{01375 \textcolor{comment}{probe に使う plugin 情報を探す.}}
+\DoxyCodeLine{01376 \textcolor{comment}{テーブルを export}}
+\DoxyCodeLine{01377 \textcolor{comment}{                                                    したほうが楽だが、開発者はデバッグしにくいので関数フォームも提供する.}}
+\DoxyCodeLine{01378 \textcolor{comment}{toonz\_plugin\_info で検索し、なければ toonz\_plugin\_probe() を呼び出す.}}
+\DoxyCodeLine{01379 \textcolor{comment}{*/}}
+\DoxyCodeLine{01380 \textcolor{preprocessor}{\#if defined(\_WIN32) || defined(\_CYGWIN\_)}}
+\DoxyCodeLine{01381     \textcolor{keyword}{auto} ini = (int (*)(host\_interface\_t *))GetProcAddress(handle,}
+\DoxyCodeLine{01382                                                            \textcolor{stringliteral}{"{}toonz\_plugin\_init"{}});}
+\DoxyCodeLine{01383     \textcolor{keyword}{auto} fin = (void (*)(void))GetProcAddress(handle,}
+\DoxyCodeLine{01384                                               \textcolor{stringliteral}{"{}toonz\_plugin\_exit"{}});  \textcolor{comment}{// optional}}
+\DoxyCodeLine{01385     \textcolor{keyword}{const} plugin\_probe\_list\_t *problist =}
+\DoxyCodeLine{01386         \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const }plugin\_probe\_list\_t *\textcolor{keyword}{>}(}
+\DoxyCodeLine{01387             GetProcAddress(handle, \textcolor{stringliteral}{"{}toonz\_plugin\_info\_list"{}}));}
+\DoxyCodeLine{01388 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{01389     \textcolor{keyword}{auto} ini = (int (*)(host\_interface\_t *))dlsym(handle, \textcolor{stringliteral}{"{}toonz\_plugin\_init"{}});}
+\DoxyCodeLine{01390     \textcolor{keyword}{auto} fin = (void (*)(void))dlsym(handle, \textcolor{stringliteral}{"{}toonz\_plugin\_exit"{}});  \textcolor{comment}{// optional}}
+\DoxyCodeLine{01391     \textcolor{keyword}{const} plugin\_probe\_list\_t *problist =}
+\DoxyCodeLine{01392         \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const }plugin\_probe\_list\_t *\textcolor{keyword}{>}(}
+\DoxyCodeLine{01393             dlsym(handle, \textcolor{stringliteral}{"{}toonz\_plugin\_info\_list"{}}));}
+\DoxyCodeLine{01394 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01395     pi-\/>ini\_ = ini;}
+\DoxyCodeLine{01396     pi-\/>fin\_ = fin;}
+\DoxyCodeLine{01397 }
+\DoxyCodeLine{01398     \textcolor{keyword}{const} plugin\_probe\_t *probinfo\_begin = NULL;}
+\DoxyCodeLine{01399     \textcolor{keyword}{const} plugin\_probe\_t *probinfo\_end   = NULL;}
+\DoxyCodeLine{01400     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{01401       \textcolor{keywordflow}{if} (problist) \{}
+\DoxyCodeLine{01402         \textcolor{keywordflow}{if} (!is\_compatible<plugin\_probe\_list\_t, 1, 0>(*problist))}
+\DoxyCodeLine{01403           \textcolor{keywordflow}{throw} std::domain\_error(}
+\DoxyCodeLine{01404               \textcolor{stringliteral}{"{}invalid toonz\_plugin\_info\_list: version unmatched"{}});}
+\DoxyCodeLine{01405         probinfo\_begin = problist-\/>begin;}
+\DoxyCodeLine{01406         probinfo\_end   = problist-\/>end;}
+\DoxyCodeLine{01407       \}}
+\DoxyCodeLine{01408 }
+\DoxyCodeLine{01409       \textcolor{keywordflow}{if} (!probinfo\_begin || !probinfo\_end) \{}
+\DoxyCodeLine{01410         printf(\textcolor{stringliteral}{"{}use function-\/formed prober:toonz\_plugin\_probe\(\backslash\)n"{}});}
+\DoxyCodeLine{01411 \textcolor{comment}{// look at function-\/formed}}
+\DoxyCodeLine{01412 \textcolor{preprocessor}{\#if defined(\_WIN32) || defined(\_CYGWIN\_)}}
+\DoxyCodeLine{01413         \textcolor{keywordtype}{void} *probe = GetProcAddress(handle, \textcolor{stringliteral}{"{}toonz\_plugin\_probe"{}});}
+\DoxyCodeLine{01414 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{01415         \textcolor{keywordtype}{void} *probe = dlsym(handle, \textcolor{stringliteral}{"{}toonz\_plugin\_probe"{}});}
+\DoxyCodeLine{01416 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01417         \textcolor{keywordflow}{if} (probe) \{}
+\DoxyCodeLine{01418           printf(\textcolor{stringliteral}{"{}function-\/formed prober found\(\backslash\)n"{}});}
+\DoxyCodeLine{01419           \textcolor{keyword}{const} plugin\_probe\_list\_t *lst =}
+\DoxyCodeLine{01420               (\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const }plugin\_probe\_list\_t *(*)(\textcolor{keywordtype}{void})\textcolor{keyword}{>}(probe))();}
+\DoxyCodeLine{01421           \textcolor{keywordflow}{if} (!lst || !is\_compatible<plugin\_probe\_list\_t, 1, 0>(*lst))}
+\DoxyCodeLine{01422             \textcolor{keywordflow}{throw} std::domain\_error(\textcolor{stringliteral}{"{}invalid plugin list"{}});}
+\DoxyCodeLine{01423           plugin\_probe\_t *begin = lst-\/>begin;}
+\DoxyCodeLine{01424           plugin\_probe\_t *end   = lst-\/>end;}
+\DoxyCodeLine{01425           \textcolor{keywordflow}{if} (!begin || !end)}
+\DoxyCodeLine{01426             \textcolor{keywordflow}{throw} std::domain\_error(}
+\DoxyCodeLine{01427                 \textcolor{stringliteral}{"{}invalid plugin information address (begin or end is null)"{}});}
+\DoxyCodeLine{01428           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (begin >= end)}
+\DoxyCodeLine{01429             \textcolor{keywordflow}{throw} std::domain\_error(}
+\DoxyCodeLine{01430                 \textcolor{stringliteral}{"{}invalid plugin information address (begin >= end)"{}});}
+\DoxyCodeLine{01431           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (begin == end -\/ 1)}
+\DoxyCodeLine{01432             \textcolor{keywordflow}{throw} std::domain\_error(}
+\DoxyCodeLine{01433                 \textcolor{stringliteral}{"{}invalid plugin information address (information is empty)"{}});}
+\DoxyCodeLine{01434           probinfo\_begin = begin;}
+\DoxyCodeLine{01435           probinfo\_end   = end;}
+\DoxyCodeLine{01436         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01437           \textcolor{keywordflow}{throw} std::domain\_error(}
+\DoxyCodeLine{01438               \textcolor{stringliteral}{"{}found toonz\_plugin\_probe nor toonz\_plugin\_info"{}});}
+\DoxyCodeLine{01439         \}}
+\DoxyCodeLine{01440       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01441       \}}
+\DoxyCodeLine{01442       \textcolor{keywordtype}{int} plugin\_num = probinfo\_end -\/ probinfo\_begin;}
+\DoxyCodeLine{01443       printf(\textcolor{stringliteral}{"{}plugin count:\%d begin:\%p end:\%p\(\backslash\)n"{}}, plugin\_num, probinfo\_begin,}
+\DoxyCodeLine{01444              probinfo\_end);}
+\DoxyCodeLine{01445 }
+\DoxyCodeLine{01446       \textcolor{comment}{/* sanity check に失敗した場合は予期せぬアドレスを参照して toonz}}
+\DoxyCodeLine{01447 \textcolor{comment}{         本体ごと落ちる可能性があるので}}
+\DoxyCodeLine{01448 \textcolor{comment}{         致命的エラー扱いで早期に抜ける. */}}
+\DoxyCodeLine{01449       \textcolor{keywordflow}{if} (!probinfo\_begin || !probinfo\_end ||}
+\DoxyCodeLine{01450           !check(probinfo\_begin, probinfo\_end))}
+\DoxyCodeLine{01451         \textcolor{keywordflow}{throw} std::domain\_error(\textcolor{stringliteral}{"{}ill-\/formed plugin information"{}});}
+\DoxyCodeLine{01452 }
+\DoxyCodeLine{01453       \textcolor{keywordflow}{for} (\textcolor{keyword}{const} plugin\_probe\_t *probinfo = probinfo\_begin;}
+\DoxyCodeLine{01454            probinfo < probinfo\_end; probinfo++) \{}
+\DoxyCodeLine{01455         pi-\/>desc\_                       = \textcolor{keyword}{new} \mbox{\hyperlink{class_plugin_description}{PluginDescription}}(probinfo);}
+\DoxyCodeLine{01456         nodal\_rasterfx\_handler\_t *nodal = probinfo-\/>handler;}
+\DoxyCodeLine{01457         \textcolor{comment}{/* probinfo は sanity check 通過済みなのでチェック不要. handler は null}}
+\DoxyCodeLine{01458 \textcolor{comment}{         * でないことのみが確認されている */}}
+\DoxyCodeLine{01459         \textcolor{keywordflow}{if} (is\_compatible<nodal\_rasterfx\_handler\_t, 1, 0>(*nodal)) \{}
+\DoxyCodeLine{01460           uint32\_t c = probinfo-\/>clss \& \string~(TOONZ\_PLUGIN\_CLASS\_MODIFIER\_MASK);}
+\DoxyCodeLine{01461           uint32\_t m = probinfo-\/>clss \& (TOONZ\_PLUGIN\_CLASS\_MODIFIER\_MASK);}
+\DoxyCodeLine{01462           \textcolor{keywordflow}{if} (c == TOONZ\_PLUGIN\_CLASS\_POSTPROCESS\_SLAB) \{}
+\DoxyCodeLine{01463             pi-\/>handler\_ = \textcolor{keyword}{new} nodal\_rasterfx\_handler\_t;}
+\DoxyCodeLine{01464             \textcolor{keywordflow}{if} (!check\_and\_copy(pi-\/>handler\_, nodal))}
+\DoxyCodeLine{01465               \textcolor{keywordflow}{throw} std::domain\_error(\textcolor{stringliteral}{"{}ill-\/formed nodal interface"{}});}
+\DoxyCodeLine{01466           \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01467             \textcolor{comment}{// unknown plugin-\/class : gracefully end}}
+\DoxyCodeLine{01468             \textcolor{comment}{/* sanity check しているので来ないはずだ */}}
+\DoxyCodeLine{01469           \}}
+\DoxyCodeLine{01470         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01471           \textcolor{comment}{// unknown version : gracefully end}}
+\DoxyCodeLine{01472         \}}
+\DoxyCodeLine{01473 }
+\DoxyCodeLine{01474         emit load\_finished(pi);}
+\DoxyCodeLine{01475 }
+\DoxyCodeLine{01476         \textcolor{keywordflow}{if} (pi) \{}
+\DoxyCodeLine{01477           \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{01478             \textcolor{keywordflow}{if} (pi-\/>ini\_) \{}
+\DoxyCodeLine{01479               \textcolor{comment}{/* interface は plugin 内部で破壊されても他に影響させないため}}
+\DoxyCodeLine{01480 \textcolor{comment}{               * plugin instance ごとに割り当てる.  */}}
+\DoxyCodeLine{01481               host\_interface\_t *host  = \textcolor{keyword}{new} host\_interface\_t;}
+\DoxyCodeLine{01482               host-\/>ver.major         = 1;}
+\DoxyCodeLine{01483               host-\/>ver.minor         = 0;}
+\DoxyCodeLine{01484               host-\/>query\_interface   = query\_interface;}
+\DoxyCodeLine{01485               host-\/>release\_interface = release\_interface;}
+\DoxyCodeLine{01486               \textcolor{keywordtype}{int} ret                 = pi-\/>ini\_(host);}
+\DoxyCodeLine{01487               \textcolor{keywordflow}{if} (ret) \{}
+\DoxyCodeLine{01488                 \textcolor{keyword}{delete} host;}
+\DoxyCodeLine{01489                 std::domain\_error(}
+\DoxyCodeLine{01490                     \textcolor{stringliteral}{"{}failed initialized: error on \_toonz\_plugin\_init"{}});}
+\DoxyCodeLine{01491               \}}
+\DoxyCodeLine{01492               pi-\/>host\_ = host;}
+\DoxyCodeLine{01493               pi-\/>decl\_ = \textcolor{keyword}{new} \mbox{\hyperlink{struct_plugin_declaration}{PluginDeclaration}}(pi);}
+\DoxyCodeLine{01494             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01495               \textcolor{comment}{/* もっと早期にエラーを出して終了することもできるが}}
+\DoxyCodeLine{01496 \textcolor{comment}{                 センシティブすぎると見通しが立てにくいのである程度我慢してから出す}}
+\DoxyCodeLine{01497 \textcolor{comment}{                 */}}
+\DoxyCodeLine{01498               \textcolor{keywordflow}{throw} std::domain\_error(\textcolor{stringliteral}{"{}not found \_toonz\_plugin\_init"{}});}
+\DoxyCodeLine{01499             \}}
+\DoxyCodeLine{01500           \} \textcolor{keywordflow}{catch} (\textcolor{keyword}{const} std::exception \&e) \{}
+\DoxyCodeLine{01501             printf(\textcolor{stringliteral}{"{}Exception occurred after plugin loading: \%s\(\backslash\)n"{}}, e.what());}
+\DoxyCodeLine{01502           \}}
+\DoxyCodeLine{01503 }
+\DoxyCodeLine{01504           \textcolor{keywordflow}{if} (pi-\/>handler\_ \&\& pi-\/>handler\_-\/>setup) \{}
+\DoxyCodeLine{01505             \mbox{\hyperlink{class_plugin_setup_message}{PluginSetupMessage}}(pi).sendBlocking();}
+\DoxyCodeLine{01506           \}}
+\DoxyCodeLine{01507 }
+\DoxyCodeLine{01508           \textcolor{keywordflow}{if} (probinfo + 1 < probinfo\_end) \{}
+\DoxyCodeLine{01509             \textcolor{comment}{/* for a next plugin on the library */}}
+\DoxyCodeLine{01510             \textcolor{keyword}{auto} prev = pi-\/>library\_;}
+\DoxyCodeLine{01511             pi        = \textcolor{keyword}{new} \mbox{\hyperlink{class_plugin_information}{PluginInformation}};}
+\DoxyCodeLine{01512             \textcolor{comment}{/* instance に依存しない unique なリソースは引き継ぐ必要がある */}}
+\DoxyCodeLine{01513             pi-\/>library\_ = prev;}
+\DoxyCodeLine{01514             pi-\/>ini\_     = ini;}
+\DoxyCodeLine{01515             pi-\/>fin\_     = fin;}
+\DoxyCodeLine{01516           \}}
+\DoxyCodeLine{01517         \}}
+\DoxyCodeLine{01518       \}}
+\DoxyCodeLine{01519     \} \textcolor{keywordflow}{catch} (\textcolor{keyword}{const} std::exception \&e) \{}
+\DoxyCodeLine{01520       printf(\textcolor{stringliteral}{"{}Exception occurred while plugin loading: \%s\(\backslash\)n"{}}, e.what());}
+\DoxyCodeLine{01521       \textcolor{keyword}{delete} pi;}
+\DoxyCodeLine{01522       pi = NULL;}
+\DoxyCodeLine{01523     \}}
+\DoxyCodeLine{01524   \}}
+\DoxyCodeLine{01525 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_loader_aa33df37a85bf6f6e527e5989c4f7a1b2}\label{class_loader_aa33df37a85bf6f6e527e5989c4f7a1b2}} 
+\index{Loader@{Loader}!walkDictionary@{walkDictionary}}
+\index{walkDictionary@{walkDictionary}!Loader@{Loader}}
+\doxysubsubsection{\texorpdfstring{walkDictionary}{walkDictionary}}
+{\footnotesize\ttfamily void Loader\+::walk\+Dictionary (\begin{DoxyParamCaption}\item[{const QString \&}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01337                                                \{}
+\DoxyCodeLine{01338   \textcolor{comment}{/* only for emitting a signal for fixup */}}
+\DoxyCodeLine{01339   printf(\textcolor{stringliteral}{"{}walkDictionary: \%s [dry]\(\backslash\)n"{}}, path.toLocal8Bit().data());}
+\DoxyCodeLine{01340   emit fixup();}
+\DoxyCodeLine{01341 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_loader_a571a60d4ebcbd5d04088ad967b9af709}\label{class_loader_a571a60d4ebcbd5d04088ad967b9af709}} 
+\index{Loader@{Loader}!walkDirectory@{walkDirectory}}
+\index{walkDirectory@{walkDirectory}!Loader@{Loader}}
+\doxysubsubsection{\texorpdfstring{walkDirectory}{walkDirectory}}
+{\footnotesize\ttfamily void Loader\+::walk\+Directory (\begin{DoxyParamCaption}\item[{const QString \&}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01332                                               \{}
+\DoxyCodeLine{01333   walkDirectory\_(path);}
+\DoxyCodeLine{01334   emit fixup();}
+\DoxyCodeLine{01335 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_loader_af03fc96e4201cd3ef01a4f341b933020}\label{class_loader_af03fc96e4201cd3ef01a4f341b933020}} 
+\index{Loader@{Loader}!walkDirectory\_@{walkDirectory\_}}
+\index{walkDirectory\_@{walkDirectory\_}!Loader@{Loader}}
+\doxysubsubsection{\texorpdfstring{walkDirectory\_()}{walkDirectory\_()}}
+{\footnotesize\ttfamily void Loader\+::walk\+Directory\+\_\+ (\begin{DoxyParamCaption}\item[{const QString \&}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01343                                                \{}
+\DoxyCodeLine{01344   printf(\textcolor{stringliteral}{"{}walkDirectory\_: \%s\(\backslash\)n"{}}, path.toLocal8Bit().data());}
+\DoxyCodeLine{01345   QDir dir(path, QString::fromStdString(\textcolor{stringliteral}{"{}*.plugin"{}}), QDir::Name,}
+\DoxyCodeLine{01346            QDir::AllDirs | QDir::Files | QDir::NoDot | QDir::NoDotDot);}
+\DoxyCodeLine{01347   \textcolor{keyword}{auto} lst = dir.entryInfoList();}
+\DoxyCodeLine{01348   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \&e : lst) \{}
+\DoxyCodeLine{01349     \textcolor{keywordflow}{if} (e.isDir()) \{}
+\DoxyCodeLine{01350       walkDirectory\_(e.filePath());}
+\DoxyCodeLine{01351     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (e.isFile()) \{  \textcolor{comment}{// file or symlink-\/to-\/file}}
+\DoxyCodeLine{01352       doLoad(e.filePath());}
+\DoxyCodeLine{01353     \}}
+\DoxyCodeLine{01354   \}}
+\DoxyCodeLine{01355 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/pluginhost.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/pluginhost.\+cpp\end{DoxyCompactItemize}

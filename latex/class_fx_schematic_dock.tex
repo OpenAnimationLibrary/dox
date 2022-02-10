@@ -1,0 +1,158 @@
+\hypertarget{class_fx_schematic_dock}{}\doxysection{Fx\+Schematic\+Dock Class Reference}
+\label{class_fx_schematic_dock}\index{FxSchematicDock@{FxSchematicDock}}
+Inheritance diagram for Fx\+Schematic\+Dock\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_fx_schematic_dock}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_fx_schematic_dock_af5b78c2bd329534f7a8096c17c5f51a1}{Fx\+Schematic\+Dock}} (\mbox{\hyperlink{class_fx_schematic_node}{Fx\+Schematic\+Node}} $\ast$parent, const QString \&string, double width, e\+Fx\+Schematic\+Port\+Type type)
+\item 
+QRectF \mbox{\hyperlink{class_fx_schematic_dock_aa88add210a9aaa8ea507cb07e23debdf}{bounding\+Rect}} () const override
+\item 
+void \mbox{\hyperlink{class_fx_schematic_dock_ac66bff37725f895fad6338df30daebd7}{paint}} (QPainter $\ast$painter, const QStyle\+Option\+Graphics\+Item $\ast$option, QWidget $\ast$widget=0) override
+\item 
+\mbox{\hyperlink{class_fx_schematic_node}{Fx\+Schematic\+Node}} $\ast$ \mbox{\hyperlink{class_fx_schematic_dock_a00f0c05ded9a0a7e0f3545d4fa239e9c}{get\+Node}} ()
+\item 
+\mbox{\hyperlink{class_fx_schematic_port}{Fx\+Schematic\+Port}} $\ast$ \mbox{\hyperlink{class_fx_schematic_dock_a3bdb3e85b30c7c5a9b316058fdd4fb8f}{get\+Port}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_fx_schematic_dock_af5b78c2bd329534f7a8096c17c5f51a1}\label{class_fx_schematic_dock_af5b78c2bd329534f7a8096c17c5f51a1}} 
+\index{FxSchematicDock@{FxSchematicDock}!FxSchematicDock@{FxSchematicDock}}
+\index{FxSchematicDock@{FxSchematicDock}!FxSchematicDock@{FxSchematicDock}}
+\doxysubsubsection{\texorpdfstring{FxSchematicDock()}{FxSchematicDock()}}
+{\footnotesize\ttfamily Fx\+Schematic\+Dock\+::\+Fx\+Schematic\+Dock (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_schematic_node}{Fx\+Schematic\+Node}} $\ast$}]{parent,  }\item[{const QString \&}]{string,  }\item[{double}]{width,  }\item[{e\+Fx\+Schematic\+Port\+Type}]{type }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01805     : QGraphicsItem(parent), m\_name(name), m\_width(width) \{}
+\DoxyCodeLine{01806   m\_port = \textcolor{keyword}{new} \mbox{\hyperlink{class_fx_schematic_port}{FxSchematicPort}}(\textcolor{keyword}{this}, type);}
+\DoxyCodeLine{01807   m\_port-\/>setPos(0, 0);}
+\DoxyCodeLine{01808   \textcolor{keywordflow}{if} (parent) \{}
+\DoxyCodeLine{01809     \mbox{\hyperlink{class_t_fx}{TFx}} *fx       = parent-\/>getFx();}
+\DoxyCodeLine{01810     \mbox{\hyperlink{class_t_fx_port}{TFxPort}} *port = fx-\/>getInputPort(name.toStdString());}
+\DoxyCodeLine{01811     \textcolor{keywordflow}{if} (port) \{}
+\DoxyCodeLine{01812       \mbox{\hyperlink{class_t_fx}{TFx}} *inputFx = port-\/>getFx();}
+\DoxyCodeLine{01813       \textcolor{keywordflow}{if} (inputFx) \{}
+\DoxyCodeLine{01814         \mbox{\hyperlink{class_t_level_column_fx}{TLevelColumnFx}} *levelFx    = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_level_column_fx}{TLevelColumnFx}} *\textcolor{keyword}{>}(inputFx);}
+\DoxyCodeLine{01815         \mbox{\hyperlink{class_t_palette_column_fx}{TPaletteColumnFx}} *palettFx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_palette_column_fx}{TPaletteColumnFx}} *\textcolor{keyword}{>}(inputFx);}
+\DoxyCodeLine{01816         \textcolor{keywordflow}{if} (levelFx || palettFx) \{}
+\DoxyCodeLine{01817           \textcolor{keywordtype}{int} index =}
+\DoxyCodeLine{01818               levelFx ? levelFx-\/>getColumnIndex() : palettFx-\/>getColumnIndex();}
+\DoxyCodeLine{01819           \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} objId         = TStageObjectId::ColumnId(index);}
+\DoxyCodeLine{01820           QGraphicsScene *graphicScene = scene();}
+\DoxyCodeLine{01821           \mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *schematicScene =}
+\DoxyCodeLine{01822               \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *\textcolor{keyword}{>}(graphicScene);}
+\DoxyCodeLine{01823           \textcolor{keywordflow}{if} (schematicScene) \{}
+\DoxyCodeLine{01824             std::string colName =}
+\DoxyCodeLine{01825                 schematicScene-\/>getXsheet()-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(objId)-\/>getName();}
+\DoxyCodeLine{01826             setToolTip(QString::fromStdString(colName));}
+\DoxyCodeLine{01827           \}}
+\DoxyCodeLine{01828         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01829           \mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *zeraryFx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *\textcolor{keyword}{>}(inputFx);}
+\DoxyCodeLine{01830           \textcolor{keywordflow}{if} (zeraryFx) inputFx = zeraryFx-\/>getZeraryFx();}
+\DoxyCodeLine{01831           setToolTip(QString::fromStdWString(inputFx-\/>getName()));}
+\DoxyCodeLine{01832         \}}
+\DoxyCodeLine{01833       \}}
+\DoxyCodeLine{01834     \}}
+\DoxyCodeLine{01835   \}}
+\DoxyCodeLine{01836   connect(m\_port, SIGNAL(sceneChanged()), parent, SIGNAL(sceneChanged()));}
+\DoxyCodeLine{01837   connect(m\_port, SIGNAL(xsheetChanged()), parent, SIGNAL(xsheetChanged()));}
+\DoxyCodeLine{01838 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_dock_a087cf4dd1cfec3222cc9fdac2b53cede}\label{class_fx_schematic_dock_a087cf4dd1cfec3222cc9fdac2b53cede}} 
+\index{FxSchematicDock@{FxSchematicDock}!````~FxSchematicDock@{$\sim$FxSchematicDock}}
+\index{````~FxSchematicDock@{$\sim$FxSchematicDock}!FxSchematicDock@{FxSchematicDock}}
+\doxysubsubsection{\texorpdfstring{$\sim$FxSchematicDock()}{~FxSchematicDock()}}
+{\footnotesize\ttfamily Fx\+Schematic\+Dock\+::$\sim$\+Fx\+Schematic\+Dock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01842 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_fx_schematic_dock_aa88add210a9aaa8ea507cb07e23debdf}\label{class_fx_schematic_dock_aa88add210a9aaa8ea507cb07e23debdf}} 
+\index{FxSchematicDock@{FxSchematicDock}!boundingRect@{boundingRect}}
+\index{boundingRect@{boundingRect}!FxSchematicDock@{FxSchematicDock}}
+\doxysubsubsection{\texorpdfstring{boundingRect()}{boundingRect()}}
+{\footnotesize\ttfamily QRectF Fx\+Schematic\+Dock\+::bounding\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01846                                            \{}
+\DoxyCodeLine{01847   \textcolor{keywordflow}{return} QRectF(0, 0, m\_width, m\_port-\/>boundingRect().height());}
+\DoxyCodeLine{01848 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_dock_a00f0c05ded9a0a7e0f3545d4fa239e9c}\label{class_fx_schematic_dock_a00f0c05ded9a0a7e0f3545d4fa239e9c}} 
+\index{FxSchematicDock@{FxSchematicDock}!getNode@{getNode}}
+\index{getNode@{getNode}!FxSchematicDock@{FxSchematicDock}}
+\doxysubsubsection{\texorpdfstring{getNode()}{getNode()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_fx_schematic_node}{Fx\+Schematic\+Node}} $\ast$ Fx\+Schematic\+Dock\+::get\+Node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01876                                           \{}
+\DoxyCodeLine{01877   \mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *node = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *\textcolor{keyword}{>}(parentItem());}
+\DoxyCodeLine{01878   \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{01879 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_dock_a3bdb3e85b30c7c5a9b316058fdd4fb8f}\label{class_fx_schematic_dock_a3bdb3e85b30c7c5a9b316058fdd4fb8f}} 
+\index{FxSchematicDock@{FxSchematicDock}!getPort@{getPort}}
+\index{getPort@{getPort}!FxSchematicDock@{FxSchematicDock}}
+\doxysubsubsection{\texorpdfstring{getPort()}{getPort()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_fx_schematic_port}{Fx\+Schematic\+Port}} $\ast$ Fx\+Schematic\+Dock\+::get\+Port (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00257 \{ \textcolor{keywordflow}{return} m\_port; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_dock_ac66bff37725f895fad6338df30daebd7}\label{class_fx_schematic_dock_ac66bff37725f895fad6338df30daebd7}} 
+\index{FxSchematicDock@{FxSchematicDock}!paint@{paint}}
+\index{paint@{paint}!FxSchematicDock@{FxSchematicDock}}
+\doxysubsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Dock\+::paint (\begin{DoxyParamCaption}\item[{QPainter $\ast$}]{painter,  }\item[{const QStyle\+Option\+Graphics\+Item $\ast$}]{option,  }\item[{QWidget $\ast$}]{widget = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01854                                              \{}
+\DoxyCodeLine{01855   \textcolor{keywordflow}{if} (m\_port-\/>\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxInputPort ||}
+\DoxyCodeLine{01856       m\_port-\/>\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxGroupedInPort) \{}
+\DoxyCodeLine{01857     \textcolor{comment}{// do nothing when small scaled}}
+\DoxyCodeLine{01858     \textcolor{keywordflow}{if} (!getNode()-\/>isNormalIconView()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01859 }
+\DoxyCodeLine{01860     painter-\/>setPen(Qt::NoPen);}
+\DoxyCodeLine{01861     painter-\/>setBrush(QColor(0, 0, 0, 192));}
+\DoxyCodeLine{01862     painter-\/>drawRect(boundingRect());}
+\DoxyCodeLine{01863 }
+\DoxyCodeLine{01864     QFont tempFont(painter-\/>font());}
+\DoxyCodeLine{01865     tempFont.setPixelSize(tempFont.pixelSize() -\/ 1);}
+\DoxyCodeLine{01866     painter-\/>setFont(tempFont);}
+\DoxyCodeLine{01867 }
+\DoxyCodeLine{01868     painter-\/>setPen(Qt::white);}
+\DoxyCodeLine{01869     painter-\/>drawText(boundingRect().adjusted(18, 0, 0, 0),}
+\DoxyCodeLine{01870                       Qt::AlignLeft | Qt::AlignVCenter, m\_name);}
+\DoxyCodeLine{01871   \}}
+\DoxyCodeLine{01872 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/fxschematicnode.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/fxschematicnode.\+cpp\end{DoxyCompactItemize}

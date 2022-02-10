@@ -1,0 +1,212 @@
+\hypertarget{class_insert_fx_undo}{}\doxysection{Insert\+Fx\+Undo Class Reference}
+\label{class_insert_fx_undo}\index{InsertFxUndo@{InsertFxUndo}}
+Inheritance diagram for Insert\+Fx\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_insert_fx_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_insert_fx_undo_ac1eb09bc160ad9fd117df15fc429a941}{Insert\+Fx\+Undo}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} \&fx, int row, int col, const QList$<$ \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} $>$ \&selected\+Fxs, QList$<$ \mbox{\hyperlink{class_t_fx_command_1_1_link}{TFx\+Command\+::\+Link}} $>$ selected\+Links, \mbox{\hyperlink{class_t_application}{TApplication}} $\ast$app, bool attach\+Outputs=true)
+\item 
+bool \mbox{\hyperlink{class_insert_fx_undo_a7bb307e73fb03a9519d96d42bac34e04}{is\+Consistent}} () const override
+\item 
+void \mbox{\hyperlink{class_insert_fx_undo_a9d9f9b57af0838968fa29ac8e5af05b1}{redo}} () const override
+\item 
+void \mbox{\hyperlink{class_insert_fx_undo_a35c480885cd13211baf88fabc29a9ed9}{undo}} () const override
+\item 
+int \mbox{\hyperlink{class_insert_fx_undo_a3aff49b6a8be3ed16618af9c146ae625}{get\+Size}} () const override
+\item 
+QString \mbox{\hyperlink{class_insert_fx_undo_ae4e2a02a055af05f0b3729c7ed288458}{get\+History\+String}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_insert_fx_undo_ac1eb09bc160ad9fd117df15fc429a941}\label{class_insert_fx_undo_ac1eb09bc160ad9fd117df15fc429a941}} 
+\index{InsertFxUndo@{InsertFxUndo}!InsertFxUndo@{InsertFxUndo}}
+\index{InsertFxUndo@{InsertFxUndo}!InsertFxUndo@{InsertFxUndo}}
+\doxysubsubsection{\texorpdfstring{InsertFxUndo()}{InsertFxUndo()}}
+{\footnotesize\ttfamily Insert\+Fx\+Undo\+::\+Insert\+Fx\+Undo (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} \&}]{fx,  }\item[{int}]{row,  }\item[{int}]{col,  }\item[{const QList$<$ \mbox{\hyperlink{class_t_smart_pointer_t}{TFxP}} $>$ \&}]{selected\+Fxs,  }\item[{QList$<$ \mbox{\hyperlink{class_t_fx_command_1_1_link}{TFx\+Command\+::\+Link}} $>$}]{selected\+Links,  }\item[{\mbox{\hyperlink{class_t_application}{TApplication}} $\ast$}]{app,  }\item[{bool}]{attach\+Outputs = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00709       : m\_selectedFxs(selectedFxs)}
+\DoxyCodeLine{00710       , m\_selectedLinks(selectedLinks)}
+\DoxyCodeLine{00711       , m\_insertedColumn(0)}
+\DoxyCodeLine{00712       , m\_app(app)}
+\DoxyCodeLine{00713       , m\_colIdx(col)}
+\DoxyCodeLine{00714       , m\_columnReplacesHole(\textcolor{keyword}{false})}
+\DoxyCodeLine{00715       , m\_attachOutputs(attachOutputs) \{}
+\DoxyCodeLine{00716     initialize(fx, row, col);}
+\DoxyCodeLine{00717   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_insert_fx_undo_ae4e2a02a055af05f0b3729c7ed288458}\label{class_insert_fx_undo_ae4e2a02a055af05f0b3729c7ed288458}} 
+\index{InsertFxUndo@{InsertFxUndo}!getHistoryString@{getHistoryString}}
+\index{getHistoryString@{getHistoryString}!InsertFxUndo@{InsertFxUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryString()}{getHistoryString()}}
+{\footnotesize\ttfamily QString Insert\+Fx\+Undo\+::get\+History\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00904                                        \{}
+\DoxyCodeLine{00905   QString str = (m\_selectedLinks.isEmpty()) ? QObject::tr(\textcolor{stringliteral}{"{}Add Fx  : "{}})}
+\DoxyCodeLine{00906                                             : QObject::tr(\textcolor{stringliteral}{"{}Insert Fx  : "{}});}
+\DoxyCodeLine{00907   QList<TFxP>::iterator it;}
+\DoxyCodeLine{00908   \textcolor{keywordflow}{for} (it = m\_insertedFxs.begin(); it != m\_insertedFxs.end(); it++) \{}
+\DoxyCodeLine{00909     \textcolor{keywordflow}{if} (it != m\_insertedFxs.begin()) str += QString(\textcolor{stringliteral}{"{}, "{}});}
+\DoxyCodeLine{00910 }
+\DoxyCodeLine{00911     str += QString::fromStdWString((*it)-\/>getFxId());}
+\DoxyCodeLine{00912   \}}
+\DoxyCodeLine{00913   \textcolor{keywordflow}{return} str;}
+\DoxyCodeLine{00914 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_fx_undo_a3aff49b6a8be3ed16618af9c146ae625}\label{class_insert_fx_undo_a3aff49b6a8be3ed16618af9c146ae625}} 
+\index{InsertFxUndo@{InsertFxUndo}!getSize@{getSize}}
+\index{getSize@{getSize}!InsertFxUndo@{InsertFxUndo}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Insert\+Fx\+Undo\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00724 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(*this); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_fx_undo_a7bb307e73fb03a9519d96d42bac34e04}\label{class_insert_fx_undo_a7bb307e73fb03a9519d96d42bac34e04}} 
+\index{InsertFxUndo@{InsertFxUndo}!isConsistent@{isConsistent}}
+\index{isConsistent@{isConsistent}!InsertFxUndo@{InsertFxUndo}}
+\doxysubsubsection{\texorpdfstring{isConsistent()}{isConsistent()}}
+{\footnotesize\ttfamily bool Insert\+Fx\+Undo\+::is\+Consistent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_fx_command_undo}{Fx\+Command\+Undo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00719 \{ \textcolor{keywordflow}{return} !m\_insertedFxs.isEmpty(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_fx_undo_a9d9f9b57af0838968fa29ac8e5af05b1}\label{class_insert_fx_undo_a9d9f9b57af0838968fa29ac8e5af05b1}} 
+\index{InsertFxUndo@{InsertFxUndo}!redo@{redo}}
+\index{redo@{redo}!InsertFxUndo@{InsertFxUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Insert\+Fx\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00826                               \{}
+\DoxyCodeLine{00827   \textcolor{keyword}{struct }OnExit \{}
+\DoxyCodeLine{00828     \textcolor{keyword}{const} \mbox{\hyperlink{class_insert_fx_undo}{InsertFxUndo}} *m\_this;}
+\DoxyCodeLine{00829     \string~OnExit() \{}
+\DoxyCodeLine{00830       m\_this-\/>m\_app-\/>getCurrentFx()-\/>setFx(}
+\DoxyCodeLine{00831           m\_this-\/>m\_insertedFxs.back().getPointer());}
+\DoxyCodeLine{00832       m\_this-\/>m\_app-\/>getCurrentXsheet()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00833       m\_this-\/>m\_app-\/>getCurrentScene()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{00834     \}}
+\DoxyCodeLine{00835   \} onExit = \{\textcolor{keyword}{this}\};}
+\DoxyCodeLine{00836 }
+\DoxyCodeLine{00837   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = m\_app-\/>getCurrentXsheet()-\/>getXsheet();}
+\DoxyCodeLine{00838 }
+\DoxyCodeLine{00839   \textcolor{comment}{// Zerary case}}
+\DoxyCodeLine{00840   \textcolor{keywordflow}{if} (m\_insertedColumn) \{}
+\DoxyCodeLine{00841     FxCommandUndo::insertColumn(xsh, m\_insertedColumn.getPointer(), m\_colIdx,}
+\DoxyCodeLine{00842                                 m\_columnReplacesHole, \textcolor{keyword}{true});}
+\DoxyCodeLine{00843     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00844   \}}
+\DoxyCodeLine{00845 }
+\DoxyCodeLine{00846   \textcolor{comment}{// Isolated Fx case}}
+\DoxyCodeLine{00847   \textcolor{keywordflow}{if} (m\_selectedLinks.isEmpty() \&\& m\_selectedFxs.isEmpty()) \{}
+\DoxyCodeLine{00848     assert(m\_insertedFxs.size() == 1);}
+\DoxyCodeLine{00849     ::addFxToCurrentScene(m\_insertedFxs.back().getPointer(), xsh,}
+\DoxyCodeLine{00850                           \textcolor{keyword}{false});  \textcolor{comment}{// Already showFx()s}}
+\DoxyCodeLine{00851   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00852     \textcolor{comment}{// Selected links}}
+\DoxyCodeLine{00853     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00854     \textcolor{keywordflow}{for} (i = 0; i < m\_selectedLinks.size(); ++i) \{}
+\DoxyCodeLine{00855       \textcolor{keyword}{const} \mbox{\hyperlink{class_t_fx_command_1_1_link}{TFxCommand::Link}} \&link = m\_selectedLinks[i];}
+\DoxyCodeLine{00856       \mbox{\hyperlink{class_t_fx}{TFx}} *insertedFx              = m\_insertedFxs[i].getPointer();}
+\DoxyCodeLine{00857 }
+\DoxyCodeLine{00858       ::addFxToCurrentScene(insertedFx, xsh, \textcolor{keyword}{false});}
+\DoxyCodeLine{00859       FxCommandUndo::insertFxs(xsh, link, insertedFx, insertedFx);}
+\DoxyCodeLine{00860       FxCommandUndo::copyGroupEditLevel(link.m\_inputFx.getPointer(),}
+\DoxyCodeLine{00861                                         insertedFx);}
+\DoxyCodeLine{00862     \}}
+\DoxyCodeLine{00863 }
+\DoxyCodeLine{00864     \textcolor{comment}{// Selected fxs}}
+\DoxyCodeLine{00865     \textcolor{keywordtype}{int} j, t;}
+\DoxyCodeLine{00866     \textcolor{keywordflow}{for} (j = 0, t = 0; j < m\_selectedFxs.size(); j++) \{}
+\DoxyCodeLine{00867       \mbox{\hyperlink{class_t_fx}{TFx}} *fx = m\_selectedFxs[j].getPointer();}
+\DoxyCodeLine{00868       assert(fx);}
+\DoxyCodeLine{00869 }
+\DoxyCodeLine{00870       \mbox{\hyperlink{class_t_fx}{TFx}} *insertedFx = m\_insertedFxs[i + t].getPointer();}
+\DoxyCodeLine{00871       t++;}
+\DoxyCodeLine{00872 }
+\DoxyCodeLine{00873       assert(insertedFx);}
+\DoxyCodeLine{00874       ::addFxToCurrentScene(insertedFx, xsh, \textcolor{keyword}{false});}
+\DoxyCodeLine{00875 }
+\DoxyCodeLine{00876       \textcolor{keywordflow}{if} (m\_attachOutputs) FxCommandUndo::attachOutputs(xsh, insertedFx, fx);}
+\DoxyCodeLine{00877 }
+\DoxyCodeLine{00878       FxCommandUndo::attach(xsh, fx, insertedFx, 0, \textcolor{keyword}{true});}
+\DoxyCodeLine{00879     \}}
+\DoxyCodeLine{00880   \}}
+\DoxyCodeLine{00881 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_fx_undo_a35c480885cd13211baf88fabc29a9ed9}\label{class_insert_fx_undo_a35c480885cd13211baf88fabc29a9ed9}} 
+\index{InsertFxUndo@{InsertFxUndo}!undo@{undo}}
+\index{undo@{undo}!InsertFxUndo@{InsertFxUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Insert\+Fx\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00885                               \{}
+\DoxyCodeLine{00886   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = m\_app-\/>getCurrentXsheet()-\/>getXsheet();}
+\DoxyCodeLine{00887 }
+\DoxyCodeLine{00888   \textcolor{keywordtype}{int} i, iCount = m\_insertedFxs.size();}
+\DoxyCodeLine{00889   \textcolor{keywordflow}{for} (i = 0; i != iCount; ++i) \{}
+\DoxyCodeLine{00890     \mbox{\hyperlink{class_t_fx}{TFx}} *insertedFx = m\_insertedFxs[i].getPointer();}
+\DoxyCodeLine{00891 }
+\DoxyCodeLine{00892     FxCommandUndo::removeFxOrColumn(xsh, insertedFx, -\/1, m\_columnReplacesHole,}
+\DoxyCodeLine{00893                                     \textcolor{keyword}{false});  \textcolor{comment}{// Skip parameter links removal}}
+\DoxyCodeLine{00894     FxCommandUndo::makeNotCurrent(m\_app-\/>getCurrentFx(), insertedFx);}
+\DoxyCodeLine{00895   \}}
+\DoxyCodeLine{00896 }
+\DoxyCodeLine{00897   m\_app-\/>getCurrentFx()-\/>setFx(0);}
+\DoxyCodeLine{00898   m\_app-\/>getCurrentXsheet()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00899   m\_app-\/>getCurrentScene()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{00900 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/fxcommand.\+cpp\end{DoxyCompactItemize}

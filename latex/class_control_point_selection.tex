@@ -1,0 +1,330 @@
+\hypertarget{class_control_point_selection}{}\doxysection{Control\+Point\+Selection Class Reference}
+\label{class_control_point_selection}\index{ControlPointSelection@{ControlPointSelection}}
+Inheritance diagram for Control\+Point\+Selection\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_control_point_selection}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_control_point_selection_a5b882f56b02d721c8663658b668a9da5}{set\+Control\+Point\+Editor\+Stroke}} (\mbox{\hyperlink{class_control_point_editor_stroke}{Control\+Point\+Editor\+Stroke}} $\ast$control\+Point\+Editor\+Stroke)
+\item 
+bool \mbox{\hyperlink{class_control_point_selection_a9365f705e8bb4374aa1cbdf10d71545f}{is\+Empty}} () const override
+\item 
+void \mbox{\hyperlink{class_control_point_selection_a1beb1dd46ad6bb30ce3ea02d59c780fd}{select\+None}} () override
+\item 
+bool \mbox{\hyperlink{class_control_point_selection_a7e114b4337dac2f8cdd14d0fa077b916}{is\+Selected}} (int index) const
+\item 
+void \mbox{\hyperlink{class_control_point_selection_ab9b88f154d5c75680cdfd80a04a3d176}{select}} (int index)
+\item 
+void \mbox{\hyperlink{class_control_point_selection_afaaf178a276dfcbf590629f4c34d6534}{unselect}} (int index)
+\item 
+void \mbox{\hyperlink{class_control_point_selection_ad5630bfc1e0408bb626c42188c5d58a8}{delete\+Control\+Points}} ()
+\item 
+void \mbox{\hyperlink{class_control_point_selection_a07dec75e72d3ed4c273dd08c9ebf584c}{add\+Menu\+Items}} (QMenu $\ast$menu)
+\item 
+void \mbox{\hyperlink{class_control_point_selection_a8f7ecdebeaf87225bd62811d6ad9500f}{enable\+Commands}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_control_point_selection_a09fee326e902b3877206f7599312edf7}{set\+Linear}} ()
+\item 
+void \mbox{\hyperlink{class_control_point_selection_af12545576bbb7363c70ecd80a23ceb7a}{set\+Unlinear}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_control_point_selection_ad11464aa6c4c5f5ac01bc3302cabc25b}\label{class_control_point_selection_ad11464aa6c4c5f5ac01bc3302cabc25b}} 
+\index{ControlPointSelection@{ControlPointSelection}!ControlPointSelection@{ControlPointSelection}}
+\index{ControlPointSelection@{ControlPointSelection}!ControlPointSelection@{ControlPointSelection}}
+\doxysubsubsection{\texorpdfstring{ControlPointSelection()}{ControlPointSelection()}}
+{\footnotesize\ttfamily Control\+Point\+Selection\+::\+Control\+Point\+Selection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00145 : m\_controlPointEditorStroke(0), m\_strokeIndex(-\/1) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_control_point_selection_a07dec75e72d3ed4c273dd08c9ebf584c}\label{class_control_point_selection_a07dec75e72d3ed4c273dd08c9ebf584c}} 
+\index{ControlPointSelection@{ControlPointSelection}!addMenuItems@{addMenuItems}}
+\index{addMenuItems@{addMenuItems}!ControlPointSelection@{ControlPointSelection}}
+\doxysubsubsection{\texorpdfstring{addMenuItems()}{addMenuItems()}}
+{\footnotesize\ttfamily void Control\+Point\+Selection\+::add\+Menu\+Items (\begin{DoxyParamCaption}\item[{QMenu $\ast$}]{menu }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01007                                                     \{}
+\DoxyCodeLine{01008   \textcolor{keywordtype}{int} currentStrokeIndex = m\_controlPointEditorStroke-\/>getStrokeIndex();}
+\DoxyCodeLine{01009   \textcolor{keywordflow}{if} (isEmpty() || currentStrokeIndex == -\/1 ||}
+\DoxyCodeLine{01010       (m\_controlPointEditorStroke \&\&}
+\DoxyCodeLine{01011        m\_controlPointEditorStroke-\/>getControlPointCount() <= 1))}
+\DoxyCodeLine{01012     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01013   QAction *linear   = menu-\/>addAction(tr(\textcolor{stringliteral}{"{}Set Linear Control Point"{}}));}
+\DoxyCodeLine{01014   QAction *unlinear = menu-\/>addAction(tr(\textcolor{stringliteral}{"{}Set Nonlinear Control Point"{}}));}
+\DoxyCodeLine{01015   menu-\/>addSeparator();}
+\DoxyCodeLine{01016   \textcolor{keywordtype}{bool} ret = connect(linear, SIGNAL(triggered()), \textcolor{keyword}{this}, SLOT(setLinear()));}
+\DoxyCodeLine{01017   ret =}
+\DoxyCodeLine{01018       ret \&\& connect(unlinear, SIGNAL(triggered()), \textcolor{keyword}{this}, SLOT(setUnlinear()));}
+\DoxyCodeLine{01019   assert(ret);}
+\DoxyCodeLine{01020 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_control_point_selection_ad5630bfc1e0408bb626c42188c5d58a8}\label{class_control_point_selection_ad5630bfc1e0408bb626c42188c5d58a8}} 
+\index{ControlPointSelection@{ControlPointSelection}!deleteControlPoints@{deleteControlPoints}}
+\index{deleteControlPoints@{deleteControlPoints}!ControlPointSelection@{ControlPointSelection}}
+\doxysubsubsection{\texorpdfstring{deleteControlPoints()}{deleteControlPoints()}}
+{\footnotesize\ttfamily void Control\+Point\+Selection\+::delete\+Control\+Points (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01085                                                 \{}
+\DoxyCodeLine{01086   \mbox{\hyperlink{class_t_tool}{TTool}} *tool = TTool::getApplication()-\/>getCurrentTool()-\/>getTool();}
+\DoxyCodeLine{01087 }
+\DoxyCodeLine{01088   \textcolor{comment}{// cancel deleting while dragging points}}
+\DoxyCodeLine{01089   \mbox{\hyperlink{class_control_point_editor_tool}{ControlPointEditorTool}} *cpTool = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_control_point_editor_tool}{ControlPointEditorTool}} *\textcolor{keyword}{>}(tool);}
+\DoxyCodeLine{01090   \textcolor{keywordflow}{if} (cpTool \&\& cpTool-\/>isBusy()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01091 }
+\DoxyCodeLine{01092   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi(tool-\/>\mbox{\hyperlink{class_t_tool_a947d2af39fd4df397577bbf8602abfd4}{getImage}}(\textcolor{keyword}{false}));}
+\DoxyCodeLine{01093   \textcolor{keywordtype}{int} currentStrokeIndex = m\_controlPointEditorStroke-\/>getStrokeIndex();}
+\DoxyCodeLine{01094   \textcolor{keywordflow}{if} (!vi || isEmpty() || currentStrokeIndex == -\/1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01095 }
+\DoxyCodeLine{01096   \textcolor{comment}{// Inizializzo l'UNDO}}
+\DoxyCodeLine{01097   \mbox{\hyperlink{class_t_undo}{TUndo}} *undo;}
+\DoxyCodeLine{01098   \textcolor{keywordtype}{bool} isCurrentObjectSpline =}
+\DoxyCodeLine{01099       tool-\/>getApplication()-\/>getCurrentObject()-\/>isSpline();}
+\DoxyCodeLine{01100   \textcolor{keywordflow}{if} (isCurrentObjectSpline)}
+\DoxyCodeLine{01101     undo = \textcolor{keyword}{new} \mbox{\hyperlink{class_tool_utils_1_1_undo_path}{UndoPath}}(}
+\DoxyCodeLine{01102         tool-\/>\mbox{\hyperlink{class_t_tool_a8716e1462da359f4902c044a79f2d40d}{getXsheet}}()-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(tool-\/>\mbox{\hyperlink{class_t_tool_a25b57b82dfac131d9d6405e07fbd98b4}{getObjectId}}())-\/>\mbox{\hyperlink{class_t_stage_object_a425cb2dbcefe6ba4e288e1e8bdd16f72}{getSpline}}());}
+\DoxyCodeLine{01103   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01104     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *level =}
+\DoxyCodeLine{01105         tool-\/>getApplication()-\/>getCurrentLevel()-\/>getSimpleLevel();}
+\DoxyCodeLine{01106     \mbox{\hyperlink{class_tool_utils_1_1_undo_control_point_editor}{UndoControlPointEditor}} *cpEditorUndo =}
+\DoxyCodeLine{01107         \textcolor{keyword}{new} \mbox{\hyperlink{class_tool_utils_1_1_undo_control_point_editor}{UndoControlPointEditor}}(level, tool-\/>\mbox{\hyperlink{class_t_tool_ae7db6c4288b721fd95f283419883a4b2}{getCurrentFid}}());}
+\DoxyCodeLine{01108     cpEditorUndo-\/>addOldStroke(currentStrokeIndex,}
+\DoxyCodeLine{01109                                vi-\/>getVIStroke(currentStrokeIndex));}
+\DoxyCodeLine{01110     undo = cpEditorUndo;}
+\DoxyCodeLine{01111   \}}
+\DoxyCodeLine{01112 }
+\DoxyCodeLine{01113   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{01114   \textcolor{keywordflow}{for} (i = m\_controlPointEditorStroke-\/>getControlPointCount() -\/ 1; i >= 0; i-\/-\/)}
+\DoxyCodeLine{01115     \textcolor{keywordflow}{if} (isSelected(i)) m\_controlPointEditorStroke-\/>deleteControlPoint(i);}
+\DoxyCodeLine{01116 }
+\DoxyCodeLine{01117   \textcolor{keywordflow}{if} (m\_controlPointEditorStroke-\/>getControlPointCount() == 0) \{}
+\DoxyCodeLine{01118     m\_controlPointEditorStroke-\/>\mbox{\hyperlink{class_control_point_editor_stroke_aae2e6944903ac1ca932e0cd79c0e387a}{setStroke}}((\mbox{\hyperlink{class_t_vector_image}{TVectorImage}} *)0, -\/1);}
+\DoxyCodeLine{01119     \textcolor{keywordflow}{if} (!isCurrentObjectSpline) \{}
+\DoxyCodeLine{01120       \mbox{\hyperlink{class_tool_utils_1_1_undo_control_point_editor}{UndoControlPointEditor}} *cpEditorUndo =}
+\DoxyCodeLine{01121           \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_tool_utils_1_1_undo_control_point_editor}{UndoControlPointEditor}} *\textcolor{keyword}{>}(undo);}
+\DoxyCodeLine{01122       \textcolor{keywordflow}{if} (cpEditorUndo) cpEditorUndo-\/>isStrokeDelete(\textcolor{keyword}{true});}
+\DoxyCodeLine{01123     \}}
+\DoxyCodeLine{01124   \}}
+\DoxyCodeLine{01125 }
+\DoxyCodeLine{01126   \textcolor{comment}{// La spline non puo' essere cancellata completamente!!!}}
+\DoxyCodeLine{01127   \textcolor{keywordflow}{if} (vi-\/>getStrokeCount() == 0) \{}
+\DoxyCodeLine{01128     \textcolor{keywordflow}{if} (TTool::getApplication()-\/>getCurrentObject()-\/>isSpline()) \{}
+\DoxyCodeLine{01129       std::vector<TPointD> points;}
+\DoxyCodeLine{01130       \textcolor{keywordtype}{double} d = 10;}
+\DoxyCodeLine{01131       points.push\_back(\mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/d, 0));}
+\DoxyCodeLine{01132       points.push\_back(\mbox{\hyperlink{class_t_point_t}{TPointD}}(0, 0));}
+\DoxyCodeLine{01133       points.push\_back(\mbox{\hyperlink{class_t_point_t}{TPointD}}(d, 0));}
+\DoxyCodeLine{01134       \mbox{\hyperlink{class_t_stroke}{TStroke}} *stroke = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_stroke}{TStroke}}(points);}
+\DoxyCodeLine{01135       vi-\/>addStroke(stroke, \textcolor{keyword}{false});}
+\DoxyCodeLine{01136       m\_controlPointEditorStroke-\/>setStrokeIndex(0);}
+\DoxyCodeLine{01137     \}}
+\DoxyCodeLine{01138   \}}
+\DoxyCodeLine{01139   tool-\/>\mbox{\hyperlink{class_t_tool_abd1824e9b49705c534e0a773305294c4}{notifyImageChanged}}();}
+\DoxyCodeLine{01140   selectNone();}
+\DoxyCodeLine{01141   \textcolor{comment}{// Registro l'UNDO}}
+\DoxyCodeLine{01142   TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{01143 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_control_point_selection_a8f7ecdebeaf87225bd62811d6ad9500f}\label{class_control_point_selection_a8f7ecdebeaf87225bd62811d6ad9500f}} 
+\index{ControlPointSelection@{ControlPointSelection}!enableCommands@{enableCommands}}
+\index{enableCommands@{enableCommands}!ControlPointSelection@{ControlPointSelection}}
+\doxysubsubsection{\texorpdfstring{enableCommands()}{enableCommands()}}
+{\footnotesize\ttfamily void Control\+Point\+Selection\+::enable\+Commands (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_selection}{TSelection}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01147                                            \{}
+\DoxyCodeLine{01148   enableCommand(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}MI\_Clear"{}}, \&ControlPointSelection::deleteControlPoints);}
+\DoxyCodeLine{01149 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_control_point_selection_a9365f705e8bb4374aa1cbdf10d71545f}\label{class_control_point_selection_a9365f705e8bb4374aa1cbdf10d71545f}} 
+\index{ControlPointSelection@{ControlPointSelection}!isEmpty@{isEmpty}}
+\index{isEmpty@{isEmpty}!ControlPointSelection@{ControlPointSelection}}
+\doxysubsubsection{\texorpdfstring{isEmpty()}{isEmpty()}}
+{\footnotesize\ttfamily bool Control\+Point\+Selection\+::is\+Empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_selection}{TSelection}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00152 \{ \textcolor{keywordflow}{return} m\_selectedPoints.empty(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_control_point_selection_a7e114b4337dac2f8cdd14d0fa077b916}\label{class_control_point_selection_a7e114b4337dac2f8cdd14d0fa077b916}} 
+\index{ControlPointSelection@{ControlPointSelection}!isSelected@{isSelected}}
+\index{isSelected@{isSelected}!ControlPointSelection@{ControlPointSelection}}
+\doxysubsubsection{\texorpdfstring{isSelected()}{isSelected()}}
+{\footnotesize\ttfamily bool Control\+Point\+Selection\+::is\+Selected (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00989                                                       \{}
+\DoxyCodeLine{00990   \textcolor{keywordflow}{return} m\_selectedPoints.find(index) != m\_selectedPoints.end();}
+\DoxyCodeLine{00991 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_control_point_selection_ab9b88f154d5c75680cdfd80a04a3d176}\label{class_control_point_selection_ab9b88f154d5c75680cdfd80a04a3d176}} 
+\index{ControlPointSelection@{ControlPointSelection}!select@{select}}
+\index{select@{select}!ControlPointSelection@{ControlPointSelection}}
+\doxysubsubsection{\texorpdfstring{select()}{select()}}
+{\footnotesize\ttfamily void Control\+Point\+Selection\+::select (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00995                                             \{}
+\DoxyCodeLine{00996   m\_selectedPoints.insert(index);}
+\DoxyCodeLine{00997 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_control_point_selection_a1beb1dd46ad6bb30ce3ea02d59c780fd}\label{class_control_point_selection_a1beb1dd46ad6bb30ce3ea02d59c780fd}} 
+\index{ControlPointSelection@{ControlPointSelection}!selectNone@{selectNone}}
+\index{selectNone@{selectNone}!ControlPointSelection@{ControlPointSelection}}
+\doxysubsubsection{\texorpdfstring{selectNone()}{selectNone()}}
+{\footnotesize\ttfamily void Control\+Point\+Selection\+::select\+None (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_selection}{TSelection}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00154 \{ m\_selectedPoints.clear(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_control_point_selection_a5b882f56b02d721c8663658b668a9da5}\label{class_control_point_selection_a5b882f56b02d721c8663658b668a9da5}} 
+\index{ControlPointSelection@{ControlPointSelection}!setControlPointEditorStroke@{setControlPointEditorStroke}}
+\index{setControlPointEditorStroke@{setControlPointEditorStroke}!ControlPointSelection@{ControlPointSelection}}
+\doxysubsubsection{\texorpdfstring{setControlPointEditorStroke()}{setControlPointEditorStroke()}}
+{\footnotesize\ttfamily void Control\+Point\+Selection\+::set\+Control\+Point\+Editor\+Stroke (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_control_point_editor_stroke}{Control\+Point\+Editor\+Stroke}} $\ast$}]{control\+Point\+Editor\+Stroke }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00148                                                           \{}
+\DoxyCodeLine{00149     m\_controlPointEditorStroke = controlPointEditorStroke;}
+\DoxyCodeLine{00150   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_control_point_selection_a09fee326e902b3877206f7599312edf7}\label{class_control_point_selection_a09fee326e902b3877206f7599312edf7}} 
+\index{ControlPointSelection@{ControlPointSelection}!setLinear@{setLinear}}
+\index{setLinear@{setLinear}!ControlPointSelection@{ControlPointSelection}}
+\doxysubsubsection{\texorpdfstring{setLinear}{setLinear}}
+{\footnotesize\ttfamily void Control\+Point\+Selection\+::set\+Linear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01024                                       \{}
+\DoxyCodeLine{01025   \mbox{\hyperlink{class_t_tool}{TTool}} *tool            = TTool::getApplication()-\/>getCurrentTool()-\/>getTool();}
+\DoxyCodeLine{01026   \textcolor{keywordtype}{int} currentStrokeIndex = m\_controlPointEditorStroke-\/>getStrokeIndex();}
+\DoxyCodeLine{01027   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi(tool-\/>\mbox{\hyperlink{class_t_tool_a947d2af39fd4df397577bbf8602abfd4}{getImage}}(\textcolor{keyword}{false}));}
+\DoxyCodeLine{01028   \textcolor{keywordflow}{if} (!vi || isEmpty() || currentStrokeIndex == -\/1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01029   \mbox{\hyperlink{class_t_undo}{TUndo}} *undo;}
+\DoxyCodeLine{01030   \textcolor{keywordflow}{if} (tool-\/>getApplication()-\/>getCurrentObject()-\/>isSpline())}
+\DoxyCodeLine{01031     undo = \textcolor{keyword}{new} \mbox{\hyperlink{class_tool_utils_1_1_undo_path}{UndoPath}}(}
+\DoxyCodeLine{01032         tool-\/>\mbox{\hyperlink{class_t_tool_a8716e1462da359f4902c044a79f2d40d}{getXsheet}}()-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(tool-\/>\mbox{\hyperlink{class_t_tool_a25b57b82dfac131d9d6405e07fbd98b4}{getObjectId}}())-\/>\mbox{\hyperlink{class_t_stage_object_a425cb2dbcefe6ba4e288e1e8bdd16f72}{getSpline}}());}
+\DoxyCodeLine{01033   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01034     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *level =}
+\DoxyCodeLine{01035         tool-\/>getApplication()-\/>getCurrentLevel()-\/>getSimpleLevel();}
+\DoxyCodeLine{01036     \mbox{\hyperlink{class_tool_utils_1_1_undo_control_point_editor}{UndoControlPointEditor}} *cpEditorUndo =}
+\DoxyCodeLine{01037         \textcolor{keyword}{new} \mbox{\hyperlink{class_tool_utils_1_1_undo_control_point_editor}{UndoControlPointEditor}}(level, tool-\/>\mbox{\hyperlink{class_t_tool_ae7db6c4288b721fd95f283419883a4b2}{getCurrentFid}}());}
+\DoxyCodeLine{01038     cpEditorUndo-\/>addOldStroke(currentStrokeIndex,}
+\DoxyCodeLine{01039                                vi-\/>getVIStroke(currentStrokeIndex));}
+\DoxyCodeLine{01040     undo = cpEditorUndo;}
+\DoxyCodeLine{01041   \}}
+\DoxyCodeLine{01042   \textcolor{keywordflow}{if} (m\_controlPointEditorStroke-\/>getControlPointCount() == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01043 }
+\DoxyCodeLine{01044   \textcolor{keywordtype}{bool} isChanged = m\_controlPointEditorStroke-\/>setControlPointsLinear(}
+\DoxyCodeLine{01045       m\_selectedPoints, \textcolor{keyword}{true});}
+\DoxyCodeLine{01046 }
+\DoxyCodeLine{01047   \textcolor{keywordflow}{if} (!isChanged) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01048   TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{01049   tool-\/>\mbox{\hyperlink{class_t_tool_abd1824e9b49705c534e0a773305294c4}{notifyImageChanged}}();}
+\DoxyCodeLine{01050 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_control_point_selection_af12545576bbb7363c70ecd80a23ceb7a}\label{class_control_point_selection_af12545576bbb7363c70ecd80a23ceb7a}} 
+\index{ControlPointSelection@{ControlPointSelection}!setUnlinear@{setUnlinear}}
+\index{setUnlinear@{setUnlinear}!ControlPointSelection@{ControlPointSelection}}
+\doxysubsubsection{\texorpdfstring{setUnlinear}{setUnlinear}}
+{\footnotesize\ttfamily void Control\+Point\+Selection\+::set\+Unlinear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01054                                         \{}
+\DoxyCodeLine{01055   \mbox{\hyperlink{class_t_tool}{TTool}} *tool            = TTool::getApplication()-\/>getCurrentTool()-\/>getTool();}
+\DoxyCodeLine{01056   \textcolor{keywordtype}{int} currentStrokeIndex = m\_controlPointEditorStroke-\/>getStrokeIndex();}
+\DoxyCodeLine{01057   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi(tool-\/>\mbox{\hyperlink{class_t_tool_a947d2af39fd4df397577bbf8602abfd4}{getImage}}(\textcolor{keyword}{false}));}
+\DoxyCodeLine{01058   \textcolor{keywordflow}{if} (!vi || isEmpty() || currentStrokeIndex == -\/1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01059 }
+\DoxyCodeLine{01060   \mbox{\hyperlink{class_t_undo}{TUndo}} *undo;}
+\DoxyCodeLine{01061   \textcolor{keywordflow}{if} (tool-\/>getApplication()-\/>getCurrentObject()-\/>isSpline())}
+\DoxyCodeLine{01062     undo = \textcolor{keyword}{new} \mbox{\hyperlink{class_tool_utils_1_1_undo_path}{UndoPath}}(}
+\DoxyCodeLine{01063         tool-\/>\mbox{\hyperlink{class_t_tool_a8716e1462da359f4902c044a79f2d40d}{getXsheet}}()-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(tool-\/>\mbox{\hyperlink{class_t_tool_a25b57b82dfac131d9d6405e07fbd98b4}{getObjectId}}())-\/>\mbox{\hyperlink{class_t_stage_object_a425cb2dbcefe6ba4e288e1e8bdd16f72}{getSpline}}());}
+\DoxyCodeLine{01064   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01065     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *level =}
+\DoxyCodeLine{01066         tool-\/>getApplication()-\/>getCurrentLevel()-\/>getSimpleLevel();}
+\DoxyCodeLine{01067     \mbox{\hyperlink{class_tool_utils_1_1_undo_control_point_editor}{UndoControlPointEditor}} *cpEditorUndo =}
+\DoxyCodeLine{01068         \textcolor{keyword}{new} \mbox{\hyperlink{class_tool_utils_1_1_undo_control_point_editor}{UndoControlPointEditor}}(level, tool-\/>\mbox{\hyperlink{class_t_tool_ae7db6c4288b721fd95f283419883a4b2}{getCurrentFid}}());}
+\DoxyCodeLine{01069     cpEditorUndo-\/>addOldStroke(currentStrokeIndex,}
+\DoxyCodeLine{01070                                vi-\/>getVIStroke(currentStrokeIndex));}
+\DoxyCodeLine{01071     undo = cpEditorUndo;}
+\DoxyCodeLine{01072   \}}
+\DoxyCodeLine{01073   \textcolor{keywordflow}{if} (m\_controlPointEditorStroke-\/>getControlPointCount() == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01074 }
+\DoxyCodeLine{01075   \textcolor{keywordtype}{bool} isChanged = m\_controlPointEditorStroke-\/>setControlPointsLinear(}
+\DoxyCodeLine{01076       m\_selectedPoints, \textcolor{keyword}{false});}
+\DoxyCodeLine{01077 }
+\DoxyCodeLine{01078   \textcolor{keywordflow}{if} (!isChanged) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01079   TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{01080   tool-\/>\mbox{\hyperlink{class_t_tool_abd1824e9b49705c534e0a773305294c4}{notifyImageChanged}}();}
+\DoxyCodeLine{01081 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_control_point_selection_afaaf178a276dfcbf590629f4c34d6534}\label{class_control_point_selection_afaaf178a276dfcbf590629f4c34d6534}} 
+\index{ControlPointSelection@{ControlPointSelection}!unselect@{unselect}}
+\index{unselect@{unselect}!ControlPointSelection@{ControlPointSelection}}
+\doxysubsubsection{\texorpdfstring{unselect()}{unselect()}}
+{\footnotesize\ttfamily void Control\+Point\+Selection\+::unselect (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01001                                               \{}
+\DoxyCodeLine{01002   m\_selectedPoints.erase(index);}
+\DoxyCodeLine{01003 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/controlpointselection.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/controlpointselection.\+cpp\end{DoxyCompactItemize}

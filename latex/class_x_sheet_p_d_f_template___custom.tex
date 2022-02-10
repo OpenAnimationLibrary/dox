@@ -1,0 +1,135 @@
+\hypertarget{class_x_sheet_p_d_f_template___custom}{}\doxysection{XSheet\+PDFTemplate\+\_\+\+Custom Class Reference}
+\label{class_x_sheet_p_d_f_template___custom}\index{XSheetPDFTemplate\_Custom@{XSheetPDFTemplate\_Custom}}
+Inheritance diagram for XSheet\+PDFTemplate\+\_\+\+Custom\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_x_sheet_p_d_f_template___custom}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_x_sheet_p_d_f_template___custom_a65735a06012e24de9405c4b78f1b1ef2}{XSheet\+PDFTemplate\+\_\+\+Custom}} (const QString \&fp, const QList$<$ QPair$<$ \mbox{\hyperlink{class_t_xsh_level_column}{TXsh\+Level\+Column}} $\ast$, QString $>$ $>$ \&columns, const int duration)
+\item 
+bool \mbox{\hyperlink{class_x_sheet_p_d_f_template___custom_aae4c3595496ef0fea859cdd6d51d8169}{is\+Valid}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_x_sheet_p_d_f_template___custom_a65735a06012e24de9405c4b78f1b1ef2}\label{class_x_sheet_p_d_f_template___custom_a65735a06012e24de9405c4b78f1b1ef2}} 
+\index{XSheetPDFTemplate\_Custom@{XSheetPDFTemplate\_Custom}!XSheetPDFTemplate\_Custom@{XSheetPDFTemplate\_Custom}}
+\index{XSheetPDFTemplate\_Custom@{XSheetPDFTemplate\_Custom}!XSheetPDFTemplate\_Custom@{XSheetPDFTemplate\_Custom}}
+\doxysubsubsection{\texorpdfstring{XSheetPDFTemplate\_Custom()}{XSheetPDFTemplate\_Custom()}}
+{\footnotesize\ttfamily XSheet\+PDFTemplate\+\_\+\+Custom\+::\+XSheet\+PDFTemplate\+\_\+\+Custom (\begin{DoxyParamCaption}\item[{const QString \&}]{fp,  }\item[{const QList$<$ QPair$<$ \mbox{\hyperlink{class_t_xsh_level_column}{TXsh\+Level\+Column}} $\ast$, QString $>$ $>$ \&}]{columns,  }\item[{const int}]{duration }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01678     : \mbox{\hyperlink{class_x_sheet_p_d_f_template}{XSheetPDFTemplate}}(columns, duration), m\_valid(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{01679   QSettings s(fp, QSettings::IniFormat);}
+\DoxyCodeLine{01680   \textcolor{keywordflow}{if} (!s.childGroups().contains(\textcolor{stringliteral}{"{}XSheetPDFTemplate"{}})) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01681 }
+\DoxyCodeLine{01682   s.beginGroup(\textcolor{stringliteral}{"{}XSheetPDFTemplate"{}});}
+\DoxyCodeLine{01683   \{}
+\DoxyCodeLine{01684     QString pageStr      = s.value(\textcolor{stringliteral}{"{}PageSize"{}}).toString();}
+\DoxyCodeLine{01685     m\_p.documentPageSize = str2PageSizeId(pageStr);}
+\DoxyCodeLine{01686 }
+\DoxyCodeLine{01687     QString marginStr = s.value(\textcolor{stringliteral}{"{}Margin"{}}).toString();}
+\DoxyCodeLine{01688 \textcolor{preprocessor}{\#if QT\_VERSION >= QT\_VERSION\_CHECK(5, 14, 0)}}
+\DoxyCodeLine{01689     QStringList m = marginStr.split(QLatin1Char(\textcolor{charliteral}{','}), Qt::SkipEmptyParts);}
+\DoxyCodeLine{01690 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{01691     QStringList m = marginStr.split(QLatin1Char(\textcolor{charliteral}{','}), QString::SkipEmptyParts);}
+\DoxyCodeLine{01692 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01693     assert(m.size() == 4);}
+\DoxyCodeLine{01694     \textcolor{keywordflow}{if} (m.size() == 4)}
+\DoxyCodeLine{01695       m\_p.documentMargin = QMarginsF(m[0].toDouble(), m[1].toDouble(),}
+\DoxyCodeLine{01696                                      m[2].toDouble(), m[3].toDouble());}
+\DoxyCodeLine{01697 }
+\DoxyCodeLine{01698     s.beginGroup(\textcolor{stringliteral}{"{}Number"{}});}
+\DoxyCodeLine{01699     \{}
+\DoxyCodeLine{01700       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} key : s.childKeys())}
+\DoxyCodeLine{01701         m\_params.insert(key.toStdString(), s.value(key).toInt());}
+\DoxyCodeLine{01702     \}}
+\DoxyCodeLine{01703     s.endGroup();}
+\DoxyCodeLine{01704 }
+\DoxyCodeLine{01705     s.beginGroup(\textcolor{stringliteral}{"{}Length"{}});}
+\DoxyCodeLine{01706     \{}
+\DoxyCodeLine{01707       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} key : s.childKeys())}
+\DoxyCodeLine{01708         m\_params.insert(key.toStdString(), mm2px(s.value(key).toDouble()));}
+\DoxyCodeLine{01709     \}}
+\DoxyCodeLine{01710     s.endGroup();}
+\DoxyCodeLine{01711 }
+\DoxyCodeLine{01712     \textcolor{keywordtype}{bool} translateInfo = param(TranslateInfoLabel, 1) == 1;}
+\DoxyCodeLine{01713     \textcolor{keywordtype}{int} size           = s.beginReadArray(\textcolor{stringliteral}{"{}InfoFormats"{}});}
+\DoxyCodeLine{01714     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < size; ++i) \{}
+\DoxyCodeLine{01715       s.setArrayIndex(i);}
+\DoxyCodeLine{01716       XSheetPDF\_InfoFormat infoFormat;}
+\DoxyCodeLine{01717       infoFormat.width = mm2px(s.value(\textcolor{stringliteral}{"{}width"{}}).toDouble());}
+\DoxyCodeLine{01718       \textcolor{keywordflow}{if} (translateInfo)}
+\DoxyCodeLine{01719         infoFormat.label =}
+\DoxyCodeLine{01720             QObject::tr(s.value(\textcolor{stringliteral}{"{}label"{}}).toString().toLocal8Bit(), \textcolor{stringliteral}{"{}XSheetPDF"{}});}
+\DoxyCodeLine{01721       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01722         infoFormat.label = s.value(\textcolor{stringliteral}{"{}label"{}}).toString();}
+\DoxyCodeLine{01723 }
+\DoxyCodeLine{01724       infoFormat.decoFunc =}
+\DoxyCodeLine{01725           infoType2DecoFunc(s.value(\textcolor{stringliteral}{"{}infoType"{}}, \textcolor{stringliteral}{"{}"{}}).toString());}
+\DoxyCodeLine{01726       m\_p.array\_Infos.append(infoFormat);}
+\DoxyCodeLine{01727     \}}
+\DoxyCodeLine{01728     s.endArray();}
+\DoxyCodeLine{01729 }
+\DoxyCodeLine{01730     s.beginGroup(\textcolor{stringliteral}{"{}DataFields"{}});}
+\DoxyCodeLine{01731     \{}
+\DoxyCodeLine{01732       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} key : s.childKeys()) \{}
+\DoxyCodeLine{01733         QString rectStr = s.value(key).toString();}
+\DoxyCodeLine{01734 \textcolor{preprocessor}{\#if QT\_VERSION >= QT\_VERSION\_CHECK(5, 14, 0)}}
+\DoxyCodeLine{01735         QStringList r = rectStr.split(QLatin1Char(\textcolor{charliteral}{','}), Qt::SkipEmptyParts);}
+\DoxyCodeLine{01736 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{01737         QStringList r =}
+\DoxyCodeLine{01738             rectStr.split(QLatin1Char(\textcolor{charliteral}{','}), QString::SkipEmptyParts);}
+\DoxyCodeLine{01739 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{01740         assert(r.size() == 4);}
+\DoxyCodeLine{01741         \textcolor{keywordflow}{if} (r.size() == 4)}
+\DoxyCodeLine{01742           m\_dataRects[dataStr2Type(key)] =}
+\DoxyCodeLine{01743               QRect(mm2px(r[0].toDouble()), mm2px(r[1].toDouble()),}
+\DoxyCodeLine{01744                     mm2px(r[2].toDouble()), mm2px(r[3].toDouble()));}
+\DoxyCodeLine{01745       \}}
+\DoxyCodeLine{01746     \}}
+\DoxyCodeLine{01747     s.endGroup();}
+\DoxyCodeLine{01748   \}}
+\DoxyCodeLine{01749   s.endGroup();}
+\DoxyCodeLine{01750 }
+\DoxyCodeLine{01751   m\_p.keyBlockWidth =}
+\DoxyCodeLine{01752       param(KeyColWidth) * param(KeyColAmount) + param(LastKeyColWidth);}
+\DoxyCodeLine{01753   m\_p.cellsBlockWidth         = param(CellsColWidth) * param(CellsColAmount);}
+\DoxyCodeLine{01754   m\_p.cameraBlockWidth        = param(CameraColWidth) * param(CameraColAmount);}
+\DoxyCodeLine{01755   m\_p.infoHeaderHeight        = param(InfoTitleHeight) + param(InfoBodyHeight);}
+\DoxyCodeLine{01756   m\_p.bodylabelTextSize\_Large = param(HeaderHeight) -\/ mm2px(3);}
+\DoxyCodeLine{01757   m\_p.bodylabelTextSize\_Small = param(HeaderHeight) / 2 -\/ mm2px(1);}
+\DoxyCodeLine{01758 }
+\DoxyCodeLine{01759   m\_valid = \textcolor{keyword}{true};}
+\DoxyCodeLine{01760 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_x_sheet_p_d_f_template___custom_aae4c3595496ef0fea859cdd6d51d8169}\label{class_x_sheet_p_d_f_template___custom_aae4c3595496ef0fea859cdd6d51d8169}} 
+\index{XSheetPDFTemplate\_Custom@{XSheetPDFTemplate\_Custom}!isValid@{isValid}}
+\index{isValid@{isValid}!XSheetPDFTemplate\_Custom@{XSheetPDFTemplate\_Custom}}
+\doxysubsubsection{\texorpdfstring{isValid()}{isValid()}}
+{\footnotesize\ttfamily bool XSheet\+PDFTemplate\+\_\+\+Custom\+::is\+Valid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00245 \{ \textcolor{keywordflow}{return} m\_valid; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/exportxsheetpdf.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/exportxsheetpdf.\+cpp\end{DoxyCompactItemize}

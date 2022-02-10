@@ -1,0 +1,319 @@
+\hypertarget{class_mesh_texturizer}{}\doxysection{Mesh\+Texturizer Class Reference}
+\label{class_mesh_texturizer}\index{MeshTexturizer@{MeshTexturizer}}
+
+
+The \mbox{\hyperlink{class_mesh_texturizer}{Mesh\+Texturizer}} class acts as a management wrapper to Open\+GL texturing capabilities, in particular concerning texture virtualization.  
+
+
+
+
+{\ttfamily \#include $<$meshtexturizer.\+h$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_mesh_texturizer_1_1_imp}{Imp}}
+\item 
+struct \mbox{\hyperlink{struct_mesh_texturizer_1_1_texture_data}{Texture\+Data}}
+\begin{DoxyCompactList}\small\item\em The Mesh\+Texturizer-\/owned data about a texture. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745}{Premult\+Mode}} \{ \mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745a86bd8d532023068b55ac6b5b6df7ef72}{NONPREMULTIPLIED}}
+, \mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745ab457bc0430439655e8ccae45d6b77278}{PREMULTIPLIED}}
+ \}
+\begin{DoxyCompactList}\small\item\em Premultiplication specifier for texture binding. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_mesh_texturizer_a3fa598cb63981464e2bf7846490ab1f8}{bind\+Texture}} (const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&ras, const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&geometry, \mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745}{Premult\+Mode}} premultiply\+Mode=\mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745a86bd8d532023068b55ac6b5b6df7ef72}{NONPREMULTIPLIED}})
+\item 
+\mbox{\hyperlink{struct_mesh_texturizer_1_1_texture_data}{Texture\+Data}} $\ast$ \mbox{\hyperlink{class_mesh_texturizer_a34014cab75532d14c48017d8e37d27a6}{get\+Texture\+Data}} (int texture\+Id)
+\item 
+void \mbox{\hyperlink{class_mesh_texturizer_ab5c84d3378c2f45046849133e6fd0207}{rebind\+Texture}} (int texture\+Id, const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&ras, const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&geometry, \mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745}{Premult\+Mode}} premultiply\+Mode=\mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745a86bd8d532023068b55ac6b5b6df7ef72}{NONPREMULTIPLIED}})
+\item 
+void \mbox{\hyperlink{class_mesh_texturizer_abe81d212c56c9b739e4988143570383b}{unbind\+Texture}} (int texture\+Id)
+\begin{DoxyCompactList}\small\item\em id to a new image. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_mesh_texturizer}{Mesh\+Texturizer}} class acts as a management wrapper to Open\+GL texturing capabilities, in particular concerning texture virtualization. 
+
+The first step in Open\+GL texturing requires copying a texture into the video ram ({\itshape VRAM}). Now, Open\+GL documentation specifies that, although there is no limit to the {\itshape number} of allowed textures, there {\itshape are} limits to the {\bfseries{size}} of said textures, which can be tested by asking Open\+GL whether it can accommodate specific texture requests or not.
+
+Technically, the \mbox{\hyperlink{class_mesh_texturizer}{Mesh\+Texturizer}} class acts as a virtualization manager that can be used to allow texturization with arbitrary texture sizes. The manager accepts raster images that are cut up into tiles and bound to VRAM.
+
+Please, observe that the number of texture objects is typically not an issue, as Open\+GL is able to swap texture objects between RAM and VRAM, depending on which textures have been used most frequently. In other words, since \mbox{\hyperlink{class_mesh_texturizer}{Mesh\+Texturizer}} ensures the granularity required by Open\+GL, textures can be used until the process runs out of memory -\/ of course, swapping can be a source of slowdowns, though.
+
+\begin{DoxyRemark}{Remarks}
+Subdivision into tiles is designed to work for both premultiplied {\itshape and} non-\/premultiplied textures. 
+
+\mbox{\hyperlink{class_mesh_texturizer}{Mesh\+Texturizer}} instances are thread-\/safe. 
+\end{DoxyRemark}
+
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745}\label{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745}} 
+\index{MeshTexturizer@{MeshTexturizer}!PremultMode@{PremultMode}}
+\index{PremultMode@{PremultMode}!MeshTexturizer@{MeshTexturizer}}
+\doxysubsubsection{\texorpdfstring{PremultMode}{PremultMode}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745}{Mesh\+Texturizer\+::\+Premult\+Mode}}}
+
+
+
+Premultiplication specifier for texture binding. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NONPREMULTIPLIED@{NONPREMULTIPLIED}!MeshTexturizer@{MeshTexturizer}}\index{MeshTexturizer@{MeshTexturizer}!NONPREMULTIPLIED@{NONPREMULTIPLIED}}}\mbox{\Hypertarget{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745a86bd8d532023068b55ac6b5b6df7ef72}\label{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745a86bd8d532023068b55ac6b5b6df7ef72}} 
+NONPREMULTIPLIED&\mbox{\hyperlink{struct_texture}{Texture}} is not premultiplied. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PREMULTIPLIED@{PREMULTIPLIED}!MeshTexturizer@{MeshTexturizer}}\index{MeshTexturizer@{MeshTexturizer}!PREMULTIPLIED@{PREMULTIPLIED}}}\mbox{\Hypertarget{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745ab457bc0430439655e8ccae45d6b77278}\label{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745ab457bc0430439655e8ccae45d6b77278}} 
+PREMULTIPLIED&\mbox{\hyperlink{struct_texture}{Texture}} is premultiplied. \\
+\hline
+
+\end{DoxyEnumFields}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00072   \{ \mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745a86bd8d532023068b55ac6b5b6df7ef72}{NONPREMULTIPLIED}},  }
+\DoxyCodeLine{00073     \mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745ab457bc0430439655e8ccae45d6b77278}{PREMULTIPLIED}},     }
+\DoxyCodeLine{00074   \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_mesh_texturizer_a18e2bfed2b2a4dcbf5a7a78a394fd8d8}\label{class_mesh_texturizer_a18e2bfed2b2a4dcbf5a7a78a394fd8d8}} 
+\index{MeshTexturizer@{MeshTexturizer}!MeshTexturizer@{MeshTexturizer}}
+\index{MeshTexturizer@{MeshTexturizer}!MeshTexturizer@{MeshTexturizer}}
+\doxysubsubsection{\texorpdfstring{MeshTexturizer()}{MeshTexturizer()}}
+{\footnotesize\ttfamily Mesh\+Texturizer\+::\+Mesh\+Texturizer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00248 : m\_imp(\textcolor{keyword}{new} Imp) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_mesh_texturizer_ab238e8d73ad73a270e314a9f8d2a0368}\label{class_mesh_texturizer_ab238e8d73ad73a270e314a9f8d2a0368}} 
+\index{MeshTexturizer@{MeshTexturizer}!````~MeshTexturizer@{$\sim$MeshTexturizer}}
+\index{````~MeshTexturizer@{$\sim$MeshTexturizer}!MeshTexturizer@{MeshTexturizer}}
+\doxysubsubsection{\texorpdfstring{$\sim$MeshTexturizer()}{~MeshTexturizer()}}
+{\footnotesize\ttfamily Mesh\+Texturizer\+::$\sim$\+Mesh\+Texturizer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00252 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_mesh_texturizer_a3fa598cb63981464e2bf7846490ab1f8}\label{class_mesh_texturizer_a3fa598cb63981464e2bf7846490ab1f8}} 
+\index{MeshTexturizer@{MeshTexturizer}!bindTexture@{bindTexture}}
+\index{bindTexture@{bindTexture}!MeshTexturizer@{MeshTexturizer}}
+\doxysubsubsection{\texorpdfstring{bindTexture()}{bindTexture()}}
+{\footnotesize\ttfamily int Mesh\+Texturizer\+::bind\+Texture (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&}]{ras,  }\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{geometry,  }\item[{\mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745}{Premult\+Mode}}}]{premultiply\+Mode = {\ttfamily \mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745a86bd8d532023068b55ac6b5b6df7ef72}{NONPREMULTIPLIED}}} }\end{DoxyParamCaption})}
+
+The \mbox{\hyperlink{class_mesh_texturizer_a3fa598cb63981464e2bf7846490ab1f8}{bind\+Texture()}} function is used to specify a 32-\/bit fullcolor raster as a texture to be used for mesh rendering. The supplied geometry rect defines its position with respect to compiled meshes. \begin{DoxyRemark}{Remarks}
+The premultiplication specifier is used to tell the texturizer how to add a proper transparent border surrounding texture tiles. This border is essential to draw transparent pixels beyond a texture tile\textquotesingle{}s content. 
+\end{DoxyRemark}
+\begin{DoxyReturn}{Returns}
+The internal id used to reference to the input raster. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em geometry} & Moves a {\itshape copy} of the supplied raster image to VRAM, \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00257                                                              \{}
+\DoxyCodeLine{00258   QWriteLocker locker(\&m\_imp-\/>m\_lock);}
+\DoxyCodeLine{00259 }
+\DoxyCodeLine{00260   \textcolor{comment}{// Backup the state of some specific OpenGL variables that will be changed}}
+\DoxyCodeLine{00261   \textcolor{comment}{// throughout the code}}
+\DoxyCodeLine{00262   \textcolor{keywordtype}{int} row\_length, alignment;}
+\DoxyCodeLine{00263   glGetIntegerv(GL\_UNPACK\_ROW\_LENGTH, \&row\_length);}
+\DoxyCodeLine{00264   glGetIntegerv(GL\_UNPACK\_ALIGNMENT, \&alignment);}
+\DoxyCodeLine{00265 }
+\DoxyCodeLine{00266   \textcolor{comment}{// Initialize a new texture data}}
+\DoxyCodeLine{00267   \textcolor{keywordtype}{int} dataIdx =}
+\DoxyCodeLine{00268       m\_imp-\/>m\_textureDatas.push\_back(std::make\_shared<TextureData>(geom));}
+\DoxyCodeLine{00269 }
+\DoxyCodeLine{00270   \textcolor{comment}{// Textures must have 2-\/power sizes. So, let's start with the smallest 2 power}}
+\DoxyCodeLine{00271   \textcolor{comment}{// >= ras's sizes.}}
+\DoxyCodeLine{00272   \textcolor{keywordtype}{int} textureLx =}
+\DoxyCodeLine{00273       \mbox{\hyperlink{namespacetcg_1_1numeric__ops_ac52e0f198805e231c1497086c535d185}{tcg::numeric\_ops::GE\_2Power}}((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int})ras-\/>getLx() + TOTAL\_BORDER\_2);}
+\DoxyCodeLine{00274   \textcolor{keywordtype}{int} textureLy =}
+\DoxyCodeLine{00275       \mbox{\hyperlink{namespacetcg_1_1numeric__ops_ac52e0f198805e231c1497086c535d185}{tcg::numeric\_ops::GE\_2Power}}((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int})ras-\/>getLy() + TOTAL\_BORDER\_2);}
+\DoxyCodeLine{00276 }
+\DoxyCodeLine{00277   \textcolor{comment}{// We'll assume a strict granularity max of 2048 x 2048 textures, if it is}}
+\DoxyCodeLine{00278   \textcolor{comment}{// possible.}}
+\DoxyCodeLine{00279   textureLx = std::min(textureLx, getMaxTextureTileSize());}
+\DoxyCodeLine{00280   textureLy = std::min(textureLy, getMaxTextureTileSize());}
+\DoxyCodeLine{00281 }
+\DoxyCodeLine{00282   \textcolor{comment}{// Allocate a suitable texture raster. The texture will include a transparent}}
+\DoxyCodeLine{00283   \textcolor{comment}{// 1-\/pix border}}
+\DoxyCodeLine{00284   \textcolor{comment}{// that is needed to perform texture mapping with GL\_CLAMP transparent}}
+\DoxyCodeLine{00285   \textcolor{comment}{// wrapping}}
+\DoxyCodeLine{00286   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} tex(textureLx, textureLy);}
+\DoxyCodeLine{00287 }
+\DoxyCodeLine{00288   \textcolor{comment}{// Now, let's tile the specified raster. We'll start from the lower-\/left}}
+\DoxyCodeLine{00289   \textcolor{comment}{// corner in case}}
+\DoxyCodeLine{00290   \textcolor{comment}{// the raster can be completely included in just one tile}}
+\DoxyCodeLine{00291 }
+\DoxyCodeLine{00292   \textcolor{keywordtype}{int} lx = ras-\/>getLx(), ly = ras-\/>getLy();}
+\DoxyCodeLine{00293   \textcolor{keywordtype}{int} tileLx = textureLx -\/ TOTAL\_BORDER\_2,}
+\DoxyCodeLine{00294       tileLy = textureLy -\/ TOTAL\_BORDER\_2;  \textcolor{comment}{// Texture size without border}}
+\DoxyCodeLine{00295 }
+\DoxyCodeLine{00296   \textcolor{keywordtype}{int} xEntireCells = (lx -\/ 1) / tileLx,}
+\DoxyCodeLine{00297       yEntireCells =}
+\DoxyCodeLine{00298           (ly -\/ 1) /}
+\DoxyCodeLine{00299           tileLy;  \textcolor{comment}{// +1 so in case l == tileL, we get the remainder case}}
+\DoxyCodeLine{00300 }
+\DoxyCodeLine{00301   \textcolor{keywordtype}{int} lastTexLx = \mbox{\hyperlink{namespacetcg_1_1numeric__ops_ac52e0f198805e231c1497086c535d185}{tcg::numeric\_ops::GE\_2Power}}(}
+\DoxyCodeLine{00302       (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int})(lx -\/ xEntireCells * tileLx + TOTAL\_BORDER\_2));}
+\DoxyCodeLine{00303   \textcolor{keywordtype}{int} lastTexLy = \mbox{\hyperlink{namespacetcg_1_1numeric__ops_ac52e0f198805e231c1497086c535d185}{tcg::numeric\_ops::GE\_2Power}}(}
+\DoxyCodeLine{00304       (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int})(ly -\/ yEntireCells * tileLy + TOTAL\_BORDER\_2));}
+\DoxyCodeLine{00305 }
+\DoxyCodeLine{00306   \textcolor{keywordtype}{int} lastTileLx = lastTexLx -\/ TOTAL\_BORDER\_2,}
+\DoxyCodeLine{00307       lastTileLy = lastTexLy -\/ TOTAL\_BORDER\_2;}
+\DoxyCodeLine{00308 }
+\DoxyCodeLine{00309   \textcolor{keywordtype}{bool} premultiplied = (premultiplyMode == \mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745ab457bc0430439655e8ccae45d6b77278}{PREMULTIPLIED}});}
+\DoxyCodeLine{00310 }
+\DoxyCodeLine{00311   \textcolor{keywordtype}{int} i, j;}
+\DoxyCodeLine{00312   \textcolor{keywordflow}{for} (i = 0; i < yEntireCells; ++i) \{}
+\DoxyCodeLine{00313     \textcolor{keywordflow}{for} (j = 0; j < xEntireCells; ++j)}
+\DoxyCodeLine{00314       \textcolor{comment}{// Perform a (possibly subdividing) allocation of the specified tile}}
+\DoxyCodeLine{00315       m\_imp-\/>allocateTextures(dataIdx, ras, tex, j * tileLx, i * tileLy, tileLx,}
+\DoxyCodeLine{00316                               tileLy, premultiplied);}
+\DoxyCodeLine{00317 }
+\DoxyCodeLine{00318     m\_imp-\/>allocateTextures(dataIdx, ras, tex, j * tileLx, i * tileLy,}
+\DoxyCodeLine{00319                             lastTileLx, tileLy, premultiplied);}
+\DoxyCodeLine{00320   \}}
+\DoxyCodeLine{00321 }
+\DoxyCodeLine{00322   \textcolor{keywordflow}{for} (j = 0; j < xEntireCells; ++j)}
+\DoxyCodeLine{00323     m\_imp-\/>allocateTextures(dataIdx, ras, tex, j * tileLx, i * tileLy, tileLx,}
+\DoxyCodeLine{00324                             lastTileLy, premultiplied);}
+\DoxyCodeLine{00325 }
+\DoxyCodeLine{00326   m\_imp-\/>allocateTextures(dataIdx, ras, tex, j * tileLx, i * tileLy, lastTileLx,}
+\DoxyCodeLine{00327                           lastTileLy, premultiplied);}
+\DoxyCodeLine{00328 }
+\DoxyCodeLine{00329   \textcolor{comment}{// Restore OpenGL variables}}
+\DoxyCodeLine{00330   glPixelStorei(GL\_UNPACK\_ROW\_LENGTH, row\_length);}
+\DoxyCodeLine{00331   glPixelStorei(GL\_UNPACK\_ALIGNMENT, alignment);}
+\DoxyCodeLine{00332 }
+\DoxyCodeLine{00333   \textcolor{keywordflow}{return} dataIdx;}
+\DoxyCodeLine{00334 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00200}{tcg\+::numeric\+\_\+ops\+::\+GE\+\_\+2\+Power()}}, and \mbox{\hyperlink{l00073}{PREMULTIPLIED}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00136}{TTextures\+Storage\+::load\+Texture()}}, and \mbox{\hyperlink{l00338}{rebind\+Texture()}}.
+
+\mbox{\Hypertarget{class_mesh_texturizer_a34014cab75532d14c48017d8e37d27a6}\label{class_mesh_texturizer_a34014cab75532d14c48017d8e37d27a6}} 
+\index{MeshTexturizer@{MeshTexturizer}!getTextureData@{getTextureData}}
+\index{getTextureData@{getTextureData}!MeshTexturizer@{MeshTexturizer}}
+\doxysubsubsection{\texorpdfstring{getTextureData()}{getTextureData()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_mesh_texturizer_1_1_texture_data}{Mesh\+Texturizer\+::\+Texture\+Data}} $\ast$ Mesh\+Texturizer\+::get\+Texture\+Data (\begin{DoxyParamCaption}\item[{int}]{texture\+Id }\end{DoxyParamCaption})}
+
+and assigns an identification number to it. 
+\begin{DoxyParams}{Parameters}
+{\em ras} & \mbox{\hyperlink{struct_texture}{Texture}} to be copied to VRAM. \\
+\hline
+{\em geometry} & The texture\textquotesingle{}s geometry in the world -\/ with respect to compiled meshes. \\
+\hline
+{\em premultiply\+Mode} & Specified whether ras is to be intended premultiplied or not.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+The pointer returned by \mbox{\hyperlink{class_mesh_texturizer_a34014cab75532d14c48017d8e37d27a6}{get\+Texture\+Data()}} is {\bfseries{owned by this class}} -\/ it must not be deleted. Retrieves the texture data built from a previously 
+\end{DoxyWarning}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00358                                                                        \{}
+\DoxyCodeLine{00359   QReadLocker locker(\&m\_imp-\/>m\_lock);}
+\DoxyCodeLine{00360   \textcolor{keywordflow}{return} m\_imp-\/>getTextureData(textureId);}
+\DoxyCodeLine{00361 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l00136}{TTextures\+Storage\+::load\+Texture()}}.
+
+\mbox{\Hypertarget{class_mesh_texturizer_ab5c84d3378c2f45046849133e6fd0207}\label{class_mesh_texturizer_ab5c84d3378c2f45046849133e6fd0207}} 
+\index{MeshTexturizer@{MeshTexturizer}!rebindTexture@{rebindTexture}}
+\index{rebindTexture@{rebindTexture}!MeshTexturizer@{MeshTexturizer}}
+\doxysubsubsection{\texorpdfstring{rebindTexture()}{rebindTexture()}}
+{\footnotesize\ttfamily void Mesh\+Texturizer\+::rebind\+Texture (\begin{DoxyParamCaption}\item[{int}]{texture\+Id,  }\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&}]{ras,  }\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{geometry,  }\item[{\mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745}{Premult\+Mode}}}]{premultiply\+Mode = {\ttfamily \mbox{\hyperlink{class_mesh_texturizer_a6492b42f79d7e43ab31ee5c3c32db745a86bd8d532023068b55ac6b5b6df7ef72}{NONPREMULTIPLIED}}} }\end{DoxyParamCaption})}
+
+bound texture image.
+\begin{DoxyParams}{Parameters}
+{\em texture\+Id} & Identifier of the texture to be retrieved \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+See summary.
+\end{DoxyReturn}
+The texture identifier specified to \mbox{\hyperlink{class_mesh_texturizer_ab5c84d3378c2f45046849133e6fd0207}{rebind\+Texture()}} is retained, and the effect is that of an \mbox{\hyperlink{class_mesh_texturizer_abe81d212c56c9b739e4988143570383b}{unbind\+Texture()}} -\/ \mbox{\hyperlink{class_mesh_texturizer_a3fa598cb63981464e2bf7846490ab1f8}{bind\+Texture()}} combo. \begin{DoxyNote}{Note}
+Pre-\/compiled mesh data against the old texture can be retained {\bfseries{if}} the newly supplied texture size and geometry are the {\bfseries{same}} as the old one. ~\newline
+ 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em geometry} & Rebinds the image bound to the specified texture \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00340                                                                 \{}
+\DoxyCodeLine{00341   QWriteLocker locker(\&m\_imp-\/>m\_lock);}
+\DoxyCodeLine{00342 }
+\DoxyCodeLine{00343   \mbox{\hyperlink{class_mesh_texturizer_abe81d212c56c9b739e4988143570383b}{unbindTexture}}(texId);}
+\DoxyCodeLine{00344   \textcolor{keywordtype}{int} newTexId = \mbox{\hyperlink{class_mesh_texturizer_a3fa598cb63981464e2bf7846490ab1f8}{bindTexture}}(ras, geom, premultiplyMode);}
+\DoxyCodeLine{00345 }
+\DoxyCodeLine{00346   assert(texId == newTexId);}
+\DoxyCodeLine{00347 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00256}{bind\+Texture()}}, and \mbox{\hyperlink{l00351}{unbind\+Texture()}}.
+
+\mbox{\Hypertarget{class_mesh_texturizer_abe81d212c56c9b739e4988143570383b}\label{class_mesh_texturizer_abe81d212c56c9b739e4988143570383b}} 
+\index{MeshTexturizer@{MeshTexturizer}!unbindTexture@{unbindTexture}}
+\index{unbindTexture@{unbindTexture}!MeshTexturizer@{MeshTexturizer}}
+\doxysubsubsection{\texorpdfstring{unbindTexture()}{unbindTexture()}}
+{\footnotesize\ttfamily void Mesh\+Texturizer\+::unbind\+Texture (\begin{DoxyParamCaption}\item[{int}]{texture\+Id }\end{DoxyParamCaption})}
+
+
+
+id to a new image. 
+
+Deletes the texture associated to the passed id.
+\begin{DoxyParams}{Parameters}
+{\em texture\+Id} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00351                                             \{}
+\DoxyCodeLine{00352   QWriteLocker locker(\&m\_imp-\/>m\_lock);}
+\DoxyCodeLine{00353   m\_imp-\/>m\_textureDatas.erase(texId);}
+\DoxyCodeLine{00354 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l00338}{rebind\+Texture()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/ext/meshtexturizer.\+h\item 
+E\+:/opentoonz/toonz/sources/tnzext/meshtexturizer.\+cpp\end{DoxyCompactItemize}

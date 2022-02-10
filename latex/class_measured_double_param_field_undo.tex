@@ -1,0 +1,109 @@
+\hypertarget{class_measured_double_param_field_undo}{}\doxysection{Measured\+Double\+Param\+Field\+Undo Class Reference}
+\label{class_measured_double_param_field_undo}\index{MeasuredDoubleParamFieldUndo@{MeasuredDoubleParamFieldUndo}}
+Inheritance diagram for Measured\+Double\+Param\+Field\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_measured_double_param_field_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_measured_double_param_field_undo_a7b7636cea8c3083bdb46996d60e11691}{Measured\+Double\+Param\+Field\+Undo}} (const TDouble\+ParamP param, QString name, int frame, \mbox{\hyperlink{class_t_fx_handle}{TFx\+Handle}} $\ast$fx\+Handle)
+\item 
+void \mbox{\hyperlink{class_measured_double_param_field_undo_a5029815588ec535625852b84f30da76e}{on\+Add}} () override
+\item 
+void \mbox{\hyperlink{class_measured_double_param_field_undo_adc5a271a4e1a3d2ab27de1104f7b6c72}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_measured_double_param_field_undo_a525be24a5d5d86c461dad9e51c7103c9}{redo}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_measured_double_param_field}{Measured\+Double\+Param\+Field}} Undo 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_measured_double_param_field_undo_a7b7636cea8c3083bdb46996d60e11691}\label{class_measured_double_param_field_undo_a7b7636cea8c3083bdb46996d60e11691}} 
+\index{MeasuredDoubleParamFieldUndo@{MeasuredDoubleParamFieldUndo}!MeasuredDoubleParamFieldUndo@{MeasuredDoubleParamFieldUndo}}
+\index{MeasuredDoubleParamFieldUndo@{MeasuredDoubleParamFieldUndo}!MeasuredDoubleParamFieldUndo@{MeasuredDoubleParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{MeasuredDoubleParamFieldUndo()}{MeasuredDoubleParamFieldUndo()}}
+{\footnotesize\ttfamily Measured\+Double\+Param\+Field\+Undo\+::\+Measured\+Double\+Param\+Field\+Undo (\begin{DoxyParamCaption}\item[{const TDouble\+ParamP}]{param,  }\item[{QString}]{name,  }\item[{int}]{frame,  }\item[{\mbox{\hyperlink{class_t_fx_handle}{TFx\+Handle}} $\ast$}]{fx\+Handle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073       : \mbox{\hyperlink{class_animatable_fx_settings_undo}{AnimatableFxSettingsUndo}}(name, frame, fxHandle), m\_param(param) \{}
+\DoxyCodeLine{00074     m\_oldValue    = param-\/>getValue(frame);}
+\DoxyCodeLine{00075     m\_newValue    = m\_oldValue;}
+\DoxyCodeLine{00076     m\_wasKeyframe = m\_param-\/>isKeyframe(frame);}
+\DoxyCodeLine{00077   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_measured_double_param_field_undo_a5029815588ec535625852b84f30da76e}\label{class_measured_double_param_field_undo_a5029815588ec535625852b84f30da76e}} 
+\index{MeasuredDoubleParamFieldUndo@{MeasuredDoubleParamFieldUndo}!onAdd@{onAdd}}
+\index{onAdd@{onAdd}!MeasuredDoubleParamFieldUndo@{MeasuredDoubleParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{onAdd()}{onAdd()}}
+{\footnotesize\ttfamily void Measured\+Double\+Param\+Field\+Undo\+::on\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00079 \{ m\_newValue = m\_param-\/>getValue(m\_frame); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_measured_double_param_field_undo_a525be24a5d5d86c461dad9e51c7103c9}\label{class_measured_double_param_field_undo_a525be24a5d5d86c461dad9e51c7103c9}} 
+\index{MeasuredDoubleParamFieldUndo@{MeasuredDoubleParamFieldUndo}!redo@{redo}}
+\index{redo@{redo}!MeasuredDoubleParamFieldUndo@{MeasuredDoubleParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Measured\+Double\+Param\+Field\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00092                              \{}
+\DoxyCodeLine{00093     \textcolor{keywordflow}{if} (!m\_wasKeyframe)}
+\DoxyCodeLine{00094       m\_param-\/>setDefaultValue(m\_newValue);}
+\DoxyCodeLine{00095     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00096       m\_param-\/>setValue(m\_frame, m\_newValue);}
+\DoxyCodeLine{00097     \textcolor{keywordflow}{if} (m\_fxHandle) m\_fxHandle-\/>notifyFxChanged();}
+\DoxyCodeLine{00098   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_measured_double_param_field_undo_adc5a271a4e1a3d2ab27de1104f7b6c72}\label{class_measured_double_param_field_undo_adc5a271a4e1a3d2ab27de1104f7b6c72}} 
+\index{MeasuredDoubleParamFieldUndo@{MeasuredDoubleParamFieldUndo}!undo@{undo}}
+\index{undo@{undo}!MeasuredDoubleParamFieldUndo@{MeasuredDoubleParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Measured\+Double\+Param\+Field\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00081                              \{}
+\DoxyCodeLine{00082     \textcolor{keywordflow}{if} (!m\_wasKeyframe)}
+\DoxyCodeLine{00083       m\_param-\/>setDefaultValue(m\_oldValue);}
+\DoxyCodeLine{00084     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00085       m\_param-\/>setValue(m\_frame, m\_oldValue);}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087     \textcolor{keywordflow}{if} (m\_fxHandle) \{}
+\DoxyCodeLine{00088       m\_fxHandle-\/>notifyFxChanged();}
+\DoxyCodeLine{00089     \}}
+\DoxyCodeLine{00090   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/paramfield.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,93 @@
+\hypertarget{class_fx_schematic_link}{}\doxysection{Fx\+Schematic\+Link Class Reference}
+\label{class_fx_schematic_link}\index{FxSchematicLink@{FxSchematicLink}}
+Inheritance diagram for Fx\+Schematic\+Link\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_fx_schematic_link}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_fx_schematic_link_ac603517380f1638a936477ee0a907539}{Fx\+Schematic\+Link}} (QGraphics\+Item $\ast$parent, QGraphics\+Scene $\ast$scene)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_fx_schematic_link_a9ab1fb7ff2f6658ee6a51522601fe7a6}{context\+Menu\+Event}} (QGraphics\+Scene\+Context\+Menu\+Event $\ast$cme) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_fx_schematic_link_ac603517380f1638a936477ee0a907539}\label{class_fx_schematic_link_ac603517380f1638a936477ee0a907539}} 
+\index{FxSchematicLink@{FxSchematicLink}!FxSchematicLink@{FxSchematicLink}}
+\index{FxSchematicLink@{FxSchematicLink}!FxSchematicLink@{FxSchematicLink}}
+\doxysubsubsection{\texorpdfstring{FxSchematicLink()}{FxSchematicLink()}}
+{\footnotesize\ttfamily Fx\+Schematic\+Link\+::\+Fx\+Schematic\+Link (\begin{DoxyParamCaption}\item[{QGraphics\+Item $\ast$}]{parent,  }\item[{QGraphics\+Scene $\ast$}]{scene }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01098     : \mbox{\hyperlink{class_schematic_link}{SchematicLink}}(parent, scene) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_link_a4d69774695cd1a0a057839dd29ed15ae}\label{class_fx_schematic_link_a4d69774695cd1a0a057839dd29ed15ae}} 
+\index{FxSchematicLink@{FxSchematicLink}!````~FxSchematicLink@{$\sim$FxSchematicLink}}
+\index{````~FxSchematicLink@{$\sim$FxSchematicLink}!FxSchematicLink@{FxSchematicLink}}
+\doxysubsubsection{\texorpdfstring{$\sim$FxSchematicLink()}{~FxSchematicLink()}}
+{\footnotesize\ttfamily Fx\+Schematic\+Link\+::$\sim$\+Fx\+Schematic\+Link (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01102 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_fx_schematic_link_a9ab1fb7ff2f6658ee6a51522601fe7a6}\label{class_fx_schematic_link_a9ab1fb7ff2f6658ee6a51522601fe7a6}} 
+\index{FxSchematicLink@{FxSchematicLink}!contextMenuEvent@{contextMenuEvent}}
+\index{contextMenuEvent@{contextMenuEvent}!FxSchematicLink@{FxSchematicLink}}
+\doxysubsubsection{\texorpdfstring{contextMenuEvent()}{contextMenuEvent()}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Link\+::context\+Menu\+Event (\begin{DoxyParamCaption}\item[{QGraphics\+Scene\+Context\+Menu\+Event $\ast$}]{cme }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01106                                                                           \{}
+\DoxyCodeLine{01107   \mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *fxScene = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{01108   \mbox{\hyperlink{class_t_fx_command_1_1_link}{TFxCommand::Link}} link     = fxScene-\/>getFxSelection()-\/>getBoundingFxs(\textcolor{keyword}{this});}
+\DoxyCodeLine{01109   \textcolor{keywordflow}{if} (link == \mbox{\hyperlink{class_t_fx_command_1_1_link}{TFxCommand::Link}}()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01110 }
+\DoxyCodeLine{01111   QMenu menu(fxScene-\/>views()[0]);}
+\DoxyCodeLine{01112 }
+\DoxyCodeLine{01113   \textcolor{keywordflow}{if} (cme-\/>modifiers() \& Qt::ControlModifier) \{}
+\DoxyCodeLine{01114     menu.addAction(fxScene-\/>getAgainAction(AddFxContextMenu::Insert));}
+\DoxyCodeLine{01115     \textcolor{keywordflow}{if} (!menu.actions().isEmpty()) \{}
+\DoxyCodeLine{01116       menu.exec(cme-\/>screenPos());}
+\DoxyCodeLine{01117       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01118     \}}
+\DoxyCodeLine{01119   \}}
+\DoxyCodeLine{01120 }
+\DoxyCodeLine{01121   QAction *deleteFx = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Delete"{}}), \&menu);}
+\DoxyCodeLine{01122   connect(deleteFx, SIGNAL(triggered()), fxScene, SLOT(onDeleteFx()));}
+\DoxyCodeLine{01123 }
+\DoxyCodeLine{01124   QAction *insertPaste = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Paste Insert"{}}), \&menu);}
+\DoxyCodeLine{01125   connect(insertPaste, SIGNAL(triggered()), fxScene, SLOT(onInsertPaste()));}
+\DoxyCodeLine{01126 }
+\DoxyCodeLine{01127   menu.addMenu(fxScene-\/>getInsertFxMenu());}
+\DoxyCodeLine{01128   menu.addSeparator();}
+\DoxyCodeLine{01129   menu.addAction(insertPaste);}
+\DoxyCodeLine{01130   menu.addAction(deleteFx);}
+\DoxyCodeLine{01131 }
+\DoxyCodeLine{01132   menu.exec(cme-\/>screenPos());}
+\DoxyCodeLine{01133 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/fxschematicnode.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/fxschematicnode.\+cpp\end{DoxyCompactItemize}

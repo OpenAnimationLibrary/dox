@@ -1,0 +1,66 @@
+\hypertarget{class_script_engine_1_1_executor}{}\doxysection{Script\+Engine\+::Executor Class Reference}
+\label{class_script_engine_1_1_executor}\index{ScriptEngine::Executor@{ScriptEngine::Executor}}
+Inheritance diagram for Script\+Engine\+::Executor\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_script_engine_1_1_executor}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_script_engine_1_1_executor_a133a92f9b11cefacbedb53f722f866de}{Executor}} (\mbox{\hyperlink{class_script_engine}{Script\+Engine}} $\ast$engine, const QString \&cmd)
+\item 
+void \mbox{\hyperlink{class_script_engine_1_1_executor_a82858b4d9178f879f14de974405bf030}{run}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_script_engine_1_1_executor_a133a92f9b11cefacbedb53f722f866de}\label{class_script_engine_1_1_executor_a133a92f9b11cefacbedb53f722f866de}} 
+\index{ScriptEngine::Executor@{ScriptEngine::Executor}!Executor@{Executor}}
+\index{Executor@{Executor}!ScriptEngine::Executor@{ScriptEngine::Executor}}
+\doxysubsubsection{\texorpdfstring{Executor()}{Executor()}}
+{\footnotesize\ttfamily Script\+Engine\+::\+Executor\+::\+Executor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_script_engine}{Script\+Engine}} $\ast$}]{engine,  }\item[{const QString \&}]{cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00141       : m\_engine(engine), m\_cmd(cmd) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_script_engine_1_1_executor_a82858b4d9178f879f14de974405bf030}\label{class_script_engine_1_1_executor_a82858b4d9178f879f14de974405bf030}} 
+\index{ScriptEngine::Executor@{ScriptEngine::Executor}!run@{run}}
+\index{run@{run}!ScriptEngine::Executor@{ScriptEngine::Executor}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Script\+Engine\+::\+Executor\+::run (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00143                       \{}
+\DoxyCodeLine{00144     m\_engine-\/>m\_engine-\/>collectGarbage();}
+\DoxyCodeLine{00145     QScriptValue result = m\_engine-\/>m\_engine-\/>evaluate(m\_cmd);}
+\DoxyCodeLine{00146     \textcolor{keywordflow}{if} (result.isError()) \{}
+\DoxyCodeLine{00147       m\_engine-\/>emitOutput(ScriptEngine::SyntaxError, result.toString());}
+\DoxyCodeLine{00148     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (result.isUndefined()) \{}
+\DoxyCodeLine{00149       m\_engine-\/>emitOutput(ScriptEngine::UndefinedEvaluationResult,}
+\DoxyCodeLine{00150                            \textcolor{stringliteral}{"{}undefined"{}});}
+\DoxyCodeLine{00151     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00152       \textcolor{keywordflow}{if} (qscriptvalue\_cast<TScriptBinding::Void *>(result)) \{}
+\DoxyCodeLine{00153       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00154         m\_engine-\/>emitOutput(ScriptEngine::EvaluationResult,}
+\DoxyCodeLine{00155                              print(result, \textcolor{keyword}{true}));}
+\DoxyCodeLine{00156       \}}
+\DoxyCodeLine{00157     \}}
+\DoxyCodeLine{00158   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/scriptengine.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,258 @@
+\hypertarget{class_camera_test_toggle_command}{}\doxysection{Camera\+Test\+Toggle\+Command Class Reference}
+\label{class_camera_test_toggle_command}\index{CameraTestToggleCommand@{CameraTestToggleCommand}}
+Inheritance diagram for Camera\+Test\+Toggle\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_camera_test_toggle_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_camera_test_toggle_command_a460d6f749477b9871d87be8320b9c416}{execute}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_camera_test_toggle_command_ae1afbdac28e38f67cdae1534c75a3e89}{on\+Preview\+Data\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_camera_test_toggle_command_a58f944ed967bdbb7d8e2d9546bc914b1}{post\+Process}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_camera_test_toggle_command_a3f8c9596e508f0b99acb5ac11d362701}{enable}} ()
+\item 
+void \mbox{\hyperlink{class_camera_test_toggle_command_ac6180340ed8609dcc37baa4c38b14695}{disable}} ()
+\item 
+void \mbox{\hyperlink{class_camera_test_toggle_command_a7458cfdfda2b97b5fc48255cce932c43}{clean}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_camera_test_toggle_command_abc8e03f3f8f84be57c562b110db8e2fb}{Preview\+Toggle\+Command}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_camera_test_toggle_command_a71b9eb05df94ba6b07618f717fc39a4e}\label{class_camera_test_toggle_command_a71b9eb05df94ba6b07618f717fc39a4e}} 
+\index{CameraTestToggleCommand@{CameraTestToggleCommand}!CameraTestToggleCommand@{CameraTestToggleCommand}}
+\index{CameraTestToggleCommand@{CameraTestToggleCommand}!CameraTestToggleCommand@{CameraTestToggleCommand}}
+\doxysubsubsection{\texorpdfstring{CameraTestToggleCommand()}{CameraTestToggleCommand()}}
+{\footnotesize\ttfamily Camera\+Test\+Toggle\+Command\+::\+Camera\+Test\+Toggle\+Command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00247     : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(\textcolor{stringliteral}{"{}MI\_CameraTest"{}}), m\_oldTool(0) \{}
+\DoxyCodeLine{00248   m\_timer.setSingleShot(\textcolor{keyword}{true});}
+\DoxyCodeLine{00249   m\_timer.setInterval(500);}
+\DoxyCodeLine{00250 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_camera_test_toggle_command_a7458cfdfda2b97b5fc48255cce932c43}\label{class_camera_test_toggle_command_a7458cfdfda2b97b5fc48255cce932c43}} 
+\index{CameraTestToggleCommand@{CameraTestToggleCommand}!clean@{clean}}
+\index{clean@{clean}!CameraTestToggleCommand@{CameraTestToggleCommand}}
+\doxysubsubsection{\texorpdfstring{clean()}{clean()}}
+{\footnotesize\ttfamily void Camera\+Test\+Toggle\+Command\+::clean (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00369                                     \{}
+\DoxyCodeLine{00370   \textcolor{comment}{// Release all previewed images}}
+\DoxyCodeLine{00371   \textcolor{keywordflow}{if} (m\_sl) \{}
+\DoxyCodeLine{00372     \textcolor{keywordtype}{int} i, fidsCount = m\_fids.size();}
+\DoxyCodeLine{00373     \textcolor{keywordflow}{for} (i = 0; i < fidsCount; ++i) \{}
+\DoxyCodeLine{00374       \textcolor{keyword}{const} \mbox{\hyperlink{class_t_frame_id}{TFrameId}} \&fid = m\_fids[i];}
+\DoxyCodeLine{00375 }
+\DoxyCodeLine{00376       \textcolor{keywordtype}{int} status = m\_sl-\/>getFrameStatus(fid);}
+\DoxyCodeLine{00377       \textcolor{keywordflow}{if} (status \& \mbox{\hyperlink{class_t_xsh_simple_level_a8ee78a10f5ced42f16e01b6adf3f8c49a9e5aa8f328730d501a912a0e11fe39f0}{TXshSimpleLevel::CleanupPreview}}) \{}
+\DoxyCodeLine{00378         \mbox{\hyperlink{class_image_manager}{ImageManager}} *im = ImageManager::instance();}
+\DoxyCodeLine{00379         im-\/>\mbox{\hyperlink{class_image_manager_ab74305fdae38a7704081f7f777d0d80d}{unbind}}(m\_sl-\/>getImageId(fid, \mbox{\hyperlink{class_t_xsh_simple_level_a8ee78a10f5ced42f16e01b6adf3f8c49a9e5aa8f328730d501a912a0e11fe39f0}{TXshSimpleLevel::CleanupPreview}}));}
+\DoxyCodeLine{00380 }
+\DoxyCodeLine{00381         IconGenerator::instance()-\/>remove(m\_sl.getPointer(), fid);}
+\DoxyCodeLine{00382 }
+\DoxyCodeLine{00383         m\_sl-\/>setFrameStatus(fid, status \& \string~\mbox{\hyperlink{class_t_xsh_simple_level_a8ee78a10f5ced42f16e01b6adf3f8c49a9e5aa8f328730d501a912a0e11fe39f0}{TXshSimpleLevel::CleanupPreview}});}
+\DoxyCodeLine{00384       \}}
+\DoxyCodeLine{00385     \}}
+\DoxyCodeLine{00386   \}}
+\DoxyCodeLine{00387 }
+\DoxyCodeLine{00388   m\_sl = \mbox{\hyperlink{class_t_smart_pointer_t}{TXshSimpleLevelP}}();}
+\DoxyCodeLine{00389   m\_fids.clear();}
+\DoxyCodeLine{00390 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_camera_test_toggle_command_ac6180340ed8609dcc37baa4c38b14695}\label{class_camera_test_toggle_command_ac6180340ed8609dcc37baa4c38b14695}} 
+\index{CameraTestToggleCommand@{CameraTestToggleCommand}!disable@{disable}}
+\index{disable@{disable}!CameraTestToggleCommand@{CameraTestToggleCommand}}
+\doxysubsubsection{\texorpdfstring{disable()}{disable()}}
+{\footnotesize\ttfamily void Camera\+Test\+Toggle\+Command\+::disable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00297                                       \{}
+\DoxyCodeLine{00298   \mbox{\hyperlink{class_cleanup_settings_model}{CleanupSettingsModel}} *model = CleanupSettingsModel::instance();}
+\DoxyCodeLine{00299   model-\/>\mbox{\hyperlink{class_cleanup_settings_model_a26a2edbdf4fe3ed77fe4f40020189579}{detach}}(CleanupSettingsModel::LISTENER |}
+\DoxyCodeLine{00300                 CleanupSettingsModel::CAMERATEST);}
+\DoxyCodeLine{00301 }
+\DoxyCodeLine{00302   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00303   ret      = ret \&\& disconnect(model, SIGNAL(previewDataChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00304                           SLOT(onPreviewDataChanged()));}
+\DoxyCodeLine{00305   assert(ret);}
+\DoxyCodeLine{00306 }
+\DoxyCodeLine{00307   clean();}
+\DoxyCodeLine{00308 }
+\DoxyCodeLine{00309   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>notifyLevelChange();}
+\DoxyCodeLine{00310 }
+\DoxyCodeLine{00311   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad70b447aff489792cfc3dbac7150a540}{getCurrentTool}}()-\/>setTool(}
+\DoxyCodeLine{00312       QString::fromStdString(m\_oldTool-\/>getName()));}
+\DoxyCodeLine{00313   m\_oldTool = 0;}
+\DoxyCodeLine{00314 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_camera_test_toggle_command_a3f8c9596e508f0b99acb5ac11d362701}\label{class_camera_test_toggle_command_a3f8c9596e508f0b99acb5ac11d362701}} 
+\index{CameraTestToggleCommand@{CameraTestToggleCommand}!enable@{enable}}
+\index{enable@{enable}!CameraTestToggleCommand@{CameraTestToggleCommand}}
+\doxysubsubsection{\texorpdfstring{enable()}{enable()}}
+{\footnotesize\ttfamily void Camera\+Test\+Toggle\+Command\+::enable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00264                                      \{}
+\DoxyCodeLine{00265   \textcolor{comment}{/*-\/-\/-\/既に現在のツールがCameraTestになっている場合はreturn-\/-\/-\/*/}}
+\DoxyCodeLine{00266   m\_oldTool = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad70b447aff489792cfc3dbac7150a540}{getCurrentTool}}()-\/>getTool();}
+\DoxyCodeLine{00267   \textcolor{keywordflow}{if} (m\_oldTool-\/>getName().compare(\textcolor{stringliteral}{"{}T\_CameraTest"{}}) == 0) \{}
+\DoxyCodeLine{00268     \mbox{\hyperlink{class_camera_test_check_adc1033b93dea95f49db36d8fb668e16d}{CameraTestCheck::instance}}()-\/>setIsEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00269     disable();}
+\DoxyCodeLine{00270     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00271   \}}
+\DoxyCodeLine{00272 }
+\DoxyCodeLine{00273   \textcolor{comment}{// Cleanup Preview and Camera Test are exclusive. In case, disable the latter.}}
+\DoxyCodeLine{00274   \textcolor{comment}{// NOTE: This is done *before* attaching, since attach may invoke a preview}}
+\DoxyCodeLine{00275   \textcolor{comment}{// rebuild.}}
+\DoxyCodeLine{00276   \mbox{\hyperlink{class_cleanup_preview_check}{CleanupPreviewCheck}} *pc = \mbox{\hyperlink{class_cleanup_preview_check_a231efbbe4e3356757b725452d5efb62d}{CleanupPreviewCheck::instance}}();}
+\DoxyCodeLine{00277   pc-\/>setIsEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00278 }
+\DoxyCodeLine{00279   \textcolor{comment}{// Attach to the model}}
+\DoxyCodeLine{00280   \mbox{\hyperlink{class_cleanup_settings_model}{CleanupSettingsModel}} *model = CleanupSettingsModel::instance();}
+\DoxyCodeLine{00281   model-\/>\mbox{\hyperlink{class_cleanup_settings_model_a244bd70aa1bc4af824a6c8e299cd5d79}{attach}}(}
+\DoxyCodeLine{00282       CleanupSettingsModel::LISTENER | CleanupSettingsModel::CAMERATEST, \textcolor{keyword}{false});}
+\DoxyCodeLine{00283 }
+\DoxyCodeLine{00284   \textcolor{comment}{// Connect signals}}
+\DoxyCodeLine{00285   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00286   ret      = ret \&\& connect(model, SIGNAL(previewDataChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00287                        SLOT(onPreviewDataChanged()));}
+\DoxyCodeLine{00288   assert(ret);}
+\DoxyCodeLine{00289 }
+\DoxyCodeLine{00290   onPreviewDataChanged();}
+\DoxyCodeLine{00291 }
+\DoxyCodeLine{00292   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad70b447aff489792cfc3dbac7150a540}{getCurrentTool}}()-\/>setTool(\textcolor{stringliteral}{"{}T\_CameraTest"{}});}
+\DoxyCodeLine{00293 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_camera_test_toggle_command_a460d6f749477b9871d87be8320b9c416}\label{class_camera_test_toggle_command_a460d6f749477b9871d87be8320b9c416}} 
+\index{CameraTestToggleCommand@{CameraTestToggleCommand}!execute@{execute}}
+\index{execute@{execute}!CameraTestToggleCommand@{CameraTestToggleCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Camera\+Test\+Toggle\+Command\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00254                                       \{}
+\DoxyCodeLine{00255   \mbox{\hyperlink{class_camera_test_check}{CameraTestCheck}} *tc = \mbox{\hyperlink{class_camera_test_check_adc1033b93dea95f49db36d8fb668e16d}{CameraTestCheck::instance}}();}
+\DoxyCodeLine{00256   \textcolor{keywordflow}{if} (tc-\/>isEnabled())}
+\DoxyCodeLine{00257     enable();}
+\DoxyCodeLine{00258   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00259     disable();}
+\DoxyCodeLine{00260 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_camera_test_toggle_command_ae1afbdac28e38f67cdae1534c75a3e89}\label{class_camera_test_toggle_command_ae1afbdac28e38f67cdae1534c75a3e89}} 
+\index{CameraTestToggleCommand@{CameraTestToggleCommand}!onPreviewDataChanged@{onPreviewDataChanged}}
+\index{onPreviewDataChanged@{onPreviewDataChanged}!CameraTestToggleCommand@{CameraTestToggleCommand}}
+\doxysubsubsection{\texorpdfstring{onPreviewDataChanged}{onPreviewDataChanged}}
+{\footnotesize\ttfamily void Camera\+Test\+Toggle\+Command\+::on\+Preview\+Data\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00318                                                    \{}
+\DoxyCodeLine{00319   \mbox{\hyperlink{class_cleanup_settings_model}{CleanupSettingsModel}} *model = CleanupSettingsModel::instance();}
+\DoxyCodeLine{00320 }
+\DoxyCodeLine{00321   \textcolor{comment}{// Retrieve level under cleanup}}
+\DoxyCodeLine{00322   \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl;}
+\DoxyCodeLine{00323   \mbox{\hyperlink{class_t_frame_id}{TFrameId}} fid;}
+\DoxyCodeLine{00324   model-\/>getCleanupFrame(sl, fid);}
+\DoxyCodeLine{00325 }
+\DoxyCodeLine{00326   \textcolor{comment}{// In case the level changes, release all previously previewed images}}
+\DoxyCodeLine{00327   \textcolor{keywordflow}{if} (m\_sl.getPointer() != sl) clean();}
+\DoxyCodeLine{00328 }
+\DoxyCodeLine{00329   m\_sl = sl;}
+\DoxyCodeLine{00330   \textcolor{keywordflow}{if} (sl) \{}
+\DoxyCodeLine{00331     \textcolor{keywordflow}{if} (!(sl-\/>getFrameStatus(fid) \& \mbox{\hyperlink{class_t_xsh_simple_level_a8ee78a10f5ced42f16e01b6adf3f8c49a9e5aa8f328730d501a912a0e11fe39f0}{TXshSimpleLevel::CleanupPreview}})) \{}
+\DoxyCodeLine{00332       m\_fids.push\_back(fid);}
+\DoxyCodeLine{00333       sl-\/>setFrameStatus(}
+\DoxyCodeLine{00334           fid, sl-\/>getFrameStatus(fid) | \mbox{\hyperlink{class_t_xsh_simple_level_a8ee78a10f5ced42f16e01b6adf3f8c49a9e5aa8f328730d501a912a0e11fe39f0}{TXshSimpleLevel::CleanupPreview}});}
+\DoxyCodeLine{00335     \}}
+\DoxyCodeLine{00336 }
+\DoxyCodeLine{00337     postProcess();}
+\DoxyCodeLine{00338   \}}
+\DoxyCodeLine{00339 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_camera_test_toggle_command_a58f944ed967bdbb7d8e2d9546bc914b1}\label{class_camera_test_toggle_command_a58f944ed967bdbb7d8e2d9546bc914b1}} 
+\index{CameraTestToggleCommand@{CameraTestToggleCommand}!postProcess@{postProcess}}
+\index{postProcess@{postProcess}!CameraTestToggleCommand@{CameraTestToggleCommand}}
+\doxysubsubsection{\texorpdfstring{postProcess}{postProcess}}
+{\footnotesize\ttfamily void Camera\+Test\+Toggle\+Command\+::post\+Process (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00343                                           \{}
+\DoxyCodeLine{00344   \mbox{\hyperlink{class_t_app}{TApp}} *app                   = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00345   \mbox{\hyperlink{class_cleanup_settings_model}{CleanupSettingsModel}} *model = CleanupSettingsModel::instance();}
+\DoxyCodeLine{00346 }
+\DoxyCodeLine{00347   \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl;}
+\DoxyCodeLine{00348   \mbox{\hyperlink{class_t_frame_id}{TFrameId}} fid;}
+\DoxyCodeLine{00349   model-\/>getCleanupFrame(sl, fid);}
+\DoxyCodeLine{00350 }
+\DoxyCodeLine{00351   assert(sl);}
+\DoxyCodeLine{00352   \textcolor{keywordflow}{if} (!sl) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00353 }
+\DoxyCodeLine{00354   \textcolor{comment}{// Retrieve transformed image}}
+\DoxyCodeLine{00355   \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} transformed;}
+\DoxyCodeLine{00356   \{}
+\DoxyCodeLine{00357     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} original;}
+\DoxyCodeLine{00358     model-\/>\mbox{\hyperlink{class_cleanup_settings_model_a91498127febe1394e79acfef0cbdea40}{getCameraTestData}}(original, transformed);}
+\DoxyCodeLine{00359   \}}
+\DoxyCodeLine{00360 }
+\DoxyCodeLine{00361   \textcolor{comment}{// Substitute current frame image with previewed one}}
+\DoxyCodeLine{00362   sl-\/>setFrame(fid, transformed);}
+\DoxyCodeLine{00363 }
+\DoxyCodeLine{00364   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>notifyLevelChange();}
+\DoxyCodeLine{00365 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_camera_test_toggle_command_abc8e03f3f8f84be57c562b110db8e2fb}\label{class_camera_test_toggle_command_abc8e03f3f8f84be57c562b110db8e2fb}} 
+\index{CameraTestToggleCommand@{CameraTestToggleCommand}!PreviewToggleCommand@{PreviewToggleCommand}}
+\index{PreviewToggleCommand@{PreviewToggleCommand}!CameraTestToggleCommand@{CameraTestToggleCommand}}
+\doxysubsubsection{\texorpdfstring{PreviewToggleCommand}{PreviewToggleCommand}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{class_preview_toggle_command}{Preview\+Toggle\+Command}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanuppreview.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanuppreview.\+cpp\end{DoxyCompactItemize}

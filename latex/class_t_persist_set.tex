@@ -1,0 +1,149 @@
+\hypertarget{class_t_persist_set}{}\doxysection{TPersist\+Set Class Reference}
+\label{class_t_persist_set}\index{TPersistSet@{TPersistSet}}
+
+
+{\ttfamily \#include $<$tpersistset.\+h$>$}
+
+Inheritance diagram for TPersist\+Set\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_t_persist_set}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_persist_set_aaf414b36115d028132c945f1617f30d9}{$\sim$\+TPersist\+Set}} ()
+\begin{DoxyCompactList}\small\item\em Destroys the stored objects. \end{DoxyCompactList}\item 
+const std\+::vector$<$ \mbox{\hyperlink{class_t_persist}{TPersist}} $\ast$ $>$ \& \mbox{\hyperlink{class_t_persist_set_aeb9b7766bc4fb1b7b8fc08281698816a}{objects}} () const
+\begin{DoxyCompactList}\small\item\em Returns the stored objects list. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_t_persist_set_a9286b402952dd4c42c125c45b9e4620b}{insert}} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_t_persist}{TPersist}} $>$ object)
+\item 
+void \mbox{\hyperlink{class_t_persist_set_a2ddd3127a815828f9641b71e10715436}{save\+Data}} (\mbox{\hyperlink{class_t_o_stream}{TOStream}} \&os) override
+\begin{DoxyCompactList}\small\item\em Saves data to stream. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_t_persist_set_a0291cbba9994ad15d818ccdb1a9a7714}{load\+Data}} (\mbox{\hyperlink{class_t_i_stream}{TIStream}} \&is) override
+\begin{DoxyCompactList}\small\item\em Loads data from stream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Container of \mbox{\hyperlink{class_t_persist}{TPersist}} instances that are {\itshape  unique per concrete type }.
+
+This class acts as a container of \mbox{\hyperlink{class_t_persist}{TPersist}} instances where only a single instance of a given most-\/derived type can be stored.
+
+This is typically useful to {\itshape overwrite} objects of a given type, typically configuration options, without discarding the other objects. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_persist_set_aaf414b36115d028132c945f1617f30d9}\label{class_t_persist_set_aaf414b36115d028132c945f1617f30d9}} 
+\index{TPersistSet@{TPersistSet}!````~TPersistSet@{$\sim$TPersistSet}}
+\index{````~TPersistSet@{$\sim$TPersistSet}!TPersistSet@{TPersistSet}}
+\doxysubsubsection{\texorpdfstring{$\sim$TPersistSet()}{~TPersistSet()}}
+{\footnotesize\ttfamily TPersist\+Set\+::$\sim$\+TPersist\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destroys the stored objects. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019                           \{}
+\DoxyCodeLine{00020   std::for\_each(m\_objects.begin(), m\_objects.end(), std::default\_delete<TPersist>());}
+\DoxyCodeLine{00021 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_persist_set_a9286b402952dd4c42c125c45b9e4620b}\label{class_t_persist_set_a9286b402952dd4c42c125c45b9e4620b}} 
+\index{TPersistSet@{TPersistSet}!insert@{insert}}
+\index{insert@{insert}!TPersistSet@{TPersistSet}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily void TPersist\+Set\+::insert (\begin{DoxyParamCaption}\item[{std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{class_t_persist}{TPersist}} $>$}]{object }\end{DoxyParamCaption})}
+
+Overwrites an object type instance with the supplied one. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00025                                                        \{}
+\DoxyCodeLine{00026   \textcolor{keyword}{auto} \textcolor{keyword}{const} sameType = [\&object](\mbox{\hyperlink{class_t_persist}{TPersist}} *x) \{}
+\DoxyCodeLine{00027     \textcolor{keywordflow}{return} \textcolor{keyword}{typeid}(*\textcolor{keywordtype}{object}.get()) == \textcolor{keyword}{typeid}(*x);}
+\DoxyCodeLine{00028   \};}
+\DoxyCodeLine{00029 }
+\DoxyCodeLine{00030   \textcolor{comment}{// Remove any object with the same type id}}
+\DoxyCodeLine{00031   std::vector<TPersist *>::iterator pt =}
+\DoxyCodeLine{00032       std::remove\_if(m\_objects.begin(), m\_objects.end(), sameType);}
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034   std::for\_each(pt, m\_objects.end(), std::default\_delete<TPersist>());}
+\DoxyCodeLine{00035   m\_objects.erase(pt, m\_objects.end());}
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{00037   \textcolor{comment}{// Push back the supplied object}}
+\DoxyCodeLine{00038   m\_objects.push\_back(\textcolor{keywordtype}{object}.release());}
+\DoxyCodeLine{00039 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_persist_set_a0291cbba9994ad15d818ccdb1a9a7714}\label{class_t_persist_set_a0291cbba9994ad15d818ccdb1a9a7714}} 
+\index{TPersistSet@{TPersistSet}!loadData@{loadData}}
+\index{loadData@{loadData}!TPersistSet@{TPersistSet}}
+\doxysubsubsection{\texorpdfstring{loadData()}{loadData()}}
+{\footnotesize\ttfamily void TPersist\+Set\+::load\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_i_stream}{TIStream}} \&}]{is }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Loads data from stream. 
+
+
+
+Implements \mbox{\hyperlink{class_t_persist_a9e9d78431e843edb9299095af867a136}{TPersist}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00050                                        \{}
+\DoxyCodeLine{00051   \textcolor{keywordflow}{while} (!is.\mbox{\hyperlink{class_t_i_stream_af8ad0a31e14e94179bd5688f13340528}{eos}}()) \{}
+\DoxyCodeLine{00052     \mbox{\hyperlink{class_t_persist}{TPersist}} *\textcolor{keywordtype}{object} = 0;}
+\DoxyCodeLine{00053     is >> object;}
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055     m\_objects.push\_back(\textcolor{keywordtype}{object});}
+\DoxyCodeLine{00056   \}}
+\DoxyCodeLine{00057 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01169}{TIStream\+::eos()}}.
+
+\mbox{\Hypertarget{class_t_persist_set_aeb9b7766bc4fb1b7b8fc08281698816a}\label{class_t_persist_set_aeb9b7766bc4fb1b7b8fc08281698816a}} 
+\index{TPersistSet@{TPersistSet}!objects@{objects}}
+\index{objects@{objects}!TPersistSet@{TPersistSet}}
+\doxysubsubsection{\texorpdfstring{objects()}{objects()}}
+{\footnotesize\ttfamily const std\+::vector$<$ \mbox{\hyperlink{class_t_persist}{TPersist}} $\ast$ $>$ \& TPersist\+Set\+::objects (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the stored objects list. 
+
+\mbox{\Hypertarget{class_t_persist_set_a2ddd3127a815828f9641b71e10715436}\label{class_t_persist_set_a2ddd3127a815828f9641b71e10715436}} 
+\index{TPersistSet@{TPersistSet}!saveData@{saveData}}
+\index{saveData@{saveData}!TPersistSet@{TPersistSet}}
+\doxysubsubsection{\texorpdfstring{saveData()}{saveData()}}
+{\footnotesize\ttfamily void TPersist\+Set\+::save\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_o_stream}{TOStream}} \&}]{os }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Saves data to stream. 
+
+
+
+Implements \mbox{\hyperlink{class_t_persist_afb991f7b26f14dbee1740ef036ff4e85}{TPersist}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00043                                        \{}
+\DoxyCodeLine{00044   std::vector<TPersist *>::iterator pt, pEnd = m\_objects.end();}
+\DoxyCodeLine{00045   \textcolor{keywordflow}{for} (pt = m\_objects.begin(); pt != pEnd; ++pt) os << *pt;}
+\DoxyCodeLine{00046 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tpersistset.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tstream/tpersistset.\+cpp\end{DoxyCompactItemize}

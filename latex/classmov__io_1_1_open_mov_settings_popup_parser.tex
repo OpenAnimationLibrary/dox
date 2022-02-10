@@ -1,0 +1,88 @@
+\hypertarget{classmov__io_1_1_open_mov_settings_popup_parser}{}\doxysection{mov\+\_\+io\+::Open\+Mov\+Settings\+Popup\+Parser Class Reference}
+\label{classmov__io_1_1_open_mov_settings_popup_parser}\index{mov\_io::OpenMovSettingsPopupParser@{mov\_io::OpenMovSettingsPopupParser}}
+Inheritance diagram for mov\+\_\+io\+::Open\+Mov\+Settings\+Popup\+Parser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmov__io_1_1_open_mov_settings_popup_parser}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{classmov__io_1_1_open_mov_settings_popup_parser_af81ca4e0b28e4d2f6a6b2a6f38e14314}{header}} () const override
+\item 
+void \mbox{\hyperlink{classmov__io_1_1_open_mov_settings_popup_parser_aa5adc7e7b4c68b8942f6e4decf2968bc}{operator()}} (\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&stream) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmov__io_1_1_open_mov_settings_popup_parser_af81ca4e0b28e4d2f6a6b2a6f38e14314}\label{classmov__io_1_1_open_mov_settings_popup_parser_af81ca4e0b28e4d2f6a6b2a6f38e14314}} 
+\index{mov\_io::OpenMovSettingsPopupParser@{mov\_io::OpenMovSettingsPopupParser}!header@{header}}
+\index{header@{header}!mov\_io::OpenMovSettingsPopupParser@{mov\_io::OpenMovSettingsPopupParser}}
+\doxysubsubsection{\texorpdfstring{header()}{header()}}
+{\footnotesize\ttfamily QString mov\+\_\+io\+::\+Open\+Mov\+Settings\+Popup\+Parser\+::header (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054 \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$openMovSettingsPopup"{}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmov__io_1_1_open_mov_settings_popup_parser_aa5adc7e7b4c68b8942f6e4decf2968bc}\label{classmov__io_1_1_open_mov_settings_popup_parser_aa5adc7e7b4c68b8942f6e4decf2968bc}} 
+\index{mov\_io::OpenMovSettingsPopupParser@{mov\_io::OpenMovSettingsPopupParser}!operator()@{operator()}}
+\index{operator()@{operator()}!mov\_io::OpenMovSettingsPopupParser@{mov\_io::OpenMovSettingsPopupParser}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily void mov\+\_\+io\+::\+Open\+Mov\+Settings\+Popup\+Parser\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00152                                                         \{}
+\DoxyCodeLine{00153   \textcolor{comment}{// Open the properties file}}
+\DoxyCodeLine{00154   QString fp;}
+\DoxyCodeLine{00155   msg >> fp >> clr;}
+\DoxyCodeLine{00156 }
+\DoxyCodeLine{00157   \textcolor{comment}{// Retrieve the properties}}
+\DoxyCodeLine{00158   \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}} *props = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}};}
+\DoxyCodeLine{00159   \mbox{\hyperlink{class_t_file_path}{TFilePath}} tfp(fp.toStdWString());}
+\DoxyCodeLine{00160   \{}
+\DoxyCodeLine{00161     \mbox{\hyperlink{class_t_i_stream}{TIStream}} is(tfp);}
+\DoxyCodeLine{00162     props-\/>loadData(is);}
+\DoxyCodeLine{00163   \}}
+\DoxyCodeLine{00164 }
+\DoxyCodeLine{00165 \textcolor{preprocessor}{\#ifdef MACOSX}}
+\DoxyCodeLine{00166 }
+\DoxyCodeLine{00167   ProcessSerialNumber psn = \{0, kCurrentProcess\};}
+\DoxyCodeLine{00168   TransformProcessType(\&psn, kProcessTransformToForegroundApplication);}
+\DoxyCodeLine{00169   SetFrontProcess(\&psn);}
+\DoxyCodeLine{00170 }
+\DoxyCodeLine{00171 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00172 }
+\DoxyCodeLine{00173   openMovSettingsPopup(props, \textcolor{keyword}{true});}
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00175   \{}
+\DoxyCodeLine{00176     \mbox{\hyperlink{class_t_o_stream}{TOStream}} os(tfp);  \textcolor{comment}{// Should NOT append}}
+\DoxyCodeLine{00177     props-\/>saveData(os);}
+\DoxyCodeLine{00178   \}}
+\DoxyCodeLine{00179 }
+\DoxyCodeLine{00180   \textcolor{keyword}{delete} props;}
+\DoxyCodeLine{00181 }
+\DoxyCodeLine{00182   msg << QString(\textcolor{stringliteral}{"{}ok"{}});}
+\DoxyCodeLine{00183 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+h\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+cpp\end{DoxyCompactItemize}

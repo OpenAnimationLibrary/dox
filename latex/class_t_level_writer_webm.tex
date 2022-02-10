@@ -1,0 +1,203 @@
+\hypertarget{class_t_level_writer_webm}{}\doxysection{TLevel\+Writer\+Webm Class Reference}
+\label{class_t_level_writer_webm}\index{TLevelWriterWebm@{TLevelWriterWebm}}
+Inheritance diagram for TLevel\+Writer\+Webm\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_t_level_writer_webm}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_level_writer_webm_a3ff3659ff3dcc132ab663ddafe31d069}{TLevel\+Writer\+Webm}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, \mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$winfo)
+\item 
+void \mbox{\hyperlink{class_t_level_writer_webm_a9e9c9b4ce205c7e6a56b37595c819c90}{set\+Frame\+Rate}} (double fps) override
+\item 
+\mbox{\hyperlink{class_t_image_writer_p}{TImage\+WriterP}} \mbox{\hyperlink{class_t_level_writer_webm_abb21ef3b949e2444295c45b13bf458d2}{get\+Frame\+Writer}} (\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} fid) override
+\item 
+void \mbox{\hyperlink{class_t_level_writer_webm_a50b18d1fada804d8d64d12165886b618}{save}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&image, int frame\+Index)
+\item 
+void \mbox{\hyperlink{class_t_level_writer_webm_a0802277ed0bc8cde48ed88dba61d1f37}{save\+Sound\+Track}} (\mbox{\hyperlink{class_t_sound_track}{TSound\+Track}} $\ast$st) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}} $\ast$ \mbox{\hyperlink{class_t_level_writer_webm_ac5531a5df47f9922a94e7daa2e186c15}{create}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, \mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$winfo)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_level_writer_webm_a3ff3659ff3dcc132ab663ddafe31d069}\label{class_t_level_writer_webm_a3ff3659ff3dcc132ab663ddafe31d069}} 
+\index{TLevelWriterWebm@{TLevelWriterWebm}!TLevelWriterWebm@{TLevelWriterWebm}}
+\index{TLevelWriterWebm@{TLevelWriterWebm}!TLevelWriterWebm@{TLevelWriterWebm}}
+\doxysubsubsection{\texorpdfstring{TLevelWriterWebm()}{TLevelWriterWebm()}}
+{\footnotesize\ttfamily TLevel\+Writer\+Webm\+::\+TLevel\+Writer\+Webm (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$}]{winfo }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040     : \mbox{\hyperlink{class_t_level_writer}{TLevelWriter}}(path, winfo) \{}
+\DoxyCodeLine{00041   \textcolor{keywordflow}{if} (!m\_properties) m\_properties = \textcolor{keyword}{new} \mbox{\hyperlink{class_tiio_1_1_webm_writer_properties}{Tiio::WebmWriterProperties}}();}
+\DoxyCodeLine{00042   std::string scale = m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Scale"{}})-\/>getValueAsString();}
+\DoxyCodeLine{00043   m\_scale           = QString::fromStdString(scale).toInt();}
+\DoxyCodeLine{00044   std::string quality =}
+\DoxyCodeLine{00045       m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Quality"{}})-\/>getValueAsString();}
+\DoxyCodeLine{00046   m\_vidQuality = QString::fromStdString(quality).toInt();}
+\DoxyCodeLine{00047   ffmpegWriter = \textcolor{keyword}{new} \mbox{\hyperlink{class_ffmpeg}{Ffmpeg}}();}
+\DoxyCodeLine{00048   ffmpegWriter-\/>setPath(m\_path);}
+\DoxyCodeLine{00049   \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(m\_path)) TSystem::deleteFile(m\_path);}
+\DoxyCodeLine{00050 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_webm_a27ab8d8183af2f610ec06d4fef3cdbb0}\label{class_t_level_writer_webm_a27ab8d8183af2f610ec06d4fef3cdbb0}} 
+\index{TLevelWriterWebm@{TLevelWriterWebm}!````~TLevelWriterWebm@{$\sim$TLevelWriterWebm}}
+\index{````~TLevelWriterWebm@{$\sim$TLevelWriterWebm}!TLevelWriterWebm@{TLevelWriterWebm}}
+\doxysubsubsection{\texorpdfstring{$\sim$TLevelWriterWebm()}{~TLevelWriterWebm()}}
+{\footnotesize\ttfamily TLevel\+Writer\+Webm\+::$\sim$\+TLevel\+Writer\+Webm (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054                                     \{}
+\DoxyCodeLine{00055   \textcolor{comment}{// QProcess createWebm;}}
+\DoxyCodeLine{00056   QStringList preIArgs;}
+\DoxyCodeLine{00057   QStringList postIArgs;}
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059   \textcolor{keywordtype}{int} outLx = m\_lx;}
+\DoxyCodeLine{00060   \textcolor{keywordtype}{int} outLy = m\_ly;}
+\DoxyCodeLine{00061 }
+\DoxyCodeLine{00062   \textcolor{comment}{// set scaling}}
+\DoxyCodeLine{00063   \textcolor{keywordflow}{if} (m\_scale != 0) \{}
+\DoxyCodeLine{00064     outLx = m\_lx * m\_scale / 100;}
+\DoxyCodeLine{00065     outLy = m\_ly * m\_scale / 100;}
+\DoxyCodeLine{00066   \}}
+\DoxyCodeLine{00067   \textcolor{comment}{// ffmpeg doesn't like resolutions that aren't divisible by 2.}}
+\DoxyCodeLine{00068   \textcolor{keywordflow}{if} (outLx \% 2 != 0) outLx++;}
+\DoxyCodeLine{00069   \textcolor{keywordflow}{if} (outLy \% 2 != 0) outLy++;}
+\DoxyCodeLine{00070 }
+\DoxyCodeLine{00071   \textcolor{comment}{// calculate quality (bitrate)}}
+\DoxyCodeLine{00072   \textcolor{keywordtype}{int} pixelCount   = m\_lx * m\_ly;}
+\DoxyCodeLine{00073   \textcolor{keywordtype}{int} bitRate      = pixelCount / 150;  \textcolor{comment}{// crude but gets decent values}}
+\DoxyCodeLine{00074   \textcolor{keywordtype}{double} quality   = m\_vidQuality / 100.0;}
+\DoxyCodeLine{00075   \textcolor{keywordtype}{double} tempRate  = (double)bitRate * quality;}
+\DoxyCodeLine{00076   \textcolor{keywordtype}{int} finalBitrate = (int)tempRate;}
+\DoxyCodeLine{00077   \textcolor{keywordtype}{int} crf          = 51 -\/ (m\_vidQuality * 51 / 100);}
+\DoxyCodeLine{00078 }
+\DoxyCodeLine{00079   preIArgs << \textcolor{stringliteral}{"{}-\/framerate"{}};}
+\DoxyCodeLine{00080   preIArgs << QString::number(m\_frameRate);}
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00082   postIArgs << \textcolor{stringliteral}{"{}-\/auto-\/alt-\/ref"{}};}
+\DoxyCodeLine{00083   postIArgs << \textcolor{stringliteral}{"{}0"{}};}
+\DoxyCodeLine{00084   postIArgs << \textcolor{stringliteral}{"{}-\/c:v"{}};}
+\DoxyCodeLine{00085   postIArgs << \textcolor{stringliteral}{"{}libvpx"{}};}
+\DoxyCodeLine{00086   postIArgs << \textcolor{stringliteral}{"{}-\/s"{}};}
+\DoxyCodeLine{00087   postIArgs << QString::number(outLx) + \textcolor{stringliteral}{"{}x"{}} + QString::number(outLy);}
+\DoxyCodeLine{00088   postIArgs << \textcolor{stringliteral}{"{}-\/b"{}};}
+\DoxyCodeLine{00089   postIArgs << QString::number(finalBitrate) + \textcolor{stringliteral}{"{}k"{}};}
+\DoxyCodeLine{00090   postIArgs << \textcolor{stringliteral}{"{}-\/speed"{}};}
+\DoxyCodeLine{00091   postIArgs << \textcolor{stringliteral}{"{}3"{}};}
+\DoxyCodeLine{00092   postIArgs << \textcolor{stringliteral}{"{}-\/quality"{}};}
+\DoxyCodeLine{00093   postIArgs << \textcolor{stringliteral}{"{}good"{}};}
+\DoxyCodeLine{00094 }
+\DoxyCodeLine{00095   ffmpegWriter-\/>runFfmpeg(preIArgs, postIArgs, \textcolor{keyword}{false}, \textcolor{keyword}{false}, \textcolor{keyword}{true});}
+\DoxyCodeLine{00096   ffmpegWriter-\/>cleanUpFiles();}
+\DoxyCodeLine{00097 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_level_writer_webm_ac5531a5df47f9922a94e7daa2e186c15}\label{class_t_level_writer_webm_ac5531a5df47f9922a94e7daa2e186c15}} 
+\index{TLevelWriterWebm@{TLevelWriterWebm}!create@{create}}
+\index{create@{create}!TLevelWriterWebm@{TLevelWriterWebm}}
+\doxysubsubsection{\texorpdfstring{create()}{create()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}} $\ast$ TLevel\+Writer\+Webm\+::create (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$}]{winfo }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028                                                                             \{}
+\DoxyCodeLine{00029     \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_t_level_writer_webm}{TLevelWriterWebm}}(path, winfo);}
+\DoxyCodeLine{00030   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_webm_abb21ef3b949e2444295c45b13bf458d2}\label{class_t_level_writer_webm_abb21ef3b949e2444295c45b13bf458d2}} 
+\index{TLevelWriterWebm@{TLevelWriterWebm}!getFrameWriter@{getFrameWriter}}
+\index{getFrameWriter@{getFrameWriter}!TLevelWriterWebm@{TLevelWriterWebm}}
+\doxysubsubsection{\texorpdfstring{getFrameWriter()}{getFrameWriter()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_image_writer_p}{TImage\+WriterP}} TLevel\+Writer\+Webm\+::get\+Frame\+Writer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}}}]{fid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00101                                                            \{}
+\DoxyCodeLine{00102   \textcolor{comment}{// if (IOError != 0)}}
+\DoxyCodeLine{00103   \textcolor{comment}{//    throw TImageException(m\_path, buildGifExceptionString(IOError));}}
+\DoxyCodeLine{00104   \textcolor{keywordflow}{if} (!fid.getLetter().isEmpty()) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_image_writer_p}{TImageWriterP}}(0);}
+\DoxyCodeLine{00105   \textcolor{keywordtype}{int} index             = fid.getNumber();}
+\DoxyCodeLine{00106   \mbox{\hyperlink{class_t_image_writer_webm}{TImageWriterWebm}} *iwg = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_image_writer_webm}{TImageWriterWebm}}(m\_path, index, \textcolor{keyword}{this});}
+\DoxyCodeLine{00107   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_image_writer_p}{TImageWriterP}}(iwg);}
+\DoxyCodeLine{00108 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_webm_a50b18d1fada804d8d64d12165886b618}\label{class_t_level_writer_webm_a50b18d1fada804d8d64d12165886b618}} 
+\index{TLevelWriterWebm@{TLevelWriterWebm}!save@{save}}
+\index{save@{save}!TLevelWriterWebm@{TLevelWriterWebm}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily void TLevel\+Writer\+Webm\+::save (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&}]{image,  }\item[{int}]{frame\+Index }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00122                                                               \{}
+\DoxyCodeLine{00123   \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} image(img);}
+\DoxyCodeLine{00124   m\_lx = image-\/>getRaster()-\/>getLx();}
+\DoxyCodeLine{00125   m\_ly = image-\/>getRaster()-\/>getLy();}
+\DoxyCodeLine{00126   ffmpegWriter-\/>createIntermediateImage(img, frameIndex);}
+\DoxyCodeLine{00127 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_webm_a0802277ed0bc8cde48ed88dba61d1f37}\label{class_t_level_writer_webm_a0802277ed0bc8cde48ed88dba61d1f37}} 
+\index{TLevelWriterWebm@{TLevelWriterWebm}!saveSoundTrack@{saveSoundTrack}}
+\index{saveSoundTrack@{saveSoundTrack}!TLevelWriterWebm@{TLevelWriterWebm}}
+\doxysubsubsection{\texorpdfstring{saveSoundTrack()}{saveSoundTrack()}}
+{\footnotesize\ttfamily void TLevel\+Writer\+Webm\+::save\+Sound\+Track (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_sound_track}{TSound\+Track}} $\ast$}]{st }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00116                                                      \{}
+\DoxyCodeLine{00117   ffmpegWriter-\/>saveSoundTrack(st);}
+\DoxyCodeLine{00118 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_webm_a9e9c9b4ce205c7e6a56b37595c819c90}\label{class_t_level_writer_webm_a9e9c9b4ce205c7e6a56b37595c819c90}} 
+\index{TLevelWriterWebm@{TLevelWriterWebm}!setFrameRate@{setFrameRate}}
+\index{setFrameRate@{setFrameRate}!TLevelWriterWebm@{TLevelWriterWebm}}
+\doxysubsubsection{\texorpdfstring{setFrameRate()}{setFrameRate()}}
+{\footnotesize\ttfamily void TLevel\+Writer\+Webm\+::set\+Frame\+Rate (\begin{DoxyParamCaption}\item[{double}]{fps }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00111                                               \{}
+\DoxyCodeLine{00112   m\_frameRate = fps;}
+\DoxyCodeLine{00113   ffmpegWriter-\/>setFrameRate(fps);}
+\DoxyCodeLine{00114 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/ffmpeg/tiio\+\_\+webm.\+h\item 
+E\+:/opentoonz/toonz/sources/image/ffmpeg/tiio\+\_\+webm.\+cpp\end{DoxyCompactItemize}

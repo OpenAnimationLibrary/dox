@@ -1,0 +1,198 @@
+\hypertarget{class_morph_tool}{}\doxysection{Morph\+Tool Class Reference}
+\label{class_morph_tool}\index{MorphTool@{MorphTool}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_morph_tool_ad68e6aa94ee81f7b23c9d2a12293adba}{set\+Image}} (const \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \&vi)
+\item 
+void \mbox{\hyperlink{class_morph_tool_ab8c8fb6b4d50803279510014cdb0e576}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e)
+\item 
+void \mbox{\hyperlink{class_morph_tool_a703b4ce63c80c8c3f4435b4539128309}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e)
+\item 
+void \mbox{\hyperlink{class_morph_tool_a950c5f5f7eeff938ea919684b1cb3bdc}{left\+Button\+Up}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e)
+\item 
+bool \mbox{\hyperlink{class_morph_tool_a073513e256e09338f39be2b9ab525d91}{key\+Down}} (QKey\+Event $\ast$event)
+\item 
+void \mbox{\hyperlink{class_morph_tool_a25957493edd04fd97f025670e59253d1}{draw}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_morph_tool_a10ef8886063926dcd01a5bc25935ab58}\label{class_morph_tool_a10ef8886063926dcd01a5bc25935ab58}} 
+\index{MorphTool@{MorphTool}!MorphTool@{MorphTool}}
+\index{MorphTool@{MorphTool}!MorphTool@{MorphTool}}
+\doxysubsubsection{\texorpdfstring{MorphTool()}{MorphTool()}}
+{\footnotesize\ttfamily Morph\+Tool\+::\+Morph\+Tool (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00140 : m\_pixelSize(1) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_morph_tool_a5083cebcf1049321162d14cf653dfb19}\label{class_morph_tool_a5083cebcf1049321162d14cf653dfb19}} 
+\index{MorphTool@{MorphTool}!````~MorphTool@{$\sim$MorphTool}}
+\index{````~MorphTool@{$\sim$MorphTool}!MorphTool@{MorphTool}}
+\doxysubsubsection{\texorpdfstring{$\sim$MorphTool()}{~MorphTool()}}
+{\footnotesize\ttfamily Morph\+Tool\+::$\sim$\+Morph\+Tool (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00142 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_morph_tool_a25957493edd04fd97f025670e59253d1}\label{class_morph_tool_a25957493edd04fd97f025670e59253d1}} 
+\index{MorphTool@{MorphTool}!draw@{draw}}
+\index{draw@{draw}!MorphTool@{MorphTool}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Morph\+Tool\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00176                      \{}
+\DoxyCodeLine{00177   m\_pixelSize = sqrt(tglGetPixelSize2());}
+\DoxyCodeLine{00178   \textcolor{keywordflow}{if} (m\_vi2) \{}
+\DoxyCodeLine{00179     \mbox{\hyperlink{class_t_vector_render_data}{TVectorRenderData}} rd(\mbox{\hyperlink{class_t_translation}{TTranslation}}(10, 10), \mbox{\hyperlink{class_t_rect_t}{TRect}}(), 0, 0);}
+\DoxyCodeLine{00180     tglDraw(rd, m\_vi2.getPointer());}
+\DoxyCodeLine{00181   \}}
+\DoxyCodeLine{00182 }
+\DoxyCodeLine{00183   \textcolor{keywordtype}{double} u = m\_pixelSize * 5;}
+\DoxyCodeLine{00184   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)deformation.m\_controlPoints.size(); i++) \{}
+\DoxyCodeLine{00185     \mbox{\hyperlink{class_t_point_t}{TPointD}} p     = deformation.m\_controlPoints[i];}
+\DoxyCodeLine{00186     \textcolor{keywordtype}{bool} selected = deformation.m\_selected == i;}
+\DoxyCodeLine{00187     \textcolor{keywordtype}{bool} base     = (i \& 1) == 0;}
+\DoxyCodeLine{00188     \textcolor{keywordflow}{if} (base)}
+\DoxyCodeLine{00189       \textcolor{keywordflow}{if} (selected)}
+\DoxyCodeLine{00190         glColor3d(0.8, 0.8, 0.1);}
+\DoxyCodeLine{00191       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00192         glColor3d(0.5, 0.5, 0.1);}
+\DoxyCodeLine{00193     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (selected)}
+\DoxyCodeLine{00194       glColor3d(0.8, 0.3, 0.1);}
+\DoxyCodeLine{00195     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00196       glColor3d(0.5, 0.1, 0.1);}
+\DoxyCodeLine{00197 }
+\DoxyCodeLine{00198     \textcolor{keywordtype}{double} r = base ? u * 2 : u * 1;}
+\DoxyCodeLine{00199     tglDrawDisk(p, r);}
+\DoxyCodeLine{00200     glColor3d(0, 0, 0);}
+\DoxyCodeLine{00201     tglDrawCircle(p, r);}
+\DoxyCodeLine{00202   \}}
+\DoxyCodeLine{00203   glColor3f(0, 1, 0);}
+\DoxyCodeLine{00204   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i + 1 < (int)deformation.m\_controlPoints.size(); i += 2) \{}
+\DoxyCodeLine{00205     \mbox{\hyperlink{class_t_point_t}{TPointD}} a = deformation.m\_controlPoints[i];}
+\DoxyCodeLine{00206     \mbox{\hyperlink{class_t_point_t}{TPointD}} b = deformation.m\_controlPoints[i + 1];}
+\DoxyCodeLine{00207     tglDrawSegment(a, b);}
+\DoxyCodeLine{00208   \}}
+\DoxyCodeLine{00209   \textcolor{comment}{/*}}
+\DoxyCodeLine{00210 \textcolor{comment}{deformation.update();}}
+\DoxyCodeLine{00211 \textcolor{comment}{glBegin(GL\_LINES);}}
+\DoxyCodeLine{00212 \textcolor{comment}{for(double x = -\/200; x<=200; x+=20)}}
+\DoxyCodeLine{00213 \textcolor{comment}{for(double y = -\/200; y<=200; y+=20)}}
+\DoxyCodeLine{00214 \textcolor{comment}{\{}}
+\DoxyCodeLine{00215 \textcolor{comment}{TPointD p0(x,y);}}
+\DoxyCodeLine{00216 \textcolor{comment}{TPointD p1 = deformation.apply(p0);}}
+\DoxyCodeLine{00217 \textcolor{comment}{glColor3d(0,1,0);}}
+\DoxyCodeLine{00218 \textcolor{comment}{tglVertex(p0);}}
+\DoxyCodeLine{00219 \textcolor{comment}{glColor3d(1,0,0);}}
+\DoxyCodeLine{00220 \textcolor{comment}{tglVertex(p1);}}
+\DoxyCodeLine{00221 \textcolor{comment}{\}}}
+\DoxyCodeLine{00222 \textcolor{comment}{glEnd();}}
+\DoxyCodeLine{00223 \textcolor{comment}{*/}}
+\DoxyCodeLine{00224 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_morph_tool_a073513e256e09338f39be2b9ab525d91}\label{class_morph_tool_a073513e256e09338f39be2b9ab525d91}} 
+\index{MorphTool@{MorphTool}!keyDown@{keyDown}}
+\index{keyDown@{keyDown}!MorphTool@{MorphTool}}
+\doxysubsubsection{\texorpdfstring{keyDown()}{keyDown()}}
+{\footnotesize\ttfamily bool Morph\+Tool\+::key\+Down (\begin{DoxyParamCaption}\item[{QKey\+Event $\ast$}]{event }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00226                                         \{}
+\DoxyCodeLine{00227   \textcolor{keywordflow}{if} (event-\/>key() == Qt::Key\_A)}
+\DoxyCodeLine{00228     deformation.updateLevel();}
+\DoxyCodeLine{00229   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00230     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00231   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00232 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_morph_tool_ab8c8fb6b4d50803279510014cdb0e576}\label{class_morph_tool_ab8c8fb6b4d50803279510014cdb0e576}} 
+\index{MorphTool@{MorphTool}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!MorphTool@{MorphTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Morph\+Tool\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00146                                                                        \{}
+\DoxyCodeLine{00147   m\_lastPos = m\_firstPos = pos;}
+\DoxyCodeLine{00148   \textcolor{keywordtype}{int} index              = deformation.getClosest(pos);}
+\DoxyCodeLine{00149   \textcolor{keywordflow}{if} (index >= 0)}
+\DoxyCodeLine{00150     deformation.m\_selected = index;}
+\DoxyCodeLine{00151   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00152     deformation.m\_selected = -\/1;}
+\DoxyCodeLine{00153 }
+\DoxyCodeLine{00154   \textcolor{keywordflow}{if} (m\_vi \&\& index >= 0) \{}
+\DoxyCodeLine{00155     m\_vi2 = m\_vi-\/>clone();}
+\DoxyCodeLine{00156     deformation.deform(m\_vi2.getPointer(), m\_vi.getPointer());}
+\DoxyCodeLine{00157   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00158     m\_vi2 = \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}}();}
+\DoxyCodeLine{00159   \}}
+\DoxyCodeLine{00160 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_morph_tool_a703b4ce63c80c8c3f4435b4539128309}\label{class_morph_tool_a703b4ce63c80c8c3f4435b4539128309}} 
+\index{MorphTool@{MorphTool}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!MorphTool@{MorphTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Morph\+Tool\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00162                                                                        \{}
+\DoxyCodeLine{00163   \textcolor{keywordflow}{if} (deformation.m\_selected < 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00164   \mbox{\hyperlink{class_t_point_t}{TPointD}} delta = pos -\/ m\_lastPos;}
+\DoxyCodeLine{00165   m\_lastPos     = pos;}
+\DoxyCodeLine{00166   deformation.m\_controlPoints[deformation.m\_selected] += delta;}
+\DoxyCodeLine{00167   \textcolor{keywordflow}{if} ((deformation.m\_selected \& 1) == 0)}
+\DoxyCodeLine{00168     deformation.m\_controlPoints[deformation.m\_selected + 1] += delta;}
+\DoxyCodeLine{00169   \textcolor{keywordflow}{if} (m\_vi2 \&\& m\_vi) deformation.deform(m\_vi2.getPointer(), m\_vi.getPointer());}
+\DoxyCodeLine{00170 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_morph_tool_a950c5f5f7eeff938ea919684b1cb3bdc}\label{class_morph_tool_a950c5f5f7eeff938ea919684b1cb3bdc}} 
+\index{MorphTool@{MorphTool}!leftButtonUp@{leftButtonUp}}
+\index{leftButtonUp@{leftButtonUp}!MorphTool@{MorphTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonUp()}{leftButtonUp()}}
+{\footnotesize\ttfamily void Morph\+Tool\+::left\+Button\+Up (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00172                                                                      \{}
+\DoxyCodeLine{00173   m\_vi2 = \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}}();}
+\DoxyCodeLine{00174 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_morph_tool_ad68e6aa94ee81f7b23c9d2a12293adba}\label{class_morph_tool_ad68e6aa94ee81f7b23c9d2a12293adba}} 
+\index{MorphTool@{MorphTool}!setImage@{setImage}}
+\index{setImage@{setImage}!MorphTool@{MorphTool}}
+\doxysubsubsection{\texorpdfstring{setImage()}{setImage()}}
+{\footnotesize\ttfamily void Morph\+Tool\+::set\+Image (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \&}]{vi }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00144 \{ m\_vi = vi; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/morphtool.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/morphtool.\+cpp\end{DoxyCompactItemize}

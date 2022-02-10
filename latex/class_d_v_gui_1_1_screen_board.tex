@@ -1,0 +1,222 @@
+\hypertarget{class_d_v_gui_1_1_screen_board}{}\doxysection{DVGui\+::Screen\+Board Class Reference}
+\label{class_d_v_gui_1_1_screen_board}\index{DVGui::ScreenBoard@{DVGui::ScreenBoard}}
+
+
+{\ttfamily \#include $<$screenboard.\+h$>$}
+
+Inheritance diagram for DVGui\+::Screen\+Board\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_d_v_gui_1_1_screen_board}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_1_1_drawing}{Drawing}}
+\item 
+class \mbox{\hyperlink{class_screen_board_1_1_screen_widget}{Screen\+Widget}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_ad677f3f3be085aebc45b1ee01967bdba}{update}} ()
+\begin{DoxyCompactList}\small\item\em Refreshes the screen widgets pool and updates them. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+const QList$<$ \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_1_1_drawing}{Drawing}} $\ast$ $>$ \& \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_a484485fcba260452a0d373a6769a107a}{drawings}} () const
+\item 
+QList$<$ \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_1_1_drawing}{Drawing}} $\ast$ $>$ \& \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_a5d4309b4fa7f4610f54d96b11fe71c15}{drawings}} ()
+\item 
+void \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_ad05ba9dd13fb69dafc6ba62da79e4f00}{grab\+Mouse}} (const QCursor \&cursor)
+\begin{DoxyCompactList}\small\item\em Grabs mouse inputs across the whole desktop. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_afe2f63c4e5fa6cfa1bd46c8160ceadc1}{release\+Mouse}} ()
+\begin{DoxyCompactList}\small\item\em Releases the mouse grab after \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_ad05ba9dd13fb69dafc6ba62da79e4f00}{grab\+Mouse()}}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_a21de99adcc65bb6e4551f6bd3a8bdc54}{grabbing\+Mouse}} () const
+\begin{DoxyCompactList}\small\item\em Whether mouse grabbing is on. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_d_v_gui_1_1_screen_board}{Screen\+Board}} $\ast$ \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_a37d231bebdcb7894f128606fc7dab866}{instance}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_a1136d758e21deb82d94f2c0524041083}{Screen\+Widget}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_d_v_gui_1_1_screen_board}{Screen\+Board}} is a singleton class that allows self-\/drawing objects to be rendered on the whole desktop surface.
+
+The Qt Framework does not provide a standard way to draw directly on the desktop. ~\newline
+~\newline
+ Typically, users have to allocate a QWidget to host any drawing command to be rendered -\/ but the rendering surface only covers the entirety of the widget geometry, and nothing more.
+
+Plus, the maximal drawing geometry should be known in advance when using a host widget, or else heavy flickering will result from attempts to move {\itshape and} resize the widget to cover new portions of the desktop. ~\newline
+~\newline
+ Another important use for the \mbox{\hyperlink{class_d_v_gui_1_1_screen_board}{Screen\+Board}} is that of allowing dektop-\/wide mouse grabbing through the \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_ad05ba9dd13fb69dafc6ba62da79e4f00}{grab\+Mouse()}} and \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_afe2f63c4e5fa6cfa1bd46c8160ceadc1}{release\+Mouse()}} functions. ~\newline
+~\newline
+ The \mbox{\hyperlink{class_d_v_gui_1_1_screen_board}{Screen\+Board}} stores a private collection of static, inert and transparent {\itshape  screen widgets \texorpdfstring{$<$}{<}\textbackslash{}I\texorpdfstring{$>$}{>}, each overlapping a desktop screen, to be used as drawable surfaces for self-\/drawing objects (\mbox{\hyperlink{class_d_v_gui_1_1_screen_board_1_1_drawing}{Screen\+Board\+::\+Drawing}} instances) that are added to the board. ~\newline
+~\newline
+ Drawings can be added to the board by direct manipulation of the drawings() container list.}
+
+{\itshape  Use the \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_ad677f3f3be085aebc45b1ee01967bdba}{update()}} method to refresh the screen after drawing insertions or removals. ~\newline
+~\newline
+ Screen widgets redirect any event they receive to drawings that accept redirection through the Drawings\+::accpet\+Screen\+Events() method.}
+
+{\itshape  The drawings() list sorting affects the order in which events from screen widgets are delivered to drawings.}
+
+{\itshape  In particular, drawings\textquotesingle{} {\itshape  stacking order \texorpdfstring{$<$}{<}\textbackslash{}I\texorpdfstring{$>$}{>} is {\bfseries{inverse}} to the their list ordering -\/ so, paint events are received in {\bfseries{reverse}} with respect to other events. \mbox{\hyperlink{class_event}{Event}} acceptance is ignored to determine event delivery to drawings. ~\newline
+~\newline
+ Observe that upon every \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_ad677f3f3be085aebc45b1ee01967bdba}{update()}} invocation, the screen widgets pool will be refreshed to keep it to a minimum. }}
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_v_gui_1_1_screen_board_a5d4309b4fa7f4610f54d96b11fe71c15}\label{class_d_v_gui_1_1_screen_board_a5d4309b4fa7f4610f54d96b11fe71c15}} 
+\index{DVGui::ScreenBoard@{DVGui::ScreenBoard}!drawings@{drawings}}
+\index{drawings@{drawings}!DVGui::ScreenBoard@{DVGui::ScreenBoard}}
+\doxysubsubsection{\texorpdfstring{drawings()}{drawings()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily QList$<$ \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_1_1_drawing}{Drawing}} $\ast$ $>$ \& DVGui\+::\+Screen\+Board\+::drawings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00095 \{ \textcolor{keywordflow}{return} m\_drawings; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_d_v_gui_1_1_screen_board_a484485fcba260452a0d373a6769a107a}\label{class_d_v_gui_1_1_screen_board_a484485fcba260452a0d373a6769a107a}} 
+\index{DVGui::ScreenBoard@{DVGui::ScreenBoard}!drawings@{drawings}}
+\index{drawings@{drawings}!DVGui::ScreenBoard@{DVGui::ScreenBoard}}
+\doxysubsubsection{\texorpdfstring{drawings()}{drawings()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily const QList$<$ \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_1_1_drawing}{Drawing}} $\ast$ $>$ \& DVGui\+::\+Screen\+Board\+::drawings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00094 \{ \textcolor{keywordflow}{return} m\_drawings; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_d_v_gui_1_1_screen_board_a21de99adcc65bb6e4551f6bd3a8bdc54}\label{class_d_v_gui_1_1_screen_board_a21de99adcc65bb6e4551f6bd3a8bdc54}} 
+\index{DVGui::ScreenBoard@{DVGui::ScreenBoard}!grabbingMouse@{grabbingMouse}}
+\index{grabbingMouse@{grabbingMouse}!DVGui::ScreenBoard@{DVGui::ScreenBoard}}
+\doxysubsubsection{\texorpdfstring{grabbingMouse()}{grabbingMouse()}}
+{\footnotesize\ttfamily bool DVGui\+::\+Screen\+Board\+::grabbing\+Mouse (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Whether mouse grabbing is on. 
+
+\mbox{\Hypertarget{class_d_v_gui_1_1_screen_board_ad05ba9dd13fb69dafc6ba62da79e4f00}\label{class_d_v_gui_1_1_screen_board_ad05ba9dd13fb69dafc6ba62da79e4f00}} 
+\index{DVGui::ScreenBoard@{DVGui::ScreenBoard}!grabMouse@{grabMouse}}
+\index{grabMouse@{grabMouse}!DVGui::ScreenBoard@{DVGui::ScreenBoard}}
+\doxysubsubsection{\texorpdfstring{grabMouse()}{grabMouse()}}
+{\footnotesize\ttfamily void Screen\+Board\+::grab\+Mouse (\begin{DoxyParamCaption}\item[{const QCursor \&}]{cursor }\end{DoxyParamCaption})}
+
+
+
+Grabs mouse inputs across the whole desktop. 
+
+Makes the \mbox{\hyperlink{class_d_v_gui_1_1_screen_board}{Screen\+Board}} catch all mouse events (effectively preventing other windows or applications to get them), and delivers them to drawings. An appropriate cursor should be specified to inform the user that tout-\/court mouse grabbing takes place. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00133                                                  \{}
+\DoxyCodeLine{00134   m\_grabbing = \textcolor{keyword}{true};}
+\DoxyCodeLine{00135   m\_cursor   = cursor;}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137   \textcolor{comment}{// Place a mouse-\/tracking dummy drawing among drawings}}
+\DoxyCodeLine{00138   m\_drawings.push\_back(\&::tracker);}
+\DoxyCodeLine{00139 }
+\DoxyCodeLine{00140   \textcolor{comment}{// Make all screen widgets react to mouse events, and show them}}
+\DoxyCodeLine{00141   \textcolor{keywordtype}{int} i, size = m\_screenWidgets.size();}
+\DoxyCodeLine{00142   \textcolor{keywordflow}{for} (i = 0; i < size; ++i) \{}
+\DoxyCodeLine{00143     QWidget *screenWidget = m\_screenWidgets[i];}
+\DoxyCodeLine{00144     \textcolor{keywordflow}{if} (screenWidget) \{}
+\DoxyCodeLine{00145       screenWidget-\/>setAttribute(Qt::WA\_TransparentForMouseEvents, \textcolor{keyword}{false});}
+\DoxyCodeLine{00146       screenWidget-\/>setCursor(m\_cursor);}
+\DoxyCodeLine{00147     \}}
+\DoxyCodeLine{00148   \}}
+\DoxyCodeLine{00149 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_d_v_gui_1_1_screen_board_a37d231bebdcb7894f128606fc7dab866}\label{class_d_v_gui_1_1_screen_board_a37d231bebdcb7894f128606fc7dab866}} 
+\index{DVGui::ScreenBoard@{DVGui::ScreenBoard}!instance@{instance}}
+\index{instance@{instance}!DVGui::ScreenBoard@{DVGui::ScreenBoard}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_v_gui_1_1_screen_board}{Screen\+Board}} $\ast$ Screen\+Board\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00119                                    \{}
+\DoxyCodeLine{00120   \textcolor{keyword}{static} \mbox{\hyperlink{class_d_v_gui_1_1_screen_board}{ScreenBoard}} theInstance;}
+\DoxyCodeLine{00121   \textcolor{keywordflow}{return} \&theInstance;}
+\DoxyCodeLine{00122 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_d_v_gui_1_1_screen_board_afe2f63c4e5fa6cfa1bd46c8160ceadc1}\label{class_d_v_gui_1_1_screen_board_afe2f63c4e5fa6cfa1bd46c8160ceadc1}} 
+\index{DVGui::ScreenBoard@{DVGui::ScreenBoard}!releaseMouse@{releaseMouse}}
+\index{releaseMouse@{releaseMouse}!DVGui::ScreenBoard@{DVGui::ScreenBoard}}
+\doxysubsubsection{\texorpdfstring{releaseMouse()}{releaseMouse()}}
+{\footnotesize\ttfamily void Screen\+Board\+::release\+Mouse (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Releases the mouse grab after \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_ad05ba9dd13fb69dafc6ba62da79e4f00}{grab\+Mouse()}}. 
+
+Restores the \mbox{\hyperlink{class_d_v_gui_1_1_screen_board}{Screen\+Board}} to ignore mouse events (the default behaviour) after a call to \mbox{\hyperlink{class_d_v_gui_1_1_screen_board_ad05ba9dd13fb69dafc6ba62da79e4f00}{grab\+Mouse()}}. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00158                                \{}
+\DoxyCodeLine{00159   \textcolor{comment}{// Restore screen widgets to ignore mouse events}}
+\DoxyCodeLine{00160   \textcolor{keywordtype}{int} i, size = m\_screenWidgets.size();}
+\DoxyCodeLine{00161   \textcolor{keywordflow}{for} (i = 0; i < size; ++i) \{}
+\DoxyCodeLine{00162     QWidget *screenWidget = m\_screenWidgets[i];}
+\DoxyCodeLine{00163     \textcolor{keywordflow}{if} (screenWidget) \{}
+\DoxyCodeLine{00164       screenWidget-\/>setAttribute(Qt::WA\_TransparentForMouseEvents, \textcolor{keyword}{true});}
+\DoxyCodeLine{00165       screenWidget-\/>unsetCursor();}
+\DoxyCodeLine{00166     \}}
+\DoxyCodeLine{00167   \}}
+\DoxyCodeLine{00168 }
+\DoxyCodeLine{00169   \textcolor{comment}{// Remove the mouse-\/tracking drawing}}
+\DoxyCodeLine{00170   m\_drawings.removeAt(m\_drawings.indexOf(\&::tracker));}
+\DoxyCodeLine{00171 }
+\DoxyCodeLine{00172   m\_cursor   = QCursor();}
+\DoxyCodeLine{00173   m\_grabbing = \textcolor{keyword}{false};}
+\DoxyCodeLine{00174 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_d_v_gui_1_1_screen_board_ad677f3f3be085aebc45b1ee01967bdba}\label{class_d_v_gui_1_1_screen_board_ad677f3f3be085aebc45b1ee01967bdba}} 
+\index{DVGui::ScreenBoard@{DVGui::ScreenBoard}!update@{update}}
+\index{update@{update}!DVGui::ScreenBoard@{DVGui::ScreenBoard}}
+\doxysubsubsection{\texorpdfstring{update}{update}}
+{\footnotesize\ttfamily void Screen\+Board\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+
+Refreshes the screen widgets pool and updates them. 
+
+This function must be called whenever a drawing needs to be refreshed. It has 2 consequences\+:
+
+\begin{DoxyItemize}
+\item The pool of invisible screen widgets that are used to catch Qt events is refreshed to satisfy the drawings requirements. Screen widgets whose events are not needed are released from the pool.\end{DoxyItemize}
+\begin{DoxyItemize}
+\item All screen widgets are updated, propagating paint\+Events to their drawings.\end{DoxyItemize}
+Observe that this function awaits return to the main event loop before being processed. This ensures that update calls are processed outside event handlers, and multiple calls from different drawings gets coalesced into one. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00253                          \{}
+\DoxyCodeLine{00254   m\_updated = \textcolor{keyword}{false};}
+\DoxyCodeLine{00255   QMetaObject::invokeMethod(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}doUpdate"{}}, Qt::QueuedConnection);}
+\DoxyCodeLine{00256 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_d_v_gui_1_1_screen_board_a1136d758e21deb82d94f2c0524041083}\label{class_d_v_gui_1_1_screen_board_a1136d758e21deb82d94f2c0524041083}} 
+\index{DVGui::ScreenBoard@{DVGui::ScreenBoard}!ScreenWidget@{ScreenWidget}}
+\index{ScreenWidget@{ScreenWidget}!DVGui::ScreenBoard@{DVGui::ScreenBoard}}
+\doxysubsubsection{\texorpdfstring{ScreenWidget}{ScreenWidget}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{class_screen_board_1_1_screen_widget}{Screen\+Widget}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/screenboard.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/screenboard.\+cpp\end{DoxyCompactItemize}

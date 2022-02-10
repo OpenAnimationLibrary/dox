@@ -1,0 +1,152 @@
+\hypertarget{class_keyframes_delete_undo}{}\doxysection{Keyframes\+Delete\+Undo Class Reference}
+\label{class_keyframes_delete_undo}\index{KeyframesDeleteUndo@{KeyframesDeleteUndo}}
+Inheritance diagram for Keyframes\+Delete\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_keyframes_delete_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_keyframes_delete_undo_1_1_column}{Column}}
+\item 
+struct \mbox{\hyperlink{struct_keyframes_delete_undo_1_1_column_keyframes}{Column\+Keyframes}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_keyframes_delete_undo_a074697b4946b2ed9bb4cd1968654e398}{Keyframes\+Delete\+Undo}} (const std\+::vector$<$ \mbox{\hyperlink{struct_keyframes_delete_undo_1_1_column}{Column}} $>$ \&columns)
+\item 
+void \mbox{\hyperlink{class_keyframes_delete_undo_aca1496b766a3d5f2aecee015a96b3355}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_keyframes_delete_undo_a86774b9e4d6ed3b804c95b3139299096}{redo}} () const override
+\item 
+int \mbox{\hyperlink{class_keyframes_delete_undo_a399f8e9cb7ac1ab7284b1728d68457cb}{get\+Size}} () const override
+\item 
+QString \mbox{\hyperlink{class_keyframes_delete_undo_ac56acdb2e8c9124a9b8455cac1a07491}{get\+History\+String}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_keyframes_delete_undo_a074697b4946b2ed9bb4cd1968654e398}\label{class_keyframes_delete_undo_a074697b4946b2ed9bb4cd1968654e398}} 
+\index{KeyframesDeleteUndo@{KeyframesDeleteUndo}!KeyframesDeleteUndo@{KeyframesDeleteUndo}}
+\index{KeyframesDeleteUndo@{KeyframesDeleteUndo}!KeyframesDeleteUndo@{KeyframesDeleteUndo}}
+\doxysubsubsection{\texorpdfstring{KeyframesDeleteUndo()}{KeyframesDeleteUndo()}}
+{\footnotesize\ttfamily Keyframes\+Delete\+Undo\+::\+Keyframes\+Delete\+Undo (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_keyframes_delete_undo_1_1_column}{Column}} $>$ \&}]{columns }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00137                                                         \{}
+\DoxyCodeLine{00138     m\_columns.resize(columns.size());}
+\DoxyCodeLine{00139     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} col = 0; col < (int)m\_columns.size(); col++) \{}
+\DoxyCodeLine{00140       \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *param    = columns[col].m\_param;}
+\DoxyCodeLine{00141       m\_columns[col].m\_param = param;}
+\DoxyCodeLine{00142       \textcolor{keywordflow}{if} (!param) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00143       param-\/>addRef();}
+\DoxyCodeLine{00144       \textcolor{keyword}{const} QSet<int> \&keyframes = columns[col].m\_keyframes;}
+\DoxyCodeLine{00145       \textcolor{keywordflow}{for} (QSet<int>::const\_iterator it = keyframes.begin();}
+\DoxyCodeLine{00146            it != keyframes.end(); ++it)}
+\DoxyCodeLine{00147         m\_columns[col].m\_keyframes.push\_back(param-\/>getKeyframe(*it));}
+\DoxyCodeLine{00148     \}}
+\DoxyCodeLine{00149   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframes_delete_undo_a253fe864eea1e0577b29b8aeb3049353}\label{class_keyframes_delete_undo_a253fe864eea1e0577b29b8aeb3049353}} 
+\index{KeyframesDeleteUndo@{KeyframesDeleteUndo}!````~KeyframesDeleteUndo@{$\sim$KeyframesDeleteUndo}}
+\index{````~KeyframesDeleteUndo@{$\sim$KeyframesDeleteUndo}!KeyframesDeleteUndo@{KeyframesDeleteUndo}}
+\doxysubsubsection{\texorpdfstring{$\sim$KeyframesDeleteUndo()}{~KeyframesDeleteUndo()}}
+{\footnotesize\ttfamily Keyframes\+Delete\+Undo\+::$\sim$\+Keyframes\+Delete\+Undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00150                          \{}
+\DoxyCodeLine{00151     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} col = 0; col < (int)m\_columns.size(); col++)}
+\DoxyCodeLine{00152       m\_columns[col].m\_param-\/>release();}
+\DoxyCodeLine{00153   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_keyframes_delete_undo_ac56acdb2e8c9124a9b8455cac1a07491}\label{class_keyframes_delete_undo_ac56acdb2e8c9124a9b8455cac1a07491}} 
+\index{KeyframesDeleteUndo@{KeyframesDeleteUndo}!getHistoryString@{getHistoryString}}
+\index{getHistoryString@{getHistoryString}!KeyframesDeleteUndo@{KeyframesDeleteUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryString()}{getHistoryString()}}
+{\footnotesize\ttfamily QString Keyframes\+Delete\+Undo\+::get\+History\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00170 \{ \textcolor{keywordflow}{return} QObject::tr(\textcolor{stringliteral}{"{}Delete Keyframe"{}}); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframes_delete_undo_a399f8e9cb7ac1ab7284b1728d68457cb}\label{class_keyframes_delete_undo_a399f8e9cb7ac1ab7284b1728d68457cb}} 
+\index{KeyframesDeleteUndo@{KeyframesDeleteUndo}!getSize@{getSize}}
+\index{getSize@{getSize}!KeyframesDeleteUndo@{KeyframesDeleteUndo}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Keyframes\+Delete\+Undo\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00166                                \{}
+\DoxyCodeLine{00167     \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(*this) +}
+\DoxyCodeLine{00168            \textcolor{keyword}{sizeof}(\mbox{\hyperlink{class_t_double_keyframe}{TDoubleKeyframe}}) * m\_columns.size();  \textcolor{comment}{// sbagliato!}}
+\DoxyCodeLine{00169   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframes_delete_undo_a86774b9e4d6ed3b804c95b3139299096}\label{class_keyframes_delete_undo_a86774b9e4d6ed3b804c95b3139299096}} 
+\index{KeyframesDeleteUndo@{KeyframesDeleteUndo}!redo@{redo}}
+\index{redo@{redo}!KeyframesDeleteUndo@{KeyframesDeleteUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Keyframes\+Delete\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00160                              \{}
+\DoxyCodeLine{00161     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} col = 0; col < (int)m\_columns.size(); col++)}
+\DoxyCodeLine{00162       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_columns[col].m\_keyframes.size(); i++)}
+\DoxyCodeLine{00163         m\_columns[col].m\_param-\/>deleteKeyframe(}
+\DoxyCodeLine{00164             m\_columns[col].m\_keyframes[i].m\_frame);}
+\DoxyCodeLine{00165   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframes_delete_undo_aca1496b766a3d5f2aecee015a96b3355}\label{class_keyframes_delete_undo_aca1496b766a3d5f2aecee015a96b3355}} 
+\index{KeyframesDeleteUndo@{KeyframesDeleteUndo}!undo@{undo}}
+\index{undo@{undo}!KeyframesDeleteUndo@{KeyframesDeleteUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Keyframes\+Delete\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00155                              \{}
+\DoxyCodeLine{00156     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} col = 0; col < (int)m\_columns.size(); col++)}
+\DoxyCodeLine{00157       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_columns[col].m\_keyframes.size(); i++)}
+\DoxyCodeLine{00158         m\_columns[col].m\_param-\/>setKeyframe(m\_columns[col].m\_keyframes[i]);}
+\DoxyCodeLine{00159   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/functionselection.\+cpp\end{DoxyCompactItemize}

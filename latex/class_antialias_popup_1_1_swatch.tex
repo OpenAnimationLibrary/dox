@@ -1,0 +1,98 @@
+\hypertarget{class_antialias_popup_1_1_swatch}{}\doxysection{Antialias\+Popup\+::Swatch Class Reference}
+\label{class_antialias_popup_1_1_swatch}\index{AntialiasPopup::Swatch@{AntialiasPopup::Swatch}}
+Inheritance diagram for Antialias\+Popup\+::Swatch\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_antialias_popup_1_1_swatch}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_antialias_popup_1_1_swatch_a3ae728e1b6af93dc41faa67de302c1ce}{Swatch}} (QWidget $\ast$parent=0)
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \mbox{\hyperlink{class_antialias_popup_1_1_swatch_aed25714e666ffddacd24187eeb57ec67}{get\+Raster}} () const
+\item 
+void \mbox{\hyperlink{class_antialias_popup_1_1_swatch_aa95dc349066b486f369191d6616dcdd2}{set\+Image}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&img)
+\item 
+void \mbox{\hyperlink{class_antialias_popup_1_1_swatch_a8e64412b0c6001a948b968c6e7c4c72b}{paint\+GL}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_antialias_popup_1_1_swatch_a3ae728e1b6af93dc41faa67de302c1ce}\label{class_antialias_popup_1_1_swatch_a3ae728e1b6af93dc41faa67de302c1ce}} 
+\index{AntialiasPopup::Swatch@{AntialiasPopup::Swatch}!Swatch@{Swatch}}
+\index{Swatch@{Swatch}!AntialiasPopup::Swatch@{AntialiasPopup::Swatch}}
+\doxysubsubsection{\texorpdfstring{Swatch()}{Swatch()}}
+{\footnotesize\ttfamily Antialias\+Popup\+::\+Swatch\+::\+Swatch (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00076                               : \mbox{\hyperlink{class_plane_viewer}{PlaneViewer}}(parent) \{}
+\DoxyCodeLine{00077     setBgColor(TPixel32::White, TPixel32::White);}
+\DoxyCodeLine{00078   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_antialias_popup_1_1_swatch_aed25714e666ffddacd24187eeb57ec67}\label{class_antialias_popup_1_1_swatch_aed25714e666ffddacd24187eeb57ec67}} 
+\index{AntialiasPopup::Swatch@{AntialiasPopup::Swatch}!getRaster@{getRaster}}
+\index{getRaster@{getRaster}!AntialiasPopup::Swatch@{AntialiasPopup::Swatch}}
+\doxysubsubsection{\texorpdfstring{getRaster()}{getRaster()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} Antialias\+Popup\+::\+Swatch\+::get\+Raster (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080 \{ \textcolor{keywordflow}{return} m\_img-\/>\mbox{\hyperlink{class_t_image_acab19efe21f788a8016f0604c4c71912}{raster}}(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_antialias_popup_1_1_swatch_a8e64412b0c6001a948b968c6e7c4c72b}\label{class_antialias_popup_1_1_swatch_a8e64412b0c6001a948b968c6e7c4c72b}} 
+\index{AntialiasPopup::Swatch@{AntialiasPopup::Swatch}!paintGL@{paintGL}}
+\index{paintGL@{paintGL}!AntialiasPopup::Swatch@{AntialiasPopup::Swatch}}
+\doxysubsubsection{\texorpdfstring{paintGL()}{paintGL()}}
+{\footnotesize\ttfamily void Antialias\+Popup\+::\+Swatch\+::paint\+GL (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00084                           \{}
+\DoxyCodeLine{00085     drawBackground();}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087     \textcolor{keywordflow}{if} (m\_img) \{}
+\DoxyCodeLine{00088       glEnable(GL\_BLEND);}
+\DoxyCodeLine{00089       glBlendFunc(GL\_ONE, GL\_ONE\_MINUS\_SRC\_ALPHA);}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091       \textcolor{comment}{// Note GL\_ONE instead of GL\_SRC\_ALPHA: it's needed since the input}}
+\DoxyCodeLine{00092       \textcolor{comment}{// image is supposedly premultiplied -\/ and it works because the}}
+\DoxyCodeLine{00093       \textcolor{comment}{// viewer's background is opaque.}}
+\DoxyCodeLine{00094       \textcolor{comment}{// See tpixelutils.h's overPixT function for comparison.}}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096       pushGLWorldCoordinates();}
+\DoxyCodeLine{00097       draw(m\_img);}
+\DoxyCodeLine{00098       popGLCoordinates();}
+\DoxyCodeLine{00099 }
+\DoxyCodeLine{00100       glDisable(GL\_BLEND);}
+\DoxyCodeLine{00101     \}}
+\DoxyCodeLine{00102   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_antialias_popup_1_1_swatch_aa95dc349066b486f369191d6616dcdd2}\label{class_antialias_popup_1_1_swatch_aa95dc349066b486f369191d6616dcdd2}} 
+\index{AntialiasPopup::Swatch@{AntialiasPopup::Swatch}!setImage@{setImage}}
+\index{setImage@{setImage}!AntialiasPopup::Swatch@{AntialiasPopup::Swatch}}
+\doxysubsubsection{\texorpdfstring{setImage()}{setImage()}}
+{\footnotesize\ttfamily void Antialias\+Popup\+::\+Swatch\+::set\+Image (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&}]{img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00082 \{ m\_img = img; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/antialiaspopup.\+cpp\end{DoxyCompactItemize}

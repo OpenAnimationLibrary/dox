@@ -1,0 +1,161 @@
+\hypertarget{class_server_list}{}\doxysection{Server\+List Class Reference}
+\label{class_server_list}\index{ServerList@{ServerList}}
+Inheritance diagram for Server\+List\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_server_list}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_server_list_a03fb74ce028f7a42180ea089fd2f473e}{Server\+List}} (\mbox{\hyperlink{class_t_widget}{TWidget}} $\ast$parent)
+\item 
+void \mbox{\hyperlink{class_server_list_a6112540617113da595f77198dc8eb988}{right\+Button\+Down}} (const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e)
+\item 
+void \mbox{\hyperlink{class_server_list_a463f69f346e05c176fe6ffdc8fc3a137}{on\+Deactivate}} ()
+\item 
+void \mbox{\hyperlink{class_server_list_af7cef81611fbf3b831ddc535a7d9b6fe}{on\+Activate}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_popup_menu_item}{TPopup\+Menu\+Item}} $\ast$ \mbox{\hyperlink{class_server_list_a30955dbc5ab2aca9bd329ce88a93c01a}{m\+\_\+activation\+Item}}
+\item 
+\mbox{\hyperlink{class_t_popup_menu}{TPopup\+Menu}} $\ast$ \mbox{\hyperlink{class_server_list_a51fa9fccd87800d03f04ffaad2b1af92}{m\+\_\+popup\+Menu}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_server_list_a03fb74ce028f7a42180ea089fd2f473e}\label{class_server_list_a03fb74ce028f7a42180ea089fd2f473e}} 
+\index{ServerList@{ServerList}!ServerList@{ServerList}}
+\index{ServerList@{ServerList}!ServerList@{ServerList}}
+\doxysubsubsection{\texorpdfstring{ServerList()}{ServerList()}}
+{\footnotesize\ttfamily Server\+List\+::\+Server\+List (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_widget}{TWidget}} $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00034                                       : \mbox{\hyperlink{class_t_text_list}{TTextList}}(parent, \textcolor{stringliteral}{"{}servers"{}}) \{}
+\DoxyCodeLine{00035   m\_popupMenu = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_popup_menu}{TPopupMenu}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{00037   \mbox{\hyperlink{class_t_popup_menu_item}{TPopupMenuItem}} *item = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_popup_menu_item}{TPopupMenuItem}}(m\_popupMenu, \textcolor{stringliteral}{"{}deactivate"{}});}
+\DoxyCodeLine{00038   \mbox{\hyperlink{class_t_gui_command}{TGuiCommand}}(\textcolor{stringliteral}{"{}deactivate"{}})}
+\DoxyCodeLine{00039       .setAction(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_command_action}{TCommandAction<ServerList>}}(\textcolor{keyword}{this}, onDeactivate));}
+\DoxyCodeLine{00040   \mbox{\hyperlink{class_t_gui_command}{TGuiCommand}}(\textcolor{stringliteral}{"{}deactivate"{}}).add(item);}
+\DoxyCodeLine{00041 }
+\DoxyCodeLine{00042   item = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_popup_menu_item}{TPopupMenuItem}}(m\_popupMenu, \textcolor{stringliteral}{"{}activate"{}});}
+\DoxyCodeLine{00043   \mbox{\hyperlink{class_t_gui_command}{TGuiCommand}}(\textcolor{stringliteral}{"{}activate"{}})}
+\DoxyCodeLine{00044       .setAction(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_command_action}{TCommandAction<ServerList>}}(\textcolor{keyword}{this}, onActivate));}
+\DoxyCodeLine{00045   \mbox{\hyperlink{class_t_gui_command}{TGuiCommand}}(\textcolor{stringliteral}{"{}activate"{}}).add(item);}
+\DoxyCodeLine{00046 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_server_list_af7cef81611fbf3b831ddc535a7d9b6fe}\label{class_server_list_af7cef81611fbf3b831ddc535a7d9b6fe}} 
+\index{ServerList@{ServerList}!onActivate@{onActivate}}
+\index{onActivate@{onActivate}!ServerList@{ServerList}}
+\doxysubsubsection{\texorpdfstring{onActivate()}{onActivate()}}
+{\footnotesize\ttfamily void Server\+List\+::on\+Activate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00093                             \{}
+\DoxyCodeLine{00094   \mbox{\hyperlink{class_t_text_list_item}{TTextListItem}} *item = getSelectedItem(0);}
+\DoxyCodeLine{00095   \textcolor{keywordflow}{if} (item) \{}
+\DoxyCodeLine{00096     \mbox{\hyperlink{class_t_farm_controller}{TFarmController}} *controller = Application::instance()-\/>getController();}
+\DoxyCodeLine{00097     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00098       controller-\/>activateServer(item-\/>getId());}
+\DoxyCodeLine{00099     \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{00100       TMessage::error(toString(e.getMessage()));}
+\DoxyCodeLine{00101     \}}
+\DoxyCodeLine{00102   \}}
+\DoxyCodeLine{00103 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_server_list_a463f69f346e05c176fe6ffdc8fc3a137}\label{class_server_list_a463f69f346e05c176fe6ffdc8fc3a137}} 
+\index{ServerList@{ServerList}!onDeactivate@{onDeactivate}}
+\index{onDeactivate@{onDeactivate}!ServerList@{ServerList}}
+\doxysubsubsection{\texorpdfstring{onDeactivate()}{onDeactivate()}}
+{\footnotesize\ttfamily void Server\+List\+::on\+Deactivate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00079                               \{}
+\DoxyCodeLine{00080   \mbox{\hyperlink{class_t_text_list_item}{TTextListItem}} *item = getSelectedItem(0);}
+\DoxyCodeLine{00081   \textcolor{keywordflow}{if} (item) \{}
+\DoxyCodeLine{00082     \mbox{\hyperlink{class_t_farm_controller}{TFarmController}} *controller = Application::instance()-\/>getController();}
+\DoxyCodeLine{00083     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00084       controller-\/>deactivateServer(item-\/>getId());}
+\DoxyCodeLine{00085     \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{00086       TMessage::error(toString(e.getMessage()));}
+\DoxyCodeLine{00087     \}}
+\DoxyCodeLine{00088   \}}
+\DoxyCodeLine{00089 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_server_list_a6112540617113da595f77198dc8eb988}\label{class_server_list_a6112540617113da595f77198dc8eb988}} 
+\index{ServerList@{ServerList}!rightButtonDown@{rightButtonDown}}
+\index{rightButtonDown@{rightButtonDown}!ServerList@{ServerList}}
+\doxysubsubsection{\texorpdfstring{rightButtonDown()}{rightButtonDown()}}
+{\footnotesize\ttfamily void Server\+List\+::right\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_widget}{TWidget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00050                                                      \{}
+\DoxyCodeLine{00051   leftButtonDown(e);}
+\DoxyCodeLine{00052   \mbox{\hyperlink{class_t_text_list_item}{TTextListItem}} *item = getSelectedItem(0);}
+\DoxyCodeLine{00053   \textcolor{keywordflow}{if} (item) \{}
+\DoxyCodeLine{00054     \mbox{\hyperlink{class_t_farm_controller}{TFarmController}} *controller = Application::instance()-\/>getController();}
+\DoxyCodeLine{00055     ServerState state;}
+\DoxyCodeLine{00056     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00057       state = controller-\/>queryServerState2(item-\/>getId());}
+\DoxyCodeLine{00058     \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{00059       TMessage::error(toString(e.getMessage()));}
+\DoxyCodeLine{00060       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00061     \}}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063     \textcolor{keywordflow}{if} (state != Offline) \{}
+\DoxyCodeLine{00064       \mbox{\hyperlink{class_t_gui_command}{TGuiCommand}}(\textcolor{stringliteral}{"{}activate"{}}).disable();}
+\DoxyCodeLine{00065       \mbox{\hyperlink{class_t_gui_command}{TGuiCommand}}(\textcolor{stringliteral}{"{}deactivate"{}}).enable();}
+\DoxyCodeLine{00066     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00067       \mbox{\hyperlink{class_t_gui_command}{TGuiCommand}}(\textcolor{stringliteral}{"{}activate"{}}).enable();}
+\DoxyCodeLine{00068       \mbox{\hyperlink{class_t_gui_command}{TGuiCommand}}(\textcolor{stringliteral}{"{}deactivate"{}}).disable();}
+\DoxyCodeLine{00069     \}}
+\DoxyCodeLine{00070 }
+\DoxyCodeLine{00071     \mbox{\hyperlink{class_t_point_t}{TPoint}} pos =}
+\DoxyCodeLine{00072         getAbsolutePosition() + \mbox{\hyperlink{class_t_point_t}{TPoint}}(e.m\_pos.x, getSize().ly -\/ e.m\_pos.y);}
+\DoxyCodeLine{00073     m\_popupMenu-\/>popup(pos);}
+\DoxyCodeLine{00074   \}}
+\DoxyCodeLine{00075 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_server_list_a30955dbc5ab2aca9bd329ce88a93c01a}\label{class_server_list_a30955dbc5ab2aca9bd329ce88a93c01a}} 
+\index{ServerList@{ServerList}!m\_activationItem@{m\_activationItem}}
+\index{m\_activationItem@{m\_activationItem}!ServerList@{ServerList}}
+\doxysubsubsection{\texorpdfstring{m\_activationItem}{m\_activationItem}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_popup_menu_item}{TPopup\+Menu\+Item}}$\ast$ Server\+List\+::m\+\_\+activation\+Item}
+
+\mbox{\Hypertarget{class_server_list_a51fa9fccd87800d03f04ffaad2b1af92}\label{class_server_list_a51fa9fccd87800d03f04ffaad2b1af92}} 
+\index{ServerList@{ServerList}!m\_popupMenu@{m\_popupMenu}}
+\index{m\_popupMenu@{m\_popupMenu}!ServerList@{ServerList}}
+\doxysubsubsection{\texorpdfstring{m\_popupMenu}{m\_popupMenu}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_popup_menu}{TPopup\+Menu}}$\ast$ Server\+List\+::m\+\_\+popup\+Menu}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tfarmclient/serverstatuspage.\+cpp\end{DoxyCompactItemize}

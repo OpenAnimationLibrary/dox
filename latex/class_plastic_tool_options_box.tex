@@ -1,0 +1,178 @@
+\hypertarget{class_plastic_tool_options_box}{}\doxysection{Plastic\+Tool\+Options\+Box Class Reference}
+\label{class_plastic_tool_options_box}\index{PlasticToolOptionsBox@{PlasticToolOptionsBox}}
+Inheritance diagram for Plastic\+Tool\+Options\+Box\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_plastic_tool_options_box}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_plastic_tool_options_box_1_1_skel_ids_combo_box}{Skel\+Ids\+Combo\+Box}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_plastic_tool_options_box_af3b2aa910fc2f822c050a052ff7f3ebd}{Plastic\+Tool\+Options\+Box}} (QWidget $\ast$parent, \mbox{\hyperlink{class_t_tool}{TTool}} $\ast$tool, \mbox{\hyperlink{class_t_palette_handle}{TPalette\+Handle}} $\ast$plt\+Handle, \mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$tool\+Handle)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_plastic_tool_options_box_af3b2aa910fc2f822c050a052ff7f3ebd}\label{class_plastic_tool_options_box_af3b2aa910fc2f822c050a052ff7f3ebd}} 
+\index{PlasticToolOptionsBox@{PlasticToolOptionsBox}!PlasticToolOptionsBox@{PlasticToolOptionsBox}}
+\index{PlasticToolOptionsBox@{PlasticToolOptionsBox}!PlasticToolOptionsBox@{PlasticToolOptionsBox}}
+\doxysubsubsection{\texorpdfstring{PlasticToolOptionsBox()}{PlasticToolOptionsBox()}}
+{\footnotesize\ttfamily Plastic\+Tool\+Options\+Box\+::\+Plastic\+Tool\+Options\+Box (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{\mbox{\hyperlink{class_t_tool}{TTool}} $\ast$}]{tool,  }\item[{\mbox{\hyperlink{class_t_palette_handle}{TPalette\+Handle}} $\ast$}]{plt\+Handle,  }\item[{\mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$}]{tool\+Handle }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00390     : \mbox{\hyperlink{class_generic_tool_options_box}{GenericToolOptionsBox}}(parent, tool, pltHandle, PlasticTool::MODES\_COUNT,}
+\DoxyCodeLine{00391                             toolHandle)}
+\DoxyCodeLine{00392     , m\_tool(tool)}
+\DoxyCodeLine{00393     , m\_subToolbars(\textcolor{keyword}{new} \mbox{\hyperlink{class_generic_tool_options_box}{GenericToolOptionsBox}} *[PlasticTool::MODES\_COUNT])}
+\DoxyCodeLine{00394 \textcolor{comment}{//, m\_subToolbarActions(new QAction*[PlasticTool::MODES\_COUNT])}}
+\DoxyCodeLine{00395 \{}
+\DoxyCodeLine{00396   \textcolor{keyword}{struct }locals \{}
+\DoxyCodeLine{00397     \textcolor{keyword}{static} \textcolor{keyword}{inline} QWidget *newSpace(QWidget *parent = 0) \{}
+\DoxyCodeLine{00398       QWidget *space = \textcolor{keyword}{new} QWidget(parent);}
+\DoxyCodeLine{00399       space-\/>setFixedWidth(TOOL\_OPTIONS\_LEFT\_MARGIN);}
+\DoxyCodeLine{00400 }
+\DoxyCodeLine{00401       \textcolor{keywordflow}{return} space;}
+\DoxyCodeLine{00402     \}}
+\DoxyCodeLine{00403   \};}
+\DoxyCodeLine{00404   setObjectName(\textcolor{stringliteral}{"{}toolOptionsPanel"{}});}
+\DoxyCodeLine{00405   \textcolor{comment}{// Create Mesh button}}
+\DoxyCodeLine{00406   QPushButton *meshifyButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Create Mesh"{}}));}
+\DoxyCodeLine{00407 }
+\DoxyCodeLine{00408   \textcolor{comment}{// Add skeleton id-\/related widgets}}
+\DoxyCodeLine{00409   QLabel *skelIdLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Skeleton:"{}}));}
+\DoxyCodeLine{00410   m\_skelIdComboBox    = \textcolor{keyword}{new} SkelIdsComboBox;}
+\DoxyCodeLine{00411   m\_addSkelButton     = \textcolor{keyword}{new} QPushButton(\textcolor{stringliteral}{"{}+"{}});  \textcolor{comment}{// Connected in the show event}}
+\DoxyCodeLine{00412   m\_removeSkelButton  = \textcolor{keyword}{new} QPushButton(\textcolor{stringliteral}{"{}-\/"{}});  \textcolor{comment}{// Connected in the show event}}
+\DoxyCodeLine{00413   \textcolor{comment}{// Add sub-\/options for each mode group}}
+\DoxyCodeLine{00414   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} m = 0; m != PlasticTool::MODES\_COUNT; ++m)}
+\DoxyCodeLine{00415     m\_subToolbars[m] =}
+\DoxyCodeLine{00416         \textcolor{keyword}{new} \mbox{\hyperlink{class_generic_tool_options_box}{GenericToolOptionsBox}}(0, tool, pltHandle, m, 0, \textcolor{keyword}{false});}
+\DoxyCodeLine{00417 }
+\DoxyCodeLine{00418   meshifyButton-\/>setFixedHeight(20);}
+\DoxyCodeLine{00419   \textcolor{keywordtype}{int} buttonWidth = fontMetrics().width(meshifyButton-\/>text()) + 20;}
+\DoxyCodeLine{00420   meshifyButton-\/>setFixedWidth(buttonWidth);}
+\DoxyCodeLine{00421   QAction *meshifyAction =}
+\DoxyCodeLine{00422       CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}A\_ToolOption\_Meshify"{}});}
+\DoxyCodeLine{00423   meshifyButton-\/>addAction(meshifyAction);}
+\DoxyCodeLine{00424 }
+\DoxyCodeLine{00425   skelIdLabel-\/>setFixedHeight(20);}
+\DoxyCodeLine{00426   m\_skelIdComboBox-\/>setFixedWidth(50);}
+\DoxyCodeLine{00427   m\_addSkelButton-\/>setFixedSize(20, 20);}
+\DoxyCodeLine{00428   m\_removeSkelButton-\/>setFixedSize(20, 20);}
+\DoxyCodeLine{00429   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} m = 0; m != PlasticTool::MODES\_COUNT; ++m)}
+\DoxyCodeLine{00430     m\_subToolbars[m]-\/>setContentsMargins(0, 0, 0, 0);}
+\DoxyCodeLine{00431 }
+\DoxyCodeLine{00432   \textcolor{comment}{/*-\/ Layout -\/*/}}
+\DoxyCodeLine{00433   \textcolor{comment}{// Add created widgets to the toolbar (in reverse order since we're inserting}}
+\DoxyCodeLine{00434   \textcolor{comment}{// at 0)}}
+\DoxyCodeLine{00435   m\_layout-\/>insertWidget(0, m\_removeSkelButton);}
+\DoxyCodeLine{00436   m\_layout-\/>insertWidget(0, m\_addSkelButton);}
+\DoxyCodeLine{00437   m\_layout-\/>insertWidget(0, m\_skelIdComboBox);}
+\DoxyCodeLine{00438   m\_layout-\/>insertWidget(0, skelIdLabel);}
+\DoxyCodeLine{00439   m\_layout-\/>insertWidget(0, locals::newSpace(\textcolor{keyword}{this}));}
+\DoxyCodeLine{00440   m\_layout-\/>insertWidget(0, meshifyButton);}
+\DoxyCodeLine{00441   m\_layout-\/>insertWidget(0, locals::newSpace(\textcolor{keyword}{this}));}
+\DoxyCodeLine{00442 }
+\DoxyCodeLine{00443   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} m = 0; m != PlasticTool::MODES\_COUNT; ++m)}
+\DoxyCodeLine{00444     m\_layout-\/>insertWidget(m\_layout-\/>count() -\/ 1, m\_subToolbars[m], 1);}
+\DoxyCodeLine{00445 }
+\DoxyCodeLine{00446   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00447   ret      = ret \&\& connect(meshifyButton, SIGNAL(clicked()), meshifyAction,}
+\DoxyCodeLine{00448                        SLOT(trigger()));}
+\DoxyCodeLine{00449   assert(ret);}
+\DoxyCodeLine{00450 }
+\DoxyCodeLine{00451   \textcolor{comment}{// Add Animation mode fields corresponding to vertex properties}}
+\DoxyCodeLine{00452   \mbox{\hyperlink{class_generic_tool_options_box}{GenericToolOptionsBox}} *animateOptionsBox =}
+\DoxyCodeLine{00453       m\_subToolbars[PlasticTool::ANIMATE\_IDX];}
+\DoxyCodeLine{00454 }
+\DoxyCodeLine{00455   \textcolor{comment}{// Adjust some specific controls first}}
+\DoxyCodeLine{00456   \{}
+\DoxyCodeLine{00457     \mbox{\hyperlink{class_tool_option_text_field}{ToolOptionTextField}} *minAngleField = \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{class_tool_option_text_field}{ToolOptionTextField}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{00458         animateOptionsBox-\/>control(\textcolor{stringliteral}{"{}minAngle"{}}));}
+\DoxyCodeLine{00459     assert(minAngleField);}
+\DoxyCodeLine{00460 }
+\DoxyCodeLine{00461     minAngleField-\/>setFixedWidth(40);}
+\DoxyCodeLine{00462 }
+\DoxyCodeLine{00463     \mbox{\hyperlink{class_tool_option_text_field}{ToolOptionTextField}} *maxAngleField = \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{class_tool_option_text_field}{ToolOptionTextField}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{00464         animateOptionsBox-\/>control(\textcolor{stringliteral}{"{}maxAngle"{}}));}
+\DoxyCodeLine{00465     assert(maxAngleField);}
+\DoxyCodeLine{00466 }
+\DoxyCodeLine{00467     maxAngleField-\/>setFixedWidth(40);}
+\DoxyCodeLine{00468   \}}
+\DoxyCodeLine{00469 }
+\DoxyCodeLine{00470   \textcolor{comment}{// Distance}}
+\DoxyCodeLine{00471   \mbox{\hyperlink{class_tool_option_param_relay_field}{ToolOptionParamRelayField}} *distanceField = \textcolor{keyword}{new} \mbox{\hyperlink{class_tool_option_param_relay_field}{ToolOptionParamRelayField}}(}
+\DoxyCodeLine{00472       \&l\_plasticTool, \&l\_plasticTool.m\_distanceRelay);}
+\DoxyCodeLine{00473   distanceField-\/>setGlobalKey(\&l\_plasticTool.m\_globalKey,}
+\DoxyCodeLine{00474                               \&l\_plasticTool.m\_relayGroup);}
+\DoxyCodeLine{00475 }
+\DoxyCodeLine{00476   \mbox{\hyperlink{class_clickable_label}{ClickableLabel}} *distanceLabel = \textcolor{keyword}{new} \mbox{\hyperlink{class_clickable_label}{ClickableLabel}}(tr(\textcolor{stringliteral}{"{}Distance"{}}));}
+\DoxyCodeLine{00477   distanceLabel-\/>setFixedHeight(20);}
+\DoxyCodeLine{00478 }
+\DoxyCodeLine{00479   \textcolor{comment}{// Angle}}
+\DoxyCodeLine{00480   \mbox{\hyperlink{class_tool_option_param_relay_field}{ToolOptionParamRelayField}} *angleField = \textcolor{keyword}{new} \mbox{\hyperlink{class_tool_option_param_relay_field}{ToolOptionParamRelayField}}(}
+\DoxyCodeLine{00481       \&l\_plasticTool, \&l\_plasticTool.m\_angleRelay);}
+\DoxyCodeLine{00482   angleField-\/>setGlobalKey(\&l\_plasticTool.m\_globalKey,}
+\DoxyCodeLine{00483                            \&l\_plasticTool.m\_relayGroup);}
+\DoxyCodeLine{00484 }
+\DoxyCodeLine{00485   \mbox{\hyperlink{class_clickable_label}{ClickableLabel}} *angleLabel = \textcolor{keyword}{new} \mbox{\hyperlink{class_clickable_label}{ClickableLabel}}(tr(\textcolor{stringliteral}{"{}Angle"{}}));}
+\DoxyCodeLine{00486   angleLabel-\/>setFixedHeight(20);}
+\DoxyCodeLine{00487 }
+\DoxyCodeLine{00488   \textcolor{comment}{// SO}}
+\DoxyCodeLine{00489   \mbox{\hyperlink{class_tool_option_param_relay_field}{ToolOptionParamRelayField}} *soField =}
+\DoxyCodeLine{00490       \textcolor{keyword}{new} \mbox{\hyperlink{class_tool_option_param_relay_field}{ToolOptionParamRelayField}}(\&l\_plasticTool, \&l\_plasticTool.m\_soRelay);}
+\DoxyCodeLine{00491   soField-\/>setGlobalKey(\&l\_plasticTool.m\_globalKey,}
+\DoxyCodeLine{00492                         \&l\_plasticTool.m\_relayGroup);}
+\DoxyCodeLine{00493 }
+\DoxyCodeLine{00494   \mbox{\hyperlink{class_clickable_label}{ClickableLabel}} *soLabel = \textcolor{keyword}{new} \mbox{\hyperlink{class_clickable_label}{ClickableLabel}}(tr(\textcolor{stringliteral}{"{}SO"{}}));}
+\DoxyCodeLine{00495   soLabel-\/>setFixedHeight(20);}
+\DoxyCodeLine{00496 }
+\DoxyCodeLine{00497   QHBoxLayout *animateLayout = animateOptionsBox-\/>hLayout();}
+\DoxyCodeLine{00498   animateLayout-\/>insertWidget(0, soField);}
+\DoxyCodeLine{00499   animateLayout-\/>insertWidget(0, soLabel);}
+\DoxyCodeLine{00500   animateLayout-\/>insertWidget(0, angleField);}
+\DoxyCodeLine{00501   animateLayout-\/>insertWidget(0, angleLabel);}
+\DoxyCodeLine{00502   animateLayout-\/>insertWidget(0, distanceField);}
+\DoxyCodeLine{00503   animateLayout-\/>insertWidget(0, distanceLabel);}
+\DoxyCodeLine{00504 }
+\DoxyCodeLine{00505   ret = ret \&\& connect(distanceLabel, SIGNAL(onMousePress(QMouseEvent *)),}
+\DoxyCodeLine{00506                        distanceField, SLOT(receiveMousePress(QMouseEvent *)));}
+\DoxyCodeLine{00507   ret = ret \&\& connect(distanceLabel, SIGNAL(onMouseMove(QMouseEvent *)),}
+\DoxyCodeLine{00508                        distanceField, SLOT(receiveMouseMove(QMouseEvent *)));}
+\DoxyCodeLine{00509   ret = ret \&\& connect(distanceLabel, SIGNAL(onMouseRelease(QMouseEvent *)),}
+\DoxyCodeLine{00510                        distanceField, SLOT(receiveMouseRelease(QMouseEvent *)));}
+\DoxyCodeLine{00511   ret = ret \&\& connect(angleLabel, SIGNAL(onMousePress(QMouseEvent *)),}
+\DoxyCodeLine{00512                        angleField, SLOT(receiveMousePress(QMouseEvent *)));}
+\DoxyCodeLine{00513   ret = ret \&\& connect(angleLabel, SIGNAL(onMouseMove(QMouseEvent *)),}
+\DoxyCodeLine{00514                        angleField, SLOT(receiveMouseMove(QMouseEvent *)));}
+\DoxyCodeLine{00515   ret = ret \&\& connect(angleLabel, SIGNAL(onMouseRelease(QMouseEvent *)),}
+\DoxyCodeLine{00516                        angleField, SLOT(receiveMouseRelease(QMouseEvent *)));}
+\DoxyCodeLine{00517   ret = ret \&\& connect(soLabel, SIGNAL(onMousePress(QMouseEvent *)), soField,}
+\DoxyCodeLine{00518                        SLOT(receiveMousePress(QMouseEvent *)));}
+\DoxyCodeLine{00519   ret = ret \&\& connect(soLabel, SIGNAL(onMouseMove(QMouseEvent *)), soField,}
+\DoxyCodeLine{00520                        SLOT(receiveMouseMove(QMouseEvent *)));}
+\DoxyCodeLine{00521   ret = ret \&\& connect(soLabel, SIGNAL(onMouseRelease(QMouseEvent *)), soField,}
+\DoxyCodeLine{00522                        SLOT(receiveMouseRelease(QMouseEvent *)));}
+\DoxyCodeLine{00523   assert(ret);}
+\DoxyCodeLine{00524 }
+\DoxyCodeLine{00525   onPropertyChanged();}
+\DoxyCodeLine{00526 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/plastictool.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/plastictool.\+cpp\end{DoxyCompactItemize}

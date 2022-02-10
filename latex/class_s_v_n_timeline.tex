@@ -1,0 +1,571 @@
+\hypertarget{class_s_v_n_timeline}{}\doxysection{SVNTimeline Class Reference}
+\label{class_s_v_n_timeline}\index{SVNTimeline@{SVNTimeline}}
+Inheritance diagram for SVNTimeline\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_s_v_n_timeline}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_s_v_n_timeline_aece7b066068507d2d7376039047eab7a}\label{class_s_v_n_timeline_aece7b066068507d2d7376039047eab7a}} 
+void {\bfseries command\+Done} (const QString\+List \&files)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_v_n_timeline_ad8719d6aff7f034c2cf984fccd66e853}{SVNTimeline}} (QWidget $\ast$parent, const QString \&working\+Dir, const QString \&file\+Name, const QString\+List \&aux\+Files)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_v_n_timeline_a4dd96431cdd1f9cbcddb71be5cc3c11f}{on\+Update\+Done}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_timeline_ad6cf43c8e515ca777a2e6c980573213b}{on\+Log\+Done}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_s_v_n_timeline_a450e2ed0ebcc599b5a387a7c5a2de16e}{on\+Update\+Button\+Clicked}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_timeline_a48fd6f728cf297e1e51fc3d6eb621ba0}{on\+Update\+To\+Revision\+Button\+Clicked}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_timeline_a4e8f47c24a4a424a6b4454418c4700a3}{on\+Export\+Done}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_timeline_a5cdbe67f14cccb76e8d24409f3a4151c}{on\+Export\+Aux\+Done}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_timeline_a4fff4fafb02aaad8c78803e2a3cf714b}{on\+Status\+Retrieved}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_s_v_n_timeline_aedbb12680b18e28731899573d4c3af2f}{on\+Error}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_s_v_n_timeline_a768a85f511ff35bcb3b96c22726ba476}{on\+Selection\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_timeline_a0bb2537f2435bdd3bfcbe0e0eff3e763}{on\+Scene\+Contents\+Toggled}} (bool)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_v_n_timeline_ad8719d6aff7f034c2cf984fccd66e853}\label{class_s_v_n_timeline_ad8719d6aff7f034c2cf984fccd66e853}} 
+\index{SVNTimeline@{SVNTimeline}!SVNTimeline@{SVNTimeline}}
+\index{SVNTimeline@{SVNTimeline}!SVNTimeline@{SVNTimeline}}
+\doxysubsubsection{\texorpdfstring{SVNTimeline()}{SVNTimeline()}}
+{\footnotesize\ttfamily SVNTimeline\+::\+SVNTimeline (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{const QString \&}]{working\+Dir,  }\item[{const QString \&}]{file\+Name,  }\item[{const QString\+List \&}]{aux\+Files }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00092     : \mbox{\hyperlink{class_d_v_gui_1_1_dialog}{Dialog}}(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false})}
+\DoxyCodeLine{00093     , m\_workingDir(workingDir)}
+\DoxyCodeLine{00094     , m\_auxFiles(auxFiles)}
+\DoxyCodeLine{00095     , m\_fileName(fileName)}
+\DoxyCodeLine{00096     , m\_currentExportIndex(0)}
+\DoxyCodeLine{00097     , m\_currentAuxExportIndex(0) \{}
+\DoxyCodeLine{00098   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00099   setAttribute(Qt::WA\_DeleteOnClose, \textcolor{keyword}{true});}
+\DoxyCodeLine{00100   setWindowTitle(tr(\textcolor{stringliteral}{"{}Version Control: Timeline "{}}) + fileName);}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102   QHBoxLayout *hLayout = \textcolor{keyword}{new} QHBoxLayout;}
+\DoxyCodeLine{00103 }
+\DoxyCodeLine{00104   m\_waitingLabel      = \textcolor{keyword}{new} QLabel;}
+\DoxyCodeLine{00105   QMovie *waitingMove = \textcolor{keyword}{new} QMovie(\textcolor{stringliteral}{"{}:Resources/waiting.gif"{}});}
+\DoxyCodeLine{00106   waitingMove-\/>setParent(\textcolor{keyword}{this});}
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108   m\_waitingLabel-\/>setMovie(waitingMove);}
+\DoxyCodeLine{00109   waitingMove-\/>setCacheMode(QMovie::CacheAll);}
+\DoxyCodeLine{00110   waitingMove-\/>start();}
+\DoxyCodeLine{00111 }
+\DoxyCodeLine{00112   m\_textLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Getting file history..."{}}));}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114   hLayout-\/>addStretch();}
+\DoxyCodeLine{00115   hLayout-\/>addWidget(m\_waitingLabel);}
+\DoxyCodeLine{00116   hLayout-\/>addWidget(m\_textLabel);}
+\DoxyCodeLine{00117   hLayout-\/>addStretch();}
+\DoxyCodeLine{00118 }
+\DoxyCodeLine{00119   m\_timelineWidget = \textcolor{keyword}{new} \mbox{\hyperlink{class_timeline_widget}{TimelineWidget}};}
+\DoxyCodeLine{00120   m\_timelineWidget-\/>setStyleSheet(\textcolor{stringliteral}{"{}QListWidget:item \{ margin: 5px; \}"{}});}
+\DoxyCodeLine{00121   m\_timelineWidget-\/>hide();}
+\DoxyCodeLine{00122   connect(m\_timelineWidget-\/>getListWidget(), SIGNAL(itemSelectionChanged()),}
+\DoxyCodeLine{00123           \textcolor{keyword}{this}, SLOT(onSelectionChanged()));}
+\DoxyCodeLine{00124 }
+\DoxyCodeLine{00125   QHBoxLayout *checkBoxLayout = \textcolor{keyword}{new} QHBoxLayout;}
+\DoxyCodeLine{00126   checkBoxLayout-\/>setMargin(0);}
+\DoxyCodeLine{00127   m\_sceneContentsCheckBox = \textcolor{keyword}{new} QCheckBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00128   m\_sceneContentsCheckBox-\/>setVisible(m\_fileName.endsWith(\textcolor{stringliteral}{"{}.tnz"{}}));}
+\DoxyCodeLine{00129   connect(m\_sceneContentsCheckBox, SIGNAL(toggled(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00130           SLOT(onSceneContentsToggled(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00131   m\_sceneContentsCheckBox-\/>setChecked(\textcolor{keyword}{false});}
+\DoxyCodeLine{00132   m\_sceneContentsCheckBox-\/>setText(tr(\textcolor{stringliteral}{"{}Get Scene Contents"{}}));}
+\DoxyCodeLine{00133   checkBoxLayout-\/>addStretch();}
+\DoxyCodeLine{00134   checkBoxLayout-\/>addWidget(m\_sceneContentsCheckBox);}
+\DoxyCodeLine{00135   checkBoxLayout-\/>addStretch();}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout;}
+\DoxyCodeLine{00138   mainLayout-\/>setMargin(0);}
+\DoxyCodeLine{00139   mainLayout-\/>addLayout(hLayout);}
+\DoxyCodeLine{00140   mainLayout-\/>addWidget(m\_timelineWidget);}
+\DoxyCodeLine{00141   mainLayout-\/>addSpacing(5);}
+\DoxyCodeLine{00142   mainLayout-\/>addLayout(checkBoxLayout);}
+\DoxyCodeLine{00143 }
+\DoxyCodeLine{00144   QWidget *container = \textcolor{keyword}{new} QWidget;}
+\DoxyCodeLine{00145   container-\/>setLayout(mainLayout);}
+\DoxyCodeLine{00146 }
+\DoxyCodeLine{00147   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a21628a44d453352094b61b62b4407c6b}{beginHLayout}}();}
+\DoxyCodeLine{00148   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(container, \textcolor{keyword}{false});}
+\DoxyCodeLine{00149   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_abe29ee90829fe5e0351fbdee41089252}{endHLayout}}();}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   m\_updateButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Get Last Revision"{}}));}
+\DoxyCodeLine{00152   connect(m\_updateButton, SIGNAL(clicked()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00153           SLOT(onUpdateButtonClicked()));}
+\DoxyCodeLine{00154 }
+\DoxyCodeLine{00155   m\_updateToRevisionButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Get Selected Revision"{}}));}
+\DoxyCodeLine{00156   connect(m\_updateToRevisionButton, SIGNAL(clicked()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00157           SLOT(onUpdateToRevisionButtonClicked()));}
+\DoxyCodeLine{00158   m\_updateToRevisionButton-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00159 }
+\DoxyCodeLine{00160   m\_closeButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Close"{}}));}
+\DoxyCodeLine{00161   connect(m\_closeButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(close()));}
+\DoxyCodeLine{00162 }
+\DoxyCodeLine{00163   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(m\_updateButton, m\_updateToRevisionButton, m\_closeButton);}
+\DoxyCodeLine{00164 }
+\DoxyCodeLine{00165   \textcolor{comment}{// 0. Connect for svn errors (that may occur every time)}}
+\DoxyCodeLine{00166   connect(\&m\_thread, SIGNAL(error(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00167           SLOT(onError(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00168 }
+\DoxyCodeLine{00169   \textcolor{comment}{// 1. get the log (history) of fileName}}
+\DoxyCodeLine{00170   QStringList args;}
+\DoxyCodeLine{00171   args << \textcolor{stringliteral}{"{}log"{}} << m\_fileName << \textcolor{stringliteral}{"{}-\/-\/xml"{}};}
+\DoxyCodeLine{00172   connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)),}
+\DoxyCodeLine{00173           SLOT(onLogDone(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00174   m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args, \textcolor{keyword}{true});}
+\DoxyCodeLine{00175 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_timeline_ab5bc86017877c2a8b9eb6d4049a71f71}\label{class_s_v_n_timeline_ab5bc86017877c2a8b9eb6d4049a71f71}} 
+\index{SVNTimeline@{SVNTimeline}!````~SVNTimeline@{$\sim$SVNTimeline}}
+\index{````~SVNTimeline@{$\sim$SVNTimeline}!SVNTimeline@{SVNTimeline}}
+\doxysubsubsection{\texorpdfstring{$\sim$SVNTimeline()}{~SVNTimeline()}}
+{\footnotesize\ttfamily SVNTimeline\+::$\sim$\+SVNTimeline (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00179                           \{}
+\DoxyCodeLine{00180   removeTempFiles();}
+\DoxyCodeLine{00181   \textcolor{comment}{// Delete, if exist the sceneIcons folder}}
+\DoxyCodeLine{00182   QDir d(QDir::tempPath());}
+\DoxyCodeLine{00183   d.rmdir(\textcolor{stringliteral}{"{}sceneIcons"{}});}
+\DoxyCodeLine{00184 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_v_n_timeline_aedbb12680b18e28731899573d4c3af2f}\label{class_s_v_n_timeline_aedbb12680b18e28731899573d4c3af2f}} 
+\index{SVNTimeline@{SVNTimeline}!onError@{onError}}
+\index{onError@{onError}!SVNTimeline@{SVNTimeline}}
+\doxysubsubsection{\texorpdfstring{onError}{onError}}
+{\footnotesize\ttfamily void SVNTimeline\+::on\+Error (\begin{DoxyParamCaption}\item[{const QString \&}]{text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00408                                              \{}
+\DoxyCodeLine{00409   m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{00410   m\_sceneContentsCheckBox-\/>hide();}
+\DoxyCodeLine{00411   m\_textLabel-\/>setText(text);}
+\DoxyCodeLine{00412   m\_textLabel-\/>show();}
+\DoxyCodeLine{00413   m\_timelineWidget-\/>hide();}
+\DoxyCodeLine{00414   m\_closeButton-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00415 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_timeline_a5cdbe67f14cccb76e8d24409f3a4151c}\label{class_s_v_n_timeline_a5cdbe67f14cccb76e8d24409f3a4151c}} 
+\index{SVNTimeline@{SVNTimeline}!onExportAuxDone@{onExportAuxDone}}
+\index{onExportAuxDone@{onExportAuxDone}!SVNTimeline@{SVNTimeline}}
+\doxysubsubsection{\texorpdfstring{onExportAuxDone}{onExportAuxDone}}
+{\footnotesize\ttfamily void SVNTimeline\+::on\+Export\+Aux\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00357                                   \{}
+\DoxyCodeLine{00358   \textcolor{keywordtype}{int} itemCount = m\_listWidgetitems.count();}
+\DoxyCodeLine{00359   \textcolor{keywordflow}{if} (m\_currentAuxExportIndex < 0 || m\_currentAuxExportIndex >= itemCount) \{}
+\DoxyCodeLine{00360     m\_currentAuxExportIndex++;}
+\DoxyCodeLine{00361     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00362   \}}
+\DoxyCodeLine{00363   QListWidgetItem *lwi = m\_listWidgetitems.at(m\_currentAuxExportIndex);}
+\DoxyCodeLine{00364   \textcolor{keywordflow}{if} (lwi) \{}
+\DoxyCodeLine{00365     QFileInfo fi(*m\_tempFiles.at(m\_currentAuxExportIndex));}
+\DoxyCodeLine{00366     \textcolor{comment}{// qDebug(fi.absoluteFilePath().toAscii());}}
+\DoxyCodeLine{00367     lwi-\/>setIcon(createIcon(fi.absoluteFilePath()));}
+\DoxyCodeLine{00368   \}}
+\DoxyCodeLine{00369   m\_currentAuxExportIndex++;}
+\DoxyCodeLine{00370   \textcolor{keywordflow}{if} (m\_currentAuxExportIndex < itemCount) \{}
+\DoxyCodeLine{00371     exportToTemporaryFile(m\_currentAuxExportIndex, \textcolor{keyword}{true});}
+\DoxyCodeLine{00372   \}}
+\DoxyCodeLine{00373 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_timeline_a4e8f47c24a4a424a6b4454418c4700a3}\label{class_s_v_n_timeline_a4e8f47c24a4a424a6b4454418c4700a3}} 
+\index{SVNTimeline@{SVNTimeline}!onExportDone@{onExportDone}}
+\index{onExportDone@{onExportDone}!SVNTimeline@{SVNTimeline}}
+\doxysubsubsection{\texorpdfstring{onExportDone}{onExportDone}}
+{\footnotesize\ttfamily void SVNTimeline\+::on\+Export\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00323                                \{}
+\DoxyCodeLine{00324   \textcolor{keywordtype}{int} itemCount = m\_listWidgetitems.count();}
+\DoxyCodeLine{00325   \textcolor{keywordflow}{if} (m\_currentExportIndex < 0 || m\_currentExportIndex >= itemCount) \{}
+\DoxyCodeLine{00326     m\_currentExportIndex++;}
+\DoxyCodeLine{00327     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00328   \}}
+\DoxyCodeLine{00329   QListWidgetItem *lwi = m\_listWidgetitems.at(m\_currentExportIndex);}
+\DoxyCodeLine{00330   \textcolor{keywordflow}{if} (lwi) \{}
+\DoxyCodeLine{00331     QFileInfo fi(*m\_tempFiles.at(m\_currentExportIndex));}
+\DoxyCodeLine{00332     \textcolor{comment}{// qDebug(fi.absoluteFilePath().toAscii());}}
+\DoxyCodeLine{00333 }
+\DoxyCodeLine{00334     \textcolor{comment}{// Create the icon if there isn't any auxiliary files associated (palette,}}
+\DoxyCodeLine{00335     \textcolor{comment}{// sceneIcons..)}}
+\DoxyCodeLine{00336     \textcolor{keywordflow}{if} (m\_auxTempFiles.isEmpty())}
+\DoxyCodeLine{00337       lwi-\/>setIcon(createIcon(fi.absoluteFilePath()));}
+\DoxyCodeLine{00338 }
+\DoxyCodeLine{00339     lwi-\/>setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);}
+\DoxyCodeLine{00340   \}}
+\DoxyCodeLine{00341 }
+\DoxyCodeLine{00342   m\_currentExportIndex++;}
+\DoxyCodeLine{00343   \textcolor{keywordflow}{if} (m\_currentExportIndex < itemCount) \{}
+\DoxyCodeLine{00344     exportToTemporaryFile(m\_currentExportIndex);}
+\DoxyCodeLine{00345   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00346     \textcolor{keywordflow}{if} (!m\_auxTempFiles.isEmpty()) \{}
+\DoxyCodeLine{00347       m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00348       connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)),}
+\DoxyCodeLine{00349               SLOT(onExportAuxDone()));}
+\DoxyCodeLine{00350       exportToTemporaryFile(m\_currentAuxExportIndex, \textcolor{keyword}{true});}
+\DoxyCodeLine{00351     \}}
+\DoxyCodeLine{00352   \}}
+\DoxyCodeLine{00353 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_timeline_ad6cf43c8e515ca777a2e6c980573213b}\label{class_s_v_n_timeline_ad6cf43c8e515ca777a2e6c980573213b}} 
+\index{SVNTimeline@{SVNTimeline}!onLogDone@{onLogDone}}
+\index{onLogDone@{onLogDone}!SVNTimeline@{SVNTimeline}}
+\doxysubsubsection{\texorpdfstring{onLogDone}{onLogDone}}
+{\footnotesize\ttfamily void SVNTimeline\+::on\+Log\+Done (\begin{DoxyParamCaption}\item[{const QString \&}]{xml\+Response }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00212                                                       \{}
+\DoxyCodeLine{00213   m\_textLabel-\/>hide();}
+\DoxyCodeLine{00214   m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{00215   \textcolor{comment}{// qDebug(xmlResponse.toAscii());}}
+\DoxyCodeLine{00216 }
+\DoxyCodeLine{00217   \mbox{\hyperlink{class_s_v_n_log_reader}{SVNLogReader}} lr(xmlResponse);}
+\DoxyCodeLine{00218   m\_log = lr.getLog();}
+\DoxyCodeLine{00219 }
+\DoxyCodeLine{00220   \textcolor{keywordtype}{int} logCount = m\_log.size();}
+\DoxyCodeLine{00221   \textcolor{keywordflow}{if} (logCount == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00222 }
+\DoxyCodeLine{00223   QString fileNameType =}
+\DoxyCodeLine{00224       QString::fromStdString(\mbox{\hyperlink{class_t_file_path}{TFilePath}}(m\_fileName.toStdWString()).\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}());}
+\DoxyCodeLine{00225 }
+\DoxyCodeLine{00226   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < logCount; i++) \{}
+\DoxyCodeLine{00227     \mbox{\hyperlink{struct_s_v_n_log}{SVNLog}} log = m\_log.at(i);}
+\DoxyCodeLine{00228 }
+\DoxyCodeLine{00229     QDate d      = QDate::fromString(log.m\_date.left(10), \textcolor{stringliteral}{"{}yyyy-\/MM-\/dd"{}});}
+\DoxyCodeLine{00230     \textcolor{keywordtype}{int} dayCount = d.daysTo(QDate::currentDate());}
+\DoxyCodeLine{00231     QString text = \textcolor{stringliteral}{"{}\(\backslash\)n"{}} + tr(\textcolor{stringliteral}{"{}Date"{}}) + \textcolor{stringliteral}{"{}: "{}} + d.toString(\textcolor{stringliteral}{"{}MM-\/dd-\/yyyy"{}});}
+\DoxyCodeLine{00232 }
+\DoxyCodeLine{00233     \textcolor{keywordflow}{if} (dayCount == 0) \{}
+\DoxyCodeLine{00234       \textcolor{comment}{// text += "{}Today\(\backslash\)nby "{} + log.m\_author;}}
+\DoxyCodeLine{00235       QString timeString = log.m\_date.split(\textcolor{stringliteral}{"{}T"{}}).at(1);}
+\DoxyCodeLine{00236       timeString         = timeString.left(5);}
+\DoxyCodeLine{00237 }
+\DoxyCodeLine{00238       \textcolor{comment}{// Convert the current time, to UTC}}
+\DoxyCodeLine{00239       QDateTime currentTime = QDateTime::currentDateTime().toUTC();}
+\DoxyCodeLine{00240 }
+\DoxyCodeLine{00241       QTime t     = QTime::fromString(timeString, \textcolor{stringliteral}{"{}hh:mm"{}});}
+\DoxyCodeLine{00242       QTime now   = QTime::fromString(currentTime.toString(\textcolor{stringliteral}{"{}hh:mm"{}}), \textcolor{stringliteral}{"{}hh:mm"{}});}
+\DoxyCodeLine{00243       \textcolor{keywordtype}{int} seconds = t.secsTo(now);}
+\DoxyCodeLine{00244       \textcolor{keywordtype}{int} minute  = seconds / 60;}
+\DoxyCodeLine{00245       text += \textcolor{stringliteral}{"{} ( "{}} + QString::number(minute) + \textcolor{stringliteral}{"{} minutes ago )\(\backslash\)n"{}} +}
+\DoxyCodeLine{00246               tr(\textcolor{stringliteral}{"{}Author"{}}) + \textcolor{stringliteral}{"{}: "{}} + log.m\_author + \textcolor{stringliteral}{"{}\(\backslash\)n"{}} + tr(\textcolor{stringliteral}{"{}Comment"{}}) + \textcolor{stringliteral}{"{}: "{}} +}
+\DoxyCodeLine{00247               log.m\_msg;}
+\DoxyCodeLine{00248     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00249       text += \textcolor{stringliteral}{"{} ( "{}} + QString::number(dayCount) + \textcolor{stringliteral}{"{} days ago )\(\backslash\)n"{}} +}
+\DoxyCodeLine{00250               tr(\textcolor{stringliteral}{"{}Author"{}}) + \textcolor{stringliteral}{"{}: "{}} + log.m\_author + \textcolor{stringliteral}{"{}\(\backslash\)n"{}} + tr(\textcolor{stringliteral}{"{}Comment"{}}) + \textcolor{stringliteral}{"{}: "{}} +}
+\DoxyCodeLine{00251               log.m\_msg;}
+\DoxyCodeLine{00252 }
+\DoxyCodeLine{00253     QString tooltip = \textcolor{stringliteral}{"{}<b>"{}} + tr(\textcolor{stringliteral}{"{}Revision"{}}) + \textcolor{stringliteral}{"{}</b>: "{}} + log.m\_revision +}
+\DoxyCodeLine{00254                       \textcolor{stringliteral}{"{}<br><b>"{}} + tr(\textcolor{stringliteral}{"{}Author"{}}) + \textcolor{stringliteral}{"{}</b>: "{}} + log.m\_author +}
+\DoxyCodeLine{00255                       \textcolor{stringliteral}{"{}<br><b>"{}} + tr(\textcolor{stringliteral}{"{}Date"{}}) + \textcolor{stringliteral}{"{}</b>: "{}} + log.m\_date +}
+\DoxyCodeLine{00256                       \textcolor{stringliteral}{"{}<br><b>"{}} + tr(\textcolor{stringliteral}{"{}Comment"{}}) + \textcolor{stringliteral}{"{}</b>: "{}} + log.m\_msg;}
+\DoxyCodeLine{00257 }
+\DoxyCodeLine{00258     QPixmap pixmap(ICON\_WIDTH, ICON\_HEIGHT);}
+\DoxyCodeLine{00259     pixmap.fill(Qt::lightGray);}
+\DoxyCodeLine{00260 }
+\DoxyCodeLine{00261     QListWidgetItem *lwi = \textcolor{keyword}{new} QListWidgetItem(}
+\DoxyCodeLine{00262         QIcon(pixmap), text, m\_timelineWidget-\/>getListWidget());}
+\DoxyCodeLine{00263     lwi-\/>setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);}
+\DoxyCodeLine{00264     lwi-\/>setToolTip(tooltip);}
+\DoxyCodeLine{00265     lwi-\/>setTextAlignment(Qt::AlignLeft);}
+\DoxyCodeLine{00266     QString tmpFileName = QDir::tempPath() + \textcolor{stringliteral}{"{}/svn\_temp\_img\_"{}} +}
+\DoxyCodeLine{00267                           QString::number(i) + \textcolor{stringliteral}{"{}."{}} + fileNameType;}
+\DoxyCodeLine{00268     m\_tempFiles.append(\textcolor{keyword}{new} QTemporaryFile());}
+\DoxyCodeLine{00269     m\_tempFiles.last()-\/>setFileName(tmpFileName);}
+\DoxyCodeLine{00270 }
+\DoxyCodeLine{00271     \textcolor{comment}{// Add also auxiliary files}}
+\DoxyCodeLine{00272     \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp(\mbox{\hyperlink{class_t_file_path}{TFilePath}}(m\_workingDir.toStdWString()) +}
+\DoxyCodeLine{00273                  m\_fileName.toStdWString());}
+\DoxyCodeLine{00274     \textcolor{keywordflow}{if} (fp.getDots() == \textcolor{stringliteral}{"{}.."{}} || fp.getType() == \textcolor{stringliteral}{"{}tlv"{}} ||}
+\DoxyCodeLine{00275         fp.getType() == \textcolor{stringliteral}{"{}pli"{}}) \{}
+\DoxyCodeLine{00276       TFilePathSet fpset;}
+\DoxyCodeLine{00277       \mbox{\hyperlink{class_t_xsh_simple_level_aa3761996a872dfbfd19d13b63ad336f6}{TXshSimpleLevel::getFiles}}(fp, fpset);}
+\DoxyCodeLine{00278 }
+\DoxyCodeLine{00279       TFilePathSet::iterator it;}
+\DoxyCodeLine{00280       \textcolor{keywordflow}{for} (it = fpset.begin(); it != fpset.end(); ++it) \{}
+\DoxyCodeLine{00281         \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp = *it;}
+\DoxyCodeLine{00282         \textcolor{keywordflow}{if} (fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}tpl"{}}) \{}
+\DoxyCodeLine{00283           QString tmpFileName = QDir::tempPath() + \textcolor{stringliteral}{"{}/svn\_temp\_img\_"{}} +}
+\DoxyCodeLine{00284                                 QString::number(i) + \textcolor{stringliteral}{"{}."{}} +}
+\DoxyCodeLine{00285                                 QString::fromStdString(fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}());}
+\DoxyCodeLine{00286           m\_auxTempFiles.append(\textcolor{keyword}{new} QTemporaryFile());}
+\DoxyCodeLine{00287           m\_auxTempFiles.last()-\/>setFileName(tmpFileName);}
+\DoxyCodeLine{00288         \}}
+\DoxyCodeLine{00289       \}}
+\DoxyCodeLine{00290     \}}
+\DoxyCodeLine{00291     \textcolor{comment}{// Add sceneIcon (only for scene files)}}
+\DoxyCodeLine{00292     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}tnz"{}}) \{}
+\DoxyCodeLine{00293       \mbox{\hyperlink{class_t_file_path}{TFilePath}} iconPath = \mbox{\hyperlink{class_toonz_scene_a2d97e9b3647bb45c0c992a6c92c659eb}{ToonzScene::getIconPath}}(fp);}
+\DoxyCodeLine{00294       \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(iconPath).doesExist()) \{}
+\DoxyCodeLine{00295         QDir dir(toQString(fp.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}()));}
+\DoxyCodeLine{00296 }
+\DoxyCodeLine{00297         \textcolor{comment}{// Create the sceneIcons folder}}
+\DoxyCodeLine{00298         QDir d(QDir::tempPath());}
+\DoxyCodeLine{00299         d.mkdir(\textcolor{stringliteral}{"{}sceneIcons"{}});}
+\DoxyCodeLine{00300         QString tmpFileName = QDir::tempPath() + QString(\textcolor{stringliteral}{"{}/sceneicons/"{}}) +}
+\DoxyCodeLine{00301                               \textcolor{stringliteral}{"{}svn\_temp\_img\_"{}} + QString::number(i) + \textcolor{stringliteral}{"{} .png"{}};}
+\DoxyCodeLine{00302         m\_auxTempFiles.append(\textcolor{keyword}{new} QTemporaryFile());}
+\DoxyCodeLine{00303         m\_auxTempFiles.at(m\_auxTempFiles.size() -\/ 1)-\/>setFileName(tmpFileName);}
+\DoxyCodeLine{00304       \}}
+\DoxyCodeLine{00305     \}}
+\DoxyCodeLine{00306 }
+\DoxyCodeLine{00307     m\_listWidgetitems.append(lwi);}
+\DoxyCodeLine{00308   \}}
+\DoxyCodeLine{00309 }
+\DoxyCodeLine{00310   setMinimumSize(430, 450);}
+\DoxyCodeLine{00311 }
+\DoxyCodeLine{00312   m\_timelineWidget-\/>getListWidget()-\/>update();}
+\DoxyCodeLine{00313   m\_timelineWidget-\/>show();}
+\DoxyCodeLine{00314 }
+\DoxyCodeLine{00315   \textcolor{comment}{// Export to temporary files}}
+\DoxyCodeLine{00316   m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00317   connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), SLOT(onExportDone()));}
+\DoxyCodeLine{00318   exportToTemporaryFile(m\_currentExportIndex);}
+\DoxyCodeLine{00319 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_timeline_a0bb2537f2435bdd3bfcbe0e0eff3e763}\label{class_s_v_n_timeline_a0bb2537f2435bdd3bfcbe0e0eff3e763}} 
+\index{SVNTimeline@{SVNTimeline}!onSceneContentsToggled@{onSceneContentsToggled}}
+\index{onSceneContentsToggled@{onSceneContentsToggled}!SVNTimeline@{SVNTimeline}}
+\doxysubsubsection{\texorpdfstring{onSceneContentsToggled}{onSceneContentsToggled}}
+{\footnotesize\ttfamily void SVNTimeline\+::on\+Scene\+Contents\+Toggled (\begin{DoxyParamCaption}\item[{bool}]{checked }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00650                                                      \{}
+\DoxyCodeLine{00651   \textcolor{keywordflow}{if} (!checked)}
+\DoxyCodeLine{00652     m\_sceneResources.clear();}
+\DoxyCodeLine{00653   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00654     \mbox{\hyperlink{class_version_control}{VersionControl}} *vc = VersionControl::instance();}
+\DoxyCodeLine{00655     m\_sceneResources.append(vc-\/>getSceneContents(m\_workingDir, m\_fileName));}
+\DoxyCodeLine{00656   \}}
+\DoxyCodeLine{00657 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_timeline_a768a85f511ff35bcb3b96c22726ba476}\label{class_s_v_n_timeline_a768a85f511ff35bcb3b96c22726ba476}} 
+\index{SVNTimeline@{SVNTimeline}!onSelectionChanged@{onSelectionChanged}}
+\index{onSelectionChanged@{onSelectionChanged}!SVNTimeline@{SVNTimeline}}
+\doxysubsubsection{\texorpdfstring{onSelectionChanged}{onSelectionChanged}}
+{\footnotesize\ttfamily void SVNTimeline\+::on\+Selection\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00419                                      \{}
+\DoxyCodeLine{00420   \textcolor{keywordtype}{int} selectedItemCount =}
+\DoxyCodeLine{00421       m\_timelineWidget-\/>getListWidget()-\/>selectedItems().count();}
+\DoxyCodeLine{00422   m\_updateToRevisionButton-\/>setEnabled(selectedItemCount > 0);}
+\DoxyCodeLine{00423 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_timeline_a4fff4fafb02aaad8c78803e2a3cf714b}\label{class_s_v_n_timeline_a4fff4fafb02aaad8c78803e2a3cf714b}} 
+\index{SVNTimeline@{SVNTimeline}!onStatusRetrieved@{onStatusRetrieved}}
+\index{onStatusRetrieved@{onStatusRetrieved}!SVNTimeline@{SVNTimeline}}
+\doxysubsubsection{\texorpdfstring{onStatusRetrieved}{onStatusRetrieved}}
+{\footnotesize\ttfamily void SVNTimeline\+::on\+Status\+Retrieved (\begin{DoxyParamCaption}\item[{const QString \&}]{xml\+Response }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00575                                                               \{}
+\DoxyCodeLine{00576   \mbox{\hyperlink{class_s_v_n_status_reader}{SVNStatusReader}} sr(xmlResponse);}
+\DoxyCodeLine{00577   QList<SVNStatus> list = sr.getStatus();}
+\DoxyCodeLine{00578 }
+\DoxyCodeLine{00579   \textcolor{keywordflow}{if} (!list.empty()) \{}
+\DoxyCodeLine{00580     \mbox{\hyperlink{struct_s_v_n_status}{SVNStatus}} s = list.at(0);}
+\DoxyCodeLine{00581 }
+\DoxyCodeLine{00582     \textcolor{keywordflow}{if} (s.m\_item == \textcolor{stringliteral}{"{}none"{}} || s.m\_item == \textcolor{stringliteral}{"{}missing"{}} ||}
+\DoxyCodeLine{00583         s.m\_repoStatus == \textcolor{stringliteral}{"{}modified"{}}) \{}
+\DoxyCodeLine{00584       \textcolor{keywordflow}{if} (list.size() == 1)}
+\DoxyCodeLine{00585         m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Getting \%1..."{}}).arg(m\_fileName));}
+\DoxyCodeLine{00586       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00587         m\_textLabel-\/>setText(}
+\DoxyCodeLine{00588             tr(\textcolor{stringliteral}{"{}Getting \%1 items..."{}}).arg(m\_sceneResources.size() + 1));}
+\DoxyCodeLine{00589 }
+\DoxyCodeLine{00590       m\_sceneContentsCheckBox-\/>hide();}
+\DoxyCodeLine{00591 }
+\DoxyCodeLine{00592       QStringList args;}
+\DoxyCodeLine{00593       args << \textcolor{stringliteral}{"{}update"{}} << m\_fileName;}
+\DoxyCodeLine{00594 }
+\DoxyCodeLine{00595       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < list.size(); i++) \{}
+\DoxyCodeLine{00596         s = list.at(i);}
+\DoxyCodeLine{00597         \textcolor{keywordflow}{if} (s.m\_item == \textcolor{stringliteral}{"{}none"{}} || s.m\_item == \textcolor{stringliteral}{"{}missing"{}} ||}
+\DoxyCodeLine{00598             s.m\_repoStatus == \textcolor{stringliteral}{"{}modified"{}})}
+\DoxyCodeLine{00599           args << s.m\_path;}
+\DoxyCodeLine{00600       \}}
+\DoxyCodeLine{00601 }
+\DoxyCodeLine{00602       m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00603       connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), SLOT(onUpdateDone()));}
+\DoxyCodeLine{00604       m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args, \textcolor{keyword}{true});}
+\DoxyCodeLine{00605       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00606     \}}
+\DoxyCodeLine{00607   \}}
+\DoxyCodeLine{00608 }
+\DoxyCodeLine{00609   \textcolor{comment}{// Do nothing (restore the GUI)}}
+\DoxyCodeLine{00610   m\_updateButton-\/>show();}
+\DoxyCodeLine{00611   m\_updateToRevisionButton-\/>show();}
+\DoxyCodeLine{00612   m\_timelineWidget-\/>show();}
+\DoxyCodeLine{00613   \textcolor{keywordflow}{if} (m\_fileName.endsWith(\textcolor{stringliteral}{"{}.tnz"{}})) m\_sceneContentsCheckBox-\/>show();}
+\DoxyCodeLine{00614   m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{00615   m\_textLabel-\/>hide();}
+\DoxyCodeLine{00616 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_timeline_a450e2ed0ebcc599b5a387a7c5a2de16e}\label{class_s_v_n_timeline_a450e2ed0ebcc599b5a387a7c5a2de16e}} 
+\index{SVNTimeline@{SVNTimeline}!onUpdateButtonClicked@{onUpdateButtonClicked}}
+\index{onUpdateButtonClicked@{onUpdateButtonClicked}!SVNTimeline@{SVNTimeline}}
+\doxysubsubsection{\texorpdfstring{onUpdateButtonClicked}{onUpdateButtonClicked}}
+{\footnotesize\ttfamily void SVNTimeline\+::on\+Update\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00512                                         \{}
+\DoxyCodeLine{00513   m\_updateButton-\/>hide();}
+\DoxyCodeLine{00514   m\_sceneContentsCheckBox-\/>hide();}
+\DoxyCodeLine{00515   m\_updateToRevisionButton-\/>hide();}
+\DoxyCodeLine{00516   m\_timelineWidget-\/>hide();}
+\DoxyCodeLine{00517   m\_waitingLabel-\/>show();}
+\DoxyCodeLine{00518   \textcolor{keywordflow}{if} (m\_sceneResources.isEmpty())}
+\DoxyCodeLine{00519     m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Getting the status for \%1..."{}}).arg(m\_fileName));}
+\DoxyCodeLine{00520   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00521     m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Getting repository status..."{}}));}
+\DoxyCodeLine{00522   m\_textLabel-\/>show();}
+\DoxyCodeLine{00523 }
+\DoxyCodeLine{00524   QStringList files;}
+\DoxyCodeLine{00525   files.append(m\_fileName);}
+\DoxyCodeLine{00526   files.append(m\_sceneResources);}
+\DoxyCodeLine{00527   files.append(m\_auxFiles);}
+\DoxyCodeLine{00528 }
+\DoxyCodeLine{00529   \textcolor{comment}{// Getting status to control if an update is needed}}
+\DoxyCodeLine{00530   connect(\&m\_thread, SIGNAL(statusRetrieved(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00531           SLOT(onStatusRetrieved(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00532   m\_thread.getSVNStatus(m\_workingDir, files, \textcolor{keyword}{true});}
+\DoxyCodeLine{00533 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_timeline_a4dd96431cdd1f9cbcddb71be5cc3c11f}\label{class_s_v_n_timeline_a4dd96431cdd1f9cbcddb71be5cc3c11f}} 
+\index{SVNTimeline@{SVNTimeline}!onUpdateDone@{onUpdateDone}}
+\index{onUpdateDone@{onUpdateDone}!SVNTimeline@{SVNTimeline}}
+\doxysubsubsection{\texorpdfstring{onUpdateDone}{onUpdateDone}}
+{\footnotesize\ttfamily void SVNTimeline\+::on\+Update\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00620                                \{}
+\DoxyCodeLine{00621   \textcolor{comment}{// Get the new log ...}}
+\DoxyCodeLine{00622   m\_log.clear();}
+\DoxyCodeLine{00623   m\_timelineWidget-\/>getListWidget()-\/>clear();}
+\DoxyCodeLine{00624   m\_listWidgetitems.clear();}
+\DoxyCodeLine{00625   removeTempFiles();}
+\DoxyCodeLine{00626   m\_currentExportIndex    = 0;}
+\DoxyCodeLine{00627   m\_currentAuxExportIndex = 0;}
+\DoxyCodeLine{00628 }
+\DoxyCodeLine{00629   \textcolor{comment}{// Update the filebrowser}}
+\DoxyCodeLine{00630   QStringList files;}
+\DoxyCodeLine{00631   files.append(m\_fileName);}
+\DoxyCodeLine{00632   files.append(m\_sceneResources);}
+\DoxyCodeLine{00633   files.append(m\_auxFiles);}
+\DoxyCodeLine{00634   emit commandDone(files);}
+\DoxyCodeLine{00635 }
+\DoxyCodeLine{00636   m\_updateButton-\/>show();}
+\DoxyCodeLine{00637   m\_updateToRevisionButton-\/>show();}
+\DoxyCodeLine{00638   \textcolor{keywordflow}{if} (m\_fileName.endsWith(\textcolor{stringliteral}{"{}.tnz"{}})) m\_sceneContentsCheckBox-\/>show();}
+\DoxyCodeLine{00639 }
+\DoxyCodeLine{00640   QStringList args;}
+\DoxyCodeLine{00641   args << \textcolor{stringliteral}{"{}log"{}} << m\_fileName << \textcolor{stringliteral}{"{}-\/-\/xml"{}};}
+\DoxyCodeLine{00642   m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00643   connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)),}
+\DoxyCodeLine{00644           SLOT(onLogDone(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00645   m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args, \textcolor{keyword}{true});}
+\DoxyCodeLine{00646 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_timeline_a48fd6f728cf297e1e51fc3d6eb621ba0}\label{class_s_v_n_timeline_a48fd6f728cf297e1e51fc3d6eb621ba0}} 
+\index{SVNTimeline@{SVNTimeline}!onUpdateToRevisionButtonClicked@{onUpdateToRevisionButtonClicked}}
+\index{onUpdateToRevisionButtonClicked@{onUpdateToRevisionButtonClicked}!SVNTimeline@{SVNTimeline}}
+\doxysubsubsection{\texorpdfstring{onUpdateToRevisionButtonClicked}{onUpdateToRevisionButtonClicked}}
+{\footnotesize\ttfamily void SVNTimeline\+::on\+Update\+To\+Revision\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00537                                                   \{}
+\DoxyCodeLine{00538   \textcolor{keywordtype}{int} index = m\_timelineWidget-\/>getCurrentIndex();}
+\DoxyCodeLine{00539   \textcolor{keywordflow}{if} (index == -\/1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00540 }
+\DoxyCodeLine{00541   \mbox{\hyperlink{struct_s_v_n_log}{SVNLog}} log = m\_log.at(index);}
+\DoxyCodeLine{00542 }
+\DoxyCodeLine{00543   m\_updateButton-\/>hide();}
+\DoxyCodeLine{00544   m\_updateToRevisionButton-\/>hide();}
+\DoxyCodeLine{00545   m\_timelineWidget-\/>hide();}
+\DoxyCodeLine{00546   m\_sceneContentsCheckBox-\/>hide();}
+\DoxyCodeLine{00547   m\_waitingLabel-\/>show();}
+\DoxyCodeLine{00548   \textcolor{keywordflow}{if} (m\_sceneResources.isEmpty())}
+\DoxyCodeLine{00549     m\_textLabel-\/>setText(}
+\DoxyCodeLine{00550         tr(\textcolor{stringliteral}{"{}Getting \%1 to revision \%2..."{}}).arg(m\_fileName).arg(log.m\_revision));}
+\DoxyCodeLine{00551   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00552     m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Getting \%1 items to revision \%2..."{}})}
+\DoxyCodeLine{00553                              .arg(m\_sceneResources.size() + 1)}
+\DoxyCodeLine{00554                              .arg(log.m\_revision));}
+\DoxyCodeLine{00555   m\_textLabel-\/>show();}
+\DoxyCodeLine{00556 }
+\DoxyCodeLine{00557   QStringList args;}
+\DoxyCodeLine{00558   args << \textcolor{stringliteral}{"{}update"{}} << m\_fileName;}
+\DoxyCodeLine{00559 }
+\DoxyCodeLine{00560   \textcolor{keywordtype}{int} auxFilesSize = m\_auxFiles.count();}
+\DoxyCodeLine{00561   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < auxFilesSize; i++) args << m\_auxFiles.at(i);}
+\DoxyCodeLine{00562 }
+\DoxyCodeLine{00563   \textcolor{keywordtype}{int} sceneResourcesSize = m\_sceneResources.count();}
+\DoxyCodeLine{00564   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < sceneResourcesSize; i++) args << m\_sceneResources.at(i);}
+\DoxyCodeLine{00565 }
+\DoxyCodeLine{00566   args << QString(\textcolor{stringliteral}{"{}-\/r"{}}).append(log.m\_revision);}
+\DoxyCodeLine{00567 }
+\DoxyCodeLine{00568   m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00569   connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), SLOT(onUpdateDone()));}
+\DoxyCodeLine{00570   m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args, \textcolor{keyword}{true});}
+\DoxyCodeLine{00571 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/versioncontroltimeline.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/versioncontroltimeline.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,81 @@
+\hypertarget{class__3gp__io_1_1_l_w_save_sound_track_parser}{}\doxysection{\+\_\+3gp\+\_\+io\+::LWSave\+Sound\+Track\+Parser Class Reference}
+\label{class__3gp__io_1_1_l_w_save_sound_track_parser}\index{\_3gp\_io::LWSaveSoundTrackParser@{\_3gp\_io::LWSaveSoundTrackParser}}
+Inheritance diagram for \+\_\+3gp\+\_\+io\+::LWSave\+Sound\+Track\+Parser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class__3gp__io_1_1_l_w_save_sound_track_parser}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{class__3gp__io_1_1_l_w_save_sound_track_parser_a5d09591769da6374c8831d9104f8e71a}{header}} () const override
+\item 
+void \mbox{\hyperlink{class__3gp__io_1_1_l_w_save_sound_track_parser_a7a6cacb4b7c55e9d6fbd6d337ce73c56}{operator()}} (\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&stream) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class__3gp__io_1_1_l_w_save_sound_track_parser_a5d09591769da6374c8831d9104f8e71a}\label{class__3gp__io_1_1_l_w_save_sound_track_parser_a5d09591769da6374c8831d9104f8e71a}} 
+\index{\_3gp\_io::LWSaveSoundTrackParser@{\_3gp\_io::LWSaveSoundTrackParser}!header@{header}}
+\index{header@{header}!\_3gp\_io::LWSaveSoundTrackParser@{\_3gp\_io::LWSaveSoundTrackParser}}
+\doxysubsubsection{\texorpdfstring{header()}{header()}}
+{\footnotesize\ttfamily QString \+\_\+3gp\+\_\+io\+::\+LWSave\+Sound\+Track\+Parser\+::header (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00066 \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$LW3gpSaveSoundTrack"{}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class__3gp__io_1_1_l_w_save_sound_track_parser_a7a6cacb4b7c55e9d6fbd6d337ce73c56}\label{class__3gp__io_1_1_l_w_save_sound_track_parser_a7a6cacb4b7c55e9d6fbd6d337ce73c56}} 
+\index{\_3gp\_io::LWSaveSoundTrackParser@{\_3gp\_io::LWSaveSoundTrackParser}!operator()@{operator()}}
+\index{operator()@{operator()}!\_3gp\_io::LWSaveSoundTrackParser@{\_3gp\_io::LWSaveSoundTrackParser}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily void \+\_\+3gp\+\_\+io\+::\+LWSave\+Sound\+Track\+Parser\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00140                                                     \{}
+\DoxyCodeLine{00141   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} id;}
+\DoxyCodeLine{00142   QString shMemId;}
+\DoxyCodeLine{00143 }
+\DoxyCodeLine{00144   TUINT32 sampleRate;}
+\DoxyCodeLine{00145   TINT32 sCount;}
+\DoxyCodeLine{00146   \textcolor{keywordtype}{int} bps, chanCount;}
+\DoxyCodeLine{00147   \textcolor{keywordtype}{bool} signedSample;}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149   msg >> \textcolor{keywordtype}{id} >> sampleRate >> bps >> chanCount >> sCount >> signedSample;}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   \textcolor{comment}{// Retrieve the soundtrack buffer}}
+\DoxyCodeLine{00152   \mbox{\hyperlink{class_t_smart_pointer_t}{TSoundTrackP}} st =}
+\DoxyCodeLine{00153       \mbox{\hyperlink{class_t_sound_track_a9a83177a9a5b9a7470f32b87e7f21f3d}{TSoundTrack::create}}(sampleRate, bps, chanCount, sCount, signedSample);}
+\DoxyCodeLine{00154   \mbox{\hyperlink{classt32bitsrv_1_1_buffer_exchanger}{t32bitsrv::BufferExchanger}} exch((UCHAR *)st-\/>\mbox{\hyperlink{class_t_sound_track_ae47a8e255a18ddbc83d31b6c0c834e68}{getRawData}}());}
+\DoxyCodeLine{00155   \mbox{\hyperlink{namespacetipc_a30132f99c3439636d6c729f4578675b0}{tipc::readShMemBuffer}}(*stream(), msg, \&exch);}
+\DoxyCodeLine{00156 }
+\DoxyCodeLine{00157   \textcolor{comment}{// Write the soundtrack}}
+\DoxyCodeLine{00158   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00159     writers.find(\textcolor{keywordtype}{id}).value()-\/>saveSoundTrack(st.getPointer());}
+\DoxyCodeLine{00160     msg << QString(\textcolor{stringliteral}{"{}ok"{}});}
+\DoxyCodeLine{00161   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00162     msg << QString(\textcolor{stringliteral}{"{}err"{}});}
+\DoxyCodeLine{00163   \}}
+\DoxyCodeLine{00164 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t323gpmsg.\+h\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t323gpmsg.\+cpp\end{DoxyCompactItemize}

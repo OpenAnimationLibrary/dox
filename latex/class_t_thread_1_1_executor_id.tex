@@ -1,0 +1,203 @@
+\hypertarget{class_t_thread_1_1_executor_id}{}\doxysection{TThread\+::Executor\+Id Class Reference}
+\label{class_t_thread_1_1_executor_id}\index{TThread::ExecutorId@{TThread::ExecutorId}}
+Inheritance diagram for TThread\+::Executor\+Id\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_t_thread_1_1_executor_id}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_t_thread_1_1_executor_id_a58731bc0d7c822160be4c10b9b8399ea}\label{class_t_thread_1_1_executor_id_a58731bc0d7c822160be4c10b9b8399ea}} 
+void {\bfseries accumulate} (const \mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} \&task)
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_executor_id_aa1e49a4e1a2ae44f85f0a287936df307}{new\+Worker}} (\mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} \&task)
+\item 
+void \mbox{\hyperlink{class_t_thread_1_1_executor_id_a0da0e1de0c321e2f0c8aded56959c3c5}{refresh\+Dedicated\+List}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{class_t_thread_1_1_executor_id_a781d6436a1eef70b06c46c93357e65fb}{m\+\_\+id}}
+\item 
+int \mbox{\hyperlink{class_t_thread_1_1_executor_id_a218359e29664d6631ace691fe181623b}{m\+\_\+active\+Tasks}}
+\item 
+int \mbox{\hyperlink{class_t_thread_1_1_executor_id_aebca025b74bbdcb49fcd306f3f4b2f91}{m\+\_\+max\+Active\+Tasks}}
+\item 
+int \mbox{\hyperlink{class_t_thread_1_1_executor_id_a7b6beef69058beb633ca107f64902002}{m\+\_\+active\+Load}}
+\item 
+int \mbox{\hyperlink{class_t_thread_1_1_executor_id_a219ab41523b1868431b391364406c239}{m\+\_\+max\+Active\+Load}}
+\item 
+bool \mbox{\hyperlink{class_t_thread_1_1_executor_id_a2a4428b6301b99483aab3582aa5c0749}{m\+\_\+dedicated\+Threads}}
+\item 
+bool \mbox{\hyperlink{class_t_thread_1_1_executor_id_ade170e34643d64131a0f88c7cce7d8b7}{m\+\_\+persistent\+Threads}}
+\item 
+std\+::deque$<$ \mbox{\hyperlink{class_t_thread_1_1_worker}{Worker}} $\ast$ $>$ \mbox{\hyperlink{class_t_thread_1_1_executor_id_afcad764f7e418ef6b5927f04edd6b307}{m\+\_\+sleepings}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Contains all the executor data that need to persist until all tasks added by the executor have been processed. Upon creation of an \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} object, it instantiates one \mbox{\hyperlink{class_t_thread_1_1_executor_id}{Executor\+Id}} for both storing the \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}}\textquotesingle{}s data sensible to the underlying code of the \mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} manager, and to identify all tasks added through it -\/ by copying the smart pointer to the id into each added task. \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_t_thread_1_1_executor}{Executor}} and \mbox{\hyperlink{class_t_thread_1_1_runnable}{Runnable}} class. 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_id_a4fa83a28e5dd747188ae8d415db12aef}\label{class_t_thread_1_1_executor_id_a4fa83a28e5dd747188ae8d415db12aef}} 
+\index{TThread::ExecutorId@{TThread::ExecutorId}!ExecutorId@{ExecutorId}}
+\index{ExecutorId@{ExecutorId}!TThread::ExecutorId@{TThread::ExecutorId}}
+\doxysubsubsection{\texorpdfstring{ExecutorId()}{ExecutorId()}}
+{\footnotesize\ttfamily Executor\+Id\+::\+Executor\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00516     : m\_activeTasks(0)}
+\DoxyCodeLine{00517     , m\_maxActiveTasks(1)}
+\DoxyCodeLine{00518     , m\_activeLoad(0)}
+\DoxyCodeLine{00519     , m\_maxActiveLoad((std::numeric\_limits<int>::max)())}
+\DoxyCodeLine{00520     , m\_dedicatedThreads(\textcolor{keyword}{false})}
+\DoxyCodeLine{00521     , m\_persistentThreads(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00522   QMutexLocker transitionLocker(\&globalImp-\/>m\_transitionMutex);}
+\DoxyCodeLine{00523 }
+\DoxyCodeLine{00524   m\_id = globalImp-\/>m\_executorIdPool.acquire();}
+\DoxyCodeLine{00525   globalImp-\/>m\_waitingFlagsPool.resize(globalImp-\/>m\_executorIdPool.size());}
+\DoxyCodeLine{00526 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_id_a06b796adcec1281431a65dd1b4497c6b}\label{class_t_thread_1_1_executor_id_a06b796adcec1281431a65dd1b4497c6b}} 
+\index{TThread::ExecutorId@{TThread::ExecutorId}!````~ExecutorId@{$\sim$ExecutorId}}
+\index{````~ExecutorId@{$\sim$ExecutorId}!TThread::ExecutorId@{TThread::ExecutorId}}
+\doxysubsubsection{\texorpdfstring{$\sim$ExecutorId()}{~ExecutorId()}}
+{\footnotesize\ttfamily Executor\+Id\+::$\sim$\+Executor\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00530                         \{}
+\DoxyCodeLine{00531   QMutexLocker transitionLocker(\&globalImp-\/>m\_transitionMutex);}
+\DoxyCodeLine{00532 }
+\DoxyCodeLine{00533   \textcolor{keywordflow}{if} (m\_dedicatedThreads) \{}
+\DoxyCodeLine{00534     m\_persistentThreads = 0;}
+\DoxyCodeLine{00535     refreshDedicatedList();}
+\DoxyCodeLine{00536   \}}
+\DoxyCodeLine{00537 }
+\DoxyCodeLine{00538   globalImp-\/>m\_executorIdPool.release(m\_id);}
+\DoxyCodeLine{00539 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_id_aa1e49a4e1a2ae44f85f0a287936df307}\label{class_t_thread_1_1_executor_id_aa1e49a4e1a2ae44f85f0a287936df307}} 
+\index{TThread::ExecutorId@{TThread::ExecutorId}!newWorker@{newWorker}}
+\index{newWorker@{newWorker}!TThread::ExecutorId@{TThread::ExecutorId}}
+\doxysubsubsection{\texorpdfstring{newWorker()}{newWorker()}}
+{\footnotesize\ttfamily void Executor\+Id\+::new\+Worker (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{RunnableP}} \&}]{task }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00965                                                  \{}
+\DoxyCodeLine{00966   \mbox{\hyperlink{class_t_thread_1_1_worker}{Worker}} *worker;}
+\DoxyCodeLine{00967 }
+\DoxyCodeLine{00968   \textcolor{keywordflow}{if} (m\_sleepings.size()) \{}
+\DoxyCodeLine{00969     worker = m\_sleepings.front();}
+\DoxyCodeLine{00970     m\_sleepings.pop\_front();}
+\DoxyCodeLine{00971     worker-\/>m\_task = task;}
+\DoxyCodeLine{00972     worker-\/>updateCountsOnTake();}
+\DoxyCodeLine{00973     worker-\/>m\_waitCondition.wakeOne();}
+\DoxyCodeLine{00974   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00975     worker = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_thread_1_1_worker}{Worker}};}
+\DoxyCodeLine{00976     globalImp-\/>m\_workers.insert(worker);}
+\DoxyCodeLine{00977     QObject::connect(worker, SIGNAL(finished()), globalImpSlots,}
+\DoxyCodeLine{00978                      SLOT(onTerminated()));}
+\DoxyCodeLine{00979     worker-\/>m\_task = task;}
+\DoxyCodeLine{00980     worker-\/>updateCountsOnTake();}
+\DoxyCodeLine{00981     worker-\/>start();}
+\DoxyCodeLine{00982   \}}
+\DoxyCodeLine{00983 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_id_a0da0e1de0c321e2f0c8aded56959c3c5}\label{class_t_thread_1_1_executor_id_a0da0e1de0c321e2f0c8aded56959c3c5}} 
+\index{TThread::ExecutorId@{TThread::ExecutorId}!refreshDedicatedList@{refreshDedicatedList}}
+\index{refreshDedicatedList@{refreshDedicatedList}!TThread::ExecutorId@{TThread::ExecutorId}}
+\doxysubsubsection{\texorpdfstring{refreshDedicatedList()}{refreshDedicatedList()}}
+{\footnotesize\ttfamily void Executor\+Id\+::refresh\+Dedicated\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00545                                       \{}
+\DoxyCodeLine{00546   \textcolor{comment}{// QMutexLocker transitionLocker(\&globalImp-\/>m\_transitionMutex);  //Already}}
+\DoxyCodeLine{00547   \textcolor{comment}{// covered}}
+\DoxyCodeLine{00548 }
+\DoxyCodeLine{00549   \textcolor{keywordflow}{if} (!m\_dedicatedThreads || !m\_persistentThreads) \{}
+\DoxyCodeLine{00550     \textcolor{comment}{// Release all sleeping workers}}
+\DoxyCodeLine{00551     \textcolor{comment}{// Wake them -\/ they will exit on their own}}
+\DoxyCodeLine{00552 }
+\DoxyCodeLine{00553     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i, size = m\_sleepings.size();}
+\DoxyCodeLine{00554     \textcolor{keywordflow}{for} (i = 0; i < size; ++i) \{}
+\DoxyCodeLine{00555       m\_sleepings[i]-\/>m\_exit = \textcolor{keyword}{true};}
+\DoxyCodeLine{00556       m\_sleepings[i]-\/>m\_waitCondition.wakeOne();}
+\DoxyCodeLine{00557     \}}
+\DoxyCodeLine{00558 }
+\DoxyCodeLine{00559     m\_sleepings.clear();}
+\DoxyCodeLine{00560   \}}
+\DoxyCodeLine{00561 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_thread_1_1_executor_id_a7b6beef69058beb633ca107f64902002}\label{class_t_thread_1_1_executor_id_a7b6beef69058beb633ca107f64902002}} 
+\index{TThread::ExecutorId@{TThread::ExecutorId}!m\_activeLoad@{m\_activeLoad}}
+\index{m\_activeLoad@{m\_activeLoad}!TThread::ExecutorId@{TThread::ExecutorId}}
+\doxysubsubsection{\texorpdfstring{m\_activeLoad}{m\_activeLoad}}
+{\footnotesize\ttfamily int TThread\+::\+Executor\+Id\+::m\+\_\+active\+Load}
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_id_a218359e29664d6631ace691fe181623b}\label{class_t_thread_1_1_executor_id_a218359e29664d6631ace691fe181623b}} 
+\index{TThread::ExecutorId@{TThread::ExecutorId}!m\_activeTasks@{m\_activeTasks}}
+\index{m\_activeTasks@{m\_activeTasks}!TThread::ExecutorId@{TThread::ExecutorId}}
+\doxysubsubsection{\texorpdfstring{m\_activeTasks}{m\_activeTasks}}
+{\footnotesize\ttfamily int TThread\+::\+Executor\+Id\+::m\+\_\+active\+Tasks}
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_id_a2a4428b6301b99483aab3582aa5c0749}\label{class_t_thread_1_1_executor_id_a2a4428b6301b99483aab3582aa5c0749}} 
+\index{TThread::ExecutorId@{TThread::ExecutorId}!m\_dedicatedThreads@{m\_dedicatedThreads}}
+\index{m\_dedicatedThreads@{m\_dedicatedThreads}!TThread::ExecutorId@{TThread::ExecutorId}}
+\doxysubsubsection{\texorpdfstring{m\_dedicatedThreads}{m\_dedicatedThreads}}
+{\footnotesize\ttfamily bool TThread\+::\+Executor\+Id\+::m\+\_\+dedicated\+Threads}
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_id_a781d6436a1eef70b06c46c93357e65fb}\label{class_t_thread_1_1_executor_id_a781d6436a1eef70b06c46c93357e65fb}} 
+\index{TThread::ExecutorId@{TThread::ExecutorId}!m\_id@{m\_id}}
+\index{m\_id@{m\_id}!TThread::ExecutorId@{TThread::ExecutorId}}
+\doxysubsubsection{\texorpdfstring{m\_id}{m\_id}}
+{\footnotesize\ttfamily size\+\_\+t TThread\+::\+Executor\+Id\+::m\+\_\+id}
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_id_a219ab41523b1868431b391364406c239}\label{class_t_thread_1_1_executor_id_a219ab41523b1868431b391364406c239}} 
+\index{TThread::ExecutorId@{TThread::ExecutorId}!m\_maxActiveLoad@{m\_maxActiveLoad}}
+\index{m\_maxActiveLoad@{m\_maxActiveLoad}!TThread::ExecutorId@{TThread::ExecutorId}}
+\doxysubsubsection{\texorpdfstring{m\_maxActiveLoad}{m\_maxActiveLoad}}
+{\footnotesize\ttfamily int TThread\+::\+Executor\+Id\+::m\+\_\+max\+Active\+Load}
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_id_aebca025b74bbdcb49fcd306f3f4b2f91}\label{class_t_thread_1_1_executor_id_aebca025b74bbdcb49fcd306f3f4b2f91}} 
+\index{TThread::ExecutorId@{TThread::ExecutorId}!m\_maxActiveTasks@{m\_maxActiveTasks}}
+\index{m\_maxActiveTasks@{m\_maxActiveTasks}!TThread::ExecutorId@{TThread::ExecutorId}}
+\doxysubsubsection{\texorpdfstring{m\_maxActiveTasks}{m\_maxActiveTasks}}
+{\footnotesize\ttfamily int TThread\+::\+Executor\+Id\+::m\+\_\+max\+Active\+Tasks}
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_id_ade170e34643d64131a0f88c7cce7d8b7}\label{class_t_thread_1_1_executor_id_ade170e34643d64131a0f88c7cce7d8b7}} 
+\index{TThread::ExecutorId@{TThread::ExecutorId}!m\_persistentThreads@{m\_persistentThreads}}
+\index{m\_persistentThreads@{m\_persistentThreads}!TThread::ExecutorId@{TThread::ExecutorId}}
+\doxysubsubsection{\texorpdfstring{m\_persistentThreads}{m\_persistentThreads}}
+{\footnotesize\ttfamily bool TThread\+::\+Executor\+Id\+::m\+\_\+persistent\+Threads}
+
+\mbox{\Hypertarget{class_t_thread_1_1_executor_id_afcad764f7e418ef6b5927f04edd6b307}\label{class_t_thread_1_1_executor_id_afcad764f7e418ef6b5927f04edd6b307}} 
+\index{TThread::ExecutorId@{TThread::ExecutorId}!m\_sleepings@{m\_sleepings}}
+\index{m\_sleepings@{m\_sleepings}!TThread::ExecutorId@{TThread::ExecutorId}}
+\doxysubsubsection{\texorpdfstring{m\_sleepings}{m\_sleepings}}
+{\footnotesize\ttfamily std\+::deque$<$\mbox{\hyperlink{class_t_thread_1_1_worker}{Worker}} $\ast$$>$ TThread\+::\+Executor\+Id\+::m\+\_\+sleepings}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tcore/tthread.\+cpp\end{DoxyCompactItemize}

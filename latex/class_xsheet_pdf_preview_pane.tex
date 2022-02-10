@@ -1,0 +1,129 @@
+\hypertarget{class_xsheet_pdf_preview_pane}{}\doxysection{Xsheet\+Pdf\+Preview\+Pane Class Reference}
+\label{class_xsheet_pdf_preview_pane}\index{XsheetPdfPreviewPane@{XsheetPdfPreviewPane}}
+Inheritance diagram for Xsheet\+Pdf\+Preview\+Pane\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_xsheet_pdf_preview_pane}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_xsheet_pdf_preview_pane_ab7d587aef00cf289d11ba91bb5faa3ea}{Xsheet\+Pdf\+Preview\+Pane}} (QWidget $\ast$parent)
+\item 
+void \mbox{\hyperlink{class_xsheet_pdf_preview_pane_abe606928e38fb655939962e462bcacc9}{set\+Pixmap}} (QPixmap pm)
+\item 
+void \mbox{\hyperlink{class_xsheet_pdf_preview_pane_a63962653814b8de74aab422555de286f}{do\+Zoom}} (double d\+\_\+scale)
+\item 
+void \mbox{\hyperlink{class_xsheet_pdf_preview_pane_a717d82ab569475f5b6b41e1fcac65d81}{fit\+Scale\+To}} (QSize size)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_xsheet_pdf_preview_pane_a40284207af2bccd90a59d750d34def8a}{paint\+Event}} (QPaint\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_xsheet_pdf_preview_pane_ab7d587aef00cf289d11ba91bb5faa3ea}\label{class_xsheet_pdf_preview_pane_ab7d587aef00cf289d11ba91bb5faa3ea}} 
+\index{XsheetPdfPreviewPane@{XsheetPdfPreviewPane}!XsheetPdfPreviewPane@{XsheetPdfPreviewPane}}
+\index{XsheetPdfPreviewPane@{XsheetPdfPreviewPane}!XsheetPdfPreviewPane@{XsheetPdfPreviewPane}}
+\doxysubsubsection{\texorpdfstring{XsheetPdfPreviewPane()}{XsheetPdfPreviewPane()}}
+{\footnotesize\ttfamily Xsheet\+Pdf\+Preview\+Pane\+::\+Xsheet\+Pdf\+Preview\+Pane (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01764     : QWidget(parent), m\_scaleFactor(1.0) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_xsheet_pdf_preview_pane_a63962653814b8de74aab422555de286f}\label{class_xsheet_pdf_preview_pane_a63962653814b8de74aab422555de286f}} 
+\index{XsheetPdfPreviewPane@{XsheetPdfPreviewPane}!doZoom@{doZoom}}
+\index{doZoom@{doZoom}!XsheetPdfPreviewPane@{XsheetPdfPreviewPane}}
+\doxysubsubsection{\texorpdfstring{doZoom()}{doZoom()}}
+{\footnotesize\ttfamily void Xsheet\+Pdf\+Preview\+Pane\+::do\+Zoom (\begin{DoxyParamCaption}\item[{double}]{d\+\_\+scale }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01783                                                 \{}
+\DoxyCodeLine{01784   m\_scaleFactor += d\_scale;}
+\DoxyCodeLine{01785   \textcolor{keywordflow}{if} (m\_scaleFactor > 1.0)}
+\DoxyCodeLine{01786     m\_scaleFactor = 1.0;}
+\DoxyCodeLine{01787   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_scaleFactor < 0.1)}
+\DoxyCodeLine{01788     m\_scaleFactor = 0.1;}
+\DoxyCodeLine{01789 }
+\DoxyCodeLine{01790   resize(m\_pixmap.size() * m\_scaleFactor);}
+\DoxyCodeLine{01791   update();}
+\DoxyCodeLine{01792 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_pdf_preview_pane_a717d82ab569475f5b6b41e1fcac65d81}\label{class_xsheet_pdf_preview_pane_a717d82ab569475f5b6b41e1fcac65d81}} 
+\index{XsheetPdfPreviewPane@{XsheetPdfPreviewPane}!fitScaleTo@{fitScaleTo}}
+\index{fitScaleTo@{fitScaleTo}!XsheetPdfPreviewPane@{XsheetPdfPreviewPane}}
+\doxysubsubsection{\texorpdfstring{fitScaleTo()}{fitScaleTo()}}
+{\footnotesize\ttfamily void Xsheet\+Pdf\+Preview\+Pane\+::fit\+Scale\+To (\begin{DoxyParamCaption}\item[{QSize}]{size }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01794                                                 \{}
+\DoxyCodeLine{01795   \textcolor{keywordtype}{double} tmp\_scaleFactor =}
+\DoxyCodeLine{01796       std::min((\textcolor{keywordtype}{double})size.width() / (\textcolor{keywordtype}{double})m\_pixmap.width(),}
+\DoxyCodeLine{01797                (\textcolor{keywordtype}{double})size.height() / (\textcolor{keywordtype}{double})m\_pixmap.height());}
+\DoxyCodeLine{01798 }
+\DoxyCodeLine{01799   m\_scaleFactor = tmp\_scaleFactor;}
+\DoxyCodeLine{01800   \textcolor{keywordflow}{if} (m\_scaleFactor > 1.0)}
+\DoxyCodeLine{01801     m\_scaleFactor = 1.0;}
+\DoxyCodeLine{01802   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_scaleFactor < 0.1)}
+\DoxyCodeLine{01803     m\_scaleFactor = 0.1;}
+\DoxyCodeLine{01804 }
+\DoxyCodeLine{01805   resize(m\_pixmap.size() * m\_scaleFactor);}
+\DoxyCodeLine{01806   update();}
+\DoxyCodeLine{01807 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_pdf_preview_pane_a40284207af2bccd90a59d750d34def8a}\label{class_xsheet_pdf_preview_pane_a40284207af2bccd90a59d750d34def8a}} 
+\index{XsheetPdfPreviewPane@{XsheetPdfPreviewPane}!paintEvent@{paintEvent}}
+\index{paintEvent@{paintEvent}!XsheetPdfPreviewPane@{XsheetPdfPreviewPane}}
+\doxysubsubsection{\texorpdfstring{paintEvent()}{paintEvent()}}
+{\footnotesize\ttfamily void Xsheet\+Pdf\+Preview\+Pane\+::paint\+Event (\begin{DoxyParamCaption}\item[{QPaint\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01766                                                         \{}
+\DoxyCodeLine{01767   QPainter painter(\textcolor{keyword}{this});}
+\DoxyCodeLine{01768   painter.setRenderHint(QPainter::SmoothPixmapTransform, \textcolor{keyword}{true});}
+\DoxyCodeLine{01769   painter.setRenderHint(QPainter::Antialiasing, \textcolor{keyword}{true});}
+\DoxyCodeLine{01770   QSize pmSize((\textcolor{keywordtype}{double})m\_pixmap.width() * m\_scaleFactor,}
+\DoxyCodeLine{01771                (\textcolor{keywordtype}{double})m\_pixmap.height() * m\_scaleFactor);}
+\DoxyCodeLine{01772   painter.drawPixmap(}
+\DoxyCodeLine{01773       0, 0,}
+\DoxyCodeLine{01774       m\_pixmap.scaled(pmSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));}
+\DoxyCodeLine{01775 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_pdf_preview_pane_abe606928e38fb655939962e462bcacc9}\label{class_xsheet_pdf_preview_pane_abe606928e38fb655939962e462bcacc9}} 
+\index{XsheetPdfPreviewPane@{XsheetPdfPreviewPane}!setPixmap@{setPixmap}}
+\index{setPixmap@{setPixmap}!XsheetPdfPreviewPane@{XsheetPdfPreviewPane}}
+\doxysubsubsection{\texorpdfstring{setPixmap()}{setPixmap()}}
+{\footnotesize\ttfamily void Xsheet\+Pdf\+Preview\+Pane\+::set\+Pixmap (\begin{DoxyParamCaption}\item[{QPixmap}]{pm }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01777                                                \{}
+\DoxyCodeLine{01778   m\_pixmap = pm;}
+\DoxyCodeLine{01779   resize(pm.size() * m\_scaleFactor);}
+\DoxyCodeLine{01780   update();}
+\DoxyCodeLine{01781 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/exportxsheetpdf.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/exportxsheetpdf.\+cpp\end{DoxyCompactItemize}

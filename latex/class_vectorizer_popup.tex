@@ -1,0 +1,749 @@
+\hypertarget{class_vectorizer_popup}{}\doxysection{Vectorizer\+Popup Class Reference}
+\label{class_vectorizer_popup}\index{VectorizerPopup@{VectorizerPopup}}
+
+
+The \char`\"{}\+Convert-\/\+To-\/\+Vector Settings\char`\"{} popup window.  
+
+
+
+
+{\ttfamily \#include $<$vectorizerpopup.\+h$>$}
+
+Inheritance diagram for Vectorizer\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_vectorizer_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_vectorizer_popup_a446b8c60f994a12145b58dd098b0f66f}{on\+Ok}} ()
+\begin{DoxyCompactList}\small\item\em Invokes {\ttfamily \mbox{\hyperlink{class_vectorizer_popup_afd0bbc9e58cf23f703360d80afd9b7d5}{apply()}}}, and closes the popup once done. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_vectorizer_popup_ab2f2fb26e99a94e402d03b14383f3a1a}\label{class_vectorizer_popup_ab2f2fb26e99a94e402d03b14383f3a1a}} 
+void {\bfseries values\+Changed} ()
+\begin{DoxyCompactList}\small\item\em vectorization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_vectorizer_popup_ac241094afa52236c65714f26ee983bd2}{Vectorizer\+Popup}} (QWidget $\ast$parent=0, Qt\+::\+WFlags flags=Qt\+::\+Tool)
+\item 
+bool \mbox{\hyperlink{class_vectorizer_popup_afd0bbc9e58cf23f703360d80afd9b7d5}{apply}} ()
+\item 
+bool \mbox{\hyperlink{class_vectorizer_popup_a7aebabe63c6db5e1d5ca267bf9dc922a}{is\+Level\+To\+Convert}} (\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$level)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \char`\"{}\+Convert-\/\+To-\/\+Vector Settings\char`\"{} popup window. 
+
+Vectorization interface is segmented among 3 main classes\+: {\ttfamily \mbox{\hyperlink{class_vectorizer_popup}{Vectorizer\+Popup}}}, {\ttfamily \mbox{\hyperlink{class_vectorizer}{Vectorizer}}}, and {\ttfamily \mbox{\hyperlink{class_vectorizer_core}{Vectorizer\+Core}}}. {\ttfamily \mbox{\hyperlink{class_vectorizer_popup}{Vectorizer\+Popup}}} represents the outermost layer, providing a suitable user interface to choose between available vectorization modes and options, and displays a progress dialog to inform about the status of the underlying process.
+
+In order to launch a suitable vectorization process, an Xsheet or scene cast selection must be active; then the {\ttfamily show()} method should be called to let the user choose the preferred vectorization options. Each parameter set is passed down to a {\ttfamily \mbox{\hyperlink{class_vectorizer_configuration}{Vectorizer\+Configuration}}} class, so see there for more detailed explanations. The {\ttfamily \mbox{\hyperlink{class_vectorizer_popup_afd0bbc9e58cf23f703360d80afd9b7d5}{apply()}}} method can be alternatively called for default options, avoiding user interaction.
+
+During the process, the progress bar dialog is set on modal behaviour, in order to prevent the user from modifying or removing the frames to be vectorized.
+
+\begin{DoxySeeAlso}{See also}
+The {\ttfamily \mbox{\hyperlink{class_vectorizer_configuration}{Vectorizer\+Configuration}}}, {\ttfamily \mbox{\hyperlink{class_vectorizer}{Vectorizer}}} and {\ttfamily \mbox{\hyperlink{class_vectorizer_core}{Vectorizer\+Core}}} classes. 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_vectorizer_popup_ac241094afa52236c65714f26ee983bd2}\label{class_vectorizer_popup_ac241094afa52236c65714f26ee983bd2}} 
+\index{VectorizerPopup@{VectorizerPopup}!VectorizerPopup@{VectorizerPopup}}
+\index{VectorizerPopup@{VectorizerPopup}!VectorizerPopup@{VectorizerPopup}}
+\doxysubsubsection{\texorpdfstring{VectorizerPopup()}{VectorizerPopup()}}
+{\footnotesize\ttfamily Vectorizer\+Popup\+::\+Vectorizer\+Popup (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0},  }\item[{Qt\+::\+WFlags}]{flags = {\ttfamily Qt\+:\+:Tool} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00427     : \mbox{\hyperlink{class_d_v_gui_1_1_dialog}{Dialog}}(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false}, \textcolor{stringliteral}{"{}Vectorizer"{}})}
+\DoxyCodeLine{00428     , m\_sceneHandle(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentScene()) \{}
+\DoxyCodeLine{00429   \textcolor{keyword}{struct }Locals \{}
+\DoxyCodeLine{00430     \textcolor{keywordtype}{int} m\_bit;}
+\DoxyCodeLine{00431 }
+\DoxyCodeLine{00432     Locals() : m\_bit() \{\}}
+\DoxyCodeLine{00433 }
+\DoxyCodeLine{00434     \textcolor{keyword}{static} \textcolor{keywordtype}{void} addParameterGroup(std::vector<ParamGroup> \&paramGroups,}
+\DoxyCodeLine{00435                                   \textcolor{keywordtype}{int} group, \textcolor{keywordtype}{int} startRow,}
+\DoxyCodeLine{00436                                   \textcolor{keywordtype}{int} separatorRow = -\/1) \{}
+\DoxyCodeLine{00437       assert(group <= paramGroups.size());}
+\DoxyCodeLine{00438 }
+\DoxyCodeLine{00439       \textcolor{keywordflow}{if} (group == paramGroups.size())}
+\DoxyCodeLine{00440         paramGroups.push\_back(ParamGroup(startRow, separatorRow));}
+\DoxyCodeLine{00441     \}}
+\DoxyCodeLine{00442 }
+\DoxyCodeLine{00443     \textcolor{keywordtype}{void} addParameter(std::vector<ParamGroup> \&paramGroups,}
+\DoxyCodeLine{00444                       \textcolor{keyword}{const} QString \&paramName) \{}
+\DoxyCodeLine{00445       paramGroups.back().m\_params.push\_back(\mbox{\hyperlink{class_param}{Param}}(paramName, m\_bit++));}
+\DoxyCodeLine{00446     \}}
+\DoxyCodeLine{00447 }
+\DoxyCodeLine{00448   \} locals;}
+\DoxyCodeLine{00449 }
+\DoxyCodeLine{00450   \textcolor{comment}{// Su MAC i dialog modali non hanno bottoni di chiusura nella titleBar}}
+\DoxyCodeLine{00451   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00452   setWindowTitle(tr(\textcolor{stringliteral}{"{}Convert-\/to-\/Vector Settings"{}}));}
+\DoxyCodeLine{00453 }
+\DoxyCodeLine{00454   setLabelWidth(125);}
+\DoxyCodeLine{00455 }
+\DoxyCodeLine{00456   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a7aa8ccf399f483fe1f36c30a1318987a}{setTopMargin}}(0);}
+\DoxyCodeLine{00457   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_af1334e3123db7e7c9a9b90ee7c73e226}{setTopSpacing}}(0);}
+\DoxyCodeLine{00458 }
+\DoxyCodeLine{00459   \textcolor{comment}{// Build vertical layout}}
+\DoxyCodeLine{00460   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ae7de609b3b23233656bc68852a2d10cb}{beginVLayout}}();}
+\DoxyCodeLine{00461 }
+\DoxyCodeLine{00462   QSplitter *splitter = \textcolor{keyword}{new} QSplitter(Qt::Vertical, \textcolor{keyword}{this});}
+\DoxyCodeLine{00463   splitter-\/>setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,}
+\DoxyCodeLine{00464                                       QSizePolicy::MinimumExpanding));}
+\DoxyCodeLine{00465   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(splitter);}
+\DoxyCodeLine{00466 }
+\DoxyCodeLine{00467   QToolBar *leftToolBar = \textcolor{keyword}{new} QToolBar, *rightToolBar = \textcolor{keyword}{new} QToolBar;}
+\DoxyCodeLine{00468   leftToolBar-\/>setObjectName(\textcolor{stringliteral}{"{}MediumPaddingToolBar"{}});}
+\DoxyCodeLine{00469   rightToolBar-\/>setObjectName(\textcolor{stringliteral}{"{}MediumPaddingToolBar"{}});}
+\DoxyCodeLine{00470   leftToolBar-\/>setIconSize(QSize(17, 17));}
+\DoxyCodeLine{00471   rightToolBar-\/>setIconSize(QSize(17, 17));}
+\DoxyCodeLine{00472   \{}
+\DoxyCodeLine{00473     QWidget *toolbarsContainer = \textcolor{keyword}{new} QWidget(\textcolor{keyword}{this});}
+\DoxyCodeLine{00474     toolbarsContainer-\/>setFixedHeight(22);}
+\DoxyCodeLine{00475     \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(toolbarsContainer);}
+\DoxyCodeLine{00476 }
+\DoxyCodeLine{00477     QHBoxLayout *toolbarsLayout = \textcolor{keyword}{new} QHBoxLayout(toolbarsContainer);}
+\DoxyCodeLine{00478     toolbarsContainer-\/>setLayout(toolbarsLayout);}
+\DoxyCodeLine{00479 }
+\DoxyCodeLine{00480     toolbarsLayout-\/>setMargin(0);}
+\DoxyCodeLine{00481     toolbarsLayout-\/>setSpacing(0);}
+\DoxyCodeLine{00482 }
+\DoxyCodeLine{00483     QToolBar *spacingToolBar = \textcolor{keyword}{new} QToolBar(}
+\DoxyCodeLine{00484         toolbarsContainer);  \textcolor{comment}{// The spacer object must be a toolbar.}}
+\DoxyCodeLine{00485     spacingToolBar-\/>setFixedHeight(}
+\DoxyCodeLine{00486         22);  \textcolor{comment}{// It's related to qss choices... I know it's stinky}}
+\DoxyCodeLine{00487 }
+\DoxyCodeLine{00488     toolbarsLayout-\/>addWidget(leftToolBar, 0, Qt::AlignLeft);}
+\DoxyCodeLine{00489     toolbarsLayout-\/>addWidget(spacingToolBar, 1);}
+\DoxyCodeLine{00490     toolbarsLayout-\/>addWidget(rightToolBar, 0, Qt::AlignRight);}
+\DoxyCodeLine{00491   \}}
+\DoxyCodeLine{00492 }
+\DoxyCodeLine{00493   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ab88d88334402845e544da6ca1f207c79}{endVLayout}}();}
+\DoxyCodeLine{00494 }
+\DoxyCodeLine{00495   \textcolor{comment}{// Build parameters area}}
+\DoxyCodeLine{00496   QScrollArea *paramsArea = \textcolor{keyword}{new} QScrollArea(splitter);}
+\DoxyCodeLine{00497   paramsArea-\/>setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);}
+\DoxyCodeLine{00498   paramsArea-\/>setWidgetResizable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00499   splitter-\/>addWidget(paramsArea);}
+\DoxyCodeLine{00500   splitter-\/>setStretchFactor(0, 1);}
+\DoxyCodeLine{00501 }
+\DoxyCodeLine{00502   m\_paramsWidget = \textcolor{keyword}{new} QFrame(paramsArea);}
+\DoxyCodeLine{00503   paramsArea-\/>setWidget(m\_paramsWidget);}
+\DoxyCodeLine{00504 }
+\DoxyCodeLine{00505   m\_paramsLayout = \textcolor{keyword}{new} QGridLayout;}
+\DoxyCodeLine{00506   m\_paramsWidget-\/>setLayout(m\_paramsLayout);}
+\DoxyCodeLine{00507 }
+\DoxyCodeLine{00508   \textcolor{keywordtype}{int} group = 0, row = 0;}
+\DoxyCodeLine{00509 }
+\DoxyCodeLine{00510   locals.addParameterGroup(::l\_centerlineParamGroups, group, row);}
+\DoxyCodeLine{00511   locals.addParameterGroup(::l\_outlineParamGroups, group++, row);}
+\DoxyCodeLine{00512 }
+\DoxyCodeLine{00513   \textcolor{comment}{// Vectorization mode}}
+\DoxyCodeLine{00514   m\_typeMenu = \textcolor{keyword}{new} QComboBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00515   m\_typeMenu-\/>setFixedSize(245, WidgetHeight);}
+\DoxyCodeLine{00516   QStringList formats;}
+\DoxyCodeLine{00517   formats << tr(\textcolor{stringliteral}{"{}Centerline"{}}) << tr(\textcolor{stringliteral}{"{}Outline"{}});}
+\DoxyCodeLine{00518   m\_typeMenu-\/>addItems(formats);}
+\DoxyCodeLine{00519   m\_typeMenu-\/>setMinimumHeight(WidgetHeight);}
+\DoxyCodeLine{00520   \textcolor{keywordtype}{bool} isOutline = m\_sceneHandle-\/>getScene()}
+\DoxyCodeLine{00521                        -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00522                        -\/>\mbox{\hyperlink{class_t_scene_properties_a7a2b2802ddff35804f2528f259054763}{getVectorizerParameters}}()}
+\DoxyCodeLine{00523                        -\/>\mbox{\hyperlink{class_vectorizer_parameters_ac787b98ac7ec30952e9820c135277729}{m\_isOutline}};}
+\DoxyCodeLine{00524   m\_typeMenu-\/>setCurrentIndex(isOutline ? 1 : 0);}
+\DoxyCodeLine{00525   connect(m\_typeMenu, SIGNAL(currentIndexChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00526           SLOT(onTypeChange(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00527 }
+\DoxyCodeLine{00528   m\_paramsLayout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Mode"{}})), row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00529   m\_paramsLayout-\/>addWidget(m\_typeMenu, row++, 1);}
+\DoxyCodeLine{00530 }
+\DoxyCodeLine{00531   locals.addParameter(l\_centerlineParamGroups, tr(\textcolor{stringliteral}{"{}Mode"{}}));}
+\DoxyCodeLine{00532   locals.addParameter(l\_outlineParamGroups, tr(\textcolor{stringliteral}{"{}Mode"{}}));}
+\DoxyCodeLine{00533 }
+\DoxyCodeLine{00534   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Parameters area -\/ Centerline -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00535 }
+\DoxyCodeLine{00536   locals.addParameterGroup(l\_centerlineParamGroups, group++, row);}
+\DoxyCodeLine{00537 }
+\DoxyCodeLine{00538   \textcolor{comment}{// Threshold}}
+\DoxyCodeLine{00539   m\_cThresholdLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Threshold"{}}));}
+\DoxyCodeLine{00540   m\_cThreshold      = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{IntField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00541 }
+\DoxyCodeLine{00542   m\_paramsLayout-\/>addWidget(m\_cThresholdLabel, row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00543   m\_paramsLayout-\/>addWidget(m\_cThreshold, row++, 1);}
+\DoxyCodeLine{00544 }
+\DoxyCodeLine{00545   locals.addParameter(l\_centerlineParamGroups, tr(\textcolor{stringliteral}{"{}Threshold"{}}));}
+\DoxyCodeLine{00546 }
+\DoxyCodeLine{00547   \textcolor{comment}{// Accuracy}}
+\DoxyCodeLine{00548   m\_cAccuracyLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Accuracy"{}}));}
+\DoxyCodeLine{00549   m\_cAccuracy      = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{IntField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00550 }
+\DoxyCodeLine{00551   m\_paramsLayout-\/>addWidget(m\_cAccuracyLabel, row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00552   m\_paramsLayout-\/>addWidget(m\_cAccuracy, row++, 1);}
+\DoxyCodeLine{00553 }
+\DoxyCodeLine{00554   locals.addParameter(l\_centerlineParamGroups, tr(\textcolor{stringliteral}{"{}Accuracy"{}}));}
+\DoxyCodeLine{00555 }
+\DoxyCodeLine{00556   \textcolor{comment}{// Despeckling}}
+\DoxyCodeLine{00557   m\_cDespecklingLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Despeckling"{}}));}
+\DoxyCodeLine{00558   m\_cDespeckling      = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{IntField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00559 }
+\DoxyCodeLine{00560   m\_paramsLayout-\/>addWidget(m\_cDespecklingLabel, row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00561   m\_paramsLayout-\/>addWidget(m\_cDespeckling, row++, 1);}
+\DoxyCodeLine{00562 }
+\DoxyCodeLine{00563   locals.addParameter(l\_centerlineParamGroups, tr(\textcolor{stringliteral}{"{}Despeckling"{}}));}
+\DoxyCodeLine{00564 }
+\DoxyCodeLine{00565   \textcolor{comment}{// Max Thickness}}
+\DoxyCodeLine{00566   m\_cMaxThicknessLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Max Thickness"{}}));}
+\DoxyCodeLine{00567   m\_paramsLayout-\/>addWidget(m\_cMaxThicknessLabel, row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00568 }
+\DoxyCodeLine{00569   m\_cMaxThickness = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{IntField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00570   m\_cMaxThickness-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_a79de4affcf614514c906ef751a06e932}{enableSlider}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{00571   m\_paramsLayout-\/>addWidget(m\_cMaxThickness, row++, 1, Qt::AlignLeft);}
+\DoxyCodeLine{00572 }
+\DoxyCodeLine{00573   locals.addParameter(l\_centerlineParamGroups, tr(\textcolor{stringliteral}{"{}Max Thickness"{}}));}
+\DoxyCodeLine{00574 }
+\DoxyCodeLine{00575   \textcolor{comment}{// Thickness Calibration}}
+\DoxyCodeLine{00576   m\_cThicknessRatioLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Thickness Calibration"{}}));}
+\DoxyCodeLine{00577   m\_paramsLayout-\/>addWidget(m\_cThicknessRatioLabel, row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00578 }
+\DoxyCodeLine{00579   \textcolor{comment}{/*m\_cThicknessRatio = new IntField(this);}}
+\DoxyCodeLine{00580 \textcolor{comment}{paramsLayout-\/>addWidget(m\_cThicknessRatio, row++, 1);*/}}
+\DoxyCodeLine{00581 }
+\DoxyCodeLine{00582   QHBoxLayout *cThicknessRatioLayout = \textcolor{keyword}{new} QHBoxLayout;}
+\DoxyCodeLine{00583 }
+\DoxyCodeLine{00584   cThicknessRatioLayout-\/>addSpacing(20);}
+\DoxyCodeLine{00585 }
+\DoxyCodeLine{00586   m\_cThicknessRatioFirstLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Start:"{}}));}
+\DoxyCodeLine{00587   cThicknessRatioLayout-\/>addWidget(m\_cThicknessRatioFirstLabel);}
+\DoxyCodeLine{00588 }
+\DoxyCodeLine{00589   m\_cThicknessRatioFirst = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_measured_double_line_edit}{MeasuredDoubleLineEdit}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00590   m\_cThicknessRatioFirst-\/>setMeasure(\textcolor{stringliteral}{"{}percentage"{}});}
+\DoxyCodeLine{00591   cThicknessRatioLayout-\/>addWidget(m\_cThicknessRatioFirst);}
+\DoxyCodeLine{00592 }
+\DoxyCodeLine{00593   m\_cThicknessRatioLastLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}End:"{}}));}
+\DoxyCodeLine{00594   cThicknessRatioLayout-\/>addWidget(m\_cThicknessRatioLastLabel);}
+\DoxyCodeLine{00595 }
+\DoxyCodeLine{00596   m\_cThicknessRatioLast = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_measured_double_line_edit}{MeasuredDoubleLineEdit}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00597   m\_cThicknessRatioLast-\/>setMeasure(\textcolor{stringliteral}{"{}percentage"{}});}
+\DoxyCodeLine{00598   cThicknessRatioLayout-\/>addWidget(m\_cThicknessRatioLast);}
+\DoxyCodeLine{00599 }
+\DoxyCodeLine{00600   cThicknessRatioLayout-\/>addStretch(1);}
+\DoxyCodeLine{00601 }
+\DoxyCodeLine{00602   m\_paramsLayout-\/>addLayout(cThicknessRatioLayout, row++, 1);}
+\DoxyCodeLine{00603 }
+\DoxyCodeLine{00604   locals.addParameter(l\_centerlineParamGroups, tr(\textcolor{stringliteral}{"{}Thickness Calibration"{}}));}
+\DoxyCodeLine{00605 }
+\DoxyCodeLine{00606   \textcolor{comment}{// Checkboxes}}
+\DoxyCodeLine{00607   \{}
+\DoxyCodeLine{00608     \textcolor{keyword}{static} \textcolor{keyword}{const} QString name = tr(\textcolor{stringliteral}{"{}Preserve Painted Areas"{}});}
+\DoxyCodeLine{00609     locals.addParameter(l\_centerlineParamGroups, name);}
+\DoxyCodeLine{00610 }
+\DoxyCodeLine{00611     m\_cPaintFill = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_check_box}{CheckBox}}(name, \textcolor{keyword}{this});}
+\DoxyCodeLine{00612     m\_cPaintFill-\/>setFixedHeight(WidgetHeight);}
+\DoxyCodeLine{00613     m\_paramsLayout-\/>addWidget(m\_cPaintFill, row++, 1);}
+\DoxyCodeLine{00614   \}}
+\DoxyCodeLine{00615 }
+\DoxyCodeLine{00616   \{}
+\DoxyCodeLine{00617     \textcolor{keyword}{static} \textcolor{keyword}{const} QString name = tr(\textcolor{stringliteral}{"{}Align Boundary Strokes Direction"{}});}
+\DoxyCodeLine{00618     locals.addParameter(l\_centerlineParamGroups, name);}
+\DoxyCodeLine{00619 }
+\DoxyCodeLine{00620     m\_cAlignBoundaryStrokesDirection = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_check_box}{CheckBox}}(name, \textcolor{keyword}{this});}
+\DoxyCodeLine{00621     m\_cAlignBoundaryStrokesDirection-\/>setFixedHeight(WidgetHeight);}
+\DoxyCodeLine{00622     m\_cAlignBoundaryStrokesDirection-\/>setToolTip(}
+\DoxyCodeLine{00623         tr(\textcolor{stringliteral}{"{}Align boundary strokes direction to be the same.\(\backslash\)n(clockwise, i.e. "{}}}
+\DoxyCodeLine{00624            \textcolor{stringliteral}{"{}left to right as viewed from inside of the shape)"{}}));}
+\DoxyCodeLine{00625     m\_paramsLayout-\/>addWidget(m\_cAlignBoundaryStrokesDirection, row++, 1);}
+\DoxyCodeLine{00626   \}}
+\DoxyCodeLine{00627 }
+\DoxyCodeLine{00628   \{}
+\DoxyCodeLine{00629     \textcolor{keyword}{static} \textcolor{keyword}{const} QString name = tr(\textcolor{stringliteral}{"{}Add Border"{}});}
+\DoxyCodeLine{00630     locals.addParameter(l\_centerlineParamGroups, name);}
+\DoxyCodeLine{00631 }
+\DoxyCodeLine{00632     m\_cMakeFrame = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_check_box}{CheckBox}}(name, \textcolor{keyword}{this});}
+\DoxyCodeLine{00633     m\_cMakeFrame-\/>setFixedHeight(WidgetHeight);}
+\DoxyCodeLine{00634     m\_paramsLayout-\/>addWidget(m\_cMakeFrame, row++, 1);}
+\DoxyCodeLine{00635   \}}
+\DoxyCodeLine{00636 }
+\DoxyCodeLine{00637   locals.addParameterGroup(l\_centerlineParamGroups, group++, row + 1, row);}
+\DoxyCodeLine{00638 }
+\DoxyCodeLine{00639   m\_cNaaSourceSeparator = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_separator}{Separator}}(tr(\textcolor{stringliteral}{"{}Full color non-\/AA images"{}}));}
+\DoxyCodeLine{00640   m\_paramsLayout-\/>addWidget(m\_cNaaSourceSeparator, row++, 0, 1, 2);}
+\DoxyCodeLine{00641 }
+\DoxyCodeLine{00642   \{}
+\DoxyCodeLine{00643     \textcolor{keyword}{static} \textcolor{keyword}{const} QString name = tr(\textcolor{stringliteral}{"{}Enhanced ink recognition"{}});}
+\DoxyCodeLine{00644     locals.addParameter(l\_centerlineParamGroups, name);}
+\DoxyCodeLine{00645 }
+\DoxyCodeLine{00646     m\_cNaaSource = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_check_box}{CheckBox}}(name, \textcolor{keyword}{this});}
+\DoxyCodeLine{00647     m\_cNaaSource-\/>setFixedHeight(WidgetHeight);}
+\DoxyCodeLine{00648     m\_paramsLayout-\/>addWidget(m\_cNaaSource, row++, 1);}
+\DoxyCodeLine{00649   \}}
+\DoxyCodeLine{00650 }
+\DoxyCodeLine{00651   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Parameters area -\/ Outline -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00652 }
+\DoxyCodeLine{00653   group = 1;}
+\DoxyCodeLine{00654   locals.addParameterGroup(l\_outlineParamGroups, group++, row);}
+\DoxyCodeLine{00655 }
+\DoxyCodeLine{00656   \textcolor{comment}{// Accuracy}}
+\DoxyCodeLine{00657   m\_oAccuracyLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Accuracy"{}}));}
+\DoxyCodeLine{00658   m\_oAccuracy      = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{IntField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00659 }
+\DoxyCodeLine{00660   m\_paramsLayout-\/>addWidget(m\_oAccuracyLabel, row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00661   m\_paramsLayout-\/>addWidget(m\_oAccuracy, row++, 1);}
+\DoxyCodeLine{00662 }
+\DoxyCodeLine{00663   locals.addParameter(l\_outlineParamGroups, tr(\textcolor{stringliteral}{"{}Accuracy"{}}));}
+\DoxyCodeLine{00664 }
+\DoxyCodeLine{00665   \textcolor{comment}{// Despeckling}}
+\DoxyCodeLine{00666   m\_oDespecklingLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Despeckling"{}}));}
+\DoxyCodeLine{00667   m\_oDespeckling      = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{IntField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00668 }
+\DoxyCodeLine{00669   m\_paramsLayout-\/>addWidget(m\_oDespecklingLabel, row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00670   m\_paramsLayout-\/>addWidget(m\_oDespeckling, row++, 1);}
+\DoxyCodeLine{00671 }
+\DoxyCodeLine{00672   locals.addParameter(l\_outlineParamGroups, tr(\textcolor{stringliteral}{"{}Despeckling"{}}));}
+\DoxyCodeLine{00673 }
+\DoxyCodeLine{00674   \textcolor{comment}{// Paint Fill}}
+\DoxyCodeLine{00675   \{}
+\DoxyCodeLine{00676     \textcolor{keyword}{static} \textcolor{keyword}{const} QString name = tr(\textcolor{stringliteral}{"{}Preserve Painted Areas"{}});}
+\DoxyCodeLine{00677     locals.addParameter(l\_outlineParamGroups, name);}
+\DoxyCodeLine{00678 }
+\DoxyCodeLine{00679     m\_oPaintFill = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_check_box}{CheckBox}}(name, \textcolor{keyword}{this});}
+\DoxyCodeLine{00680     m\_oPaintFill-\/>setFixedHeight(WidgetHeight);}
+\DoxyCodeLine{00681     m\_paramsLayout-\/>addWidget(m\_oPaintFill, row++, 1);}
+\DoxyCodeLine{00682   \}}
+\DoxyCodeLine{00683 }
+\DoxyCodeLine{00684   \{}
+\DoxyCodeLine{00685     \textcolor{keyword}{static} \textcolor{keyword}{const} QString name = tr(\textcolor{stringliteral}{"{}Align Boundary Strokes Direction"{}});}
+\DoxyCodeLine{00686     locals.addParameter(l\_outlineParamGroups, name);}
+\DoxyCodeLine{00687 }
+\DoxyCodeLine{00688     m\_oAlignBoundaryStrokesDirection = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_check_box}{CheckBox}}(name, \textcolor{keyword}{this});}
+\DoxyCodeLine{00689     m\_oAlignBoundaryStrokesDirection-\/>setFixedHeight(WidgetHeight);}
+\DoxyCodeLine{00690     m\_oAlignBoundaryStrokesDirection-\/>setToolTip(}
+\DoxyCodeLine{00691         tr(\textcolor{stringliteral}{"{}Align boundary strokes direction to be the same.\(\backslash\)n(clockwise, i.e. "{}}}
+\DoxyCodeLine{00692            \textcolor{stringliteral}{"{}left to right as viewed from inside of the shape)"{}}));}
+\DoxyCodeLine{00693     m\_paramsLayout-\/>addWidget(m\_oAlignBoundaryStrokesDirection, row++, 1);}
+\DoxyCodeLine{00694   \}}
+\DoxyCodeLine{00695   locals.addParameterGroup(l\_outlineParamGroups, group++, row + 1, row);}
+\DoxyCodeLine{00696 }
+\DoxyCodeLine{00697   m\_oCornersSeparator = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_separator}{Separator}}(tr(\textcolor{stringliteral}{"{}Corners"{}}));}
+\DoxyCodeLine{00698   m\_paramsLayout-\/>addWidget(m\_oCornersSeparator, row++, 0, 1, 2);}
+\DoxyCodeLine{00699 }
+\DoxyCodeLine{00700   \textcolor{comment}{// Adherence}}
+\DoxyCodeLine{00701   m\_oAdherenceLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Adherence"{}}));}
+\DoxyCodeLine{00702   m\_oAdherence      = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{IntField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00703 }
+\DoxyCodeLine{00704   m\_paramsLayout-\/>addWidget(m\_oAdherenceLabel, row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00705   m\_paramsLayout-\/>addWidget(m\_oAdherence, row++, 1);}
+\DoxyCodeLine{00706 }
+\DoxyCodeLine{00707   locals.addParameter(l\_outlineParamGroups, tr(\textcolor{stringliteral}{"{}Adherence"{}}));}
+\DoxyCodeLine{00708 }
+\DoxyCodeLine{00709   \textcolor{comment}{// Angle}}
+\DoxyCodeLine{00710   m\_oAngleLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Angle"{}}));}
+\DoxyCodeLine{00711   m\_oAngle      = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{IntField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00712 }
+\DoxyCodeLine{00713   m\_paramsLayout-\/>addWidget(m\_oAngleLabel, row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00714   m\_paramsLayout-\/>addWidget(m\_oAngle, row++, 1);}
+\DoxyCodeLine{00715 }
+\DoxyCodeLine{00716   locals.addParameter(l\_outlineParamGroups, tr(\textcolor{stringliteral}{"{}Angle"{}}));}
+\DoxyCodeLine{00717 }
+\DoxyCodeLine{00718   \textcolor{comment}{// Relative}}
+\DoxyCodeLine{00719   m\_oRelativeLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Curve Radius"{}}));}
+\DoxyCodeLine{00720   m\_oRelative      = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{IntField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00721 }
+\DoxyCodeLine{00722   m\_paramsLayout-\/>addWidget(m\_oRelativeLabel, row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00723   m\_paramsLayout-\/>addWidget(m\_oRelative, row++, 1);}
+\DoxyCodeLine{00724 }
+\DoxyCodeLine{00725   locals.addParameter(l\_outlineParamGroups, tr(\textcolor{stringliteral}{"{}Curve Radius"{}}));}
+\DoxyCodeLine{00726 }
+\DoxyCodeLine{00727   locals.addParameterGroup(l\_outlineParamGroups, group++, row + 1, row);}
+\DoxyCodeLine{00728 }
+\DoxyCodeLine{00729   m\_oFullColorSeparator = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_separator}{Separator}}(tr(\textcolor{stringliteral}{"{}Raster Levels"{}}));}
+\DoxyCodeLine{00730   m\_paramsLayout-\/>addWidget(m\_oFullColorSeparator, row++, 0, 1, 2);}
+\DoxyCodeLine{00731 }
+\DoxyCodeLine{00732   \textcolor{comment}{// Max Colors}}
+\DoxyCodeLine{00733   m\_oMaxColorsLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Max Colors"{}}));}
+\DoxyCodeLine{00734   m\_oMaxColors      = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{IntField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00735 }
+\DoxyCodeLine{00736   m\_paramsLayout-\/>addWidget(m\_oMaxColorsLabel, row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00737   m\_paramsLayout-\/>addWidget(m\_oMaxColors, row++, 1);}
+\DoxyCodeLine{00738 }
+\DoxyCodeLine{00739   locals.addParameter(l\_outlineParamGroups, tr(\textcolor{stringliteral}{"{}Max Colors"{}}));}
+\DoxyCodeLine{00740 }
+\DoxyCodeLine{00741   \textcolor{comment}{// Transparent Color}}
+\DoxyCodeLine{00742   m\_oTransparentColorLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Transparent Color"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00743   m\_oTransparentColor = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_color_field}{ColorField}}(\textcolor{keyword}{this}, \textcolor{keyword}{true}, TPixel32::Transparent, 48);}
+\DoxyCodeLine{00744   m\_paramsLayout-\/>addWidget(m\_oTransparentColorLabel, row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00745   m\_paramsLayout-\/>addWidget(m\_oTransparentColor, row++, 1);}
+\DoxyCodeLine{00746 }
+\DoxyCodeLine{00747   locals.addParameter(l\_outlineParamGroups, tr(\textcolor{stringliteral}{"{}Transparent Color"{}}));}
+\DoxyCodeLine{00748 }
+\DoxyCodeLine{00749   locals.addParameterGroup(l\_outlineParamGroups, group++, row + 1, row);}
+\DoxyCodeLine{00750 }
+\DoxyCodeLine{00751   m\_oTlvSeparator = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_separator}{Separator}}(tr(\textcolor{stringliteral}{"{}TLV Levels"{}}));}
+\DoxyCodeLine{00752   m\_paramsLayout-\/>addWidget(m\_oTlvSeparator, row++, 0, 1, 2);}
+\DoxyCodeLine{00753 }
+\DoxyCodeLine{00754   \textcolor{comment}{// Tone Threshold}}
+\DoxyCodeLine{00755   m\_oToneThresholdLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Tone Threshold"{}}));}
+\DoxyCodeLine{00756   m\_oToneThreshold      = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{IntField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00757 }
+\DoxyCodeLine{00758   m\_paramsLayout-\/>addWidget(m\_oToneThresholdLabel, row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00759   m\_paramsLayout-\/>addWidget(m\_oToneThreshold, row++, 1);}
+\DoxyCodeLine{00760 }
+\DoxyCodeLine{00761   locals.addParameter(l\_outlineParamGroups, tr(\textcolor{stringliteral}{"{}Tone Threshold"{}}));}
+\DoxyCodeLine{00762 }
+\DoxyCodeLine{00763   m\_paramsLayout-\/>setRowStretch(row, 1);}
+\DoxyCodeLine{00764 }
+\DoxyCodeLine{00765   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Swatch area -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00766 }
+\DoxyCodeLine{00767   m\_swatchArea = \textcolor{keyword}{new} \mbox{\hyperlink{class_vectorizer_swatch_area}{VectorizerSwatchArea}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00768   splitter-\/>addWidget(m\_swatchArea);}
+\DoxyCodeLine{00769   m\_swatchArea-\/>setEnabled(\textcolor{keyword}{false});  \textcolor{comment}{// Initially not enabled}}
+\DoxyCodeLine{00770 }
+\DoxyCodeLine{00771   connect(\textcolor{keyword}{this}, SIGNAL(\mbox{\hyperlink{class_vectorizer_popup_ab2f2fb26e99a94e402d03b14383f3a1a}{valuesChanged}}()), m\_swatchArea,}
+\DoxyCodeLine{00772           SLOT(invalidateContents()));}
+\DoxyCodeLine{00773 }
+\DoxyCodeLine{00774   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Toolbar -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00775 }
+\DoxyCodeLine{00776   QAction *swatchAct =}
+\DoxyCodeLine{00777       \textcolor{keyword}{new} QAction(createQIcon(\textcolor{stringliteral}{"{}preview"{}}), tr(\textcolor{stringliteral}{"{}Toggle Swatch Preview"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00778   swatchAct-\/>setCheckable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00779   leftToolBar-\/>addAction(swatchAct);}
+\DoxyCodeLine{00780 }
+\DoxyCodeLine{00781   QAction *centerlineAct = \textcolor{keyword}{new} QAction(createQIcon(\textcolor{stringliteral}{"{}centerline"{}}),}
+\DoxyCodeLine{00782                                        tr(\textcolor{stringliteral}{"{}Toggle Centerlines Check"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00783   centerlineAct-\/>setCheckable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00784   leftToolBar-\/>addAction(centerlineAct);}
+\DoxyCodeLine{00785 }
+\DoxyCodeLine{00786   QToolButton *visibilityButton = \textcolor{keyword}{new} QToolButton(\textcolor{keyword}{this});}
+\DoxyCodeLine{00787   visibilityButton-\/>setIcon(createQIcon(\textcolor{stringliteral}{"{}menu"{}}));}
+\DoxyCodeLine{00788   visibilityButton-\/>setText(tr(\textcolor{stringliteral}{"{}Options"{}}));}
+\DoxyCodeLine{00789   visibilityButton-\/>setPopupMode(QToolButton::InstantPopup);}
+\DoxyCodeLine{00790 }
+\DoxyCodeLine{00791   QMenu *visibilityMenu = \textcolor{keyword}{new} QMenu(visibilityButton);}
+\DoxyCodeLine{00792   visibilityButton-\/>setMenu(visibilityMenu);}
+\DoxyCodeLine{00793 }
+\DoxyCodeLine{00794   rightToolBar-\/>addWidget(visibilityButton);}
+\DoxyCodeLine{00795   rightToolBar-\/>addSeparator();}
+\DoxyCodeLine{00796 }
+\DoxyCodeLine{00797   QAction *saveAct =}
+\DoxyCodeLine{00798       \textcolor{keyword}{new} QAction(createQIcon(\textcolor{stringliteral}{"{}save"{}}), tr(\textcolor{stringliteral}{"{}Save Settings"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00799   rightToolBar-\/>addAction(saveAct);}
+\DoxyCodeLine{00800   QAction *loadAct =}
+\DoxyCodeLine{00801       \textcolor{keyword}{new} QAction(createQIcon(\textcolor{stringliteral}{"{}load"{}}), tr(\textcolor{stringliteral}{"{}Load Settings"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00802   rightToolBar-\/>addAction(loadAct);}
+\DoxyCodeLine{00803   rightToolBar-\/>addSeparator();}
+\DoxyCodeLine{00804 }
+\DoxyCodeLine{00805   QAction *resetAct =}
+\DoxyCodeLine{00806       \textcolor{keyword}{new} QAction(createQIcon(\textcolor{stringliteral}{"{}settings\_reset"{}}), tr(\textcolor{stringliteral}{"{}Reset Settings"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00807   rightToolBar-\/>addAction(resetAct);}
+\DoxyCodeLine{00808 }
+\DoxyCodeLine{00809   connect(swatchAct, SIGNAL(triggered(\textcolor{keywordtype}{bool})), m\_swatchArea,}
+\DoxyCodeLine{00810           SLOT(enablePreview(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00811   connect(centerlineAct, SIGNAL(triggered(\textcolor{keywordtype}{bool})), m\_swatchArea,}
+\DoxyCodeLine{00812           SLOT(enableDrawCenterlines(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00813   connect(visibilityMenu, SIGNAL(aboutToShow()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00814           SLOT(populateVisibilityMenu()));}
+\DoxyCodeLine{00815   connect(saveAct, SIGNAL(triggered()), \textcolor{keyword}{this}, SLOT(saveParameters()));}
+\DoxyCodeLine{00816   connect(loadAct, SIGNAL(triggered()), \textcolor{keyword}{this}, SLOT(loadParameters()));}
+\DoxyCodeLine{00817   connect(resetAct, SIGNAL(triggered()), \textcolor{keyword}{this}, SLOT(resetParameters()));}
+\DoxyCodeLine{00818 }
+\DoxyCodeLine{00819   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Convert Button -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00820 }
+\DoxyCodeLine{00821   \textcolor{comment}{// Convert Button}}
+\DoxyCodeLine{00822   m\_okBtn = \textcolor{keyword}{new} QPushButton(QString(tr(\textcolor{stringliteral}{"{}Convert"{}})), \textcolor{keyword}{this});}
+\DoxyCodeLine{00823   connect(m\_okBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(\mbox{\hyperlink{class_vectorizer_popup_a446b8c60f994a12145b58dd098b0f66f}{onOk}}()));}
+\DoxyCodeLine{00824 }
+\DoxyCodeLine{00825   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(m\_okBtn);}
+\DoxyCodeLine{00826 }
+\DoxyCodeLine{00827   \textcolor{comment}{// All detailed signals convey to the unique valuesChanged() signal. That}}
+\DoxyCodeLine{00828   \textcolor{comment}{// makes it easier}}
+\DoxyCodeLine{00829   \textcolor{comment}{// to disconnect update notifications whenever we loadConfiguration(..).}}
+\DoxyCodeLine{00830   connect(\textcolor{keyword}{this}, SIGNAL(\mbox{\hyperlink{class_vectorizer_popup_ab2f2fb26e99a94e402d03b14383f3a1a}{valuesChanged}}()), \textcolor{keyword}{this}, SLOT(updateSceneSettings()));}
+\DoxyCodeLine{00831 }
+\DoxyCodeLine{00832   \textcolor{comment}{// Connect value changes to update the global}}
+\DoxyCodeLine{00833   \textcolor{comment}{// VectorizerPopUpSettingsContainer.}}
+\DoxyCodeLine{00834   \textcolor{comment}{// connect(m\_typeMenu,SIGNAL(currentIndexChanged(const QString}}
+\DoxyCodeLine{00835   \textcolor{comment}{// \&)),this,SLOT(updateSceneSettings()));}}
+\DoxyCodeLine{00836   connect(m\_cThreshold, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00837           SLOT(onValueEdited(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00838   connect(m\_cAccuracy, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00839           SLOT(onValueEdited(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00840   connect(m\_cDespeckling, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00841           SLOT(onValueEdited(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00842   connect(m\_cMaxThickness, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00843           SLOT(onValueEdited(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00844   \textcolor{comment}{// connect(m\_cThicknessRatio,SIGNAL(valueChanged(bool)),this,SLOT(onValueEdited(bool)));}}
+\DoxyCodeLine{00845   connect(m\_cThicknessRatioFirst, SIGNAL(valueChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00846           SLOT(onValueEdited()));}
+\DoxyCodeLine{00847   connect(m\_cThicknessRatioLast, SIGNAL(valueChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00848           SLOT(onValueEdited()));}
+\DoxyCodeLine{00849   connect(m\_cMakeFrame, SIGNAL(stateChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this}, SLOT(onValueEdited()));}
+\DoxyCodeLine{00850   connect(m\_cPaintFill, SIGNAL(stateChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this}, SLOT(onValueEdited()));}
+\DoxyCodeLine{00851   connect(m\_cAlignBoundaryStrokesDirection, SIGNAL(stateChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00852           SLOT(onValueEdited()));}
+\DoxyCodeLine{00853   connect(m\_cNaaSource, SIGNAL(stateChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this}, SLOT(onValueEdited()));}
+\DoxyCodeLine{00854 }
+\DoxyCodeLine{00855   connect(m\_oAccuracy, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00856           SLOT(onValueEdited(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00857   connect(m\_oDespeckling, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00858           SLOT(onValueEdited(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00859   connect(m\_oPaintFill, SIGNAL(stateChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this}, SLOT(onValueEdited()));}
+\DoxyCodeLine{00860   connect(m\_oAlignBoundaryStrokesDirection, SIGNAL(stateChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00861           SLOT(onValueEdited()));}
+\DoxyCodeLine{00862   connect(m\_oAdherence, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00863           SLOT(onValueEdited(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00864   connect(m\_oAngle, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00865           SLOT(onValueEdited(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00866   connect(m\_oRelative, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00867           SLOT(onValueEdited(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00868   connect(m\_oDespeckling, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00869           SLOT(onValueEdited(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00870   connect(m\_oMaxColors, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00871           SLOT(onValueEdited(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00872   connect(m\_oTransparentColor, SIGNAL(colorChanged(\textcolor{keyword}{const} TPixel32 \&, \textcolor{keywordtype}{bool})),}
+\DoxyCodeLine{00873           \textcolor{keyword}{this}, SLOT(onValueEdited(\textcolor{keyword}{const} TPixel32 \&, \textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00874   connect(m\_oToneThreshold, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00875           SLOT(onValueEdited(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00876 }
+\DoxyCodeLine{00877   refreshPopup();}
+\DoxyCodeLine{00878 }
+\DoxyCodeLine{00879   \textcolor{comment}{// Non e' corretto: manca la possibilita' di aggiornare la selezione del}}
+\DoxyCodeLine{00880   \textcolor{comment}{// livello corrente}}
+\DoxyCodeLine{00881   \textcolor{comment}{//  connect(TApp::instance()-\/>getCurrentLevel(), SIGNAL(xshLevelChanged()),}}
+\DoxyCodeLine{00882   \textcolor{comment}{//                                         this, SLOT(updateValues()));}}
+\DoxyCodeLine{00883 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_vectorizer_popup_afd0bbc9e58cf23f703360d80afd9b7d5}\label{class_vectorizer_popup_afd0bbc9e58cf23f703360d80afd9b7d5}} 
+\index{VectorizerPopup@{VectorizerPopup}!apply@{apply}}
+\index{apply@{apply}!VectorizerPopup@{VectorizerPopup}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily bool Vectorizer\+Popup\+::apply (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+The main vectorization method -\/ prepares input configuration and runs the vectorization thread. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00914                             \{}
+\DoxyCodeLine{00915   std::set<TXshLevel *> levels;}
+\DoxyCodeLine{00916 }
+\DoxyCodeLine{00917   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = m\_sceneHandle-\/>getScene();}
+\DoxyCodeLine{00918   \textcolor{keywordflow}{if} (!scene) \{}
+\DoxyCodeLine{00919     assert(scene);}
+\DoxyCodeLine{00920     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00921   \}}
+\DoxyCodeLine{00922 }
+\DoxyCodeLine{00923   \mbox{\hyperlink{class_t_scene_properties}{TSceneProperties}} *sceneProp = scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}();}
+\DoxyCodeLine{00924   \textcolor{keywordflow}{if} (!sceneProp) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00925 }
+\DoxyCodeLine{00926   \mbox{\hyperlink{class_vectorizer_parameters}{VectorizerParameters}} *vectorizerParameters =}
+\DoxyCodeLine{00927       sceneProp-\/>\mbox{\hyperlink{class_t_scene_properties_a7a2b2802ddff35804f2528f259054763}{getVectorizerParameters}}();}
+\DoxyCodeLine{00928   \textcolor{keywordflow}{if} (!vectorizerParameters) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00929 }
+\DoxyCodeLine{00930   \textcolor{keywordtype}{int} r0               = 0;}
+\DoxyCodeLine{00931   \textcolor{keywordtype}{int} c0               = 0;}
+\DoxyCodeLine{00932   \textcolor{keywordtype}{int} r1               = 0;}
+\DoxyCodeLine{00933   \textcolor{keywordtype}{int} c1               = 0;}
+\DoxyCodeLine{00934   \textcolor{keywordtype}{bool} isCellSelection = getSelectedLevels(levels, r0, c0, r1, c1);}
+\DoxyCodeLine{00935   \textcolor{keywordflow}{if} (c0 < 0) c0 = 0;}
+\DoxyCodeLine{00936   \textcolor{keywordflow}{if} (levels.empty()) \{}
+\DoxyCodeLine{00937     error(tr(\textcolor{stringliteral}{"{}The current selection is invalid."{}}));}
+\DoxyCodeLine{00938     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00939   \}}
+\DoxyCodeLine{00940 }
+\DoxyCodeLine{00941   \textcolor{comment}{// Initialize Progress bar}}
+\DoxyCodeLine{00942   m\_progressDialog = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_progress_dialog}{DVGui::ProgressDialog}}(\textcolor{stringliteral}{"{}"{}}, \textcolor{stringliteral}{"{}Cancel"{}}, 0, 1);}
+\DoxyCodeLine{00943   m\_progressDialog-\/>setWindowFlags(}
+\DoxyCodeLine{00944       Qt::Dialog | Qt::WindowTitleHint);  \textcolor{comment}{// Don't show ? and X buttons}}
+\DoxyCodeLine{00945   m\_progressDialog-\/>setWindowTitle(QString(\textcolor{stringliteral}{"{}Convert To Vector..."{}}));}
+\DoxyCodeLine{00946   m\_progressDialog-\/>setAttribute(Qt::WA\_DeleteOnClose);}
+\DoxyCodeLine{00947   m\_progressDialog-\/>setWindowModality(}
+\DoxyCodeLine{00948       Qt::WindowModal);  \textcolor{comment}{// No user interaction is allowed during vectorization}}
+\DoxyCodeLine{00949   m\_progressDialog-\/>setFixedSize(200, 100);}
+\DoxyCodeLine{00950 }
+\DoxyCodeLine{00951   \textcolor{comment}{// Initialize vectorizer}}
+\DoxyCodeLine{00952   m\_vectorizer = \textcolor{keyword}{new} \mbox{\hyperlink{class_vectorizer}{Vectorizer}};}
+\DoxyCodeLine{00953 }
+\DoxyCodeLine{00954   m\_vectorizer-\/>\mbox{\hyperlink{class_vectorizer_aa8ab0e4bebbc61fcc57afaceaf9d31d7}{setParameters}}(*vectorizerParameters);}
+\DoxyCodeLine{00955 }
+\DoxyCodeLine{00956   connect(m\_vectorizer, SIGNAL(frameName(QString)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00957           SLOT(onFrameName(QString)), Qt::QueuedConnection);}
+\DoxyCodeLine{00958   connect(m\_vectorizer, SIGNAL(frameDone(\textcolor{keywordtype}{int})), \textcolor{keyword}{this}, SLOT(onFrameDone(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00959           Qt::QueuedConnection);}
+\DoxyCodeLine{00960   connect(m\_vectorizer, SIGNAL(partialDone(\textcolor{keywordtype}{int}, \textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00961           SLOT(onPartialDone(\textcolor{keywordtype}{int}, \textcolor{keywordtype}{int})), Qt::QueuedConnection);}
+\DoxyCodeLine{00962   \textcolor{comment}{// We DON'T want the progress bar to be hidden at cancel press -\/ since its}}
+\DoxyCodeLine{00963   \textcolor{comment}{// modal}}
+\DoxyCodeLine{00964   \textcolor{comment}{// behavior prevents the user to interfere with a possibly still active}}
+\DoxyCodeLine{00965   \textcolor{comment}{// vectorization.}}
+\DoxyCodeLine{00966   disconnect(m\_progressDialog, SIGNAL(canceled()), m\_progressDialog,}
+\DoxyCodeLine{00967              SLOT(onCancel()));}
+\DoxyCodeLine{00968   \textcolor{comment}{// We first inform the vectorizer of a cancel press;}}
+\DoxyCodeLine{00969   \textcolor{keywordtype}{bool} ret = connect(m\_progressDialog, SIGNAL(canceled()), m\_vectorizer,}
+\DoxyCodeLine{00970                      SLOT(cancel()));}
+\DoxyCodeLine{00971   \textcolor{comment}{// which eventually transmits the command to vectorization core, allowing}}
+\DoxyCodeLine{00972   \textcolor{comment}{// full-\/time cancels}}
+\DoxyCodeLine{00973   ret = ret \&\& connect(m\_progressDialog, SIGNAL(canceled()), m\_vectorizer,}
+\DoxyCodeLine{00974                        SIGNAL(transmitCancel()));}
+\DoxyCodeLine{00975   \textcolor{comment}{// Only after the vectorizer has terminated its process -\/ or got cancelled, we}}
+\DoxyCodeLine{00976   \textcolor{comment}{// are allowed}}
+\DoxyCodeLine{00977   \textcolor{comment}{// to proceed here.}}
+\DoxyCodeLine{00978   ret = ret \&\& connect(m\_vectorizer, SIGNAL(finished()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00979                        SLOT(onFinished()), Qt::QueuedConnection);}
+\DoxyCodeLine{00980   assert(ret);}
+\DoxyCodeLine{00981 }
+\DoxyCodeLine{00982   std::set<int> newColumnIndices;}
+\DoxyCodeLine{00983   \textcolor{keywordtype}{int} newIndexColumn = c1 + 1;}
+\DoxyCodeLine{00984   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \textcolor{keyword}{const} level : levels) \{}
+\DoxyCodeLine{00985     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *\textcolor{keyword}{>}(level);}
+\DoxyCodeLine{00986     \textcolor{keywordflow}{if} (!sl || !sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_aac1fd1d3ecf0778b8ee139c9119fcdef}{getSimpleLevel}}() || !\mbox{\hyperlink{class_vectorizer_popup_a7aebabe63c6db5e1d5ca267bf9dc922a}{isLevelToConvert}}(sl)) \{}
+\DoxyCodeLine{00987       QString levelName = tr(::to\_string(sl-\/>\mbox{\hyperlink{class_t_xsh_level_a3a59fb1bd3261baee4e889a9edbf0ae8}{getName}}()).c\_str());}
+\DoxyCodeLine{00988       QString errorMsg =}
+\DoxyCodeLine{00989           tr(\textcolor{stringliteral}{"{}Cannot convert to vector the current selection."{}}) + levelName;}
+\DoxyCodeLine{00990       error(errorMsg);}
+\DoxyCodeLine{00991       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00992     \}}
+\DoxyCodeLine{00993 }
+\DoxyCodeLine{00994     std::vector<TFrameId> fids;}
+\DoxyCodeLine{00995 }
+\DoxyCodeLine{00996     \textcolor{keywordflow}{if} (isCellSelection)}
+\DoxyCodeLine{00997       getSelectedFids(fids, sl, r0, c0, r1, c1);}
+\DoxyCodeLine{00998     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00999       sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a567daee4ca12a0e92445bcf98a6541f1}{getFids}}(fids);}
+\DoxyCodeLine{01000     assert(fids.size() > 0);}
+\DoxyCodeLine{01001 }
+\DoxyCodeLine{01002     close();}
+\DoxyCodeLine{01003 }
+\DoxyCodeLine{01004     \textcolor{comment}{// Re-\/initialize progress Bar}}
+\DoxyCodeLine{01005     m\_progressDialog-\/>setMaximum(fids.size() * 100);}
+\DoxyCodeLine{01006     m\_progressDialog-\/>setValue(0);}
+\DoxyCodeLine{01007     m\_currFrame = 0;}
+\DoxyCodeLine{01008 }
+\DoxyCodeLine{01009     \textcolor{comment}{// Re-\/initialize vectorizer}}
+\DoxyCodeLine{01010     m\_vectorizer-\/>\mbox{\hyperlink{class_vectorizer_ae775931df915a06fae3d3a42efdfe1e1}{setLevel}}(sl);}
+\DoxyCodeLine{01011     m\_vectorizer-\/>\mbox{\hyperlink{class_vectorizer_ac3ff72044e30062cd3f012af2c3f2932}{setFids}}(fids);}
+\DoxyCodeLine{01012 }
+\DoxyCodeLine{01013     \textcolor{comment}{// Start vectorizing}}
+\DoxyCodeLine{01014     m\_vectorizer-\/>start();}
+\DoxyCodeLine{01015     m\_progressDialog-\/>show();}
+\DoxyCodeLine{01016 }
+\DoxyCodeLine{01017     \textcolor{comment}{// Wait the vectorizer...}}
+\DoxyCodeLine{01018     \textcolor{keywordflow}{while} (!l\_quitLoop)}
+\DoxyCodeLine{01019       QCoreApplication::processEvents(QEventLoop::AllEvents |}
+\DoxyCodeLine{01020                                       QEventLoop::WaitForMoreEvents);}
+\DoxyCodeLine{01021 }
+\DoxyCodeLine{01022     l\_quitLoop = \textcolor{keyword}{false};}
+\DoxyCodeLine{01023 }
+\DoxyCodeLine{01024     \textcolor{comment}{// Assign output X-\/sheet cells}}
+\DoxyCodeLine{01025     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *vl = m\_vectorizer-\/>getVectorizedLevel();}
+\DoxyCodeLine{01026     \textcolor{keywordflow}{if} (isCellSelection \&\& vl) \{}
+\DoxyCodeLine{01027       \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsheet = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{01028       xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a5ea42662e27e52ef36ce77b4a5d8e06c}{insertColumn}}(newIndexColumn);}
+\DoxyCodeLine{01029 }
+\DoxyCodeLine{01030       \textcolor{keywordtype}{int} r, c;}
+\DoxyCodeLine{01031       \textcolor{keywordflow}{for} (c = c0; c <= c1; c++) \{}
+\DoxyCodeLine{01032         \textcolor{keywordflow}{for} (r = r0; r <= r1; r++) \{}
+\DoxyCodeLine{01033           \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r, c);}
+\DoxyCodeLine{01034           \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *level =}
+\DoxyCodeLine{01035               (!cell.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}()) ? cell.\mbox{\hyperlink{class_t_xsh_cell_a8898cc47eba24e59477bfba8e2511f1d}{getSimpleLevel}}() : 0;}
+\DoxyCodeLine{01036           \textcolor{keywordflow}{if} (level != sl) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01037           \mbox{\hyperlink{class_t_frame_id}{TFrameId}} curFid = cell.\mbox{\hyperlink{class_t_xsh_cell_a5a1965b96c2c698d6f0fb42a80c03406}{getFrameId}}();}
+\DoxyCodeLine{01038           std::vector<TFrameId> newFids;}
+\DoxyCodeLine{01039           vl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a567daee4ca12a0e92445bcf98a6541f1}{getFids}}(newFids);}
+\DoxyCodeLine{01040           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \textcolor{keyword}{const} \&fid : newFids) \{}
+\DoxyCodeLine{01041             \textcolor{keywordflow}{if} (fid.getNumber() ==}
+\DoxyCodeLine{01042                     curFid.getNumber() ||  \textcolor{comment}{// Hanno stesso numero di frame}}
+\DoxyCodeLine{01043                 (fid.getNumber() == 1 \&\&}
+\DoxyCodeLine{01044                  curFid.getNumber() ==}
+\DoxyCodeLine{01045                      -\/2))  \textcolor{comment}{// La vecchia cella non ha numero di frame}}
+\DoxyCodeLine{01046               xsheet-\/>setCell(r, newIndexColumn, \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}}(vl, fid));}
+\DoxyCodeLine{01047           \}}
+\DoxyCodeLine{01048         \}}
+\DoxyCodeLine{01049       \}}
+\DoxyCodeLine{01050       newColumnIndices.insert(newIndexColumn);}
+\DoxyCodeLine{01051       newIndexColumn += 1;}
+\DoxyCodeLine{01052     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (vl) \{}
+\DoxyCodeLine{01053       std::vector<TFrameId> gomi;}
+\DoxyCodeLine{01054       newColumnIndices.insert(scene-\/>\mbox{\hyperlink{class_toonz_scene_ae3c828e3223fd809fd59189233d0576a}{getXsheet}}()-\/>\mbox{\hyperlink{class_t_xsheet_ac00c621f54bf2c4f4a51a8b7d6f27253}{getFirstFreeColumnIndex}}());}
+\DoxyCodeLine{01055       scene-\/>\mbox{\hyperlink{class_toonz_scene_ae3c828e3223fd809fd59189233d0576a}{getXsheet}}()-\/>\mbox{\hyperlink{class_t_xsheet_ad2812514a3f36e1a61cbf71aa7f21cd5}{exposeLevel}}(}
+\DoxyCodeLine{01056           0, scene-\/>\mbox{\hyperlink{class_toonz_scene_ae3c828e3223fd809fd59189233d0576a}{getXsheet}}()-\/>\mbox{\hyperlink{class_t_xsheet_ac00c621f54bf2c4f4a51a8b7d6f27253}{getFirstFreeColumnIndex}}(), vl, gomi);}
+\DoxyCodeLine{01057     \}}
+\DoxyCodeLine{01058 }
+\DoxyCodeLine{01059     \textcolor{keywordflow}{if} (m\_vectorizer-\/>\mbox{\hyperlink{class_vectorizer_a46e44eb9b1c0a394ca7cad8e5353fdec}{isCanceled}}()) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01060   \}}
+\DoxyCodeLine{01061 }
+\DoxyCodeLine{01062   \textcolor{comment}{// Add undo object}}
+\DoxyCodeLine{01063   \textcolor{keywordflow}{if} (!m\_vectorizer-\/>\mbox{\hyperlink{class_vectorizer_a46e44eb9b1c0a394ca7cad8e5353fdec}{isCanceled}}())}
+\DoxyCodeLine{01064     ColumnCmd::addConvertToVectorUndo(newColumnIndices);}
+\DoxyCodeLine{01065 }
+\DoxyCodeLine{01066   m\_progressDialog-\/>close();}
+\DoxyCodeLine{01067   \textcolor{keyword}{delete} m\_vectorizer;}
+\DoxyCodeLine{01068 }
+\DoxyCodeLine{01069   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>notifyCastChange();}
+\DoxyCodeLine{01070   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{01071 }
+\DoxyCodeLine{01072   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{01073 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01045}{TXsheet\+::expose\+Level()}}, \mbox{\hyperlink{l00233}{TXsheet\+::get\+Cell()}}, \mbox{\hyperlink{l00106}{TApp\+::get\+Current\+Scene()}}, \mbox{\hyperlink{l00110}{TApp\+::get\+Current\+Xsheet()}}, \mbox{\hyperlink{l00448}{TXsh\+Simple\+Level\+::get\+Fids()}}, \mbox{\hyperlink{l01431}{TXsheet\+::get\+First\+Free\+Column\+Index()}}, \mbox{\hyperlink{l00120}{TXsh\+Cell\+::get\+Frame\+Id()}}, \mbox{\hyperlink{l00115}{TXsh\+Level\+::get\+Name()}}, \mbox{\hyperlink{l00087}{Toonz\+Scene\+::get\+Properties()}}, \mbox{\hyperlink{l00019}{TXsh\+Cell\+::get\+Simple\+Level()}}, \mbox{\hyperlink{l00092}{TXsh\+Simple\+Level\+::get\+Simple\+Level()}}, \mbox{\hyperlink{l00170}{TScene\+Properties\+::get\+Vectorizer\+Parameters()}}, \mbox{\hyperlink{l00957}{Toonz\+Scene\+::get\+Xsheet()}}, \mbox{\hyperlink{l01324}{TXsheet\+::insert\+Column()}}, \mbox{\hyperlink{l00215}{TApp\+::instance()}}, \mbox{\hyperlink{l00293}{Vectorizer\+::is\+Canceled()}}, \mbox{\hyperlink{l00078}{TXsh\+Cell\+::is\+Empty()}}, \mbox{\hyperlink{l00908}{is\+Level\+To\+Convert()}}, \mbox{\hyperlink{l00287}{Vectorizer\+::set\+Fids()}}, \mbox{\hyperlink{l00242}{Vectorizer\+::set\+Level()}}, and \mbox{\hyperlink{l00281}{Vectorizer\+::set\+Parameters()}}.
+
+
+
+Referenced by \mbox{\hyperlink{l01120}{on\+Ok()}}.
+
+\mbox{\Hypertarget{class_vectorizer_popup_a7aebabe63c6db5e1d5ca267bf9dc922a}\label{class_vectorizer_popup_a7aebabe63c6db5e1d5ca267bf9dc922a}} 
+\index{VectorizerPopup@{VectorizerPopup}!isLevelToConvert@{isLevelToConvert}}
+\index{isLevelToConvert@{isLevelToConvert}!VectorizerPopup@{VectorizerPopup}}
+\doxysubsubsection{\texorpdfstring{isLevelToConvert()}{isLevelToConvert()}}
+{\footnotesize\ttfamily bool Vectorizer\+Popup\+::is\+Level\+To\+Convert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{level }\end{DoxyParamCaption})}
+
+Verifies if specified level supports 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00908                                                           \{}
+\DoxyCodeLine{00909   \textcolor{keywordflow}{return} (sl-\/>getPath().getType() != \textcolor{stringliteral}{"{}pli"{}});}
+\DoxyCodeLine{00910 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00120}{TXsh\+Simple\+Level\+::get\+Path()}}, and \mbox{\hyperlink{l00225}{TFile\+Path\+::get\+Type()}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00914}{apply()}}.
+
+\mbox{\Hypertarget{class_vectorizer_popup_a446b8c60f994a12145b58dd098b0f66f}\label{class_vectorizer_popup_a446b8c60f994a12145b58dd098b0f66f}} 
+\index{VectorizerPopup@{VectorizerPopup}!onOk@{onOk}}
+\index{onOk@{onOk}!VectorizerPopup@{VectorizerPopup}}
+\doxysubsubsection{\texorpdfstring{onOk}{onOk}}
+{\footnotesize\ttfamily void Vectorizer\+Popup\+::on\+Ok (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+
+Invokes {\ttfamily \mbox{\hyperlink{class_vectorizer_popup_afd0bbc9e58cf23f703360d80afd9b7d5}{apply()}}}, and closes the popup once done. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01120 \{ \mbox{\hyperlink{class_vectorizer_popup_afd0bbc9e58cf23f703360d80afd9b7d5}{apply}}(); \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00914}{apply()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/vectorizerpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/vectorizerpopup.\+cpp\end{DoxyCompactItemize}

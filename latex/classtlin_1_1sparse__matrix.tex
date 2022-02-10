@@ -1,0 +1,269 @@
+\hypertarget{classtlin_1_1sparse__matrix}{}\doxysection{tlin\+::sparse\+\_\+matrix\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classtlin_1_1sparse__matrix}\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+
+
+{\ttfamily \#include $<$tlin\+\_\+sparsemat.\+h$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structtlin_1_1sparse__matrix_1_1_idx_functor}{Idx\+Functor}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{classtcg_1_1hash}{tcg\+::hash}}$<$ std\+::pair$<$ int, int $>$, T, \mbox{\hyperlink{structtlin_1_1sparse__matrix_1_1_idx_functor}{Idx\+Functor}} $>$ \mbox{\hyperlink{classtlin_1_1sparse__matrix_a4f28796bfe739306e79b06723f758f7d}{Hash\+Map}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtlin_1_1sparse__matrix_a2750c46693a34b6a904c8ff31ac1d01e}{sparse\+\_\+matrix}} (int rows, int cols)
+\item 
+\mbox{\hyperlink{classtlin_1_1sparse__matrix_ab403bab90cb125ebd34579d6d01a719a}{sparse\+\_\+matrix}} (const \mbox{\hyperlink{classtlin_1_1sparse__matrix}{sparse\+\_\+matrix}} \&\mbox{\hyperlink{classtlin_1_1matrix}{mat}})
+\item 
+\mbox{\hyperlink{classtlin_1_1sparse__matrix}{sparse\+\_\+matrix}} \& \mbox{\hyperlink{classtlin_1_1sparse__matrix_a4d5e1a0dcb932f412a36663e9fffcf38}{operator=}} (const \mbox{\hyperlink{classtlin_1_1sparse__matrix}{sparse\+\_\+matrix}} \&\mbox{\hyperlink{classtlin_1_1matrix}{mat}})
+\item 
+int \mbox{\hyperlink{classtlin_1_1sparse__matrix_a6f1ab4a8fe689a912d6abdae7afede50}{rows}} () const
+\item 
+int \mbox{\hyperlink{classtlin_1_1sparse__matrix_a5b6905600af3ca656a26c650417ddf7d}{cols}} () const
+\item 
+\mbox{\hyperlink{classtcg_1_1hash}{tcg\+::hash}}$<$ std\+::pair$<$ int, int $>$, T, \mbox{\hyperlink{structtlin_1_1sparse__matrix_1_1_idx_functor}{Idx\+Functor}} $>$ \& \mbox{\hyperlink{classtlin_1_1sparse__matrix_ae5894def53c9ab5dcba63f6e14724609}{entries}} ()
+\item 
+const \mbox{\hyperlink{classtcg_1_1hash}{tcg\+::hash}}$<$ std\+::pair$<$ int, int $>$, T, \mbox{\hyperlink{structtlin_1_1sparse__matrix_1_1_idx_functor}{Idx\+Functor}} $>$ \& \mbox{\hyperlink{classtlin_1_1sparse__matrix_a1a0af3f8031f6b9c24caa62de5d976bd}{entries}} () const
+\item 
+T \& \mbox{\hyperlink{classtlin_1_1sparse__matrix_a185ecf4ed642b6500e0fea5de5889abe}{at}} (int row, int col)
+\item 
+const T \mbox{\hyperlink{classtlin_1_1sparse__matrix_a65734e03ba815d988ba3814bc320ce9b}{get}} (int row, int col) const
+\item 
+const T \mbox{\hyperlink{classtlin_1_1sparse__matrix_a41369f5e64c4690d27114f2e24faa66e}{operator()}} (int row, int col) const
+\item 
+void \mbox{\hyperlink{classtlin_1_1sparse__matrix_a2967dd1701969fa89776ff26e20116ac}{clear}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classtlin_1_1sparse__matrix_a84413384af8417717d22e8588850fe84}{swap}} (\mbox{\hyperlink{classtlin_1_1sparse__matrix}{sparse\+\_\+matrix}} \&a, \mbox{\hyperlink{classtlin_1_1sparse__matrix}{sparse\+\_\+matrix}} \&b)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class tlin\+::sparse\+\_\+matrix$<$ T $>$}
+The \mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}} class implements a hash-\/based format for storing sparse matrices.
+
+A \mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}} is a \mbox{\hyperlink{classtlin_1_1matrix}{tlin\+::matrix}}-\/compliant class that allows the user to access the matrix in a purely random fashion, without sacrificing storage space or efficiency. This is achieved using a single, fast, dynamic hash container that maps (row, col) entries into their values, the hash function being like\+:
+
+(row, col) -\/\texorpdfstring{$>$}{>} row $\ast$ n\+Cols + col; (taken modulo n\+Buckets)
+
+Observe that if the number of buckets of the hash map is n\+Cols, the resulting representation is similar to a CCS (Harwell-\/\+Boeing), with the difference that buckets are not sorted by row. 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_a4f28796bfe739306e79b06723f758f7d}\label{classtlin_1_1sparse__matrix_a4f28796bfe739306e79b06723f758f7d}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!HashMap@{HashMap}}
+\index{HashMap@{HashMap}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{HashMap}{HashMap}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+typedef \mbox{\hyperlink{classtcg_1_1hash}{tcg\+::hash}}$<$std\+::pair$<$int, int$>$, T, \mbox{\hyperlink{structtlin_1_1sparse__matrix_1_1_idx_functor}{Idx\+Functor}}$>$ \mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}}$<$ T $>$\+::\+Hash\+Map}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_ae24a5d80a5eb98f9f6fae18b95678ded}\label{classtlin_1_1sparse__matrix_ae24a5d80a5eb98f9f6fae18b95678ded}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!sparse\_matrix@{sparse\_matrix}}
+\index{sparse\_matrix@{sparse\_matrix}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{sparse\_matrix()}{sparse\_matrix()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}}$<$ T $>$\+::sparse\+\_\+matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053 : m\_rows(0), m\_cols(0), m\_hash(IdxFunctor(0)) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_a2750c46693a34b6a904c8ff31ac1d01e}\label{classtlin_1_1sparse__matrix_a2750c46693a34b6a904c8ff31ac1d01e}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!sparse\_matrix@{sparse\_matrix}}
+\index{sparse\_matrix@{sparse\_matrix}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{sparse\_matrix()}{sparse\_matrix()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}}$<$ T $>$\+::sparse\+\_\+matrix (\begin{DoxyParamCaption}\item[{int}]{rows,  }\item[{int}]{cols }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055       : m\_rows(rows), m\_cols(cols), m\_hash(cols) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_a9f589b605203e8321ba73cdbeea1e893}\label{classtlin_1_1sparse__matrix_a9f589b605203e8321ba73cdbeea1e893}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!````~sparse\_matrix@{$\sim$sparse\_matrix}}
+\index{````~sparse\_matrix@{$\sim$sparse\_matrix}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$sparse\_matrix()}{~sparse\_matrix()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}}$<$ T $>$\+::$\sim$\mbox{\hyperlink{classtlin_1_1sparse__matrix}{sparse\+\_\+matrix}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00056 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_ab403bab90cb125ebd34579d6d01a719a}\label{classtlin_1_1sparse__matrix_ab403bab90cb125ebd34579d6d01a719a}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!sparse\_matrix@{sparse\_matrix}}
+\index{sparse\_matrix@{sparse\_matrix}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{sparse\_matrix()}{sparse\_matrix()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}}$<$ T $>$\+::sparse\+\_\+matrix (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classtlin_1_1sparse__matrix}{sparse\+\_\+matrix}}$<$ T $>$ \&}]{mat }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059       : m\_rows(mat.m\_rows), m\_cols(mat.m\_cols), m\_hash(mat.m\_hash) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_a185ecf4ed642b6500e0fea5de5889abe}\label{classtlin_1_1sparse__matrix_a185ecf4ed642b6500e0fea5de5889abe}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!at@{at}}
+\index{at@{at}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{at()}{at()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T \& \mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}}$<$ T $>$\+::at (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyWarning}{Warning}
+Assignments of kind\+: A.\+at(1,1) = A.\+at(0,0) are potentially harmful. Use A.\+get(x,y) on the right side instead. 
+\end{DoxyWarning}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00078 \{ \textcolor{keywordflow}{return} m\_hash.touch(std::make\_pair(row, col), 0); \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00212}{tcg\+::hash$<$ K, T, Hash\+\_\+functor $>$\+::touch()}}.
+
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_a2967dd1701969fa89776ff26e20116ac}\label{classtlin_1_1sparse__matrix_a2967dd1701969fa89776ff26e20116ac}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!clear@{clear}}
+\index{clear@{clear}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}}$<$ T $>$\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00085 \{ m\_hash.clear(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_a5b6905600af3ca656a26c650417ddf7d}\label{classtlin_1_1sparse__matrix_a5b6905600af3ca656a26c650417ddf7d}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!cols@{cols}}
+\index{cols@{cols}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{cols()}{cols()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+int \mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}}$<$ T $>$\+::cols (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067 \{ \textcolor{keywordflow}{return} m\_cols; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_ae5894def53c9ab5dcba63f6e14724609}\label{classtlin_1_1sparse__matrix_ae5894def53c9ab5dcba63f6e14724609}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!entries@{entries}}
+\index{entries@{entries}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{entries()}{entries()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classtcg_1_1hash}{tcg\+::hash}}$<$ std\+::pair$<$ int, int $>$, T, \mbox{\hyperlink{structtlin_1_1sparse__matrix_1_1_idx_functor}{Idx\+Functor}} $>$ \& \mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}}$<$ T $>$\+::entries (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00070 \{ \textcolor{keywordflow}{return} m\_hash; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_a1a0af3f8031f6b9c24caa62de5d976bd}\label{classtlin_1_1sparse__matrix_a1a0af3f8031f6b9c24caa62de5d976bd}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!entries@{entries}}
+\index{entries@{entries}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{entries()}{entries()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+const \mbox{\hyperlink{classtcg_1_1hash}{tcg\+::hash}}$<$ std\+::pair$<$ int, int $>$, T, \mbox{\hyperlink{structtlin_1_1sparse__matrix_1_1_idx_functor}{Idx\+Functor}} $>$ \& \mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}}$<$ T $>$\+::entries (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00071                                                                    \{}
+\DoxyCodeLine{00072     \textcolor{keywordflow}{return} m\_hash;}
+\DoxyCodeLine{00073   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_a65734e03ba815d988ba3814bc320ce9b}\label{classtlin_1_1sparse__matrix_a65734e03ba815d988ba3814bc320ce9b}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!get@{get}}
+\index{get@{get}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+const T \mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}}$<$ T $>$\+::get (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00079                                       \{}
+\DoxyCodeLine{00080     \textcolor{keyword}{typename} HashMap::const\_iterator it = m\_hash.find(std::make\_pair(row, col));}
+\DoxyCodeLine{00081     \textcolor{keywordflow}{return} (it == m\_hash.end()) ? 0 : it-\/>m\_val;}
+\DoxyCodeLine{00082   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_a41369f5e64c4690d27114f2e24faa66e}\label{classtlin_1_1sparse__matrix_a41369f5e64c4690d27114f2e24faa66e}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+const T \mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}}$<$ T $>$\+::operator() (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{int}]{col }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00083 \{ \textcolor{keywordflow}{return} get(row, col); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_a4d5e1a0dcb932f412a36663e9fffcf38}\label{classtlin_1_1sparse__matrix_a4d5e1a0dcb932f412a36663e9fffcf38}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classtlin_1_1sparse__matrix}{sparse\+\_\+matrix}} \& \mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}}$<$ T $>$\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classtlin_1_1sparse__matrix}{sparse\+\_\+matrix}}$<$ T $>$ \&}]{mat }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00061                                                      \{}
+\DoxyCodeLine{00062     m\_rows = mat.m\_rows, m\_cols = mat.m\_cols, m\_hash = mat.m\_hash;}
+\DoxyCodeLine{00063     \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{00064   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_a6f1ab4a8fe689a912d6abdae7afede50}\label{classtlin_1_1sparse__matrix_a6f1ab4a8fe689a912d6abdae7afede50}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!rows@{rows}}
+\index{rows@{rows}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{rows()}{rows()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+int \mbox{\hyperlink{classtlin_1_1sparse__matrix}{tlin\+::sparse\+\_\+matrix}}$<$ T $>$\+::rows (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00066 \{ \textcolor{keywordflow}{return} m\_rows; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classtlin_1_1sparse__matrix_a84413384af8417717d22e8588850fe84}\label{classtlin_1_1sparse__matrix_a84413384af8417717d22e8588850fe84}} 
+\index{tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}!swap@{swap}}
+\index{swap@{swap}!tlin::sparse\_matrix$<$ T $>$@{tlin::sparse\_matrix$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{swap}{swap}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void swap (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtlin_1_1sparse__matrix}{sparse\+\_\+matrix}}$<$ T $>$ \&}]{a,  }\item[{\mbox{\hyperlink{classtlin_1_1sparse__matrix}{sparse\+\_\+matrix}}$<$ T $>$ \&}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087                                                        \{}
+\DoxyCodeLine{00088     \textcolor{keyword}{using} std::swap;}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090     swap(a.m\_rows, b.m\_rows), swap(a.m\_cols, b.m\_cols);}
+\DoxyCodeLine{00091     swap(a.m\_hash, b.m\_hash);}
+\DoxyCodeLine{00092   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tlin/tlin\+\_\+sparsemat.\+h\end{DoxyCompactItemize}

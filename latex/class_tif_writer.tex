@@ -1,0 +1,384 @@
+\hypertarget{class_tif_writer}{}\doxysection{Tif\+Writer Class Reference}
+\label{class_tif_writer}\index{TifWriter@{TifWriter}}
+Inheritance diagram for Tif\+Writer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_tif_writer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_tif_writer_a38b3dba54b44788064baabe74e2016ce}{open}} (FILE $\ast$file, const \mbox{\hyperlink{class_t_image_info}{TImage\+Info}} \&info) override
+\item 
+void \mbox{\hyperlink{class_tif_writer_a790d5dca57d20e90c3b9615471a8efb7}{write\+Line}} (char $\ast$buffer) override
+\item 
+void \mbox{\hyperlink{class_tif_writer_a533e5255f3a13b37ac003db07b84de87}{write\+Line}} (short $\ast$buffer) override
+\item 
+void \mbox{\hyperlink{class_tif_writer_a6a6288607aea16a813ba6a6412d91b7c}{flush}} () override
+\item 
+Tiio\+::\+Row\+Order \mbox{\hyperlink{class_tif_writer_a1c89b9acc83aaf3319d10adaf5b59002}{get\+Row\+Order}} () const override
+\item 
+bool \mbox{\hyperlink{class_tif_writer_acaee142dbce1b773f669746c4d6293dd}{write\+Alpha\+Supported}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_tif_writer_a26da7ea525051fdbe54ab235b393f73f}\label{class_tif_writer_a26da7ea525051fdbe54ab235b393f73f}} 
+\index{TifWriter@{TifWriter}!TifWriter@{TifWriter}}
+\index{TifWriter@{TifWriter}!TifWriter@{TifWriter}}
+\doxysubsubsection{\texorpdfstring{TifWriter()}{TifWriter()}}
+{\footnotesize\ttfamily Tif\+Writer\+::\+Tif\+Writer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00783     : m\_tiff(0), m\_row(-\/1), m\_lineBuffer(0), m\_RightToLeft(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00784   TIFFSetWarningHandler(0);}
+\DoxyCodeLine{00785 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tif_writer_a5fbd28b9bf96494773f3fe80d3482745}\label{class_tif_writer_a5fbd28b9bf96494773f3fe80d3482745}} 
+\index{TifWriter@{TifWriter}!````~TifWriter@{$\sim$TifWriter}}
+\index{````~TifWriter@{$\sim$TifWriter}!TifWriter@{TifWriter}}
+\doxysubsubsection{\texorpdfstring{$\sim$TifWriter()}{~TifWriter()}}
+{\footnotesize\ttfamily Tif\+Writer\+::$\sim$\+Tif\+Writer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00789                       \{}
+\DoxyCodeLine{00790   \textcolor{keywordflow}{if} (m\_tiff) TIFFClose(m\_tiff);}
+\DoxyCodeLine{00791 }
+\DoxyCodeLine{00792   \textcolor{keyword}{delete}[] m\_lineBuffer;}
+\DoxyCodeLine{00793   \textcolor{keyword}{delete} m\_properties;}
+\DoxyCodeLine{00794 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tif_writer_a6a6288607aea16a813ba6a6412d91b7c}\label{class_tif_writer_a6a6288607aea16a813ba6a6412d91b7c}} 
+\index{TifWriter@{TifWriter}!flush@{flush}}
+\index{flush@{flush}!TifWriter@{TifWriter}}
+\doxysubsubsection{\texorpdfstring{flush()}{flush()}}
+{\footnotesize\ttfamily void Tif\+Writer\+::flush (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00949 \{ TIFFFlush(m\_tiff); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tif_writer_a1c89b9acc83aaf3319d10adaf5b59002}\label{class_tif_writer_a1c89b9acc83aaf3319d10adaf5b59002}} 
+\index{TifWriter@{TifWriter}!getRowOrder@{getRowOrder}}
+\index{getRowOrder@{getRowOrder}!TifWriter@{TifWriter}}
+\doxysubsubsection{\texorpdfstring{getRowOrder()}{getRowOrder()}}
+{\footnotesize\ttfamily Tiio\+::\+Row\+Order Tif\+Writer\+::get\+Row\+Order (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00772 \{ \textcolor{keywordflow}{return} m\_rowOrder; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tif_writer_a38b3dba54b44788064baabe74e2016ce}\label{class_tif_writer_a38b3dba54b44788064baabe74e2016ce}} 
+\index{TifWriter@{TifWriter}!open@{open}}
+\index{open@{open}!TifWriter@{TifWriter}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily void Tif\+Writer\+::open (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{file,  }\item[{const \mbox{\hyperlink{class_t_image_info}{TImage\+Info}} \&}]{info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00798                                                        \{}
+\DoxyCodeLine{00799   m\_info           = info;}
+\DoxyCodeLine{00800   std::string mode = \textcolor{stringliteral}{"{}w"{}};}
+\DoxyCodeLine{00801 }
+\DoxyCodeLine{00802   \textcolor{keywordflow}{if} (!m\_properties) m\_properties = \textcolor{keyword}{new} \mbox{\hyperlink{class_tiio_1_1_tif_writer_properties}{Tiio::TifWriterProperties}}();}
+\DoxyCodeLine{00803 }
+\DoxyCodeLine{00804   std::wstring byteOrdering =}
+\DoxyCodeLine{00805       ((\mbox{\hyperlink{class_t_enum_property}{TEnumProperty}} *)(m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Byte Ordering"{}})))}
+\DoxyCodeLine{00806           -\/>getValue();}
+\DoxyCodeLine{00807   \textcolor{keywordflow}{if} (byteOrdering == L\textcolor{stringliteral}{"{}IBM PC"{}})}
+\DoxyCodeLine{00808     mode += \textcolor{stringliteral}{"{}l"{}};}
+\DoxyCodeLine{00809   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00810     mode += \textcolor{stringliteral}{"{}b"{}};}
+\DoxyCodeLine{00811 }
+\DoxyCodeLine{00812   \mbox{\hyperlink{class_t_enum_property}{TEnumProperty}} *p =}
+\DoxyCodeLine{00813       (\mbox{\hyperlink{class_t_enum_property}{TEnumProperty}} *)(m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Bits Per Pixel"{}}));}
+\DoxyCodeLine{00814   assert(p);}
+\DoxyCodeLine{00815   std::string str = ::to\_string(p-\/>getValue());}
+\DoxyCodeLine{00816   m\_bpp           = atoi(str.c\_str());}
+\DoxyCodeLine{00817   assert(m\_bpp == 1 || m\_bpp == 8 || m\_bpp == 16 || m\_bpp == 24 ||}
+\DoxyCodeLine{00818          m\_bpp == 32 || m\_bpp == 48 || m\_bpp == 64);}
+\DoxyCodeLine{00819 }
+\DoxyCodeLine{00820   \textcolor{keywordtype}{int} fd = fileno(file);}
+\DoxyCodeLine{00821 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{00822     m\_tiff = TIFFFdOpenNoCloseProc(fd, \textcolor{stringliteral}{"{}"{}}, mode.c\_str());}
+\DoxyCodeLine{00823 \textcolor{preprocessor}{\#elif defined(\_WIN32) \&\& defined(\_\_GNUC\_\_)}}
+\DoxyCodeLine{00824   m\_tiff = TIFFFdOpen((\textcolor{keywordtype}{int})\_get\_osfhandle(dup(fd)), \textcolor{stringliteral}{"{}"{}}, mode.c\_str());}
+\DoxyCodeLine{00825 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00826   m\_tiff = TIFFFdOpen(dup(fd), \textcolor{stringliteral}{"{}"{}}, mode.c\_str());}
+\DoxyCodeLine{00827 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00828   \textcolor{keywordflow}{if} (!m\_tiff) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00829 }
+\DoxyCodeLine{00830   std::wstring worientation =}
+\DoxyCodeLine{00831       ((\mbox{\hyperlink{class_t_enum_property}{TEnumProperty}} *)(m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Orientation"{}})))-\/>getValue();}
+\DoxyCodeLine{00832 }
+\DoxyCodeLine{00833   \textcolor{keywordtype}{int} orientation;}
+\DoxyCodeLine{00834   \textcolor{keywordflow}{if} (worientation == TNZ\_INFO\_ORIENT\_TOPLEFT)}
+\DoxyCodeLine{00835     orientation = ORIENTATION\_TOPLEFT;}
+\DoxyCodeLine{00836   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (worientation == TNZ\_INFO\_ORIENT\_TOPRIGHT)}
+\DoxyCodeLine{00837     orientation = ORIENTATION\_TOPRIGHT;}
+\DoxyCodeLine{00838   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (worientation == TNZ\_INFO\_ORIENT\_BOTRIGHT)}
+\DoxyCodeLine{00839     orientation = ORIENTATION\_BOTRIGHT;}
+\DoxyCodeLine{00840   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (worientation == TNZ\_INFO\_ORIENT\_BOTLEFT)}
+\DoxyCodeLine{00841     orientation = ORIENTATION\_BOTLEFT;}
+\DoxyCodeLine{00842   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (worientation == TNZ\_INFO\_ORIENT\_LEFTTOP)}
+\DoxyCodeLine{00843     orientation = ORIENTATION\_LEFTTOP;}
+\DoxyCodeLine{00844   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (worientation == TNZ\_INFO\_ORIENT\_RIGHTTOP)}
+\DoxyCodeLine{00845     orientation = ORIENTATION\_RIGHTTOP;}
+\DoxyCodeLine{00846   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (worientation == TNZ\_INFO\_ORIENT\_RIGHTBOT)}
+\DoxyCodeLine{00847     orientation = ORIENTATION\_RIGHTBOT;}
+\DoxyCodeLine{00848   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (worientation == TNZ\_INFO\_ORIENT\_LEFTBOT)}
+\DoxyCodeLine{00849     orientation = ORIENTATION\_LEFTBOT;}
+\DoxyCodeLine{00850   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00851     assert(0);}
+\DoxyCodeLine{00852 }
+\DoxyCodeLine{00853   \textcolor{keywordflow}{switch} (orientation) \{}
+\DoxyCodeLine{00854   \textcolor{keywordflow}{case} ORIENTATION\_TOPLEFT: \textcolor{comment}{/* row 0 top, col 0 lhs */}}
+\DoxyCodeLine{00855     m\_rowOrder = Tiio::TOP2BOTTOM;}
+\DoxyCodeLine{00856     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00857   \textcolor{keywordflow}{case} ORIENTATION\_TOPRIGHT: \textcolor{comment}{/* row 0 top, col 0 rhs */}}
+\DoxyCodeLine{00858     m\_rowOrder = Tiio::TOP2BOTTOM;}
+\DoxyCodeLine{00859     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00860   \textcolor{keywordflow}{case} ORIENTATION\_LEFTTOP: \textcolor{comment}{/* row 0 lhs, col 0 top */}}
+\DoxyCodeLine{00861     m\_rowOrder = Tiio::TOP2BOTTOM;}
+\DoxyCodeLine{00862     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00863   \textcolor{keywordflow}{case} ORIENTATION\_RIGHTTOP: \textcolor{comment}{/* row 0 rhs, col 0 top */}}
+\DoxyCodeLine{00864     m\_rowOrder = Tiio::TOP2BOTTOM;}
+\DoxyCodeLine{00865     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00866 }
+\DoxyCodeLine{00867   \textcolor{keywordflow}{case} ORIENTATION\_BOTRIGHT: \textcolor{comment}{/* row 0 bottom, col 0 rhs */}}
+\DoxyCodeLine{00868     m\_rowOrder = Tiio::BOTTOM2TOP;}
+\DoxyCodeLine{00869     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00870   \textcolor{keywordflow}{case} ORIENTATION\_BOTLEFT: \textcolor{comment}{/* row 0 bottom, col 0 lhs */}}
+\DoxyCodeLine{00871     m\_rowOrder = Tiio::BOTTOM2TOP;}
+\DoxyCodeLine{00872     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00873   \textcolor{keywordflow}{case} ORIENTATION\_RIGHTBOT: \textcolor{comment}{/* row 0 rhs, col 0 bottom */}}
+\DoxyCodeLine{00874     m\_rowOrder = Tiio::BOTTOM2TOP;}
+\DoxyCodeLine{00875     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00876   \textcolor{keywordflow}{case} ORIENTATION\_LEFTBOT: \textcolor{comment}{/* row 0 lhs, col 0 bottom */}}
+\DoxyCodeLine{00877     m\_rowOrder = Tiio::BOTTOM2TOP;}
+\DoxyCodeLine{00878     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00879   \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00880     m\_rowOrder = Tiio::TOP2BOTTOM;}
+\DoxyCodeLine{00881     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00882   \}}
+\DoxyCodeLine{00883   m\_RightToLeft = \textcolor{keyword}{false};}
+\DoxyCodeLine{00884   \textcolor{keywordflow}{if} (orientation == ORIENTATION\_TOPRIGHT ||}
+\DoxyCodeLine{00885       orientation == ORIENTATION\_BOTRIGHT ||}
+\DoxyCodeLine{00886       orientation == ORIENTATION\_RIGHTTOP ||}
+\DoxyCodeLine{00887       orientation == ORIENTATION\_RIGHTBOT)}
+\DoxyCodeLine{00888     m\_RightToLeft = \textcolor{keyword}{true};}
+\DoxyCodeLine{00889 }
+\DoxyCodeLine{00890   \textcolor{keywordtype}{int} bitsPerSample =}
+\DoxyCodeLine{00891       (m\_bpp == 1) ? 1 : ((m\_bpp == 8 || m\_bpp == 24 || m\_bpp == 32) ? 8 : 16);}
+\DoxyCodeLine{00892 }
+\DoxyCodeLine{00893   TIFFSetField(m\_tiff, TIFFTAG\_IMAGEWIDTH, m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}});}
+\DoxyCodeLine{00894   TIFFSetField(m\_tiff, TIFFTAG\_IMAGELENGTH, m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}});}
+\DoxyCodeLine{00895   TIFFSetField(m\_tiff, TIFFTAG\_BITSPERSAMPLE, bitsPerSample);}
+\DoxyCodeLine{00896   TIFFSetField(m\_tiff, TIFFTAG\_SAMPLESPERPIXEL, m\_bpp / bitsPerSample);}
+\DoxyCodeLine{00897   TIFFSetField(m\_tiff, TIFFTAG\_ORIENTATION, orientation);}
+\DoxyCodeLine{00898 }
+\DoxyCodeLine{00899   \textcolor{keywordflow}{if} (m\_bpp == 1)}
+\DoxyCodeLine{00900     TIFFSetField(m\_tiff, TIFFTAG\_COMPRESSION, COMPRESSION\_CCITTFAX4);}
+\DoxyCodeLine{00901   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00902     std::wstring compressionType =}
+\DoxyCodeLine{00903         ((\mbox{\hyperlink{class_t_enum_property}{TEnumProperty}} *)(m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Compression Type"{}})))}
+\DoxyCodeLine{00904             -\/>getValue();}
+\DoxyCodeLine{00905     \textcolor{keywordflow}{if} (compressionType == TNZ\_INFO\_COMPRESS\_LZW || compressionType == TNZ\_INFO\_COMPRESS\_LZW\_LEG)}
+\DoxyCodeLine{00906       TIFFSetField(m\_tiff, TIFFTAG\_COMPRESSION, COMPRESSION\_LZW);}
+\DoxyCodeLine{00907     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (compressionType == TNZ\_INFO\_COMPRESS\_PACKBITS)}
+\DoxyCodeLine{00908       TIFFSetField(m\_tiff, TIFFTAG\_COMPRESSION, COMPRESSION\_PACKBITS);}
+\DoxyCodeLine{00909     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (compressionType == TNZ\_INFO\_COMPRESS\_CCITTFAX3)}
+\DoxyCodeLine{00910       TIFFSetField(m\_tiff, TIFFTAG\_COMPRESSION, COMPRESSION\_CCITTFAX3);}
+\DoxyCodeLine{00911     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (compressionType == TNZ\_INFO\_COMPRESS\_CCITTFAX4)}
+\DoxyCodeLine{00912       TIFFSetField(m\_tiff, TIFFTAG\_COMPRESSION, COMPRESSION\_CCITTFAX4);}
+\DoxyCodeLine{00913     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (compressionType == TNZ\_INFO\_COMPRESS\_CCITTRLE)}
+\DoxyCodeLine{00914       TIFFSetField(m\_tiff, TIFFTAG\_COMPRESSION, COMPRESSION\_CCITTRLE);}
+\DoxyCodeLine{00915     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (compressionType == TNZ\_INFO\_COMPRESS\_JPEG)}
+\DoxyCodeLine{00916       TIFFSetField(m\_tiff, TIFFTAG\_COMPRESSION, COMPRESSION\_JPEG);}
+\DoxyCodeLine{00917     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (compressionType == TNZ\_INFO\_COMPRESS\_OJPEG)}
+\DoxyCodeLine{00918       TIFFSetField(m\_tiff, TIFFTAG\_COMPRESSION, COMPRESSION\_OJPEG);}
+\DoxyCodeLine{00919     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (compressionType == TNZ\_INFO\_COMPRESS\_NONE)}
+\DoxyCodeLine{00920       TIFFSetField(m\_tiff, TIFFTAG\_COMPRESSION, COMPRESSION\_NONE);}
+\DoxyCodeLine{00921     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (compressionType == TNZ\_INFO\_COMPRESS\_THUNDERSCAN)}
+\DoxyCodeLine{00922       TIFFSetField(m\_tiff, TIFFTAG\_COMPRESSION, COMPRESSION\_THUNDERSCAN);}
+\DoxyCodeLine{00923     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (compressionType == TNZ\_INFO\_COMPRESS\_ADOBE\_DEFLATE)}
+\DoxyCodeLine{00924       TIFFSetField(m\_tiff, TIFFTAG\_COMPRESSION, COMPRESSION\_ADOBE\_DEFLATE);}
+\DoxyCodeLine{00925     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (compressionType == TNZ\_INFO\_COMPRESS\_DEFLATE)}
+\DoxyCodeLine{00926       TIFFSetField(m\_tiff, TIFFTAG\_COMPRESSION, COMPRESSION\_DEFLATE);}
+\DoxyCodeLine{00927     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00928       assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{00929   \}}
+\DoxyCodeLine{00930   TIFFSetField(m\_tiff, TIFFTAG\_PLANARCONFIG, PLANARCONFIG\_CONTIG);}
+\DoxyCodeLine{00931   TIFFSetField(}
+\DoxyCodeLine{00932       m\_tiff, TIFFTAG\_PHOTOMETRIC,}
+\DoxyCodeLine{00933       (m\_bpp == 8 || m\_bpp == 1) ? PHOTOMETRIC\_MINISBLACK : PHOTOMETRIC\_RGB);}
+\DoxyCodeLine{00934   TIFFSetField(m\_tiff, TIFFTAG\_XRESOLUTION, m\_info.\mbox{\hyperlink{class_t_image_info_ad66e78a66158fddceaa192d0063f68e8}{m\_dpix}});}
+\DoxyCodeLine{00935   TIFFSetField(m\_tiff, TIFFTAG\_YRESOLUTION, m\_info.\mbox{\hyperlink{class_t_image_info_ad8d3ccb14666297e487e04aa10ab7831}{m\_dpiy}});}
+\DoxyCodeLine{00936   TIFFSetField(m\_tiff, TIFFTAG\_RESOLUTIONUNIT, RESUNIT\_INCH);}
+\DoxyCodeLine{00937   TIFFSetField(m\_tiff, TIFFTAG\_ROWSPERSTRIP, TIFFDefaultStripSize(m\_tiff, 0));}
+\DoxyCodeLine{00938 }
+\DoxyCodeLine{00939   m\_row = 0;}
+\DoxyCodeLine{00940   \textcolor{keywordflow}{if} (m\_bpp == 1)}
+\DoxyCodeLine{00941     m\_lineBuffer = \textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} / 8 + 1];}
+\DoxyCodeLine{00942   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00943     m\_lineBuffer =}
+\DoxyCodeLine{00944         \textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[(m\_bpp == 1 ? 1 : m\_bpp / 8) * m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}];}
+\DoxyCodeLine{00945 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tif_writer_acaee142dbce1b773f669746c4d6293dd}\label{class_tif_writer_acaee142dbce1b773f669746c4d6293dd}} 
+\index{TifWriter@{TifWriter}!writeAlphaSupported@{writeAlphaSupported}}
+\index{writeAlphaSupported@{writeAlphaSupported}!TifWriter@{TifWriter}}
+\doxysubsubsection{\texorpdfstring{writeAlphaSupported()}{writeAlphaSupported()}}
+{\footnotesize\ttfamily bool Tif\+Writer\+::write\+Alpha\+Supported (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00775                                             \{}
+\DoxyCodeLine{00776     \textcolor{keywordflow}{return} (m\_bpp == 32 || m\_bpp == 64);}
+\DoxyCodeLine{00777   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tif_writer_a790d5dca57d20e90c3b9615471a8efb7}\label{class_tif_writer_a790d5dca57d20e90c3b9615471a8efb7}} 
+\index{TifWriter@{TifWriter}!writeLine@{writeLine}}
+\index{writeLine@{writeLine}!TifWriter@{TifWriter}}
+\doxysubsubsection{\texorpdfstring{writeLine()}{writeLine()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Tif\+Writer\+::write\+Line (\begin{DoxyParamCaption}\item[{char $\ast$}]{buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01008                                       \{}
+\DoxyCodeLine{01009   \textcolor{keywordtype}{int} delta = 1;}
+\DoxyCodeLine{01010   \textcolor{keywordtype}{int} start = 0;}
+\DoxyCodeLine{01011   \textcolor{keywordflow}{if} (m\_RightToLeft) \{}
+\DoxyCodeLine{01012     delta = -\/1;}
+\DoxyCodeLine{01013     start = m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} -\/ 1;}
+\DoxyCodeLine{01014   \}}
+\DoxyCodeLine{01015   \textcolor{keywordflow}{if} (m\_bpp == 1)}
+\DoxyCodeLine{01016     fillBits(m\_lineBuffer, ((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *)buffer) + start, m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}},}
+\DoxyCodeLine{01017              delta);}
+\DoxyCodeLine{01018   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_bpp == 8) \{}
+\DoxyCodeLine{01019     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *pix = ((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *)buffer) + start;}
+\DoxyCodeLine{01020     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; i++) \{}
+\DoxyCodeLine{01021       \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *b = m\_lineBuffer + i;}
+\DoxyCodeLine{01022       b[0]             = pix[0];}
+\DoxyCodeLine{01023       pix              = pix + delta;}
+\DoxyCodeLine{01024     \}}
+\DoxyCodeLine{01025   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01026     assert(m\_bpp == 24 || m\_bpp == 32);}
+\DoxyCodeLine{01027     TPixel32 *pix = ((TPixel32 *)buffer) + start;}
+\DoxyCodeLine{01028 }
+\DoxyCodeLine{01029     \textcolor{keywordflow}{if} (m\_bpp == 32)}
+\DoxyCodeLine{01030       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; i++) \{}
+\DoxyCodeLine{01031         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *b = m\_lineBuffer + i * 4;}
+\DoxyCodeLine{01032         b[0]             = pix-\/>r;}
+\DoxyCodeLine{01033         b[1]             = pix-\/>g;}
+\DoxyCodeLine{01034         b[2]             = pix-\/>b;}
+\DoxyCodeLine{01035         b[3]             = pix-\/>m;}
+\DoxyCodeLine{01036         pix              = pix + delta;}
+\DoxyCodeLine{01037       \}}
+\DoxyCodeLine{01038     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_bpp == 24)}
+\DoxyCodeLine{01039       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; i++) \{}
+\DoxyCodeLine{01040         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *b = m\_lineBuffer + i * 3;}
+\DoxyCodeLine{01041         b[0]             = pix-\/>r;}
+\DoxyCodeLine{01042         b[1]             = pix-\/>g;}
+\DoxyCodeLine{01043         b[2]             = pix-\/>b;}
+\DoxyCodeLine{01044         pix              = pix + delta;}
+\DoxyCodeLine{01045       \}}
+\DoxyCodeLine{01046   \}}
+\DoxyCodeLine{01047   TIFFWriteScanline(m\_tiff, m\_lineBuffer, m\_row++, 0);}
+\DoxyCodeLine{01048 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tif_writer_a533e5255f3a13b37ac003db07b84de87}\label{class_tif_writer_a533e5255f3a13b37ac003db07b84de87}} 
+\index{TifWriter@{TifWriter}!writeLine@{writeLine}}
+\index{writeLine@{writeLine}!TifWriter@{TifWriter}}
+\doxysubsubsection{\texorpdfstring{writeLine()}{writeLine()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Tif\+Writer\+::write\+Line (\begin{DoxyParamCaption}\item[{short $\ast$}]{buffer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_writer}{Tiio\+::\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00953                                        \{}
+\DoxyCodeLine{00954   \textcolor{keywordtype}{int} delta = 1;}
+\DoxyCodeLine{00955   \textcolor{keywordtype}{int} start = 0;}
+\DoxyCodeLine{00956   \textcolor{keywordflow}{if} (m\_RightToLeft) \{}
+\DoxyCodeLine{00957     delta = -\/1;}
+\DoxyCodeLine{00958     start = m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} -\/ 1;}
+\DoxyCodeLine{00959   \}}
+\DoxyCodeLine{00960   \textcolor{keywordflow}{if} (m\_bpp == 16) \{}
+\DoxyCodeLine{00961     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *pix = ((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *)buffer) + start;}
+\DoxyCodeLine{00962     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; i++) \{}
+\DoxyCodeLine{00963       \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *b = (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *)m\_lineBuffer + i * 2;}
+\DoxyCodeLine{00964       b[0]              = pix[0];}
+\DoxyCodeLine{00965       b[1]              = pix[1];}
+\DoxyCodeLine{00966       pix               = pix + delta;}
+\DoxyCodeLine{00967     \}}
+\DoxyCodeLine{00968   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00969     assert(m\_bpp == 48 || m\_bpp == 64);}
+\DoxyCodeLine{00970     TPixel64 *pix = ((TPixel64 *)buffer) + start;}
+\DoxyCodeLine{00971 }
+\DoxyCodeLine{00972     \textcolor{keywordflow}{if} (m\_bpp == 64)}
+\DoxyCodeLine{00973       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; i++) \{}
+\DoxyCodeLine{00974         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *b = (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *)m\_lineBuffer + i * 4;}
+\DoxyCodeLine{00975         b[0]              = pix-\/>r;}
+\DoxyCodeLine{00976         b[1]              = pix-\/>g;}
+\DoxyCodeLine{00977         b[2]              = pix-\/>b;}
+\DoxyCodeLine{00978         b[3]              = pix-\/>m;}
+\DoxyCodeLine{00979         pix               = pix + delta;}
+\DoxyCodeLine{00980       \}}
+\DoxyCodeLine{00981     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_bpp == 48)}
+\DoxyCodeLine{00982       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; i++) \{}
+\DoxyCodeLine{00983         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *b = (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *)m\_lineBuffer + i * 3;}
+\DoxyCodeLine{00984         b[0]              = pix-\/>r;}
+\DoxyCodeLine{00985         b[1]              = pix-\/>g;}
+\DoxyCodeLine{00986         b[2]              = pix-\/>b;}
+\DoxyCodeLine{00987         pix               = pix + delta;}
+\DoxyCodeLine{00988       \}}
+\DoxyCodeLine{00989   \}}
+\DoxyCodeLine{00990   TIFFWriteScanline(m\_tiff, m\_lineBuffer, m\_row++, 0);}
+\DoxyCodeLine{00991 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/tif/tiio\+\_\+tif.\+cpp\end{DoxyCompactItemize}

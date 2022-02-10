@@ -1,0 +1,295 @@
+\hypertarget{class_t_binarizer}{}\doxysection{TBinarizer Class Reference}
+\label{class_t_binarizer}\index{TBinarizer@{TBinarizer}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_binarizer_a124561136da6d32262221aa5de4dd6ef}{process}} (const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&ras)
+\item 
+void \mbox{\hyperlink{class_t_binarizer_abe3ab86b72b35a31c5faead7ef9a692e}{enable\+Alpha}} (bool enabled)
+\item 
+bool \mbox{\hyperlink{class_t_binarizer_a58d2b622094546590ab888ff66adc935}{is\+Alpha\+Enabled}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_binarizer_ab07f8ccf2d595a754113ff721b1d6ab8}\label{class_t_binarizer_ab07f8ccf2d595a754113ff721b1d6ab8}} 
+\index{TBinarizer@{TBinarizer}!TBinarizer@{TBinarizer}}
+\index{TBinarizer@{TBinarizer}!TBinarizer@{TBinarizer}}
+\doxysubsubsection{\texorpdfstring{TBinarizer()}{TBinarizer()}}
+{\footnotesize\ttfamily TBinarizer\+::\+TBinarizer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00077 : m\_alphaEnabled(\textcolor{keyword}{true}) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_binarizer_abe3ab86b72b35a31c5faead7ef9a692e}\label{class_t_binarizer_abe3ab86b72b35a31c5faead7ef9a692e}} 
+\index{TBinarizer@{TBinarizer}!enableAlpha@{enableAlpha}}
+\index{enableAlpha@{enableAlpha}!TBinarizer@{TBinarizer}}
+\doxysubsubsection{\texorpdfstring{enableAlpha()}{enableAlpha()}}
+{\footnotesize\ttfamily void TBinarizer\+::enable\+Alpha (\begin{DoxyParamCaption}\item[{bool}]{enabled }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026 \{ m\_alphaEnabled = enabled; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_binarizer_a58d2b622094546590ab888ff66adc935}\label{class_t_binarizer_a58d2b622094546590ab888ff66adc935}} 
+\index{TBinarizer@{TBinarizer}!isAlphaEnabled@{isAlphaEnabled}}
+\index{isAlphaEnabled@{isAlphaEnabled}!TBinarizer@{TBinarizer}}
+\doxysubsubsection{\texorpdfstring{isAlphaEnabled()}{isAlphaEnabled()}}
+{\footnotesize\ttfamily bool TBinarizer\+::is\+Alpha\+Enabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027 \{ \textcolor{keywordflow}{return} m\_alphaEnabled; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_binarizer_a124561136da6d32262221aa5de4dd6ef}\label{class_t_binarizer_a124561136da6d32262221aa5de4dd6ef}} 
+\index{TBinarizer@{TBinarizer}!process@{process}}
+\index{process@{process}!TBinarizer@{TBinarizer}}
+\doxysubsubsection{\texorpdfstring{process()}{process()}}
+{\footnotesize\ttfamily void TBinarizer\+::process (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&}]{ras }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00081                                               \{}
+\DoxyCodeLine{00082   \textcolor{comment}{// palette di colori puri che verranno usati per l'output: nero, rosso, verde,}}
+\DoxyCodeLine{00083   \textcolor{comment}{// blu}}
+\DoxyCodeLine{00084   \textcolor{keyword}{static} \textcolor{keyword}{const} TPixel32 colors[] = \{}
+\DoxyCodeLine{00085       TPixel32(0, 0, 0),    TPixel32(255, 0, 0),   TPixel32(0, 255, 0),}
+\DoxyCodeLine{00086       TPixel32(0, 0, 255),  TPixel32(0, 255, 255), TPixel32(255, 0, 255),}
+\DoxyCodeLine{00087       TPixel32(255, 255, 0)\};}
+\DoxyCodeLine{00088 }
+\DoxyCodeLine{00089   \textcolor{keywordtype}{int} w = ras-\/>getLx(), h = ras-\/>getLy();}
+\DoxyCodeLine{00090   TPixel32 *buffer = ras-\/>pixels();  \textcolor{comment}{// WARNING! non funziona sui sotto-\/raster}}
+\DoxyCodeLine{00091   assert(ras-\/>getWrap() == ras-\/>getLx());}
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{00093   \textcolor{comment}{// mi cautelo contro immagini trasparenti}}
+\DoxyCodeLine{00094   \textcolor{keywordflow}{if} (hasAlpha(buffer, w, h)) removeAlpha(buffer, w, h);}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096   \textcolor{comment}{// divido l'immagine in quadrati grandi 2\string^b pixel}}
+\DoxyCodeLine{00097   \textcolor{keywordtype}{int} b     = 5;}
+\DoxyCodeLine{00098   \textcolor{keywordtype}{int} bsize = 1 << b;}
+\DoxyCodeLine{00099   \textcolor{keywordtype}{int} w1 = ((w -\/ 1) >> b) + 1, h1 = ((h -\/ 1) >> b) + 1;}
+\DoxyCodeLine{00100 }
+\DoxyCodeLine{00101   \textcolor{comment}{// buffer di appoggio}}
+\DoxyCodeLine{00102   std::vector<unsigned char> vBuffer(}
+\DoxyCodeLine{00103       w * h, 0);  \textcolor{comment}{// per ogni pixel: v = min(r,g,b) (inchiostro scuro su sfondo}}
+\DoxyCodeLine{00104                   \textcolor{comment}{// chiaro: mi sembra che min funzioni meglio di max)}}
+\DoxyCodeLine{00105   std::vector<unsigned char> thrBuffer(w1 * h1, 0);  \textcolor{comment}{// per ogni quadrato: se}}
+\DoxyCodeLine{00106                                                      \textcolor{comment}{// v>thrBuffer[k1] allora}}
+\DoxyCodeLine{00107                                                      \textcolor{comment}{// siamo sicuro che e'}}
+\DoxyCodeLine{00108                                                      \textcolor{comment}{// sfondo}}
+\DoxyCodeLine{00109   std::vector<unsigned char> qBuffer(w1 * h1, 0);  \textcolor{comment}{// per ogni quadrato: quel v}}
+\DoxyCodeLine{00110                                                    \textcolor{comment}{// tale che solo 20 pixel in}}
+\DoxyCodeLine{00111                                                    \textcolor{comment}{// tutto il quadrato sono}}
+\DoxyCodeLine{00112                                                    \textcolor{comment}{// piu' scuri}}
+\DoxyCodeLine{00113   std::vector<unsigned char> tBuffer(w * h, 255);  \textcolor{comment}{// per ogni pixel: 'tipo' del}}
+\DoxyCodeLine{00114                                                    \textcolor{comment}{// pixel (0..6=>colore,}}
+\DoxyCodeLine{00115                                                    \textcolor{comment}{// 20=cornice esterna, )}}
+\DoxyCodeLine{00116   std::vector<unsigned char> sBuffer(w * h, 255);  \textcolor{comment}{// per ogni pixel: quando}}
+\DoxyCodeLine{00117                                                    \textcolor{comment}{// faccio il fill il colore}}
+\DoxyCodeLine{00118                                                    \textcolor{comment}{// si puo' estendere solo sui}}
+\DoxyCodeLine{00119                                                    \textcolor{comment}{// vicini con v<sBuffer[k]}}
+\DoxyCodeLine{00120 }
+\DoxyCodeLine{00121   std::vector<int> boundary1, boundary2;  \textcolor{comment}{// usati per il fill}}
+\DoxyCodeLine{00122   boundary1.reserve(w * h / 2);}
+\DoxyCodeLine{00123   boundary2.reserve(w * h / 2);}
+\DoxyCodeLine{00124 }
+\DoxyCodeLine{00125   \textcolor{keywordtype}{int} goodBgQuadCount = 0;}
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127   \textcolor{comment}{// per ogni quadrato costruisco l'istrogramma e determino il threshold per il}}
+\DoxyCodeLine{00128   \textcolor{comment}{// bg}}
+\DoxyCodeLine{00129   \textcolor{comment}{// conto i quadrati che hanno un "{}buon"{} background}}
+\DoxyCodeLine{00130   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y1 = 0; y1 < h1; y1++) \{}
+\DoxyCodeLine{00131     \textcolor{keywordtype}{int} ya = y1 * bsize;}
+\DoxyCodeLine{00132     \textcolor{keywordtype}{int} yb = std::min(h, ya + bsize) -\/ 1;}
+\DoxyCodeLine{00133     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x1 = 0; x1 < w1; x1++) \{}
+\DoxyCodeLine{00134       \textcolor{keywordtype}{int} xa = x1 * bsize;}
+\DoxyCodeLine{00135       \textcolor{keywordtype}{int} xb = std::min(w, xa + bsize) -\/ 1;}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137       \textcolor{keywordtype}{int} tot = 0;}
+\DoxyCodeLine{00138       std::vector<int> histo(32, 0);}
+\DoxyCodeLine{00139       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = ya; y <= yb; y++) \{}
+\DoxyCodeLine{00140         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = xa; x <= xb; x++) \{}
+\DoxyCodeLine{00141           \textcolor{keywordtype}{int} k        = y * w + x;}
+\DoxyCodeLine{00142           TPixel32 pix = buffer[k];}
+\DoxyCodeLine{00143           \textcolor{keywordtype}{int} v        = std::min(\{pix.r, pix.g, pix.b\});}
+\DoxyCodeLine{00144           vBuffer[k]   = v;}
+\DoxyCodeLine{00145           histo[v >> 3] += 1;}
+\DoxyCodeLine{00146           tot += 1;}
+\DoxyCodeLine{00147         \}}
+\DoxyCodeLine{00148       \}}
+\DoxyCodeLine{00149 }
+\DoxyCodeLine{00150       \textcolor{keywordtype}{int} bgThreshold = 31;}
+\DoxyCodeLine{00151       \textcolor{keywordflow}{if} (histo[31] > tot / 2 \&\& histo[30] < 4) \{}
+\DoxyCodeLine{00152         \textcolor{comment}{// "{}buon"{} background. Picco su histo[31] che finisce in histo[30]}}
+\DoxyCodeLine{00153         goodBgQuadCount++;}
+\DoxyCodeLine{00154         bgThreshold = 29;}
+\DoxyCodeLine{00155       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00156         \textcolor{comment}{// background normale. salto eventuali zeri (lo sfondo puo' essere}}
+\DoxyCodeLine{00157         \textcolor{comment}{// grigio, anche scuro)}}
+\DoxyCodeLine{00158         \textcolor{keywordtype}{int} i = 31;}
+\DoxyCodeLine{00159         \textcolor{keywordflow}{while} (i >= 0 \&\& histo[i] == 0) i-\/-\/;}
+\DoxyCodeLine{00160         \textcolor{keywordtype}{int} i0 = i;}
+\DoxyCodeLine{00161         \textcolor{comment}{// cerco il massimo}}
+\DoxyCodeLine{00162         \textcolor{keywordflow}{while} (i > 0 \&\& histo[i -\/ 1] > histo[i]) i-\/-\/;}
+\DoxyCodeLine{00163         \textcolor{keywordtype}{int} i1 = i;}
+\DoxyCodeLine{00164         \textcolor{comment}{// presuppongo che il picco del BG sia symmetrico: i0-\/i1 == i1-\/i2}}
+\DoxyCodeLine{00165         \textcolor{keywordtype}{int} i2      = 2 * i1 -\/ i0;}
+\DoxyCodeLine{00166         bgThreshold = i2 -\/ 1;}
+\DoxyCodeLine{00167       \}}
+\DoxyCodeLine{00168       \textcolor{comment}{// calcolo qBuffer[k1] : e' un valore di v tale che pochi pixel (<20)}}
+\DoxyCodeLine{00169       \textcolor{comment}{// hanno un valore inferiore.}}
+\DoxyCodeLine{00170       \textcolor{comment}{// Se qBuffer[k1] e' molto grande vuol dire che il quadrato e' vuoto}}
+\DoxyCodeLine{00171       \textcolor{keywordtype}{int} i = 0;}
+\DoxyCodeLine{00172       \textcolor{keywordtype}{int} c = histo[i];}
+\DoxyCodeLine{00173       \textcolor{keywordflow}{while} (i < bgThreshold \&\& c < 20) c += histo[++i];}
+\DoxyCodeLine{00174       \textcolor{keywordtype}{int} k1        = y1 * w1 + x1;}
+\DoxyCodeLine{00175       qBuffer[k1]   = i * 255 / 31;}
+\DoxyCodeLine{00176       bgThreshold   = bgThreshold * 255 / 31;}
+\DoxyCodeLine{00177       thrBuffer[k1] = bgThreshold;}
+\DoxyCodeLine{00178     \}}
+\DoxyCodeLine{00179   \}}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181   \textcolor{comment}{// L'immagine ha un buon background se la maggior parte dei quadrati ha un}}
+\DoxyCodeLine{00182   \textcolor{comment}{// buon background}}
+\DoxyCodeLine{00183   \textcolor{keywordtype}{bool} goodBackground = goodBgQuadCount > w1 * h1 / 2;}
+\DoxyCodeLine{00184 }
+\DoxyCodeLine{00185   \textcolor{comment}{// thrDelta e' una correzione sul threshold per immagini con cattivo}}
+\DoxyCodeLine{00186   \textcolor{comment}{// background}}
+\DoxyCodeLine{00187   \textcolor{comment}{// un quadrato che abbia meno di 20 (v.s sopra c<20) sotto}}
+\DoxyCodeLine{00188   \textcolor{comment}{// thrBuffer[k1]-\/thrDelta e' considerato sfondo}}
+\DoxyCodeLine{00189   \textcolor{keywordtype}{int} thrDelta                  = 0;}
+\DoxyCodeLine{00190   \textcolor{keywordflow}{if} (!goodBackground) thrDelta = 20;}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192   \textcolor{comment}{// inizializzo la cornice dell'immagine (mi serve per non sconfinare quando}}
+\DoxyCodeLine{00193   \textcolor{comment}{// faccio fill)}}
+\DoxyCodeLine{00194   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = 0; y < h; y++) tBuffer[y * w] = tBuffer[y * w + w -\/ 1] = 20;}
+\DoxyCodeLine{00195   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < w; x++) tBuffer[x] = tBuffer[(h -\/ 1) * w + x] = 20;}
+\DoxyCodeLine{00196 }
+\DoxyCodeLine{00197   \textcolor{comment}{// cerco i pixel sicuramente colorati e i sicuramente neri}}
+\DoxyCodeLine{00198   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y1 = 0; y1 < h1; y1++) \{}
+\DoxyCodeLine{00199     \textcolor{keywordtype}{int} ya = std::max(1, y1 * bsize);}
+\DoxyCodeLine{00200     \textcolor{keywordtype}{int} yb = std::min(h -\/ 1, ya + bsize) -\/ 1;}
+\DoxyCodeLine{00201     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x1 = 0; x1 < w1; x1++) \{}
+\DoxyCodeLine{00202       \textcolor{keywordtype}{int} k1 = y1 * w1 + x1;}
+\DoxyCodeLine{00203       \textcolor{comment}{// salto i quadrati completamente bianchi}}
+\DoxyCodeLine{00204       \textcolor{keywordflow}{if} (qBuffer[k1] >= thrBuffer[k1] -\/ thrDelta) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = ya + 1; y <= yb; y++) \{}
+\DoxyCodeLine{00207         \textcolor{keywordtype}{int} xa = std::max(1, x1 * bsize);}
+\DoxyCodeLine{00208         \textcolor{keywordtype}{int} xb = std::min(w -\/ 1, xa + bsize) -\/ 1;}
+\DoxyCodeLine{00209         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = xa + 1; x <= xb; x++) \{}
+\DoxyCodeLine{00210           \textcolor{keywordtype}{int} k = y * w + x;}
+\DoxyCodeLine{00211 }
+\DoxyCodeLine{00212           \textcolor{keywordtype}{int} vk  = vBuffer[k];}
+\DoxyCodeLine{00213           \textcolor{keywordtype}{int} vk2 = vk;}
+\DoxyCodeLine{00214           \textcolor{keywordflow}{if} (vk < thrBuffer[k1]) \{}
+\DoxyCodeLine{00215             \textcolor{comment}{// vk<thrBuffer[k1] : non e' detto che il pixel sia sfondo}}
+\DoxyCodeLine{00216             \textcolor{keywordtype}{bool} isSeed = \textcolor{keyword}{false};}
+\DoxyCodeLine{00217             \textcolor{keywordflow}{if} (vk2 <= vBuffer[k + 1] \&\& vk2 <= vBuffer[k -\/ 1] \&\&}
+\DoxyCodeLine{00218                 vk2 <= vBuffer[k + w] \&\& vk2 <= vBuffer[k -\/ w]) \{}
+\DoxyCodeLine{00219               \textcolor{comment}{// il pixel e' un minimo locale. calcolo il colore}}
+\DoxyCodeLine{00220               \textcolor{keywordtype}{int} color, value, chroma;}
+\DoxyCodeLine{00221               computeColor(color, value, chroma, buffer[k]);}
+\DoxyCodeLine{00222 }
+\DoxyCodeLine{00223               \textcolor{keyword}{const} \textcolor{keywordtype}{int} chromaThreshold = 40;}
+\DoxyCodeLine{00224               \textcolor{keywordflow}{if} (chroma > chromaThreshold) \{}
+\DoxyCodeLine{00225                 \textcolor{comment}{// il pixel e' un buon candidato ad essere "{}sicuramente}}
+\DoxyCodeLine{00226                 \textcolor{comment}{// colorato"{}: controllo i vicini}}
+\DoxyCodeLine{00227                 \textcolor{comment}{// per evitare i pixel colorati sparsi (sulle linee nere).}}
+\DoxyCodeLine{00228                 \textcolor{keywordtype}{int} m    = 0;}
+\DoxyCodeLine{00229                 \textcolor{keywordtype}{int} dd[] = \{1, -\/1, w, -\/w, 1 + w, 1 -\/ w, -\/1 + w, -\/1 -\/ w\};}
+\DoxyCodeLine{00230                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < 8; j++) \{}
+\DoxyCodeLine{00231                   \textcolor{keywordtype}{int} c1, v1, ch1;}
+\DoxyCodeLine{00232                   computeColor(c1, v1, ch1, buffer[k + dd[j]]);}
+\DoxyCodeLine{00233                   \textcolor{keywordflow}{if} (ch1 > 20 \&\& c1 == color) m++;}
+\DoxyCodeLine{00234                 \}}
+\DoxyCodeLine{00235                 \textcolor{comment}{// scarto se intorno non ci sono almeno due pixel dello stesso}}
+\DoxyCodeLine{00236                 \textcolor{comment}{// colore}}
+\DoxyCodeLine{00237                 \textcolor{comment}{// n.b. lascio un valore alto per chroma per evitare che il}}
+\DoxyCodeLine{00238                 \textcolor{comment}{// pixel possa diventare "{}sicuramente nero"{}. vedi sotto}}
+\DoxyCodeLine{00239                 \textcolor{keywordflow}{if} (m < 2) chroma = chromaThreshold -\/ 1;}
+\DoxyCodeLine{00240               \}}
+\DoxyCodeLine{00241 }
+\DoxyCodeLine{00242               \textcolor{keywordflow}{if} (chroma > chromaThreshold) \{}
+\DoxyCodeLine{00243                 \textcolor{comment}{// "{}sicuramente"{} colorato}}
+\DoxyCodeLine{00244                 tBuffer[k] = color;}
+\DoxyCodeLine{00245                 isSeed     = \textcolor{keyword}{true};}
+\DoxyCodeLine{00246               \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (chroma < 15 \&\&}
+\DoxyCodeLine{00247                          vBuffer[k] * 100 <}
+\DoxyCodeLine{00248                              qBuffer[k1] * 25 +}
+\DoxyCodeLine{00249                                  (thrBuffer[k1] -\/ thrDelta) * 75) \{}
+\DoxyCodeLine{00250                 \textcolor{comment}{// molto poco colorato e scuro (al 25\% della distanza fra}}
+\DoxyCodeLine{00251                 \textcolor{comment}{// qBuffer[] e bg) => "{}sicuramente"{} nero}}
+\DoxyCodeLine{00252                 tBuffer[k] = 0;}
+\DoxyCodeLine{00253                 isSeed     = \textcolor{keyword}{true};}
+\DoxyCodeLine{00254               \}}
+\DoxyCodeLine{00255             \}}
+\DoxyCodeLine{00256             \textcolor{keywordflow}{if} (isSeed) \{}
+\DoxyCodeLine{00257               \textcolor{comment}{// se il pixel e' sicuramente colorato o sicuramente nero diventa}}
+\DoxyCodeLine{00258               \textcolor{comment}{// un seme per il fill}}
+\DoxyCodeLine{00259               \textcolor{comment}{// il fill si deve fermare quando sono al 50\% della distanza verso}}
+\DoxyCodeLine{00260               \textcolor{comment}{// il bg}}
+\DoxyCodeLine{00261               sBuffer[k] = (vBuffer[k] + thrBuffer[k1]) / 2;}
+\DoxyCodeLine{00262               boundary1.push\_back(k);}
+\DoxyCodeLine{00263             \}}
+\DoxyCodeLine{00264           \}}
+\DoxyCodeLine{00265         \}}
+\DoxyCodeLine{00266       \}}
+\DoxyCodeLine{00267     \}}
+\DoxyCodeLine{00268   \}}
+\DoxyCodeLine{00269 }
+\DoxyCodeLine{00270   \textcolor{comment}{// vado avanti finche' ci sono semi, ma non oltre 10 iterazioni}}
+\DoxyCodeLine{00271   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} it = 0; it < 10 \&\& !boundary1.empty(); it++) \{}
+\DoxyCodeLine{00272     \textcolor{comment}{// per tutti i semi}}
+\DoxyCodeLine{00273     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)boundary1.size(); i++) \{}
+\DoxyCodeLine{00274       \textcolor{keywordtype}{int} k = boundary1[i];}
+\DoxyCodeLine{00275       \textcolor{comment}{// per ogni direzione}}
+\DoxyCodeLine{00276       \textcolor{keyword}{const} \textcolor{keywordtype}{int} dd[] = \{1, -\/1, w, -\/w\};}
+\DoxyCodeLine{00277       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < 4; j++) \{}
+\DoxyCodeLine{00278         \textcolor{keywordtype}{int} ka = dd[j] + k;}
+\DoxyCodeLine{00279         \textcolor{comment}{// se il pixel adiacente non e' gia' colorato (e non e' la cornice}}
+\DoxyCodeLine{00280         \textcolor{comment}{// esterna) e ha un v ancora abbastanza scuro...}}
+\DoxyCodeLine{00281         \textcolor{keywordflow}{if} (tBuffer[ka] > 20 \&\& vBuffer[ka] < sBuffer[k]) \{}
+\DoxyCodeLine{00282           \textcolor{comment}{// lo coloro e lo faccio diventare un nuovo seme}}
+\DoxyCodeLine{00283           tBuffer[ka] = tBuffer[k];}
+\DoxyCodeLine{00284           sBuffer[ka] = sBuffer[k];}
+\DoxyCodeLine{00285           boundary2.push\_back(ka);}
+\DoxyCodeLine{00286         \}}
+\DoxyCodeLine{00287       \}}
+\DoxyCodeLine{00288     \}}
+\DoxyCodeLine{00289     \textcolor{comment}{// scambio i buffer}}
+\DoxyCodeLine{00290     boundary1.clear();}
+\DoxyCodeLine{00291     boundary1.swap(boundary2);}
+\DoxyCodeLine{00292   \}}
+\DoxyCodeLine{00293 }
+\DoxyCodeLine{00294   \textcolor{comment}{// output}}
+\DoxyCodeLine{00295   TPixel32 bgColor =}
+\DoxyCodeLine{00296       m\_alphaEnabled ? TPixel32(0, 0, 0, 0) : TPixel32(255, 255, 255);}
+\DoxyCodeLine{00297   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = 0; y < h; y++) \{}
+\DoxyCodeLine{00298     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < w; x++) \{}
+\DoxyCodeLine{00299       \textcolor{keywordtype}{int} k = y * w + x;}
+\DoxyCodeLine{00300       \textcolor{keywordflow}{if} (tBuffer[k] <= 6)}
+\DoxyCodeLine{00301         buffer[k] = colors[tBuffer[k]];}
+\DoxyCodeLine{00302       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00303         buffer[k] = bgColor;}
+\DoxyCodeLine{00304     \}}
+\DoxyCodeLine{00305   \}}
+\DoxyCodeLine{00306 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/tbinarizer.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tbinarizer.\+cpp\end{DoxyCompactItemize}

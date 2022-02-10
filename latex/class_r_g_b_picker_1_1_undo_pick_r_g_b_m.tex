@@ -1,0 +1,167 @@
+\hypertarget{class_r_g_b_picker_1_1_undo_pick_r_g_b_m}{}\doxysection{RGBPicker\+::Undo\+Pick\+RGBM Class Reference}
+\label{class_r_g_b_picker_1_1_undo_pick_r_g_b_m}\index{RGBPicker::UndoPickRGBM@{RGBPicker::UndoPickRGBM}}
+Inheritance diagram for RGBPicker\+::Undo\+Pick\+RGBM\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_r_g_b_picker_1_1_undo_pick_r_g_b_m}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_a110573065c22fbe7c18d261b20c8cd72}{Undo\+Pick\+RGBM}} (\mbox{\hyperlink{class_t_palette}{TPalette}} $\ast$palette, int style\+Id, const TPixel32 new\+Value, const \mbox{\hyperlink{class_t_smart_pointer_t}{TXsh\+Simple\+LevelP}} \&level)
+\item 
+void \mbox{\hyperlink{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_a8b7cd17d3db6fb86f773d06f3d1e84d2}{set\+Color}} (const TPixel32 \&color) const
+\item 
+void \mbox{\hyperlink{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_adb5922d1b6afe0f4592bb0ffaeb37c98}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_a596cc228ad61d81eb35985514ecb81f5}{redo}} () const override
+\item 
+int \mbox{\hyperlink{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_a396f1d221dd3eb275fd3db4b5dfc15aa}{get\+Size}} () const override
+\item 
+QString \mbox{\hyperlink{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_ae4b1ceac3027543c27b8b30f72989b6b}{get\+History\+String}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_a110573065c22fbe7c18d261b20c8cd72}\label{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_a110573065c22fbe7c18d261b20c8cd72}} 
+\index{RGBPicker::UndoPickRGBM@{RGBPicker::UndoPickRGBM}!UndoPickRGBM@{UndoPickRGBM}}
+\index{UndoPickRGBM@{UndoPickRGBM}!RGBPicker::UndoPickRGBM@{RGBPicker::UndoPickRGBM}}
+\doxysubsubsection{\texorpdfstring{UndoPickRGBM()}{UndoPickRGBM()}}
+{\footnotesize\ttfamily RGBPicker\+::\+Undo\+Pick\+RGBM\+::\+Undo\+Pick\+RGBM (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_palette}{TPalette}} $\ast$}]{palette,  }\item[{int}]{style\+Id,  }\item[{const TPixel32}]{new\+Value,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TXsh\+Simple\+LevelP}} \&}]{level }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057       : m\_palette(palette)}
+\DoxyCodeLine{00058       , m\_styleId(styleId)}
+\DoxyCodeLine{00059       , m\_newValue(newValue)}
+\DoxyCodeLine{00060       , m\_level(level)}
+\DoxyCodeLine{00061       , m\_colorAutoApplyEnabled(\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{00062     \mbox{\hyperlink{class_palette_controller}{PaletteController}} *controller =}
+\DoxyCodeLine{00063         TTool::getApplication()-\/>getPaletteController();}
+\DoxyCodeLine{00064     m\_colorAutoApplyEnabled = controller-\/>isColorAutoApplyEnabled();}
+\DoxyCodeLine{00065     m\_styleParamIndex = controller-\/>getCurrentPalette()-\/>getStyleParamIndex();}
+\DoxyCodeLine{00066     \textcolor{keywordflow}{if} (m\_colorAutoApplyEnabled) \{}
+\DoxyCodeLine{00067       \mbox{\hyperlink{class_t_color_style}{TColorStyle}} *cs = m\_palette-\/>\mbox{\hyperlink{class_t_palette_a0f6a4eda7dafb0a9f2b43160cfec81e4}{getStyle}}(m\_styleId);}
+\DoxyCodeLine{00068       \textcolor{keywordflow}{if} (0 <= m\_styleParamIndex \&\&}
+\DoxyCodeLine{00069           m\_styleParamIndex < cs-\/>getColorParamCount())}
+\DoxyCodeLine{00070         m\_oldValue = cs-\/>\mbox{\hyperlink{class_t_color_style_a0d6615e246d74d91464078e2ad418f5c}{getColorParamValue}}(m\_styleParamIndex);}
+\DoxyCodeLine{00071       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00072         m\_oldValue = cs-\/>\mbox{\hyperlink{class_t_color_style_abd78dd4e3ff3e2e78b647195f7622aa7}{getMainColor}}();}
+\DoxyCodeLine{00073     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00074       m\_oldValue = controller-\/>getColorSample();}
+\DoxyCodeLine{00075     \}}
+\DoxyCodeLine{00076   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_ae4b1ceac3027543c27b8b30f72989b6b}\label{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_ae4b1ceac3027543c27b8b30f72989b6b}} 
+\index{RGBPicker::UndoPickRGBM@{RGBPicker::UndoPickRGBM}!getHistoryString@{getHistoryString}}
+\index{getHistoryString@{getHistoryString}!RGBPicker::UndoPickRGBM@{RGBPicker::UndoPickRGBM}}
+\doxysubsubsection{\texorpdfstring{getHistoryString()}{getHistoryString()}}
+{\footnotesize\ttfamily QString RGBPicker\+::\+Undo\+Pick\+RGBM\+::get\+History\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00109                                       \{}
+\DoxyCodeLine{00110     \textcolor{keywordflow}{return} QObject::tr(\textcolor{stringliteral}{"{}RGB Picker (R\%1, G\%2, B\%3)"{}})}
+\DoxyCodeLine{00111         .arg(QString::number((\textcolor{keywordtype}{int})m\_newValue.r))}
+\DoxyCodeLine{00112         .arg(QString::number((\textcolor{keywordtype}{int})m\_newValue.g))}
+\DoxyCodeLine{00113         .arg(QString::number((\textcolor{keywordtype}{int})m\_newValue.b));}
+\DoxyCodeLine{00114   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_a396f1d221dd3eb275fd3db4b5dfc15aa}\label{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_a396f1d221dd3eb275fd3db4b5dfc15aa}} 
+\index{RGBPicker::UndoPickRGBM@{RGBPicker::UndoPickRGBM}!getSize@{getSize}}
+\index{getSize@{getSize}!RGBPicker::UndoPickRGBM@{RGBPicker::UndoPickRGBM}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int RGBPicker\+::\+Undo\+Pick\+RGBM\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(*this); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_a596cc228ad61d81eb35985514ecb81f5}\label{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_a596cc228ad61d81eb35985514ecb81f5}} 
+\index{RGBPicker::UndoPickRGBM@{RGBPicker::UndoPickRGBM}!redo@{redo}}
+\index{redo@{redo}!RGBPicker::UndoPickRGBM@{RGBPicker::UndoPickRGBM}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void RGBPicker\+::\+Undo\+Pick\+RGBM\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00105 \{ setColor(m\_newValue); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_a8b7cd17d3db6fb86f773d06f3d1e84d2}\label{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_a8b7cd17d3db6fb86f773d06f3d1e84d2}} 
+\index{RGBPicker::UndoPickRGBM@{RGBPicker::UndoPickRGBM}!setColor@{setColor}}
+\index{setColor@{setColor}!RGBPicker::UndoPickRGBM@{RGBPicker::UndoPickRGBM}}
+\doxysubsubsection{\texorpdfstring{setColor()}{setColor()}}
+{\footnotesize\ttfamily void RGBPicker\+::\+Undo\+Pick\+RGBM\+::set\+Color (\begin{DoxyParamCaption}\item[{const TPixel32 \&}]{color }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00078                                              \{}
+\DoxyCodeLine{00079     \mbox{\hyperlink{class_palette_controller}{PaletteController}} *controller =}
+\DoxyCodeLine{00080         TTool::getApplication()-\/>getPaletteController();}
+\DoxyCodeLine{00081     \textcolor{keywordflow}{if} (m\_colorAutoApplyEnabled) \{}
+\DoxyCodeLine{00082       \mbox{\hyperlink{class_t_color_style}{TColorStyle}} *cs = m\_palette-\/>\mbox{\hyperlink{class_t_palette_a0f6a4eda7dafb0a9f2b43160cfec81e4}{getStyle}}(m\_styleId);}
+\DoxyCodeLine{00083       \textcolor{keywordflow}{if} (0 <= m\_styleParamIndex \&\&}
+\DoxyCodeLine{00084           m\_styleParamIndex < cs-\/>getColorParamCount())}
+\DoxyCodeLine{00085         cs-\/>\mbox{\hyperlink{class_t_color_style_a7c01d0327d6411361d993f2bf979ff42}{setColorParamValue}}(m\_styleParamIndex, color);}
+\DoxyCodeLine{00086       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00087         cs-\/>\mbox{\hyperlink{class_t_color_style_a7298dce9321f51cfb21f3fcb13701240}{setMainColor}}(color);}
+\DoxyCodeLine{00088       cs-\/>\mbox{\hyperlink{class_t_color_style_a504046079b4938a1945db7847cb4a740}{invalidateIcon}}();}
+\DoxyCodeLine{00089       controller-\/>getCurrentPalette()-\/>notifyColorStyleChanged();}
+\DoxyCodeLine{00090       updateLevel();}
+\DoxyCodeLine{00091     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00092       controller-\/>setColorSample(color);}
+\DoxyCodeLine{00093     \}}
+\DoxyCodeLine{00094     \mbox{\hyperlink{class_t_application}{TTool::Application}} *app = TTool::getApplication();}
+\DoxyCodeLine{00095     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *level  = app-\/>getCurrentLevel()-\/>getSimpleLevel();}
+\DoxyCodeLine{00096     \textcolor{keywordflow}{if} (level) \{}
+\DoxyCodeLine{00097       std::vector<TFrameId> fids;}
+\DoxyCodeLine{00098       level-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a567daee4ca12a0e92445bcf98a6541f1}{getFids}}(fids);}
+\DoxyCodeLine{00099       invalidateIcons(level, fids);}
+\DoxyCodeLine{00100     \}}
+\DoxyCodeLine{00101   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_adb5922d1b6afe0f4592bb0ffaeb37c98}\label{class_r_g_b_picker_1_1_undo_pick_r_g_b_m_adb5922d1b6afe0f4592bb0ffaeb37c98}} 
+\index{RGBPicker::UndoPickRGBM@{RGBPicker::UndoPickRGBM}!undo@{undo}}
+\index{undo@{undo}!RGBPicker::UndoPickRGBM@{RGBPicker::UndoPickRGBM}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void RGBPicker\+::\+Undo\+Pick\+RGBM\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00103 \{ setColor(m\_oldValue); \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/rgbpickertool.\+cpp\end{DoxyCompactItemize}

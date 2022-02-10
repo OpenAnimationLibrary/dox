@@ -1,0 +1,101 @@
+\hypertarget{classmov__io_1_1_l_r_image_read_parser}{}\doxysection{mov\+\_\+io\+::LRImage\+Read\+Parser Class Reference}
+\label{classmov__io_1_1_l_r_image_read_parser}\index{mov\_io::LRImageReadParser@{mov\_io::LRImageReadParser}}
+Inheritance diagram for mov\+\_\+io\+::LRImage\+Read\+Parser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmov__io_1_1_l_r_image_read_parser}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{classmov__io_1_1_l_r_image_read_parser_af5d65ff43ecf161730794ee8f57b4087}{header}} () const override
+\item 
+void \mbox{\hyperlink{classmov__io_1_1_l_r_image_read_parser_aebd6bfb0b3072505c2a9b4098831495e}{operator()}} (\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&stream) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmov__io_1_1_l_r_image_read_parser_af5d65ff43ecf161730794ee8f57b4087}\label{classmov__io_1_1_l_r_image_read_parser_af5d65ff43ecf161730794ee8f57b4087}} 
+\index{mov\_io::LRImageReadParser@{mov\_io::LRImageReadParser}!header@{header}}
+\index{header@{header}!mov\_io::LRImageReadParser@{mov\_io::LRImageReadParser}}
+\doxysubsubsection{\texorpdfstring{header()}{header()}}
+{\footnotesize\ttfamily QString mov\+\_\+io\+::\+LRImage\+Read\+Parser\+::header (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00201 \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$LRMovImageRead"{}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmov__io_1_1_l_r_image_read_parser_aebd6bfb0b3072505c2a9b4098831495e}\label{classmov__io_1_1_l_r_image_read_parser_aebd6bfb0b3072505c2a9b4098831495e}} 
+\index{mov\_io::LRImageReadParser@{mov\_io::LRImageReadParser}!operator()@{operator()}}
+\index{operator()@{operator()}!mov\_io::LRImageReadParser@{mov\_io::LRImageReadParser}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily void mov\+\_\+io\+::\+LRImage\+Read\+Parser\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00490                                                \{}
+\DoxyCodeLine{00491   tipc\_debug(QTime fTime; QTime irTime; QTime shTime; fTime.start(););}
+\DoxyCodeLine{00492 }
+\DoxyCodeLine{00493   \{}
+\DoxyCodeLine{00494     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} id;}
+\DoxyCodeLine{00495     \textcolor{keywordtype}{int} lx, ly, pixSize, frameIdx, x, y, shrinkX, shrinkY;}
+\DoxyCodeLine{00496 }
+\DoxyCodeLine{00497     msg >> \textcolor{keywordtype}{id} >> lx >> ly >> pixSize >> frameIdx >> x >> y >> shrinkX >>}
+\DoxyCodeLine{00498         shrinkY >> clr;}
+\DoxyCodeLine{00499 }
+\DoxyCodeLine{00500     \textcolor{keywordflow}{if} (pixSize != 4) \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00501 }
+\DoxyCodeLine{00502     QHash<unsigned int, TLevelReaderP>::iterator it = readers.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00503     \textcolor{keywordflow}{if} (it == readers.end()) \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00504 }
+\DoxyCodeLine{00505     tipc\_debug(irTime.start());}
+\DoxyCodeLine{00506 }
+\DoxyCodeLine{00507     \textcolor{comment}{// Load the raster}}
+\DoxyCodeLine{00508     \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras(lx, ly);}
+\DoxyCodeLine{00509     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00510       \mbox{\hyperlink{class_t_image_reader_p}{TImageReaderP}} ir(it.value()-\/>getFrameReader(frameIdx + 1));}
+\DoxyCodeLine{00511       ir-\/>load(ras, \mbox{\hyperlink{class_t_point_t}{TPoint}}(x, y), shrinkX, shrinkY);}
+\DoxyCodeLine{00512     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00513       \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00514     \}}
+\DoxyCodeLine{00515 }
+\DoxyCodeLine{00516     tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}load time:"{}} << irTime.elapsed());}
+\DoxyCodeLine{00517     tipc\_debug(shTime.start());}
+\DoxyCodeLine{00518 }
+\DoxyCodeLine{00519     \mbox{\hyperlink{classt32bitsrv_1_1_raster_exchanger}{t32bitsrv::RasterExchanger<TPixel32>}} exch(ras);}
+\DoxyCodeLine{00520     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{namespacetipc_a20c43aa530b558c7dcb3149d8901bdc4}{tipc::writeShMemBuffer}}(*stream(), msg << clr,}
+\DoxyCodeLine{00521                                 lx * ly * \textcolor{keyword}{sizeof}(TPixel32), \&exch))}
+\DoxyCodeLine{00522       \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00523 }
+\DoxyCodeLine{00524     tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}exchange time:"{}} << shTime.elapsed());}
+\DoxyCodeLine{00525     tipc\_debug(qDebug() << \textcolor{stringliteral}{"{}TLevelReaderMov::loadImage time:"{}}}
+\DoxyCodeLine{00526                         << fTime.elapsed());}
+\DoxyCodeLine{00527   \}}
+\DoxyCodeLine{00528 }
+\DoxyCodeLine{00529   \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00530 }
+\DoxyCodeLine{00531 err:}
+\DoxyCodeLine{00532 }
+\DoxyCodeLine{00533   msg << QString(\textcolor{stringliteral}{"{}err"{}});}
+\DoxyCodeLine{00534 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+h\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+cpp\end{DoxyCompactItemize}

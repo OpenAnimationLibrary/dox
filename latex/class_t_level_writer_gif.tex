@@ -1,0 +1,259 @@
+\hypertarget{class_t_level_writer_gif}{}\doxysection{TLevel\+Writer\+Gif Class Reference}
+\label{class_t_level_writer_gif}\index{TLevelWriterGif@{TLevelWriterGif}}
+Inheritance diagram for TLevel\+Writer\+Gif\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_t_level_writer_gif}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_level_writer_gif_ad7a9d59c18fb9e0160a978781c527fac}{TLevel\+Writer\+Gif}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, \mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$winfo)
+\item 
+void \mbox{\hyperlink{class_t_level_writer_gif_af334071f5fd44210c3c0c6092907135f}{set\+Frame\+Rate}} (double fps) override
+\item 
+\mbox{\hyperlink{class_t_image_writer_p}{TImage\+WriterP}} \mbox{\hyperlink{class_t_level_writer_gif_a22316f355761162f51ab04e79a06d4ba}{get\+Frame\+Writer}} (\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} fid) override
+\item 
+void \mbox{\hyperlink{class_t_level_writer_gif_a4d2b5b9630076d8e173018c739bbd65f}{save}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&image, int frame\+Index)
+\item 
+void \mbox{\hyperlink{class_t_level_writer_gif_a0f749cf8588cb7e4bb559e7fe61722d6}{save\+Sound\+Track}} (\mbox{\hyperlink{class_t_sound_track}{TSound\+Track}} $\ast$st) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}} $\ast$ \mbox{\hyperlink{class_t_level_writer_gif_aaca846aa2a7e790eafb4440457290b03}{create}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, \mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$winfo)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_level_writer_gif_ad7a9d59c18fb9e0160a978781c527fac}\label{class_t_level_writer_gif_ad7a9d59c18fb9e0160a978781c527fac}} 
+\index{TLevelWriterGif@{TLevelWriterGif}!TLevelWriterGif@{TLevelWriterGif}}
+\index{TLevelWriterGif@{TLevelWriterGif}!TLevelWriterGif@{TLevelWriterGif}}
+\doxysubsubsection{\texorpdfstring{TLevelWriterGif()}{TLevelWriterGif()}}
+{\footnotesize\ttfamily TLevel\+Writer\+Gif\+::\+TLevel\+Writer\+Gif (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$}]{winfo }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039     : \mbox{\hyperlink{class_t_level_writer}{TLevelWriter}}(path, winfo) \{}
+\DoxyCodeLine{00040   \textcolor{keywordflow}{if} (!m\_properties) m\_properties = \textcolor{keyword}{new} \mbox{\hyperlink{class_tiio_1_1_gif_writer_properties}{Tiio::GifWriterProperties}}();}
+\DoxyCodeLine{00041   std::string scale = m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Scale"{}})-\/>getValueAsString();}
+\DoxyCodeLine{00042   m\_scale           = QString::fromStdString(scale).toInt();}
+\DoxyCodeLine{00043   \mbox{\hyperlink{class_t_bool_property}{TBoolProperty}} *looping =}
+\DoxyCodeLine{00044       (\mbox{\hyperlink{class_t_bool_property}{TBoolProperty}} *)m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Looping"{}});}
+\DoxyCodeLine{00045   m\_looping = looping-\/>getValue();}
+\DoxyCodeLine{00046   \mbox{\hyperlink{class_t_enum_property}{TEnumProperty}} *modeProp =}
+\DoxyCodeLine{00047       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_enum_property}{TEnumProperty}} *\textcolor{keyword}{>}(m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Mode"{}}));}
+\DoxyCodeLine{00048   m\_mode = 0;}
+\DoxyCodeLine{00049   \textcolor{keywordflow}{if} (modeProp) \{}
+\DoxyCodeLine{00050     m\_mode = modeProp-\/>getIndex();}
+\DoxyCodeLine{00051   \}}
+\DoxyCodeLine{00052   std::string maxcolors =}
+\DoxyCodeLine{00053       m\_properties-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(\textcolor{stringliteral}{"{}Max Colors"{}})-\/>getValueAsString();}
+\DoxyCodeLine{00054   m\_maxcolors = QString::fromStdString(maxcolors).toInt();}
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056   ffmpegWriter = \textcolor{keyword}{new} \mbox{\hyperlink{class_ffmpeg}{Ffmpeg}}();}
+\DoxyCodeLine{00057   ffmpegWriter-\/>setPath(m\_path);}
+\DoxyCodeLine{00058   \textcolor{comment}{// m\_frameCount = 0;}}
+\DoxyCodeLine{00059   \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(m\_path)) TSystem::deleteFile(m\_path);}
+\DoxyCodeLine{00060 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_gif_a73abde5bf56954a26538295b622fc07d}\label{class_t_level_writer_gif_a73abde5bf56954a26538295b622fc07d}} 
+\index{TLevelWriterGif@{TLevelWriterGif}!````~TLevelWriterGif@{$\sim$TLevelWriterGif}}
+\index{````~TLevelWriterGif@{$\sim$TLevelWriterGif}!TLevelWriterGif@{TLevelWriterGif}}
+\doxysubsubsection{\texorpdfstring{$\sim$TLevelWriterGif()}{~TLevelWriterGif()}}
+{\footnotesize\ttfamily TLevel\+Writer\+Gif\+::$\sim$\+TLevel\+Writer\+Gif (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00064                                   \{}
+\DoxyCodeLine{00065   QStringList preIArgs;}
+\DoxyCodeLine{00066   QStringList postIArgs;}
+\DoxyCodeLine{00067   QStringList palettePreIArgs;}
+\DoxyCodeLine{00068   QStringList palettePostIArgs;}
+\DoxyCodeLine{00069 }
+\DoxyCodeLine{00070   \textcolor{keywordtype}{int} outLx = m\_lx;}
+\DoxyCodeLine{00071   \textcolor{keywordtype}{int} outLy = m\_ly;}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073   \textcolor{comment}{// set scaling}}
+\DoxyCodeLine{00074   outLx = m\_lx * m\_scale / 100;}
+\DoxyCodeLine{00075   outLy = m\_ly * m\_scale / 100;}
+\DoxyCodeLine{00076   \textcolor{comment}{/*}}
+\DoxyCodeLine{00077 \textcolor{comment}{  // ffmpeg doesn't like resolutions that aren't divisible by 2.}}
+\DoxyCodeLine{00078 \textcolor{comment}{  if (outLx \% 2 != 0) outLx++;}}
+\DoxyCodeLine{00079 \textcolor{comment}{  if (outLy \% 2 != 0) outLy++;}}
+\DoxyCodeLine{00080 \textcolor{comment}{  */}}
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00082   \textcolor{keywordtype}{double} framerate = (m\_frameRate < 1.0 ? 1.0 : m\_frameRate);}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084   QString filters = \textcolor{stringliteral}{"{}fps="{}} + QString::number(framerate) +}
+\DoxyCodeLine{00085                     \textcolor{stringliteral}{"{},scale="{}} + QString::number(outLx) + \textcolor{stringliteral}{"{}:"{}} +}
+\DoxyCodeLine{00086                     QString::number(outLy) + \textcolor{stringliteral}{"{}:flags=lanczos"{}};}
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088   \textcolor{comment}{// 1 = "{}dither=sierra2\_4a"{} is default}}
+\DoxyCodeLine{00089   \textcolor{keyword}{const} \textcolor{keywordtype}{char} *ditherConsts[4] = \{\textcolor{stringliteral}{"{}none"{}}, \textcolor{stringliteral}{"{}sierra2\_4a"{}}, \textcolor{stringliteral}{"{}bayer:bayer\_scale=2"{}},}
+\DoxyCodeLine{00090                                  \textcolor{stringliteral}{"{}bayer:bayer\_scale=1"{}}\};}
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00092   \textcolor{comment}{// Please be careful when moving items, logic AND 3 requires alignment}}
+\DoxyCodeLine{00093   \textcolor{keywordflow}{switch} (m\_mode) \{}
+\DoxyCodeLine{00094   \textcolor{keywordflow}{case} 0:}
+\DoxyCodeLine{00095   \textcolor{keywordflow}{case} 1:}
+\DoxyCodeLine{00096   \textcolor{keywordflow}{case} 2:}
+\DoxyCodeLine{00097   \textcolor{keywordflow}{case} 3:}
+\DoxyCodeLine{00098     filters += \textcolor{stringliteral}{"{},split[o1][o2];[o1]palettegen"{}};  \textcolor{comment}{// "{}stats\_mode=full"{} is default}}
+\DoxyCodeLine{00099     \textcolor{keywordflow}{if} (m\_maxcolors != 256) \{}
+\DoxyCodeLine{00100       filters += \textcolor{stringliteral}{"{}=max\_colors="{}} + QString::number(m\_maxcolors);}
+\DoxyCodeLine{00101     \}}
+\DoxyCodeLine{00102     filters += \textcolor{stringliteral}{"{}[p];[o2]fifo[o3];[o3][p]paletteuse"{}};}
+\DoxyCodeLine{00103     \textcolor{keywordflow}{if} ((m\_mode \& 3) != 1) \{}
+\DoxyCodeLine{00104       filters += \textcolor{stringliteral}{"{}=dither="{}} + QString(ditherConsts[m\_mode \& 3]);}
+\DoxyCodeLine{00105     \}}
+\DoxyCodeLine{00106     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00107   \textcolor{keywordflow}{case} 4:}
+\DoxyCodeLine{00108   \textcolor{keywordflow}{case} 5:}
+\DoxyCodeLine{00109   \textcolor{keywordflow}{case} 6:}
+\DoxyCodeLine{00110   \textcolor{keywordflow}{case} 7:}
+\DoxyCodeLine{00111     filters += \textcolor{stringliteral}{"{},split[o1][o2];[o1]palettegen=stats\_mode=diff"{}};}
+\DoxyCodeLine{00112     \textcolor{keywordflow}{if} (m\_maxcolors != 256) \{}
+\DoxyCodeLine{00113       filters += \textcolor{stringliteral}{"{}:max\_colors="{}} + QString::number(m\_maxcolors);}
+\DoxyCodeLine{00114     \}}
+\DoxyCodeLine{00115     filters += \textcolor{stringliteral}{"{}[p];[o2]fifo[o3];[o3][p]paletteuse"{}};}
+\DoxyCodeLine{00116     \textcolor{keywordflow}{if} ((m\_mode \& 3) != 1) \{}
+\DoxyCodeLine{00117       filters += \textcolor{stringliteral}{"{}=dither="{}} + QString(ditherConsts[m\_mode \& 3]);}
+\DoxyCodeLine{00118     \}}
+\DoxyCodeLine{00119     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00120   \textcolor{keywordflow}{case} 8:}
+\DoxyCodeLine{00121   \textcolor{keywordflow}{case} 9:}
+\DoxyCodeLine{00122   \textcolor{keywordflow}{case} 10:}
+\DoxyCodeLine{00123   \textcolor{keywordflow}{case} 11:}
+\DoxyCodeLine{00124     filters += \textcolor{stringliteral}{"{},split[o1][o2];[o1]palettegen=stats\_mode=single"{}};}
+\DoxyCodeLine{00125     \textcolor{keywordflow}{if} (m\_maxcolors != 256) \{}
+\DoxyCodeLine{00126       filters += \textcolor{stringliteral}{"{}:max\_colors="{}} + QString::number(m\_maxcolors);}
+\DoxyCodeLine{00127     \}}
+\DoxyCodeLine{00128     filters += \textcolor{stringliteral}{"{}[p];[o2]fifo[o3];[o3][p]paletteuse=new=1"{}};}
+\DoxyCodeLine{00129     \textcolor{keywordflow}{if} ((m\_mode \& 3) != 1) \{}
+\DoxyCodeLine{00130       filters += \textcolor{stringliteral}{"{}:dither="{}} + QString(ditherConsts[m\_mode \& 3]);}
+\DoxyCodeLine{00131     \}}
+\DoxyCodeLine{00132     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00133   \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00134     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00135   \}}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137   preIArgs << \textcolor{stringliteral}{"{}-\/v"{}};}
+\DoxyCodeLine{00138   preIArgs << \textcolor{stringliteral}{"{}warning"{}};}
+\DoxyCodeLine{00139   postIArgs << \textcolor{stringliteral}{"{}-\/vf"{}};}
+\DoxyCodeLine{00140   postIArgs << filters;}
+\DoxyCodeLine{00141   postIArgs << \textcolor{stringliteral}{"{}-\/gifflags"{}};}
+\DoxyCodeLine{00142   postIArgs << \textcolor{stringliteral}{"{}0"{}};}
+\DoxyCodeLine{00143 }
+\DoxyCodeLine{00144   \textcolor{keywordflow}{if} (!m\_looping) \{}
+\DoxyCodeLine{00145     postIArgs << \textcolor{stringliteral}{"{}-\/loop"{}};}
+\DoxyCodeLine{00146     postIArgs << \textcolor{stringliteral}{"{}-\/1"{}};}
+\DoxyCodeLine{00147   \}}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149   std::string outPath = m\_path.getQString().toStdString();}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   ffmpegWriter-\/>runFfmpeg(preIArgs, postIArgs, \textcolor{keyword}{false}, \textcolor{keyword}{false}, \textcolor{keyword}{true});}
+\DoxyCodeLine{00152   ffmpegWriter-\/>cleanUpFiles();}
+\DoxyCodeLine{00153 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_level_writer_gif_aaca846aa2a7e790eafb4440457290b03}\label{class_t_level_writer_gif_aaca846aa2a7e790eafb4440457290b03}} 
+\index{TLevelWriterGif@{TLevelWriterGif}!create@{create}}
+\index{create@{create}!TLevelWriterGif@{TLevelWriterGif}}
+\doxysubsubsection{\texorpdfstring{create()}{create()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}} $\ast$ TLevel\+Writer\+Gif\+::create (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$}]{winfo }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031                                                                             \{}
+\DoxyCodeLine{00032     \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_t_level_writer_gif}{TLevelWriterGif}}(path, winfo);}
+\DoxyCodeLine{00033   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_gif_a22316f355761162f51ab04e79a06d4ba}\label{class_t_level_writer_gif_a22316f355761162f51ab04e79a06d4ba}} 
+\index{TLevelWriterGif@{TLevelWriterGif}!getFrameWriter@{getFrameWriter}}
+\index{getFrameWriter@{getFrameWriter}!TLevelWriterGif@{TLevelWriterGif}}
+\doxysubsubsection{\texorpdfstring{getFrameWriter()}{getFrameWriter()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_image_writer_p}{TImage\+WriterP}} TLevel\+Writer\+Gif\+::get\+Frame\+Writer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}}}]{fid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00157                                                           \{}
+\DoxyCodeLine{00158   \textcolor{comment}{// if (IOError != 0)}}
+\DoxyCodeLine{00159   \textcolor{comment}{//    throw TImageException(m\_path, buildGifExceptionString(IOError));}}
+\DoxyCodeLine{00160   \textcolor{keywordflow}{if} (!fid.getLetter().isEmpty()) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_image_writer_p}{TImageWriterP}}(0);}
+\DoxyCodeLine{00161   \textcolor{keywordtype}{int} index            = fid.getNumber();}
+\DoxyCodeLine{00162   \mbox{\hyperlink{class_t_image_writer_gif}{TImageWriterGif}} *iwg = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_image_writer_gif}{TImageWriterGif}}(m\_path, index, \textcolor{keyword}{this});}
+\DoxyCodeLine{00163   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_image_writer_p}{TImageWriterP}}(iwg);}
+\DoxyCodeLine{00164 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_gif_a4d2b5b9630076d8e173018c739bbd65f}\label{class_t_level_writer_gif_a4d2b5b9630076d8e173018c739bbd65f}} 
+\index{TLevelWriterGif@{TLevelWriterGif}!save@{save}}
+\index{save@{save}!TLevelWriterGif@{TLevelWriterGif}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily void TLevel\+Writer\+Gif\+::save (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&}]{image,  }\item[{int}]{frame\+Index }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00177                                                              \{}
+\DoxyCodeLine{00178   \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} image(img);}
+\DoxyCodeLine{00179   m\_lx = image-\/>getRaster()-\/>getLx();}
+\DoxyCodeLine{00180   m\_ly = image-\/>getRaster()-\/>getLy();}
+\DoxyCodeLine{00181   ffmpegWriter-\/>createIntermediateImage(img, frameIndex);}
+\DoxyCodeLine{00182 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_gif_a0f749cf8588cb7e4bb559e7fe61722d6}\label{class_t_level_writer_gif_a0f749cf8588cb7e4bb559e7fe61722d6}} 
+\index{TLevelWriterGif@{TLevelWriterGif}!saveSoundTrack@{saveSoundTrack}}
+\index{saveSoundTrack@{saveSoundTrack}!TLevelWriterGif@{TLevelWriterGif}}
+\doxysubsubsection{\texorpdfstring{saveSoundTrack()}{saveSoundTrack()}}
+{\footnotesize\ttfamily void TLevel\+Writer\+Gif\+::save\+Sound\+Track (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_sound_track}{TSound\+Track}} $\ast$}]{st }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00173 \{ \textcolor{keywordflow}{return}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_gif_af334071f5fd44210c3c0c6092907135f}\label{class_t_level_writer_gif_af334071f5fd44210c3c0c6092907135f}} 
+\index{TLevelWriterGif@{TLevelWriterGif}!setFrameRate@{setFrameRate}}
+\index{setFrameRate@{setFrameRate}!TLevelWriterGif@{TLevelWriterGif}}
+\doxysubsubsection{\texorpdfstring{setFrameRate()}{setFrameRate()}}
+{\footnotesize\ttfamily void TLevel\+Writer\+Gif\+::set\+Frame\+Rate (\begin{DoxyParamCaption}\item[{double}]{fps }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00167                                              \{}
+\DoxyCodeLine{00168   \textcolor{comment}{// m\_fps = fps;}}
+\DoxyCodeLine{00169   m\_frameRate = fps;}
+\DoxyCodeLine{00170   ffmpegWriter-\/>setFrameRate(fps);}
+\DoxyCodeLine{00171 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/ffmpeg/tiio\+\_\+gif.\+h\item 
+E\+:/opentoonz/toonz/sources/image/ffmpeg/tiio\+\_\+gif.\+cpp\end{DoxyCompactItemize}

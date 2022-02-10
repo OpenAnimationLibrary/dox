@@ -1,0 +1,90 @@
+\hypertarget{class_fx_settings_panel}{}\doxysection{Fx\+Settings\+Panel Class Reference}
+\label{class_fx_settings_panel}\index{FxSettingsPanel@{FxSettingsPanel}}
+Inheritance diagram for Fx\+Settings\+Panel\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_fx_settings_panel}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_fx_settings_panel_ae49c1dc705a798e3f7e5d9d2e4c88065}{Fx\+Settings\+Panel}} (QWidget $\ast$parent)
+\item 
+void \mbox{\hyperlink{class_fx_settings_panel_a87d8f1124165cafc1d9e5ae6991ab4cd}{restore\+Floating\+Panel\+State}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_fx_settings_panel_ae49c1dc705a798e3f7e5d9d2e4c88065}\label{class_fx_settings_panel_ae49c1dc705a798e3f7e5d9d2e4c88065}} 
+\index{FxSettingsPanel@{FxSettingsPanel}!FxSettingsPanel@{FxSettingsPanel}}
+\index{FxSettingsPanel@{FxSettingsPanel}!FxSettingsPanel@{FxSettingsPanel}}
+\doxysubsubsection{\texorpdfstring{FxSettingsPanel()}{FxSettingsPanel()}}
+{\footnotesize\ttfamily Fx\+Settings\+Panel\+::\+Fx\+Settings\+Panel (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01507                                                 : \mbox{\hyperlink{class_t_panel}{TPanel}}(parent) \{}
+\DoxyCodeLine{01508   \mbox{\hyperlink{class_t_app}{TApp}} *app            = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{01509   \mbox{\hyperlink{class_t_scene_handle}{TSceneHandle}} *hScene = app-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}();}
+\DoxyCodeLine{01510   TPixel32 col1, col2;}
+\DoxyCodeLine{01511   Preferences::instance()-\/>getChessboardColors(col1, col2);}
+\DoxyCodeLine{01512 }
+\DoxyCodeLine{01513   m\_fxSettings = \textcolor{keyword}{new} \mbox{\hyperlink{class_fx_settings}{FxSettings}}(\textcolor{keyword}{this}, col1, col2);}
+\DoxyCodeLine{01514   m\_fxSettings-\/>setSceneHandle(hScene);}
+\DoxyCodeLine{01515   m\_fxSettings-\/>setFxHandle(app-\/>\mbox{\hyperlink{class_t_app_a1d1d4b484617e7a938040554beca6282}{getCurrentFx}}());}
+\DoxyCodeLine{01516   m\_fxSettings-\/>setFrameHandle(app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}());}
+\DoxyCodeLine{01517   m\_fxSettings-\/>setXsheetHandle(app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}());}
+\DoxyCodeLine{01518   m\_fxSettings-\/>setLevelHandle(app-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}());}
+\DoxyCodeLine{01519   m\_fxSettings-\/>setObjectHandle(app-\/>\mbox{\hyperlink{class_t_app_a0d91c122eec2b756b7c4780014e49f9e}{getCurrentObject}}());}
+\DoxyCodeLine{01520 }
+\DoxyCodeLine{01521   m\_fxSettings-\/>setCurrentFx();}
+\DoxyCodeLine{01522 }
+\DoxyCodeLine{01523   setWidget(m\_fxSettings);}
+\DoxyCodeLine{01524 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_fx_settings_panel_a87d8f1124165cafc1d9e5ae6991ab4cd}\label{class_fx_settings_panel_a87d8f1124165cafc1d9e5ae6991ab4cd}} 
+\index{FxSettingsPanel@{FxSettingsPanel}!restoreFloatingPanelState@{restoreFloatingPanelState}}
+\index{restoreFloatingPanelState@{restoreFloatingPanelState}!FxSettingsPanel@{FxSettingsPanel}}
+\doxysubsubsection{\texorpdfstring{restoreFloatingPanelState()}{restoreFloatingPanelState()}}
+{\footnotesize\ttfamily void Fx\+Settings\+Panel\+::restore\+Floating\+Panel\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+load and restore previous geometry and state of the floating panel. called from the function Open\+Floating\+Panel\+::get\+Or\+Open\+Floating\+Panel() in \mbox{\hyperlink{}{floatingpanelcommand.\+cpp}} 
+
+Reimplemented from \mbox{\hyperlink{class_t_panel_a6c399a15d9c788f549e8df0267f2d7f8}{TPanel}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01528                                                 \{}
+\DoxyCodeLine{01529   \mbox{\hyperlink{class_t_file_path}{TFilePath}} savePath = ToonzFolder::getMyModuleDir() + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(\textcolor{stringliteral}{"{}popups.ini"{}});}
+\DoxyCodeLine{01530   QSettings settings(QString::fromStdWString(savePath.getWideString()),}
+\DoxyCodeLine{01531                      QSettings::IniFormat);}
+\DoxyCodeLine{01532   settings.beginGroup(\textcolor{stringliteral}{"{}Panels"{}});}
+\DoxyCodeLine{01533 }
+\DoxyCodeLine{01534   \textcolor{keywordflow}{if} (!settings.childGroups().contains(\textcolor{stringliteral}{"{}FxSettings"{}})) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01535 }
+\DoxyCodeLine{01536   settings.beginGroup(\textcolor{stringliteral}{"{}FxSettings"{}});}
+\DoxyCodeLine{01537 }
+\DoxyCodeLine{01538   QRect geom = settings.value(\textcolor{stringliteral}{"{}geometry"{}}, saveGeometry()).toRect();}
+\DoxyCodeLine{01539   \textcolor{comment}{// check if it can be visible in the current screen}}
+\DoxyCodeLine{01540   \textcolor{keywordflow}{if} (!(geom \& QApplication::desktop()-\/>availableGeometry(\textcolor{keyword}{this})).isEmpty())}
+\DoxyCodeLine{01541     move(geom.topLeft());}
+\DoxyCodeLine{01542 }
+\DoxyCodeLine{01543   \textcolor{comment}{// FxSettings has no optional settings (SaveLoadQSettings) to load}}
+\DoxyCodeLine{01544 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/tpanels.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/tpanels.\+cpp\end{DoxyCompactItemize}

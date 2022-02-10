@@ -1,0 +1,159 @@
+\hypertarget{class_flipbook_panel}{}\doxysection{Flipbook\+Panel Class Reference}
+\label{class_flipbook_panel}\index{FlipbookPanel@{FlipbookPanel}}
+Inheritance diagram for Flipbook\+Panel\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_flipbook_panel}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_flipbook_panel_af908dba7cedc7e0cd60f5d449bea3298}{Flipbook\+Panel}} (QWidget $\ast$parent)
+\item 
+void \mbox{\hyperlink{class_flipbook_panel_a12a33a567e66463e84b8e6e9eef24980}{reset}} () override
+\item 
+void \mbox{\hyperlink{class_flipbook_panel_a5555f9325c03ed71a1bc84afadfa2057}{on\+Dock}} (bool docked) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_flipbook_panel_ac92091bf3a5928a3bbd2961d397d9fbc}{on\+Minimize\+Button\+Toggled}} (bool)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_flipbook_panel_a3e32c5616de7e0ac4cb63c80dbbab2e5}{initialize\+Title\+Bar}} (\mbox{\hyperlink{class_t_panel_title_bar}{TPanel\+Title\+Bar}} $\ast$title\+Bar)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_flipbook_panel_af908dba7cedc7e0cd60f5d449bea3298}\label{class_flipbook_panel_af908dba7cedc7e0cd60f5d449bea3298}} 
+\index{FlipbookPanel@{FlipbookPanel}!FlipbookPanel@{FlipbookPanel}}
+\index{FlipbookPanel@{FlipbookPanel}!FlipbookPanel@{FlipbookPanel}}
+\doxysubsubsection{\texorpdfstring{FlipbookPanel()}{FlipbookPanel()}}
+{\footnotesize\ttfamily Flipbook\+Panel\+::\+Flipbook\+Panel (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01087                                             : \mbox{\hyperlink{class_flipbook_base_panel}{FlipbookBasePanel}}(parent) \{}
+\DoxyCodeLine{01088   m\_flipbook = \textcolor{keyword}{new} \mbox{\hyperlink{class_flip_book}{FlipBook}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{01089   setWidget(m\_flipbook);}
+\DoxyCodeLine{01090   \textcolor{comment}{// minimize button and safearea toggle}}
+\DoxyCodeLine{01091   initializeTitleBar(getTitleBar());}
+\DoxyCodeLine{01092 }
+\DoxyCodeLine{01093   \mbox{\hyperlink{class_main_window}{MainWindow}} *mw =}
+\DoxyCodeLine{01094       qobject\_cast<MainWindow *>(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow());}
+\DoxyCodeLine{01095   \textcolor{keywordflow}{if} (mw \&\& mw-\/>getLayoutName() == QString(\textcolor{stringliteral}{"{}flip"{}}))}
+\DoxyCodeLine{01096     connect(m\_flipbook, SIGNAL(imageLoaded(QString \&)), mw,}
+\DoxyCodeLine{01097             SLOT(changeWindowTitle(QString \&)));}
+\DoxyCodeLine{01098 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_flipbook_panel_a3e32c5616de7e0ac4cb63c80dbbab2e5}\label{class_flipbook_panel_a3e32c5616de7e0ac4cb63c80dbbab2e5}} 
+\index{FlipbookPanel@{FlipbookPanel}!initializeTitleBar@{initializeTitleBar}}
+\index{initializeTitleBar@{initializeTitleBar}!FlipbookPanel@{FlipbookPanel}}
+\doxysubsubsection{\texorpdfstring{initializeTitleBar()}{initializeTitleBar()}}
+{\footnotesize\ttfamily void Flipbook\+Panel\+::initialize\+Title\+Bar (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_panel_title_bar}{TPanel\+Title\+Bar}} $\ast$}]{title\+Bar }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01106                                                                \{}
+\DoxyCodeLine{01107   \textcolor{keywordtype}{bool} ret      = \textcolor{keyword}{true};}
+\DoxyCodeLine{01108   \textcolor{keywordtype}{int} x         = -\/91;}
+\DoxyCodeLine{01109   \textcolor{keywordtype}{int} iconWidth = 20;}
+\DoxyCodeLine{01110   \textcolor{comment}{// safe area button}}
+\DoxyCodeLine{01111   \mbox{\hyperlink{class_t_panel_title_bar_button_for_safe_area}{TPanelTitleBarButtonForSafeArea}} *safeAreaButton =}
+\DoxyCodeLine{01112       \textcolor{keyword}{new} \mbox{\hyperlink{class_t_panel_title_bar_button_for_safe_area}{TPanelTitleBarButtonForSafeArea}}(}
+\DoxyCodeLine{01113           titleBar, getIconThemePath(\textcolor{stringliteral}{"{}actions/20/pane\_safe.svg"{}}));}
+\DoxyCodeLine{01114   safeAreaButton-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Safe Area (Right Click to Select)"{}}));}
+\DoxyCodeLine{01115   titleBar-\/>add(QPoint(x, 0), safeAreaButton);}
+\DoxyCodeLine{01116   ret = ret \&\& connect(safeAreaButton, SIGNAL(toggled(\textcolor{keywordtype}{bool})),}
+\DoxyCodeLine{01117                        CommandManager::instance()-\/>getAction(MI\_SafeArea),}
+\DoxyCodeLine{01118                        SLOT(trigger()));}
+\DoxyCodeLine{01119   ret = ret \&\& connect(CommandManager::instance()-\/>getAction(MI\_SafeArea),}
+\DoxyCodeLine{01120                        SIGNAL(triggered(\textcolor{keywordtype}{bool})), safeAreaButton,}
+\DoxyCodeLine{01121                        SLOT(setPressed(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{01122   \textcolor{comment}{// sync the initial state}}
+\DoxyCodeLine{01123   safeAreaButton-\/>setPressed(}
+\DoxyCodeLine{01124       CommandManager::instance()-\/>getAction(MI\_SafeArea)-\/>isChecked());}
+\DoxyCodeLine{01125 }
+\DoxyCodeLine{01126   x += 28 + iconWidth;}
+\DoxyCodeLine{01127   \textcolor{comment}{// minimize button}}
+\DoxyCodeLine{01128   m\_button = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_panel_title_bar_button}{TPanelTitleBarButton}}(}
+\DoxyCodeLine{01129       titleBar, getIconThemePath(\textcolor{stringliteral}{"{}actions/20/pane\_minimize.svg"{}}));}
+\DoxyCodeLine{01130   m\_button-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Minimize"{}}));}
+\DoxyCodeLine{01131   m\_button-\/>setPressed(\textcolor{keyword}{false});}
+\DoxyCodeLine{01132 }
+\DoxyCodeLine{01133   titleBar-\/>add(QPoint(x, 0), m\_button);}
+\DoxyCodeLine{01134   ret = ret \&\& connect(m\_button, SIGNAL(toggled(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01135                        SLOT(onMinimizeButtonToggled(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{01136   assert(ret);}
+\DoxyCodeLine{01137 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_flipbook_panel_a5555f9325c03ed71a1bc84afadfa2057}\label{class_flipbook_panel_a5555f9325c03ed71a1bc84afadfa2057}} 
+\index{FlipbookPanel@{FlipbookPanel}!onDock@{onDock}}
+\index{onDock@{onDock}!FlipbookPanel@{FlipbookPanel}}
+\doxysubsubsection{\texorpdfstring{onDock()}{onDock()}}
+{\footnotesize\ttfamily void Flipbook\+Panel\+::on\+Dock (\begin{DoxyParamCaption}\item[{bool}]{docked }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_dock_widget}{Dock\+Widget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01156 \{ m\_button-\/>setVisible(!docked); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_flipbook_panel_ac92091bf3a5928a3bbd2961d397d9fbc}\label{class_flipbook_panel_ac92091bf3a5928a3bbd2961d397d9fbc}} 
+\index{FlipbookPanel@{FlipbookPanel}!onMinimizeButtonToggled@{onMinimizeButtonToggled}}
+\index{onMinimizeButtonToggled@{onMinimizeButtonToggled}!FlipbookPanel@{FlipbookPanel}}
+\doxysubsubsection{\texorpdfstring{onMinimizeButtonToggled}{onMinimizeButtonToggled}}
+{\footnotesize\ttfamily void Flipbook\+Panel\+::on\+Minimize\+Button\+Toggled (\begin{DoxyParamCaption}\item[{bool}]{do\+Minimize }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01141                                                            \{}
+\DoxyCodeLine{01142   \textcolor{keywordflow}{if} (!isFloating()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01143 }
+\DoxyCodeLine{01144   m\_flipbook-\/>minimize(doMinimize);}
+\DoxyCodeLine{01145 }
+\DoxyCodeLine{01146   \textcolor{keywordflow}{if} (doMinimize) \{}
+\DoxyCodeLine{01147     m\_floatingSize = window()-\/>size();}
+\DoxyCodeLine{01148     resize(240, 20);}
+\DoxyCodeLine{01149   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01150     resize(m\_floatingSize);}
+\DoxyCodeLine{01151   \}}
+\DoxyCodeLine{01152 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_flipbook_panel_a12a33a567e66463e84b8e6e9eef24980}\label{class_flipbook_panel_a12a33a567e66463e84b8e6e9eef24980}} 
+\index{FlipbookPanel@{FlipbookPanel}!reset@{reset}}
+\index{reset@{reset}!FlipbookPanel@{FlipbookPanel}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void Flipbook\+Panel\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_panel}{TPanel}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01102 \{ m\_flipbook-\/>reset(); \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/tpanels.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/tpanels.\+cpp\end{DoxyCompactItemize}

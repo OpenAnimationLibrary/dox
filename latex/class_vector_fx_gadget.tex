@@ -1,0 +1,129 @@
+\hypertarget{class_vector_fx_gadget}{}\doxysection{Vector\+Fx\+Gadget Class Reference}
+\label{class_vector_fx_gadget}\index{VectorFxGadget@{VectorFxGadget}}
+Inheritance diagram for Vector\+Fx\+Gadget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_vector_fx_gadget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_vector_fx_gadget_ab4a56f7f261534a3bb060c36695a0948}{Vector\+Fx\+Gadget}} (\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$controller, const TPoint\+ParamP \&pa, const TPoint\+ParamP \&pb)
+\item 
+void \mbox{\hyperlink{class_vector_fx_gadget_ac18caf0010afcfe9de3bda0947a186aa}{draw}} (bool picking) override
+\item 
+void \mbox{\hyperlink{class_vector_fx_gadget_a53e2eafcebe6a3baf9e635223008a44b}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+void \mbox{\hyperlink{class_vector_fx_gadget_ab9ab6e36c91691ceadda429843157f97}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_vector_fx_gadget_ab4a56f7f261534a3bb060c36695a0948}\label{class_vector_fx_gadget_ab4a56f7f261534a3bb060c36695a0948}} 
+\index{VectorFxGadget@{VectorFxGadget}!VectorFxGadget@{VectorFxGadget}}
+\index{VectorFxGadget@{VectorFxGadget}!VectorFxGadget@{VectorFxGadget}}
+\doxysubsubsection{\texorpdfstring{VectorFxGadget()}{VectorFxGadget()}}
+{\footnotesize\ttfamily Vector\+Fx\+Gadget\+::\+Vector\+Fx\+Gadget (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$}]{controller,  }\item[{const TPoint\+ParamP \&}]{pa,  }\item[{const TPoint\+ParamP \&}]{pb }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01004       : \mbox{\hyperlink{class_fx_gadget}{FxGadget}}(controller), m\_pa(pa), m\_pb(pb) \{}
+\DoxyCodeLine{01005     addParam(pa-\/>getX());}
+\DoxyCodeLine{01006     addParam(pa-\/>getY());}
+\DoxyCodeLine{01007     addParam(pb-\/>getX());}
+\DoxyCodeLine{01008     addParam(pb-\/>getY());}
+\DoxyCodeLine{01009   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_vector_fx_gadget_ac18caf0010afcfe9de3bda0947a186aa}\label{class_vector_fx_gadget_ac18caf0010afcfe9de3bda0947a186aa}} 
+\index{VectorFxGadget@{VectorFxGadget}!draw@{draw}}
+\index{draw@{draw}!VectorFxGadget@{VectorFxGadget}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Vector\+Fx\+Gadget\+::draw (\begin{DoxyParamCaption}\item[{bool}]{picking }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01011                                    \{}
+\DoxyCodeLine{01012     setPixelSize();}
+\DoxyCodeLine{01013     \textcolor{keywordflow}{if} (isSelected())}
+\DoxyCodeLine{01014       glColor3dv(m\_selectedColor);}
+\DoxyCodeLine{01015     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01016       glColor3d(0, 0, 1);}
+\DoxyCodeLine{01017     \textcolor{comment}{// glPushName(getId());}}
+\DoxyCodeLine{01018     \textcolor{keywordtype}{double} pixelSize = getPixelSize();}
+\DoxyCodeLine{01019     \mbox{\hyperlink{class_t_point_t}{TPointD}} pa       = getValue(m\_pa);}
+\DoxyCodeLine{01020     \mbox{\hyperlink{class_t_point_t}{TPointD}} pb       = getValue(m\_pb);}
+\DoxyCodeLine{01021     \mbox{\hyperlink{class_t_point_t}{TPointD}} dab      = pb -\/ pa;}
+\DoxyCodeLine{01022     \textcolor{keywordtype}{double} ab2       = norm2(dab);}
+\DoxyCodeLine{01023     \textcolor{keywordflow}{if} (ab2 > 0.0001) \{}
+\DoxyCodeLine{01024       \textcolor{keywordtype}{double} ab = sqrt(ab2);}
+\DoxyCodeLine{01025       \mbox{\hyperlink{class_t_point_t}{TPointD}} u = dab * (1.0 / ab);}
+\DoxyCodeLine{01026       \mbox{\hyperlink{class_t_point_t}{TPointD}} v = rotate90(u);}
+\DoxyCodeLine{01027 }
+\DoxyCodeLine{01028       \textcolor{keywordtype}{double} a = pixelSize * 10, b = pixelSize * 5;}
+\DoxyCodeLine{01029       \textcolor{keywordtype}{double} c = pixelSize * 4;}
+\DoxyCodeLine{01030 }
+\DoxyCodeLine{01031       \mbox{\hyperlink{class_t_point_t}{TPointD}} pbb = pb -\/ u * c;}
+\DoxyCodeLine{01032       \textcolor{keywordflow}{if} (ab -\/ c > 0) \{}
+\DoxyCodeLine{01033         glLineStipple(1, 0xAAAA);}
+\DoxyCodeLine{01034         glEnable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{01035         tglDrawSegment(pa, pbb);}
+\DoxyCodeLine{01036         glDisable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{01037       \}}
+\DoxyCodeLine{01038       tglDrawSegment(pbb, pbb -\/ u * a + v * b);}
+\DoxyCodeLine{01039       tglDrawSegment(pbb, pbb -\/ u * a -\/ v * b);}
+\DoxyCodeLine{01040       \textcolor{comment}{// drawDot(pa);}}
+\DoxyCodeLine{01041       \textcolor{comment}{// drawDot(pb);}}
+\DoxyCodeLine{01042     \}  \textcolor{comment}{// else}}
+\DoxyCodeLine{01043        \textcolor{comment}{// drawDot(pa);}}
+\DoxyCodeLine{01044     \textcolor{comment}{// glPopName();}}
+\DoxyCodeLine{01045   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_fx_gadget_a53e2eafcebe6a3baf9e635223008a44b}\label{class_vector_fx_gadget_a53e2eafcebe6a3baf9e635223008a44b}} 
+\index{VectorFxGadget@{VectorFxGadget}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!VectorFxGadget@{VectorFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Vector\+Fx\+Gadget\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01047 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_vector_fx_gadget_ab9ab6e36c91691ceadda429843157f97}\label{class_vector_fx_gadget_ab9ab6e36c91691ceadda429843157f97}} 
+\index{VectorFxGadget@{VectorFxGadget}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!VectorFxGadget@{VectorFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Vector\+Fx\+Gadget\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01048 \{\}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/edittoolgadgets.\+cpp\end{DoxyCompactItemize}

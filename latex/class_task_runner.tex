@@ -1,0 +1,227 @@
+\hypertarget{class_task_runner}{}\doxysection{Task\+Runner Class Reference}
+\label{class_task_runner}\index{TaskRunner@{TaskRunner}}
+Inheritance diagram for Task\+Runner\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_task_runner}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_task_runner_a270f7e7082cde27c564bb6765a88113a}{Task\+Runner}} (\mbox{\hyperlink{class_t_farm_task}{TFarm\+Task}} $\ast$task, int local\+Controller\+Port)
+\item 
+void \mbox{\hyperlink{class_task_runner_a2b9df073863b93e0ee35a0c1949a8f6e}{run}} () override
+\begin{DoxyCompactList}\small\item\em The central code of the task that is executed by a worker thread. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_task_runner_a13742cc8e87e4fa14ff9c531508e1978}{task\+Load}} () override
+\item 
+void \mbox{\hyperlink{class_task_runner_a5cde2878cf52bf7e63a08d2ac1ed9dca}{do\+Run}} (\mbox{\hyperlink{class_t_farm_task}{TFarm\+Task}} $\ast$task)
+\item 
+void \mbox{\hyperlink{class_task_runner_a6e4c1a6b78a1c7e815342108ccee19bd}{run\+Cleanup}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_farm_task}{TFarm\+Task}} $\ast$ \mbox{\hyperlink{class_task_runner_addc6665bd3eab2a4ce566b420a68fec2}{m\+\_\+task}}
+\item 
+int \mbox{\hyperlink{class_task_runner_a7dffef7eef41c3191de6d181d7a7c6cc}{m\+\_\+local\+Controller\+Port}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_task_runner_a270f7e7082cde27c564bb6765a88113a}\label{class_task_runner_a270f7e7082cde27c564bb6765a88113a}} 
+\index{TaskRunner@{TaskRunner}!TaskRunner@{TaskRunner}}
+\index{TaskRunner@{TaskRunner}!TaskRunner@{TaskRunner}}
+\doxysubsubsection{\texorpdfstring{TaskRunner()}{TaskRunner()}}
+{\footnotesize\ttfamily Task\+Runner\+::\+Task\+Runner (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_farm_task}{TFarm\+Task}} $\ast$}]{task,  }\item[{int}]{local\+Controller\+Port }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00143       : m\_task(task), m\_localControllerPort(localControllerPort) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_task_runner_a5cde2878cf52bf7e63a08d2ac1ed9dca}\label{class_task_runner_a5cde2878cf52bf7e63a08d2ac1ed9dca}} 
+\index{TaskRunner@{TaskRunner}!doRun@{doRun}}
+\index{doRun@{doRun}!TaskRunner@{TaskRunner}}
+\doxysubsubsection{\texorpdfstring{doRun()}{doRun()}}
+{\footnotesize\ttfamily void Task\+Runner\+::do\+Run (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_farm_task}{TFarm\+Task}} $\ast$}]{task }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00178                                       \{}
+\DoxyCodeLine{00179   \textcolor{comment}{// Suspended tasks are not executed. (Should only waiting ones be executed?)}}
+\DoxyCodeLine{00180   \textcolor{keywordflow}{if} (task-\/>\mbox{\hyperlink{class_t_farm_task_a2be81cd241bf4cbc9aa039b7183e7c98}{m\_status}} == Suspended) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00181 }
+\DoxyCodeLine{00182   \textcolor{keywordflow}{if} (task-\/>m\_dependencies \&\& task-\/>m\_dependencies-\/>getTaskCount() != 0) \{}
+\DoxyCodeLine{00183     task-\/>\mbox{\hyperlink{class_t_farm_task_a2be81cd241bf4cbc9aa039b7183e7c98}{m\_status}} = Waiting;}
+\DoxyCodeLine{00184     \textcolor{keywordtype}{int} depCount   = task-\/>m\_dependencies-\/>getTaskCount();}
+\DoxyCodeLine{00185     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < depCount; ++i) \{}
+\DoxyCodeLine{00186       QString depTaskId  = task-\/>m\_dependencies-\/>getTaskId(i);}
+\DoxyCodeLine{00187       \mbox{\hyperlink{class_t_farm_task}{TFarmTask}} *depTask = BatchesController::instance()-\/>getTask(depTaskId);}
+\DoxyCodeLine{00188       \textcolor{keywordflow}{if} (depTask) \{}
+\DoxyCodeLine{00189         doRun(depTask);}
+\DoxyCodeLine{00190       \}}
+\DoxyCodeLine{00191     \}}
+\DoxyCodeLine{00192   \}}
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00194   task-\/>m\_successfullSteps = task-\/>m\_failedSteps = 0;}
+\DoxyCodeLine{00195   task-\/>m\_completionDate                         = QDateTime();}
+\DoxyCodeLine{00196 }
+\DoxyCodeLine{00197   task-\/>\mbox{\hyperlink{class_t_farm_task_a2be81cd241bf4cbc9aa039b7183e7c98}{m\_status}}    = Running;}
+\DoxyCodeLine{00198   task-\/>\mbox{\hyperlink{class_t_farm_task_af74d2cb63a6c62785364b7c87b9e2aff}{m\_server}}    = TSystem::getHostName();}
+\DoxyCodeLine{00199   task-\/>m\_startDate = QDateTime::currentDateTime();}
+\DoxyCodeLine{00200 }
+\DoxyCodeLine{00201   NotifyMessage().send();}
+\DoxyCodeLine{00202 }
+\DoxyCodeLine{00203   \textcolor{keywordtype}{int} count = task-\/>getTaskCount();}
+\DoxyCodeLine{00204   \textcolor{keywordflow}{if} (count > 1) \{}
+\DoxyCodeLine{00205     \textcolor{comment}{// Launch each subtask}}
+\DoxyCodeLine{00206     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < task-\/>getTaskCount(); i++) \{}
+\DoxyCodeLine{00207       \textcolor{keywordflow}{if} (task-\/>\mbox{\hyperlink{class_t_farm_task_a2be81cd241bf4cbc9aa039b7183e7c98}{m\_status}} == Suspended) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00208 }
+\DoxyCodeLine{00209       doRun(task-\/>getTask(i));}
+\DoxyCodeLine{00210     \}}
+\DoxyCodeLine{00211 }
+\DoxyCodeLine{00212     \textcolor{comment}{// Check their status}}
+\DoxyCodeLine{00213     task-\/>\mbox{\hyperlink{class_t_farm_task_a2be81cd241bf4cbc9aa039b7183e7c98}{m\_status}}           = Completed;}
+\DoxyCodeLine{00214     task-\/>m\_successfullSteps = task-\/>m\_to -\/ task-\/>m\_from + 1;}
+\DoxyCodeLine{00215     task-\/>m\_completionDate   = QDateTime::currentDateTime();}
+\DoxyCodeLine{00216     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < task-\/>getTaskCount(); i++) \{}
+\DoxyCodeLine{00217       \textcolor{keywordflow}{if} (task-\/>getTask(i)-\/>\mbox{\hyperlink{class_t_farm_task_a2be81cd241bf4cbc9aa039b7183e7c98}{m\_status}} == Aborted) task-\/>\mbox{\hyperlink{class_t_farm_task_a2be81cd241bf4cbc9aa039b7183e7c98}{m\_status}} = Aborted;}
+\DoxyCodeLine{00218     \}}
+\DoxyCodeLine{00219 }
+\DoxyCodeLine{00220     NotifyMessage().send();}
+\DoxyCodeLine{00221 }
+\DoxyCodeLine{00222     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00223   \}}
+\DoxyCodeLine{00224 }
+\DoxyCodeLine{00225   \textcolor{comment}{// int exitCode;}}
+\DoxyCodeLine{00226 }
+\DoxyCodeLine{00227   \textcolor{comment}{/*QString commandline = task-\/>getCommandLine();}}
+\DoxyCodeLine{00228 \textcolor{comment}{}}
+\DoxyCodeLine{00229 \textcolor{comment}{commandline += "{} -\/farm "{};}}
+\DoxyCodeLine{00230 \textcolor{comment}{commandline += QString::number(m\_localControllerPort) + "{}@localhost"{};}}
+\DoxyCodeLine{00231 \textcolor{comment}{commandline += "{} -\/id "{} + task-\/>m\_id;*/}}
+\DoxyCodeLine{00232 }
+\DoxyCodeLine{00233   QProcess *process = \textcolor{keyword}{new} QProcess();}
+\DoxyCodeLine{00234   std::map<QString, QProcess *>::iterator it;}
+\DoxyCodeLine{00235 }
+\DoxyCodeLine{00236   \{}
+\DoxyCodeLine{00237     QMutexLocker sl(\&TasksMutex);}
+\DoxyCodeLine{00238     \textcolor{keywordflow}{if} ((it = RunningTasks.find(task-\/>\mbox{\hyperlink{class_t_farm_task_a87ab2a7b7bcb3c5fc19ff3d38f8b93d6}{m\_id}})) != RunningTasks.end()) \{}
+\DoxyCodeLine{00239       it-\/>second-\/>kill();}
+\DoxyCodeLine{00240       RunningTasks.erase(task-\/>\mbox{\hyperlink{class_t_farm_task_a87ab2a7b7bcb3c5fc19ff3d38f8b93d6}{m\_id}});}
+\DoxyCodeLine{00241     \}}
+\DoxyCodeLine{00242 }
+\DoxyCodeLine{00243     RunningTasks[task-\/>\mbox{\hyperlink{class_t_farm_task_a87ab2a7b7bcb3c5fc19ff3d38f8b93d6}{m\_id}}] = process;}
+\DoxyCodeLine{00244   \}}
+\DoxyCodeLine{00245 }
+\DoxyCodeLine{00246   process-\/>start(task-\/>getCommandLine());}
+\DoxyCodeLine{00247   process-\/>waitForFinished(-\/1);}
+\DoxyCodeLine{00248 }
+\DoxyCodeLine{00249   \{}
+\DoxyCodeLine{00250     QMutexLocker sl(\&TasksMutex);}
+\DoxyCodeLine{00251     RunningTasks.erase(task-\/>\mbox{\hyperlink{class_t_farm_task_a87ab2a7b7bcb3c5fc19ff3d38f8b93d6}{m\_id}});}
+\DoxyCodeLine{00252   \}}
+\DoxyCodeLine{00253   \textcolor{comment}{// exitCode = QProcess::execute(task-\/>getCommandLine());}}
+\DoxyCodeLine{00254 }
+\DoxyCodeLine{00255   \textcolor{keywordtype}{int} error     = process-\/>error();}
+\DoxyCodeLine{00256   \textcolor{keywordtype}{bool} statusOK = (error == QProcess::UnknownError) \&\&}
+\DoxyCodeLine{00257                   (process-\/>exitCode() == 0 ||}
+\DoxyCodeLine{00258                    task-\/>m\_successfullSteps == task-\/>m\_stepCount);}
+\DoxyCodeLine{00259 }
+\DoxyCodeLine{00260   \textcolor{keywordflow}{if} (statusOK) \{}
+\DoxyCodeLine{00261     task-\/>\mbox{\hyperlink{class_t_farm_task_a2be81cd241bf4cbc9aa039b7183e7c98}{m\_status}}           = Completed;}
+\DoxyCodeLine{00262     task-\/>m\_successfullSteps = task-\/>m\_to -\/ task-\/>m\_from + 1;}
+\DoxyCodeLine{00263   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00264     task-\/>\mbox{\hyperlink{class_t_farm_task_a2be81cd241bf4cbc9aa039b7183e7c98}{m\_status}}      = Aborted;}
+\DoxyCodeLine{00265     task-\/>m\_failedSteps = task-\/>m\_to -\/ task-\/>m\_from + 1;}
+\DoxyCodeLine{00266   \}}
+\DoxyCodeLine{00267 }
+\DoxyCodeLine{00268   task-\/>m\_completionDate = QDateTime::currentDateTime();}
+\DoxyCodeLine{00269 }
+\DoxyCodeLine{00270   NotifyMessage().send();}
+\DoxyCodeLine{00271 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_task_runner_a2b9df073863b93e0ee35a0c1949a8f6e}\label{class_task_runner_a2b9df073863b93e0ee35a0c1949a8f6e}} 
+\index{TaskRunner@{TaskRunner}!run@{run}}
+\index{run@{run}!TaskRunner@{TaskRunner}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Task\+Runner\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The central code of the task that is executed by a worker thread. 
+
+
+
+Implements \mbox{\hyperlink{class_t_thread_1_1_runnable_ad3b8ee5e7b375bd169f7382fa26b00ef}{TThread\+::\+Runnable}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00157 \{ doRun(m\_task); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_task_runner_a6e4c1a6b78a1c7e815342108ccee19bd}\label{class_task_runner_a6e4c1a6b78a1c7e815342108ccee19bd}} 
+\index{TaskRunner@{TaskRunner}!runCleanup@{runCleanup}}
+\index{runCleanup@{runCleanup}!TaskRunner@{TaskRunner}}
+\doxysubsubsection{\texorpdfstring{runCleanup()}{runCleanup()}}
+{\footnotesize\ttfamily void Task\+Runner\+::run\+Cleanup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00151 \{ BatchesController::instance()-\/>notify(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_task_runner_a13742cc8e87e4fa14ff9c531508e1978}\label{class_task_runner_a13742cc8e87e4fa14ff9c531508e1978}} 
+\index{TaskRunner@{TaskRunner}!taskLoad@{taskLoad}}
+\index{taskLoad@{taskLoad}!TaskRunner@{TaskRunner}}
+\doxysubsubsection{\texorpdfstring{taskLoad()}{taskLoad()}}
+{\footnotesize\ttfamily int Task\+Runner\+::task\+Load (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Returns the predicted CPU load generated by the task, expressed in percentage of core usage (that is, 100 is intended to fully occupy one processing core). Appropriate task load calibration is an important step to take when implementing a new task; for this purpose, remember some rules to follow\+: 
+\begin{DoxyItemize}
+\item In every moment, the task manager ensures that the overall sum of the active task\textquotesingle{}s load does not exceed the number of machine\textquotesingle{}s processing cores multiplied by 100. This condition is {\itshape blocking} with respect to the execution of any other task -\/ meaning that when a task is about to be executed the task manager {\itshape waits} until enough CPU resources are available to make it run. In particular, observe that a task\textquotesingle{}s load {\bfseries{never}} has to exceed the total CPU resources -\/ doing so would surely result in a block of your application. The number of available cores can be accessed via the {\bfseries{TSystem\+::get\+Processor\+Count()}} or {\bfseries{QThread\+::ideal\+Thread\+Count()}}. 
+\item The task load is considered constant for the duration of the task. Changing its value does not affect the task manager in any way once the task has been started. 
+\item The default task load is 0, representing a very light task. If the task load is 0 the condition at point 1 always succeeds -\/ so the task is always executed when encountered. Observe that a long succession of 0 task loads leads to the creation of a proportional number of threads simultaneously running to dispatch it; if this is a problem, consider the use of {\bfseries{Executor\+::set\+Max\+Active\+Tasks()}} to make only a certain number of tasks being executed at the same time. 
+\end{DoxyItemize}
+
+Reimplemented from \mbox{\hyperlink{class_t_thread_1_1_runnable_a9c08dc36ed7b4c9e35809ea696c91e95}{TThread\+::\+Runnable}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00159                          \{}
+\DoxyCodeLine{00160   \textcolor{comment}{// We assume that CPU control is under the user's responsibility about}}
+\DoxyCodeLine{00161   \textcolor{comment}{// tcomposer tasks -\/ so they don't figure in CPU consumption calculations.}}
+\DoxyCodeLine{00162   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00163 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_task_runner_a7dffef7eef41c3191de6d181d7a7c6cc}\label{class_task_runner_a7dffef7eef41c3191de6d181d7a7c6cc}} 
+\index{TaskRunner@{TaskRunner}!m\_localControllerPort@{m\_localControllerPort}}
+\index{m\_localControllerPort@{m\_localControllerPort}!TaskRunner@{TaskRunner}}
+\doxysubsubsection{\texorpdfstring{m\_localControllerPort}{m\_localControllerPort}}
+{\footnotesize\ttfamily int Task\+Runner\+::m\+\_\+local\+Controller\+Port}
+
+\mbox{\Hypertarget{class_task_runner_addc6665bd3eab2a4ce566b420a68fec2}\label{class_task_runner_addc6665bd3eab2a4ce566b420a68fec2}} 
+\index{TaskRunner@{TaskRunner}!m\_task@{m\_task}}
+\index{m\_task@{m\_task}!TaskRunner@{TaskRunner}}
+\doxysubsubsection{\texorpdfstring{m\_task}{m\_task}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_farm_task}{TFarm\+Task}}$\ast$ Task\+Runner\+::m\+\_\+task}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/batches.\+cpp\end{DoxyCompactItemize}

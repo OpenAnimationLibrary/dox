@@ -1,0 +1,355 @@
+\hypertarget{class_lines_fade_popup}{}\doxysection{Lines\+Fade\+Popup Class Reference}
+\label{class_lines_fade_popup}\index{LinesFadePopup@{LinesFadePopup}}
+Inheritance diagram for Lines\+Fade\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_lines_fade_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_lines_fade_popup_1_1_swatch}{Swatch}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_lines_fade_popup_a205cb7a3eb1315f41cfba49d33f2ee68}{apply}} ()
+\item 
+void \mbox{\hyperlink{class_lines_fade_popup_a44dba4bcc4190de0bb2c31c5e7b1c237}{on\+Lines\+Color\+Changed}} (const TPixel32 \&, bool)
+\item 
+void \mbox{\hyperlink{class_lines_fade_popup_a48dec7aba0474457f8293e97650cb10d}{on\+Intensity\+Changed}} (bool is\+Dragging)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_lines_fade_popup_acb41f928be314e303e03b7c2ec1aa878}{set\+Current\+Sample\+Raster}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_lines_fade_popup_ae76dce8cbc37b9ee541bc6b5678911d7}{show\+Event}} (QShow\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_lines_fade_popup_ac70dcc2669659d3b48396e18298c2ec0}{hide\+Event}} (QHide\+Event $\ast$e) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_lines_fade_popup_a0cd368f317896c9b7f137031d49e5b2d}\label{class_lines_fade_popup_a0cd368f317896c9b7f137031d49e5b2d}} 
+\index{LinesFadePopup@{LinesFadePopup}!LinesFadePopup@{LinesFadePopup}}
+\index{LinesFadePopup@{LinesFadePopup}!LinesFadePopup@{LinesFadePopup}}
+\doxysubsubsection{\texorpdfstring{LinesFadePopup()}{LinesFadePopup()}}
+{\footnotesize\ttfamily Lines\+Fade\+Popup\+::\+Lines\+Fade\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00133     : \mbox{\hyperlink{class_d_v_gui_1_1_dialog}{Dialog}}(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false}, \textcolor{stringliteral}{"{}LinesFade"{}})}
+\DoxyCodeLine{00134     , m\_startRas(0) \{}
+\DoxyCodeLine{00135   setWindowTitle(tr(\textcolor{stringliteral}{"{}Color Fade"{}}));}
+\DoxyCodeLine{00136   setLabelWidth(0);}
+\DoxyCodeLine{00137   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00138 }
+\DoxyCodeLine{00139   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a7aa8ccf399f483fe1f36c30a1318987a}{setTopMargin}}(0);}
+\DoxyCodeLine{00140   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_af1334e3123db7e7c9a9b90ee7c73e226}{setTopSpacing}}(0);}
+\DoxyCodeLine{00141 }
+\DoxyCodeLine{00142   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ae7de609b3b23233656bc68852a2d10cb}{beginVLayout}}();}
+\DoxyCodeLine{00143 }
+\DoxyCodeLine{00144   QSplitter *splitter = \textcolor{keyword}{new} QSplitter(Qt::Vertical);}
+\DoxyCodeLine{00145   splitter-\/>setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,}
+\DoxyCodeLine{00146                                       QSizePolicy::MinimumExpanding));}
+\DoxyCodeLine{00147   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(splitter);}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ab88d88334402845e544da6ca1f207c79}{endVLayout}}();}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Top Layout -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00152 }
+\DoxyCodeLine{00153   QScrollArea *scrollArea = \textcolor{keyword}{new} QScrollArea(splitter);}
+\DoxyCodeLine{00154   scrollArea-\/>setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);}
+\DoxyCodeLine{00155   scrollArea-\/>setWidgetResizable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00156   splitter-\/>addWidget(scrollArea);}
+\DoxyCodeLine{00157   splitter-\/>setStretchFactor(0, 1);}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159   QFrame *topWidget = \textcolor{keyword}{new} QFrame(scrollArea);}
+\DoxyCodeLine{00160   topWidget-\/>setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,}
+\DoxyCodeLine{00161                                        QSizePolicy::MinimumExpanding));}
+\DoxyCodeLine{00162   scrollArea-\/>setWidget(topWidget);}
+\DoxyCodeLine{00163 }
+\DoxyCodeLine{00164   QGridLayout *topLayout = \textcolor{keyword}{new} QGridLayout(\textcolor{keyword}{this});}
+\DoxyCodeLine{00165   topWidget-\/>setLayout(topLayout);}
+\DoxyCodeLine{00166 }
+\DoxyCodeLine{00167   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Parameters -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00168 }
+\DoxyCodeLine{00169   \textcolor{comment}{// Fade}}
+\DoxyCodeLine{00170   QLabel *fadeLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Fade:"{}}));}
+\DoxyCodeLine{00171   topLayout-\/>addWidget(fadeLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00172 }
+\DoxyCodeLine{00173   m\_linesColorField = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_color_field}{DVGui::ColorField}}(\textcolor{keyword}{this}, \textcolor{keyword}{true}, TPixel32::Black, 40);}
+\DoxyCodeLine{00174   m\_linesColorField-\/>setFixedHeight(40);}
+\DoxyCodeLine{00175 }
+\DoxyCodeLine{00176   topLayout-\/>addWidget(m\_linesColorField, 0, 1);}
+\DoxyCodeLine{00177 }
+\DoxyCodeLine{00178   \textcolor{comment}{// Intensity}}
+\DoxyCodeLine{00179   QLabel *intensityLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Intensity:"{}}));}
+\DoxyCodeLine{00180   topLayout-\/>addWidget(intensityLabel, 1, 0, Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00181 }
+\DoxyCodeLine{00182   m\_intensity = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_field}{IntField}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00183   m\_intensity-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_a4739e5468df7fb725423b99ff66950b4}{setValues}}(100, 0, 100);}
+\DoxyCodeLine{00184   topLayout-\/>addWidget(m\_intensity, 1, 1);}
+\DoxyCodeLine{00185 }
+\DoxyCodeLine{00186   topLayout-\/>setRowStretch(2, 1);}
+\DoxyCodeLine{00187 }
+\DoxyCodeLine{00188   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Swatch -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00189 }
+\DoxyCodeLine{00190   m\_viewer = \textcolor{keyword}{new} Swatch(splitter);}
+\DoxyCodeLine{00191   m\_viewer-\/>setMinimumHeight(150);}
+\DoxyCodeLine{00192   m\_viewer-\/>setFocusPolicy(Qt::WheelFocus);}
+\DoxyCodeLine{00193   splitter-\/>addWidget(m\_viewer);}
+\DoxyCodeLine{00194 }
+\DoxyCodeLine{00195   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Button -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00196 }
+\DoxyCodeLine{00197   m\_okBtn = \textcolor{keyword}{new} QPushButton(QString(tr(\textcolor{stringliteral}{"{}Apply"{}})), \textcolor{keyword}{this});}
+\DoxyCodeLine{00198   connect(m\_okBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(apply()));}
+\DoxyCodeLine{00199 }
+\DoxyCodeLine{00200   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(m\_okBtn);}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Connections -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00203 }
+\DoxyCodeLine{00204   \mbox{\hyperlink{class_t_app}{TApp}} *app = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00207 }
+\DoxyCodeLine{00208   ret = ret \&\&}
+\DoxyCodeLine{00209         connect(m\_linesColorField, SIGNAL(colorChanged(\textcolor{keyword}{const} TPixel32 \&, \textcolor{keywordtype}{bool})),}
+\DoxyCodeLine{00210                 \textcolor{keyword}{this}, SLOT(onLinesColorChanged(\textcolor{keyword}{const} TPixel32 \&, \textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00211   ret = ret \&\& connect(m\_intensity, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00212                        SLOT(onIntensityChanged(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00213 }
+\DoxyCodeLine{00214   assert(ret);}
+\DoxyCodeLine{00215 }
+\DoxyCodeLine{00216   m\_viewer-\/>resize(0, 350);}
+\DoxyCodeLine{00217   resize(600, 500);}
+\DoxyCodeLine{00218 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_lines_fade_popup_a205cb7a3eb1315f41cfba49d33f2ee68}\label{class_lines_fade_popup_a205cb7a3eb1315f41cfba49d33f2ee68}} 
+\index{LinesFadePopup@{LinesFadePopup}!apply@{apply}}
+\index{apply@{apply}!LinesFadePopup@{LinesFadePopup}}
+\doxysubsubsection{\texorpdfstring{apply}{apply}}
+{\footnotesize\ttfamily void Lines\+Fade\+Popup\+::apply (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00365                            \{}
+\DoxyCodeLine{00366   \mbox{\hyperlink{class_t_cell_selection}{TCellSelection}} *cellSelection =}
+\DoxyCodeLine{00367       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_cell_selection}{TCellSelection}} *\textcolor{keyword}{>}(TSelection::getCurrent());}
+\DoxyCodeLine{00368   TPixel32 color = m\_linesColorField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_color_field_a6955ee5be0a395075590a99bc9262fe1}{getColor}}();}
+\DoxyCodeLine{00369   \textcolor{keywordtype}{int} intensity  = m\_intensity-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_a5657b3a478f9e4993c7d48a5338dbb75}{getValue}}();}
+\DoxyCodeLine{00370 }
+\DoxyCodeLine{00371   \textcolor{keywordflow}{if} (cellSelection) \{}
+\DoxyCodeLine{00372     std::set<TRasterImage *> images;}
+\DoxyCodeLine{00373     \textcolor{keywordtype}{int} r0, c0, r1, c1;}
+\DoxyCodeLine{00374     cellSelection-\/>getSelectedCells(r0, c0, r1, c1);}
+\DoxyCodeLine{00375     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsheet      = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00376     \textcolor{keywordtype}{bool} oneImageChanged = \textcolor{keyword}{false};}
+\DoxyCodeLine{00377     \textcolor{keywordtype}{int} c, r;}
+\DoxyCodeLine{00378     TUndoManager::manager()-\/>beginBlock();}
+\DoxyCodeLine{00379     \textcolor{keywordflow}{for} (c = c0; c <= c1; c++)}
+\DoxyCodeLine{00380       \textcolor{keywordflow}{for} (r = r0; r <= r1; r++) \{}
+\DoxyCodeLine{00381         \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell          = xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r, c);}
+\DoxyCodeLine{00382         \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} rasImage = (\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}})cell.\mbox{\hyperlink{class_t_xsh_cell_a20b623d308bc09b820ec6b116516f564}{getImage}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00383         \textcolor{keywordflow}{if} (!rasImage) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00384         \textcolor{keywordflow}{if} (images.find(rasImage.getPointer()) != images.end()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00385         \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras = rasImage-\/>getRaster();}
+\DoxyCodeLine{00386         \textcolor{keywordflow}{if} (!ras) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00387         images.insert(rasImage.getPointer());}
+\DoxyCodeLine{00388         TUndoManager::manager()-\/>add(}
+\DoxyCodeLine{00389             \textcolor{keyword}{new} \mbox{\hyperlink{class_t_line_fade_undo}{TLineFadeUndo}}(color, intensity, r, c, ras-\/>clone()));}
+\DoxyCodeLine{00390         oneImageChanged = \textcolor{keyword}{true};}
+\DoxyCodeLine{00391         onChange(ras, ras, color, intensity);}
+\DoxyCodeLine{00392         \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *simpleLevel = cell.\mbox{\hyperlink{class_t_xsh_cell_a8898cc47eba24e59477bfba8e2511f1d}{getSimpleLevel}}();}
+\DoxyCodeLine{00393         assert(simpleLevel);}
+\DoxyCodeLine{00394         simpleLevel-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a3c20a8d11037048322d2035b0f286209}{touchFrame}}(cell.\mbox{\hyperlink{class_t_xsh_cell_a5a1965b96c2c698d6f0fb42a80c03406}{getFrameId}}());}
+\DoxyCodeLine{00395         simpleLevel-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a2d43337766628739707849f8808bf300}{setDirtyFlag}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00396         IconGenerator::instance()-\/>invalidate(simpleLevel, cell.\mbox{\hyperlink{class_t_xsh_cell_a5a1965b96c2c698d6f0fb42a80c03406}{getFrameId}}());}
+\DoxyCodeLine{00397       \}}
+\DoxyCodeLine{00398     TUndoManager::manager()-\/>endBlock();}
+\DoxyCodeLine{00399     images.clear();}
+\DoxyCodeLine{00400     \textcolor{keywordflow}{if} (oneImageChanged) \{}
+\DoxyCodeLine{00401       close();}
+\DoxyCodeLine{00402       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00403     \}}
+\DoxyCodeLine{00404   \}}
+\DoxyCodeLine{00405   \mbox{\hyperlink{class_t_filmstrip_selection}{TFilmstripSelection}} *filmstripSelection =}
+\DoxyCodeLine{00406       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_filmstrip_selection}{TFilmstripSelection}} *\textcolor{keyword}{>}(TSelection::getCurrent());}
+\DoxyCodeLine{00407   \textcolor{keywordflow}{if} (filmstripSelection) \{}
+\DoxyCodeLine{00408     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *simpleLevel =}
+\DoxyCodeLine{00409         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>getSimpleLevel();}
+\DoxyCodeLine{00410     \textcolor{keywordflow}{if} (simpleLevel) \{}
+\DoxyCodeLine{00411       std::set<TFrameId> fids = filmstripSelection-\/>getSelectedFids();}
+\DoxyCodeLine{00412       \textcolor{keywordtype}{bool} oneImageChanged    = \textcolor{keyword}{false};}
+\DoxyCodeLine{00413       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \textcolor{keyword}{const} \&fid : fids) \{}
+\DoxyCodeLine{00414         \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} rasImage =}
+\DoxyCodeLine{00415             (\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}})simpleLevel-\/>getFrame(fid, \textcolor{keyword}{true});}
+\DoxyCodeLine{00416         ;}
+\DoxyCodeLine{00417         \textcolor{keywordflow}{if} (!rasImage) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00418         \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras = rasImage-\/>getRaster();}
+\DoxyCodeLine{00419         \textcolor{keywordflow}{if} (!ras) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00420         oneImageChanged = \textcolor{keyword}{true};}
+\DoxyCodeLine{00421         onChange(ras, ras, color, intensity);}
+\DoxyCodeLine{00422         simpleLevel-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a3c20a8d11037048322d2035b0f286209}{touchFrame}}(fid);}
+\DoxyCodeLine{00423         simpleLevel-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a2d43337766628739707849f8808bf300}{setDirtyFlag}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00424         IconGenerator::instance()-\/>invalidate(simpleLevel, fid);}
+\DoxyCodeLine{00425       \}}
+\DoxyCodeLine{00426       \textcolor{keywordflow}{if} (oneImageChanged) \{}
+\DoxyCodeLine{00427         close();}
+\DoxyCodeLine{00428         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00429       \}}
+\DoxyCodeLine{00430     \}}
+\DoxyCodeLine{00431   \}}
+\DoxyCodeLine{00432 }
+\DoxyCodeLine{00433   DVGui::error(QObject::tr(\textcolor{stringliteral}{"{}The current selection is invalid."{}}));}
+\DoxyCodeLine{00434   \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00435 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lines_fade_popup_ac70dcc2669659d3b48396e18298c2ec0}\label{class_lines_fade_popup_ac70dcc2669659d3b48396e18298c2ec0}} 
+\index{LinesFadePopup@{LinesFadePopup}!hideEvent@{hideEvent}}
+\index{hideEvent@{hideEvent}!LinesFadePopup@{LinesFadePopup}}
+\doxysubsubsection{\texorpdfstring{hideEvent()}{hideEvent()}}
+{\footnotesize\ttfamily void Lines\+Fade\+Popup\+::hide\+Event (\begin{DoxyParamCaption}\item[{QHide\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00282                                              \{}
+\DoxyCodeLine{00283   \mbox{\hyperlink{class_t_app}{TApp}} *app = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00284   disconnect(app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}(), SIGNAL(frameTypeChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00285              SLOT(setCurrentSampleRaster()));}
+\DoxyCodeLine{00286   disconnect(app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}(), SIGNAL(frameSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00287              SLOT(setCurrentSampleRaster()));}
+\DoxyCodeLine{00288   disconnect(app-\/>\mbox{\hyperlink{class_t_app_a1e294e7cff300851d12a8c3d196943f6}{getCurrentColumn}}(), SIGNAL(columnIndexSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00289              SLOT(setCurrentSampleRaster()));}
+\DoxyCodeLine{00290   Dialog::hideEvent(he);}
+\DoxyCodeLine{00291 }
+\DoxyCodeLine{00292   m\_viewer-\/>raster() = \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}();}
+\DoxyCodeLine{00293   m\_startRas         = \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}();}
+\DoxyCodeLine{00294 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lines_fade_popup_a48dec7aba0474457f8293e97650cb10d}\label{class_lines_fade_popup_a48dec7aba0474457f8293e97650cb10d}} 
+\index{LinesFadePopup@{LinesFadePopup}!onIntensityChanged@{onIntensityChanged}}
+\index{onIntensityChanged@{onIntensityChanged}!LinesFadePopup@{LinesFadePopup}}
+\doxysubsubsection{\texorpdfstring{onIntensityChanged}{onIntensityChanged}}
+{\footnotesize\ttfamily void Lines\+Fade\+Popup\+::on\+Intensity\+Changed (\begin{DoxyParamCaption}\item[{bool}]{is\+Dragging }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00448                                                        \{}
+\DoxyCodeLine{00449   \textcolor{keywordflow}{if} (!m\_startRas || !m\_viewer-\/>raster()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00450   onChange(m\_startRas, m\_viewer-\/>raster(), m\_linesColorField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_color_field_a6955ee5be0a395075590a99bc9262fe1}{getColor}}(),}
+\DoxyCodeLine{00451            m\_intensity-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_a5657b3a478f9e4993c7d48a5338dbb75}{getValue}}());}
+\DoxyCodeLine{00452   m\_viewer-\/>update();}
+\DoxyCodeLine{00453 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lines_fade_popup_a44dba4bcc4190de0bb2c31c5e7b1c237}\label{class_lines_fade_popup_a44dba4bcc4190de0bb2c31c5e7b1c237}} 
+\index{LinesFadePopup@{LinesFadePopup}!onLinesColorChanged@{onLinesColorChanged}}
+\index{onLinesColorChanged@{onLinesColorChanged}!LinesFadePopup@{LinesFadePopup}}
+\doxysubsubsection{\texorpdfstring{onLinesColorChanged}{onLinesColorChanged}}
+{\footnotesize\ttfamily void Lines\+Fade\+Popup\+::on\+Lines\+Color\+Changed (\begin{DoxyParamCaption}\item[{const TPixel32 \&}]{color,  }\item[{bool}]{is\+Dragging }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00440                                                           \{}
+\DoxyCodeLine{00441   \textcolor{keywordflow}{if} (!m\_startRas || !m\_viewer-\/>raster()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00442   onChange(m\_startRas, m\_viewer-\/>raster(), color, m\_intensity-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_a5657b3a478f9e4993c7d48a5338dbb75}{getValue}}());}
+\DoxyCodeLine{00443   m\_viewer-\/>update();}
+\DoxyCodeLine{00444 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lines_fade_popup_acb41f928be314e303e03b7c2ec1aa878}\label{class_lines_fade_popup_acb41f928be314e303e03b7c2ec1aa878}} 
+\index{LinesFadePopup@{LinesFadePopup}!setCurrentSampleRaster@{setCurrentSampleRaster}}
+\index{setCurrentSampleRaster@{setCurrentSampleRaster}!LinesFadePopup@{LinesFadePopup}}
+\doxysubsubsection{\texorpdfstring{setCurrentSampleRaster}{setCurrentSampleRaster}}
+{\footnotesize\ttfamily void Lines\+Fade\+Popup\+::set\+Current\+Sample\+Raster (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00222                                             \{}
+\DoxyCodeLine{00223   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} sampleRas;}
+\DoxyCodeLine{00224 }
+\DoxyCodeLine{00225   m\_startRas = \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}();}
+\DoxyCodeLine{00226   \mbox{\hyperlink{class_t_selection}{TSelection}} *selection =}
+\DoxyCodeLine{00227       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}()-\/>getSelection();}
+\DoxyCodeLine{00228   \mbox{\hyperlink{class_t_cell_selection}{TCellSelection}} *cellSelection = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_cell_selection}{TCellSelection}} *\textcolor{keyword}{>}(selection);}
+\DoxyCodeLine{00229   \mbox{\hyperlink{class_t_filmstrip_selection}{TFilmstripSelection}} *filmstripSelection =}
+\DoxyCodeLine{00230       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_filmstrip_selection}{TFilmstripSelection}} *\textcolor{keyword}{>}(selection);}
+\DoxyCodeLine{00231   \textcolor{keywordflow}{if} (cellSelection) \{}
+\DoxyCodeLine{00232     \mbox{\hyperlink{class_t_app}{TApp}} *app     = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00233     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh  = app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00234     \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>getFrameIndex(),}
+\DoxyCodeLine{00235                                  app-\/>\mbox{\hyperlink{class_t_app_a1e294e7cff300851d12a8c3d196943f6}{getCurrentColumn}}()-\/>getColumnIndex());}
+\DoxyCodeLine{00236     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} rasImage = cell.\mbox{\hyperlink{class_t_xsh_cell_a20b623d308bc09b820ec6b116516f564}{getImage}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00237     \textcolor{keywordflow}{if} (rasImage \&\& rasImage-\/>getRaster())}
+\DoxyCodeLine{00238       sampleRas = rasImage-\/>getRaster()-\/>clone();}
+\DoxyCodeLine{00239   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (filmstripSelection) \{}
+\DoxyCodeLine{00240     \mbox{\hyperlink{class_t_app}{TApp}} *app                    = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00241     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *simpleLevel = app-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>getSimpleLevel();}
+\DoxyCodeLine{00242     \textcolor{keywordflow}{if} (simpleLevel) \{}
+\DoxyCodeLine{00243       \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} rasImage = (\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}})simpleLevel-\/>getFrame(}
+\DoxyCodeLine{00244           app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>getFid(), \textcolor{keyword}{true});}
+\DoxyCodeLine{00245       \textcolor{keywordflow}{if} (rasImage \&\& rasImage-\/>getRaster())}
+\DoxyCodeLine{00246         sampleRas = rasImage-\/>getRaster()-\/>clone();}
+\DoxyCodeLine{00247     \}}
+\DoxyCodeLine{00248   \}}
+\DoxyCodeLine{00249   \textcolor{keywordflow}{if} (!sampleRas) \{}
+\DoxyCodeLine{00250     m\_viewer-\/>raster() = \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}();}
+\DoxyCodeLine{00251     m\_viewer-\/>update();}
+\DoxyCodeLine{00252     m\_okBtn-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00253     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00254   \}}
+\DoxyCodeLine{00255 }
+\DoxyCodeLine{00256   m\_okBtn-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00257   m\_startRas = sampleRas-\/>clone();}
+\DoxyCodeLine{00258   onChange(m\_startRas, sampleRas, m\_linesColorField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_color_field_a6955ee5be0a395075590a99bc9262fe1}{getColor}}(),}
+\DoxyCodeLine{00259            m\_intensity-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_field_a5657b3a478f9e4993c7d48a5338dbb75}{getValue}}());}
+\DoxyCodeLine{00260 }
+\DoxyCodeLine{00261   m\_viewer-\/>raster() = sampleRas;}
+\DoxyCodeLine{00262   m\_viewer-\/>update();}
+\DoxyCodeLine{00263 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_lines_fade_popup_ae76dce8cbc37b9ee541bc6b5678911d7}\label{class_lines_fade_popup_ae76dce8cbc37b9ee541bc6b5678911d7}} 
+\index{LinesFadePopup@{LinesFadePopup}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!LinesFadePopup@{LinesFadePopup}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Lines\+Fade\+Popup\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00267                                              \{}
+\DoxyCodeLine{00268   \mbox{\hyperlink{class_t_app}{TApp}} *app = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00269   \textcolor{keywordtype}{bool} ret  = \textcolor{keyword}{true};}
+\DoxyCodeLine{00270   ret = ret \&\& connect(app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}(), SIGNAL(frameTypeChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00271                        SLOT(setCurrentSampleRaster()));}
+\DoxyCodeLine{00272   ret = ret \&\& connect(app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}(), SIGNAL(frameSwitched()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00273                        SLOT(setCurrentSampleRaster()));}
+\DoxyCodeLine{00274   ret = ret \&\& connect(app-\/>\mbox{\hyperlink{class_t_app_a1e294e7cff300851d12a8c3d196943f6}{getCurrentColumn}}(), SIGNAL(columnIndexSwitched()),}
+\DoxyCodeLine{00275                        \textcolor{keyword}{this}, SLOT(setCurrentSampleRaster()));}
+\DoxyCodeLine{00276   assert(ret);}
+\DoxyCodeLine{00277   setCurrentSampleRaster();}
+\DoxyCodeLine{00278 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/linesfadepopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/linesfadepopup.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,73 @@
+\hypertarget{class_revert_scene}{}\doxysection{Revert\+Scene Class Reference}
+\label{class_revert_scene}\index{RevertScene@{RevertScene}}
+Inheritance diagram for Revert\+Scene\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_revert_scene}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_revert_scene_a0da537d0621e0b0da2eacd518a1bdde9}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_revert_scene_a6a3b9dc2b74d515d4a4091dc56a425a0}\label{class_revert_scene_a6a3b9dc2b74d515d4a4091dc56a425a0}} 
+\index{RevertScene@{RevertScene}!RevertScene@{RevertScene}}
+\index{RevertScene@{RevertScene}!RevertScene@{RevertScene}}
+\doxysubsubsection{\texorpdfstring{RevertScene()}{RevertScene()}}
+{\footnotesize\ttfamily Revert\+Scene\+::\+Revert\+Scene (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02989 : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(MI\_RevertScene) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_revert_scene_a0da537d0621e0b0da2eacd518a1bdde9}\label{class_revert_scene_a0da537d0621e0b0da2eacd518a1bdde9}} 
+\index{RevertScene@{RevertScene}!execute@{execute}}
+\index{execute@{execute}!RevertScene@{RevertScene}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Revert\+Scene\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02990                           \{}
+\DoxyCodeLine{02991     \mbox{\hyperlink{class_t_scene_handle}{TSceneHandle}} *sceneHandle = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}();}
+\DoxyCodeLine{02992     \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene         = sceneHandle-\/>getScene();}
+\DoxyCodeLine{02993     assert(scene);}
+\DoxyCodeLine{02994     \mbox{\hyperlink{class_t_file_path}{TFilePath}} path       = scene-\/>\mbox{\hyperlink{class_toonz_scene_ad42b52b671b094f66e003c4b7ebefd45}{getScenePath}}();}
+\DoxyCodeLine{02995     \mbox{\hyperlink{class_t_file_path}{TFilePath}} decodePath = scene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(scene-\/>\mbox{\hyperlink{class_toonz_scene_ad42b52b671b094f66e003c4b7ebefd45}{getScenePath}}());}
+\DoxyCodeLine{02996     \textcolor{keywordflow}{if} (!TSystem::doesExistFileOrLevel(decodePath)) \{}
+\DoxyCodeLine{02997       DVGui::warning(QObject::tr(\textcolor{stringliteral}{"{}The scene \%1 doesn't exist."{}})}
+\DoxyCodeLine{02998                          .arg(toQString(decodePath)));}
+\DoxyCodeLine{02999       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{03000     \}}
+\DoxyCodeLine{03001     \textcolor{keywordflow}{if} (sceneHandle-\/>getDirtyFlag()) \{}
+\DoxyCodeLine{03002       \textcolor{keywordtype}{int} ret = DVGui::MsgBox(}
+\DoxyCodeLine{03003           QString(}
+\DoxyCodeLine{03004               QObject::tr(\textcolor{stringliteral}{"{}Revert: the current scene has been modified.\(\backslash\)nAre "{}}}
+\DoxyCodeLine{03005                           \textcolor{stringliteral}{"{}you sure you want to revert to previous version?"{}})),}
+\DoxyCodeLine{03006           QString(QObject::tr(\textcolor{stringliteral}{"{}Revert"{}})), QString(QObject::tr(\textcolor{stringliteral}{"{}Cancel"{}})));}
+\DoxyCodeLine{03007       \textcolor{keywordflow}{if} (ret == 2 || ret == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{03008     \}}
+\DoxyCodeLine{03009     IoCmd::loadScene(path, \textcolor{keyword}{false}, \textcolor{keyword}{false});}
+\DoxyCodeLine{03010   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/iocommand.\+cpp\end{DoxyCompactItemize}

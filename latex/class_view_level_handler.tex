@@ -1,0 +1,110 @@
+\hypertarget{class_view_level_handler}{}\doxysection{View\+Level\+Handler Class Reference}
+\label{class_view_level_handler}\index{ViewLevelHandler@{ViewLevelHandler}}
+Inheritance diagram for View\+Level\+Handler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_view_level_handler}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_view_level_handler_ab7567c94f62a47d65115ef672f1748a7}{View\+Level\+Handler}} (Command\+Id cmd\+Id)
+\item 
+void \mbox{\hyperlink{class_view_level_handler_abaea6c019089b89521969d51ffbc1933}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_view_level_handler_ab7567c94f62a47d65115ef672f1748a7}\label{class_view_level_handler_ab7567c94f62a47d65115ef672f1748a7}} 
+\index{ViewLevelHandler@{ViewLevelHandler}!ViewLevelHandler@{ViewLevelHandler}}
+\index{ViewLevelHandler@{ViewLevelHandler}!ViewLevelHandler@{ViewLevelHandler}}
+\doxysubsubsection{\texorpdfstring{ViewLevelHandler()}{ViewLevelHandler()}}
+{\footnotesize\ttfamily View\+Level\+Handler\+::\+View\+Level\+Handler (\begin{DoxyParamCaption}\item[{Command\+Id}]{cmd\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01641 : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(cmdId) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_view_level_handler_abaea6c019089b89521969d51ffbc1933}\label{class_view_level_handler_abaea6c019089b89521969d51ffbc1933}} 
+\index{ViewLevelHandler@{ViewLevelHandler}!execute@{execute}}
+\index{execute@{execute}!ViewLevelHandler@{ViewLevelHandler}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void View\+Level\+Handler\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01643                           \{}
+\DoxyCodeLine{01644     \mbox{\hyperlink{class_t_selection}{TSelection}} *selection =}
+\DoxyCodeLine{01645         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}()-\/>getSelection();}
+\DoxyCodeLine{01646     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_file_selection}{FileSelection}} *fileSelection =}
+\DoxyCodeLine{01647             \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_file_selection}{FileSelection}} *\textcolor{keyword}{>}(selection)) \{}
+\DoxyCodeLine{01648       fileSelection-\/>viewFile();}
+\DoxyCodeLine{01649       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01650     \}}
+\DoxyCodeLine{01651 }
+\DoxyCodeLine{01652     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl = 0;}
+\DoxyCodeLine{01653     \textcolor{keywordtype}{int} i               = 0;}
+\DoxyCodeLine{01654     std::vector<TXshSimpleLevel *> simpleLevels;}
+\DoxyCodeLine{01655     \textcolor{comment}{/*-\/-\/ セル選択ContextMenu→Viewコマンドの場合 -\/-\/*/}}
+\DoxyCodeLine{01656     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *currentXsheet = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{01657     \mbox{\hyperlink{class_t_cell_selection}{TCellSelection}} *cellSelection = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_cell_selection}{TCellSelection}} *\textcolor{keyword}{>}(selection);}
+\DoxyCodeLine{01658     \textcolor{keywordflow}{if} (currentXsheet \&\& cellSelection \&\& !cellSelection-\/>isEmpty()) \{}
+\DoxyCodeLine{01659       \textcolor{keywordtype}{int} r0, c0, r1, c1;}
+\DoxyCodeLine{01660       cellSelection-\/>getSelectedCells(r0, c0, r1, c1);}
+\DoxyCodeLine{01661 }
+\DoxyCodeLine{01662       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = c0; c <= c1; c++) \{}
+\DoxyCodeLine{01663         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} r = r0; r <= r1; r++) \{}
+\DoxyCodeLine{01664           \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *lv = currentXsheet-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r, c).\mbox{\hyperlink{class_t_xsh_cell_a8898cc47eba24e59477bfba8e2511f1d}{getSimpleLevel}}();}
+\DoxyCodeLine{01665           \textcolor{keywordflow}{if} (!lv) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01666           std::vector<TXshSimpleLevel *>::iterator lvIt =}
+\DoxyCodeLine{01667               find(simpleLevels.begin(), simpleLevels.end(), lv);}
+\DoxyCodeLine{01668           \textcolor{keywordflow}{if} (lvIt == simpleLevels.end()) simpleLevels.push\_back(lv);}
+\DoxyCodeLine{01669         \}}
+\DoxyCodeLine{01670       \}}
+\DoxyCodeLine{01671     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_cast_selection}{CastSelection}} *castSelection =}
+\DoxyCodeLine{01672                    \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_cast_selection}{CastSelection}} *\textcolor{keyword}{>}(selection)) \{}
+\DoxyCodeLine{01673       std::vector<TXshLevel *> selectedLevels;}
+\DoxyCodeLine{01674       castSelection-\/>getSelectedLevels(selectedLevels);}
+\DoxyCodeLine{01675       \textcolor{keywordflow}{for} (i = 0; i < selectedLevels.size(); i++)}
+\DoxyCodeLine{01676         simpleLevels.push\_back(selectedLevels[i]-\/>getSimpleLevel());}
+\DoxyCodeLine{01677     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentLevel()-\/>getSimpleLevel())}
+\DoxyCodeLine{01678       simpleLevels.push\_back(}
+\DoxyCodeLine{01679           \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentLevel()-\/>getSimpleLevel());}
+\DoxyCodeLine{01680 }
+\DoxyCodeLine{01681     \textcolor{keywordflow}{if} (!simpleLevels.size()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01682     \textcolor{keywordflow}{for} (i = 0; i < simpleLevels.size(); i++) \{}
+\DoxyCodeLine{01683       \textcolor{keywordflow}{if} (!(simpleLevels[i]-\/>getType() \& LEVELCOLUMN\_XSHLEVEL)) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01684 }
+\DoxyCodeLine{01685       \mbox{\hyperlink{class_t_file_path}{TFilePath}} path = simpleLevels[i]-\/>getPath();}
+\DoxyCodeLine{01686       path           = simpleLevels[i]-\/>getScene()-\/>decodeFilePath(path);}
+\DoxyCodeLine{01687       \mbox{\hyperlink{class_flip_book}{FlipBook}} *fb;}
+\DoxyCodeLine{01688       \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(path))}
+\DoxyCodeLine{01689         fb = ::viewFile(path);}
+\DoxyCodeLine{01690       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01691         fb = FlipBookPool::instance()-\/>\mbox{\hyperlink{class_flip_book_pool_aa110af5e7e2650be4540744f53de314b}{pop}}();}
+\DoxyCodeLine{01692         fb-\/>\mbox{\hyperlink{class_flip_book_ac70c72b88200e2821ea83f4273cb34e4}{setLevel}}(simpleLevels[i]);}
+\DoxyCodeLine{01693       \}}
+\DoxyCodeLine{01694       \textcolor{keywordflow}{if} (fb) \{}
+\DoxyCodeLine{01695         FileBrowserPopup::setModalBrowserToParent(fb-\/>parentWidget());}
+\DoxyCodeLine{01696       \}}
+\DoxyCodeLine{01697     \}}
+\DoxyCodeLine{01698   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/levelsettingspopup.\+cpp\end{DoxyCompactItemize}

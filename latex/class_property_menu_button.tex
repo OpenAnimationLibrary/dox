@@ -1,0 +1,143 @@
+\hypertarget{class_property_menu_button}{}\doxysection{Property\+Menu\+Button Class Reference}
+\label{class_property_menu_button}\index{PropertyMenuButton@{PropertyMenuButton}}
+Inheritance diagram for Property\+Menu\+Button\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_property_menu_button}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_property_menu_button_aeb5a6bc57b7f684cfa846d940cc4422a}\label{class_property_menu_button_aeb5a6bc57b7f684cfa846d940cc4422a}} 
+void {\bfseries on\+Property\+Changed} (QString name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_property_menu_button_a9ac89f58c3a58af99fd27de9ec2b84df}{Property\+Menu\+Button}} (QWidget $\ast$parent=0, \mbox{\hyperlink{class_t_tool}{TTool}} $\ast$tool=0, QList$<$ \mbox{\hyperlink{class_t_bool_property}{TBool\+Property}} $\ast$ $>$ properties=QList$<$ \mbox{\hyperlink{class_t_bool_property}{TBool\+Property}} $\ast$ $>$(), QIcon icon=QIcon(), QString tooltip=QString())
+\item 
+void \mbox{\hyperlink{class_property_menu_button_ad6f07307a874ac7347761ccd91a6b173}{update\+Status}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_property_menu_button_abd7e005a94073f1c56d29c26ed4ad289}{on\+Action\+Triggered}} (QAction $\ast$)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_property_menu_button_a9ac89f58c3a58af99fd27de9ec2b84df}\label{class_property_menu_button_a9ac89f58c3a58af99fd27de9ec2b84df}} 
+\index{PropertyMenuButton@{PropertyMenuButton}!PropertyMenuButton@{PropertyMenuButton}}
+\index{PropertyMenuButton@{PropertyMenuButton}!PropertyMenuButton@{PropertyMenuButton}}
+\doxysubsubsection{\texorpdfstring{PropertyMenuButton()}{PropertyMenuButton()}}
+{\footnotesize\ttfamily Property\+Menu\+Button\+::\+Property\+Menu\+Button (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0},  }\item[{\mbox{\hyperlink{class_t_tool}{TTool}} $\ast$}]{tool = {\ttfamily 0},  }\item[{QList$<$ \mbox{\hyperlink{class_t_bool_property}{TBool\+Property}} $\ast$ $>$}]{properties = {\ttfamily QList$<$\mbox{\hyperlink{class_t_bool_property}{TBool\+Property}}~$\ast$$>$()},  }\item[{QIcon}]{icon = {\ttfamily QIcon()},  }\item[{QString}]{tooltip = {\ttfamily QString()} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01167     : QToolButton(parent)}
+\DoxyCodeLine{01168     , \mbox{\hyperlink{class_tool_option_control}{ToolOptionControl}}(tool, \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{01169     , m\_properties(properties) \{}
+\DoxyCodeLine{01170   setPopupMode(QToolButton::InstantPopup);}
+\DoxyCodeLine{01171   setIcon(icon);}
+\DoxyCodeLine{01172   setToolTip(tooltip);}
+\DoxyCodeLine{01173 }
+\DoxyCodeLine{01174   QMenu *menu = \textcolor{keyword}{new} QMenu(tooltip, \textcolor{keyword}{this});}
+\DoxyCodeLine{01175   \textcolor{keywordflow}{if} (!tooltip.isEmpty()) tooltip = tooltip + \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{01176 }
+\DoxyCodeLine{01177   QActionGroup *actiongroup = \textcolor{keyword}{new} QActionGroup(\textcolor{keyword}{this});}
+\DoxyCodeLine{01178   actiongroup-\/>setExclusive(\textcolor{keyword}{false});}
+\DoxyCodeLine{01179   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{01180   \textcolor{keywordflow}{for} (i = 0; i < m\_properties.count(); i++) \{}
+\DoxyCodeLine{01181     \mbox{\hyperlink{class_t_bool_property}{TBoolProperty}} *prop  = m\_properties.at(i);}
+\DoxyCodeLine{01182     QString propertyName = prop-\/>getQStringName();}
+\DoxyCodeLine{01183     \textcolor{comment}{// Se il tooltip essagnato e' contenuto nel nome della proprieta' lo levo}}
+\DoxyCodeLine{01184     \textcolor{comment}{// dalla stringa dell'azione}}
+\DoxyCodeLine{01185     \textcolor{keywordflow}{if} (propertyName.contains(tooltip)) propertyName.remove(tooltip);}
+\DoxyCodeLine{01186     QAction *action = menu-\/>addAction(propertyName);}
+\DoxyCodeLine{01187     action-\/>setCheckable(\textcolor{keyword}{true});}
+\DoxyCodeLine{01188     action-\/>setChecked(prop-\/>getValue());}
+\DoxyCodeLine{01189     action-\/>setData(QVariant(i));}
+\DoxyCodeLine{01190     actiongroup-\/>addAction(action);}
+\DoxyCodeLine{01191   \}}
+\DoxyCodeLine{01192   \textcolor{keywordtype}{bool} ret = connect(actiongroup, SIGNAL(triggered(QAction *)),}
+\DoxyCodeLine{01193                      SLOT(onActionTriggered(QAction *)));}
+\DoxyCodeLine{01194   assert(ret);}
+\DoxyCodeLine{01195 }
+\DoxyCodeLine{01196   setMenu(menu);}
+\DoxyCodeLine{01197 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_property_menu_button_a6e5525bdff28a89d6152e67b6889b5e5}\label{class_property_menu_button_a6e5525bdff28a89d6152e67b6889b5e5}} 
+\index{PropertyMenuButton@{PropertyMenuButton}!````~PropertyMenuButton@{$\sim$PropertyMenuButton}}
+\index{````~PropertyMenuButton@{$\sim$PropertyMenuButton}!PropertyMenuButton@{PropertyMenuButton}}
+\doxysubsubsection{\texorpdfstring{$\sim$PropertyMenuButton()}{~PropertyMenuButton()}}
+{\footnotesize\ttfamily Property\+Menu\+Button\+::$\sim$\+Property\+Menu\+Button (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00470 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_property_menu_button_abd7e005a94073f1c56d29c26ed4ad289}\label{class_property_menu_button_abd7e005a94073f1c56d29c26ed4ad289}} 
+\index{PropertyMenuButton@{PropertyMenuButton}!onActionTriggered@{onActionTriggered}}
+\index{onActionTriggered@{onActionTriggered}!PropertyMenuButton@{PropertyMenuButton}}
+\doxysubsubsection{\texorpdfstring{onActionTriggered}{onActionTriggered}}
+{\footnotesize\ttfamily void Property\+Menu\+Button\+::on\+Action\+Triggered (\begin{DoxyParamCaption}\item[{QAction $\ast$}]{action }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01219                                                           \{}
+\DoxyCodeLine{01220   \textcolor{keywordtype}{int} currentPropertyIndex = action-\/>data().toInt();}
+\DoxyCodeLine{01221   \mbox{\hyperlink{class_t_bool_property}{TBoolProperty}} *prop      = m\_properties.at(currentPropertyIndex);}
+\DoxyCodeLine{01222   \textcolor{keywordtype}{bool} isChecked           = action-\/>isChecked();}
+\DoxyCodeLine{01223   \textcolor{keywordflow}{if} (isChecked == prop-\/>getValue()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01224   prop-\/>setValue(isChecked);}
+\DoxyCodeLine{01225   notifyTool();}
+\DoxyCodeLine{01226 }
+\DoxyCodeLine{01227   emit onPropertyChanged(QString(prop-\/>getName().c\_str()));}
+\DoxyCodeLine{01228 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_property_menu_button_ad6f07307a874ac7347761ccd91a6b173}\label{class_property_menu_button_ad6f07307a874ac7347761ccd91a6b173}} 
+\index{PropertyMenuButton@{PropertyMenuButton}!updateStatus@{updateStatus}}
+\index{updateStatus@{updateStatus}!PropertyMenuButton@{PropertyMenuButton}}
+\doxysubsubsection{\texorpdfstring{updateStatus()}{updateStatus()}}
+{\footnotesize\ttfamily void Property\+Menu\+Button\+::update\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tool_option_control}{Tool\+Option\+Control}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01201                                       \{}
+\DoxyCodeLine{01202   QMenu *m = menu();}
+\DoxyCodeLine{01203   assert(m);}
+\DoxyCodeLine{01204   QList<QAction *> actionList = m-\/>actions();}
+\DoxyCodeLine{01205   assert(actionList.count() == m\_properties.count());}
+\DoxyCodeLine{01206 }
+\DoxyCodeLine{01207   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{01208   \textcolor{keywordflow}{for} (i = 0; i < m\_properties.count(); i++) \{}
+\DoxyCodeLine{01209     \mbox{\hyperlink{class_t_bool_property}{TBoolProperty}} *prop   = m\_properties.at(i);}
+\DoxyCodeLine{01210     QAction *action       = actionList.at(i);}
+\DoxyCodeLine{01211     \textcolor{keywordtype}{bool} isPropertyLocked = prop-\/>getValue();}
+\DoxyCodeLine{01212     \textcolor{keywordflow}{if} (action-\/>isChecked() != isPropertyLocked)}
+\DoxyCodeLine{01213       action-\/>setChecked(isPropertyLocked);}
+\DoxyCodeLine{01214   \}}
+\DoxyCodeLine{01215 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptionscontrols.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptionscontrols.\+cpp\end{DoxyCompactItemize}

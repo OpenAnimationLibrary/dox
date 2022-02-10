@@ -1,0 +1,141 @@
+\hypertarget{class_simple_exp_field}{}\doxysection{Simple\+Exp\+Field Class Reference}
+\label{class_simple_exp_field}\index{SimpleExpField@{SimpleExpField}}
+Inheritance diagram for Simple\+Exp\+Field\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_simple_exp_field}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_simple_exp_field_a0f9756a1336e809bda270603de38b34c}{Simple\+Exp\+Field}} (QWidget $\ast$parent)
+\item 
+void \mbox{\hyperlink{class_simple_exp_field_a19aaad4307f8c9f5040a386e48680443}{set\+Value}} (double)
+\item 
+void \mbox{\hyperlink{class_simple_exp_field_a453d666f9443c1246a41de264307c53d}{set\+Value}} (double, int, int)
+\item 
+double \mbox{\hyperlink{class_simple_exp_field_a77a08f6a15949a4b7d9234dfb0f5eccb}{get\+Value}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_simple_exp_field_a5eef30faba651d3dedb5385f8061afdc}{focus\+In\+Event}} (QFocus\+Event $\ast$event) override
+\item 
+void \mbox{\hyperlink{class_simple_exp_field_a1955908df35b559d0d80bbe338c6c953}{focus\+Out\+Event}} (QFocus\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_simple_exp_field_a0f9756a1336e809bda270603de38b34c}\label{class_simple_exp_field_a0f9756a1336e809bda270603de38b34c}} 
+\index{SimpleExpField@{SimpleExpField}!SimpleExpField@{SimpleExpField}}
+\index{SimpleExpField@{SimpleExpField}!SimpleExpField@{SimpleExpField}}
+\doxysubsubsection{\texorpdfstring{SimpleExpField()}{SimpleExpField()}}
+{\footnotesize\ttfamily Simple\+Exp\+Field\+::\+Simple\+Exp\+Field (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00120                                               : QLineEdit(parent) \{}
+\DoxyCodeLine{00121   m\_validator = \textcolor{keyword}{new} \mbox{\hyperlink{class_simple_exp_validator}{SimpleExpValidator}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00122   setValidator(m\_validator);}
+\DoxyCodeLine{00123 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_simple_exp_field_a5eef30faba651d3dedb5385f8061afdc}\label{class_simple_exp_field_a5eef30faba651d3dedb5385f8061afdc}} 
+\index{SimpleExpField@{SimpleExpField}!focusInEvent@{focusInEvent}}
+\index{focusInEvent@{focusInEvent}!SimpleExpField@{SimpleExpField}}
+\doxysubsubsection{\texorpdfstring{focusInEvent()}{focusInEvent()}}
+{\footnotesize\ttfamily void Simple\+Exp\+Field\+::focus\+In\+Event (\begin{DoxyParamCaption}\item[{QFocus\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00159                                                     \{}
+\DoxyCodeLine{00160   m\_previousValue = text();}
+\DoxyCodeLine{00161   QLineEdit::focusInEvent(event);}
+\DoxyCodeLine{00162 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_simple_exp_field_a1955908df35b559d0d80bbe338c6c953}\label{class_simple_exp_field_a1955908df35b559d0d80bbe338c6c953}} 
+\index{SimpleExpField@{SimpleExpField}!focusOutEvent@{focusOutEvent}}
+\index{focusOutEvent@{focusOutEvent}!SimpleExpField@{SimpleExpField}}
+\doxysubsubsection{\texorpdfstring{focusOutEvent()}{focusOutEvent()}}
+{\footnotesize\ttfamily void Simple\+Exp\+Field\+::focus\+Out\+Event (\begin{DoxyParamCaption}\item[{QFocus\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00166                                                      \{}
+\DoxyCodeLine{00167   \textcolor{keywordtype}{int} dummy;}
+\DoxyCodeLine{00168   QString tmp = text();}
+\DoxyCodeLine{00169   \textcolor{keywordflow}{if} (validator()-\/>validate(tmp, dummy) != QValidator::Acceptable)}
+\DoxyCodeLine{00170     setText(m\_previousValue);}
+\DoxyCodeLine{00171   QLineEdit::focusOutEvent(event);}
+\DoxyCodeLine{00172 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_simple_exp_field_a77a08f6a15949a4b7d9234dfb0f5eccb}\label{class_simple_exp_field_a77a08f6a15949a4b7d9234dfb0f5eccb}} 
+\index{SimpleExpField@{SimpleExpField}!getValue@{getValue}}
+\index{getValue@{getValue}!SimpleExpField@{SimpleExpField}}
+\doxysubsubsection{\texorpdfstring{getValue()}{getValue()}}
+{\footnotesize\ttfamily double Simple\+Exp\+Field\+::get\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00145                                 \{}
+\DoxyCodeLine{00146   \textcolor{keywordtype}{int} slashCount = text().count(\textcolor{charliteral}{'/'});}
+\DoxyCodeLine{00147   \textcolor{keywordflow}{if} (slashCount == 0)}
+\DoxyCodeLine{00148     \textcolor{keywordflow}{return} text().toDouble();}
+\DoxyCodeLine{00149   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (slashCount == 1) \{}
+\DoxyCodeLine{00150     QStringList strList = text().split(\textcolor{charliteral}{'/'});}
+\DoxyCodeLine{00151     \textcolor{keywordflow}{return} strList.at(0).toDouble() / strList.at(1).toDouble();}
+\DoxyCodeLine{00152   \}}
+\DoxyCodeLine{00153   std::cout << \textcolor{stringliteral}{"{}more than one slash!"{}} << std::endl;}
+\DoxyCodeLine{00154   \textcolor{keywordflow}{return} 0.1;}
+\DoxyCodeLine{00155 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_simple_exp_field_a19aaad4307f8c9f5040a386e48680443}\label{class_simple_exp_field_a19aaad4307f8c9f5040a386e48680443}} 
+\index{SimpleExpField@{SimpleExpField}!setValue@{setValue}}
+\index{setValue@{setValue}!SimpleExpField@{SimpleExpField}}
+\doxysubsubsection{\texorpdfstring{setValue()}{setValue()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Simple\+Exp\+Field\+::set\+Value (\begin{DoxyParamCaption}\item[{double}]{value }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00126                                           \{}
+\DoxyCodeLine{00127   QString str;}
+\DoxyCodeLine{00128   str.setNum(value);}
+\DoxyCodeLine{00129   setText(str);}
+\DoxyCodeLine{00130 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_simple_exp_field_a453d666f9443c1246a41de264307c53d}\label{class_simple_exp_field_a453d666f9443c1246a41de264307c53d}} 
+\index{SimpleExpField@{SimpleExpField}!setValue@{setValue}}
+\index{setValue@{setValue}!SimpleExpField@{SimpleExpField}}
+\doxysubsubsection{\texorpdfstring{setValue()}{setValue()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Simple\+Exp\+Field\+::set\+Value (\begin{DoxyParamCaption}\item[{double}]{value,  }\item[{int}]{w,  }\item[{int}]{h }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00133                                                         \{}
+\DoxyCodeLine{00134   QString str;}
+\DoxyCodeLine{00135   \textcolor{keywordflow}{if} (areAlmostEqual(value, (\textcolor{keywordtype}{double})w / (\textcolor{keywordtype}{double})h, 1e-\/5))}
+\DoxyCodeLine{00136     str = QString().setNum(w) + \textcolor{stringliteral}{"{}/"{}} + QString().setNum(h);}
+\DoxyCodeLine{00137   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00138     str.setNum(value);}
+\DoxyCodeLine{00139 }
+\DoxyCodeLine{00140   setText(str);}
+\DoxyCodeLine{00141 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/camerasettingswidget.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/camerasettingswidget.\+cpp\end{DoxyCompactItemize}

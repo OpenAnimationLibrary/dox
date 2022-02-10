@@ -1,0 +1,162 @@
+\hypertarget{class_onion_skin_mask_modifier}{}\doxysection{Onion\+Skin\+Mask\+Modifier Class Reference}
+\label{class_onion_skin_mask_modifier}\index{OnionSkinMaskModifier@{OnionSkinMaskModifier}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_onion_skin_mask_modifier_a929f331c833d9e65e9bdde0b4ce9fa34}{Onion\+Skin\+Mask\+Modifier}} (\mbox{\hyperlink{class_onion_skin_mask}{Onion\+Skin\+Mask}} mask, int current\+Row)
+\item 
+const \mbox{\hyperlink{class_onion_skin_mask}{Onion\+Skin\+Mask}} \& \mbox{\hyperlink{class_onion_skin_mask_modifier_a62c4ed60934d011259a05184526a23ed}{get\+Mask}} () const
+\item 
+void \mbox{\hyperlink{class_onion_skin_mask_modifier_ad8bd6c9bc0d91a87168387a4558c6a6d}{click}} (int row, bool is\+Fos)
+\item 
+void \mbox{\hyperlink{class_onion_skin_mask_modifier_a894b49554154427820dc64330d56aaa0}{drag}} (int row)
+\item 
+void \mbox{\hyperlink{class_onion_skin_mask_modifier_aebc57b355c4e72258224e43d45c1a6b6}{release}} (int row)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_onion_skin_mask_modifier_a929f331c833d9e65e9bdde0b4ce9fa34}\label{class_onion_skin_mask_modifier_a929f331c833d9e65e9bdde0b4ce9fa34}} 
+\index{OnionSkinMaskModifier@{OnionSkinMaskModifier}!OnionSkinMaskModifier@{OnionSkinMaskModifier}}
+\index{OnionSkinMaskModifier@{OnionSkinMaskModifier}!OnionSkinMaskModifier@{OnionSkinMaskModifier}}
+\doxysubsubsection{\texorpdfstring{OnionSkinMaskModifier()}{OnionSkinMaskModifier()}}
+{\footnotesize\ttfamily Onion\+Skin\+Mask\+Modifier\+::\+Onion\+Skin\+Mask\+Modifier (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_onion_skin_mask}{Onion\+Skin\+Mask}}}]{mask,  }\item[{int}]{current\+Row }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00187     : m\_oldMask(mask)}
+\DoxyCodeLine{00188     , m\_curMask(mask)}
+\DoxyCodeLine{00189     , m\_firstRow(0)}
+\DoxyCodeLine{00190     , m\_lastRow(0)}
+\DoxyCodeLine{00191     , m\_curRow(currentRow)}
+\DoxyCodeLine{00192     , m\_status(0) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_onion_skin_mask_modifier_ad8bd6c9bc0d91a87168387a4558c6a6d}\label{class_onion_skin_mask_modifier_ad8bd6c9bc0d91a87168387a4558c6a6d}} 
+\index{OnionSkinMaskModifier@{OnionSkinMaskModifier}!click@{click}}
+\index{click@{click}!OnionSkinMaskModifier@{OnionSkinMaskModifier}}
+\doxysubsubsection{\texorpdfstring{click()}{click()}}
+{\footnotesize\ttfamily void Onion\+Skin\+Mask\+Modifier\+::click (\begin{DoxyParamCaption}\item[{int}]{row,  }\item[{bool}]{is\+Fos }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00196                                                      \{}
+\DoxyCodeLine{00197   assert(m\_status == 0);}
+\DoxyCodeLine{00198 }
+\DoxyCodeLine{00199   m\_firstRow = m\_lastRow = row;}
+\DoxyCodeLine{00200   \textcolor{keywordflow}{if} (isFos) \{}
+\DoxyCodeLine{00201     assert(row != m\_curRow);}
+\DoxyCodeLine{00202 }
+\DoxyCodeLine{00203     \textcolor{keywordflow}{if} (m\_curMask.isEnabled() \&\& m\_curMask.isFos(row)) \{}
+\DoxyCodeLine{00204       m\_status = 2;  \textcolor{comment}{// spegnere fos}}
+\DoxyCodeLine{00205       m\_curMask.\mbox{\hyperlink{class_onion_skin_mask_abec0776ab067027858d7c7a8c27f1b59}{setFos}}(row, \textcolor{keyword}{false});}
+\DoxyCodeLine{00206     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00207       \textcolor{keywordflow}{if} (!m\_curMask.isEnabled()) \{}
+\DoxyCodeLine{00208         m\_curMask.clear();}
+\DoxyCodeLine{00209         m\_curMask.enable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00210       \}}
+\DoxyCodeLine{00211 }
+\DoxyCodeLine{00212       m\_curMask.\mbox{\hyperlink{class_onion_skin_mask_abec0776ab067027858d7c7a8c27f1b59}{setFos}}(row, \textcolor{keyword}{true});}
+\DoxyCodeLine{00213       m\_status = 3;  \textcolor{comment}{// accendere fos}}
+\DoxyCodeLine{00214     \}}
+\DoxyCodeLine{00215   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00216     \textcolor{keywordtype}{int} drow = row -\/ m\_curRow;}
+\DoxyCodeLine{00217     \textcolor{keywordflow}{if} (drow != 0 \&\& m\_curMask.isEnabled() \&\& m\_curMask.isMos(drow)) \{}
+\DoxyCodeLine{00218       m\_status = 4;  \textcolor{comment}{// spegnere mos}}
+\DoxyCodeLine{00219       m\_curMask.\mbox{\hyperlink{class_onion_skin_mask_a52cefe9a23f99c469ac6df66bf5555ab}{setMos}}(drow, \textcolor{keyword}{false});}
+\DoxyCodeLine{00220     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (drow == 0) \{}
+\DoxyCodeLine{00221       m\_status = 8 + 4 + 1;  \textcolor{comment}{// accendere mos; partito da 0}}
+\DoxyCodeLine{00222     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00223       \textcolor{keywordflow}{if} (!m\_curMask.isEnabled()) m\_curMask.enable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00224       m\_curMask.\mbox{\hyperlink{class_onion_skin_mask_a52cefe9a23f99c469ac6df66bf5555ab}{setMos}}(drow, \textcolor{keyword}{true});}
+\DoxyCodeLine{00225       m\_status = 4 + 1;  \textcolor{comment}{// accendere mos;}}
+\DoxyCodeLine{00226     \}}
+\DoxyCodeLine{00227   \}}
+\DoxyCodeLine{00228 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_onion_skin_mask_modifier_a894b49554154427820dc64330d56aaa0}\label{class_onion_skin_mask_modifier_a894b49554154427820dc64330d56aaa0}} 
+\index{OnionSkinMaskModifier@{OnionSkinMaskModifier}!drag@{drag}}
+\index{drag@{drag}!OnionSkinMaskModifier@{OnionSkinMaskModifier}}
+\doxysubsubsection{\texorpdfstring{drag()}{drag()}}
+{\footnotesize\ttfamily void Onion\+Skin\+Mask\+Modifier\+::drag (\begin{DoxyParamCaption}\item[{int}]{row }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00232                                         \{}
+\DoxyCodeLine{00233   \textcolor{keywordflow}{if} (m\_status \& 128) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00234 }
+\DoxyCodeLine{00235   \textcolor{keywordflow}{if} (row == m\_lastRow) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00236 }
+\DoxyCodeLine{00237   m\_status |= 64;  \textcolor{comment}{// moved}}
+\DoxyCodeLine{00238 }
+\DoxyCodeLine{00239   \textcolor{keywordtype}{int} n = row -\/ m\_lastRow, d = 1;}
+\DoxyCodeLine{00240   \textcolor{keywordflow}{if} (n < 0) n = -\/n, d = -\/d;}
+\DoxyCodeLine{00241 }
+\DoxyCodeLine{00242   \textcolor{keywordtype}{int} oldr = m\_lastRow, r = oldr + d;}
+\DoxyCodeLine{00243 }
+\DoxyCodeLine{00244   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; ++i, r += d) \{}
+\DoxyCodeLine{00245     \textcolor{keywordflow}{if} (m\_status \& 4) \{}
+\DoxyCodeLine{00246       \textcolor{keywordflow}{if} (!m\_curMask.isEnabled()) \{}
+\DoxyCodeLine{00247         m\_curMask.clear();}
+\DoxyCodeLine{00248         m\_curMask.enable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00249       \}}
+\DoxyCodeLine{00250       \textcolor{keywordflow}{if} (r != m\_curRow) m\_curMask.\mbox{\hyperlink{class_onion_skin_mask_a52cefe9a23f99c469ac6df66bf5555ab}{setMos}}(r -\/ m\_curRow, (m\_status \& 1) != 0);}
+\DoxyCodeLine{00251     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00252       m\_curMask.\mbox{\hyperlink{class_onion_skin_mask_abec0776ab067027858d7c7a8c27f1b59}{setFos}}(r, (m\_status \& 1) != 0);}
+\DoxyCodeLine{00253   \}}
+\DoxyCodeLine{00254 }
+\DoxyCodeLine{00255   m\_lastRow = row;}
+\DoxyCodeLine{00256 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_onion_skin_mask_modifier_a62c4ed60934d011259a05184526a23ed}\label{class_onion_skin_mask_modifier_a62c4ed60934d011259a05184526a23ed}} 
+\index{OnionSkinMaskModifier@{OnionSkinMaskModifier}!getMask@{getMask}}
+\index{getMask@{getMask}!OnionSkinMaskModifier@{OnionSkinMaskModifier}}
+\doxysubsubsection{\texorpdfstring{getMask()}{getMask()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_onion_skin_mask}{Onion\+Skin\+Mask}} \& Onion\+Skin\+Mask\+Modifier\+::get\+Mask (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00157 \{ \textcolor{keywordflow}{return} m\_curMask; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_onion_skin_mask_modifier_aebc57b355c4e72258224e43d45c1a6b6}\label{class_onion_skin_mask_modifier_aebc57b355c4e72258224e43d45c1a6b6}} 
+\index{OnionSkinMaskModifier@{OnionSkinMaskModifier}!release@{release}}
+\index{release@{release}!OnionSkinMaskModifier@{OnionSkinMaskModifier}}
+\doxysubsubsection{\texorpdfstring{release()}{release()}}
+{\footnotesize\ttfamily void Onion\+Skin\+Mask\+Modifier\+::release (\begin{DoxyParamCaption}\item[{int}]{row }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00260                                            \{}
+\DoxyCodeLine{00261   \textcolor{keywordflow}{if} (m\_status \& 128) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00262   \textcolor{keywordflow}{if} ((m\_status \& 64) == 0    \textcolor{comment}{// non si e' mosso}}
+\DoxyCodeLine{00263       \&\& (m\_status \& 8) == 8  \textcolor{comment}{// e' partito da zero}}
+\DoxyCodeLine{00264       \&\& row == m\_curRow) \{}
+\DoxyCodeLine{00265     \textcolor{keywordflow}{if} (!m\_curMask.isEmpty() \&\& m\_curMask.isEnabled())}
+\DoxyCodeLine{00266       m\_curMask.enable(\textcolor{keyword}{false});}
+\DoxyCodeLine{00267     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00268       m\_curMask.enable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00269       \textcolor{keywordflow}{if} (m\_curMask.isEmpty()) \{}
+\DoxyCodeLine{00270         m\_curMask.\mbox{\hyperlink{class_onion_skin_mask_a52cefe9a23f99c469ac6df66bf5555ab}{setMos}}(-\/1, \textcolor{keyword}{true});}
+\DoxyCodeLine{00271         m\_curMask.\mbox{\hyperlink{class_onion_skin_mask_a52cefe9a23f99c469ac6df66bf5555ab}{setMos}}(-\/2, \textcolor{keyword}{true});}
+\DoxyCodeLine{00272         m\_curMask.\mbox{\hyperlink{class_onion_skin_mask_a52cefe9a23f99c469ac6df66bf5555ab}{setMos}}(-\/3, \textcolor{keyword}{true});}
+\DoxyCodeLine{00273       \}}
+\DoxyCodeLine{00274     \}}
+\DoxyCodeLine{00275   \}}
+\DoxyCodeLine{00276 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/onionskinmask.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/onionskinmask.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,125 @@
+\hypertarget{class_d_v_gui_1_1_radio_button_dialog}{}\doxysection{DVGui\+::Radio\+Button\+Dialog Class Reference}
+\label{class_d_v_gui_1_1_radio_button_dialog}\index{DVGui::RadioButtonDialog@{DVGui::RadioButtonDialog}}
+
+
+{\ttfamily \#include $<$dvdialog.\+h$>$}
+
+Inheritance diagram for DVGui\+::Radio\+Button\+Dialog\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_d_v_gui_1_1_radio_button_dialog}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_d_v_gui_1_1_radio_button_dialog_a7c0bb03ac4dbbd93bee8d5974f07f2e8}{on\+Button\+Clicked}} (int id)
+\item 
+void \mbox{\hyperlink{class_d_v_gui_1_1_radio_button_dialog_a9709fc6335fb22da3eefd44814c30a2b}{on\+Cancel}} ()
+\item 
+void \mbox{\hyperlink{class_d_v_gui_1_1_radio_button_dialog_a6c717ec88c4fddab183a6fa3e15cadfb}{on\+Apply}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_v_gui_1_1_radio_button_dialog_aeef1f39a23bf328200ceb4e9d9e72d13}{Radio\+Button\+Dialog}} (const QString \&label\+Text, const QList$<$ QString $>$ \&radio\+Button\+List, QWidget $\ast$parent=0, Qt\+::\+Window\+Flags f=0)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Is a modal dialog with exclusive list of radio button. Exec value depend to checked button. 0 -\/\texorpdfstring{$>$}{>} Cancel or Close Popup, 1,2,3,... -\/\texorpdfstring{$>$}{>} checkbox clicked. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_v_gui_1_1_radio_button_dialog_aeef1f39a23bf328200ceb4e9d9e72d13}\label{class_d_v_gui_1_1_radio_button_dialog_aeef1f39a23bf328200ceb4e9d9e72d13}} 
+\index{DVGui::RadioButtonDialog@{DVGui::RadioButtonDialog}!RadioButtonDialog@{RadioButtonDialog}}
+\index{RadioButtonDialog@{RadioButtonDialog}!DVGui::RadioButtonDialog@{DVGui::RadioButtonDialog}}
+\doxysubsubsection{\texorpdfstring{RadioButtonDialog()}{RadioButtonDialog()}}
+{\footnotesize\ttfamily Radio\+Button\+Dialog\+::\+Radio\+Button\+Dialog (\begin{DoxyParamCaption}\item[{const QString \&}]{label\+Text,  }\item[{const QList$<$ QString $>$ \&}]{radio\+Button\+List,  }\item[{QWidget $\ast$}]{parent = {\ttfamily 0},  }\item[{Qt\+::\+Window\+Flags}]{f = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00823     : \mbox{\hyperlink{class_d_v_gui_1_1_dialog}{Dialog}}(parent, \textcolor{keyword}{true}, \textcolor{keyword}{true}), m\_result(1) \{}
+\DoxyCodeLine{00824   setWindowTitle(tr(\textcolor{stringliteral}{"{}OpenToonz"{}}));}
+\DoxyCodeLine{00825 }
+\DoxyCodeLine{00826   setMinimumSize(20, 20);}
+\DoxyCodeLine{00827 }
+\DoxyCodeLine{00828   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ae7de609b3b23233656bc68852a2d10cb}{beginVLayout}}();}
+\DoxyCodeLine{00829 }
+\DoxyCodeLine{00830   QLabel *label = \textcolor{keyword}{new} QLabel(labelText);}
+\DoxyCodeLine{00831   label-\/>setAlignment(Qt::AlignLeft);}
+\DoxyCodeLine{00832   label-\/>setFixedHeight(2 * WidgetHeight);}
+\DoxyCodeLine{00833   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(label);}
+\DoxyCodeLine{00834 }
+\DoxyCodeLine{00835   QButtonGroup *buttonGroup = \textcolor{keyword}{new} QButtonGroup(\textcolor{keyword}{this});}
+\DoxyCodeLine{00836   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00837   \textcolor{keywordflow}{for} (i = 0; i < radioButtonList.count(); i++) \{}
+\DoxyCodeLine{00838     QRadioButton *radioButton = \textcolor{keyword}{new} QRadioButton(radioButtonList.at(i));}
+\DoxyCodeLine{00839     \textcolor{keywordflow}{if} (i == m\_result -\/ 1) radioButton-\/>setChecked(\textcolor{keyword}{true});}
+\DoxyCodeLine{00840     radioButton-\/>setFixedHeight(WidgetHeight);}
+\DoxyCodeLine{00841     buttonGroup-\/>addButton(radioButton);}
+\DoxyCodeLine{00842     buttonGroup-\/>setId(radioButton, i);}
+\DoxyCodeLine{00843     \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(radioButton);}
+\DoxyCodeLine{00844   \}}
+\DoxyCodeLine{00845 }
+\DoxyCodeLine{00846   \textcolor{keywordtype}{bool} ret = connect(buttonGroup, SIGNAL(buttonClicked(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00847                      SLOT(onButtonClicked(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00848 }
+\DoxyCodeLine{00849   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ab88d88334402845e544da6ca1f207c79}{endVLayout}}();}
+\DoxyCodeLine{00850 }
+\DoxyCodeLine{00851   QPushButton *applyButton = \textcolor{keyword}{new} QPushButton(QObject::tr(\textcolor{stringliteral}{"{}Apply"{}}));}
+\DoxyCodeLine{00852   ret = ret \&\& connect(applyButton, SIGNAL(pressed()), \textcolor{keyword}{this}, SLOT(onApply()));}
+\DoxyCodeLine{00853   QPushButton *cancelButton = \textcolor{keyword}{new} QPushButton(QObject::tr(\textcolor{stringliteral}{"{}Cancel"{}}));}
+\DoxyCodeLine{00854   ret = ret \&\& connect(cancelButton, SIGNAL(pressed()), \textcolor{keyword}{this}, SLOT(onCancel()));}
+\DoxyCodeLine{00855 }
+\DoxyCodeLine{00856   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(applyButton, cancelButton);}
+\DoxyCodeLine{00857 }
+\DoxyCodeLine{00858   assert(ret);}
+\DoxyCodeLine{00859 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_v_gui_1_1_radio_button_dialog_a6c717ec88c4fddab183a6fa3e15cadfb}\label{class_d_v_gui_1_1_radio_button_dialog_a6c717ec88c4fddab183a6fa3e15cadfb}} 
+\index{DVGui::RadioButtonDialog@{DVGui::RadioButtonDialog}!onApply@{onApply}}
+\index{onApply@{onApply}!DVGui::RadioButtonDialog@{DVGui::RadioButtonDialog}}
+\doxysubsubsection{\texorpdfstring{onApply}{onApply}}
+{\footnotesize\ttfamily void Radio\+Button\+Dialog\+::on\+Apply (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00874 \{ done(m\_result); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_d_v_gui_1_1_radio_button_dialog_a7c0bb03ac4dbbd93bee8d5974f07f2e8}\label{class_d_v_gui_1_1_radio_button_dialog_a7c0bb03ac4dbbd93bee8d5974f07f2e8}} 
+\index{DVGui::RadioButtonDialog@{DVGui::RadioButtonDialog}!onButtonClicked@{onButtonClicked}}
+\index{onButtonClicked@{onButtonClicked}!DVGui::RadioButtonDialog@{DVGui::RadioButtonDialog}}
+\doxysubsubsection{\texorpdfstring{onButtonClicked}{onButtonClicked}}
+{\footnotesize\ttfamily void Radio\+Button\+Dialog\+::on\+Button\+Clicked (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00863                                               \{}
+\DoxyCodeLine{00864   \textcolor{comment}{// Add "{}1"{} because "{}0"{} is cancel button.}}
+\DoxyCodeLine{00865   m\_result = \textcolor{keywordtype}{id} + 1;}
+\DoxyCodeLine{00866 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_d_v_gui_1_1_radio_button_dialog_a9709fc6335fb22da3eefd44814c30a2b}\label{class_d_v_gui_1_1_radio_button_dialog_a9709fc6335fb22da3eefd44814c30a2b}} 
+\index{DVGui::RadioButtonDialog@{DVGui::RadioButtonDialog}!onCancel@{onCancel}}
+\index{onCancel@{onCancel}!DVGui::RadioButtonDialog@{DVGui::RadioButtonDialog}}
+\doxysubsubsection{\texorpdfstring{onCancel}{onCancel}}
+{\footnotesize\ttfamily void Radio\+Button\+Dialog\+::on\+Cancel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00870 \{ done(0); \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/dvdialog.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/dvdialog.\+cpp\end{DoxyCompactItemize}

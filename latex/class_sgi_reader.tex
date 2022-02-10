@@ -1,0 +1,293 @@
+\hypertarget{class_sgi_reader}{}\doxysection{Sgi\+Reader Class Reference}
+\label{class_sgi_reader}\index{SgiReader@{SgiReader}}
+Inheritance diagram for Sgi\+Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_sgi_reader}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_sgi_reader_aa9370c75575d4bc1391a2672d2059d02}{open}} (FILE $\ast$file) override
+\item 
+\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$ \mbox{\hyperlink{class_sgi_reader_acade61a743fca7417cf72fb862851b60}{get\+Properties}} () const override
+\item 
+void \mbox{\hyperlink{class_sgi_reader_af406705824ccf8c5dc2fe20ee7245c45}{read\+Line}} (char $\ast$buffer, int x0, int x1, int shrink) override
+\item 
+void \mbox{\hyperlink{class_sgi_reader_a477adf591d7de354b3950eb2224a6636}{read\+Line}} (short $\ast$buffer, int x0, int x1, int shrink) override
+\item 
+int \mbox{\hyperlink{class_sgi_reader_ab71b3a0f66494269c27a1d846da7874e}{skip\+Lines}} (int line\+Count) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_sgi_reader_aeca169867f2044b31ca89d81b52da687}\label{class_sgi_reader_aeca169867f2044b31ca89d81b52da687}} 
+\index{SgiReader@{SgiReader}!SgiReader@{SgiReader}}
+\index{SgiReader@{SgiReader}!SgiReader@{SgiReader}}
+\doxysubsubsection{\texorpdfstring{SgiReader()}{SgiReader()}}
+{\footnotesize\ttfamily Sgi\+Reader\+::\+Sgi\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00848 : m\_header(0), m\_currentY(0) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_sgi_reader_a56e7f3586b0a1274e38fc831a197311e}\label{class_sgi_reader_a56e7f3586b0a1274e38fc831a197311e}} 
+\index{SgiReader@{SgiReader}!````~SgiReader@{$\sim$SgiReader}}
+\index{````~SgiReader@{$\sim$SgiReader}!SgiReader@{SgiReader}}
+\doxysubsubsection{\texorpdfstring{$\sim$SgiReader()}{~SgiReader()}}
+{\footnotesize\ttfamily Sgi\+Reader\+::$\sim$\+Sgi\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00898                       \{}
+\DoxyCodeLine{00899   \textcolor{keywordflow}{if} (!m\_header) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00900   \textcolor{keywordflow}{if} (m\_header-\/>base) free(m\_header-\/>base);}
+\DoxyCodeLine{00901   \textcolor{keywordflow}{if} (m\_header-\/>tmpbuf) free(m\_header-\/>tmpbuf);}
+\DoxyCodeLine{00902   \textcolor{keywordflow}{if} ((ISRLE(m\_header-\/>type))) \{}
+\DoxyCodeLine{00903     free(m\_header-\/>rowstart);}
+\DoxyCodeLine{00904     free(m\_header-\/>rowsize);}
+\DoxyCodeLine{00905   \}}
+\DoxyCodeLine{00906 }
+\DoxyCodeLine{00907   free(m\_header);}
+\DoxyCodeLine{00908   m\_header = 0;}
+\DoxyCodeLine{00909 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_sgi_reader_acade61a743fca7417cf72fb862851b60}\label{class_sgi_reader_acade61a743fca7417cf72fb862851b60}} 
+\index{SgiReader@{SgiReader}!getProperties@{getProperties}}
+\index{getProperties@{getProperties}!SgiReader@{SgiReader}}
+\doxysubsubsection{\texorpdfstring{getProperties()}{getProperties()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$ Sgi\+Reader\+::get\+Properties (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00854 \{ \textcolor{keywordflow}{return} 0; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_sgi_reader_aa9370c75575d4bc1391a2672d2059d02}\label{class_sgi_reader_aa9370c75575d4bc1391a2672d2059d02}} 
+\index{SgiReader@{SgiReader}!open@{open}}
+\index{open@{open}!SgiReader@{SgiReader}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily void Sgi\+Reader\+::open (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00864                                \{}
+\DoxyCodeLine{00865   m\_header = iopen(fileno(file), OpenRead, 0, 0, 0, 0, 0, 0);}
+\DoxyCodeLine{00866 }
+\DoxyCodeLine{00867   \textcolor{keywordflow}{if} (!m\_header) \{}
+\DoxyCodeLine{00868     \textcolor{keywordtype}{string} str(\textcolor{stringliteral}{"{}Can't open file"{}});}
+\DoxyCodeLine{00869     \textcolor{keywordflow}{throw}(str);}
+\DoxyCodeLine{00870   \}}
+\DoxyCodeLine{00871 }
+\DoxyCodeLine{00872   m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}                     = m\_header-\/>xsize;}
+\DoxyCodeLine{00873   m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}}                     = m\_header-\/>ysize;}
+\DoxyCodeLine{00874   m\_info.\mbox{\hyperlink{class_t_image_info_aa69221d579b49a27bcd54ffaabb2e8be}{m\_bitsPerSample}}          = BPP(m\_header-\/>type) * 8;}
+\DoxyCodeLine{00875   m\_info.\mbox{\hyperlink{class_t_image_info_a6b58380f718e21dde1b37577090f5c77}{m\_samplePerPixel}}         = m\_header-\/>zsize;}
+\DoxyCodeLine{00876   \mbox{\hyperlink{class_tiio_1_1_sgi_writer_properties}{Tiio::SgiWriterProperties}} *prop = \textcolor{keyword}{new} \mbox{\hyperlink{class_tiio_1_1_sgi_writer_properties}{Tiio::SgiWriterProperties}}();}
+\DoxyCodeLine{00877   m\_info.\mbox{\hyperlink{class_t_image_info_af19bdfa77849b4ca4de94f3fa1caad9d}{m\_properties}}             = prop;}
+\DoxyCodeLine{00878   prop-\/>m\_endianess.setValue(m\_header-\/>dorev == 1 ? L\textcolor{stringliteral}{"{}Big Endian"{}}}
+\DoxyCodeLine{00879                                                   : L\textcolor{stringliteral}{"{}Little Endian"{}});}
+\DoxyCodeLine{00880   prop-\/>m\_compressed.setValue(ISRLE(m\_header-\/>type) ? \textcolor{keyword}{true} : \textcolor{keyword}{false});}
+\DoxyCodeLine{00881   wstring pixelSize;}
+\DoxyCodeLine{00882   \textcolor{keywordtype}{int} ps = m\_info.\mbox{\hyperlink{class_t_image_info_aa69221d579b49a27bcd54ffaabb2e8be}{m\_bitsPerSample}} * m\_info.\mbox{\hyperlink{class_t_image_info_a6b58380f718e21dde1b37577090f5c77}{m\_samplePerPixel}};}
+\DoxyCodeLine{00883   \textcolor{keywordflow}{if} (ps == 8)}
+\DoxyCodeLine{00884     pixelSize = L\textcolor{stringliteral}{"{}8 bits (Greyscale)"{}};}
+\DoxyCodeLine{00885   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ps == 24)}
+\DoxyCodeLine{00886     pixelSize = L\textcolor{stringliteral}{"{}24 bits"{}};}
+\DoxyCodeLine{00887   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ps == 32)}
+\DoxyCodeLine{00888     pixelSize = L\textcolor{stringliteral}{"{}32 bits"{}};}
+\DoxyCodeLine{00889   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ps == 48)}
+\DoxyCodeLine{00890     pixelSize = L\textcolor{stringliteral}{"{}48 bits"{}};}
+\DoxyCodeLine{00891   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ps == 64)}
+\DoxyCodeLine{00892     pixelSize = L\textcolor{stringliteral}{"{}64 bits"{}};}
+\DoxyCodeLine{00893   prop-\/>m\_pixelSize.setValue(pixelSize);}
+\DoxyCodeLine{00894 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_sgi_reader_af406705824ccf8c5dc2fe20ee7245c45}\label{class_sgi_reader_af406705824ccf8c5dc2fe20ee7245c45}} 
+\index{SgiReader@{SgiReader}!readLine@{readLine}}
+\index{readLine@{readLine}!SgiReader@{SgiReader}}
+\doxysubsubsection{\texorpdfstring{readLine()}{readLine()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Sgi\+Reader\+::read\+Line (\begin{DoxyParamCaption}\item[{char $\ast$}]{buffer,  }\item[{int}]{x0,  }\item[{int}]{x1,  }\item[{int}]{shrink }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00954                                                                  \{}
+\DoxyCodeLine{00955   \textcolor{comment}{// assert(shrink == 1);}}
+\DoxyCodeLine{00956   \textcolor{comment}{// assert(x0 == 0);}}
+\DoxyCodeLine{00957   \textcolor{comment}{// assert(x1 == m\_info.m\_lx-\/1);}}
+\DoxyCodeLine{00958 }
+\DoxyCodeLine{00959   \textcolor{comment}{// Non ancora implementata la lettura parziale}}
+\DoxyCodeLine{00960   x0     = 0;}
+\DoxyCodeLine{00961   x1     = m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} -\/ 1;}
+\DoxyCodeLine{00962   shrink = 1;}
+\DoxyCodeLine{00963 }
+\DoxyCodeLine{00964   \textcolor{keywordflow}{if} (BPP(m\_header-\/>type) == 1)  \textcolor{comment}{// 32 -\/> 32}}
+\DoxyCodeLine{00965   \{}
+\DoxyCodeLine{00966     TPixel32 *pix = (TPixel32 *)buffer;}
+\DoxyCodeLine{00967     std::vector<UCHAR> rbuf(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}), gbuf(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}), bbuf(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}),}
+\DoxyCodeLine{00968         mbuf(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}});}
+\DoxyCodeLine{00969     \textcolor{keywordflow}{if} (m\_header-\/>zsize == 4) \{}
+\DoxyCodeLine{00970       new\_getrow(m\_header, \&rbuf[0], m\_currentY, 0);}
+\DoxyCodeLine{00971       new\_getrow(m\_header, \&gbuf[0], m\_currentY, 1);}
+\DoxyCodeLine{00972       new\_getrow(m\_header, \&bbuf[0], m\_currentY, 2);}
+\DoxyCodeLine{00973       new\_getrow(m\_header, \&mbuf[0], m\_currentY, 3);}
+\DoxyCodeLine{00974       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (x1 -\/ x0 + 1); ++i) \{}
+\DoxyCodeLine{00975         pix-\/>r = rbuf[i];}
+\DoxyCodeLine{00976         pix-\/>g = gbuf[i];}
+\DoxyCodeLine{00977         pix-\/>b = bbuf[i];}
+\DoxyCodeLine{00978         pix-\/>m = mbuf[i];}
+\DoxyCodeLine{00979         ++pix;}
+\DoxyCodeLine{00980       \}}
+\DoxyCodeLine{00981     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00982       new\_getrow(m\_header, \&rbuf[0], m\_currentY, 0);}
+\DoxyCodeLine{00983       \textcolor{keywordflow}{if} (m\_header-\/>zsize == 1)}
+\DoxyCodeLine{00984         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (x1 -\/ x0 + 1); ++i) \{}
+\DoxyCodeLine{00985           pix-\/>r = rbuf[i];}
+\DoxyCodeLine{00986           pix-\/>g = rbuf[i];}
+\DoxyCodeLine{00987           pix-\/>b = rbuf[i];}
+\DoxyCodeLine{00988           pix-\/>m = 0xff;}
+\DoxyCodeLine{00989           ++pix;}
+\DoxyCodeLine{00990         \}}
+\DoxyCodeLine{00991       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00992         new\_getrow(m\_header, \&gbuf[0], m\_currentY, 1);}
+\DoxyCodeLine{00993         new\_getrow(m\_header, \&bbuf[0], m\_currentY, 2);}
+\DoxyCodeLine{00994         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (x1 -\/ x0 + 1); ++i) \{}
+\DoxyCodeLine{00995           pix-\/>r = rbuf[i];}
+\DoxyCodeLine{00996           pix-\/>g = gbuf[i];}
+\DoxyCodeLine{00997           pix-\/>b = bbuf[i];}
+\DoxyCodeLine{00998           pix-\/>m = 0xff;}
+\DoxyCodeLine{00999           ++pix;}
+\DoxyCodeLine{01000         \}}
+\DoxyCodeLine{01001       \}}
+\DoxyCodeLine{01002     \}}
+\DoxyCodeLine{01003   \} \textcolor{keywordflow}{else} \{  \textcolor{comment}{// 64 -\/> 32}}
+\DoxyCodeLine{01004     TPixel32 *pix = (TPixel32 *)buffer;}
+\DoxyCodeLine{01005     std::vector<USHORT> rbuf(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}), gbuf(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}), bbuf(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}),}
+\DoxyCodeLine{01006         mbuf(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}});}
+\DoxyCodeLine{01007     \textcolor{keywordflow}{if} (m\_header-\/>zsize == 4) \{}
+\DoxyCodeLine{01008       new\_getrow(m\_header, \&rbuf[0], m\_currentY, 0);}
+\DoxyCodeLine{01009       new\_getrow(m\_header, \&gbuf[0], m\_currentY, 1);}
+\DoxyCodeLine{01010       new\_getrow(m\_header, \&bbuf[0], m\_currentY, 2);}
+\DoxyCodeLine{01011       new\_getrow(m\_header, \&mbuf[0], m\_currentY, 3);}
+\DoxyCodeLine{01012       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (x1 -\/ x0 + 1); ++i) \{}
+\DoxyCodeLine{01013         pix-\/>r = rbuf[i] >> 8;}
+\DoxyCodeLine{01014         pix-\/>g = gbuf[i] >> 8;}
+\DoxyCodeLine{01015         pix-\/>b = bbuf[i] >> 8;}
+\DoxyCodeLine{01016         pix-\/>m = mbuf[i] >> 8;}
+\DoxyCodeLine{01017         ++pix;}
+\DoxyCodeLine{01018       \}}
+\DoxyCodeLine{01019     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01020       new\_getrow(m\_header, \&rbuf[0], m\_currentY, 0);}
+\DoxyCodeLine{01021       new\_getrow(m\_header, \&gbuf[0], m\_currentY, 1);}
+\DoxyCodeLine{01022       new\_getrow(m\_header, \&bbuf[0], m\_currentY, 2);}
+\DoxyCodeLine{01023       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (x1 -\/ x0 + 1); ++i) \{}
+\DoxyCodeLine{01024         pix-\/>r = rbuf[i] >> 8;}
+\DoxyCodeLine{01025         pix-\/>g = gbuf[i] >> 8;}
+\DoxyCodeLine{01026         pix-\/>b = bbuf[i] >> 8;}
+\DoxyCodeLine{01027         pix-\/>m = 0xff;}
+\DoxyCodeLine{01028         ++pix;}
+\DoxyCodeLine{01029       \}}
+\DoxyCodeLine{01030     \}}
+\DoxyCodeLine{01031   \}}
+\DoxyCodeLine{01032   m\_currentY++;}
+\DoxyCodeLine{01033 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_sgi_reader_a477adf591d7de354b3950eb2224a6636}\label{class_sgi_reader_a477adf591d7de354b3950eb2224a6636}} 
+\index{SgiReader@{SgiReader}!readLine@{readLine}}
+\index{readLine@{readLine}!SgiReader@{SgiReader}}
+\doxysubsubsection{\texorpdfstring{readLine()}{readLine()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Sgi\+Reader\+::read\+Line (\begin{DoxyParamCaption}\item[{short $\ast$}]{buffer,  }\item[{int}]{x0,  }\item[{int}]{x1,  }\item[{int}]{shrink }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00913                                                                   \{}
+\DoxyCodeLine{00914   \textcolor{comment}{// assert(shrink == 1);}}
+\DoxyCodeLine{00915   \textcolor{comment}{// assert(x0 == 0);}}
+\DoxyCodeLine{00916   \textcolor{comment}{// assert(x1 == m\_info.m\_lx-\/1);}}
+\DoxyCodeLine{00917 }
+\DoxyCodeLine{00918   assert(BPP(m\_header-\/>type) == 2);}
+\DoxyCodeLine{00919 }
+\DoxyCodeLine{00920   \{  \textcolor{comment}{// 64 -\/> 32}}
+\DoxyCodeLine{00921     TPixel64 *pix = (TPixel64 *)buffer;}
+\DoxyCodeLine{00922     std::vector<USHORT> rbuf(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}), gbuf(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}), bbuf(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}),}
+\DoxyCodeLine{00923         mbuf(m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}});}
+\DoxyCodeLine{00924     \textcolor{keywordflow}{if} (m\_header-\/>zsize == 4) \{}
+\DoxyCodeLine{00925       new\_getrow(m\_header, \&rbuf[0], m\_currentY, 0);}
+\DoxyCodeLine{00926       new\_getrow(m\_header, \&gbuf[0], m\_currentY, 1);}
+\DoxyCodeLine{00927       new\_getrow(m\_header, \&bbuf[0], m\_currentY, 2);}
+\DoxyCodeLine{00928       new\_getrow(m\_header, \&mbuf[0], m\_currentY, 3);}
+\DoxyCodeLine{00929       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (x1 -\/ x0 + 1); ++i) \{}
+\DoxyCodeLine{00930         pix-\/>r = rbuf[i];}
+\DoxyCodeLine{00931         pix-\/>g = gbuf[i];}
+\DoxyCodeLine{00932         pix-\/>b = bbuf[i];}
+\DoxyCodeLine{00933         pix-\/>m = mbuf[i];}
+\DoxyCodeLine{00934         ++pix;}
+\DoxyCodeLine{00935       \}}
+\DoxyCodeLine{00936     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00937       new\_getrow(m\_header, \&rbuf[0], m\_currentY, 0);}
+\DoxyCodeLine{00938       new\_getrow(m\_header, \&gbuf[0], m\_currentY, 1);}
+\DoxyCodeLine{00939       new\_getrow(m\_header, \&bbuf[0], m\_currentY, 2);}
+\DoxyCodeLine{00940       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (x1 -\/ x0 + 1); ++i) \{}
+\DoxyCodeLine{00941         pix-\/>r = rbuf[i];}
+\DoxyCodeLine{00942         pix-\/>g = gbuf[i];}
+\DoxyCodeLine{00943         pix-\/>b = bbuf[i];}
+\DoxyCodeLine{00944         pix-\/>m = 0xffff;}
+\DoxyCodeLine{00945         ++pix;}
+\DoxyCodeLine{00946       \}}
+\DoxyCodeLine{00947     \}}
+\DoxyCodeLine{00948   \}}
+\DoxyCodeLine{00949   m\_currentY++;}
+\DoxyCodeLine{00950 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_sgi_reader_ab71b3a0f66494269c27a1d846da7874e}\label{class_sgi_reader_ab71b3a0f66494269c27a1d846da7874e}} 
+\index{SgiReader@{SgiReader}!skipLines@{skipLines}}
+\index{skipLines@{skipLines}!SgiReader@{SgiReader}}
+\doxysubsubsection{\texorpdfstring{skipLines()}{skipLines()}}
+{\footnotesize\ttfamily int Sgi\+Reader\+::skip\+Lines (\begin{DoxyParamCaption}\item[{int}]{line\+Count }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01037                                       \{}
+\DoxyCodeLine{01038   m\_currentY += lineCount;}
+\DoxyCodeLine{01039   \textcolor{keywordflow}{return} lineCount;}
+\DoxyCodeLine{01040 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/sgi/filesgi.\+cpp\end{DoxyCompactItemize}

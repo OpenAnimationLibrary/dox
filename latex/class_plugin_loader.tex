@@ -1,0 +1,94 @@
+\hypertarget{class_plugin_loader}{}\doxysection{Plugin\+Loader Class Reference}
+\label{class_plugin_loader}\index{PluginLoader@{PluginLoader}}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::map$<$ std\+::string, QTree\+Widget\+Item $\ast$ $>$ \mbox{\hyperlink{class_plugin_loader_af4bf0c73074a5d2cdc6a65cb575467d6}{create\+\_\+menu\+\_\+items}} (std\+::function$<$ void(QTree\+Widget\+Item $\ast$)$>$ \&\&, std\+::function$<$ void(QTree\+Widget\+Item $\ast$)$>$ \&\&)
+\item 
+static \mbox{\hyperlink{class_t_fx}{TFx}} $\ast$ \mbox{\hyperlink{class_plugin_loader_a6c609af12d998dd1300a2d187e1fe942}{create\+\_\+host}} (const std\+::string \&id)
+\item 
+static bool \mbox{\hyperlink{class_plugin_loader_ad4756d9e0d9064ae88248ec382bb1441}{load\+\_\+entries}} (const std\+::string \&basepath)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_plugin_loader_a6c609af12d998dd1300a2d187e1fe942}\label{class_plugin_loader_a6c609af12d998dd1300a2d187e1fe942}} 
+\index{PluginLoader@{PluginLoader}!create\_host@{create\_host}}
+\index{create\_host@{create\_host}!PluginLoader@{PluginLoader}}
+\doxysubsubsection{\texorpdfstring{create\_host()}{create\_host()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_fx}{TFx}} $\ast$ Plugin\+Loader\+::create\+\_\+host (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00064                                                     \{}
+\DoxyCodeLine{00065   std::string \textcolor{keywordtype}{id} = fxId.substr(5);}
+\DoxyCodeLine{00066   \textcolor{keyword}{auto} it        = plugin\_dict\_.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00067   \textcolor{keywordflow}{if} (it != plugin\_dict\_.end()) \{}
+\DoxyCodeLine{00068     \textcolor{keyword}{auto} plugin = \textcolor{keyword}{new} \mbox{\hyperlink{class_raster_fx_plugin_host}{RasterFxPluginHost}}(it-\/>second);}
+\DoxyCodeLine{00069     plugin-\/>notify();}
+\DoxyCodeLine{00070     \textcolor{keywordflow}{return} plugin;}
+\DoxyCodeLine{00071   \}}
+\DoxyCodeLine{00072   \textcolor{keywordflow}{return} NULL;}
+\DoxyCodeLine{00073 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plugin_loader_af4bf0c73074a5d2cdc6a65cb575467d6}\label{class_plugin_loader_af4bf0c73074a5d2cdc6a65cb575467d6}} 
+\index{PluginLoader@{PluginLoader}!create\_menu\_items@{create\_menu\_items}}
+\index{create\_menu\_items@{create\_menu\_items}!PluginLoader@{PluginLoader}}
+\doxysubsubsection{\texorpdfstring{create\_menu\_items()}{create\_menu\_items()}}
+{\footnotesize\ttfamily std\+::map$<$ std\+::string, QTree\+Widget\+Item $\ast$ $>$ Plugin\+Loader\+::create\+\_\+menu\+\_\+items (\begin{DoxyParamCaption}\item[{std\+::function$<$ void(QTree\+Widget\+Item $\ast$)$>$ \&\&}]{l1\+\_\+handler,  }\item[{std\+::function$<$ void(QTree\+Widget\+Item $\ast$)$>$ \&\&}]{l2\+\_\+handler }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00077                                                        \{}
+\DoxyCodeLine{00078   std::map<std::string, QTreeWidgetItem *> vendors;}
+\DoxyCodeLine{00079   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} plugin : plugin\_dict\_) \{}
+\DoxyCodeLine{00080     \mbox{\hyperlink{class_plugin_description}{PluginDescription}} *desc = plugin.second-\/>desc\_;}
+\DoxyCodeLine{00081     \textcolor{keywordflow}{if} (vendors.count(desc-\/>vendor\_) == 0) \{}
+\DoxyCodeLine{00082       \textcolor{keyword}{auto} vendor = \textcolor{keyword}{new} QTreeWidgetItem(}
+\DoxyCodeLine{00083           (QTreeWidget *)NULL,}
+\DoxyCodeLine{00084           QStringList(QString::fromStdString(desc-\/>vendor\_)));}
+\DoxyCodeLine{00085       vendors.insert(std::make\_pair(desc-\/>vendor\_, vendor));}
+\DoxyCodeLine{00086       l1\_handler(vendor);}
+\DoxyCodeLine{00087     \}}
+\DoxyCodeLine{00088 }
+\DoxyCodeLine{00089     \textcolor{keyword}{auto} vendor = vendors[desc-\/>vendor\_];}
+\DoxyCodeLine{00090     \textcolor{keyword}{auto} item   = \textcolor{keyword}{new} QTreeWidgetItem(}
+\DoxyCodeLine{00091         (QTreeWidget *)NULL, QStringList(QString::fromStdString(desc-\/>name\_)));}
+\DoxyCodeLine{00092     item-\/>setData(0, Qt::UserRole,}
+\DoxyCodeLine{00093                   QVariant(\textcolor{stringliteral}{"{}\_plg\_"{}} + QString::fromStdString(desc-\/>id\_)));}
+\DoxyCodeLine{00094     l2\_handler(item);}
+\DoxyCodeLine{00095     vendor-\/>addChild(item);}
+\DoxyCodeLine{00096   \}}
+\DoxyCodeLine{00097   \textcolor{keywordflow}{return} vendors;}
+\DoxyCodeLine{00098 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plugin_loader_ad4756d9e0d9064ae88248ec382bb1441}\label{class_plugin_loader_ad4756d9e0d9064ae88248ec382bb1441}} 
+\index{PluginLoader@{PluginLoader}!load\_entries@{load\_entries}}
+\index{load\_entries@{load\_entries}!PluginLoader@{PluginLoader}}
+\doxysubsubsection{\texorpdfstring{load\_entries()}{load\_entries()}}
+{\footnotesize\ttfamily bool Plugin\+Loader\+::load\+\_\+entries (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{basepath }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054                                                          \{}
+\DoxyCodeLine{00055   \textcolor{keyword}{static} \mbox{\hyperlink{class_plugin_load_controller}{PluginLoadController}} *aw = NULL; \textcolor{comment}{/* main() から一度だけ呼ばれる */}}
+\DoxyCodeLine{00056   \textcolor{keywordflow}{if} (!aw) \{}
+\DoxyCodeLine{00057     aw = \textcolor{keyword}{new} \mbox{\hyperlink{class_plugin_load_controller}{PluginLoadController}}(basepath, NULL);}
+\DoxyCodeLine{00058   \}}
+\DoxyCodeLine{00059   \textcolor{keywordtype}{bool} ret = aw-\/>wait(16 \textcolor{comment}{/* ms */});}
+\DoxyCodeLine{00060   \textcolor{keywordflow}{if} (ret) aw = NULL; \textcolor{comment}{/* deleteLater で消えるはず */}}
+\DoxyCodeLine{00061   \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{00062 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/pluginloader.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/pluginhost.\+cpp\end{DoxyCompactItemize}

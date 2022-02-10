@@ -1,0 +1,128 @@
+\hypertarget{class_off_screen_g_l}{}\doxysection{Off\+Screen\+GL Class Reference}
+\label{class_off_screen_g_l}\index{OffScreenGL@{OffScreenGL}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_off_screen_g_l_a42f414846eebba7ae42864b979189a9e}{Off\+Screen\+GL}} (int width, int height, int bpp, int stencil\+Bpp=0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_off_screen_g_l_a42f414846eebba7ae42864b979189a9e}\label{class_off_screen_g_l_a42f414846eebba7ae42864b979189a9e}} 
+\index{OffScreenGL@{OffScreenGL}!OffScreenGL@{OffScreenGL}}
+\index{OffScreenGL@{OffScreenGL}!OffScreenGL@{OffScreenGL}}
+\doxysubsubsection{\texorpdfstring{OffScreenGL()}{OffScreenGL()}}
+{\footnotesize\ttfamily Off\+Screen\+GL\+::\+Off\+Screen\+GL (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{bpp,  }\item[{int}]{stencil\+Bpp = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00011                                                                   \{}
+\DoxyCodeLine{00012 \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00013 \textcolor{comment}{// //}}
+\DoxyCodeLine{00014 \textcolor{comment}{// creo il contesto openGL //}}
+\DoxyCodeLine{00015 \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00016 \textcolor{comment}{// //}}
+\DoxyCodeLine{00017 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00018     initBITMAPINFO(m\_info, width, height, bpp);}
+\DoxyCodeLine{00019 }
+\DoxyCodeLine{00020     m\_offData = 0;  \textcolor{comment}{// a pointer to buffer}}
+\DoxyCodeLine{00021     m\_offHdc  =     \textcolor{comment}{// open an offscreen device}}
+\DoxyCodeLine{00022         GetDC(NULL);}
+\DoxyCodeLine{00023 }
+\DoxyCodeLine{00024     m\_offDIB =  \textcolor{comment}{// and a bitmap image}}
+\DoxyCodeLine{00025         CreateDIBSection(m\_offHdc, \&m\_info, DIB\_RGB\_COLORS, \&m\_offData, NULL,}
+\DoxyCodeLine{00026                          0);}
+\DoxyCodeLine{00027 }
+\DoxyCodeLine{00028     assert(m\_offDIB);}
+\DoxyCodeLine{00029     assert(m\_offData);}
+\DoxyCodeLine{00030 }
+\DoxyCodeLine{00031     m\_offDC = CreateCompatibleDC(m\_offHdc);}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033     m\_oldobj =  \textcolor{comment}{// select BIB to write}}
+\DoxyCodeLine{00034         SelectObject(m\_offDC, m\_offDIB);}
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{00036     \textcolor{keyword}{static} PIXELFORMATDESCRIPTOR pfd = \{}
+\DoxyCodeLine{00037         \textcolor{keyword}{sizeof}(PIXELFORMATDESCRIPTOR),  \textcolor{comment}{// size of this pfd}}
+\DoxyCodeLine{00038         1,                              \textcolor{comment}{// version number}}
+\DoxyCodeLine{00039         0 | (\textcolor{keyword}{false} ? (0) : (PFD\_DRAW\_TO\_BITMAP | PFD\_SUPPORT\_GDI)) |}
+\DoxyCodeLine{00040             PFD\_SUPPORT\_OPENGL,  \textcolor{comment}{// support OpenGL}}
+\DoxyCodeLine{00041         PFD\_TYPE\_RGBA,           \textcolor{comment}{// RGBA type}}
+\DoxyCodeLine{00042         bpp,                     \textcolor{comment}{// 32-\/bit color depth}}
+\DoxyCodeLine{00043         0,}
+\DoxyCodeLine{00044         0, 0, 0, 0, 0,   \textcolor{comment}{// color bits ignored}}
+\DoxyCodeLine{00045         bpp >> 2,        \textcolor{comment}{// alpha buffer}}
+\DoxyCodeLine{00046         0,               \textcolor{comment}{// shift bit ignored}}
+\DoxyCodeLine{00047         0,               \textcolor{comment}{// no accumulation buffer}}
+\DoxyCodeLine{00048         0, 0, 0, 0,      \textcolor{comment}{// accum bits ignored}}
+\DoxyCodeLine{00049         0,               \textcolor{comment}{// 32-\/bit z-\/buffer}}
+\DoxyCodeLine{00050         stencilBpp,      \textcolor{comment}{// no stencil buffer}}
+\DoxyCodeLine{00051         0,               \textcolor{comment}{// no auxiliary buffer}}
+\DoxyCodeLine{00052         PFD\_MAIN\_PLANE,  \textcolor{comment}{// main layer}}
+\DoxyCodeLine{00053         0,               \textcolor{comment}{// reserved}}
+\DoxyCodeLine{00054         0, 0, 0          \textcolor{comment}{// layer masks ignored}}
+\DoxyCodeLine{00055     \};}
+\DoxyCodeLine{00056     \textcolor{comment}{// std::cout << "{}bit depth = "{} << v << std::endl;}}
+\DoxyCodeLine{00057     \textcolor{comment}{// get the best available match of pixel format for the device context}}
+\DoxyCodeLine{00058     \textcolor{keywordtype}{int} iPixelFormat = ChoosePixelFormat(m\_offDC, \&pfd);}
+\DoxyCodeLine{00059     assert(iPixelFormat != 0);}
+\DoxyCodeLine{00060 }
+\DoxyCodeLine{00061     \textcolor{comment}{// make that the pixel format of the device context}}
+\DoxyCodeLine{00062     \textcolor{keywordtype}{int} ret  = SetPixelFormat(m\_offDC, iPixelFormat, \&pfd);}
+\DoxyCodeLine{00063     DWORD dw = GetLastError();}
+\DoxyCodeLine{00064     assert(ret == TRUE);}
+\DoxyCodeLine{00065 }
+\DoxyCodeLine{00066     \textcolor{comment}{// make a valid context for OpenGL rendering}}
+\DoxyCodeLine{00067     m\_hglRC = wglCreateContext(m\_offDC);}
+\DoxyCodeLine{00068     assert(m\_hglRC);}
+\DoxyCodeLine{00069 \textcolor{comment}{/*}}
+\DoxyCodeLine{00070 \textcolor{comment}{          ret = wglMakeCurrent( m\_offDC, m\_hglRC );}}
+\DoxyCodeLine{00071 \textcolor{comment}{          assert(ret == TRUE);}}
+\DoxyCodeLine{00072 \textcolor{comment}{    */}}
+\DoxyCodeLine{00073 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00074 \textcolor{preprocessor}{\#if defined(LINUX) || defined(FREEBSD) || defined(MACOSX)}}
+\DoxyCodeLine{00075     m\_offlineGL = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_offline_g_l}{TOfflineGL}}(\mbox{\hyperlink{class_t_dimension_t}{TDimension}}(width, height));}
+\DoxyCodeLine{00076 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00077 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00078   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_off_screen_g_l_ad0728ee0961a599e0fbe5dc8345de9e0}\label{class_off_screen_g_l_ad0728ee0961a599e0fbe5dc8345de9e0}} 
+\index{OffScreenGL@{OffScreenGL}!````~OffScreenGL@{$\sim$OffScreenGL}}
+\index{````~OffScreenGL@{$\sim$OffScreenGL}!OffScreenGL@{OffScreenGL}}
+\doxysubsubsection{\texorpdfstring{$\sim$OffScreenGL()}{~OffScreenGL()}}
+{\footnotesize\ttfamily Off\+Screen\+GL\+::$\sim$\+Off\+Screen\+GL (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080                  \{}
+\DoxyCodeLine{00081 \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00082 \textcolor{comment}{// //}}
+\DoxyCodeLine{00083 \textcolor{comment}{// cancello il contesto openGL //}}
+\DoxyCodeLine{00084 \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00085 \textcolor{comment}{// //}}
+\DoxyCodeLine{00086 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00087     wglDeleteContext(m\_hglRC);}
+\DoxyCodeLine{00088 }
+\DoxyCodeLine{00089     \textcolor{comment}{// release object}}
+\DoxyCodeLine{00090     SelectObject(m\_offDC, m\_oldobj);}
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00092     DeleteObject(m\_offDC);}
+\DoxyCodeLine{00093     DeleteObject(m\_offDIB);}
+\DoxyCodeLine{00094     DeleteObject(m\_offHdc);}
+\DoxyCodeLine{00095 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00096 \textcolor{preprocessor}{\#if defined(LINUX) || defined(FREEBSD) || defined(MACOSX)}}
+\DoxyCodeLine{00097 }
+\DoxyCodeLine{00098     \textcolor{keyword}{delete} m\_offlineGL;}
+\DoxyCodeLine{00099 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00100 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00101   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/offscreengl.\+h\end{DoxyCompactItemize}

@@ -1,0 +1,193 @@
+\hypertarget{class_permissions_manager_1_1_imp}{}\doxysection{Permissions\+Manager\+::Imp Class Reference}
+\label{class_permissions_manager_1_1_imp}\index{PermissionsManager::Imp@{PermissionsManager::Imp}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+User $\ast$ \mbox{\hyperlink{class_permissions_manager_1_1_imp_a3d2a098a91ded2a1a5aed755ffe75be3}{find\+User}} (std\+::string user\+Name, bool create=true)
+\item 
+std\+::string \mbox{\hyperlink{class_permissions_manager_1_1_imp_af82c012d947d902c4bcccd8d06ff4174}{get\+SVNUser\+Name}} (int index)
+\item 
+std\+::string \mbox{\hyperlink{class_permissions_manager_1_1_imp_a52ea7c9ba44d63bbef1e71e410ba83f5}{get\+SVNPassword}} (int index)
+\item 
+\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \mbox{\hyperlink{class_permissions_manager_1_1_imp_abb4a51699fc3bb8b11eca1a28e8ef8c2}{get\+Permission\+File}} ()
+\item 
+void \mbox{\hyperlink{class_permissions_manager_1_1_imp_a83aa941468177dd8e3b48fc40b4d6f45}{load\+Permissions}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::map$<$ std\+::string, User $\ast$ $>$ \mbox{\hyperlink{class_permissions_manager_1_1_imp_a4fe67aead69049d99c2987b5cae36466}{m\+\_\+users}}
+\item 
+User $\ast$ \mbox{\hyperlink{class_permissions_manager_1_1_imp_aa9df24f9ee2aa5ac104f754aed20928f}{m\+\_\+user}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_permissions_manager_1_1_imp_a0c2893fcecac926c9088e1215bfa52d5}\label{class_permissions_manager_1_1_imp_a0c2893fcecac926c9088e1215bfa52d5}} 
+\index{PermissionsManager::Imp@{PermissionsManager::Imp}!Imp@{Imp}}
+\index{Imp@{Imp}!PermissionsManager::Imp@{PermissionsManager::Imp}}
+\doxysubsubsection{\texorpdfstring{Imp()}{Imp()}}
+{\footnotesize\ttfamily Permissions\+Manager\+::\+Imp\+::\+Imp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052         : m\_user(0) \{}
+\DoxyCodeLine{00053     loadPermissions();}
+\DoxyCodeLine{00054     m\_user              = findUser(TSystem::getUserName().toStdString(), \textcolor{keyword}{false});}
+\DoxyCodeLine{00055     \textcolor{keywordflow}{if} (!m\_user) m\_user = findUser(\textcolor{stringliteral}{"{}guest"{}}, \textcolor{keyword}{false});}
+\DoxyCodeLine{00056   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_permissions_manager_1_1_imp_a3c0b6efe90fcbba80fbfcbb47f7b4f0d}\label{class_permissions_manager_1_1_imp_a3c0b6efe90fcbba80fbfcbb47f7b4f0d}} 
+\index{PermissionsManager::Imp@{PermissionsManager::Imp}!````~Imp@{$\sim$Imp}}
+\index{````~Imp@{$\sim$Imp}!PermissionsManager::Imp@{PermissionsManager::Imp}}
+\doxysubsubsection{\texorpdfstring{$\sim$Imp()}{~Imp()}}
+{\footnotesize\ttfamily Permissions\+Manager\+::\+Imp\+::$\sim$\+Imp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00058          \{}
+\DoxyCodeLine{00059     \textcolor{keywordflow}{for} (std::map<std::string, User *>::iterator u = m\_users.begin();}
+\DoxyCodeLine{00060          u != m\_users.end(); ++u)}
+\DoxyCodeLine{00061       \textcolor{keyword}{delete} u-\/>second;}
+\DoxyCodeLine{00062   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_permissions_manager_1_1_imp_a3d2a098a91ded2a1a5aed755ffe75be3}\label{class_permissions_manager_1_1_imp_a3d2a098a91ded2a1a5aed755ffe75be3}} 
+\index{PermissionsManager::Imp@{PermissionsManager::Imp}!findUser@{findUser}}
+\index{findUser@{findUser}!PermissionsManager::Imp@{PermissionsManager::Imp}}
+\doxysubsubsection{\texorpdfstring{findUser()}{findUser()}}
+{\footnotesize\ttfamily User $\ast$ Permissions\+Manager\+::\+Imp\+::find\+User (\begin{DoxyParamCaption}\item[{std\+::string}]{user\+Name,  }\item[{bool}]{create = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00064                                                          \{}
+\DoxyCodeLine{00065     std::map<std::string, User *>::iterator i = m\_users.find(userName);}
+\DoxyCodeLine{00066     \textcolor{keywordflow}{if} (i != m\_users.end()) \textcolor{keywordflow}{return} i-\/>second;}
+\DoxyCodeLine{00067     \textcolor{keywordflow}{if} (!create) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00068     User *user        = \textcolor{keyword}{new} User(userName);}
+\DoxyCodeLine{00069     m\_users[userName] = user;}
+\DoxyCodeLine{00070     \textcolor{keywordflow}{return} user;}
+\DoxyCodeLine{00071   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_permissions_manager_1_1_imp_abb4a51699fc3bb8b11eca1a28e8ef8c2}\label{class_permissions_manager_1_1_imp_abb4a51699fc3bb8b11eca1a28e8ef8c2}} 
+\index{PermissionsManager::Imp@{PermissionsManager::Imp}!getPermissionFile@{getPermissionFile}}
+\index{getPermissionFile@{getPermissionFile}!PermissionsManager::Imp@{PermissionsManager::Imp}}
+\doxysubsubsection{\texorpdfstring{getPermissionFile()}{getPermissionFile()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} Permissions\+Manager\+::\+Imp\+::get\+Permission\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087                                 \{}
+\DoxyCodeLine{00088     \textcolor{keywordflow}{return} TEnv::getConfigDir() + \textcolor{stringliteral}{"{}permissions.xml"{}};}
+\DoxyCodeLine{00089   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_permissions_manager_1_1_imp_a52ea7c9ba44d63bbef1e71e410ba83f5}\label{class_permissions_manager_1_1_imp_a52ea7c9ba44d63bbef1e71e410ba83f5}} 
+\index{PermissionsManager::Imp@{PermissionsManager::Imp}!getSVNPassword@{getSVNPassword}}
+\index{getSVNPassword@{getSVNPassword}!PermissionsManager::Imp@{PermissionsManager::Imp}}
+\doxysubsubsection{\texorpdfstring{getSVNPassword()}{getSVNPassword()}}
+{\footnotesize\ttfamily std\+::string Permissions\+Manager\+::\+Imp\+::get\+SVNPassword (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080                                       \{}
+\DoxyCodeLine{00081     User *user      = findUser(TSystem::getUserName().toStdString(), \textcolor{keyword}{false});}
+\DoxyCodeLine{00082     \textcolor{keywordflow}{if} (!user) user = findUser(\textcolor{stringliteral}{"{}guest"{}}, \textcolor{keyword}{false});}
+\DoxyCodeLine{00083     \textcolor{keywordflow}{if} (!user) \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00084     \textcolor{keywordflow}{return} user-\/>getSvnPassword(index);}
+\DoxyCodeLine{00085   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_permissions_manager_1_1_imp_af82c012d947d902c4bcccd8d06ff4174}\label{class_permissions_manager_1_1_imp_af82c012d947d902c4bcccd8d06ff4174}} 
+\index{PermissionsManager::Imp@{PermissionsManager::Imp}!getSVNUserName@{getSVNUserName}}
+\index{getSVNUserName@{getSVNUserName}!PermissionsManager::Imp@{PermissionsManager::Imp}}
+\doxysubsubsection{\texorpdfstring{getSVNUserName()}{getSVNUserName()}}
+{\footnotesize\ttfamily std\+::string Permissions\+Manager\+::\+Imp\+::get\+SVNUser\+Name (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073                                       \{}
+\DoxyCodeLine{00074     User *user      = findUser(TSystem::getUserName().toStdString(), \textcolor{keyword}{false});}
+\DoxyCodeLine{00075     \textcolor{keywordflow}{if} (!user) user = findUser(\textcolor{stringliteral}{"{}guest"{}}, \textcolor{keyword}{false});}
+\DoxyCodeLine{00076     \textcolor{keywordflow}{if} (!user) \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00077     \textcolor{keywordflow}{return} user-\/>getSvnUsername(index);}
+\DoxyCodeLine{00078   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_permissions_manager_1_1_imp_a83aa941468177dd8e3b48fc40b4d6f45}\label{class_permissions_manager_1_1_imp_a83aa941468177dd8e3b48fc40b4d6f45}} 
+\index{PermissionsManager::Imp@{PermissionsManager::Imp}!loadPermissions@{loadPermissions}}
+\index{loadPermissions@{loadPermissions}!PermissionsManager::Imp@{PermissionsManager::Imp}}
+\doxysubsubsection{\texorpdfstring{loadPermissions()}{loadPermissions()}}
+{\footnotesize\ttfamily void Permissions\+Manager\+::\+Imp\+::load\+Permissions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00095                                             \{}
+\DoxyCodeLine{00096   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp = getPermissionFile();}
+\DoxyCodeLine{00097   \mbox{\hyperlink{class_t_i_stream}{TIStream}} is(fp);}
+\DoxyCodeLine{00098   \textcolor{keywordflow}{if} (!is) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00099 }
+\DoxyCodeLine{00100   std::string tagName;}
+\DoxyCodeLine{00101   \textcolor{keywordflow}{if} (!is.matchTag(tagName) || tagName != \textcolor{stringliteral}{"{}permissions"{}}) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00102 }
+\DoxyCodeLine{00103   \textcolor{keywordflow}{while} (is.matchTag(tagName))}
+\DoxyCodeLine{00104     \textcolor{keywordflow}{if} (tagName == \textcolor{stringliteral}{"{}users"{}}) \{}
+\DoxyCodeLine{00105       \textcolor{keywordflow}{while} (is.matchTag(tagName)) \{}
+\DoxyCodeLine{00106         \textcolor{keywordflow}{if} (tagName != \textcolor{stringliteral}{"{}user"{}}) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00107         std::string userName;}
+\DoxyCodeLine{00108         is.getTagParam(\textcolor{stringliteral}{"{}name"{}}, userName);}
+\DoxyCodeLine{00109         \textcolor{keywordflow}{if} (userName == \textcolor{stringliteral}{"{}"{}}) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00110         User *user = findUser(userName);}
+\DoxyCodeLine{00111         \textcolor{keywordflow}{while} (is.matchTag(tagName)) \{}
+\DoxyCodeLine{00112           \textcolor{keywordflow}{if} (tagName == \textcolor{stringliteral}{"{}roles"{}}) \{}
+\DoxyCodeLine{00113             \textcolor{comment}{//  <roles> is no longer used}}
+\DoxyCodeLine{00114             is.skipCurrentTag();}
+\DoxyCodeLine{00115           \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tagName == \textcolor{stringliteral}{"{}svn"{}}) \{}
+\DoxyCodeLine{00116             std::string name;}
+\DoxyCodeLine{00117             is.getTagParam(\textcolor{stringliteral}{"{}name"{}}, name);}
+\DoxyCodeLine{00118             std::string password;}
+\DoxyCodeLine{00119             is.getTagParam(\textcolor{stringliteral}{"{}password"{}}, password);}
+\DoxyCodeLine{00120             user-\/>addSvnUsername(name);}
+\DoxyCodeLine{00121             user-\/>addSvnPassword(password);}
+\DoxyCodeLine{00122           \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00123             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00124         \}}
+\DoxyCodeLine{00125         \textcolor{keywordflow}{if} (!is.matchEndTag()) \textcolor{keywordflow}{return};  \textcolor{comment}{// </user>}}
+\DoxyCodeLine{00126       \}}
+\DoxyCodeLine{00127       \textcolor{keywordflow}{if} (!is.matchEndTag()) \textcolor{keywordflow}{return};  \textcolor{comment}{// </users>}}
+\DoxyCodeLine{00128     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tagName == \textcolor{stringliteral}{"{}roles"{}}) \{}
+\DoxyCodeLine{00129       \textcolor{comment}{//  <roles> is no longer used}}
+\DoxyCodeLine{00130       is.skipCurrentTag();}
+\DoxyCodeLine{00131     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00132       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00133 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_permissions_manager_1_1_imp_aa9df24f9ee2aa5ac104f754aed20928f}\label{class_permissions_manager_1_1_imp_aa9df24f9ee2aa5ac104f754aed20928f}} 
+\index{PermissionsManager::Imp@{PermissionsManager::Imp}!m\_user@{m\_user}}
+\index{m\_user@{m\_user}!PermissionsManager::Imp@{PermissionsManager::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_user}{m\_user}}
+{\footnotesize\ttfamily User$\ast$ Permissions\+Manager\+::\+Imp\+::m\+\_\+user}
+
+\mbox{\Hypertarget{class_permissions_manager_1_1_imp_a4fe67aead69049d99c2987b5cae36466}\label{class_permissions_manager_1_1_imp_a4fe67aead69049d99c2987b5cae36466}} 
+\index{PermissionsManager::Imp@{PermissionsManager::Imp}!m\_users@{m\_users}}
+\index{m\_users@{m\_users}!PermissionsManager::Imp@{PermissionsManager::Imp}}
+\doxysubsubsection{\texorpdfstring{m\_users}{m\_users}}
+{\footnotesize\ttfamily std\+::map$<$std\+::string, User $\ast$$>$ Permissions\+Manager\+::\+Imp\+::m\+\_\+users}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnzbase/permissionsmanager.\+cpp\end{DoxyCompactItemize}

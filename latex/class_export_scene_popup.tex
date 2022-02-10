@@ -1,0 +1,325 @@
+\hypertarget{class_export_scene_popup}{}\doxysection{Export\+Scene\+Popup Class Reference}
+\label{class_export_scene_popup}\index{ExportScenePopup@{ExportScenePopup}}
+Inheritance diagram for Export\+Scene\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_export_scene_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_export_scene_popup_aa2ab61183a64a3398e93848c5260b7ca}{Export\+Scene\+Popup}} (std\+::vector$<$ \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} $>$ scenes)
+\item 
+void \mbox{\hyperlink{class_export_scene_popup_ab092f63c7e9a6f5d0f5a6d267d0bb215}{set\+Scenes}} (std\+::vector$<$ \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} $>$ scenes)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_export_scene_popup_a77a52e0a99e34ee886eb4284525ed9ff}{switch\+Mode}} (int id)
+\item 
+void \mbox{\hyperlink{class_export_scene_popup_a8842cd3b881d59230decaad22fee2309}{on\+Project\+Tree\+Viwe\+Focus\+In}} ()
+\item 
+void \mbox{\hyperlink{class_export_scene_popup_a2b08dbd73ecfb6b0a5c0f9faef26977e}{on\+Project\+Name\+Focus\+In}} ()
+\item 
+void \mbox{\hyperlink{class_export_scene_popup_a5f75a35b0bb54cb51665d51a69bae410}{on\+Export}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \mbox{\hyperlink{class_export_scene_popup_a756a910156262b2e9362a7ee1445cf18}{create\+New\+Project}} ()
+\begin{DoxyCompactList}\small\item\em Create new project and return new project path. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_export_scene_popup_aa2ab61183a64a3398e93848c5260b7ca}\label{class_export_scene_popup_aa2ab61183a64a3398e93848c5260b7ca}} 
+\index{ExportScenePopup@{ExportScenePopup}!ExportScenePopup@{ExportScenePopup}}
+\index{ExportScenePopup@{ExportScenePopup}!ExportScenePopup@{ExportScenePopup}}
+\doxysubsubsection{\texorpdfstring{ExportScenePopup()}{ExportScenePopup()}}
+{\footnotesize\ttfamily Export\+Scene\+Popup\+::\+Export\+Scene\+Popup (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} $>$}]{scenes }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00509     : \mbox{\hyperlink{class_d_v_gui_1_1_dialog}{Dialog}}(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false}, \textcolor{stringliteral}{"{}ExportScene"{}})}
+\DoxyCodeLine{00510     , m\_scenes(scenes)}
+\DoxyCodeLine{00511     , m\_createNewProject(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00512   setWindowTitle(tr(\textcolor{stringliteral}{"{}Export Scene"{}}));}
+\DoxyCodeLine{00513 }
+\DoxyCodeLine{00514   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00515 }
+\DoxyCodeLine{00516   QVBoxLayout *layout = \textcolor{keyword}{new} QVBoxLayout(\textcolor{keyword}{this});}
+\DoxyCodeLine{00517 }
+\DoxyCodeLine{00518   \textcolor{comment}{//  m\_command = new QLabel(this);}}
+\DoxyCodeLine{00519   \textcolor{comment}{//  layout-\/>addWidget(m\_command);}}
+\DoxyCodeLine{00520 }
+\DoxyCodeLine{00521   QButtonGroup *group = \textcolor{keyword}{new} QButtonGroup(\textcolor{keyword}{this});}
+\DoxyCodeLine{00522   group-\/>setExclusive(\textcolor{keyword}{true});}
+\DoxyCodeLine{00523 }
+\DoxyCodeLine{00524   \textcolor{comment}{// Choose Project}}
+\DoxyCodeLine{00525   QWidget *chooseProjectWidget     = \textcolor{keyword}{new} QWidget(\textcolor{keyword}{this});}
+\DoxyCodeLine{00526   QVBoxLayout *chooseProjectLayout = \textcolor{keyword}{new} QVBoxLayout(chooseProjectWidget);}
+\DoxyCodeLine{00527 }
+\DoxyCodeLine{00528   m\_chooseProjectButton =}
+\DoxyCodeLine{00529       \textcolor{keyword}{new} QRadioButton(tr(\textcolor{stringliteral}{"{}Choose Existing Project"{}}), chooseProjectWidget);}
+\DoxyCodeLine{00530   group-\/>addButton(m\_chooseProjectButton, 0);}
+\DoxyCodeLine{00531   m\_chooseProjectButton-\/>setChecked(\textcolor{keyword}{true});}
+\DoxyCodeLine{00532   chooseProjectLayout-\/>addWidget(m\_chooseProjectButton);}
+\DoxyCodeLine{00533 }
+\DoxyCodeLine{00534   m\_projectTreeView = \textcolor{keyword}{new} \mbox{\hyperlink{class_export_scene_tree_view}{ExportSceneTreeView}}(chooseProjectWidget);}
+\DoxyCodeLine{00535   m\_projectTreeView-\/>setMinimumWidth(400);}
+\DoxyCodeLine{00536   ret = ret \&\& connect(m\_projectTreeView, SIGNAL(focusIn()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00537                        SLOT(onProjectTreeViweFocusIn()));}
+\DoxyCodeLine{00538   chooseProjectLayout-\/>addWidget(m\_projectTreeView);}
+\DoxyCodeLine{00539 }
+\DoxyCodeLine{00540   chooseProjectWidget-\/>setLayout(chooseProjectLayout);}
+\DoxyCodeLine{00541   layout-\/>addWidget(chooseProjectWidget, 5);}
+\DoxyCodeLine{00542 }
+\DoxyCodeLine{00543   \textcolor{comment}{// New Project}}
+\DoxyCodeLine{00544   QWidget *newProjectWidget     = \textcolor{keyword}{new} QWidget(\textcolor{keyword}{this});}
+\DoxyCodeLine{00545   QGridLayout *newProjectLayout = \textcolor{keyword}{new} QGridLayout(newProjectWidget);}
+\DoxyCodeLine{00546 }
+\DoxyCodeLine{00547   m\_newProjectButton =}
+\DoxyCodeLine{00548       \textcolor{keyword}{new} QRadioButton(tr(\textcolor{stringliteral}{"{}New Project"{}}), newProjectWidget);}
+\DoxyCodeLine{00549   group-\/>addButton(m\_newProjectButton, 1);}
+\DoxyCodeLine{00550   newProjectLayout-\/>addWidget(m\_newProjectButton, 0, 0, 1, 2, Qt::AlignLeft);}
+\DoxyCodeLine{00551 }
+\DoxyCodeLine{00552   m\_newProjectNameLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Name:"{}}), newProjectWidget);}
+\DoxyCodeLine{00553   newProjectLayout-\/>addWidget(m\_newProjectNameLabel, 1, 0, 1, 1,}
+\DoxyCodeLine{00554                               Qt::AlignRight);}
+\DoxyCodeLine{00555 }
+\DoxyCodeLine{00556   m\_newProjectName = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_line_edit}{LineEdit}}(newProjectWidget);}
+\DoxyCodeLine{00557   ret              = ret \&\& connect(m\_newProjectName, SIGNAL(focusIn()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00558                        SLOT(onProjectNameFocusIn()));}
+\DoxyCodeLine{00559   newProjectLayout-\/>setColumnStretch(1, 5);}
+\DoxyCodeLine{00560   newProjectLayout-\/>addWidget(m\_newProjectName, 1, 1, 1, 1, Qt::AlignLeft);}
+\DoxyCodeLine{00561   }
+\DoxyCodeLine{00562     m\_pathFieldLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Create In:"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00563   QString defaultProjectLocation =}
+\DoxyCodeLine{00564       Preferences::instance()-\/>getDefaultProjectPath();}
+\DoxyCodeLine{00565   m\_projectLocationFld =}
+\DoxyCodeLine{00566       \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_file_field}{DVGui::FileField}}(\textcolor{keyword}{this}, getStdDocumentsPath().getQString());}
+\DoxyCodeLine{00567   ret = ret \&\& connect(m\_projectLocationFld-\/>getField(), SIGNAL(focusIn()),}
+\DoxyCodeLine{00568                        \textcolor{keyword}{this}, SLOT(onProjectNameFocusIn()));}
+\DoxyCodeLine{00569   \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(\mbox{\hyperlink{class_t_file_path}{TFilePath}}(defaultProjectLocation))) \{}
+\DoxyCodeLine{00570     m\_projectLocationFld-\/>setPath(defaultProjectLocation);}
+\DoxyCodeLine{00571   \}}
+\DoxyCodeLine{00572 }
+\DoxyCodeLine{00573   newProjectLayout-\/>addWidget(m\_pathFieldLabel, 2, 0,}
+\DoxyCodeLine{00574                               Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00575   newProjectLayout-\/>addWidget(m\_projectLocationFld, 2, 1);}
+\DoxyCodeLine{00576 }
+\DoxyCodeLine{00577   newProjectWidget-\/>setLayout(chooseProjectLayout);}
+\DoxyCodeLine{00578   layout-\/>addWidget(newProjectWidget);}
+\DoxyCodeLine{00579 }
+\DoxyCodeLine{00580   ret = ret \&\&}
+\DoxyCodeLine{00581         connect(group, SIGNAL(buttonClicked(\textcolor{keywordtype}{int})), \textcolor{keyword}{this}, SLOT(switchMode(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00582 }
+\DoxyCodeLine{00583   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_adecc035c55394875b6354480911feab2}{addLayout}}(layout, \textcolor{keyword}{false});}
+\DoxyCodeLine{00584 }
+\DoxyCodeLine{00585   QPushButton *okBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Export"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00586   okBtn-\/>setDefault(\textcolor{keyword}{true});}
+\DoxyCodeLine{00587   QPushButton *cancelBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cancel"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00588   connect(okBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onExport()));}
+\DoxyCodeLine{00589   connect(cancelBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(reject()));}
+\DoxyCodeLine{00590 }
+\DoxyCodeLine{00591   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(okBtn, cancelBtn);}
+\DoxyCodeLine{00592 }
+\DoxyCodeLine{00593   switchMode(0);}
+\DoxyCodeLine{00594   \textcolor{comment}{//  updateCommandLabel();}}
+\DoxyCodeLine{00595 }
+\DoxyCodeLine{00596   assert(ret);}
+\DoxyCodeLine{00597 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_export_scene_popup_a756a910156262b2e9362a7ee1445cf18}\label{class_export_scene_popup_a756a910156262b2e9362a7ee1445cf18}} 
+\index{ExportScenePopup@{ExportScenePopup}!createNewProject@{createNewProject}}
+\index{createNewProject@{createNewProject}!ExportScenePopup@{ExportScenePopup}}
+\doxysubsubsection{\texorpdfstring{createNewProject()}{createNewProject()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} Export\+Scene\+Popup\+::create\+New\+Project (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Create new project and return new project path. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00676                                              \{}
+\DoxyCodeLine{00677   \mbox{\hyperlink{class_t_project_manager}{TProjectManager}} *pm = \mbox{\hyperlink{class_t_project_manager_a150ca0d6e2eb171b8117b0c5f03dbfad}{TProjectManager::instance}}();}
+\DoxyCodeLine{00678   \mbox{\hyperlink{class_t_file_path}{TFilePath}} projectName(m\_newProjectName-\/>text().toStdWString());}
+\DoxyCodeLine{00679   \textcolor{keywordflow}{if} (projectName == \mbox{\hyperlink{class_t_file_path}{TFilePath}}()) \{}
+\DoxyCodeLine{00680     DVGui::warning(}
+\DoxyCodeLine{00681         tr(\textcolor{stringliteral}{"{}The project name cannot be empty or contain any of the following "{}}}
+\DoxyCodeLine{00682            \textcolor{stringliteral}{"{}characters:(new line)   \(\backslash\)\(\backslash\) / : * ? \(\backslash\)"{}  |"{}}));}
+\DoxyCodeLine{00683     \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_file_path}{TFilePath}}();}
+\DoxyCodeLine{00684   \}}
+\DoxyCodeLine{00685   \textcolor{keywordflow}{if} (projectName.isAbsolute()) \{}
+\DoxyCodeLine{00686     \textcolor{comment}{// bad project name}}
+\DoxyCodeLine{00687     DVGui::warning(}
+\DoxyCodeLine{00688         tr(\textcolor{stringliteral}{"{}The project name cannot be empty or contain any of the following "{}}}
+\DoxyCodeLine{00689            \textcolor{stringliteral}{"{}characters:(new line)   \(\backslash\)\(\backslash\) / : * ? \(\backslash\)"{}  |"{}}));}
+\DoxyCodeLine{00690     \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_file_path}{TFilePath}}();}
+\DoxyCodeLine{00691   \}}
+\DoxyCodeLine{00692   \textcolor{keywordflow}{if} (pm-\/>\mbox{\hyperlink{class_t_project_manager_a14225d1945b95c131fd01a724dbcda93}{getProjectPathByName}}(projectName) != \mbox{\hyperlink{class_t_file_path}{TFilePath}}()) \{}
+\DoxyCodeLine{00693     \textcolor{comment}{// project already exists}}
+\DoxyCodeLine{00694     DVGui::warning(tr(\textcolor{stringliteral}{"{}The project name you specified is already used."{}}));}
+\DoxyCodeLine{00695     \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_file_path}{TFilePath}}();}
+\DoxyCodeLine{00696   \}}
+\DoxyCodeLine{00697   \mbox{\hyperlink{class_t_file_path}{TFilePath}} newLocation   = \mbox{\hyperlink{class_t_file_path}{TFilePath}}(m\_projectLocationFld-\/>getPath());}
+\DoxyCodeLine{00698   \mbox{\hyperlink{class_t_file_path}{TFilePath}} projectFolder = newLocation + projectName;}
+\DoxyCodeLine{00699   \mbox{\hyperlink{class_t_file_path}{TFilePath}} projectPath   = pm-\/>\mbox{\hyperlink{class_t_project_manager_a29ae519b44c77674d68c993b7652a896}{projectFolderToProjectPath}}(projectFolder);}
+\DoxyCodeLine{00700 }
+\DoxyCodeLine{00701   \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(projectPath)) \{}
+\DoxyCodeLine{00702     error(tr(\textcolor{stringliteral}{"{}Project '\%1' already exists"{}}).arg(m\_newProjectName-\/>text()));}
+\DoxyCodeLine{00703     \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_file_path}{TFilePath}}();}
+\DoxyCodeLine{00704   \}}
+\DoxyCodeLine{00705 }
+\DoxyCodeLine{00706   \mbox{\hyperlink{class_t_project}{TProject}} *project = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_project}{TProject}}();rToProjectPath(projectFolder);}
+\DoxyCodeLine{00707   \mbox{\hyperlink{class_t_project}{TProject}} *project       = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_project}{TProject}}();}
+\DoxyCodeLine{00708 }
+\DoxyCodeLine{00709   \mbox{\hyperlink{class_t_smart_pointer_t}{TProjectP}} currentProject = pm-\/>\mbox{\hyperlink{class_t_project_manager_a5267cfeae48d4e7585c3fc56d8d5b0b3}{getCurrentProject}}();}
+\DoxyCodeLine{00710   assert(currentProject);}
+\DoxyCodeLine{00711   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00712   \textcolor{keywordflow}{for} (i = 0; i < (int)currentProject-\/>getFolderCount(); i++)}
+\DoxyCodeLine{00713     project-\/>setFolder(currentProject-\/>getFolderName(i),}
+\DoxyCodeLine{00714                        currentProject-\/>getFolder(i));}
+\DoxyCodeLine{00715   project-\/>\mbox{\hyperlink{class_t_project_a620a88aa773f5521435d7f53d77e920a}{save}}(projectPath);}
+\DoxyCodeLine{00716   DvDirModel::instance()-\/>refreshFolder(currentProjectRoot);}
+\DoxyCodeLine{00717 }
+\DoxyCodeLine{00718   \textcolor{keywordflow}{return} projectPath;}
+\DoxyCodeLine{00719 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00993}{TProject\+Manager\+::get\+Current\+Project()}}, \mbox{\hyperlink{l00888}{TProject\+Manager\+::get\+Project\+Path\+By\+Name()}}, \mbox{\hyperlink{l00777}{TProject\+Manager\+::instance()}}, \mbox{\hyperlink{l00876}{TProject\+Manager\+::project\+Folder\+To\+Project\+Path()}}, and \mbox{\hyperlink{l00524}{TProject\+::save()}}.
+
+\mbox{\Hypertarget{class_export_scene_popup_a5f75a35b0bb54cb51665d51a69bae410}\label{class_export_scene_popup_a5f75a35b0bb54cb51665d51a69bae410}} 
+\index{ExportScenePopup@{ExportScenePopup}!onExport@{onExport}}
+\index{onExport@{onExport}!ExportScenePopup@{ExportScenePopup}}
+\doxysubsubsection{\texorpdfstring{onExport}{onExport}}
+{\footnotesize\ttfamily void Export\+Scene\+Popup\+::on\+Export (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00630                                 \{}
+\DoxyCodeLine{00631   QApplication::setOverrideCursor(Qt::WaitCursor);}
+\DoxyCodeLine{00632   \mbox{\hyperlink{class_t_project_manager}{TProjectManager}} *pm      = \mbox{\hyperlink{class_t_project_manager_a150ca0d6e2eb171b8117b0c5f03dbfad}{TProjectManager::instance}}();}
+\DoxyCodeLine{00633   \mbox{\hyperlink{class_t_file_path}{TFilePath}} oldProjectPath = pm-\/>\mbox{\hyperlink{class_t_project_manager_a79e8b9ec6435b27c64f0fd853832b102}{getCurrentProjectPath}}();}
+\DoxyCodeLine{00634   \mbox{\hyperlink{class_t_file_path}{TFilePath}} projectPath;}
+\DoxyCodeLine{00635   \textcolor{keywordflow}{if} (!m\_createNewProject) \{}
+\DoxyCodeLine{00636     \mbox{\hyperlink{class_dv_dir_model_file_folder_node}{DvDirModelFileFolderNode}} *node =}
+\DoxyCodeLine{00637         (\mbox{\hyperlink{class_dv_dir_model_file_folder_node}{DvDirModelFileFolderNode}} *)m\_projectTreeView-\/>getCurrentNode();}
+\DoxyCodeLine{00638     \textcolor{keywordflow}{if} (!node || !pm-\/>isProject(node-\/>getPath())) \{}
+\DoxyCodeLine{00639       QApplication::restoreOverrideCursor();}
+\DoxyCodeLine{00640       DVGui::warning(tr(\textcolor{stringliteral}{"{}The folder you selected is not a project."{}}));}
+\DoxyCodeLine{00641       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00642     \}}
+\DoxyCodeLine{00643     projectPath = pm-\/>\mbox{\hyperlink{class_t_project_manager_a29ae519b44c77674d68c993b7652a896}{projectFolderToProjectPath}}(node-\/>getPath());}
+\DoxyCodeLine{00644     assert(projectPath != \mbox{\hyperlink{class_t_file_path}{TFilePath}}());}
+\DoxyCodeLine{00645   \} \textcolor{keywordflow}{else}  \textcolor{comment}{// Create project}}
+\DoxyCodeLine{00646   \{}
+\DoxyCodeLine{00647     projectPath = \mbox{\hyperlink{class_export_scene_popup_a756a910156262b2e9362a7ee1445cf18}{createNewProject}}();}
+\DoxyCodeLine{00648     \textcolor{keywordflow}{if} (projectPath == \mbox{\hyperlink{class_t_file_path}{TFilePath}}()) \{}
+\DoxyCodeLine{00649       QApplication::restoreOverrideCursor();}
+\DoxyCodeLine{00650       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00651     \}}
+\DoxyCodeLine{00652   \}}
+\DoxyCodeLine{00653   pm-\/>\mbox{\hyperlink{class_t_project_manager_aa55b362becc698e787db40c822f79bc3}{setCurrentProjectPath}}(projectPath);}
+\DoxyCodeLine{00654 }
+\DoxyCodeLine{00655   std::vector<TFilePath> newScenes;}
+\DoxyCodeLine{00656   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00657   \textcolor{keywordflow}{for} (i = 0; i < m\_scenes.size(); i++) \{}
+\DoxyCodeLine{00658     \mbox{\hyperlink{class_t_file_path}{TFilePath}} newScenePath = importScene(m\_scenes[i]);}
+\DoxyCodeLine{00659     \textcolor{keywordflow}{if} (newScenePath == \mbox{\hyperlink{class_t_file_path}{TFilePath}}()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00660     newScenes.push\_back(newScenePath);}
+\DoxyCodeLine{00661   \}}
+\DoxyCodeLine{00662   pm-\/>\mbox{\hyperlink{class_t_project_manager_aa55b362becc698e787db40c822f79bc3}{setCurrentProjectPath}}(oldProjectPath);}
+\DoxyCodeLine{00663   \textcolor{keywordflow}{if} (newScenes.empty()) \{}
+\DoxyCodeLine{00664     QApplication::restoreOverrideCursor();}
+\DoxyCodeLine{00665     DVGui::warning(tr(\textcolor{stringliteral}{"{}There was an error exporting the scene."{}}));}
+\DoxyCodeLine{00666     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00667   \}}
+\DoxyCodeLine{00668   \textcolor{keywordflow}{for} (i = 0; i < newScenes.size(); i++) collectAssets(newScenes[i]);}
+\DoxyCodeLine{00669 }
+\DoxyCodeLine{00670   QApplication::restoreOverrideCursor();}
+\DoxyCodeLine{00671   accept();}
+\DoxyCodeLine{00672 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_scene_popup_a2b08dbd73ecfb6b0a5c0f9faef26977e}\label{class_export_scene_popup_a2b08dbd73ecfb6b0a5c0f9faef26977e}} 
+\index{ExportScenePopup@{ExportScenePopup}!onProjectNameFocusIn@{onProjectNameFocusIn}}
+\index{onProjectNameFocusIn@{onProjectNameFocusIn}!ExportScenePopup@{ExportScenePopup}}
+\doxysubsubsection{\texorpdfstring{onProjectNameFocusIn}{onProjectNameFocusIn}}
+{\footnotesize\ttfamily void Export\+Scene\+Popup\+::on\+Project\+Name\+Focus\+In (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00623                                             \{}
+\DoxyCodeLine{00624   m\_newProjectButton-\/>setChecked(\textcolor{keyword}{true});}
+\DoxyCodeLine{00625   switchMode(1);}
+\DoxyCodeLine{00626 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_scene_popup_a8842cd3b881d59230decaad22fee2309}\label{class_export_scene_popup_a8842cd3b881d59230decaad22fee2309}} 
+\index{ExportScenePopup@{ExportScenePopup}!onProjectTreeViweFocusIn@{onProjectTreeViweFocusIn}}
+\index{onProjectTreeViweFocusIn@{onProjectTreeViweFocusIn}!ExportScenePopup@{ExportScenePopup}}
+\doxysubsubsection{\texorpdfstring{onProjectTreeViweFocusIn}{onProjectTreeViweFocusIn}}
+{\footnotesize\ttfamily void Export\+Scene\+Popup\+::on\+Project\+Tree\+Viwe\+Focus\+In (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00616                                                 \{}
+\DoxyCodeLine{00617   m\_chooseProjectButton-\/>setChecked(\textcolor{keyword}{true});}
+\DoxyCodeLine{00618   switchMode(0);}
+\DoxyCodeLine{00619 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_scene_popup_ab092f63c7e9a6f5d0f5a6d267d0bb215}\label{class_export_scene_popup_ab092f63c7e9a6f5d0f5a6d267d0bb215}} 
+\index{ExportScenePopup@{ExportScenePopup}!setScenes@{setScenes}}
+\index{setScenes@{setScenes}!ExportScenePopup@{ExportScenePopup}}
+\doxysubsubsection{\texorpdfstring{setScenes()}{setScenes()}}
+{\footnotesize\ttfamily void Export\+Scene\+Popup\+::set\+Scenes (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} $>$}]{scenes }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00175                                               \{}
+\DoxyCodeLine{00176     m\_scenes = scenes;}
+\DoxyCodeLine{00177     \textcolor{comment}{//    updateCommandLabel();}}
+\DoxyCodeLine{00178   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_export_scene_popup_a77a52e0a99e34ee886eb4284525ed9ff}\label{class_export_scene_popup_a77a52e0a99e34ee886eb4284525ed9ff}} 
+\index{ExportScenePopup@{ExportScenePopup}!switchMode@{switchMode}}
+\index{switchMode@{switchMode}!ExportScenePopup@{ExportScenePopup}}
+\doxysubsubsection{\texorpdfstring{switchMode}{switchMode}}
+{\footnotesize\ttfamily void Export\+Scene\+Popup\+::switch\+Mode (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00601                                         \{}
+\DoxyCodeLine{00602   \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id} == 0)  \textcolor{comment}{// choose Existing Project}}
+\DoxyCodeLine{00603   \{}
+\DoxyCodeLine{00604     m\_createNewProject = \textcolor{keyword}{false};}
+\DoxyCodeLine{00605     \textcolor{comment}{// m\_projectTreeView-\/>setEnabled(true);}}
+\DoxyCodeLine{00606   \} \textcolor{keywordflow}{else}  \textcolor{comment}{// create new project}}
+\DoxyCodeLine{00607   \{}
+\DoxyCodeLine{00608     assert(\textcolor{keywordtype}{id} == 1);}
+\DoxyCodeLine{00609     m\_createNewProject = \textcolor{keyword}{true};}
+\DoxyCodeLine{00610     \textcolor{comment}{// m\_projectTreeView-\/>setEnabled(false);}}
+\DoxyCodeLine{00611   \}}
+\DoxyCodeLine{00612 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/exportscenepopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/exportscenepopup.\+cpp\end{DoxyCompactItemize}

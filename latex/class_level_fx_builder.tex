@@ -1,0 +1,183 @@
+\hypertarget{class_level_fx_builder}{}\doxysection{Level\+Fx\+Builder Class Reference}
+\label{class_level_fx_builder}\index{LevelFxBuilder@{LevelFxBuilder}}
+Inheritance diagram for Level\+Fx\+Builder\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_level_fx_builder}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_level_fx_builder_afc01fecff83c9fc1051690e30bccf193}{Level\+Fx\+Builder}} (const std\+::string \&resource\+Name, double frame, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&rs, \mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$sl, \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} fid)
+\item 
+void \mbox{\hyperlink{class_level_fx_builder_aa7b78d7d1841a48db9d121a538bc2b35}{set\+Ras\+Bounds}} (const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&ras\+Bounds)
+\item 
+void \mbox{\hyperlink{class_level_fx_builder_ae0f9dd7b0e328274d7c0bf77666ce769}{compute}} (const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&tile\+Rect) override
+\item 
+void \mbox{\hyperlink{class_level_fx_builder_a8b5ff4318304b075d76735dde9690951}{sim\+Compute}} (const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&rect) override
+\item 
+void \mbox{\hyperlink{class_level_fx_builder_ae42a89004a85b1fea403307750f92af5}{upload}} (\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}} \&resource) override
+\item 
+bool \mbox{\hyperlink{class_level_fx_builder_a9405de83653f4ee3f40410eaf38f418d}{download}} (\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}} \&resource) override
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \mbox{\hyperlink{class_level_fx_builder_aa4306ddc50bec9e44fa52a6ca31eb99f}{get\+Image}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_level_fx_builder_afc01fecff83c9fc1051690e30bccf193}\label{class_level_fx_builder_afc01fecff83c9fc1051690e30bccf193}} 
+\index{LevelFxBuilder@{LevelFxBuilder}!LevelFxBuilder@{LevelFxBuilder}}
+\index{LevelFxBuilder@{LevelFxBuilder}!LevelFxBuilder@{LevelFxBuilder}}
+\doxysubsubsection{\texorpdfstring{LevelFxBuilder()}{LevelFxBuilder()}}
+{\footnotesize\ttfamily Level\+Fx\+Builder\+::\+Level\+Fx\+Builder (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{resource\+Name,  }\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{rs,  }\item[{\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{sl,  }\item[{\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}}}]{fid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00735       : \mbox{\hyperlink{class_resource_builder}{ResourceBuilder}}(resourceName, 0, frame, rs)}
+\DoxyCodeLine{00736       , m\_loadedRas()}
+\DoxyCodeLine{00737       , m\_palette()}
+\DoxyCodeLine{00738       , m\_sl(sl)}
+\DoxyCodeLine{00739       , m\_fid(fid)}
+\DoxyCodeLine{00740       , m\_64bit(rs.\mbox{\hyperlink{class_t_render_settings_a9489ed9d21a047b29cc5dd285f1f6f19}{m\_bpp}} == 64) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_level_fx_builder_ae0f9dd7b0e328274d7c0bf77666ce769}\label{class_level_fx_builder_ae0f9dd7b0e328274d7c0bf77666ce769}} 
+\index{LevelFxBuilder@{LevelFxBuilder}!compute@{compute}}
+\index{compute@{compute}!LevelFxBuilder@{LevelFxBuilder}}
+\doxysubsubsection{\texorpdfstring{compute()}{compute()}}
+{\footnotesize\ttfamily void Level\+Fx\+Builder\+::compute (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{tile\+Rect }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_resource_builder}{Resource\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00744                                                 \{}
+\DoxyCodeLine{00745     \textcolor{comment}{// Load the image}}
+\DoxyCodeLine{00746     \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} img(m\_sl-\/>getFullsampledFrame(}
+\DoxyCodeLine{00747         m\_fid, (m\_64bit ? ImageManager::is64bitEnabled : 0) |}
+\DoxyCodeLine{00748                    ImageManager::dontPutInCache));}
+\DoxyCodeLine{00749 }
+\DoxyCodeLine{00750     \textcolor{keywordflow}{if} (!img) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00751 }
+\DoxyCodeLine{00752     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} rimg(img);}
+\DoxyCodeLine{00753     \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} timg(img);}
+\DoxyCodeLine{00754 }
+\DoxyCodeLine{00755     m\_loadedRas = rimg ? (\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}})rimg-\/>getRaster()}
+\DoxyCodeLine{00756                        : timg ? (\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}})timg-\/>getRaster() : \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}();}
+\DoxyCodeLine{00757     assert(m\_loadedRas);}
+\DoxyCodeLine{00758 }
+\DoxyCodeLine{00759     \textcolor{keywordflow}{if} (timg) m\_palette = timg-\/>getPalette();}
+\DoxyCodeLine{00760 }
+\DoxyCodeLine{00761     assert(tileRect ==}
+\DoxyCodeLine{00762            \mbox{\hyperlink{class_t_rect_t}{TRectD}}(0, 0, m\_loadedRas-\/>getLx(), m\_loadedRas-\/>getLy()));}
+\DoxyCodeLine{00763   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_fx_builder_a9405de83653f4ee3f40410eaf38f418d}\label{class_level_fx_builder_a9405de83653f4ee3f40410eaf38f418d}} 
+\index{LevelFxBuilder@{LevelFxBuilder}!download@{download}}
+\index{download@{download}!LevelFxBuilder@{LevelFxBuilder}}
+\doxysubsubsection{\texorpdfstring{download()}{download()}}
+{\footnotesize\ttfamily bool Level\+Fx\+Builder\+::download (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}} \&}]{resource }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_resource_builder}{Resource\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00773                                                     \{}
+\DoxyCodeLine{00774     \textcolor{comment}{// If the image has been loaded in this builder, just use it}}
+\DoxyCodeLine{00775     \textcolor{keywordflow}{if} (m\_loadedRas) \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00776 }
+\DoxyCodeLine{00777     \textcolor{comment}{// If the image has yet to be loaded by this builder, skip without}}
+\DoxyCodeLine{00778     \textcolor{comment}{// allocating anything}}
+\DoxyCodeLine{00779     \textcolor{keywordflow}{if} (resource-\/>\mbox{\hyperlink{class_t_cache_resource_aae821b3058d74bb59cb7dc48f7bd4db9}{canDownloadAll}}(m\_rasBounds)) \{}
+\DoxyCodeLine{00780       m\_loadedRas = resource-\/>buildCompatibleRaster(m\_rasBounds.getSize());}
+\DoxyCodeLine{00781       resource-\/>downloadPalette(m\_palette);}
+\DoxyCodeLine{00782       \textcolor{keywordflow}{return} resource-\/>downloadAll(\mbox{\hyperlink{class_t_point_t}{TPoint}}(), m\_loadedRas);}
+\DoxyCodeLine{00783     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00784       \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00785   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_fx_builder_aa4306ddc50bec9e44fa52a6ca31eb99f}\label{class_level_fx_builder_aa4306ddc50bec9e44fa52a6ca31eb99f}} 
+\index{LevelFxBuilder@{LevelFxBuilder}!getImage@{getImage}}
+\index{getImage@{getImage}!LevelFxBuilder@{LevelFxBuilder}}
+\doxysubsubsection{\texorpdfstring{getImage()}{getImage()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} Level\+Fx\+Builder\+::get\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00787                            \{}
+\DoxyCodeLine{00788     \textcolor{keywordflow}{if} (!m\_loadedRas) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}}();}
+\DoxyCodeLine{00789 }
+\DoxyCodeLine{00790     \mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}} cm(m\_loadedRas);}
+\DoxyCodeLine{00791 }
+\DoxyCodeLine{00792     \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} result(cm ? \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}}(\mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}}(cm, cm-\/>getBounds()))}
+\DoxyCodeLine{00793                       : \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}}(\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}(m\_loadedRas)));}
+\DoxyCodeLine{00794     \textcolor{keywordflow}{if} (m\_palette) result-\/>setPalette(m\_palette.getPointer());}
+\DoxyCodeLine{00795 }
+\DoxyCodeLine{00796     \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{00797   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_fx_builder_aa7b78d7d1841a48db9d121a538bc2b35}\label{class_level_fx_builder_aa7b78d7d1841a48db9d121a538bc2b35}} 
+\index{LevelFxBuilder@{LevelFxBuilder}!setRasBounds@{setRasBounds}}
+\index{setRasBounds@{setRasBounds}!LevelFxBuilder@{LevelFxBuilder}}
+\doxysubsubsection{\texorpdfstring{setRasBounds()}{setRasBounds()}}
+{\footnotesize\ttfamily void Level\+Fx\+Builder\+::set\+Ras\+Bounds (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&}]{ras\+Bounds }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00742 \{ m\_rasBounds = rasBounds; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_fx_builder_a8b5ff4318304b075d76735dde9690951}\label{class_level_fx_builder_a8b5ff4318304b075d76735dde9690951}} 
+\index{LevelFxBuilder@{LevelFxBuilder}!simCompute@{simCompute}}
+\index{simCompute@{simCompute}!LevelFxBuilder@{LevelFxBuilder}}
+\doxysubsubsection{\texorpdfstring{simCompute()}{simCompute()}}
+{\footnotesize\ttfamily void Level\+Fx\+Builder\+::sim\+Compute (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{rect }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_resource_builder}{Resource\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00765 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_fx_builder_ae42a89004a85b1fea403307750f92af5}\label{class_level_fx_builder_ae42a89004a85b1fea403307750f92af5}} 
+\index{LevelFxBuilder@{LevelFxBuilder}!upload@{upload}}
+\index{upload@{upload}!LevelFxBuilder@{LevelFxBuilder}}
+\doxysubsubsection{\texorpdfstring{upload()}{upload()}}
+{\footnotesize\ttfamily void Level\+Fx\+Builder\+::upload (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}} \&}]{resource }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_resource_builder}{Resource\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00767                                                   \{}
+\DoxyCodeLine{00768     assert(m\_loadedRas);}
+\DoxyCodeLine{00769     resource-\/>\mbox{\hyperlink{class_t_cache_resource_a7fca73a70165610ef7d0ed9d67d32150}{upload}}(\mbox{\hyperlink{class_t_point_t}{TPoint}}(), m\_loadedRas);}
+\DoxyCodeLine{00770     \textcolor{keywordflow}{if} (m\_palette) resource-\/>uploadPalette(m\_palette);}
+\DoxyCodeLine{00771   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tcolumnfx.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,198 @@
+\hypertarget{class_set_savebox_tool}{}\doxysection{Set\+Savebox\+Tool Class Reference}
+\label{class_set_savebox_tool}\index{SetSaveboxTool@{SetSaveboxTool}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_set_savebox_tool_a6d74bf61ccafd61830cbd0f120d61402}{Set\+Savebox\+Tool}} (\mbox{\hyperlink{class_t_tool}{TTool}} $\ast$tool)
+\item 
+int \mbox{\hyperlink{class_set_savebox_tool_a7bc1963247abe3da0a13b70f6e57682f}{get\+Cursor\+Id}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos)
+\item 
+void \mbox{\hyperlink{class_set_savebox_tool_a5e042261200f4c57cd596b5365354f10}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos)
+\item 
+void \mbox{\hyperlink{class_set_savebox_tool_a625c1f35653af6e7e560b26321bd0e3f}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos)
+\item 
+void \mbox{\hyperlink{class_set_savebox_tool_a1bb739100f61e1181f32c2faeab8b4d3}{left\+Button\+Up}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos)
+\item 
+void \mbox{\hyperlink{class_set_savebox_tool_a753c26e7f9453add9aa780e159ce8b19}{draw}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_set_savebox_tool_a6d74bf61ccafd61830cbd0f120d61402}\label{class_set_savebox_tool_a6d74bf61ccafd61830cbd0f120d61402}} 
+\index{SetSaveboxTool@{SetSaveboxTool}!SetSaveboxTool@{SetSaveboxTool}}
+\index{SetSaveboxTool@{SetSaveboxTool}!SetSaveboxTool@{SetSaveboxTool}}
+\doxysubsubsection{\texorpdfstring{SetSaveboxTool()}{SetSaveboxTool()}}
+{\footnotesize\ttfamily Set\+Savebox\+Tool\+::\+Set\+Savebox\+Tool (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_tool}{TTool}} $\ast$}]{tool }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00078     : m\_tool(tool), m\_pos(), m\_modifiedRect() \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_set_savebox_tool_a753c26e7f9453add9aa780e159ce8b19}\label{class_set_savebox_tool_a753c26e7f9453add9aa780e159ce8b19}} 
+\index{SetSaveboxTool@{SetSaveboxTool}!draw@{draw}}
+\index{draw@{draw}!SetSaveboxTool@{SetSaveboxTool}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Set\+Savebox\+Tool\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00213                           \{}
+\DoxyCodeLine{00214   \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} image = getImage();}
+\DoxyCodeLine{00215   \textcolor{keywordflow}{if} (!image) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00216 }
+\DoxyCodeLine{00217   \mbox{\hyperlink{class_t_rect_t}{TRectD}} bbox;}
+\DoxyCodeLine{00218   \textcolor{keywordflow}{if} (m\_modifiedRect == \mbox{\hyperlink{class_t_rect_t}{TRectD}}())}
+\DoxyCodeLine{00219     bbox =}
+\DoxyCodeLine{00220         ToonzImageUtils::convertRasterToWorld(convert(image-\/>getBBox()), image);}
+\DoxyCodeLine{00221   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00222     bbox = m\_modifiedRect;}
+\DoxyCodeLine{00223 }
+\DoxyCodeLine{00224   drawRect(bbox * image-\/>getSubsampling(), TPixel32::Black, 0x5555, \textcolor{keyword}{true});}
+\DoxyCodeLine{00225   tglColor(TPixel32(90, 90, 90));}
+\DoxyCodeLine{00226 }
+\DoxyCodeLine{00227   \textcolor{keywordtype}{double} pixelSize = m\_tool-\/>getPixelSize();}
+\DoxyCodeLine{00228   \mbox{\hyperlink{class_t_point_t}{TPointD}} p00      = bbox.getP00();}
+\DoxyCodeLine{00229   \mbox{\hyperlink{class_t_point_t}{TPointD}} p11      = bbox.getP11();}
+\DoxyCodeLine{00230   \mbox{\hyperlink{class_t_point_t}{TPointD}} p01      = bbox.getP01();}
+\DoxyCodeLine{00231   \mbox{\hyperlink{class_t_point_t}{TPointD}} p10      = bbox.getP10();}
+\DoxyCodeLine{00232   \mbox{\hyperlink{class_t_point_t}{TPointD}} p11\_01   = (bbox.getP11() + bbox.getP01()) * 0.5;}
+\DoxyCodeLine{00233   \mbox{\hyperlink{class_t_point_t}{TPointD}} p11\_10   = (bbox.getP11() + bbox.getP10()) * 0.5;}
+\DoxyCodeLine{00234   \mbox{\hyperlink{class_t_point_t}{TPointD}} p00\_01   = (bbox.getP00() + bbox.getP01()) * 0.5;}
+\DoxyCodeLine{00235   \mbox{\hyperlink{class_t_point_t}{TPointD}} p00\_10   = (bbox.getP00() + bbox.getP10()) * 0.5;}
+\DoxyCodeLine{00236   \mbox{\hyperlink{class_t_point_t}{TPointD}} size(pixelSize * 4, pixelSize * 4);}
+\DoxyCodeLine{00237   tglDrawRect(\mbox{\hyperlink{class_t_rect_t}{TRectD}}(p00 -\/ size, p00 + size));}
+\DoxyCodeLine{00238   tglDrawRect(\mbox{\hyperlink{class_t_rect_t}{TRectD}}(p11 -\/ size, p11 + size));}
+\DoxyCodeLine{00239   tglDrawRect(\mbox{\hyperlink{class_t_rect_t}{TRectD}}(p01 -\/ size, p01 + size));}
+\DoxyCodeLine{00240   tglDrawRect(\mbox{\hyperlink{class_t_rect_t}{TRectD}}(p10 -\/ size, p10 + size));}
+\DoxyCodeLine{00241   tglDrawRect(\mbox{\hyperlink{class_t_rect_t}{TRectD}}(p11\_01 -\/ size, p11\_01 + size));}
+\DoxyCodeLine{00242   tglDrawRect(\mbox{\hyperlink{class_t_rect_t}{TRectD}}(p11\_10 -\/ size, p11\_10 + size));}
+\DoxyCodeLine{00243   tglDrawRect(\mbox{\hyperlink{class_t_rect_t}{TRectD}}(p00\_01 -\/ size, p00\_01 + size));}
+\DoxyCodeLine{00244   tglDrawRect(\mbox{\hyperlink{class_t_rect_t}{TRectD}}(p00\_10 -\/ size, p00\_10 + size));}
+\DoxyCodeLine{00245 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_set_savebox_tool_a7bc1963247abe3da0a13b70f6e57682f}\label{class_set_savebox_tool_a7bc1963247abe3da0a13b70f6e57682f}} 
+\index{SetSaveboxTool@{SetSaveboxTool}!getCursorId@{getCursorId}}
+\index{getCursorId@{getCursorId}!SetSaveboxTool@{SetSaveboxTool}}
+\doxysubsubsection{\texorpdfstring{getCursorId()}{getCursorId()}}
+{\footnotesize\ttfamily int Set\+Savebox\+Tool\+::get\+Cursor\+Id (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00129                                                   \{}
+\DoxyCodeLine{00130   \textcolor{keywordtype}{int} dragType = getDragType(pos);}
+\DoxyCodeLine{00131   \textcolor{keywordflow}{switch} (dragType) \{}
+\DoxyCodeLine{00132   \textcolor{keywordflow}{case} eMoveRect:}
+\DoxyCodeLine{00133     \textcolor{keywordflow}{return} ToolCursor::MoveCursor;}
+\DoxyCodeLine{00134   \textcolor{keywordflow}{case} eMoveLeft:}
+\DoxyCodeLine{00135   \textcolor{keywordflow}{case} eMoveRight:}
+\DoxyCodeLine{00136     \textcolor{keywordflow}{return} ToolCursor::ScaleHCursor;}
+\DoxyCodeLine{00137   \textcolor{keywordflow}{case} eMoveDown:}
+\DoxyCodeLine{00138   \textcolor{keywordflow}{case} eMoveUp:}
+\DoxyCodeLine{00139     \textcolor{keywordflow}{return} ToolCursor::ScaleVCursor;}
+\DoxyCodeLine{00140   \textcolor{keywordflow}{case} eMoveLeft | eMoveUp:}
+\DoxyCodeLine{00141   \textcolor{keywordflow}{case} eMoveRight | eMoveDown:}
+\DoxyCodeLine{00142     \textcolor{keywordflow}{return} ToolCursor::ScaleInvCursor;}
+\DoxyCodeLine{00143   \textcolor{keywordflow}{case} eMoveLeft | eMoveDown:}
+\DoxyCodeLine{00144   \textcolor{keywordflow}{case} eMoveRight | eMoveUp:}
+\DoxyCodeLine{00145     \textcolor{keywordflow}{return} ToolCursor::ScaleCursor;}
+\DoxyCodeLine{00146   \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00147     \textcolor{keywordflow}{return} ToolCursor::StrokeSelectCursor;}
+\DoxyCodeLine{00148   \}}
+\DoxyCodeLine{00149   \textcolor{keywordflow}{return} ToolCursor::StrokeSelectCursor;}
+\DoxyCodeLine{00150 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_set_savebox_tool_a5e042261200f4c57cd596b5365354f10}\label{class_set_savebox_tool_a5e042261200f4c57cd596b5365354f10}} 
+\index{SetSaveboxTool@{SetSaveboxTool}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!SetSaveboxTool@{SetSaveboxTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Set\+Savebox\+Tool\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00154                                                       \{}
+\DoxyCodeLine{00155   \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} image = getImage();}
+\DoxyCodeLine{00156   \textcolor{keywordflow}{if} (!image) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00157   m\_modifiedRect =}
+\DoxyCodeLine{00158       ToonzImageUtils::convertRasterToWorld(convert(image-\/>getBBox()), image);}
+\DoxyCodeLine{00159   m\_pos          = pos;}
+\DoxyCodeLine{00160   m\_movementType = (SetSaveboxTool::Moviment)getDragType(pos);}
+\DoxyCodeLine{00161 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_set_savebox_tool_a625c1f35653af6e7e560b26321bd0e3f}\label{class_set_savebox_tool_a625c1f35653af6e7e560b26321bd0e3f}} 
+\index{SetSaveboxTool@{SetSaveboxTool}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!SetSaveboxTool@{SetSaveboxTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Set\+Savebox\+Tool\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00165                                                       \{}
+\DoxyCodeLine{00166   \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} image = getImage();}
+\DoxyCodeLine{00167   \textcolor{keywordflow}{if} (!image) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00168 }
+\DoxyCodeLine{00169   \textcolor{keywordflow}{if} (m\_movementType == eNone) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00170   \textcolor{keywordflow}{if} (m\_movementType == eMoveRect)}
+\DoxyCodeLine{00171     m\_modifiedRect = m\_modifiedRect + (pos -\/ m\_pos);}
+\DoxyCodeLine{00172   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00173     \textcolor{keywordflow}{if} (m\_movementType \& eMoveLeft) m\_modifiedRect.\mbox{\hyperlink{class_t_rect_t_ac008cbc625f50d8b3c180c8eb2594cdb}{x0}} += pos.x -\/ m\_pos.x;}
+\DoxyCodeLine{00174     \textcolor{keywordflow}{if} (m\_movementType \& eMoveRight) m\_modifiedRect.x1 += pos.x -\/ m\_pos.x;}
+\DoxyCodeLine{00175     \textcolor{keywordflow}{if} (m\_movementType \& eMoveDown) m\_modifiedRect.y0 += pos.y -\/ m\_pos.y;}
+\DoxyCodeLine{00176     \textcolor{keywordflow}{if} (m\_movementType \& eMoveUp) m\_modifiedRect.y1 += pos.y -\/ m\_pos.y;}
+\DoxyCodeLine{00177   \}}
+\DoxyCodeLine{00178   m\_pos = pos;}
+\DoxyCodeLine{00179 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_set_savebox_tool_a1bb739100f61e1181f32c2faeab8b4d3}\label{class_set_savebox_tool_a1bb739100f61e1181f32c2faeab8b4d3}} 
+\index{SetSaveboxTool@{SetSaveboxTool}!leftButtonUp@{leftButtonUp}}
+\index{leftButtonUp@{leftButtonUp}!SetSaveboxTool@{SetSaveboxTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonUp()}{leftButtonUp()}}
+{\footnotesize\ttfamily void Set\+Savebox\+Tool\+::left\+Button\+Up (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00183                                                     \{}
+\DoxyCodeLine{00184   \mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} image = getImage();}
+\DoxyCodeLine{00185   \textcolor{keywordflow}{if} (!image) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00186   m\_pos                  = \mbox{\hyperlink{class_t_point_t}{TPointD}}();}
+\DoxyCodeLine{00187   \mbox{\hyperlink{class_t_rect_t}{TRectD}} originalSavebox = image-\/>getBBox();}
+\DoxyCodeLine{00188   \mbox{\hyperlink{class_t_rect_t}{TRect}} savebox = ToonzImageUtils::convertWorldToRaster(m\_modifiedRect, image);}
+\DoxyCodeLine{00189   \textcolor{keywordflow}{if} (savebox.\mbox{\hyperlink{class_t_rect_t_a53ce09c6112f8a019b43ad82d721a93b}{isEmpty}}()) \{}
+\DoxyCodeLine{00190     m\_modifiedRect = \mbox{\hyperlink{class_t_rect_t}{TRectD}}();}
+\DoxyCodeLine{00191     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00192   \}}
+\DoxyCodeLine{00193   \mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}} ras      = image-\/>getRaster();}
+\DoxyCodeLine{00194   \mbox{\hyperlink{class_t_tile_set_c_m32}{TTileSetCM32}} *tileSet = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_tile_set_c_m32}{TTileSetCM32}}(ras-\/>getSize());}
+\DoxyCodeLine{00195   tileSet-\/>add(ras, image-\/>getSavebox());}
+\DoxyCodeLine{00196   \textcolor{comment}{/*-\/-\/ 以下を有効にすると、SaveBoxの外の絵のデータが失われる -\/-\/*/}}
+\DoxyCodeLine{00197   \textcolor{comment}{// ras-\/>clearOutside(savebox);}}
+\DoxyCodeLine{00198   \textcolor{comment}{// if(Preferences::instance()-\/>isMinimizeSaveboxAfterEditing())}}
+\DoxyCodeLine{00199   \textcolor{comment}{//    TRop::computeBBox(ras, savebox);}}
+\DoxyCodeLine{00200   image-\/>setSavebox(savebox);}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202   \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *level =}
+\DoxyCodeLine{00203       m\_tool-\/>getApplication()-\/>getCurrentLevel()-\/>getSimpleLevel();}
+\DoxyCodeLine{00204   TUndoManager::manager()-\/>add(}
+\DoxyCodeLine{00205       \textcolor{keyword}{new} SetSaveboxUndo(tileSet, savebox, convert(originalSavebox), level,}
+\DoxyCodeLine{00206                          m\_tool-\/>\mbox{\hyperlink{class_t_tool_ae7db6c4288b721fd95f283419883a4b2}{getCurrentFid}}()));}
+\DoxyCodeLine{00207   m\_modifiedRect = \mbox{\hyperlink{class_t_rect_t}{TRectD}}();}
+\DoxyCodeLine{00208   m\_tool-\/>\mbox{\hyperlink{class_t_tool_abd1824e9b49705c534e0a773305294c4}{notifyImageChanged}}();}
+\DoxyCodeLine{00209 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/setsaveboxtool.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/setsaveboxtool.\+cpp\end{DoxyCompactItemize}

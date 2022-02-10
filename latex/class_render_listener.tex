@@ -1,0 +1,152 @@
+\hypertarget{class_render_listener}{}\doxysection{Render\+Listener Class Reference}
+\label{class_render_listener}\index{RenderListener@{RenderListener}}
+Inheritance diagram for Render\+Listener\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_render_listener}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_render_listener_a1104005470293378a97e95a82aae8130}{Render\+Listener}} (\mbox{\hyperlink{class_t_renderer}{TRenderer}} $\ast$renderer, const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, int steps, bool is\+Preview)
+\item 
+bool \mbox{\hyperlink{class_render_listener_a022aa65823509d570f058c3726f16df0}{on\+Frame\+Completed}} (int frame) override
+\item 
+bool \mbox{\hyperlink{class_render_listener_a65f6001e3e8365f75c3c898af32428e9}{on\+Frame\+Failed}} (int frame, \mbox{\hyperlink{class_t_exception}{TException}} \&) override
+\item 
+void \mbox{\hyperlink{class_render_listener_a207ba8cc209287a1633bc20250d8cf16}{on\+Sequence\+Completed}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&fp) override
+\item 
+void \mbox{\hyperlink{class_render_listener_a265a2202a846afde4943ba914c25ba85}{on\+Cancel}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_render_listener_a1104005470293378a97e95a82aae8130}\label{class_render_listener_a1104005470293378a97e95a82aae8130}} 
+\index{RenderListener@{RenderListener}!RenderListener@{RenderListener}}
+\index{RenderListener@{RenderListener}!RenderListener@{RenderListener}}
+\doxysubsubsection{\texorpdfstring{RenderListener()}{RenderListener()}}
+{\footnotesize\ttfamily Render\+Listener\+::\+Render\+Listener (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_renderer}{TRenderer}} $\ast$}]{renderer,  }\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{int}]{steps,  }\item[{bool}]{is\+Preview }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00389       : \mbox{\hyperlink{class_d_v_gui_1_1_progress_dialog}{DVGui::ProgressDialog}}(}
+\DoxyCodeLine{00390             QObject::tr(\textcolor{stringliteral}{"{}Precomputing \%1 Frames"{}}, \textcolor{stringliteral}{"{}RenderListener"{}}).arg(steps) +}
+\DoxyCodeLine{00391                 ((isPreview) ? \textcolor{stringliteral}{"{}"{}} : QObject::tr(\textcolor{stringliteral}{"{} of \%1"{}}, \textcolor{stringliteral}{"{}RenderListener"{}})}
+\DoxyCodeLine{00392                                         .arg(toQString(path))),}
+\DoxyCodeLine{00393             QObject::tr(\textcolor{stringliteral}{"{}Cancel"{}}), 0, steps, \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow())}
+\DoxyCodeLine{00394       , m\_renderer(renderer)}
+\DoxyCodeLine{00395       , m\_frameCounter(0)}
+\DoxyCodeLine{00396       , m\_error(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00397 \textcolor{preprocessor}{\#ifdef MACOSX}}
+\DoxyCodeLine{00398     \textcolor{comment}{// Modal dialogs seem to be preventing the execution of}}
+\DoxyCodeLine{00399     \textcolor{comment}{// Qt::BlockingQueuedConnections on MAC...!}}
+\DoxyCodeLine{00400     setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00401 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00402     setWindowModality(Qt::ApplicationModal);}
+\DoxyCodeLine{00403 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00404     setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint);}
+\DoxyCodeLine{00405     m\_progressBarString =}
+\DoxyCodeLine{00406         QString::number(steps) +}
+\DoxyCodeLine{00407         ((isPreview)}
+\DoxyCodeLine{00408              ? \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00409              : QObject::tr(\textcolor{stringliteral}{"{} of \%1"{}}, \textcolor{stringliteral}{"{}RenderListener"{}}).arg(toQString(path)));}
+\DoxyCodeLine{00410     \textcolor{comment}{// setMinimumDuration (0);}}
+\DoxyCodeLine{00411     m\_totalFrames = steps;}
+\DoxyCodeLine{00412     show();}
+\DoxyCodeLine{00413   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_render_listener_a265a2202a846afde4943ba914c25ba85}\label{class_render_listener_a265a2202a846afde4943ba914c25ba85}} 
+\index{RenderListener@{RenderListener}!onCancel@{onCancel}}
+\index{onCancel@{onCancel}!RenderListener@{RenderListener}}
+\doxysubsubsection{\texorpdfstring{onCancel()}{onCancel()}}
+{\footnotesize\ttfamily void Render\+Listener\+::on\+Cancel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_d_v_gui_1_1_progress_dialog}{DVGui\+::\+Progress\+Dialog}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00435                            \{}
+\DoxyCodeLine{00436     m\_isCanceled = \textcolor{keyword}{true};}
+\DoxyCodeLine{00437     setLabelText(QObject::tr(\textcolor{stringliteral}{"{}Aborting render..."{}}, \textcolor{stringliteral}{"{}RenderListener"{}}));}
+\DoxyCodeLine{00438     reset();}
+\DoxyCodeLine{00439     hide();}
+\DoxyCodeLine{00440     RenderCommand::resetBgColor();}
+\DoxyCodeLine{00441   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_listener_a022aa65823509d570f058c3726f16df0}\label{class_render_listener_a022aa65823509d570f058c3726f16df0}} 
+\index{RenderListener@{RenderListener}!onFrameCompleted@{onFrameCompleted}}
+\index{onFrameCompleted@{onFrameCompleted}!RenderListener@{RenderListener}}
+\doxysubsubsection{\texorpdfstring{onFrameCompleted()}{onFrameCompleted()}}
+{\footnotesize\ttfamily bool Render\+Listener\+::on\+Frame\+Completed (\begin{DoxyParamCaption}\item[{int}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_movie_renderer_1_1_listener}{Movie\+Renderer\+::\+Listener}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00416                                             \{}
+\DoxyCodeLine{00417     \textcolor{keywordtype}{bool} ret = wasCanceled();}
+\DoxyCodeLine{00418     \textcolor{keywordflow}{if} (m\_frameCounter + 1 < m\_totalFrames)}
+\DoxyCodeLine{00419       Message(\textcolor{keyword}{this}, ret ? -\/1 : ++m\_frameCounter, m\_progressBarString).send();}
+\DoxyCodeLine{00420     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00421       Message(\textcolor{keyword}{this}, -\/2, \textcolor{stringliteral}{"{}"{}}).send();}
+\DoxyCodeLine{00422     \textcolor{keywordflow}{return} !ret;}
+\DoxyCodeLine{00423   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_listener_a65f6001e3e8365f75c3c898af32428e9}\label{class_render_listener_a65f6001e3e8365f75c3c898af32428e9}} 
+\index{RenderListener@{RenderListener}!onFrameFailed@{onFrameFailed}}
+\index{onFrameFailed@{onFrameFailed}!RenderListener@{RenderListener}}
+\doxysubsubsection{\texorpdfstring{onFrameFailed()}{onFrameFailed()}}
+{\footnotesize\ttfamily bool Render\+Listener\+::on\+Frame\+Failed (\begin{DoxyParamCaption}\item[{int}]{frame,  }\item[{\mbox{\hyperlink{class_t_exception}{TException}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_movie_renderer_1_1_listener}{Movie\+Renderer\+::\+Listener}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00424                                                        \{}
+\DoxyCodeLine{00425     m\_error = \textcolor{keyword}{true};}
+\DoxyCodeLine{00426     \textcolor{keywordflow}{return} onFrameCompleted(frame);}
+\DoxyCodeLine{00427   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_listener_a207ba8cc209287a1633bc20250d8cf16}\label{class_render_listener_a207ba8cc209287a1633bc20250d8cf16}} 
+\index{RenderListener@{RenderListener}!onSequenceCompleted@{onSequenceCompleted}}
+\index{onSequenceCompleted@{onSequenceCompleted}!RenderListener@{RenderListener}}
+\doxysubsubsection{\texorpdfstring{onSequenceCompleted()}{onSequenceCompleted()}}
+{\footnotesize\ttfamily void Render\+Listener\+::on\+Sequence\+Completed (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{fp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_movie_renderer_1_1_listener}{Movie\+Renderer\+::\+Listener}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00428                                                          \{}
+\DoxyCodeLine{00429     Message(\textcolor{keyword}{this}, -\/1, \textcolor{stringliteral}{"{}"{}}).send();}
+\DoxyCodeLine{00430     \mbox{\hyperlink{class_on_render_completed}{OnRenderCompleted}}(fp, m\_error).send();}
+\DoxyCodeLine{00431     m\_error = \textcolor{keyword}{false};}
+\DoxyCodeLine{00432     RenderCommand::resetBgColor();}
+\DoxyCodeLine{00433   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/rendercommand.\+cpp\end{DoxyCompactItemize}

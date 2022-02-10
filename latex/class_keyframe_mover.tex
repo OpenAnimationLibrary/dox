@@ -1,0 +1,258 @@
+\hypertarget{class_keyframe_mover}{}\doxysection{Keyframe\+Mover Class Reference}
+\label{class_keyframe_mover}\index{KeyframeMover@{KeyframeMover}}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries Qualifier} \{ {\bfseries e\+Copy\+Keyframes}
+, {\bfseries e\+Move\+Keyframes}
+, {\bfseries e\+Insert\+Keyframes} = 0x4
+, {\bfseries e\+Overwrite\+Keyframes} = 0x8
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_keyframe_mover_a6c639953f7c2c41597a5074323a81f7d}{start}} (\mbox{\hyperlink{class_t_keyframe_selection}{TKeyframe\+Selection}} $\ast$selection, int qualifiers)
+\item 
+int \mbox{\hyperlink{class_keyframe_mover_ab4a2144b0df41fefed39652fbf08ab03}{get\+Qualifiers}} () const
+\item 
+bool \mbox{\hyperlink{class_keyframe_mover_a9abfb3905657215dfac803a0657d8b09}{move\+Keyframes}} (int dr, std\+::set$<$ TKeyframe\+Selection\+::\+Position $>$ \&new\+Positions, \mbox{\hyperlink{class_t_keyframe_selection}{TKeyframe\+Selection}} $\ast$selection=0)
+\item 
+void \mbox{\hyperlink{class_keyframe_mover_ac10c6ace756d5354afc78132a34f6a2b}{undo\+Move\+Keyframe}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_keyframe_mover_ac8976ad8e4dd0eb8311871ad0753bb8b}\label{class_keyframe_mover_ac8976ad8e4dd0eb8311871ad0753bb8b}} 
+\index{KeyframeMover@{KeyframeMover}!Qualifier@{Qualifier}}
+\index{Qualifier@{Qualifier}!KeyframeMover@{KeyframeMover}}
+\doxysubsubsection{\texorpdfstring{Qualifier}{Qualifier}}
+{\footnotesize\ttfamily enum Keyframe\+Mover\+::\+Qualifier}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044                  \{}
+\DoxyCodeLine{00045     eCopyKeyframes =}
+\DoxyCodeLine{00046         0x1,  \textcolor{comment}{// leaves a copy of Keyframes block at the starting point}}
+\DoxyCodeLine{00047     eMoveKeyframes =}
+\DoxyCodeLine{00048         0x2,  \textcolor{comment}{// move keyframes only (if the destination keyframes are empty)}}
+\DoxyCodeLine{00049     eInsertKeyframes    = 0x4,}
+\DoxyCodeLine{00050     eOverwriteKeyframes = 0x8}
+\DoxyCodeLine{00051   \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_keyframe_mover_ab3677a347816cc5ff434e53f7d040fe7}\label{class_keyframe_mover_ab3677a347816cc5ff434e53f7d040fe7}} 
+\index{KeyframeMover@{KeyframeMover}!KeyframeMover@{KeyframeMover}}
+\index{KeyframeMover@{KeyframeMover}!KeyframeMover@{KeyframeMover}}
+\doxysubsubsection{\texorpdfstring{KeyframeMover()}{KeyframeMover()}}
+{\footnotesize\ttfamily Keyframe\+Mover\+::\+Keyframe\+Mover (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00029     : m\_qualifiers(eMoveKeyframes), m\_lastKeyframeData(0) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframe_mover_aaa86de0877564432851084939ed6af82}\label{class_keyframe_mover_aaa86de0877564432851084939ed6af82}} 
+\index{KeyframeMover@{KeyframeMover}!````~KeyframeMover@{$\sim$KeyframeMover}}
+\index{````~KeyframeMover@{$\sim$KeyframeMover}!KeyframeMover@{KeyframeMover}}
+\doxysubsubsection{\texorpdfstring{$\sim$KeyframeMover()}{~KeyframeMover()}}
+{\footnotesize\ttfamily Keyframe\+Mover\+::$\sim$\+Keyframe\+Mover (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033                               \{}
+\DoxyCodeLine{00034   \textcolor{keyword}{delete} m\_lastKeyframeData;}
+\DoxyCodeLine{00035   m\_lastKeyframeData = 0;}
+\DoxyCodeLine{00036 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_keyframe_mover_ab4a2144b0df41fefed39652fbf08ab03}\label{class_keyframe_mover_ab4a2144b0df41fefed39652fbf08ab03}} 
+\index{KeyframeMover@{KeyframeMover}!getQualifiers@{getQualifiers}}
+\index{getQualifiers@{getQualifiers}!KeyframeMover@{KeyframeMover}}
+\doxysubsubsection{\texorpdfstring{getQualifiers()}{getQualifiers()}}
+{\footnotesize\ttfamily int Keyframe\+Mover\+::get\+Qualifiers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055 \{ \textcolor{keywordflow}{return} m\_qualifiers; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframe_mover_a9abfb3905657215dfac803a0657d8b09}\label{class_keyframe_mover_a9abfb3905657215dfac803a0657d8b09}} 
+\index{KeyframeMover@{KeyframeMover}!moveKeyframes@{moveKeyframes}}
+\index{moveKeyframes@{moveKeyframes}!KeyframeMover@{KeyframeMover}}
+\doxysubsubsection{\texorpdfstring{moveKeyframes()}{moveKeyframes()}}
+{\footnotesize\ttfamily bool Keyframe\+Mover\+::move\+Keyframes (\begin{DoxyParamCaption}\item[{int}]{dr,  }\item[{std\+::set$<$ TKeyframe\+Selection\+::\+Position $>$ \&}]{new\+Positions,  }\item[{\mbox{\hyperlink{class_t_keyframe_selection}{TKeyframe\+Selection}} $\ast$}]{selection = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00104                                    \{}
+\DoxyCodeLine{00105   \textcolor{comment}{// return if there is no movement}}
+\DoxyCodeLine{00106   \textcolor{keywordflow}{if} (dr == 0) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00107   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = getXsheet();}
+\DoxyCodeLine{00108   std::set<TKeyframeSelection::Position> positions;}
+\DoxyCodeLine{00109   \textcolor{keywordflow}{if} (selection)}
+\DoxyCodeLine{00110     positions = selection-\/>getSelection();}
+\DoxyCodeLine{00111   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00112     positions = m\_startSelectedKeyframes;}
+\DoxyCodeLine{00113   \textcolor{keywordflow}{if} (positions.empty()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00114   std::set<TKeyframeSelection::Position>::iterator posIt;}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116   \textcolor{keywordflow}{if} (m\_qualifiers \& eMoveKeyframes) \{}
+\DoxyCodeLine{00117     \textcolor{keywordflow}{for} (posIt = positions.begin(); posIt != positions.end(); ++posIt) \{}
+\DoxyCodeLine{00118       \textcolor{keywordtype}{int} c = posIt-\/>second;}
+\DoxyCodeLine{00119       \textcolor{keywordtype}{int} r = posIt-\/>first;}
+\DoxyCodeLine{00120       \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} objId =}
+\DoxyCodeLine{00121           c >= 0 ? TStageObjectId::ColumnId(c)}
+\DoxyCodeLine{00122                  : \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}}::CameraId(xsh-\/>getCameraColumnIndex());}
+\DoxyCodeLine{00123       \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *stObj = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(objId);}
+\DoxyCodeLine{00124       \textcolor{keywordflow}{if} (r + dr < 0) \{}
+\DoxyCodeLine{00125         dr = -\/r;}
+\DoxyCodeLine{00126         \textcolor{comment}{// dragging backward stops when the selection reaches the first frame}}
+\DoxyCodeLine{00127         \textcolor{keywordflow}{if} (dr == 0) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00128       \}}
+\DoxyCodeLine{00129       \textcolor{keywordflow}{if} (stObj-\/>\mbox{\hyperlink{class_t_stage_object_af2c8c37f71b2b2e2c2a15c6eb73b8b38}{isKeyframe}}(r + dr)) \{}
+\DoxyCodeLine{00130         \textcolor{keywordflow}{if} (m\_qualifiers \& eCopyKeyframes) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00131         \textcolor{comment}{// occupying key may be dragged one which is to be moved out}}
+\DoxyCodeLine{00132         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (positions.count(TKeyframeSelection::Position(r + dr, c)) == 0)}
+\DoxyCodeLine{00133           \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00134       \}}
+\DoxyCodeLine{00135     \}}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137     \textcolor{keywordtype}{bool} firstTime = \textcolor{keyword}{false};}
+\DoxyCodeLine{00138 }
+\DoxyCodeLine{00139     \textcolor{comment}{// move keys from the end of the selection on dragging forward}}
+\DoxyCodeLine{00140     \textcolor{keywordflow}{if} (dr > 0) \{}
+\DoxyCodeLine{00141       \textcolor{keywordflow}{for} (std::set<TKeyframeSelection::Position>::reverse\_iterator revIt =}
+\DoxyCodeLine{00142                positions.rbegin();}
+\DoxyCodeLine{00143            revIt != positions.rend(); ++revIt) \{}
+\DoxyCodeLine{00144         \textcolor{keywordtype}{int} c = revIt-\/>second;}
+\DoxyCodeLine{00145         \textcolor{keywordtype}{int} r = revIt-\/>first;}
+\DoxyCodeLine{00146         \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} objId =}
+\DoxyCodeLine{00147             c >= 0 ? TStageObjectId::ColumnId(c)}
+\DoxyCodeLine{00148                    : \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}}::CameraId(xsh-\/>getCameraColumnIndex());}
+\DoxyCodeLine{00149         \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *stObj = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(objId);}
+\DoxyCodeLine{00150         \textcolor{keywordflow}{if} (m\_qualifiers \& eCopyKeyframes) \{}
+\DoxyCodeLine{00151           firstTime = \textcolor{keyword}{true};}
+\DoxyCodeLine{00152           stObj-\/>setKeyframeWithoutUndo(r + dr, stObj-\/>\mbox{\hyperlink{class_t_stage_object_aacff624691523109a01d3039b8aae432}{getKeyframe}}(r));}
+\DoxyCodeLine{00153         \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00154           stObj-\/>\mbox{\hyperlink{class_t_stage_object_a1962d494c104943d6eab6ecaf0d656ad}{moveKeyframe}}(r + dr, r);}
+\DoxyCodeLine{00155         newPositions.insert(TKeyframeSelection::Position(r + dr, c));}
+\DoxyCodeLine{00156       \}}
+\DoxyCodeLine{00157     \} \textcolor{keywordflow}{else} \{  \textcolor{comment}{// ... and vice versa}}
+\DoxyCodeLine{00158       \textcolor{keywordflow}{for} (posIt = positions.begin(); posIt != positions.end(); ++posIt) \{}
+\DoxyCodeLine{00159         \textcolor{keywordtype}{int} c = posIt-\/>second;}
+\DoxyCodeLine{00160         \textcolor{keywordtype}{int} r = posIt-\/>first;}
+\DoxyCodeLine{00161         \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} objId =}
+\DoxyCodeLine{00162             c >= 0 ? TStageObjectId::ColumnId(c)}
+\DoxyCodeLine{00163                    : \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}}::CameraId(xsh-\/>getCameraColumnIndex());}
+\DoxyCodeLine{00164         \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *stObj = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(objId);}
+\DoxyCodeLine{00165         \textcolor{keywordflow}{if} (m\_qualifiers \& eCopyKeyframes) \{}
+\DoxyCodeLine{00166           firstTime = \textcolor{keyword}{true};}
+\DoxyCodeLine{00167           stObj-\/>setKeyframeWithoutUndo(r + dr, stObj-\/>\mbox{\hyperlink{class_t_stage_object_aacff624691523109a01d3039b8aae432}{getKeyframe}}(r));}
+\DoxyCodeLine{00168         \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00169           stObj-\/>\mbox{\hyperlink{class_t_stage_object_a1962d494c104943d6eab6ecaf0d656ad}{moveKeyframe}}(r + dr, r);}
+\DoxyCodeLine{00170         newPositions.insert(TKeyframeSelection::Position(r + dr, c));}
+\DoxyCodeLine{00171       \}}
+\DoxyCodeLine{00172     \}}
+\DoxyCodeLine{00173     \textcolor{keywordflow}{if} (firstTime) \{}
+\DoxyCodeLine{00174       m\_qualifiers = 0;}
+\DoxyCodeLine{00175       m\_qualifiers = eMoveKeyframes;}
+\DoxyCodeLine{00176     \}}
+\DoxyCodeLine{00177     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00178   \}}
+\DoxyCodeLine{00179 }
+\DoxyCodeLine{00180   setKeyframes();}
+\DoxyCodeLine{00181   \textcolor{keywordtype}{bool} notChange = \textcolor{keyword}{false};}
+\DoxyCodeLine{00182   \textcolor{keywordflow}{for} (posIt = m\_startSelectedKeyframes.begin();}
+\DoxyCodeLine{00183        posIt != m\_startSelectedKeyframes.end(); ++posIt) \{}
+\DoxyCodeLine{00184     \textcolor{keywordtype}{int} c = posIt-\/>second;}
+\DoxyCodeLine{00185     \textcolor{keywordtype}{int} r = posIt-\/>first;}
+\DoxyCodeLine{00186     \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} objId =}
+\DoxyCodeLine{00187         c >= 0 ? TStageObjectId::ColumnId(c)}
+\DoxyCodeLine{00188                : \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}}::CameraId(xsh-\/>getCameraColumnIndex());}
+\DoxyCodeLine{00189     \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *stObj    = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(objId);}
+\DoxyCodeLine{00190     \textcolor{keywordflow}{if} (r + dr < 0) dr     = -\/r;}
+\DoxyCodeLine{00191     \textcolor{keywordflow}{if} (dr == 0) notChange = \textcolor{keyword}{true};}
+\DoxyCodeLine{00192     newPositions.insert(TKeyframeSelection::Position(r, c));}
+\DoxyCodeLine{00193   \}}
+\DoxyCodeLine{00194   \textcolor{keywordflow}{if} (notChange) \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00195 }
+\DoxyCodeLine{00196   newPositions.clear();}
+\DoxyCodeLine{00197   \textcolor{keywordflow}{for} (posIt = m\_startSelectedKeyframes.begin();}
+\DoxyCodeLine{00198        posIt != m\_startSelectedKeyframes.end(); ++posIt) \{}
+\DoxyCodeLine{00199     \textcolor{keywordtype}{int} c = posIt-\/>second;}
+\DoxyCodeLine{00200     \textcolor{keywordtype}{int} r = posIt-\/>first;}
+\DoxyCodeLine{00201     \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} objId =}
+\DoxyCodeLine{00202         c >= 0 ? TStageObjectId::ColumnId(c)}
+\DoxyCodeLine{00203                : \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}}::CameraId(xsh-\/>getCameraColumnIndex());}
+\DoxyCodeLine{00204     \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *stObj = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(objId);}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206     \textcolor{keywordflow}{if} (m\_qualifiers \& eOverwriteKeyframes) \{}
+\DoxyCodeLine{00207       stObj-\/>removeKeyframeWithoutUndo(r + dr);}
+\DoxyCodeLine{00208       \textcolor{keywordflow}{if} (m\_qualifiers \& eCopyKeyframes)}
+\DoxyCodeLine{00209         stObj-\/>setKeyframeWithoutUndo(r + dr, stObj-\/>\mbox{\hyperlink{class_t_stage_object_aacff624691523109a01d3039b8aae432}{getKeyframe}}(r));}
+\DoxyCodeLine{00210       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00211         stObj-\/>\mbox{\hyperlink{class_t_stage_object_a1962d494c104943d6eab6ecaf0d656ad}{moveKeyframe}}(r + dr, r);}
+\DoxyCodeLine{00212       newPositions.insert(TKeyframeSelection::Position(r + dr, c));}
+\DoxyCodeLine{00213     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_qualifiers \& eInsertKeyframes) \{}
+\DoxyCodeLine{00214       \textcolor{keywordtype}{int} s                           = r;}
+\DoxyCodeLine{00215       \mbox{\hyperlink{struct_t_stage_object_1_1_keyframe}{TStageObject::Keyframe}} keyframe = stObj-\/>\mbox{\hyperlink{class_t_stage_object_aacff624691523109a01d3039b8aae432}{getKeyframe}}(r);}
+\DoxyCodeLine{00216       \textcolor{keywordflow}{if} (!(m\_qualifiers \& eCopyKeyframes)) stObj-\/>removeKeyframeWithoutUndo(r);}
+\DoxyCodeLine{00217       std::set<int> keyframeToShift;}
+\DoxyCodeLine{00218       \textcolor{keywordflow}{while} (stObj-\/>\mbox{\hyperlink{class_t_stage_object_af2c8c37f71b2b2e2c2a15c6eb73b8b38}{isKeyframe}}(s + dr) \&\& s + dr != r) \{}
+\DoxyCodeLine{00219         keyframeToShift.insert(s + dr);}
+\DoxyCodeLine{00220         s++;}
+\DoxyCodeLine{00221       \}}
+\DoxyCodeLine{00222       stObj-\/>moveKeyframes(keyframeToShift, 1);}
+\DoxyCodeLine{00223       stObj-\/>setKeyframeWithoutUndo(r + dr, keyframe);}
+\DoxyCodeLine{00224       newPositions.insert(TKeyframeSelection::Position(r + dr, c));}
+\DoxyCodeLine{00225     \}}
+\DoxyCodeLine{00226   \}}
+\DoxyCodeLine{00227 }
+\DoxyCodeLine{00228   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00229 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframe_mover_a6c639953f7c2c41597a5074323a81f7d}\label{class_keyframe_mover_a6c639953f7c2c41597a5074323a81f7d}} 
+\index{KeyframeMover@{KeyframeMover}!start@{start}}
+\index{start@{start}!KeyframeMover@{KeyframeMover}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void Keyframe\+Mover\+::start (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_keyframe_selection}{TKeyframe\+Selection}} $\ast$}]{selection,  }\item[{int}]{qualifiers }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00092                                                                        \{}
+\DoxyCodeLine{00093   selection-\/>unselectLockedColumn();}
+\DoxyCodeLine{00094   m\_qualifiers                                     = qualifiers;}
+\DoxyCodeLine{00095   std::set<TKeyframeSelection::Position> positions = selection-\/>getSelection();}
+\DoxyCodeLine{00096   m\_startSelectedKeyframes                         = positions;}
+\DoxyCodeLine{00097   getKeyframes();}
+\DoxyCodeLine{00098 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_keyframe_mover_ac10c6ace756d5354afc78132a34f6a2b}\label{class_keyframe_mover_ac10c6ace756d5354afc78132a34f6a2b}} 
+\index{KeyframeMover@{KeyframeMover}!undoMoveKeyframe@{undoMoveKeyframe}}
+\index{undoMoveKeyframe@{undoMoveKeyframe}!KeyframeMover@{KeyframeMover}}
+\doxysubsubsection{\texorpdfstring{undoMoveKeyframe()}{undoMoveKeyframe()}}
+{\footnotesize\ttfamily void Keyframe\+Mover\+::undo\+Move\+Keyframe (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00061 \{ setKeyframes(); \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/keyframemover.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/keyframemover.\+cpp\end{DoxyCompactItemize}

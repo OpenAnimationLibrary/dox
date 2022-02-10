@@ -1,0 +1,225 @@
+\hypertarget{class_win_sound_input_device}{}\doxysection{Win\+Sound\+Input\+Device Class Reference}
+\label{class_win_sound_input_device}\index{WinSoundInputDevice@{WinSoundInputDevice}}
+Inheritance diagram for Win\+Sound\+Input\+Device\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_win_sound_input_device}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_win_sound_input_device_aa05e39a93b4809e42c491ddb815e3f4a}{open}} (const \mbox{\hyperlink{class_wave_format}{Wave\+Format}} \&wf)
+\item 
+void \mbox{\hyperlink{class_win_sound_input_device_a993f542f5c16c62f328a74b482fd7752}{close}} ()
+\item 
+void \mbox{\hyperlink{class_win_sound_input_device_a271df99509ffa85a099561e0c512b578}{prepare\+Header}} (char $\ast$sample\+Buffer, TUINT32 sample\+Buffer\+Size, WAVEHDR \&whdr)
+\item 
+void \mbox{\hyperlink{class_win_sound_input_device_a79338fe4331f7d50474db951a5557ed0}{unprepare\+Header}} (WAVEHDR \&whdr)
+\item 
+void \mbox{\hyperlink{class_win_sound_input_device_af477655ce3014a5d3fd9049aadfd32df}{add\+Block}} (WAVEHDR \&whdr)
+\item 
+void \mbox{\hyperlink{class_win_sound_input_device_a756b8e65261ab287fc370cc48cd7155d}{start}} ()
+\item 
+void \mbox{\hyperlink{class_win_sound_input_device_a7cdb17019561c4fcc3800ed1aa0ae2f4}{reset}} ()
+\item 
+void \mbox{\hyperlink{class_win_sound_input_device_a6e15bfa6b2acf0afc221fd46a54698ed}{stop}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+HANDLE \mbox{\hyperlink{class_win_sound_input_device_a58b45f93640093bf4a63bf8e5c630c6a}{m\+\_\+h\+Block\+Done}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_win_sound_input_device_a2e50448f18e833cf990b6018d69bdca6}\label{class_win_sound_input_device_a2e50448f18e833cf990b6018d69bdca6}} 
+\index{WinSoundInputDevice@{WinSoundInputDevice}!WinSoundInputDevice@{WinSoundInputDevice}}
+\index{WinSoundInputDevice@{WinSoundInputDevice}!WinSoundInputDevice@{WinSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{WinSoundInputDevice()}{WinSoundInputDevice()}}
+{\footnotesize\ttfamily Win\+Sound\+Input\+Device\+::\+Win\+Sound\+Input\+Device (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00914                                          : m\_hWaveIn(0) \{}
+\DoxyCodeLine{00915   m\_hBlockDone = CreateEvent(NULL,   \textcolor{comment}{// no security attributes}}
+\DoxyCodeLine{00916                              FALSE,  \textcolor{comment}{// auto-\/reset event}}
+\DoxyCodeLine{00917                              FALSE,  \textcolor{comment}{// initial state is not signaled}}
+\DoxyCodeLine{00918                              NULL);  \textcolor{comment}{// object not named}}
+\DoxyCodeLine{00919 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_win_sound_input_device_adf00f5b488e23f6c95e32753d22e153d}\label{class_win_sound_input_device_adf00f5b488e23f6c95e32753d22e153d}} 
+\index{WinSoundInputDevice@{WinSoundInputDevice}!````~WinSoundInputDevice@{$\sim$WinSoundInputDevice}}
+\index{````~WinSoundInputDevice@{$\sim$WinSoundInputDevice}!WinSoundInputDevice@{WinSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{$\sim$WinSoundInputDevice()}{~WinSoundInputDevice()}}
+{\footnotesize\ttfamily Win\+Sound\+Input\+Device\+::$\sim$\+Win\+Sound\+Input\+Device (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00923 \{ CloseHandle(m\_hBlockDone); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_win_sound_input_device_af477655ce3014a5d3fd9049aadfd32df}\label{class_win_sound_input_device_af477655ce3014a5d3fd9049aadfd32df}} 
+\index{WinSoundInputDevice@{WinSoundInputDevice}!addBlock@{addBlock}}
+\index{addBlock@{addBlock}!WinSoundInputDevice@{WinSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{addBlock()}{addBlock()}}
+{\footnotesize\ttfamily void Win\+Sound\+Input\+Device\+::add\+Block (\begin{DoxyParamCaption}\item[{WAVEHDR \&}]{whdr }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00978                                                 \{}
+\DoxyCodeLine{00979   MMRESULT ret = waveInAddBuffer(m\_hWaveIn, \&whdr, \textcolor{keyword}{sizeof}(WAVEHDR));}
+\DoxyCodeLine{00980   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00981     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Unable to add a waveheader"{}});}
+\DoxyCodeLine{00982   \}}
+\DoxyCodeLine{00983 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_win_sound_input_device_a993f542f5c16c62f328a74b482fd7752}\label{class_win_sound_input_device_a993f542f5c16c62f328a74b482fd7752}} 
+\index{WinSoundInputDevice@{WinSoundInputDevice}!close@{close}}
+\index{close@{close}!WinSoundInputDevice@{WinSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily void Win\+Sound\+Input\+Device\+::close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00940                                 \{}
+\DoxyCodeLine{00941   \textcolor{keywordflow}{if} (!m\_hWaveIn) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00942 }
+\DoxyCodeLine{00943   MMRESULT ret = waveInClose(m\_hWaveIn);}
+\DoxyCodeLine{00944 }
+\DoxyCodeLine{00945   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00946     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Error to close the input device"{}});}
+\DoxyCodeLine{00947   \}}
+\DoxyCodeLine{00948   m\_hWaveIn = 0;}
+\DoxyCodeLine{00949 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_win_sound_input_device_aa05e39a93b4809e42c491ddb815e3f4a}\label{class_win_sound_input_device_aa05e39a93b4809e42c491ddb815e3f4a}} 
+\index{WinSoundInputDevice@{WinSoundInputDevice}!open@{open}}
+\index{open@{open}!WinSoundInputDevice@{WinSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily void Win\+Sound\+Input\+Device\+::open (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_wave_format}{Wave\+Format}} \&}]{wf }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00927                                                    \{}
+\DoxyCodeLine{00928   \textcolor{keywordflow}{if} (m\_hWaveIn) close();}
+\DoxyCodeLine{00929 }
+\DoxyCodeLine{00930   MMRESULT ret = waveInOpen(\&m\_hWaveIn, WAVE\_MAPPER, \&wf, (DWORD)recordCB,}
+\DoxyCodeLine{00931                             (DWORD)m\_hBlockDone, CALLBACK\_FUNCTION);}
+\DoxyCodeLine{00932 }
+\DoxyCodeLine{00933   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00934     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Error to open the input device"{}});}
+\DoxyCodeLine{00935   \}}
+\DoxyCodeLine{00936 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_win_sound_input_device_a271df99509ffa85a099561e0c512b578}\label{class_win_sound_input_device_a271df99509ffa85a099561e0c512b578}} 
+\index{WinSoundInputDevice@{WinSoundInputDevice}!prepareHeader@{prepareHeader}}
+\index{prepareHeader@{prepareHeader}!WinSoundInputDevice@{WinSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{prepareHeader()}{prepareHeader()}}
+{\footnotesize\ttfamily void Win\+Sound\+Input\+Device\+::prepare\+Header (\begin{DoxyParamCaption}\item[{char $\ast$}]{sample\+Buffer,  }\item[{TUINT32}]{sample\+Buffer\+Size,  }\item[{WAVEHDR \&}]{whdr }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00955                                                        \{}
+\DoxyCodeLine{00956   whdr.lpData         = sampleBuffer;}
+\DoxyCodeLine{00957   whdr.dwBufferLength = sampleBufferSize;  \textcolor{comment}{// numero di byte}}
+\DoxyCodeLine{00958   whdr.dwFlags        = 0;}
+\DoxyCodeLine{00959   whdr.dwLoops        = 0;}
+\DoxyCodeLine{00960 }
+\DoxyCodeLine{00961   MMRESULT ret = waveInPrepareHeader(m\_hWaveIn, \&whdr, \textcolor{keyword}{sizeof}(WAVEHDR));}
+\DoxyCodeLine{00962   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00963     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Unable to prepare a wave header"{}});}
+\DoxyCodeLine{00964   \}}
+\DoxyCodeLine{00965 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_win_sound_input_device_a7cdb17019561c4fcc3800ed1aa0ae2f4}\label{class_win_sound_input_device_a7cdb17019561c4fcc3800ed1aa0ae2f4}} 
+\index{WinSoundInputDevice@{WinSoundInputDevice}!reset@{reset}}
+\index{reset@{reset}!WinSoundInputDevice@{WinSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void Win\+Sound\+Input\+Device\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00996                                 \{}
+\DoxyCodeLine{00997   \textcolor{keywordflow}{if} (!m\_hWaveIn) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00998 }
+\DoxyCodeLine{00999   MMRESULT ret = waveInReset(m\_hWaveIn);}
+\DoxyCodeLine{01000   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{01001     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Unable to add a waveheader"{}});}
+\DoxyCodeLine{01002   \}}
+\DoxyCodeLine{01003 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_win_sound_input_device_a756b8e65261ab287fc370cc48cd7155d}\label{class_win_sound_input_device_a756b8e65261ab287fc370cc48cd7155d}} 
+\index{WinSoundInputDevice@{WinSoundInputDevice}!start@{start}}
+\index{start@{start}!WinSoundInputDevice@{WinSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void Win\+Sound\+Input\+Device\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00987                                 \{}
+\DoxyCodeLine{00988   \textcolor{keywordtype}{int} ret = waveInStart(m\_hWaveIn);}
+\DoxyCodeLine{00989   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00990     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Unable to add a waveheader"{}});}
+\DoxyCodeLine{00991   \}}
+\DoxyCodeLine{00992 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_win_sound_input_device_a6e15bfa6b2acf0afc221fd46a54698ed}\label{class_win_sound_input_device_a6e15bfa6b2acf0afc221fd46a54698ed}} 
+\index{WinSoundInputDevice@{WinSoundInputDevice}!stop@{stop}}
+\index{stop@{stop}!WinSoundInputDevice@{WinSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void Win\+Sound\+Input\+Device\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01007                                \{}
+\DoxyCodeLine{01008   MMRESULT ret = waveInStop(m\_hWaveIn);}
+\DoxyCodeLine{01009   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{01010     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Unable to add a waveheader"{}});}
+\DoxyCodeLine{01011   \}}
+\DoxyCodeLine{01012 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_win_sound_input_device_a79338fe4331f7d50474db951a5557ed0}\label{class_win_sound_input_device_a79338fe4331f7d50474db951a5557ed0}} 
+\index{WinSoundInputDevice@{WinSoundInputDevice}!unprepareHeader@{unprepareHeader}}
+\index{unprepareHeader@{unprepareHeader}!WinSoundInputDevice@{WinSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{unprepareHeader()}{unprepareHeader()}}
+{\footnotesize\ttfamily void Win\+Sound\+Input\+Device\+::unprepare\+Header (\begin{DoxyParamCaption}\item[{WAVEHDR \&}]{whdr }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00969                                                        \{}
+\DoxyCodeLine{00970   MMRESULT ret = waveInUnprepareHeader(m\_hWaveIn, \&whdr, \textcolor{keyword}{sizeof}(WAVEHDR));}
+\DoxyCodeLine{00971   \textcolor{keywordflow}{if} (ret != MMSYSERR\_NOERROR) \{}
+\DoxyCodeLine{00972     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Unable to unprepare a wave header"{}});}
+\DoxyCodeLine{00973   \}}
+\DoxyCodeLine{00974 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_win_sound_input_device_a58b45f93640093bf4a63bf8e5c630c6a}\label{class_win_sound_input_device_a58b45f93640093bf4a63bf8e5c630c6a}} 
+\index{WinSoundInputDevice@{WinSoundInputDevice}!m\_hBlockDone@{m\_hBlockDone}}
+\index{m\_hBlockDone@{m\_hBlockDone}!WinSoundInputDevice@{WinSoundInputDevice}}
+\doxysubsubsection{\texorpdfstring{m\_hBlockDone}{m\_hBlockDone}}
+{\footnotesize\ttfamily HANDLE Win\+Sound\+Input\+Device\+::m\+\_\+h\+Block\+Done}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tsound/tsound\+\_\+nt.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,146 @@
+\hypertarget{class_pli_thumbnail}{}\doxysection{Pli\+Thumbnail Class Reference}
+\label{class_pli_thumbnail}\index{PliThumbnail@{PliThumbnail}}
+Inheritance diagram for Pli\+Thumbnail\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_pli_thumbnail}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_pli_thumbnail_aaecff34b1c37a3a798e8f22b66e1a0bd}{Pli\+Thumbnail}} (const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&size, const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&fp)
+\item 
+void \mbox{\hyperlink{class_pli_thumbnail_aa2742b8dc32a316776b2d32830a42691}{load\+Icon}} ()
+\item 
+void \mbox{\hyperlink{class_pli_thumbnail_a084c357523e6e3f9c7c58a5a6f1c2407}{load\+Frame}} (int index)
+\item 
+void \mbox{\hyperlink{class_pli_thumbnail_a4baa35d255cb2a662ff6958a87652886}{set\+Playing}} (bool on)
+\item 
+Type \mbox{\hyperlink{class_pli_thumbnail_afda429ea64d554d024526ee307ba8eb1}{get\+Type}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_pli_thumbnail_aaecff34b1c37a3a798e8f22b66e1a0bd}\label{class_pli_thumbnail_aaecff34b1c37a3a798e8f22b66e1a0bd}} 
+\index{PliThumbnail@{PliThumbnail}!PliThumbnail@{PliThumbnail}}
+\index{PliThumbnail@{PliThumbnail}!PliThumbnail@{PliThumbnail}}
+\doxysubsubsection{\texorpdfstring{PliThumbnail()}{PliThumbnail()}}
+{\footnotesize\ttfamily Pli\+Thumbnail\+::\+Pli\+Thumbnail (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&}]{size,  }\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{fp }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00101     : \mbox{\hyperlink{class_file_thumbnail}{FileThumbnail}}(size, fp), m\_lr() \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_pli_thumbnail_afda429ea64d554d024526ee307ba8eb1}\label{class_pli_thumbnail_afda429ea64d554d024526ee307ba8eb1}} 
+\index{PliThumbnail@{PliThumbnail}!getType@{getType}}
+\index{getType@{getType}!PliThumbnail@{PliThumbnail}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily Type Pli\+Thumbnail\+::get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_thumbnail}{Thumbnail}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00090 \{ \textcolor{keywordflow}{return} LEVEL; \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_pli_thumbnail_a084c357523e6e3f9c7c58a5a6f1c2407}\label{class_pli_thumbnail_a084c357523e6e3f9c7c58a5a6f1c2407}} 
+\index{PliThumbnail@{PliThumbnail}!loadFrame@{loadFrame}}
+\index{loadFrame@{loadFrame}!PliThumbnail@{PliThumbnail}}
+\doxysubsubsection{\texorpdfstring{loadFrame()}{loadFrame()}}
+{\footnotesize\ttfamily void Pli\+Thumbnail\+::load\+Frame (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_thumbnail}{Thumbnail}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00129                                       \{}
+\DoxyCodeLine{00130   assert(0 <= index \&\& index < (\textcolor{keywordtype}{int})m\_frames.size());}
+\DoxyCodeLine{00131   \textcolor{keywordflow}{if} (!m\_lr) \{}
+\DoxyCodeLine{00132     assert(m\_playing);}
+\DoxyCodeLine{00133     m\_lr = \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}}(m\_filepath);}
+\DoxyCodeLine{00134     m\_lr-\/>loadInfo();}
+\DoxyCodeLine{00135   \}}
+\DoxyCodeLine{00136   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi   = m\_lr-\/>getFrameReader(m\_frames[index]-\/>m\_fid)-\/>load();}
+\DoxyCodeLine{00137   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&raster = m\_frames[index]-\/>m\_raster;}
+\DoxyCodeLine{00138   raster             = \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}(m\_size);}
+\DoxyCodeLine{00139   \textcolor{keywordflow}{if} (vi) \{}
+\DoxyCodeLine{00140     raster-\/>fill(TPixel32::White);}
+\DoxyCodeLine{00141     \mbox{\hyperlink{class_t_dimension_t}{TDimension}} cameraSize(640, 480);}
+\DoxyCodeLine{00142     \textcolor{keyword}{const} \mbox{\hyperlink{class_t_vector_render_data}{TVectorRenderData}} rd(getAffine(cameraSize),}
+\DoxyCodeLine{00143                                \mbox{\hyperlink{class_t_rect_t}{TRect}}(),  \textcolor{comment}{// raster-\/>getBounds(),}}
+\DoxyCodeLine{00144                                m\_palette.getPointer(), 0);}
+\DoxyCodeLine{00145     \textcolor{comment}{// vi-\/>render(rd,raster);}}
+\DoxyCodeLine{00146     doRender(vi, rd, raster);}
+\DoxyCodeLine{00147   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00148     raster-\/>fill(TPixel32(255, 0, 0));}
+\DoxyCodeLine{00149   \}}
+\DoxyCodeLine{00150 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_pli_thumbnail_aa2742b8dc32a316776b2d32830a42691}\label{class_pli_thumbnail_aa2742b8dc32a316776b2d32830a42691}} 
+\index{PliThumbnail@{PliThumbnail}!loadIcon@{loadIcon}}
+\index{loadIcon@{loadIcon}!PliThumbnail@{PliThumbnail}}
+\doxysubsubsection{\texorpdfstring{loadIcon()}{loadIcon()}}
+{\footnotesize\ttfamily void Pli\+Thumbnail\+::load\+Icon (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_thumbnail}{Thumbnail}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00105                             \{}
+\DoxyCodeLine{00106   clearPointerContainer(m\_frames);}
+\DoxyCodeLine{00107   m\_lr          = \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}}(m\_filepath);}
+\DoxyCodeLine{00108   \mbox{\hyperlink{class_t_level_p}{TLevelP}} level = m\_lr-\/>loadInfo();}
+\DoxyCodeLine{00109   m\_palette     = level-\/>getPalette();}
+\DoxyCodeLine{00110   \textcolor{keywordflow}{for} (TLevel::Iterator it = level-\/>begin(); it != level-\/>end(); ++it)}
+\DoxyCodeLine{00111     addFrame(it-\/>first);}
+\DoxyCodeLine{00112   loadFrame(0);}
+\DoxyCodeLine{00113   m\_lr         = \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}}();}
+\DoxyCodeLine{00114   m\_raster     = m\_frames[0]-\/>m\_raster;}
+\DoxyCodeLine{00115   m\_iconLoaded = \textcolor{keyword}{true};}
+\DoxyCodeLine{00116 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_pli_thumbnail_a4baa35d255cb2a662ff6958a87652886}\label{class_pli_thumbnail_a4baa35d255cb2a662ff6958a87652886}} 
+\index{PliThumbnail@{PliThumbnail}!setPlaying@{setPlaying}}
+\index{setPlaying@{setPlaying}!PliThumbnail@{PliThumbnail}}
+\doxysubsubsection{\texorpdfstring{setPlaying()}{setPlaying()}}
+{\footnotesize\ttfamily void Pli\+Thumbnail\+::set\+Playing (\begin{DoxyParamCaption}\item[{bool}]{on }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_thumbnail}{Thumbnail}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00154                                      \{}
+\DoxyCodeLine{00155   \textcolor{keywordflow}{if} (m\_playing == on) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00156   m\_playing = on;}
+\DoxyCodeLine{00157   \textcolor{keywordflow}{if} (!m\_playing) \{}
+\DoxyCodeLine{00158     m\_lr      = \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}}();}
+\DoxyCodeLine{00159     m\_palette = \mbox{\hyperlink{class_t_smart_pointer_t}{TPaletteP}}();}
+\DoxyCodeLine{00160   \}}
+\DoxyCodeLine{00161 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tfarmclient/thumbnail.\+cpp\end{DoxyCompactItemize}

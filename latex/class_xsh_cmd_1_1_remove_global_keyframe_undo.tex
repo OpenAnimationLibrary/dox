@@ -1,0 +1,157 @@
+\hypertarget{class_xsh_cmd_1_1_remove_global_keyframe_undo}{}\doxysection{Xsh\+Cmd\+::Remove\+Global\+Keyframe\+Undo Class Reference}
+\label{class_xsh_cmd_1_1_remove_global_keyframe_undo}\index{XshCmd::RemoveGlobalKeyframeUndo@{XshCmd::RemoveGlobalKeyframeUndo}}
+Inheritance diagram for Xsh\+Cmd\+::Remove\+Global\+Keyframe\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_xsh_cmd_1_1_remove_global_keyframe_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_xsh_cmd_1_1_remove_global_keyframe_undo_a4870245cbf5a3611f98c155923d72739}{Remove\+Global\+Keyframe\+Undo}} (int frame, const std\+::vector$<$ int $>$ \&columns)
+\item 
+void \mbox{\hyperlink{class_xsh_cmd_1_1_remove_global_keyframe_undo_aff8e7b88687fbb7a112467dd00e0a696}{redo}} () const override
+\item 
+void \mbox{\hyperlink{class_xsh_cmd_1_1_remove_global_keyframe_undo_a9ed8efcfbc6b0db8410994384e1e77b9}{undo}} () const override
+\item 
+int \mbox{\hyperlink{class_xsh_cmd_1_1_remove_global_keyframe_undo_aecd9229ecb91a0fa1cd6ff4efac56a5b}{get\+Size}} () const override
+\item 
+QString \mbox{\hyperlink{class_xsh_cmd_1_1_remove_global_keyframe_undo_a4bdebdbc752c53536281e0292ca32199}{get\+History\+String}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_remove_global_keyframe_undo_a4870245cbf5a3611f98c155923d72739}\label{class_xsh_cmd_1_1_remove_global_keyframe_undo_a4870245cbf5a3611f98c155923d72739}} 
+\index{XshCmd::RemoveGlobalKeyframeUndo@{XshCmd::RemoveGlobalKeyframeUndo}!RemoveGlobalKeyframeUndo@{RemoveGlobalKeyframeUndo}}
+\index{RemoveGlobalKeyframeUndo@{RemoveGlobalKeyframeUndo}!XshCmd::RemoveGlobalKeyframeUndo@{XshCmd::RemoveGlobalKeyframeUndo}}
+\doxysubsubsection{\texorpdfstring{RemoveGlobalKeyframeUndo()}{RemoveGlobalKeyframeUndo()}}
+{\footnotesize\ttfamily Xsh\+Cmd\+::\+Remove\+Global\+Keyframe\+Undo\+::\+Remove\+Global\+Keyframe\+Undo (\begin{DoxyParamCaption}\item[{int}]{frame,  }\item[{const std\+::vector$<$ int $>$ \&}]{columns }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00478       : GlobalKeyframeUndo(frame) \{}
+\DoxyCodeLine{00479     \textcolor{keyword}{struct }locals \{}
+\DoxyCodeLine{00480       \textcolor{keyword}{static} \mbox{\hyperlink{struct_t_stage_object_1_1_keyframe}{TStageObject::Keyframe}} getKeyframe(\textcolor{keywordtype}{int} r, \textcolor{keywordtype}{int} c) \{}
+\DoxyCodeLine{00481         \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00482 }
+\DoxyCodeLine{00483         \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} objectId =}
+\DoxyCodeLine{00484             (c == -\/1) ? TStageObjectId::CameraId(xsh-\/>getCameraColumnIndex())}
+\DoxyCodeLine{00485                       : TStageObjectId::ColumnId(c);}
+\DoxyCodeLine{00486 }
+\DoxyCodeLine{00487         \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *\textcolor{keywordtype}{object} = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(objectId);}
+\DoxyCodeLine{00488         assert(\textcolor{keywordtype}{object});}
+\DoxyCodeLine{00489 }
+\DoxyCodeLine{00490         \textcolor{keywordflow}{return} \textcolor{keywordtype}{object}-\/>getKeyframe(r);}
+\DoxyCodeLine{00491       \}}
+\DoxyCodeLine{00492     \};  \textcolor{comment}{// locals}}
+\DoxyCodeLine{00493 }
+\DoxyCodeLine{00494     \mbox{\hyperlink{range__utility_8h_a6e998835f065bb4b10d59722f3ec9019}{tcg::substitute}}(m\_columns,}
+\DoxyCodeLine{00495                     columns | ba::filtered(boost::bind(isKeyframe, frame, \_1)));}
+\DoxyCodeLine{00496 }
+\DoxyCodeLine{00497     \mbox{\hyperlink{range__utility_8h_a6e998835f065bb4b10d59722f3ec9019}{tcg::substitute}}(m\_keyframes,}
+\DoxyCodeLine{00498                     m\_columns | ba::transformed(boost::bind(locals::getKeyframe,}
+\DoxyCodeLine{00499                                                             frame, \_1)));}
+\DoxyCodeLine{00500   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_remove_global_keyframe_undo_a4bdebdbc752c53536281e0292ca32199}\label{class_xsh_cmd_1_1_remove_global_keyframe_undo_a4bdebdbc752c53536281e0292ca32199}} 
+\index{XshCmd::RemoveGlobalKeyframeUndo@{XshCmd::RemoveGlobalKeyframeUndo}!getHistoryString@{getHistoryString}}
+\index{getHistoryString@{getHistoryString}!XshCmd::RemoveGlobalKeyframeUndo@{XshCmd::RemoveGlobalKeyframeUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryString()}{getHistoryString()}}
+{\footnotesize\ttfamily QString Xsh\+Cmd\+::\+Remove\+Global\+Keyframe\+Undo\+::get\+History\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00533                                       \{}
+\DoxyCodeLine{00534     \textcolor{keywordflow}{return} QObject::tr(\textcolor{stringliteral}{"{}Remove Multiple Keys  at Frame \%1"{}})}
+\DoxyCodeLine{00535         .arg(QString::number(m\_frame + 1));}
+\DoxyCodeLine{00536   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_remove_global_keyframe_undo_aecd9229ecb91a0fa1cd6ff4efac56a5b}\label{class_xsh_cmd_1_1_remove_global_keyframe_undo_aecd9229ecb91a0fa1cd6ff4efac56a5b}} 
+\index{XshCmd::RemoveGlobalKeyframeUndo@{XshCmd::RemoveGlobalKeyframeUndo}!getSize@{getSize}}
+\index{getSize@{getSize}!XshCmd::RemoveGlobalKeyframeUndo@{XshCmd::RemoveGlobalKeyframeUndo}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Xsh\+Cmd\+::\+Remove\+Global\+Keyframe\+Undo\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsh_cmd_1_1_global_keyframe_undo}{Xsh\+Cmd\+::\+Global\+Keyframe\+Undo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00528                                \{}
+\DoxyCodeLine{00529     \textcolor{keywordflow}{return} GlobalKeyframeUndo::getSize() +}
+\DoxyCodeLine{00530            m\_keyframes.size() * \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_t_stage_object_1_1_keyframe}{TStageObject::Keyframe}});}
+\DoxyCodeLine{00531   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_remove_global_keyframe_undo_aff8e7b88687fbb7a112467dd00e0a696}\label{class_xsh_cmd_1_1_remove_global_keyframe_undo_aff8e7b88687fbb7a112467dd00e0a696}} 
+\index{XshCmd::RemoveGlobalKeyframeUndo@{XshCmd::RemoveGlobalKeyframeUndo}!redo@{redo}}
+\index{redo@{redo}!XshCmd::RemoveGlobalKeyframeUndo@{XshCmd::RemoveGlobalKeyframeUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Xsh\+Cmd\+::\+Remove\+Global\+Keyframe\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00502                              \{}
+\DoxyCodeLine{00503     doRemoveGlobalKeyframes(m\_frame, m\_columns);}
+\DoxyCodeLine{00504 }
+\DoxyCodeLine{00505     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{00506     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00507   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_remove_global_keyframe_undo_a9ed8efcfbc6b0db8410994384e1e77b9}\label{class_xsh_cmd_1_1_remove_global_keyframe_undo_a9ed8efcfbc6b0db8410994384e1e77b9}} 
+\index{XshCmd::RemoveGlobalKeyframeUndo@{XshCmd::RemoveGlobalKeyframeUndo}!undo@{undo}}
+\index{undo@{undo}!XshCmd::RemoveGlobalKeyframeUndo@{XshCmd::RemoveGlobalKeyframeUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Xsh\+Cmd\+::\+Remove\+Global\+Keyframe\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00509                              \{}
+\DoxyCodeLine{00510     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00511 }
+\DoxyCodeLine{00512     \textcolor{keywordtype}{int} c, cCount = int(m\_columns.size());}
+\DoxyCodeLine{00513     \textcolor{keywordflow}{for} (c = 0; c != cCount; ++c) \{}
+\DoxyCodeLine{00514       \textcolor{keywordtype}{int} col = m\_columns[c];}
+\DoxyCodeLine{00515 }
+\DoxyCodeLine{00516       \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} objectId =}
+\DoxyCodeLine{00517           (col == -\/1) ? TStageObjectId::CameraId(xsh-\/>getCameraColumnIndex())}
+\DoxyCodeLine{00518                       : TStageObjectId::ColumnId(col);}
+\DoxyCodeLine{00519 }
+\DoxyCodeLine{00520       \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *\textcolor{keywordtype}{object} = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(objectId);}
+\DoxyCodeLine{00521       \textcolor{keywordtype}{object}-\/>setKeyframeWithoutUndo(m\_frame, m\_keyframes[c]);}
+\DoxyCodeLine{00522     \}}
+\DoxyCodeLine{00523 }
+\DoxyCodeLine{00524     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{00525     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00526   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xsheetcmd.\+cpp\end{DoxyCompactItemize}

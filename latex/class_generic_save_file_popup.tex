@@ -1,0 +1,127 @@
+\hypertarget{class_generic_save_file_popup}{}\doxysection{Generic\+Save\+File\+Popup Class Reference}
+\label{class_generic_save_file_popup}\index{GenericSaveFilePopup@{GenericSaveFilePopup}}
+
+
+{\ttfamily \#include $<$filebrowserpopup.\+h$>$}
+
+Inheritance diagram for Generic\+Save\+File\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_generic_save_file_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_generic_save_file_popup_a10d49c4ebcb61b7b22eb960bda5f64d9}{Generic\+Save\+File\+Popup}} (const QString \&title, QWidget $\ast$custom\+Widget=nullptr)
+\item 
+\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \mbox{\hyperlink{class_generic_save_file_popup_a60a6017d0e411695c066c478b4974745}{get\+Path}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_generic_save_file_popup_aaa96fa9d947e6c58603a7febfc37b99b}{execute}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_generic_save_file_popup}{Generic\+Save\+File\+Popup}} is a simple, standard Toonz popup that asks the user for a {\itshape single} file path to save something to. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_generic_save_file_popup_a10d49c4ebcb61b7b22eb960bda5f64d9}\label{class_generic_save_file_popup_a10d49c4ebcb61b7b22eb960bda5f64d9}} 
+\index{GenericSaveFilePopup@{GenericSaveFilePopup}!GenericSaveFilePopup@{GenericSaveFilePopup}}
+\index{GenericSaveFilePopup@{GenericSaveFilePopup}!GenericSaveFilePopup@{GenericSaveFilePopup}}
+\doxysubsubsection{\texorpdfstring{GenericSaveFilePopup()}{GenericSaveFilePopup()}}
+{\footnotesize\ttfamily Generic\+Save\+File\+Popup\+::\+Generic\+Save\+File\+Popup (\begin{DoxyParamCaption}\item[{const QString \&}]{title,  }\item[{QWidget $\ast$}]{custom\+Widget = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00459     : \mbox{\hyperlink{class_file_browser_popup}{FileBrowserPopup}}(title, \mbox{\hyperlink{class_file_browser_popup_a873aa6f7f7a00e34a4f60058db3a3fee}{Options}}(\mbox{\hyperlink{class_file_browser_popup_a873aa6f7f7a00e34a4f60058db3a3feeaba33ea45d284253da84fcae43116e9f3}{FOR\_SAVING}}), \textcolor{stringliteral}{"{}"{}}, customWidget) \{}
+\DoxyCodeLine{00460   connect(m\_nameField, SIGNAL(returnPressedNow()), m\_okButton,}
+\DoxyCodeLine{00461           SLOT(animateClick()));}
+\DoxyCodeLine{00462 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_generic_save_file_popup_aaa96fa9d947e6c58603a7febfc37b99b}\label{class_generic_save_file_popup_aaa96fa9d947e6c58603a7febfc37b99b}} 
+\index{GenericSaveFilePopup@{GenericSaveFilePopup}!execute@{execute}}
+\index{execute@{execute}!GenericSaveFilePopup@{GenericSaveFilePopup}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily bool Generic\+Save\+File\+Popup\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+Performs some action on m\+\_\+paths and returns whether the action was successful (accepted) -\/ in which case the popup closes. 
+
+Implements \mbox{\hyperlink{class_file_browser_popup_a8158b9b8756ac5dfa893b78cdc2fd9af}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00466                                    \{}
+\DoxyCodeLine{00467   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.empty()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00468 }
+\DoxyCodeLine{00469   \mbox{\hyperlink{class_t_file_path}{TFilePath}} path(*\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.begin());}
+\DoxyCodeLine{00470   assert(!path.isEmpty());}
+\DoxyCodeLine{00471 }
+\DoxyCodeLine{00472   \textcolor{comment}{// In case the path is not coherent with the specified type filter,}}
+\DoxyCodeLine{00473   \textcolor{comment}{// it means that the user specified it by typing and forgot the right type}}
+\DoxyCodeLine{00474   \textcolor{comment}{// (yep, even if a DIFFERENT type was specified -\/ next time do it right :P)}}
+\DoxyCodeLine{00475   \textcolor{keyword}{const} QStringList \&extList = m\_browser-\/>getFilterTypes();}
+\DoxyCodeLine{00476 }
+\DoxyCodeLine{00477   \textcolor{keywordflow}{if} (!m\_isDirectoryOnly \&\&}
+\DoxyCodeLine{00478       !extList.contains(QString::fromStdString(path.getType()))) \{}
+\DoxyCodeLine{00479     path =}
+\DoxyCodeLine{00480         \mbox{\hyperlink{class_t_file_path}{TFilePath}}(path.getWideString() + L\textcolor{stringliteral}{"{}."{}} + extList.first().toStdWString());}
+\DoxyCodeLine{00481   \}}
+\DoxyCodeLine{00482 }
+\DoxyCodeLine{00483   \textcolor{comment}{// Ask for user permission to overwrite if necessary}}
+\DoxyCodeLine{00484   \textcolor{keywordflow}{if} (!m\_isDirectoryOnly \&\& \mbox{\hyperlink{class_t_file_status}{TFileStatus}}(path).doesExist()) \{}
+\DoxyCodeLine{00485     \textcolor{keyword}{const} QString \&question =}
+\DoxyCodeLine{00486         QObject::tr(\textcolor{stringliteral}{"{}File \%1 already exists.\(\backslash\)nDo you want to overwrite it?"{}})}
+\DoxyCodeLine{00487             .arg(toQString(path));}
+\DoxyCodeLine{00488 }
+\DoxyCodeLine{00489     \textcolor{keywordtype}{int} ret = DVGui::MsgBox(question, QObject::tr(\textcolor{stringliteral}{"{}Overwrite"{}}),}
+\DoxyCodeLine{00490                             QObject::tr(\textcolor{stringliteral}{"{}Cancel"{}}));}
+\DoxyCodeLine{00491     \textcolor{keywordflow}{if} (ret == 0 || ret == 2) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00492   \}}
+\DoxyCodeLine{00493 }
+\DoxyCodeLine{00494   \mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.clear();}
+\DoxyCodeLine{00495   \mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.insert(path);}
+\DoxyCodeLine{00496 }
+\DoxyCodeLine{00497   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00498 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00225}{TFile\+Path\+::get\+Type()}}, and \mbox{\hyperlink{l00090}{File\+Browser\+Popup\+::m\+\_\+selected\+Paths}}.
+
+\mbox{\Hypertarget{class_generic_save_file_popup_a60a6017d0e411695c066c478b4974745}\label{class_generic_save_file_popup_a60a6017d0e411695c066c478b4974745}} 
+\index{GenericSaveFilePopup@{GenericSaveFilePopup}!getPath@{getPath}}
+\index{getPath@{getPath}!GenericSaveFilePopup@{GenericSaveFilePopup}}
+\doxysubsubsection{\texorpdfstring{getPath()}{getPath()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} Generic\+Save\+File\+Popup\+::get\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This function shows the popup and blocks until a suitable path has been selected -\/ if the returned path is empty, the action was explicitly aborted by the user.
+
+\begin{DoxyNote}{Note}
+The popup {\itshape does} ask for user consent to overwrite existing files. 
+\end{DoxyNote}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00502                                         \{}
+\DoxyCodeLine{00503   \textcolor{keywordflow}{return} (exec() == QDialog::Rejected) ? \mbox{\hyperlink{class_t_file_path}{TFilePath}}() : *\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.begin();}
+\DoxyCodeLine{00504 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00090}{File\+Browser\+Popup\+::m\+\_\+selected\+Paths}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowserpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowserpopup.\+cpp\end{DoxyCompactItemize}

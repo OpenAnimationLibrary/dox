@@ -1,0 +1,117 @@
+\hypertarget{class_blur_pattern}{}\doxysection{Blur\+Pattern Class Reference}
+\label{class_blur_pattern}\index{BlurPattern@{BlurPattern}}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::vector$<$ \mbox{\hyperlink{class_t_point_t}{TPoint}} $>$ \mbox{\hyperlink{class_blur_pattern_a7d6fb9b5a9805bc959824762d2f35f55}{Sample\+Path}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_blur_pattern_ad64665f7923e1a1da25c1ab18c968ccf}{Blur\+Pattern}} (double distance, unsigned int samples\+Count, bool radial)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_t_point_t}{TPoint}} $>$ \mbox{\hyperlink{class_blur_pattern_ab8525f44231e16803180e297160fd29e}{m\+\_\+samples}}
+\item 
+std\+::vector$<$ Sample\+Path $>$ \mbox{\hyperlink{class_blur_pattern_a5601cb9428c3d2034c32a9ef77d14f9e}{m\+\_\+sample\+Paths}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_blur_pattern}{Blur\+Pattern}} class delineates the idea of a \textquotesingle{}blur\textquotesingle{} pattern from a number of random sample points taken in a neighbourhood of the blurred pixel. The pattern develops in a radial manner if specified, so that possible \textquotesingle{}obstacles\textquotesingle{} in the blur can be identified. 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{class_blur_pattern_a7d6fb9b5a9805bc959824762d2f35f55}\label{class_blur_pattern_a7d6fb9b5a9805bc959824762d2f35f55}} 
+\index{BlurPattern@{BlurPattern}!SamplePath@{SamplePath}}
+\index{SamplePath@{SamplePath}!BlurPattern@{BlurPattern}}
+\doxysubsubsection{\texorpdfstring{SamplePath}{SamplePath}}
+{\footnotesize\ttfamily typedef std\+::vector$<$\mbox{\hyperlink{class_t_point_t}{TPoint}}$>$ Blur\+Pattern\+::\+Sample\+Path}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_blur_pattern_ad64665f7923e1a1da25c1ab18c968ccf}\label{class_blur_pattern_ad64665f7923e1a1da25c1ab18c968ccf}} 
+\index{BlurPattern@{BlurPattern}!BlurPattern@{BlurPattern}}
+\index{BlurPattern@{BlurPattern}!BlurPattern@{BlurPattern}}
+\doxysubsubsection{\texorpdfstring{BlurPattern()}{BlurPattern()}}
+{\footnotesize\ttfamily Blur\+Pattern\+::\+Blur\+Pattern (\begin{DoxyParamCaption}\item[{double}]{distance,  }\item[{unsigned int}]{samples\+Count,  }\item[{bool}]{radial }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044                                       \{}
+\DoxyCodeLine{00045   \textcolor{keyword}{const} \textcolor{keywordtype}{double} randFactor = 2.0 * distance / RAND\_MAX;}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047   m\_samples.resize(samplesCount);}
+\DoxyCodeLine{00048 }
+\DoxyCodeLine{00049   \textcolor{comment}{// Build the samples}}
+\DoxyCodeLine{00050   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00051   \textcolor{keywordflow}{for} (i = 0; i < samplesCount; ++i) \{}
+\DoxyCodeLine{00052     \textcolor{comment}{// NOTE: The following method ensures a perfectly flat probability}}
+\DoxyCodeLine{00053     \textcolor{comment}{// distribution.}}
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055     \mbox{\hyperlink{class_t_point_t}{TPoint}} candidatePoint(tround(rand() * randFactor -\/ distance),}
+\DoxyCodeLine{00056                           tround(rand() * randFactor -\/ distance));}
+\DoxyCodeLine{00057     \textcolor{keywordtype}{double} distanceSq = sq(distance);}
+\DoxyCodeLine{00058     \textcolor{keywordflow}{while} (sq(candidatePoint.x) + sq(candidatePoint.y) > distanceSq)}
+\DoxyCodeLine{00059       candidatePoint = \mbox{\hyperlink{class_t_point_t}{TPoint}}(tround(rand() * randFactor -\/ distance),}
+\DoxyCodeLine{00060                               tround(rand() * randFactor -\/ distance));}
+\DoxyCodeLine{00061 }
+\DoxyCodeLine{00062     m\_samples[i] = candidatePoint;}
+\DoxyCodeLine{00063   \}}
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00065   m\_samplePaths.resize(samplesCount);}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067   \textcolor{comment}{// If necessary, build the paths}}
+\DoxyCodeLine{00068   \textcolor{keywordflow}{if} (radial) \{}
+\DoxyCodeLine{00069     \textcolor{keywordflow}{for} (i = 0; i < samplesCount; ++i) \{}
+\DoxyCodeLine{00070       \mbox{\hyperlink{class_t_point_t}{TPoint}} \&sample = m\_samples[i];}
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00072       \textcolor{keywordtype}{int} l = std::max(abs(sample.x), abs(sample.y));}
+\DoxyCodeLine{00073 }
+\DoxyCodeLine{00074       m\_samplePaths[i].reserve(l);}
+\DoxyCodeLine{00075 }
+\DoxyCodeLine{00076       \textcolor{keywordtype}{double} dx = sample.x / (double)l;}
+\DoxyCodeLine{00077       \textcolor{keywordtype}{double} dy = sample.y / (double)l;}
+\DoxyCodeLine{00078 }
+\DoxyCodeLine{00079       \textcolor{keywordtype}{double} x, y;}
+\DoxyCodeLine{00080       \textcolor{keywordtype}{int} j;}
+\DoxyCodeLine{00081       \textcolor{keywordflow}{for} (j = 0, x = dx, y = dy; j < l; x += dx, y += dy, ++j)}
+\DoxyCodeLine{00082         m\_samplePaths[i].push\_back(\mbox{\hyperlink{class_t_point_t}{TPoint}}(tround(x), tround(y)));}
+\DoxyCodeLine{00083     \}}
+\DoxyCodeLine{00084   \}}
+\DoxyCodeLine{00085 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_blur_pattern_ae3d9ecccbc450afd7fe8c752327be398}\label{class_blur_pattern_ae3d9ecccbc450afd7fe8c752327be398}} 
+\index{BlurPattern@{BlurPattern}!````~BlurPattern@{$\sim$BlurPattern}}
+\index{````~BlurPattern@{$\sim$BlurPattern}!BlurPattern@{BlurPattern}}
+\doxysubsubsection{\texorpdfstring{$\sim$BlurPattern()}{~BlurPattern()}}
+{\footnotesize\ttfamily Blur\+Pattern\+::$\sim$\+Blur\+Pattern (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_blur_pattern_a5601cb9428c3d2034c32a9ef77d14f9e}\label{class_blur_pattern_a5601cb9428c3d2034c32a9ef77d14f9e}} 
+\index{BlurPattern@{BlurPattern}!m\_samplePaths@{m\_samplePaths}}
+\index{m\_samplePaths@{m\_samplePaths}!BlurPattern@{BlurPattern}}
+\doxysubsubsection{\texorpdfstring{m\_samplePaths}{m\_samplePaths}}
+{\footnotesize\ttfamily std\+::vector$<$Sample\+Path$>$ Blur\+Pattern\+::m\+\_\+sample\+Paths}
+
+\mbox{\Hypertarget{class_blur_pattern_ab8525f44231e16803180e297160fd29e}\label{class_blur_pattern_ab8525f44231e16803180e297160fd29e}} 
+\index{BlurPattern@{BlurPattern}!m\_samples@{m\_samples}}
+\index{m\_samples@{m\_samples}!BlurPattern@{BlurPattern}}
+\doxysubsubsection{\texorpdfstring{m\_samples}{m\_samples}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{class_t_point_t}{TPoint}}$>$ Blur\+Pattern\+::m\+\_\+samples}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/sandor\+\_\+fxs/blend.\+cpp\end{DoxyCompactItemize}

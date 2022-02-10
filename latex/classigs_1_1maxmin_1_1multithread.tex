@@ -1,0 +1,108 @@
+\hypertarget{classigs_1_1maxmin_1_1multithread}{}\doxysection{igs\+::maxmin\+::multithread\texorpdfstring{$<$}{<} IT, RT \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classigs_1_1maxmin_1_1multithread}\index{igs::maxmin::multithread$<$ IT, RT $>$@{igs::maxmin::multithread$<$ IT, RT $>$}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classigs_1_1maxmin_1_1multithread_a7a11deca8a101d409e2f45396d43a45d}{multithread}} (const IT $\ast$inn, IT $\ast$out, const int height, const int width, const int channels, const RT $\ast$ref, const int ref\+\_\+mode, const double radius, const double smooth\+\_\+outer\+\_\+range, const int polygon\+\_\+number, const double roll\+\_\+degree, const bool min\+\_\+sw, const bool alpha\+\_\+rendering\+\_\+sw, const bool add\+\_\+blend\+\_\+sw, const int number\+\_\+of\+\_\+thread)
+\item 
+void \mbox{\hyperlink{classigs_1_1maxmin_1_1multithread_a9aac164b98aaf04ed9e5a3a55eb8f12f}{run}} (void)
+\item 
+void \mbox{\hyperlink{classigs_1_1maxmin_1_1multithread_af8d605e324c2114fab1f107a1cfd1dac}{clear}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class IT, class RT$>$\newline
+class igs\+::maxmin\+::multithread$<$ IT, RT $>$}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classigs_1_1maxmin_1_1multithread_a7a11deca8a101d409e2f45396d43a45d}\label{classigs_1_1maxmin_1_1multithread_a7a11deca8a101d409e2f45396d43a45d}} 
+\index{igs::maxmin::multithread$<$ IT, RT $>$@{igs::maxmin::multithread$<$ IT, RT $>$}!multithread@{multithread}}
+\index{multithread@{multithread}!igs::maxmin::multithread$<$ IT, RT $>$@{igs::maxmin::multithread$<$ IT, RT $>$}}
+\doxysubsubsection{\texorpdfstring{multithread()}{multithread()}}
+{\footnotesize\ttfamily template$<$class IT , class RT $>$ \\
+\mbox{\hyperlink{classigs_1_1maxmin_1_1multithread}{igs\+::maxmin\+::multithread}}$<$ IT, RT $>$\+::multithread (\begin{DoxyParamCaption}\item[{const IT $\ast$}]{inn,  }\item[{IT $\ast$}]{out,  }\item[{const int}]{height,  }\item[{const int}]{width,  }\item[{const int}]{channels,  }\item[{const RT $\ast$}]{ref,  }\item[{const int}]{ref\+\_\+mode,  }\item[{const double}]{radius,  }\item[{const double}]{smooth\+\_\+outer\+\_\+range,  }\item[{const int}]{polygon\+\_\+number,  }\item[{const double}]{roll\+\_\+degree,  }\item[{const bool}]{min\+\_\+sw,  }\item[{const bool}]{alpha\+\_\+rendering\+\_\+sw,  }\item[{const bool}]{add\+\_\+blend\+\_\+sw,  }\item[{const int}]{number\+\_\+of\+\_\+thread }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00227         \{}
+\DoxyCodeLine{00228     \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/メモリ確保-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00229     igs::maxmin::alloc\_and\_shape\_lens\_matrix(}
+\DoxyCodeLine{00230         radius, radius + smooth\_outer\_range, polygon\_number, roll\_degree,}
+\DoxyCodeLine{00231         this-\/>lens\_offsets\_, this-\/>lens\_sizes\_, this-\/>lens\_ratio\_);}
+\DoxyCodeLine{00232     \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/スレッド毎の処理指定-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00233     \textcolor{keywordtype}{int} thread\_num = number\_of\_thread;}
+\DoxyCodeLine{00234     \textcolor{comment}{/* ゼロ以下の場合強制変更。そもそもGUIでエラーにすべき */}}
+\DoxyCodeLine{00235     \textcolor{keywordflow}{if} (thread\_num < 1) \{}
+\DoxyCodeLine{00236       thread\_num = 1;}
+\DoxyCodeLine{00237     \}}
+\DoxyCodeLine{00238     \textcolor{comment}{/* 高さより多い場合強制変更。そもそもGUIでエラーにすべき */}}
+\DoxyCodeLine{00239     \textcolor{keywordflow}{if} (height < thread\_num) \{}
+\DoxyCodeLine{00240       thread\_num = height;}
+\DoxyCodeLine{00241     \}}
+\DoxyCodeLine{00242     \textcolor{comment}{/* threadメモリ確保 */}}
+\DoxyCodeLine{00243     this-\/>threads\_.resize(thread\_num);}
+\DoxyCodeLine{00244     \textcolor{comment}{/* thread set */}}
+\DoxyCodeLine{00245     \textcolor{keywordtype}{int} yy = 0;}
+\DoxyCodeLine{00246     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} ii = 0; ii < thread\_num; ++ii) \{}
+\DoxyCodeLine{00247       \textcolor{keyword}{const} \textcolor{keywordtype}{int} y\_end =}
+\DoxyCodeLine{00248           \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(height) * (ii + 1) / thread\_num +}
+\DoxyCodeLine{00249                            0.999999) -\/}
+\DoxyCodeLine{00250           1;}
+\DoxyCodeLine{00251       this-\/>threads\_.at(ii).setup(}
+\DoxyCodeLine{00252           inn, out, height, width, channels, ref, ref\_mode, yy, y\_end,}
+\DoxyCodeLine{00253           \&(this-\/>lens\_offsets\_), \&(this-\/>lens\_sizes\_), \&(this-\/>lens\_ratio\_)}
+\DoxyCodeLine{00254 }
+\DoxyCodeLine{00255                                                             ,}
+\DoxyCodeLine{00256           radius, smooth\_outer\_range, polygon\_number, roll\_degree}
+\DoxyCodeLine{00257 }
+\DoxyCodeLine{00258           ,}
+\DoxyCodeLine{00259           min\_sw, alpha\_rendering\_sw, add\_blend\_sw);}
+\DoxyCodeLine{00260       yy = y\_end;}
+\DoxyCodeLine{00261     \}}
+\DoxyCodeLine{00262     \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/スレッド毎のスレッド指定-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00263     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} ii = 0; ii < thread\_num; ++ii) \{}
+\DoxyCodeLine{00264       this-\/>mthread\_.add(\&(this-\/>threads\_.at(ii)));}
+\DoxyCodeLine{00265     \}}
+\DoxyCodeLine{00266   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classigs_1_1maxmin_1_1multithread_af8d605e324c2114fab1f107a1cfd1dac}\label{classigs_1_1maxmin_1_1multithread_af8d605e324c2114fab1f107a1cfd1dac}} 
+\index{igs::maxmin::multithread$<$ IT, RT $>$@{igs::maxmin::multithread$<$ IT, RT $>$}!clear@{clear}}
+\index{clear@{clear}!igs::maxmin::multithread$<$ IT, RT $>$@{igs::maxmin::multithread$<$ IT, RT $>$}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily template$<$class IT , class RT $>$ \\
+void \mbox{\hyperlink{classigs_1_1maxmin_1_1multithread}{igs\+::maxmin\+::multithread}}$<$ IT, RT $>$\+::clear (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00268                \{}
+\DoxyCodeLine{00269     this-\/>mthread\_.clear();}
+\DoxyCodeLine{00270     this-\/>threads\_.clear();}
+\DoxyCodeLine{00271     this-\/>lens\_ratio\_.clear();}
+\DoxyCodeLine{00272     this-\/>lens\_sizes\_.clear();}
+\DoxyCodeLine{00273     this-\/>lens\_offsets\_.clear();}
+\DoxyCodeLine{00274   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classigs_1_1maxmin_1_1multithread_a9aac164b98aaf04ed9e5a3a55eb8f12f}\label{classigs_1_1maxmin_1_1multithread_a9aac164b98aaf04ed9e5a3a55eb8f12f}} 
+\index{igs::maxmin::multithread$<$ IT, RT $>$@{igs::maxmin::multithread$<$ IT, RT $>$}!run@{run}}
+\index{run@{run}!igs::maxmin::multithread$<$ IT, RT $>$@{igs::maxmin::multithread$<$ IT, RT $>$}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily template$<$class IT , class RT $>$ \\
+void \mbox{\hyperlink{classigs_1_1maxmin_1_1multithread}{igs\+::maxmin\+::multithread}}$<$ IT, RT $>$\+::run (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00267 \{ this-\/>mthread\_.run(); \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/igs\+\_\+maxmin\+\_\+multithread.\+h\end{DoxyCompactItemize}

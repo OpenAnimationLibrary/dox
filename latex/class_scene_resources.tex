@@ -1,0 +1,186 @@
+\hypertarget{class_scene_resources}{}\doxysection{Scene\+Resources Class Reference}
+\label{class_scene_resources}\index{SceneResources@{SceneResources}}
+
+
+{\ttfamily \#include $<$sceneresources.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_scene_resources_a9876319dd7b928bd96fd6d4ef7c7b41f}{Scene\+Resources}} (\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$scene, \mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$sub\+Xsheet)
+\item 
+\mbox{\hyperlink{class_scene_resources_afa3dcedca2e3c758582e6cacd65a4e0a}{$\sim$\+Scene\+Resources}} ()
+\item 
+void \mbox{\hyperlink{class_scene_resources_af1fad9d58916f630943e722078959344}{save}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} new\+Scene\+Path)
+\item 
+void \mbox{\hyperlink{class_scene_resources_ae6b4bfe485029a68e42f2ae9ae15292c}{update\+Paths}} ()
+\item 
+void \mbox{\hyperlink{class_scene_resources_a3eed5901edd7a62f0f4a1a49bce88ea5}{rollback\+Paths}} ()
+\item 
+void \mbox{\hyperlink{class_scene_resources_a7e29682e9c55e8057eff1ac1ca007bd1}{commit}} ()
+\item 
+void \mbox{\hyperlink{class_scene_resources_a714565a90f8e48dc6ad5bd5309360e75}{accept}} (\mbox{\hyperlink{class_resource_processor}{Resource\+Processor}} $\ast$processor, bool auto\+Commit=true)
+\item 
+void \mbox{\hyperlink{class_scene_resources_ad3279af1728f01b0ce5aa3b9277161cb}{get\+Dirty\+Resources}} (QString\+List \&dirty\+Resources)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_scene_resources}{Scene\+Resources}} class provides scene resources and allows their management.
+
+The class contains a vector of pointer to {\bfseries{\mbox{\hyperlink{class_scene_resource}{Scene\+Resource}}}}, a pointer to scene, a pointer to xsheet, a boolean to know if commit is done and a boolean to know if scene is untitled. The class allows to save scene resources save(), and to update or to restore old scene resources paths \mbox{\hyperlink{class_scene_resources_ae6b4bfe485029a68e42f2ae9ae15292c}{update\+Paths()}}, \mbox{\hyperlink{class_scene_resources_a3eed5901edd7a62f0f4a1a49bce88ea5}{rollback\+Paths()}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_scene_resources_a9876319dd7b928bd96fd6d4ef7c7b41f}\label{class_scene_resources_a9876319dd7b928bd96fd6d4ef7c7b41f}} 
+\index{SceneResources@{SceneResources}!SceneResources@{SceneResources}}
+\index{SceneResources@{SceneResources}!SceneResources@{SceneResources}}
+\doxysubsubsection{\texorpdfstring{SceneResources()}{SceneResources()}}
+{\footnotesize\ttfamily Scene\+Resources\+::\+Scene\+Resources (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$}]{scene,  }\item[{\mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$}]{sub\+Xsheet }\end{DoxyParamCaption})}
+
+Constructs \mbox{\hyperlink{class_scene_resources}{Scene\+Resources}} with {\bfseries{\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}}}} {\bfseries{scene}} and {\bfseries{\mbox{\hyperlink{class_t_xsheet}{TXsheet}}}} {\bfseries{sub\+Xsheet}}. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00469     : m\_scene(scene)}
+\DoxyCodeLine{00470     , m\_commitDone(\textcolor{keyword}{false})}
+\DoxyCodeLine{00471     , m\_wasUntitled(scene-\/>\mbox{\hyperlink{class_toonz_scene_a53cbaf09f551658479eb743e153ab6bc}{isUntitled}}())}
+\DoxyCodeLine{00472     , m\_subXsheet(subXsheet) \{}
+\DoxyCodeLine{00473   getResources();}
+\DoxyCodeLine{00474 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_resources_afa3dcedca2e3c758582e6cacd65a4e0a}\label{class_scene_resources_afa3dcedca2e3c758582e6cacd65a4e0a}} 
+\index{SceneResources@{SceneResources}!````~SceneResources@{$\sim$SceneResources}}
+\index{````~SceneResources@{$\sim$SceneResources}!SceneResources@{SceneResources}}
+\doxysubsubsection{\texorpdfstring{$\sim$SceneResources()}{~SceneResources()}}
+{\footnotesize\ttfamily Scene\+Resources\+::$\sim$\+Scene\+Resources (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Destroys the \mbox{\hyperlink{class_scene_resources}{Scene\+Resources}} object. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00478                                 \{}
+\DoxyCodeLine{00479   \textcolor{keywordflow}{if} (!m\_commitDone) \mbox{\hyperlink{class_scene_resources_a3eed5901edd7a62f0f4a1a49bce88ea5}{rollbackPaths}}();}
+\DoxyCodeLine{00480   clearPointerContainer(m\_resources);}
+\DoxyCodeLine{00481 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00537}{rollback\+Paths()}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_scene_resources_a714565a90f8e48dc6ad5bd5309360e75}\label{class_scene_resources_a714565a90f8e48dc6ad5bd5309360e75}} 
+\index{SceneResources@{SceneResources}!accept@{accept}}
+\index{accept@{accept}!SceneResources@{SceneResources}}
+\doxysubsubsection{\texorpdfstring{accept()}{accept()}}
+{\footnotesize\ttfamily void Scene\+Resources\+::accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_resource_processor}{Resource\+Processor}} $\ast$}]{processor,  }\item[{bool}]{auto\+Commit = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00544                                                                          \{}
+\DoxyCodeLine{00545   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_resources.size() \&\& !processor-\/>aborted(); i++)}
+\DoxyCodeLine{00546     m\_resources[i]-\/>accept(processor);}
+\DoxyCodeLine{00547   \textcolor{keywordflow}{if} (autoCommit) \mbox{\hyperlink{class_scene_resources_a7e29682e9c55e8057eff1ac1ca007bd1}{commit}}();}
+\DoxyCodeLine{00548 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_resources_a7e29682e9c55e8057eff1ac1ca007bd1}\label{class_scene_resources_a7e29682e9c55e8057eff1ac1ca007bd1}} 
+\index{SceneResources@{SceneResources}!commit@{commit}}
+\index{commit@{commit}!SceneResources@{SceneResources}}
+\doxysubsubsection{\texorpdfstring{commit()}{commit()}}
+{\footnotesize\ttfamily void Scene\+Resources\+::commit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set boolean {\bfseries{m\+\_\+commit\+Done}} to true. ~\newline
+If doesn\textquotesingle{}t make {\bfseries{\mbox{\hyperlink{class_scene_resources_a7e29682e9c55e8057eff1ac1ca007bd1}{commit()}}}} destroyer calls {\bfseries{\mbox{\hyperlink{class_scene_resources_a3eed5901edd7a62f0f4a1a49bce88ea5}{rollback\+Paths()}}}}. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00315 \{ m\_commitDone = \textcolor{keyword}{true}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_resources_ad3279af1728f01b0ce5aa3b9277161cb}\label{class_scene_resources_ad3279af1728f01b0ce5aa3b9277161cb}} 
+\index{SceneResources@{SceneResources}!getDirtyResources@{getDirtyResources}}
+\index{getDirtyResources@{getDirtyResources}!SceneResources@{SceneResources}}
+\doxysubsubsection{\texorpdfstring{getDirtyResources()}{getDirtyResources()}}
+{\footnotesize\ttfamily void Scene\+Resources\+::get\+Dirty\+Resources (\begin{DoxyParamCaption}\item[{QString\+List \&}]{dirty\+Resources }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00552                                                                   \{}
+\DoxyCodeLine{00553   \textcolor{keywordflow}{for} (\mbox{\hyperlink{class_scene_resource}{SceneResource}} *resource : m\_resources)}
+\DoxyCodeLine{00554     \textcolor{keywordflow}{if} (resource-\/>isDirty()) \{}
+\DoxyCodeLine{00555       dirtyResources << resource-\/>getResourceName();}
+\DoxyCodeLine{00556     \}}
+\DoxyCodeLine{00557   dirtyResources.removeDuplicates();}
+\DoxyCodeLine{00558 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_resources_a3eed5901edd7a62f0f4a1a49bce88ea5}\label{class_scene_resources_a3eed5901edd7a62f0f4a1a49bce88ea5}} 
+\index{SceneResources@{SceneResources}!rollbackPaths@{rollbackPaths}}
+\index{rollbackPaths@{rollbackPaths}!SceneResources@{SceneResources}}
+\doxysubsubsection{\texorpdfstring{rollbackPaths()}{rollbackPaths()}}
+{\footnotesize\ttfamily void Scene\+Resources\+::rollback\+Paths (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Set all resources paths to old paths. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00537                                    \{}
+\DoxyCodeLine{00538   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_resources.size(); i++)}
+\DoxyCodeLine{00539     m\_resources[i]-\/>rollbackPath();}
+\DoxyCodeLine{00540 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l00478}{$\sim$\+Scene\+Resources()}}.
+
+\mbox{\Hypertarget{class_scene_resources_af1fad9d58916f630943e722078959344}\label{class_scene_resources_af1fad9d58916f630943e722078959344}} 
+\index{SceneResources@{SceneResources}!save@{save}}
+\index{save@{save}!SceneResources@{SceneResources}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily void Scene\+Resources\+::save (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}}}]{new\+Scene\+Path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00503                                                       \{}
+\DoxyCodeLine{00504   \mbox{\hyperlink{class_t_file_path}{TFilePath}} oldScenePath = m\_scene-\/>\mbox{\hyperlink{class_toonz_scene_ad42b52b671b094f66e003c4b7ebefd45}{getScenePath}}();}
+\DoxyCodeLine{00505   m\_scene-\/>\mbox{\hyperlink{class_toonz_scene_a815ecf4f07a92f9f9fef693f762c1228}{setScenePath}}(newScenePath);}
+\DoxyCodeLine{00506   \textcolor{keywordtype}{bool} failedSave = \textcolor{keyword}{false};}
+\DoxyCodeLine{00507   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_resources.size(); i++) \{}
+\DoxyCodeLine{00508     m\_resources[i]-\/>save();}
+\DoxyCodeLine{00509   \}}
+\DoxyCodeLine{00510 }
+\DoxyCodeLine{00511   QStringList failedList;}
+\DoxyCodeLine{00512   getDirtyResources(failedList);}
+\DoxyCodeLine{00513 }
+\DoxyCodeLine{00514   \textcolor{keywordflow}{if} (!failedList.isEmpty()) \{  \textcolor{comment}{// didn't save for some reason}}
+\DoxyCodeLine{00515     \textcolor{comment}{// show up to 5 items}}
+\DoxyCodeLine{00516     \textcolor{keywordtype}{int} extraCount = failedList.count() -\/ 5;}
+\DoxyCodeLine{00517     \textcolor{keywordflow}{if} (extraCount > 0) \{}
+\DoxyCodeLine{00518       failedList = failedList.mid(0, 5);}
+\DoxyCodeLine{00519       failedList.append(QObject::tr(\textcolor{stringliteral}{"{}and \%1 more item(s)."{}}).arg(extraCount));}
+\DoxyCodeLine{00520     \}}
+\DoxyCodeLine{00521 }
+\DoxyCodeLine{00522     DVGui::warning(QObject::tr(\textcolor{stringliteral}{"{}Failed to save the following resources:\(\backslash\)n"{}}) +}
+\DoxyCodeLine{00523                    \textcolor{stringliteral}{"{}  "{}} + failedList.join(\textcolor{stringliteral}{"{}\(\backslash\)n  "{}}));}
+\DoxyCodeLine{00524   \}}
+\DoxyCodeLine{00525   m\_scene-\/>\mbox{\hyperlink{class_toonz_scene_a815ecf4f07a92f9f9fef693f762c1228}{setScenePath}}(oldScenePath);}
+\DoxyCodeLine{00526 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_resources_ae6b4bfe485029a68e42f2ae9ae15292c}\label{class_scene_resources_ae6b4bfe485029a68e42f2ae9ae15292c}} 
+\index{SceneResources@{SceneResources}!updatePaths@{updatePaths}}
+\index{updatePaths@{updatePaths}!SceneResources@{SceneResources}}
+\doxysubsubsection{\texorpdfstring{updatePaths()}{updatePaths()}}
+{\footnotesize\ttfamily void Scene\+Resources\+::update\+Paths (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Update all resources paths. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00530                                  \{}
+\DoxyCodeLine{00531   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_resources.size(); i++)}
+\DoxyCodeLine{00532     m\_resources[i]-\/>updatePath();}
+\DoxyCodeLine{00533 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/sceneresources.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/sceneresources.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,193 @@
+\hypertarget{class_popup_button}{}\doxysection{Popup\+Button Class Reference}
+\label{class_popup_button}\index{PopupButton@{PopupButton}}
+
+
+{\ttfamily \#include $<$popupbutton.\+h$>$}
+
+Inheritance diagram for Popup\+Button\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_popup_button}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_popup_button_a72fc1efa23141636aa1c728a350c77da}{set\+Current\+Index}} (int index)
+\end{DoxyCompactItemize}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_popup_button_a6aba5122ad6c16a9f2710648b783289e}\label{class_popup_button_a6aba5122ad6c16a9f2710648b783289e}} 
+void {\bfseries activated} (int index)
+\item 
+\mbox{\Hypertarget{class_popup_button_ab378a65648b5d6221e72684c5e6faead}\label{class_popup_button_ab378a65648b5d6221e72684c5e6faead}} 
+void {\bfseries current\+Index\+Changed} (int index)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_popup_button_af9c3ad36b38c97d42a117f1f4f716a47}{Popup\+Button}} (QWidget $\ast$parent=0)
+\item 
+int \mbox{\hyperlink{class_popup_button_a9a977a10236a552e4fea65c8653d70f7}{current\+Index}} () const
+\item 
+const QAction $\ast$ \mbox{\hyperlink{class_popup_button_ab63103d6a9e1a6416340bf1b45c996b7}{current\+Item}} () const
+\item 
+int \mbox{\hyperlink{class_popup_button_a374245e42d3f0ad37618c29100dd75c1}{count}} () const
+\item 
+QAction $\ast$ \mbox{\hyperlink{class_popup_button_a2577fd7dd6065e49fbe3ce7a6b177c92}{add\+Item}} (const QString \&text)
+\item 
+QAction $\ast$ \mbox{\hyperlink{class_popup_button_ab390086310491cf0d27523ed3f89dcd6}{add\+Item}} (const QIcon \&icon, const QString \&text=QString())
+\item 
+QAction $\ast$ \mbox{\hyperlink{class_popup_button_a7879ef3c35bc07faeb3f7b237b3a1bfc}{add\+Separator}} ()
+\item 
+int \mbox{\hyperlink{class_popup_button_a550318331ccfd428fc93f17c64783dd9}{find\+Text}} (const QString \&text, Qt\+::\+Case\+Sensitivity cs=Qt\+::\+Case\+Sensitive) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_popup_button}{Popup\+Button}} represents an enum type in a compact, popup-\/based form. A \mbox{\hyperlink{class_popup_button}{Popup\+Button}} instance at rest is a simple push button showing an icon which represents the stored enum. As the user clicks on the button, a popup appears showing a description and, optionally, an icon of the selectable enum values. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_popup_button_af9c3ad36b38c97d42a117f1f4f716a47}\label{class_popup_button_af9c3ad36b38c97d42a117f1f4f716a47}} 
+\index{PopupButton@{PopupButton}!PopupButton@{PopupButton}}
+\index{PopupButton@{PopupButton}!PopupButton@{PopupButton}}
+\doxysubsubsection{\texorpdfstring{PopupButton()}{PopupButton()}}
+{\footnotesize\ttfamily Popup\+Button\+::\+Popup\+Button (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00012                                         : QPushButton(parent), m\_index(-\/1) \{}
+\DoxyCodeLine{00013   setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{00014 }
+\DoxyCodeLine{00015   QMenu *menu = \textcolor{keyword}{new} QMenu(\textcolor{keyword}{this});}
+\DoxyCodeLine{00016   setMenu(menu);}
+\DoxyCodeLine{00017   menu-\/>setToolTipsVisible(\textcolor{keyword}{true});}
+\DoxyCodeLine{00018   connect(\textcolor{keyword}{this}, SIGNAL(clicked(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this}, SLOT(showMenu()));}
+\DoxyCodeLine{00019 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_popup_button_ab390086310491cf0d27523ed3f89dcd6}\label{class_popup_button_ab390086310491cf0d27523ed3f89dcd6}} 
+\index{PopupButton@{PopupButton}!addItem@{addItem}}
+\index{addItem@{addItem}!PopupButton@{PopupButton}}
+\doxysubsubsection{\texorpdfstring{addItem()}{addItem()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily QAction $\ast$ Popup\+Button\+::add\+Item (\begin{DoxyParamCaption}\item[{const QIcon \&}]{icon,  }\item[{const QString \&}]{text = {\ttfamily QString()} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00032                                                                     \{}
+\DoxyCodeLine{00033   QAction *action = menu()-\/>addAction(icon, text);}
+\DoxyCodeLine{00034   connect(action, SIGNAL(triggered(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this}, SLOT(onIndexChange()));}
+\DoxyCodeLine{00035   m\_actions.push\_back(action);}
+\DoxyCodeLine{00036   \textcolor{keywordflow}{return} action;}
+\DoxyCodeLine{00037 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_popup_button_a2577fd7dd6065e49fbe3ce7a6b177c92}\label{class_popup_button_a2577fd7dd6065e49fbe3ce7a6b177c92}} 
+\index{PopupButton@{PopupButton}!addItem@{addItem}}
+\index{addItem@{addItem}!PopupButton@{PopupButton}}
+\doxysubsubsection{\texorpdfstring{addItem()}{addItem()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily QAction $\ast$ Popup\+Button\+::add\+Item (\begin{DoxyParamCaption}\item[{const QString \&}]{text }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023                                                  \{}
+\DoxyCodeLine{00024   QAction *action = menu()-\/>addAction(text);}
+\DoxyCodeLine{00025   connect(action, SIGNAL(triggered(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this}, SLOT(onIndexChange()));}
+\DoxyCodeLine{00026   m\_actions.push\_back(action);}
+\DoxyCodeLine{00027   \textcolor{keywordflow}{return} action;}
+\DoxyCodeLine{00028 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_popup_button_a7879ef3c35bc07faeb3f7b237b3a1bfc}\label{class_popup_button_a7879ef3c35bc07faeb3f7b237b3a1bfc}} 
+\index{PopupButton@{PopupButton}!addSeparator@{addSeparator}}
+\index{addSeparator@{addSeparator}!PopupButton@{PopupButton}}
+\doxysubsubsection{\texorpdfstring{addSeparator()}{addSeparator()}}
+{\footnotesize\ttfamily QAction $\ast$ Popup\+Button\+::add\+Separator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041 \{ \textcolor{keywordflow}{return} menu()-\/>addSeparator(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_popup_button_a374245e42d3f0ad37618c29100dd75c1}\label{class_popup_button_a374245e42d3f0ad37618c29100dd75c1}} 
+\index{PopupButton@{PopupButton}!count@{count}}
+\index{count@{count}!PopupButton@{PopupButton}}
+\doxysubsubsection{\texorpdfstring{count()}{count()}}
+{\footnotesize\ttfamily int Popup\+Button\+::count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068 \{ \textcolor{keywordflow}{return} m\_actions.size(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_popup_button_a9a977a10236a552e4fea65c8653d70f7}\label{class_popup_button_a9a977a10236a552e4fea65c8653d70f7}} 
+\index{PopupButton@{PopupButton}!currentIndex@{currentIndex}}
+\index{currentIndex@{currentIndex}!PopupButton@{PopupButton}}
+\doxysubsubsection{\texorpdfstring{currentIndex()}{currentIndex()}}
+{\footnotesize\ttfamily int Popup\+Button\+::current\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00045 \{ \textcolor{keywordflow}{return} m\_index; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_popup_button_ab63103d6a9e1a6416340bf1b45c996b7}\label{class_popup_button_ab63103d6a9e1a6416340bf1b45c996b7}} 
+\index{PopupButton@{PopupButton}!currentItem@{currentItem}}
+\index{currentItem@{currentItem}!PopupButton@{PopupButton}}
+\doxysubsubsection{\texorpdfstring{currentItem()}{currentItem()}}
+{\footnotesize\ttfamily const QAction $\ast$ Popup\+Button\+::current\+Item (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00049                                               \{}
+\DoxyCodeLine{00050   \textcolor{keywordflow}{return} (m\_index >= 0) ? m\_actions[m\_index] : 0;}
+\DoxyCodeLine{00051 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_popup_button_a550318331ccfd428fc93f17c64783dd9}\label{class_popup_button_a550318331ccfd428fc93f17c64783dd9}} 
+\index{PopupButton@{PopupButton}!findText@{findText}}
+\index{findText@{findText}!PopupButton@{PopupButton}}
+\doxysubsubsection{\texorpdfstring{findText()}{findText()}}
+{\footnotesize\ttfamily int Popup\+Button\+::find\+Text (\begin{DoxyParamCaption}\item[{const QString \&}]{text,  }\item[{Qt\+::\+Case\+Sensitivity}]{cs = {\ttfamily Qt\+:\+:CaseSensitive} }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00072                                                                          \{}
+\DoxyCodeLine{00073   \textcolor{keywordtype}{int} i, size = m\_actions.size();}
+\DoxyCodeLine{00074   \textcolor{keywordflow}{for} (i = 0; i < size; ++i)}
+\DoxyCodeLine{00075     \textcolor{keywordflow}{if} (QString::compare(m\_actions[i]-\/>text(), text, cs) == 0) \textcolor{keywordflow}{return} i;}
+\DoxyCodeLine{00076 }
+\DoxyCodeLine{00077   \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00078 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_popup_button_a72fc1efa23141636aa1c728a350c77da}\label{class_popup_button_a72fc1efa23141636aa1c728a350c77da}} 
+\index{PopupButton@{PopupButton}!setCurrentIndex@{setCurrentIndex}}
+\index{setCurrentIndex@{setCurrentIndex}!PopupButton@{PopupButton}}
+\doxysubsubsection{\texorpdfstring{setCurrentIndex}{setCurrentIndex}}
+{\footnotesize\ttfamily void Popup\+Button\+::set\+Current\+Index (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055                                            \{}
+\DoxyCodeLine{00056   \textcolor{keywordflow}{if} (index < 0 || index >= m\_actions.size()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00058   m\_index               = index;}
+\DoxyCodeLine{00059   \textcolor{keyword}{const} QAction *action = currentItem();}
+\DoxyCodeLine{00060   setIcon(action-\/>icon());}
+\DoxyCodeLine{00061   setText(action-\/>text());}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063   emit currentIndexChanged(index);}
+\DoxyCodeLine{00064 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/popupbutton.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/popupbutton.\+cpp\end{DoxyCompactItemize}

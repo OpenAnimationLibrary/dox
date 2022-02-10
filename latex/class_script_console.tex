@@ -1,0 +1,327 @@
+\hypertarget{class_script_console}{}\doxysection{Script\+Console Class Reference}
+\label{class_script_console}\index{ScriptConsole@{ScriptConsole}}
+Inheritance diagram for Script\+Console\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_script_console}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_script_console_aad649ef71573b272f2da87cf23dd0cb1}{on\+Evaluation\+Done}} ()
+\item 
+void \mbox{\hyperlink{class_script_console_a534f5355267bb0c4d65b96e82bbd570b}{output}} (int, const QString \&msg)
+\item 
+void \mbox{\hyperlink{class_script_console_ad6816d138f8870b1a7c8a87d4e491796}{on\+Cursor\+Position\+Changed}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_script_console_ac3c7f73d385b1484c4601bd776e18327}{Script\+Console}} (QWidget $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_script_console_a4984b1f8a952f7416716af31770e54b5}{execute\+Command}} (const QString \&cmd)
+\item 
+\mbox{\hyperlink{class_script_engine}{Script\+Engine}} $\ast$ \mbox{\hyperlink{class_script_console_a90daf8da611f6128b5332c80b06ce4d1}{get\+Engine}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_script_console_acafe5466561940c5ad614bdde682c08d}{key\+Press\+Event}} (QKey\+Event $\ast$e) override
+\item 
+void \mbox{\hyperlink{class_script_console_ab75c18d24a1a70fe1ca4c2d2ffdbff9d}{on\+Return\+Key\+Press}} ()
+\item 
+bool \mbox{\hyperlink{class_script_console_a481555f66a3de389dc4e23406efec810}{can\+Insert\+From\+Mime\+Data}} (const QMime\+Data $\ast$source) const override
+\item 
+void \mbox{\hyperlink{class_script_console_afe4021b142c11204db245b7ad8c4a103}{insert\+From\+Mime\+Data}} (const QMime\+Data $\ast$source) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_script_console_ac3c7f73d385b1484c4601bd776e18327}\label{class_script_console_ac3c7f73d385b1484c4601bd776e18327}} 
+\index{ScriptConsole@{ScriptConsole}!ScriptConsole@{ScriptConsole}}
+\index{ScriptConsole@{ScriptConsole}!ScriptConsole@{ScriptConsole}}
+\doxysubsubsection{\texorpdfstring{ScriptConsole()}{ScriptConsole()}}
+{\footnotesize\ttfamily Script\+Console\+::\+Script\+Console (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00011     : QTextEdit(parent), m\_commandIndex(0) \{}
+\DoxyCodeLine{00012   setObjectName(\textcolor{stringliteral}{"{}ScriptConsole"{}});}
+\DoxyCodeLine{00013 }
+\DoxyCodeLine{00014   m\_prompt = \textcolor{stringliteral}{"{}>> "{}};}
+\DoxyCodeLine{00015 }
+\DoxyCodeLine{00016   append(m\_prompt);}
+\DoxyCodeLine{00017   moveCursor(QTextCursor::EndOfLine);}
+\DoxyCodeLine{00018 }
+\DoxyCodeLine{00019   m\_engine = \textcolor{keyword}{new} \mbox{\hyperlink{class_script_engine}{ScriptEngine}}();}
+\DoxyCodeLine{00020   connect(m\_engine, SIGNAL(evaluationDone()), \textcolor{keyword}{this}, SLOT(onEvaluationDone()));}
+\DoxyCodeLine{00021   connect(m\_engine, SIGNAL(output(\textcolor{keywordtype}{int}, \textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00022           SLOT(output(\textcolor{keywordtype}{int}, \textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00023   connect(\textcolor{keyword}{this}, SIGNAL(cursorPositionChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00024           SLOT(onCursorPositionChanged()));}
+\DoxyCodeLine{00025 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_script_console_a3b3d89f2d8acd748a7cebfe3d13b7b8b}\label{class_script_console_a3b3d89f2d8acd748a7cebfe3d13b7b8b}} 
+\index{ScriptConsole@{ScriptConsole}!````~ScriptConsole@{$\sim$ScriptConsole}}
+\index{````~ScriptConsole@{$\sim$ScriptConsole}!ScriptConsole@{ScriptConsole}}
+\doxysubsubsection{\texorpdfstring{$\sim$ScriptConsole()}{~ScriptConsole()}}
+{\footnotesize\ttfamily Script\+Console\+::$\sim$\+Script\+Console (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027 \{ \textcolor{keyword}{delete} m\_engine; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_script_console_a481555f66a3de389dc4e23406efec810}\label{class_script_console_a481555f66a3de389dc4e23406efec810}} 
+\index{ScriptConsole@{ScriptConsole}!canInsertFromMimeData@{canInsertFromMimeData}}
+\index{canInsertFromMimeData@{canInsertFromMimeData}!ScriptConsole@{ScriptConsole}}
+\doxysubsubsection{\texorpdfstring{canInsertFromMimeData()}{canInsertFromMimeData()}}
+{\footnotesize\ttfamily bool Script\+Console\+::can\+Insert\+From\+Mime\+Data (\begin{DoxyParamCaption}\item[{const QMime\+Data $\ast$}]{source }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00088                                                                        \{}
+\DoxyCodeLine{00089   \textcolor{keywordflow}{if} (source-\/>hasText()) \{}
+\DoxyCodeLine{00090     QString text = source-\/>text();}
+\DoxyCodeLine{00091     \textcolor{keywordflow}{if} (text.contains(\textcolor{stringliteral}{"{}\(\backslash\)n"{}}))}
+\DoxyCodeLine{00092       \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00093     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00094       \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00095   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (source-\/>hasUrls() \&\& source-\/>urls().length() == 1) \{}
+\DoxyCodeLine{00096     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00097   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00098     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00099 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_script_console_a4984b1f8a952f7416716af31770e54b5}\label{class_script_console_a4984b1f8a952f7416716af31770e54b5}} 
+\index{ScriptConsole@{ScriptConsole}!executeCommand@{executeCommand}}
+\index{executeCommand@{executeCommand}!ScriptConsole@{ScriptConsole}}
+\doxysubsubsection{\texorpdfstring{executeCommand()}{executeCommand()}}
+{\footnotesize\ttfamily void Script\+Console\+::execute\+Command (\begin{DoxyParamCaption}\item[{const QString \&}]{cmd }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00175                                                      \{}
+\DoxyCodeLine{00176   moveCursor(QTextCursor::End);}
+\DoxyCodeLine{00177   setTextColor(Qt::black);}
+\DoxyCodeLine{00178   append(m\_prompt);}
+\DoxyCodeLine{00179   moveCursor(QTextCursor::EndOfLine);}
+\DoxyCodeLine{00180   textCursor().insertText(cmd);}
+\DoxyCodeLine{00181   moveCursor(QTextCursor::EndOfLine);}
+\DoxyCodeLine{00182   onReturnKeyPress();}
+\DoxyCodeLine{00183 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_script_console_a90daf8da611f6128b5332c80b06ce4d1}\label{class_script_console_a90daf8da611f6128b5332c80b06ce4d1}} 
+\index{ScriptConsole@{ScriptConsole}!getEngine@{getEngine}}
+\index{getEngine@{getEngine}!ScriptConsole@{ScriptConsole}}
+\doxysubsubsection{\texorpdfstring{getEngine()}{getEngine()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_script_engine}{Script\+Engine}} $\ast$ Script\+Console\+::get\+Engine (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00036 \{ \textcolor{keywordflow}{return} m\_engine; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_script_console_afe4021b142c11204db245b7ad8c4a103}\label{class_script_console_afe4021b142c11204db245b7ad8c4a103}} 
+\index{ScriptConsole@{ScriptConsole}!insertFromMimeData@{insertFromMimeData}}
+\index{insertFromMimeData@{insertFromMimeData}!ScriptConsole@{ScriptConsole}}
+\doxysubsubsection{\texorpdfstring{insertFromMimeData()}{insertFromMimeData()}}
+{\footnotesize\ttfamily void Script\+Console\+::insert\+From\+Mime\+Data (\begin{DoxyParamCaption}\item[{const QMime\+Data $\ast$}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00101                                                               \{}
+\DoxyCodeLine{00102   \textcolor{keywordflow}{if} (canInsertFromMimeData(source)) \{}
+\DoxyCodeLine{00103     \textcolor{keywordflow}{if} (source-\/>hasText())}
+\DoxyCodeLine{00104       QTextEdit::insertFromMimeData(source);}
+\DoxyCodeLine{00105     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (source-\/>hasUrls() \&\& source-\/>urls().length() == 1) \{}
+\DoxyCodeLine{00106       QUrl url                    = source-\/>urls()[0];}
+\DoxyCodeLine{00107       QString text                = url.toString();}
+\DoxyCodeLine{00108       \textcolor{keywordflow}{if} (url.isLocalFile()) text = url.toLocalFile();}
+\DoxyCodeLine{00109       text = \textcolor{stringliteral}{"{}\(\backslash\)"{}"{}} + text.replace(\textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}}, \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)\(\backslash\)\(\backslash\)"{}}).replace(\textcolor{stringliteral}{"{}\(\backslash\)"{}"{}}, \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)\(\backslash\)"{}"{}}) + \textcolor{stringliteral}{"{}\(\backslash\)"{}"{}};}
+\DoxyCodeLine{00110       textCursor().insertText(text);}
+\DoxyCodeLine{00111     \}}
+\DoxyCodeLine{00112   \}}
+\DoxyCodeLine{00113 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_script_console_acafe5466561940c5ad614bdde682c08d}\label{class_script_console_acafe5466561940c5ad614bdde682c08d}} 
+\index{ScriptConsole@{ScriptConsole}!keyPressEvent@{keyPressEvent}}
+\index{keyPressEvent@{keyPressEvent}!ScriptConsole@{ScriptConsole}}
+\doxysubsubsection{\texorpdfstring{keyPressEvent()}{keyPressEvent()}}
+{\footnotesize\ttfamily void Script\+Console\+::key\+Press\+Event (\begin{DoxyParamCaption}\item[{QKey\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00029                                               \{}
+\DoxyCodeLine{00030   \textcolor{keywordflow}{if} (e-\/>modifiers() == Qt::ControlModifier \&\& e-\/>key() == Qt::Key\_Y) \{}
+\DoxyCodeLine{00031     \textcolor{keywordflow}{if} (m\_engine-\/>isEvaluating()) \{}
+\DoxyCodeLine{00032       m\_engine-\/>interrupt();}
+\DoxyCodeLine{00033       setTextColor(QColor(255, 127, 0));}
+\DoxyCodeLine{00034       append(\textcolor{stringliteral}{"{}Interrupt"{}});}
+\DoxyCodeLine{00035       moveCursor(QTextCursor::EndOfLine);}
+\DoxyCodeLine{00036       setTextColor(Qt::black);}
+\DoxyCodeLine{00037     \}}
+\DoxyCodeLine{00038     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00039   \}}
+\DoxyCodeLine{00040 }
+\DoxyCodeLine{00041   \textcolor{keywordflow}{switch} (e-\/>key()) \{}
+\DoxyCodeLine{00042   \textcolor{keywordflow}{case} Qt::Key\_Return:}
+\DoxyCodeLine{00043     onReturnKeyPress();}
+\DoxyCodeLine{00044     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00045   \textcolor{keywordflow}{case} Qt::Key\_Up:}
+\DoxyCodeLine{00046     \textcolor{keywordflow}{if} (m\_commandIndex > 0) \{}
+\DoxyCodeLine{00047       moveCursor(QTextCursor::End);}
+\DoxyCodeLine{00048       moveCursor(QTextCursor::StartOfBlock);}
+\DoxyCodeLine{00049       moveCursor(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);}
+\DoxyCodeLine{00050       \textcolor{comment}{// the first KeyUp save the current command, possibly not completed yet}}
+\DoxyCodeLine{00051       \textcolor{comment}{// note: m\_currentCommand is the whole line, containing the prompt}}
+\DoxyCodeLine{00052       \textcolor{keywordflow}{if} (m\_commandIndex == m\_commands.count())}
+\DoxyCodeLine{00053         m\_currentCommand = textCursor().selectedText();}
+\DoxyCodeLine{00054       textCursor().insertText(m\_prompt + m\_commands[-\/-\/m\_commandIndex]);}
+\DoxyCodeLine{00055     \}}
+\DoxyCodeLine{00056     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00057   \textcolor{keywordflow}{case} Qt::Key\_Down:}
+\DoxyCodeLine{00058     \textcolor{keywordflow}{if} (m\_commandIndex < m\_commands.count()) \{}
+\DoxyCodeLine{00059       moveCursor(QTextCursor::End);}
+\DoxyCodeLine{00060       moveCursor(QTextCursor::StartOfBlock);}
+\DoxyCodeLine{00061       moveCursor(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);}
+\DoxyCodeLine{00062       \textcolor{keywordflow}{if} (m\_commandIndex == m\_commands.count() -\/ 1) \{}
+\DoxyCodeLine{00063         \textcolor{comment}{// the last KeyDown insert back the current command, possibly not}}
+\DoxyCodeLine{00064         \textcolor{comment}{// completed yet}}
+\DoxyCodeLine{00065         textCursor().insertText(m\_currentCommand);}
+\DoxyCodeLine{00066         ++m\_commandIndex;}
+\DoxyCodeLine{00067       \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00068         textCursor().insertText(m\_prompt + m\_commands[++m\_commandIndex]);}
+\DoxyCodeLine{00069     \}}
+\DoxyCodeLine{00070     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00071   \textcolor{keywordflow}{case} Qt::Key\_Backspace:}
+\DoxyCodeLine{00072   \textcolor{keywordflow}{case} Qt::Key\_Left:}
+\DoxyCodeLine{00073     \textcolor{keywordflow}{if} (textCursor().positionInBlock() > 3)}
+\DoxyCodeLine{00074       QTextEdit::keyPressEvent(e);}
+\DoxyCodeLine{00075     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00076       e-\/>ignore();}
+\DoxyCodeLine{00077     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00078   \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00079     QTextEdit::keyPressEvent(e);}
+\DoxyCodeLine{00080   \}}
+\DoxyCodeLine{00081 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_script_console_ad6816d138f8870b1a7c8a87d4e491796}\label{class_script_console_ad6816d138f8870b1a7c8a87d4e491796}} 
+\index{ScriptConsole@{ScriptConsole}!onCursorPositionChanged@{onCursorPositionChanged}}
+\index{onCursorPositionChanged@{onCursorPositionChanged}!ScriptConsole@{ScriptConsole}}
+\doxysubsubsection{\texorpdfstring{onCursorPositionChanged}{onCursorPositionChanged}}
+{\footnotesize\ttfamily void Script\+Console\+::on\+Cursor\+Position\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00083                                             \{}
+\DoxyCodeLine{00084   \textcolor{comment}{// only the last block (i.e. the current command) is editable}}
+\DoxyCodeLine{00085   setReadOnly(textCursor().block().next().isValid());}
+\DoxyCodeLine{00086 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_script_console_aad649ef71573b272f2da87cf23dd0cb1}\label{class_script_console_aad649ef71573b272f2da87cf23dd0cb1}} 
+\index{ScriptConsole@{ScriptConsole}!onEvaluationDone@{onEvaluationDone}}
+\index{onEvaluationDone@{onEvaluationDone}!ScriptConsole@{ScriptConsole}}
+\doxysubsubsection{\texorpdfstring{onEvaluationDone}{onEvaluationDone}}
+{\footnotesize\ttfamily void Script\+Console\+::on\+Evaluation\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00153                                      \{}
+\DoxyCodeLine{00154   moveCursor(QTextCursor::End);}
+\DoxyCodeLine{00155   setTextColor(Qt::black);}
+\DoxyCodeLine{00156   textCursor().insertText(m\_prompt);}
+\DoxyCodeLine{00157   moveCursor(QTextCursor::EndOfLine);}
+\DoxyCodeLine{00158 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_script_console_ab75c18d24a1a70fe1ca4c2d2ffdbff9d}\label{class_script_console_ab75c18d24a1a70fe1ca4c2d2ffdbff9d}} 
+\index{ScriptConsole@{ScriptConsole}!onReturnKeyPress@{onReturnKeyPress}}
+\index{onReturnKeyPress@{onReturnKeyPress}!ScriptConsole@{ScriptConsole}}
+\doxysubsubsection{\texorpdfstring{onReturnKeyPress()}{onReturnKeyPress()}}
+{\footnotesize\ttfamily void Script\+Console\+::on\+Return\+Key\+Press (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00115                                      \{}
+\DoxyCodeLine{00116   \textcolor{keywordtype}{int} promptLength   = m\_prompt.length();}
+\DoxyCodeLine{00117   QTextCursor cursor = textCursor();}
+\DoxyCodeLine{00118   cursor.movePosition(QTextCursor::StartOfLine);}
+\DoxyCodeLine{00119   cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor,}
+\DoxyCodeLine{00120                       promptLength);}
+\DoxyCodeLine{00121   cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);}
+\DoxyCodeLine{00122   QString command = cursor.selectedText();}
+\DoxyCodeLine{00123 }
+\DoxyCodeLine{00124   QTextCharFormat fmt;}
+\DoxyCodeLine{00125   fmt.setForeground(QColor(120, 120, 120));}
+\DoxyCodeLine{00126   cursor.mergeCharFormat(fmt);}
+\DoxyCodeLine{00127   cursor.clearSelection();}
+\DoxyCodeLine{00128 }
+\DoxyCodeLine{00129   \textcolor{keywordflow}{if} (command.trimmed() != \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{00130     \textcolor{keywordtype}{int} k = m\_commands.indexOf(command);}
+\DoxyCodeLine{00131     \textcolor{keywordflow}{if} (k < 0)}
+\DoxyCodeLine{00132       m\_commands.append(command);}
+\DoxyCodeLine{00133     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (k <= m\_commands.length() -\/ 1) \{}
+\DoxyCodeLine{00134       m\_commands.takeAt(k);}
+\DoxyCodeLine{00135       m\_commands.append(command);}
+\DoxyCodeLine{00136     \}}
+\DoxyCodeLine{00137     m\_commandIndex = m\_commands.count();}
+\DoxyCodeLine{00138     \textcolor{comment}{// m\_currentCommand = m\_prompt;}}
+\DoxyCodeLine{00139   \}}
+\DoxyCodeLine{00140 }
+\DoxyCodeLine{00141   moveCursor(QTextCursor::EndOfLine);}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143   \textcolor{keywordflow}{if} (command.trimmed() != \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{00144     append(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00145     cursor.movePosition(QTextCursor::StartOfBlock);}
+\DoxyCodeLine{00146     m\_engine-\/>evaluate(command);}
+\DoxyCodeLine{00147   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00148     append(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00149     onEvaluationDone();}
+\DoxyCodeLine{00150   \}}
+\DoxyCodeLine{00151 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_script_console_a534f5355267bb0c4d65b96e82bbd570b}\label{class_script_console_a534f5355267bb0c4d65b96e82bbd570b}} 
+\index{ScriptConsole@{ScriptConsole}!output@{output}}
+\index{output@{output}!ScriptConsole@{ScriptConsole}}
+\doxysubsubsection{\texorpdfstring{output}{output}}
+{\footnotesize\ttfamily void Script\+Console\+::output (\begin{DoxyParamCaption}\item[{int}]{type,  }\item[{const QString \&}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00160                                                          \{}
+\DoxyCodeLine{00161   moveCursor(QTextCursor::End);}
+\DoxyCodeLine{00162   \textcolor{keywordflow}{if} (type == ScriptEngine::ExecutionError ||}
+\DoxyCodeLine{00163       type == ScriptEngine::SyntaxError) \{}
+\DoxyCodeLine{00164     setTextColor(Qt::red);}
+\DoxyCodeLine{00165   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == ScriptEngine::UndefinedEvaluationResult ||}
+\DoxyCodeLine{00166              type == ScriptEngine::Warning) \{}
+\DoxyCodeLine{00167     setTextColor(QColor(250, 120, 40));}
+\DoxyCodeLine{00168   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00169     setTextColor(QColor(10, 150, 240));}
+\DoxyCodeLine{00170   \}}
+\DoxyCodeLine{00171   textCursor().insertText(value + \textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00172   moveCursor(QTextCursor::EndOfLine);}
+\DoxyCodeLine{00173 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/scriptconsole.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/scriptconsole.\+cpp\end{DoxyCompactItemize}

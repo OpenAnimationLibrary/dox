@@ -1,0 +1,168 @@
+\hypertarget{class_runs_map}{}\doxysection{Runs\+Map Class Reference}
+\label{class_runs_map}\index{RunsMap@{RunsMap}}
+
+
+{\ttfamily \#include $<$runsmap.\+h$>$}
+
+Inheritance diagram for Runs\+Map\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_runs_map}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_runs_map_a2af3f2c34776374ea7207adc41baedaa}{Runs\+Map}} (int lx, int ly)
+\item 
+const UCHAR \& \mbox{\hyperlink{class_runs_map_a07d44ae238402b1122fdcaa66ff69ac9}{run\+Header}} (int x, int y) const
+\item 
+UCHAR \& \mbox{\hyperlink{class_runs_map_a0765dba3dfca0d657cf7bfc5828473ef}{run\+Header}} (int x, int y)
+\item 
+TUINT32 \mbox{\hyperlink{class_runs_map_a29d99ba931d8b04dc3e4f63d9dba7c38}{run\+Length}} (const \mbox{\hyperlink{class_t_pixel_g_r8}{TPixel\+GR8}} $\ast$run, bool reversed=false) const
+\item 
+TUINT32 \mbox{\hyperlink{class_runs_map_a25afeefc0885eadf7afc2bad0af54278}{run\+Length}} (int x, int y, bool reversed=false) const
+\item 
+void \mbox{\hyperlink{class_runs_map_a0e5a45b7621917b82ec22686b36b729b}{set\+Run\+Length}} (\mbox{\hyperlink{class_t_pixel_g_r8}{TPixel\+GR8}} $\ast$run, TUINT32 length)
+\item 
+void \mbox{\hyperlink{class_runs_map_afd25647403129f5d1f064c1ca195f6b6}{set\+Run\+Length}} (int x, int y, TUINT32 length)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_runs_map_p}{Runs\+MapP}} is an auxiliary raster greymap type used to store run-\/length information about an image.
+
+Not every image pixel has valid information. Only pixels corresponding to run headers do, and those include the position of the next run header. This means that users must always iterate from the beginning of a line to get valid data.
+
+The following coding is adopted to extract the run length from the run headers\+:
+
+\begin{DoxyItemize}
+\item We\textquotesingle{}ll use the last 2 bits only in the headers. With these, we can cover directly those runs up to 4 pixels length. \item When the length \texorpdfstring{$>$}{>}=4, we require that one byte is taken in the run to store the length up to 256 pixels. \item When the length \texorpdfstring{$>$}{>}= 256, we take 4 additional bytes to store the length (which this time could go up to billions).\end{DoxyItemize}
+Observe that the runsmap supports a symmetrical representation, useful to traverse runs both forward and backwards. This means that 2 headers are provided for each run, at the opposite ends (unless the run is 1 pixel-\/width). 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_runs_map_a2af3f2c34776374ea7207adc41baedaa}\label{class_runs_map_a2af3f2c34776374ea7207adc41baedaa}} 
+\index{RunsMap@{RunsMap}!RunsMap@{RunsMap}}
+\index{RunsMap@{RunsMap}!RunsMap@{RunsMap}}
+\doxysubsubsection{\texorpdfstring{RunsMap()}{RunsMap()}}
+{\footnotesize\ttfamily Runs\+Map\+::\+Runs\+Map (\begin{DoxyParamCaption}\item[{int}]{lx,  }\item[{int}]{ly }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00042 : \mbox{\hyperlink{class_t_raster_t}{TRasterT<TPixelGR8>}}(lx, ly) \{ clear(); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_runs_map_a0765dba3dfca0d657cf7bfc5828473ef}\label{class_runs_map_a0765dba3dfca0d657cf7bfc5828473ef}} 
+\index{RunsMap@{RunsMap}!runHeader@{runHeader}}
+\index{runHeader@{runHeader}!RunsMap@{RunsMap}}
+\doxysubsubsection{\texorpdfstring{runHeader()}{runHeader()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily UCHAR \& Runs\+Map\+::run\+Header (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00045 \{ \textcolor{keywordflow}{return} pixels(y)[x].value; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_runs_map_a07d44ae238402b1122fdcaa66ff69ac9}\label{class_runs_map_a07d44ae238402b1122fdcaa66ff69ac9}} 
+\index{RunsMap@{RunsMap}!runHeader@{runHeader}}
+\index{runHeader@{runHeader}!RunsMap@{RunsMap}}
+\doxysubsubsection{\texorpdfstring{runHeader()}{runHeader()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily const UCHAR \& Runs\+Map\+::run\+Header (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044 \{ \textcolor{keywordflow}{return} pixels(y)[x].value; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_runs_map_a29d99ba931d8b04dc3e4f63d9dba7c38}\label{class_runs_map_a29d99ba931d8b04dc3e4f63d9dba7c38}} 
+\index{RunsMap@{RunsMap}!runLength@{runLength}}
+\index{runLength@{runLength}!RunsMap@{RunsMap}}
+\doxysubsubsection{\texorpdfstring{runLength()}{runLength()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily TUINT32 Runs\+Map\+::run\+Length (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_pixel_g_r8}{TPixel\+GR8}} $\ast$}]{run,  }\item[{bool}]{reversed = {\ttfamily false} }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00034                                                                     \{}
+\DoxyCodeLine{00035   \textcolor{keywordtype}{int} length = pix-\/>value >> 6;}
+\DoxyCodeLine{00036   \textcolor{keywordflow}{if} (length >= 3) \{}
+\DoxyCodeLine{00037     pix += (reversed) ? -\/1 : 1, length = pix-\/>value;}
+\DoxyCodeLine{00038     if (length >= 255) \{}
+\DoxyCodeLine{00039       pix += (reversed) ? -\/4 : 1;}
+\DoxyCodeLine{00040       length = *(TUINT32 *)pix;}
+\DoxyCodeLine{00041     \}}
+\DoxyCodeLine{00042   \}}
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00044   \textcolor{keywordflow}{return} length + 1;}
+\DoxyCodeLine{00045 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_runs_map_a25afeefc0885eadf7afc2bad0af54278}\label{class_runs_map_a25afeefc0885eadf7afc2bad0af54278}} 
+\index{RunsMap@{RunsMap}!runLength@{runLength}}
+\index{runLength@{runLength}!RunsMap@{RunsMap}}
+\doxysubsubsection{\texorpdfstring{runLength()}{runLength()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily TUINT32 Runs\+Map\+::run\+Length (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{bool}]{reversed = {\ttfamily false} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00048                                                                \{}
+\DoxyCodeLine{00049     \textcolor{keywordflow}{return} runLength(pixels(y) + x, reversed);}
+\DoxyCodeLine{00050   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_runs_map_afd25647403129f5d1f064c1ca195f6b6}\label{class_runs_map_afd25647403129f5d1f064c1ca195f6b6}} 
+\index{RunsMap@{RunsMap}!setRunLength@{setRunLength}}
+\index{setRunLength@{setRunLength}!RunsMap@{RunsMap}}
+\doxysubsubsection{\texorpdfstring{setRunLength()}{setRunLength()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Runs\+Map\+::set\+Run\+Length (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{TUINT32}]{length }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054                                                   \{}
+\DoxyCodeLine{00055     setRunLength(pixels(y) + x, length);}
+\DoxyCodeLine{00056   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_runs_map_a0e5a45b7621917b82ec22686b36b729b}\label{class_runs_map_a0e5a45b7621917b82ec22686b36b729b}} 
+\index{RunsMap@{RunsMap}!setRunLength@{setRunLength}}
+\index{setRunLength@{setRunLength}!RunsMap@{RunsMap}}
+\doxysubsubsection{\texorpdfstring{setRunLength()}{setRunLength()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Runs\+Map\+::set\+Run\+Length (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_pixel_g_r8}{TPixel\+GR8}} $\ast$}]{run,  }\item[{TUINT32}]{length }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00007                                                          \{}
+\DoxyCodeLine{00008   \mbox{\hyperlink{class_t_pixel_g_r8}{TPixelGR8}} *origPix = pix;}
+\DoxyCodeLine{00009   pix                = origPix;}
+\DoxyCodeLine{00010 }
+\DoxyCodeLine{00011   \mbox{\hyperlink{class_t_pixel_g_r8}{TPixelGR8}} *pixRev = pix + length -\/ 1;}
+\DoxyCodeLine{00012 }
+\DoxyCodeLine{00013   -\/-\/length;}
+\DoxyCodeLine{00014   \textcolor{keywordflow}{if} (length < 3)}
+\DoxyCodeLine{00015     pix-\/>value = pixRev-\/>value = (length << 6);}
+\DoxyCodeLine{00016   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00017     pix-\/>value = pixRev-\/>value = (3 << 6);}
+\DoxyCodeLine{00018     ++pix, -\/-\/pixRev;}
+\DoxyCodeLine{00019     \textcolor{keywordflow}{if} (length < 255)}
+\DoxyCodeLine{00020       pix-\/>value = pixRev-\/>value = length;}
+\DoxyCodeLine{00021     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00022       pix-\/>value = pixRev-\/>value = 255;}
+\DoxyCodeLine{00023       ++pix, pixRev -\/= 4;}
+\DoxyCodeLine{00024       TUINT32 *l = (TUINT32 *)pix;}
+\DoxyCodeLine{00025       *l         = length;}
+\DoxyCodeLine{00026     \}}
+\DoxyCodeLine{00027   \}}
+\DoxyCodeLine{00028 }
+\DoxyCodeLine{00029   assert(runLength(origPix) == (length + 1));}
+\DoxyCodeLine{00030 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/trop/runsmap.\+h\item 
+E\+:/opentoonz/toonz/sources/common/trop/runsmap.\+cpp\end{DoxyCompactItemize}

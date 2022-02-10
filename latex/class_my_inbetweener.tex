@@ -1,0 +1,132 @@
+\hypertarget{class_my_inbetweener}{}\doxysection{My\+Inbetweener Class Reference}
+\label{class_my_inbetweener}\index{MyInbetweener@{MyInbetweener}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_my_inbetweener_a4565f117cfc3708ce4e6ec4d8b3bb518}{My\+Inbetweener}} (const \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \&vi0, const \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \&vi1)
+\item 
+\mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \mbox{\hyperlink{class_my_inbetweener_ad97d9b8e51e85097ea0a379cbf391459}{tween}} (double t)
+\item 
+void \mbox{\hyperlink{class_my_inbetweener_ab9c6243b31d1bfab8d630b5ba2dcc0e1}{stabilize\+Segments}} (\mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \&image)
+\item 
+void \mbox{\hyperlink{class_my_inbetweener_acf0b8a74c0eb051fd1e7a8f8ed8258aa}{stabilize\+Segments}} (\mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$stroke)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_my_inbetweener_a4565f117cfc3708ce4e6ec4d8b3bb518}\label{class_my_inbetweener_a4565f117cfc3708ce4e6ec4d8b3bb518}} 
+\index{MyInbetweener@{MyInbetweener}!MyInbetweener@{MyInbetweener}}
+\index{MyInbetweener@{MyInbetweener}!MyInbetweener@{MyInbetweener}}
+\doxysubsubsection{\texorpdfstring{MyInbetweener()}{MyInbetweener()}}
+{\footnotesize\ttfamily My\+Inbetweener\+::\+My\+Inbetweener (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \&}]{vi0,  }\item[{const \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \&}]{vi1 }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00051     : m\_vi0(vi0), m\_vi1(vi1) \{}
+\DoxyCodeLine{00052   stabilizeSegments(m\_vi0);}
+\DoxyCodeLine{00053   stabilizeSegments(m\_vi1);}
+\DoxyCodeLine{00054 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_my_inbetweener_acf0b8a74c0eb051fd1e7a8f8ed8258aa}\label{class_my_inbetweener_acf0b8a74c0eb051fd1e7a8f8ed8258aa}} 
+\index{MyInbetweener@{MyInbetweener}!stabilizeSegments@{stabilizeSegments}}
+\index{stabilizeSegments@{stabilizeSegments}!MyInbetweener@{MyInbetweener}}
+\doxysubsubsection{\texorpdfstring{stabilizeSegments()}{stabilizeSegments()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void My\+Inbetweener\+::stabilize\+Segments (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$}]{stroke }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00061                                                      \{}
+\DoxyCodeLine{00062   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j + 4 < stroke-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}(); j += 4) \{}
+\DoxyCodeLine{00063     \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} q0 = stroke-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(j);}
+\DoxyCodeLine{00064     \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} q4 = stroke-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(j + 4);}
+\DoxyCodeLine{00065     \mbox{\hyperlink{class_t_point_t}{TPointD}} p0     = convert(q0);}
+\DoxyCodeLine{00066     \mbox{\hyperlink{class_t_point_t}{TPointD}} p1     = convert(stroke-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(j + 1));}
+\DoxyCodeLine{00067     \mbox{\hyperlink{class_t_point_t}{TPointD}} p2     = convert(stroke-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(j + 2));}
+\DoxyCodeLine{00068     \mbox{\hyperlink{class_t_point_t}{TPointD}} p3     = convert(stroke-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(j + 3));}
+\DoxyCodeLine{00069     \mbox{\hyperlink{class_t_point_t}{TPointD}} p4     = convert(q4);}
+\DoxyCodeLine{00070     \mbox{\hyperlink{class_t_point_t}{TPointD}} v      = normalize(p4 -\/ p0);}
+\DoxyCodeLine{00071     \mbox{\hyperlink{class_t_point_t}{TPointD}} u      = rotate90(v);}
+\DoxyCodeLine{00072     \textcolor{keywordtype}{double} eps     = tdistance(p0, p4) * 0.1;}
+\DoxyCodeLine{00073     \textcolor{keywordflow}{if} (fabs(u * (p2 -\/ p0)) < eps \&\& fabs(u * (p1 -\/ p0)) < eps \&\&}
+\DoxyCodeLine{00074         fabs(u * (p3 -\/ p0)) < eps) \{}
+\DoxyCodeLine{00075       \textcolor{keywordtype}{double} e                  = 0.001;}
+\DoxyCodeLine{00076       \textcolor{keywordtype}{double} d2                 = norm2(p4 -\/ p0);}
+\DoxyCodeLine{00077       \textcolor{keywordflow}{if} (e * e * 6 * 6 > d2) e = sqrt(d2) / 6;}
+\DoxyCodeLine{00078       \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} q1(p0 + v * e, q0.thick);}
+\DoxyCodeLine{00079       \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} q3(p4 -\/ v * e, q4.thick);}
+\DoxyCodeLine{00080       stroke-\/>\mbox{\hyperlink{class_t_stroke_abc4f174af1e2712c400ae63e005aac18}{setControlPoint}}(j + 1, q1);}
+\DoxyCodeLine{00081       stroke-\/>\mbox{\hyperlink{class_t_stroke_abc4f174af1e2712c400ae63e005aac18}{setControlPoint}}(j + 3, q3);}
+\DoxyCodeLine{00082     \}}
+\DoxyCodeLine{00083   \}}
+\DoxyCodeLine{00084 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_inbetweener_ab9c6243b31d1bfab8d630b5ba2dcc0e1}\label{class_my_inbetweener_ab9c6243b31d1bfab8d630b5ba2dcc0e1}} 
+\index{MyInbetweener@{MyInbetweener}!stabilizeSegments@{stabilizeSegments}}
+\index{stabilizeSegments@{stabilizeSegments}!MyInbetweener@{MyInbetweener}}
+\doxysubsubsection{\texorpdfstring{stabilizeSegments()}{stabilizeSegments()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void My\+Inbetweener\+::stabilize\+Segments (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} \&}]{image }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00056                                                           \{}
+\DoxyCodeLine{00057   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < image-\/>getStrokeCount(); i++)}
+\DoxyCodeLine{00058     stabilizeSegments(image-\/>getStroke(i));}
+\DoxyCodeLine{00059 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_inbetweener_ad97d9b8e51e85097ea0a379cbf391459}\label{class_my_inbetweener_ad97d9b8e51e85097ea0a379cbf391459}} 
+\index{MyInbetweener@{MyInbetweener}!tween@{tween}}
+\index{tween@{tween}!MyInbetweener@{MyInbetweener}}
+\doxysubsubsection{\texorpdfstring{tween()}{tween()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_vector_image_p}{TVector\+ImageP}} My\+Inbetweener\+::tween (\begin{DoxyParamCaption}\item[{double}]{t }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086                                            \{}
+\DoxyCodeLine{00087   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi = m\_vi0-\/>clone();}
+\DoxyCodeLine{00088   \textcolor{keywordtype}{int} n            = tmin(m\_vi0-\/>getStrokeCount(), m\_vi1-\/>getStrokeCount());}
+\DoxyCodeLine{00089   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++) \{}
+\DoxyCodeLine{00090     \mbox{\hyperlink{class_t_stroke}{TStroke}} *stroke0 = m\_vi0-\/>getStroke(i);}
+\DoxyCodeLine{00091     \mbox{\hyperlink{class_t_stroke}{TStroke}} *stroke1 = m\_vi1-\/>getStroke(i);}
+\DoxyCodeLine{00092     \mbox{\hyperlink{class_t_stroke}{TStroke}} *stroke  = vi-\/>getStroke(i);}
+\DoxyCodeLine{00093     \textcolor{keywordtype}{int} m =}
+\DoxyCodeLine{00094         tmin(stroke0-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}(), stroke1-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}());}
+\DoxyCodeLine{00095     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < m; j++) \{}
+\DoxyCodeLine{00096       \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} p0 = stroke0-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(j);}
+\DoxyCodeLine{00097       \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} p1 = stroke1-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(j);}
+\DoxyCodeLine{00098       \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} p  = (1 -\/ t) * p0 + t * p1;}
+\DoxyCodeLine{00099       stroke-\/>\mbox{\hyperlink{class_t_stroke_abc4f174af1e2712c400ae63e005aac18}{setControlPoint}}(j, p);}
+\DoxyCodeLine{00100     \}}
+\DoxyCodeLine{00101     \textcolor{comment}{/*}}
+\DoxyCodeLine{00102 \textcolor{comment}{for(int j=2;j+2<m;j+=2)}}
+\DoxyCodeLine{00103 \textcolor{comment}{\{}}
+\DoxyCodeLine{00104 \textcolor{comment}{TThickPoint p0 = stroke0-\/>getControlPoint(j-\/2);}}
+\DoxyCodeLine{00105 \textcolor{comment}{TThickPoint p1 = stroke0-\/>getControlPoint(j-\/1);}}
+\DoxyCodeLine{00106 \textcolor{comment}{TThickPoint p2 = stroke0-\/>getControlPoint(j);}}
+\DoxyCodeLine{00107 \textcolor{comment}{TThickPoint p3 = stroke0-\/>getControlPoint(j+1);}}
+\DoxyCodeLine{00108 \textcolor{comment}{TThickPoint p4 = stroke0-\/>getControlPoint(j+2);}}
+\DoxyCodeLine{00109 \textcolor{comment}{if(tdistance2(p0,p1)<0.001 \&\& tdistance2(p3,p4)<0.001)}}
+\DoxyCodeLine{00110 \textcolor{comment}{\{}}
+\DoxyCodeLine{00111 \textcolor{comment}{p2 = 0.5*(p1+p2);}}
+\DoxyCodeLine{00112 \textcolor{comment}{stroke-\/>setControlPoint(j,p2);}}
+\DoxyCodeLine{00113 \textcolor{comment}{\}}}
+\DoxyCodeLine{00114 \textcolor{comment}{\}}}
+\DoxyCodeLine{00115 \textcolor{comment}{*/}}
+\DoxyCodeLine{00116   \}}
+\DoxyCodeLine{00117   \textcolor{keywordflow}{return} vi;}
+\DoxyCodeLine{00118 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/inbetweencommand.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,100 @@
+\hypertarget{class_t_d_a_t_a_chunk}{}\doxysection{TDATAChunk Class Reference}
+\label{class_t_d_a_t_a_chunk}\index{TDATAChunk@{TDATAChunk}}
+Inheritance diagram for TDATAChunk\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_t_d_a_t_a_chunk}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_d_a_t_a_chunk_a845cb5c00e254abc9540a5042dccd2f8}{TDATAChunk}} (TINT32 length)
+\item 
+bool \mbox{\hyperlink{class_t_d_a_t_a_chunk_a619c8540bd8c5a0c2129b603739cea6d}{read}} (\mbox{\hyperlink{class_tifstream}{Tifstream}} \&is) override
+\item 
+bool \mbox{\hyperlink{class_t_d_a_t_a_chunk_a981bbb0c7cc4221e54702df6d79e81d6}{write}} (ofstream \&os)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::unique\+\_\+ptr$<$ UCHAR\mbox{[}$\,$\mbox{]}$>$ \mbox{\hyperlink{class_t_d_a_t_a_chunk_a57277f4ca3162090e830ddbb58b692da}{m\+\_\+samples}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_d_a_t_a_chunk_a845cb5c00e254abc9540a5042dccd2f8}\label{class_t_d_a_t_a_chunk_a845cb5c00e254abc9540a5042dccd2f8}} 
+\index{TDATAChunk@{TDATAChunk}!TDATAChunk@{TDATAChunk}}
+\index{TDATAChunk@{TDATAChunk}!TDATAChunk@{TDATAChunk}}
+\doxysubsubsection{\texorpdfstring{TDATAChunk()}{TDATAChunk()}}
+{\footnotesize\ttfamily TDATAChunk\+::\+TDATAChunk (\begin{DoxyParamCaption}\item[{TINT32}]{length }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00146 : \mbox{\hyperlink{class_t_w_a_v_chunk}{TWAVChunk}}(\textcolor{stringliteral}{"{}data"{}}, length) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_d_a_t_a_chunk_a619c8540bd8c5a0c2129b603739cea6d}\label{class_t_d_a_t_a_chunk_a619c8540bd8c5a0c2129b603739cea6d}} 
+\index{TDATAChunk@{TDATAChunk}!read@{read}}
+\index{read@{read}!TDATAChunk@{TDATAChunk}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily bool TDATAChunk\+::read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_tifstream}{Tifstream}} \&}]{is }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_w_a_v_chunk}{TWAVChunk}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00148                                     \{}
+\DoxyCodeLine{00149     \textcolor{comment}{// alloca il buffer dei campioni}}
+\DoxyCodeLine{00150     m\_samples.reset(\textcolor{keyword}{new} UCHAR[m\_length]);}
+\DoxyCodeLine{00151     \textcolor{keywordflow}{if} (!m\_samples) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00152     is.read((\textcolor{keywordtype}{char} *)m\_samples.get(), m\_length);}
+\DoxyCodeLine{00153     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00154   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_d_a_t_a_chunk_a981bbb0c7cc4221e54702df6d79e81d6}\label{class_t_d_a_t_a_chunk_a981bbb0c7cc4221e54702df6d79e81d6}} 
+\index{TDATAChunk@{TDATAChunk}!write@{write}}
+\index{write@{write}!TDATAChunk@{TDATAChunk}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily bool TDATAChunk\+::write (\begin{DoxyParamCaption}\item[{ofstream \&}]{os }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00156                            \{}
+\DoxyCodeLine{00157     TINT32 length = m\_length;}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159     \textcolor{keywordflow}{if} (!TNZ\_LITTLE\_ENDIAN) \{}
+\DoxyCodeLine{00160       length = swapTINT32(length);}
+\DoxyCodeLine{00161     \}}
+\DoxyCodeLine{00162 }
+\DoxyCodeLine{00163     os.write((\textcolor{keywordtype}{char} *)\textcolor{stringliteral}{"{}data"{}}, 4);}
+\DoxyCodeLine{00164     os.write((\textcolor{keywordtype}{char} *)\&length, \textcolor{keyword}{sizeof}(length));}
+\DoxyCodeLine{00165     os.write((\textcolor{keywordtype}{char} *)m\_samples.get(), m\_length);}
+\DoxyCodeLine{00166     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00167   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_t_d_a_t_a_chunk_a57277f4ca3162090e830ddbb58b692da}\label{class_t_d_a_t_a_chunk_a57277f4ca3162090e830ddbb58b692da}} 
+\index{TDATAChunk@{TDATAChunk}!m\_samples@{m\_samples}}
+\index{m\_samples@{m\_samples}!TDATAChunk@{TDATAChunk}}
+\doxysubsubsection{\texorpdfstring{m\_samples}{m\_samples}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$UCHAR\mbox{[}$\,$\mbox{]}$>$ TDATAChunk\+::m\+\_\+samples}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/sound/wav/tsio\+\_\+wav.\+cpp\end{DoxyCompactItemize}

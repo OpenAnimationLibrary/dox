@@ -1,0 +1,300 @@
+\hypertarget{class_cleanup_palette_viewer}{}\doxysection{Cleanup\+Palette\+Viewer Class Reference}
+\label{class_cleanup_palette_viewer}\index{CleanupPaletteViewer@{CleanupPaletteViewer}}
+Inheritance diagram for Cleanup\+Palette\+Viewer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_cleanup_palette_viewer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_cleanup_palette_viewer_afa58f185f31fa987e8ae2d517c0a9bb4}{Cleanup\+Palette\+Viewer}} (QWidget $\ast$parent)
+\item 
+void \mbox{\hyperlink{class_cleanup_palette_viewer_aa30b3c8e78fd5882f5f6ba84d890c3a2}{set\+Mode}} (bool grey\+Mode)
+\item 
+void \mbox{\hyperlink{class_cleanup_palette_viewer_a7f22b26b3665b6d7e86e3914c67bb81b}{update\+Colors}} ()
+\item 
+void \mbox{\hyperlink{class_cleanup_palette_viewer_a6198d4b7e2d9d1bce4fe900e40acef2f}{set\+Contrast\+Enabled}} (bool enable)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_cleanup_palette_viewer_ad516fa138f3413ea33d80abe86357124}{build\+GUI}} ()
+\item 
+void \mbox{\hyperlink{class_cleanup_palette_viewer_a297b26153409e09cd17ccf5ca9c909f5}{on\+Color\+Style\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_cleanup_palette_viewer_ad0d3e5a99f513cbcf120336dabaa247b}{on\+Color\+Style\+Selected}} (\mbox{\hyperlink{class_t_cleanup_style}{TCleanup\+Style}} $\ast$)
+\item 
+void \mbox{\hyperlink{class_cleanup_palette_viewer_a88b95ae34f809c36ae07e9ac9ec4d8c8}{on\+Add\+Clicked}} (bool)
+\item 
+void \mbox{\hyperlink{class_cleanup_palette_viewer_a66d1280e03e67d6caab0acb56f7ff2f5}{on\+Remove\+Clicked}} (bool)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_cleanup_palette_viewer_afa58f185f31fa987e8ae2d517c0a9bb4}\label{class_cleanup_palette_viewer_afa58f185f31fa987e8ae2d517c0a9bb4}} 
+\index{CleanupPaletteViewer@{CleanupPaletteViewer}!CleanupPaletteViewer@{CleanupPaletteViewer}}
+\index{CleanupPaletteViewer@{CleanupPaletteViewer}!CleanupPaletteViewer@{CleanupPaletteViewer}}
+\doxysubsubsection{\texorpdfstring{CleanupPaletteViewer()}{CleanupPaletteViewer()}}
+{\footnotesize\ttfamily Cleanup\+Palette\+Viewer\+::\+Cleanup\+Palette\+Viewer (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00050     : QWidget(parent)}
+\DoxyCodeLine{00051     , m\_ph(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getPaletteController()-\/>getCurrentCleanupPalette())}
+\DoxyCodeLine{00052     , m\_scrollWidget(0)}
+\DoxyCodeLine{00053     , m\_greyMode(\textcolor{keyword}{true})}
+\DoxyCodeLine{00054     , m\_contrastEnabled(\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{00055   m\_scrollArea = \textcolor{keyword}{new} QScrollArea(\textcolor{keyword}{this});}
+\DoxyCodeLine{00056   m\_add        = \textcolor{keyword}{new} QPushButton(\textcolor{stringliteral}{"{}+"{}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{00057   m\_remove     = \textcolor{keyword}{new} QPushButton(\textcolor{stringliteral}{"{}-\/"{}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059   \textcolor{comment}{//-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00060   m\_scrollArea-\/>setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);}
+\DoxyCodeLine{00061   m\_scrollArea-\/>setWidgetResizable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00062   m\_add-\/>setFixedSize(20, 20);}
+\DoxyCodeLine{00063   m\_remove-\/>setFixedSize(20, 20);}
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00065   buildGUI();}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067   \textcolor{comment}{//-\/-\/-\/-\/-\/ layout}}
+\DoxyCodeLine{00068   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout(\textcolor{keyword}{this});}
+\DoxyCodeLine{00069   mainLayout-\/>setSpacing(5);}
+\DoxyCodeLine{00070   mainLayout-\/>setMargin(5);}
+\DoxyCodeLine{00071   \{}
+\DoxyCodeLine{00072     mainLayout-\/>addWidget(m\_scrollArea, 1);}
+\DoxyCodeLine{00073 }
+\DoxyCodeLine{00074     QHBoxLayout *buttonLayout = \textcolor{keyword}{new} QHBoxLayout;}
+\DoxyCodeLine{00075     buttonLayout-\/>setSpacing(7);}
+\DoxyCodeLine{00076     buttonLayout-\/>setMargin(0);}
+\DoxyCodeLine{00077     \{}
+\DoxyCodeLine{00078       buttonLayout-\/>addWidget(m\_add);}
+\DoxyCodeLine{00079       buttonLayout-\/>addWidget(m\_remove);}
+\DoxyCodeLine{00080       buttonLayout-\/>addStretch();}
+\DoxyCodeLine{00081     \}}
+\DoxyCodeLine{00082     mainLayout-\/>addLayout(buttonLayout);}
+\DoxyCodeLine{00083   \}}
+\DoxyCodeLine{00084   setLayout(mainLayout);}
+\DoxyCodeLine{00085 }
+\DoxyCodeLine{00086   \textcolor{comment}{//-\/-\/-\/-\/-\/ signal-\/slot connections}}
+\DoxyCodeLine{00087   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00088   ret      = ret \&\& connect(m\_ph, SIGNAL(paletteSwitched()), SLOT(buildGUI()));}
+\DoxyCodeLine{00089   ret      = ret \&\& connect(m\_ph, SIGNAL(paletteChanged()), SLOT(buildGUI()));}
+\DoxyCodeLine{00090   ret      = ret \&\& connect(m\_ph, SIGNAL(colorStyleChanged(\textcolor{keywordtype}{bool})),}
+\DoxyCodeLine{00091                        SLOT(onColorStyleChanged()));}
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{00093   ret = ret \&\& connect(m\_add, SIGNAL(clicked(\textcolor{keywordtype}{bool})), SLOT(onAddClicked(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00094   ret = ret \&\&}
+\DoxyCodeLine{00095         connect(m\_remove, SIGNAL(clicked(\textcolor{keywordtype}{bool})), SLOT(onRemoveClicked(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00096   assert(ret);}
+\DoxyCodeLine{00097 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_cleanup_palette_viewer_ad516fa138f3413ea33d80abe86357124}\label{class_cleanup_palette_viewer_ad516fa138f3413ea33d80abe86357124}} 
+\index{CleanupPaletteViewer@{CleanupPaletteViewer}!buildGUI@{buildGUI}}
+\index{buildGUI@{buildGUI}!CleanupPaletteViewer@{CleanupPaletteViewer}}
+\doxysubsubsection{\texorpdfstring{buildGUI}{buildGUI}}
+{\footnotesize\ttfamily void Cleanup\+Palette\+Viewer\+::build\+GUI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00101                                     \{}
+\DoxyCodeLine{00102   m\_colorFields.clear();}
+\DoxyCodeLine{00103 }
+\DoxyCodeLine{00104   \textcolor{comment}{// delete m\_scrollWidget;    //Already destroyed by}}
+\DoxyCodeLine{00105   \textcolor{comment}{// m\_scrollWidget-\/>setWidget()}}
+\DoxyCodeLine{00106   m\_scrollWidget = \textcolor{keyword}{new} QFrame();}
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108   QVBoxLayout *scrollLayout = \textcolor{keyword}{new} QVBoxLayout(m\_scrollWidget);}
+\DoxyCodeLine{00109   m\_scrollWidget-\/>setLayout(scrollLayout);}
+\DoxyCodeLine{00110 }
+\DoxyCodeLine{00111   scrollLayout-\/>setSpacing(10);}
+\DoxyCodeLine{00112   scrollLayout-\/>setMargin(0);}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114   \mbox{\hyperlink{class_t_palette}{TPalette}} *palette = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00115                           -\/>getPaletteController()}
+\DoxyCodeLine{00116                           -\/>getCurrentCleanupPalette()}
+\DoxyCodeLine{00117                           -\/>getPalette();}
+\DoxyCodeLine{00118   assert(palette);}
+\DoxyCodeLine{00119   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00120 }
+\DoxyCodeLine{00121   \textcolor{keywordtype}{int} i, stylesCount = palette-\/>getPage(0)-\/>getStyleCount();}
+\DoxyCodeLine{00122   \textcolor{keywordflow}{for} (i = 0; i < stylesCount; ++i) \{}
+\DoxyCodeLine{00123     \mbox{\hyperlink{class_t_cleanup_style}{TCleanupStyle}} *cs =}
+\DoxyCodeLine{00124         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_cleanup_style}{TCleanupStyle}} *\textcolor{keyword}{>}(palette-\/>getPage(0)-\/>getStyle(i));}
+\DoxyCodeLine{00125     \textcolor{keywordflow}{if} (!cs) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127     cs-\/>enableContrast(\textcolor{keyword}{true});}
+\DoxyCodeLine{00128     \mbox{\hyperlink{class_d_v_gui_1_1_cleanup_color_field}{CleanupColorField}} *cf =}
+\DoxyCodeLine{00129         \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_cleanup_color_field}{CleanupColorField}}(m\_scrollWidget, cs, m\_ph, m\_greyMode);}
+\DoxyCodeLine{00130     cs-\/>enableContrast(m\_contrastEnabled);}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132     ret = ret \&\& connect(cf, SIGNAL(StyleSelected(\mbox{\hyperlink{class_t_cleanup_style}{TCleanupStyle}} *)),}
+\DoxyCodeLine{00133                          SLOT(onColorStyleSelected(\mbox{\hyperlink{class_t_cleanup_style}{TCleanupStyle}} *)));}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135     scrollLayout-\/>addWidget(cf);}
+\DoxyCodeLine{00136     m\_colorFields.push\_back(cf);}
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00138     \textcolor{keywordflow}{if} (m\_greyMode) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00139   \}}
+\DoxyCodeLine{00140 }
+\DoxyCodeLine{00141   scrollLayout-\/>addStretch(1);}
+\DoxyCodeLine{00142   assert(ret);}
+\DoxyCodeLine{00143 }
+\DoxyCodeLine{00144   \textcolor{comment}{// NOTE: setWidget() Must be done after m\_scrollWidget's layout has been set}}
+\DoxyCodeLine{00145   \textcolor{comment}{// (see Qt docs)}}
+\DoxyCodeLine{00146   m\_scrollArea-\/>setWidget(m\_scrollWidget);}
+\DoxyCodeLine{00147   m\_scrollArea-\/>ensureWidgetVisible(m\_scrollWidget, 0, 0);}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149   \textcolor{keywordflow}{if} (m\_greyMode) \{}
+\DoxyCodeLine{00150     m\_scrollArea-\/>setMinimumSize(0, 60);}
+\DoxyCodeLine{00151   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00152     m\_scrollArea-\/>setMinimumSize(0, 120);}
+\DoxyCodeLine{00153   \}}
+\DoxyCodeLine{00154 }
+\DoxyCodeLine{00155   m\_add-\/>setVisible(!m\_greyMode);}
+\DoxyCodeLine{00156   m\_remove-\/>setVisible(!m\_greyMode);}
+\DoxyCodeLine{00157 }
+\DoxyCodeLine{00158   setContrastEnabled(m\_contrastEnabled);}
+\DoxyCodeLine{00159 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_palette_viewer_a88b95ae34f809c36ae07e9ac9ec4d8c8}\label{class_cleanup_palette_viewer_a88b95ae34f809c36ae07e9ac9ec4d8c8}} 
+\index{CleanupPaletteViewer@{CleanupPaletteViewer}!onAddClicked@{onAddClicked}}
+\index{onAddClicked@{onAddClicked}!CleanupPaletteViewer@{CleanupPaletteViewer}}
+\doxysubsubsection{\texorpdfstring{onAddClicked}{onAddClicked}}
+{\footnotesize\ttfamily void Cleanup\+Palette\+Viewer\+::on\+Add\+Clicked (\begin{DoxyParamCaption}\item[{bool}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00193                                             \{}
+\DoxyCodeLine{00194   \mbox{\hyperlink{class_t_palette}{TPalette}} *palette = m\_ph-\/>getPalette();}
+\DoxyCodeLine{00195   assert(palette);}
+\DoxyCodeLine{00196   palette-\/>getPage(0)-\/>addStyle(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_color_cleanup_style}{TColorCleanupStyle}}(TPixel::Red));}
+\DoxyCodeLine{00197   buildGUI();}
+\DoxyCodeLine{00198   update();}
+\DoxyCodeLine{00199 }
+\DoxyCodeLine{00200   m\_ph-\/>notifyPaletteChanged();}
+\DoxyCodeLine{00201 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_palette_viewer_a297b26153409e09cd17ccf5ca9c909f5}\label{class_cleanup_palette_viewer_a297b26153409e09cd17ccf5ca9c909f5}} 
+\index{CleanupPaletteViewer@{CleanupPaletteViewer}!onColorStyleChanged@{onColorStyleChanged}}
+\index{onColorStyleChanged@{onColorStyleChanged}!CleanupPaletteViewer@{CleanupPaletteViewer}}
+\doxysubsubsection{\texorpdfstring{onColorStyleChanged}{onColorStyleChanged}}
+{\footnotesize\ttfamily void Cleanup\+Palette\+Viewer\+::on\+Color\+Style\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00163                                                \{}
+\DoxyCodeLine{00164   \textcolor{keywordtype}{int} i, colorFieldsCount = m\_colorFields.size();}
+\DoxyCodeLine{00165   \textcolor{keywordflow}{for} (i = 0; i < colorFieldsCount; ++i) m\_colorFields[i]-\/>updateColor();}
+\DoxyCodeLine{00166 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_palette_viewer_ad0d3e5a99f513cbcf120336dabaa247b}\label{class_cleanup_palette_viewer_ad0d3e5a99f513cbcf120336dabaa247b}} 
+\index{CleanupPaletteViewer@{CleanupPaletteViewer}!onColorStyleSelected@{onColorStyleSelected}}
+\index{onColorStyleSelected@{onColorStyleSelected}!CleanupPaletteViewer@{CleanupPaletteViewer}}
+\doxysubsubsection{\texorpdfstring{onColorStyleSelected}{onColorStyleSelected}}
+{\footnotesize\ttfamily void Cleanup\+Palette\+Viewer\+::on\+Color\+Style\+Selected (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_cleanup_style}{TCleanup\+Style}} $\ast$}]{style }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00170                                                                     \{}
+\DoxyCodeLine{00171   m\_ph-\/>setStyleIndex(style ? search(m\_ph-\/>getPalette(), style) : -\/1);}
+\DoxyCodeLine{00172 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_palette_viewer_a66d1280e03e67d6caab0acb56f7ff2f5}\label{class_cleanup_palette_viewer_a66d1280e03e67d6caab0acb56f7ff2f5}} 
+\index{CleanupPaletteViewer@{CleanupPaletteViewer}!onRemoveClicked@{onRemoveClicked}}
+\index{onRemoveClicked@{onRemoveClicked}!CleanupPaletteViewer@{CleanupPaletteViewer}}
+\doxysubsubsection{\texorpdfstring{onRemoveClicked}{onRemoveClicked}}
+{\footnotesize\ttfamily void Cleanup\+Palette\+Viewer\+::on\+Remove\+Clicked (\begin{DoxyParamCaption}\item[{bool}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00205                                                \{}
+\DoxyCodeLine{00206   \textcolor{keywordtype}{int} styleIdx = m\_ph-\/>getStyleIndex();}
+\DoxyCodeLine{00207   \textcolor{keywordflow}{if} (styleIdx < 2) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00208 }
+\DoxyCodeLine{00209   \mbox{\hyperlink{class_t_palette}{TPalette}} *palette = m\_ph-\/>getPalette();}
+\DoxyCodeLine{00210   assert(palette);}
+\DoxyCodeLine{00211 }
+\DoxyCodeLine{00212   QString question;}
+\DoxyCodeLine{00213   question = QObject::tr(}
+\DoxyCodeLine{00214       \textcolor{stringliteral}{"{}Are you sure you want to delete the selected cleanup color?"{}});}
+\DoxyCodeLine{00215   \textcolor{keywordtype}{int} ret =}
+\DoxyCodeLine{00216       DVGui::MsgBox(question, QObject::tr(\textcolor{stringliteral}{"{}Delete"{}}), QObject::tr(\textcolor{stringliteral}{"{}Cancel"{}}), 0);}
+\DoxyCodeLine{00217   \textcolor{keywordflow}{if} (ret == 2 || ret == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219   \mbox{\hyperlink{class_t_palette_1_1_page}{TPalette::Page}} *page = palette-\/>getPage(0);}
+\DoxyCodeLine{00220   \textcolor{keywordtype}{int} indexInPage      = page-\/>\mbox{\hyperlink{class_t_palette_1_1_page_a5d85ded487f7152a95ccbab63c5aecd5}{search}}(m\_ph-\/>getStyle());}
+\DoxyCodeLine{00221   page-\/>\mbox{\hyperlink{class_t_palette_1_1_page_a7619abc839bf063d3065596235171982}{removeStyle}}(indexInPage);}
+\DoxyCodeLine{00222   m\_ph-\/>setStyleIndex(-\/1);}
+\DoxyCodeLine{00223 }
+\DoxyCodeLine{00224   buildGUI();}
+\DoxyCodeLine{00225   update();}
+\DoxyCodeLine{00226 }
+\DoxyCodeLine{00227   m\_ph-\/>notifyPaletteChanged();}
+\DoxyCodeLine{00228 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_palette_viewer_a6198d4b7e2d9d1bce4fe900e40acef2f}\label{class_cleanup_palette_viewer_a6198d4b7e2d9d1bce4fe900e40acef2f}} 
+\index{CleanupPaletteViewer@{CleanupPaletteViewer}!setContrastEnabled@{setContrastEnabled}}
+\index{setContrastEnabled@{setContrastEnabled}!CleanupPaletteViewer@{CleanupPaletteViewer}}
+\doxysubsubsection{\texorpdfstring{setContrastEnabled()}{setContrastEnabled()}}
+{\footnotesize\ttfamily void Cleanup\+Palette\+Viewer\+::set\+Contrast\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{enable }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00232                                                          \{}
+\DoxyCodeLine{00233   m\_contrastEnabled = enable;}
+\DoxyCodeLine{00234   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i, size = m\_colorFields.size();}
+\DoxyCodeLine{00235   \textcolor{keywordflow}{for} (i = 0; i < size; ++i) m\_colorFields[i]-\/>setContrastEnabled(enable);}
+\DoxyCodeLine{00236 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_palette_viewer_aa30b3c8e78fd5882f5f6ba84d890c3a2}\label{class_cleanup_palette_viewer_aa30b3c8e78fd5882f5f6ba84d890c3a2}} 
+\index{CleanupPaletteViewer@{CleanupPaletteViewer}!setMode@{setMode}}
+\index{setMode@{setMode}!CleanupPaletteViewer@{CleanupPaletteViewer}}
+\doxysubsubsection{\texorpdfstring{setMode()}{setMode()}}
+{\footnotesize\ttfamily void Cleanup\+Palette\+Viewer\+::set\+Mode (\begin{DoxyParamCaption}\item[{bool}]{grey\+Mode }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00183                                                 \{}
+\DoxyCodeLine{00184   \textcolor{keywordflow}{if} (m\_greyMode == greyMode) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00185   m\_greyMode = greyMode;}
+\DoxyCodeLine{00186 }
+\DoxyCodeLine{00187   buildGUI();}
+\DoxyCodeLine{00188   update();}
+\DoxyCodeLine{00189 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_palette_viewer_a7f22b26b3665b6d7e86e3914c67bb81b}\label{class_cleanup_palette_viewer_a7f22b26b3665b6d7e86e3914c67bb81b}} 
+\index{CleanupPaletteViewer@{CleanupPaletteViewer}!updateColors@{updateColors}}
+\index{updateColors@{updateColors}!CleanupPaletteViewer@{CleanupPaletteViewer}}
+\doxysubsubsection{\texorpdfstring{updateColors()}{updateColors()}}
+{\footnotesize\ttfamily void Cleanup\+Palette\+Viewer\+::update\+Colors (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00176                                         \{}
+\DoxyCodeLine{00177   \textcolor{keywordtype}{int} i, colorFieldsCount = m\_colorFields.size();}
+\DoxyCodeLine{00178   \textcolor{keywordflow}{for} (i = 0; i < colorFieldsCount; ++i) m\_colorFields[i]-\/>updateColor();}
+\DoxyCodeLine{00179 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanuppaletteviewer.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanuppaletteviewer.\+cpp\end{DoxyCompactItemize}

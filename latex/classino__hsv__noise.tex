@@ -1,0 +1,311 @@
+\hypertarget{classino__hsv__noise}{}\doxysection{ino\+\_\+hsv\+\_\+noise Class Reference}
+\label{classino__hsv__noise}\index{ino\_hsv\_noise@{ino\_hsv\_noise}}
+Inheritance diagram for ino\+\_\+hsv\+\_\+noise\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{classino__hsv__noise}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classino__hsv__noise_ab0f208bea2c23997f60a6210c5a36e1d}{do\+Get\+BBox}} (double frame, \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&b\+Box, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&info) override
+\item 
+bool \mbox{\hyperlink{classino__hsv__noise_a05544ef58403734428fcb8a1626e843d}{can\+Handle}} (const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&info, double frame) override
+\item 
+void \mbox{\hyperlink{classino__hsv__noise_aec2a178d587c0dc2b518d44b692b72c6}{do\+Compute}} (\mbox{\hyperlink{class_t_tile}{TTile}} \&tile, double frame, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&rend\+\_\+sets) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classino__hsv__noise_afadd194263e13b7394723d4989ff24e3}\label{classino__hsv__noise_afadd194263e13b7394723d4989ff24e3}} 
+\index{ino\_hsv\_noise@{ino\_hsv\_noise}!ino\_hsv\_noise@{ino\_hsv\_noise}}
+\index{ino\_hsv\_noise@{ino\_hsv\_noise}!ino\_hsv\_noise@{ino\_hsv\_noise}}
+\doxysubsubsection{\texorpdfstring{ino\_hsv\_noise()}{ino\_hsv\_noise()}}
+{\footnotesize\ttfamily ino\+\_\+hsv\+\_\+noise\+::ino\+\_\+hsv\+\_\+noise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028       : m\_hue(0.025 * ino::param\_range())}
+\DoxyCodeLine{00029       , m\_sat(0.0 * ino::param\_range())}
+\DoxyCodeLine{00030       , m\_val(0.035 * ino::param\_range())}
+\DoxyCodeLine{00031       , m\_mat(0.0 * ino::param\_range())}
+\DoxyCodeLine{00032       , m\_random\_seed(1)}
+\DoxyCodeLine{00033       , m\_near\_blur(1.0 * ino::param\_range())}
+\DoxyCodeLine{00034       , m\_term\_effective(0.0 * ino::param\_range())}
+\DoxyCodeLine{00035       , m\_term\_center(ino::param\_range() / 2.0)}
+\DoxyCodeLine{00036       , m\_term\_type(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_enum_param}{TIntEnumParam}}(0, \textcolor{stringliteral}{"{}Keep Noise"{}}))}
+\DoxyCodeLine{00037 }
+\DoxyCodeLine{00038       , m\_anti\_alias(\textcolor{keyword}{true})}
+\DoxyCodeLine{00039       , m\_ref\_mode(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_enum_param}{TIntEnumParam}}(0, \textcolor{stringliteral}{"{}Red"{}})) \{}
+\DoxyCodeLine{00040     \mbox{\hyperlink{class_t_fx_af0ccf8d65934ed9f7a62d3b45ee5f2b6}{addInputPort}}(\textcolor{stringliteral}{"{}Source"{}}, this-\/>m\_input);}
+\DoxyCodeLine{00041     \mbox{\hyperlink{class_t_fx_af0ccf8d65934ed9f7a62d3b45ee5f2b6}{addInputPort}}(\textcolor{stringliteral}{"{}Reference"{}}, this-\/>m\_refer);}
+\DoxyCodeLine{00042 }
+\DoxyCodeLine{00043     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}hue"{}}, this-\/>m\_hue);}
+\DoxyCodeLine{00044     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}saturation"{}}, this-\/>m\_sat);}
+\DoxyCodeLine{00045     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}value"{}}, this-\/>m\_val);}
+\DoxyCodeLine{00046     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}alpha"{}}, this-\/>m\_mat);}
+\DoxyCodeLine{00047     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}seed"{}}, this-\/>m\_random\_seed);}
+\DoxyCodeLine{00048     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}nblur"{}}, this-\/>m\_near\_blur);}
+\DoxyCodeLine{00049     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}effective"{}}, this-\/>m\_term\_effective);}
+\DoxyCodeLine{00050     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}center"{}}, this-\/>m\_term\_center);}
+\DoxyCodeLine{00051     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}type"{}}, this-\/>m\_term\_type);}
+\DoxyCodeLine{00052 }
+\DoxyCodeLine{00053     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}anti\_alias"{}}, this-\/>m\_anti\_alias);}
+\DoxyCodeLine{00054     bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}reference"{}}, this-\/>m\_ref\_mode);}
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056     this-\/>m\_hue-\/>setValueRange(0.0 * ino::param\_range(),}
+\DoxyCodeLine{00057                                1.0 * ino::param\_range());}
+\DoxyCodeLine{00058     this-\/>m\_sat-\/>setValueRange(0.0 * ino::param\_range(),}
+\DoxyCodeLine{00059                                1.0 * ino::param\_range());}
+\DoxyCodeLine{00060     this-\/>m\_val-\/>setValueRange(0.0 * ino::param\_range(),}
+\DoxyCodeLine{00061                                1.0 * ino::param\_range());}
+\DoxyCodeLine{00062     this-\/>m\_mat-\/>setValueRange(0.0 * ino::param\_range(),}
+\DoxyCodeLine{00063                                1.0 * ino::param\_range());}
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00065     this-\/>m\_random\_seed-\/>setValueRange(}
+\DoxyCodeLine{00066         0, std::numeric\_limits<unsigned long>::max());}
+\DoxyCodeLine{00067     this-\/>m\_near\_blur-\/>setValueRange(0.0 * ino::param\_range(),}
+\DoxyCodeLine{00068                                      1.0 * ino::param\_range());}
+\DoxyCodeLine{00069     this-\/>m\_term\_effective-\/>setValueRange(0.0 * ino::param\_range(),}
+\DoxyCodeLine{00070                                           1.0 * ino::param\_range());}
+\DoxyCodeLine{00071     this-\/>m\_term\_center-\/>setValueRange(0.0 * ino::param\_range(),}
+\DoxyCodeLine{00072                                        1.0 * ino::param\_range());}
+\DoxyCodeLine{00073     this-\/>m\_term\_type-\/>addItem(1, \textcolor{stringliteral}{"{}Keep Contrast"{}});}
+\DoxyCodeLine{00074 }
+\DoxyCodeLine{00075     this-\/>m\_ref\_mode-\/>addItem(1, \textcolor{stringliteral}{"{}Green"{}});}
+\DoxyCodeLine{00076     this-\/>m\_ref\_mode-\/>addItem(2, \textcolor{stringliteral}{"{}Blue"{}});}
+\DoxyCodeLine{00077     this-\/>m\_ref\_mode-\/>addItem(3, \textcolor{stringliteral}{"{}Alpha"{}});}
+\DoxyCodeLine{00078     this-\/>m\_ref\_mode-\/>addItem(4, \textcolor{stringliteral}{"{}Luminance"{}});}
+\DoxyCodeLine{00079     this-\/>m\_ref\_mode-\/>addItem(-\/1, \textcolor{stringliteral}{"{}Nothing"{}});}
+\DoxyCodeLine{00080   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classino__hsv__noise_a05544ef58403734428fcb8a1626e843d}\label{classino__hsv__noise_a05544ef58403734428fcb8a1626e843d}} 
+\index{ino\_hsv\_noise@{ino\_hsv\_noise}!canHandle@{canHandle}}
+\index{canHandle@{canHandle}!ino\_hsv\_noise@{ino\_hsv\_noise}}
+\doxysubsubsection{\texorpdfstring{canHandle()}{canHandle()}}
+{\footnotesize\ttfamily bool ino\+\_\+hsv\+\_\+noise\+::can\+Handle (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{info,  }\item[{double}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00090                                                                      \{}
+\DoxyCodeLine{00091     \textcolor{comment}{// return true;}}
+\DoxyCodeLine{00092     \textcolor{comment}{/* trueだと素材がスライドして現れるときノイズパターンが}}
+\DoxyCodeLine{00093 \textcolor{comment}{    変わってしまう 2013-\/4-\/5からtoonz上で変更した */}}
+\DoxyCodeLine{00094     \textcolor{comment}{/* でなく、}}
+\DoxyCodeLine{00095 \textcolor{comment}{    ここでの指定にかかわらず、}}
+\DoxyCodeLine{00096 \textcolor{comment}{    素材をカメラ範囲で切り取ってるため、}}
+\DoxyCodeLine{00097 \textcolor{comment}{    スライドで現れるときのノイズパターンは変わってしまう。}}
+\DoxyCodeLine{00098 \textcolor{comment}{    だたし、移動以外のGeometryがなく、}}
+\DoxyCodeLine{00099 \textcolor{comment}{    連番の絵でなく一枚の絵を移動するだけのときは、}}
+\DoxyCodeLine{00100 \textcolor{comment}{    Cashのため(?)ノイズパターンは変化しない。}}
+\DoxyCodeLine{00101 \textcolor{comment}{    回転にノイズがついてくる。}}
+\DoxyCodeLine{00102 \textcolor{comment}{    防ぐ方法はtileに素材の位置と大きさ情報があれば...}}
+\DoxyCodeLine{00103 \textcolor{comment}{    2013-\/11-\/08 */}}
+\DoxyCodeLine{00104     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00105   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classino__hsv__noise_aec2a178d587c0dc2b518d44b692b72c6}\label{classino__hsv__noise_aec2a178d587c0dc2b518d44b692b72c6}} 
+\index{ino\_hsv\_noise@{ino\_hsv\_noise}!doCompute@{doCompute}}
+\index{doCompute@{doCompute}!ino\_hsv\_noise@{ino\_hsv\_noise}}
+\doxysubsubsection{\texorpdfstring{doCompute()}{doCompute()}}
+{\footnotesize\ttfamily void ino\+\_\+hsv\+\_\+noise\+::do\+Compute (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_tile}{TTile}} \&}]{tile,  }\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{rend\+\_\+sets }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00159                                                                 \{}
+\DoxyCodeLine{00160   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ 接続していなければ処理しない -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{00161   \textcolor{keywordflow}{if} (!this-\/>m\_input.isConnected()) \{}
+\DoxyCodeLine{00162     tile.getRaster()-\/>clear(); \textcolor{comment}{/* 塗りつぶしクリア */}}
+\DoxyCodeLine{00163     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00164   \}}
+\DoxyCodeLine{00165 }
+\DoxyCodeLine{00166   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ サポートしていないPixelタイプはエラーを投げる -\/-\/-\/ */}}
+\DoxyCodeLine{00167   \textcolor{keywordflow}{if} (!((\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}})tile.getRaster()) \&\& !((\mbox{\hyperlink{class_t_raster_p_t}{TRaster64P}})tile.getRaster())) \{}
+\DoxyCodeLine{00168     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_rop_exception}{TRopException}}(\textcolor{stringliteral}{"{}unsupported input pixel type"{}});}
+\DoxyCodeLine{00169   \}}
+\DoxyCodeLine{00170 }
+\DoxyCodeLine{00171   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ 動作パラメータを得る -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{00172   \textcolor{keyword}{const} \textcolor{keywordtype}{double} hue\_range = this-\/>m\_hue-\/>getValue(frame) / ino::param\_range();}
+\DoxyCodeLine{00173   \textcolor{keyword}{const} \textcolor{keywordtype}{double} sat\_range = this-\/>m\_sat-\/>getValue(frame) / ino::param\_range();}
+\DoxyCodeLine{00174   \textcolor{keyword}{const} \textcolor{keywordtype}{double} val\_range = this-\/>m\_val-\/>getValue(frame) / ino::param\_range();}
+\DoxyCodeLine{00175   \textcolor{keyword}{const} \textcolor{keywordtype}{double} mat\_range = this-\/>m\_mat-\/>getValue(frame) / ino::param\_range();}
+\DoxyCodeLine{00176   \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} random\_seed =}
+\DoxyCodeLine{00177       \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}\textcolor{keyword}{>}(this-\/>m\_random\_seed-\/>getValue(frame));}
+\DoxyCodeLine{00178   \textcolor{keyword}{const} \textcolor{keywordtype}{double} near\_blur =}
+\DoxyCodeLine{00179       this-\/>m\_near\_blur-\/>getValue(frame) / ino::param\_range() / 2.0;}
+\DoxyCodeLine{00180   \textcolor{keywordtype}{int} term\_type = -\/1;}
+\DoxyCodeLine{00181   \textcolor{keywordflow}{switch} (this-\/>m\_term\_type-\/>getValue()) \{}
+\DoxyCodeLine{00182   \textcolor{keywordflow}{case} 0:}
+\DoxyCodeLine{00183     term\_type = 0;}
+\DoxyCodeLine{00184     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00185   \textcolor{keywordflow}{case} 1:}
+\DoxyCodeLine{00186     term\_type = 3;}
+\DoxyCodeLine{00187     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00188   \}}
+\DoxyCodeLine{00189   \textcolor{keyword}{const} \textcolor{keywordtype}{double} term\_center =}
+\DoxyCodeLine{00190       this-\/>m\_term\_center-\/>getValue(frame) / ino::param\_range();}
+\DoxyCodeLine{00191   \textcolor{keyword}{const} \textcolor{keywordtype}{double} term\_effective =}
+\DoxyCodeLine{00192       this-\/>m\_term\_effective-\/>getValue(frame) / ino::param\_range();}
+\DoxyCodeLine{00193   \textcolor{keyword}{const} \textcolor{keywordtype}{bool} anti\_alias\_sw = this-\/>m\_anti\_alias-\/>getValue();}
+\DoxyCodeLine{00194   \textcolor{keyword}{const} \textcolor{keywordtype}{int} refer\_mode     = this-\/>m\_ref\_mode-\/>getValue();}
+\DoxyCodeLine{00195 }
+\DoxyCodeLine{00196   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ 画像生成 -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{00197   this-\/>m\_input-\/>compute(tile, frame, rend\_sets);}
+\DoxyCodeLine{00198   \textcolor{comment}{/*-\/-\/-\/ カメラの範囲をノイズを掛ける範囲としておく(余白含ず) -\/*/}}
+\DoxyCodeLine{00199   \textcolor{keywordtype}{int} camera\_x = 0;}
+\DoxyCodeLine{00200   \textcolor{keywordtype}{int} camera\_y = 0;}
+\DoxyCodeLine{00201   \textcolor{keywordtype}{int} camera\_w = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(rend\_sets.m\_cameraBox.getLx() + 0.5);}
+\DoxyCodeLine{00202   \textcolor{keywordtype}{int} camera\_h = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(rend\_sets.m\_cameraBox.getLy() + 0.5);}
+\DoxyCodeLine{00203   \textcolor{comment}{/*-\/-\/-\/ カメラ範囲外へのmargin付き(たぶん)はノイズ範囲から外す -\/*/}}
+\DoxyCodeLine{00204   \textcolor{keyword}{const} \textcolor{keywordtype}{int} margin\_w = tile.getRaster()-\/>getLx() -\/ camera\_w;}
+\DoxyCodeLine{00205   \textcolor{keyword}{const} \textcolor{keywordtype}{int} margin\_h = tile.getRaster()-\/>getLy() -\/ camera\_h;}
+\DoxyCodeLine{00206   \textcolor{keywordflow}{if} ((0 <= margin\_h \&\& 0 < margin\_w)    \textcolor{comment}{/* 横方向のみ余白あり */}}
+\DoxyCodeLine{00207       || (0 < margin\_h \&\& 0 <= margin\_w) \textcolor{comment}{/* 縦方向のみ余白あり */}}
+\DoxyCodeLine{00208       || (0 < margin\_h \&\& 0 < margin\_w)  \textcolor{comment}{/* 縦横両方に余白あり */}}
+\DoxyCodeLine{00209   ) \{}
+\DoxyCodeLine{00210     \textcolor{comment}{/*camera\_x = static\_cast<int>(ceil((double)margin\_w / 2.));}}
+\DoxyCodeLine{00211 \textcolor{comment}{    camera\_y = static\_cast<int>(ceil((double)margin\_h / 2.));*/}}
+\DoxyCodeLine{00212     camera\_x = margin\_w / 2;}
+\DoxyCodeLine{00213     camera\_y = margin\_h / 2;}
+\DoxyCodeLine{00214     camera\_w = rend\_sets.m\_cameraBox.getLx();}
+\DoxyCodeLine{00215     camera\_h = rend\_sets.m\_cameraBox.getLy();}
+\DoxyCodeLine{00216   \}}
+\DoxyCodeLine{00217   \textcolor{comment}{/*-\/-\/-\/ 入力画像がカメラより一部でも小さい}}
+\DoxyCodeLine{00218 \textcolor{comment}{          (ノイズ範囲指定対応できない-\/-\/>懸案事項) -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00219   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00220     camera\_w = tile.getRaster()-\/>getLx();}
+\DoxyCodeLine{00221     camera\_h = tile.getRaster()-\/>getLy();}
+\DoxyCodeLine{00222   \}}
+\DoxyCodeLine{00223   \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/ 参照画像生成 -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00224   \mbox{\hyperlink{class_t_tile}{TTile}} refer\_tile;}
+\DoxyCodeLine{00225   \textcolor{keywordtype}{bool} refer\_sw = \textcolor{keyword}{false};}
+\DoxyCodeLine{00226   \textcolor{keywordflow}{if} (this-\/>m\_refer.isConnected()) \{}
+\DoxyCodeLine{00227     refer\_sw = \textcolor{keyword}{true};}
+\DoxyCodeLine{00228     this-\/>m\_refer-\/>allocateAndCompute(}
+\DoxyCodeLine{00229         refer\_tile, tile.m\_pos,}
+\DoxyCodeLine{00230         \mbox{\hyperlink{class_t_dimension_t}{TDimensionI}}(\textcolor{comment}{/* Pixel単位 */}}
+\DoxyCodeLine{00231                     tile.getRaster()-\/>getLx(), tile.getRaster()-\/>getLy()),}
+\DoxyCodeLine{00232         tile.getRaster(), frame, rend\_sets);}
+\DoxyCodeLine{00233   \}}
+\DoxyCodeLine{00234   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ (app\_begin)log記憶 -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{00235   \textcolor{keyword}{const} \textcolor{keywordtype}{bool} log\_sw = ino::log\_enable\_sw();}
+\DoxyCodeLine{00236 }
+\DoxyCodeLine{00237   \textcolor{keywordflow}{if} (log\_sw) \{}
+\DoxyCodeLine{00238     std::ostringstream os;}
+\DoxyCodeLine{00239     os << \textcolor{stringliteral}{"{}params"{}}}
+\DoxyCodeLine{00240        << \textcolor{stringliteral}{"{}  h "{}} << hue\_range << \textcolor{stringliteral}{"{}  s "{}} << sat\_range << \textcolor{stringliteral}{"{}  v "{}} << val\_range}
+\DoxyCodeLine{00241        << \textcolor{stringliteral}{"{}  a "{}} << mat\_range << \textcolor{stringliteral}{"{}  seed "{}} << random\_seed << \textcolor{stringliteral}{"{}  nblur "{}}}
+\DoxyCodeLine{00242        << near\_blur << \textcolor{stringliteral}{"{}  effective "{}} << term\_effective << \textcolor{stringliteral}{"{}  center "{}}}
+\DoxyCodeLine{00243        << term\_center << \textcolor{stringliteral}{"{}  type "{}} << term\_type << \textcolor{stringliteral}{"{}  frame "{}} << frame}
+\DoxyCodeLine{00244        << \textcolor{stringliteral}{"{}  anti\_alias "{}} << anti\_alias\_sw << \textcolor{stringliteral}{"{}  reference "{}} << refer\_mode}
+\DoxyCodeLine{00245        << \textcolor{stringliteral}{"{}  pixbits "{}} << ino::pixel\_bits(tile.getRaster()) << \textcolor{stringliteral}{"{}  tile.m\_pos "{}}}
+\DoxyCodeLine{00246        << tile.m\_pos << \textcolor{stringliteral}{"{}  tile\_getLx "{}} << tile.getRaster()-\/>getLx() << \textcolor{stringliteral}{"{}  y "{}}}
+\DoxyCodeLine{00247        << tile.getRaster()-\/>getLy() << \textcolor{stringliteral}{"{}  rend\_sets.m\_cameraBox "{}}}
+\DoxyCodeLine{00248        << rend\_sets.m\_cameraBox << \textcolor{stringliteral}{"{}  rend\_sets.m\_affine "{}} << rend\_sets.\mbox{\hyperlink{class_t_render_settings_a1250181bf3fe8e05db005d5faa76b3ea}{m\_affine}}}
+\DoxyCodeLine{00249        << \textcolor{stringliteral}{"{}  camera x "{}} << camera\_x << \textcolor{stringliteral}{"{}  y "{}} << camera\_y << \textcolor{stringliteral}{"{}  w "{}} << camera\_w}
+\DoxyCodeLine{00250        << \textcolor{stringliteral}{"{}  h "{}} << camera\_h;}
+\DoxyCodeLine{00251     \textcolor{keywordflow}{if} (refer\_sw) \{}
+\DoxyCodeLine{00252       os << \textcolor{stringliteral}{"{}  refer\_tile.m\_pos "{}} << refer\_tile.m\_pos << \textcolor{stringliteral}{"{}  refer\_tile\_getLx "{}}}
+\DoxyCodeLine{00253          << refer\_tile.getRaster()-\/>getLx() << \textcolor{stringliteral}{"{}  y "{}}}
+\DoxyCodeLine{00254          << refer\_tile.getRaster()-\/>getLy();}
+\DoxyCodeLine{00255     \}}
+\DoxyCodeLine{00256   \}}
+\DoxyCodeLine{00257   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ fx処理 -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{00258   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00259     tile.getRaster()-\/>lock();}
+\DoxyCodeLine{00260     \textcolor{keywordflow}{if} (refer\_tile.getRaster() != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{00261       refer\_tile.getRaster()-\/>lock();}
+\DoxyCodeLine{00262     \}}
+\DoxyCodeLine{00263     fx\_(tile.getRaster(), refer\_tile.getRaster(), refer\_mode}
+\DoxyCodeLine{00264 }
+\DoxyCodeLine{00265         ,}
+\DoxyCodeLine{00266         hue\_range, sat\_range, val\_range, mat\_range, random\_seed, near\_blur,}
+\DoxyCodeLine{00267         term\_effective, term\_center, term\_type, camera\_x, camera\_y, camera\_w,}
+\DoxyCodeLine{00268         camera\_h, anti\_alias\_sw  \textcolor{comment}{// -\/-\/> add\_blend\_sw, default is true}}
+\DoxyCodeLine{00269     );}
+\DoxyCodeLine{00270     \textcolor{keywordflow}{if} (refer\_tile.getRaster() != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{00271       refer\_tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00272     \}}
+\DoxyCodeLine{00273     tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00274   \}}
+\DoxyCodeLine{00275   \textcolor{comment}{/* -\/-\/-\/-\/-\/-\/ error処理 -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ */}}
+\DoxyCodeLine{00276   \textcolor{keywordflow}{catch} (std::bad\_alloc \&e) \{}
+\DoxyCodeLine{00277     \textcolor{keywordflow}{if} (refer\_tile.getRaster() != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{00278       refer\_tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00279     \}}
+\DoxyCodeLine{00280     tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00281     \textcolor{keywordflow}{if} (log\_sw) \{}
+\DoxyCodeLine{00282       std::string str(\textcolor{stringliteral}{"{}std::bad\_alloc <"{}});}
+\DoxyCodeLine{00283       str += e.what();}
+\DoxyCodeLine{00284       str += \textcolor{charliteral}{'>'};}
+\DoxyCodeLine{00285     \}}
+\DoxyCodeLine{00286     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00287   \} \textcolor{keywordflow}{catch} (std::exception \&e) \{}
+\DoxyCodeLine{00288     \textcolor{keywordflow}{if} (refer\_tile.getRaster() != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{00289       refer\_tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00290     \}}
+\DoxyCodeLine{00291     tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00292     \textcolor{keywordflow}{if} (log\_sw) \{}
+\DoxyCodeLine{00293       std::string str(\textcolor{stringliteral}{"{}exception <"{}});}
+\DoxyCodeLine{00294       str += e.what();}
+\DoxyCodeLine{00295       str += \textcolor{charliteral}{'>'};}
+\DoxyCodeLine{00296     \}}
+\DoxyCodeLine{00297     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00298   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00299     \textcolor{keywordflow}{if} (refer\_tile.getRaster() != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{00300       refer\_tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00301     \}}
+\DoxyCodeLine{00302     tile.getRaster()-\/>unlock();}
+\DoxyCodeLine{00303     \textcolor{keywordflow}{if} (log\_sw) \{}
+\DoxyCodeLine{00304       std::string str(\textcolor{stringliteral}{"{}other exception"{}});}
+\DoxyCodeLine{00305     \}}
+\DoxyCodeLine{00306     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00307   \}}
+\DoxyCodeLine{00308 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classino__hsv__noise_ab0f208bea2c23997f60a6210c5a36e1d}\label{classino__hsv__noise_ab0f208bea2c23997f60a6210c5a36e1d}} 
+\index{ino\_hsv\_noise@{ino\_hsv\_noise}!doGetBBox@{doGetBBox}}
+\index{doGetBBox@{doGetBBox}!ino\_hsv\_noise@{ino\_hsv\_noise}}
+\doxysubsubsection{\texorpdfstring{doGetBBox()}{doGetBBox()}}
+{\footnotesize\ttfamily bool ino\+\_\+hsv\+\_\+noise\+::do\+Get\+BBox (\begin{DoxyParamCaption}\item[{double}]{frame,  }\item[{\mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{b\+Box,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_raster_fx}{TRaster\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00082                                                        \{}
+\DoxyCodeLine{00083     \textcolor{keywordflow}{if} (this-\/>m\_input.isConnected()) \{}
+\DoxyCodeLine{00084       \textcolor{keywordflow}{return} this-\/>m\_input-\/>doGetBBox(frame, bBox, info);}
+\DoxyCodeLine{00085     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00086       bBox = \mbox{\hyperlink{class_t_rect_t}{TRectD}}();}
+\DoxyCodeLine{00087       \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00088     \}}
+\DoxyCodeLine{00089   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/ino\+\_\+hsv\+\_\+noise.\+cpp\end{DoxyCompactItemize}

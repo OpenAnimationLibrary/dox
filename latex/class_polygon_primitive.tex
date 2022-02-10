@@ -1,0 +1,263 @@
+\hypertarget{class_polygon_primitive}{}\doxysection{Polygon\+Primitive Class Reference}
+\label{class_polygon_primitive}\index{PolygonPrimitive@{PolygonPrimitive}}
+Inheritance diagram for Polygon\+Primitive\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_polygon_primitive}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_polygon_primitive_a6ad947fa95c764d994fb7cba2e6092ec}{Polygon\+Primitive}} (\mbox{\hyperlink{class_primitive_param}{Primitive\+Param}} $\ast$param, \mbox{\hyperlink{class_geometric_tool}{Geometric\+Tool}} $\ast$tool, bool reaster\+Tool)
+\item 
+std\+::string \mbox{\hyperlink{class_polygon_primitive_a92c82ba507e93db4766632851a71430b}{get\+Name}} () const override
+\item 
+\mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$ \mbox{\hyperlink{class_polygon_primitive_aa0381c97f2d00153d99da0c40af3e5a2}{make\+Stroke}} () const override
+\item 
+void \mbox{\hyperlink{class_polygon_primitive_a870a7b545404f491bc38b562f9765d5a}{draw}} () override
+\item 
+void \mbox{\hyperlink{class_polygon_primitive_abb5b710b129c46deae48dfbbec527ebb}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+void \mbox{\hyperlink{class_polygon_primitive_ad60800476c3f3f0a0fe8f7ef98f340a5}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_polygon_primitive_a002eb8dd055439bddb78cab2b3911b1f}{left\+Button\+Up}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+void \mbox{\hyperlink{class_polygon_primitive_ad654524b6077f825f3012f4075eaa6a6}{mouse\+Move}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_polygon_primitive_a6ad947fa95c764d994fb7cba2e6092ec}\label{class_polygon_primitive_a6ad947fa95c764d994fb7cba2e6092ec}} 
+\index{PolygonPrimitive@{PolygonPrimitive}!PolygonPrimitive@{PolygonPrimitive}}
+\index{PolygonPrimitive@{PolygonPrimitive}!PolygonPrimitive@{PolygonPrimitive}}
+\doxysubsubsection{\texorpdfstring{PolygonPrimitive()}{PolygonPrimitive()}}
+{\footnotesize\ttfamily Polygon\+Primitive\+::\+Polygon\+Primitive (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_primitive_param}{Primitive\+Param}} $\ast$}]{param,  }\item[{\mbox{\hyperlink{class_geometric_tool}{Geometric\+Tool}} $\ast$}]{tool,  }\item[{bool}]{reaster\+Tool }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00953       : \mbox{\hyperlink{class_primitive}{Primitive}}(param, tool, reasterTool) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_polygon_primitive_a870a7b545404f491bc38b562f9765d5a}\label{class_polygon_primitive_a870a7b545404f491bc38b562f9765d5a}} 
+\index{PolygonPrimitive@{PolygonPrimitive}!draw@{draw}}
+\index{draw@{draw}!PolygonPrimitive@{PolygonPrimitive}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Polygon\+Primitive\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_primitive}{Primitive}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02745                             \{}
+\DoxyCodeLine{02746   drawSnap();}
+\DoxyCodeLine{02747   \textcolor{keywordflow}{if} (!m\_isEditing \&\& !m\_isPrompting) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{02748   tglColor(m\_isEditing ? m\_color : TPixel32::Green);}
+\DoxyCodeLine{02749 }
+\DoxyCodeLine{02750   \textcolor{keywordtype}{int} edgeCount = m\_param-\/>m\_edgeCount.getValue();}
+\DoxyCodeLine{02751   \textcolor{keywordflow}{if} (edgeCount == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{02752 }
+\DoxyCodeLine{02753   \textcolor{keywordtype}{double} angleDiff = M\_2PI / edgeCount;}
+\DoxyCodeLine{02754   \textcolor{keywordtype}{double} angle     = (3 * M\_PI + angleDiff) * 0.5;}
+\DoxyCodeLine{02755 }
+\DoxyCodeLine{02756   glBegin(GL\_LINE\_LOOP);}
+\DoxyCodeLine{02757   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < edgeCount; i++) \{}
+\DoxyCodeLine{02758     tglVertex(m\_centre + \mbox{\hyperlink{class_t_point_t}{TPointD}}(cos(angle) * m\_radius, sin(angle) * m\_radius));}
+\DoxyCodeLine{02759     angle += angleDiff;}
+\DoxyCodeLine{02760   \}}
+\DoxyCodeLine{02761   glEnd();}
+\DoxyCodeLine{02762 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_polygon_primitive_a92c82ba507e93db4766632851a71430b}\label{class_polygon_primitive_a92c82ba507e93db4766632851a71430b}} 
+\index{PolygonPrimitive@{PolygonPrimitive}!getName@{getName}}
+\index{getName@{getName}!PolygonPrimitive@{PolygonPrimitive}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily std\+::string Polygon\+Primitive\+::get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_primitive}{Primitive}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00955                                      \{}
+\DoxyCodeLine{00956     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}Polygon"{}};}
+\DoxyCodeLine{00957   \}  \textcolor{comment}{// W\_ToolOptions\_ShapePolygon"{};\}}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_polygon_primitive_abb5b710b129c46deae48dfbbec527ebb}\label{class_polygon_primitive_abb5b710b129c46deae48dfbbec527ebb}} 
+\index{PolygonPrimitive@{PolygonPrimitive}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!PolygonPrimitive@{PolygonPrimitive}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Polygon\+Primitive\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_primitive}{Primitive}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02766                                                                              \{}
+\DoxyCodeLine{02767   \mbox{\hyperlink{class_t_application}{TTool::Application}} *app = TTool::getApplication();}
+\DoxyCodeLine{02768   \textcolor{keywordflow}{if} (!app) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{02769 }
+\DoxyCodeLine{02770   \textcolor{keywordflow}{if} (app-\/>getCurrentObject()-\/>isSpline()) \{}
+\DoxyCodeLine{02771     m\_isEditing = \textcolor{keyword}{true};}
+\DoxyCodeLine{02772     m\_color     = TPixel32::Red;}
+\DoxyCodeLine{02773   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{02774     \textcolor{keyword}{const} \mbox{\hyperlink{class_t_color_style}{TColorStyle}} *style = app-\/>getCurrentLevelStyle();}
+\DoxyCodeLine{02775     \textcolor{keywordflow}{if} (style) \{}
+\DoxyCodeLine{02776       m\_isEditing = style-\/>\mbox{\hyperlink{class_t_color_style_ad30252c2cfc4e9d5d09b954d74b97b00}{isStrokeStyle}}();}
+\DoxyCodeLine{02777       m\_color     = style-\/>\mbox{\hyperlink{class_t_color_style_af5907c6146db5067fcf000edeb8e403b}{getAverageColor}}();}
+\DoxyCodeLine{02778     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{02779       m\_isEditing = \textcolor{keyword}{false};}
+\DoxyCodeLine{02780       m\_color     = TPixel32::Black;}
+\DoxyCodeLine{02781     \}}
+\DoxyCodeLine{02782   \}}
+\DoxyCodeLine{02783 }
+\DoxyCodeLine{02784   \textcolor{keywordflow}{if} (!m\_isEditing) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{02785 }
+\DoxyCodeLine{02786   m\_centre = getSnap(pos);}
+\DoxyCodeLine{02787   m\_radius = 0;}
+\DoxyCodeLine{02788 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_polygon_primitive_ad60800476c3f3f0a0fe8f7ef98f340a5}\label{class_polygon_primitive_ad60800476c3f3f0a0fe8f7ef98f340a5}} 
+\index{PolygonPrimitive@{PolygonPrimitive}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!PolygonPrimitive@{PolygonPrimitive}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Polygon\+Primitive\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_primitive}{Primitive}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02793                                                             \{}
+\DoxyCodeLine{02794   \textcolor{keywordflow}{if} (!m\_isEditing) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{02795   \mbox{\hyperlink{class_t_point_t}{TPointD}} newPos = calculateSnap(pos);}
+\DoxyCodeLine{02796   newPos         = checkGuideSnapping(pos);}
+\DoxyCodeLine{02797   m\_radius       = tdistance(m\_centre, newPos);}
+\DoxyCodeLine{02798 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_polygon_primitive_a002eb8dd055439bddb78cab2b3911b1f}\label{class_polygon_primitive_a002eb8dd055439bddb78cab2b3911b1f}} 
+\index{PolygonPrimitive@{PolygonPrimitive}!leftButtonUp@{leftButtonUp}}
+\index{leftButtonUp@{leftButtonUp}!PolygonPrimitive@{PolygonPrimitive}}
+\doxysubsubsection{\texorpdfstring{leftButtonUp()}{leftButtonUp()}}
+{\footnotesize\ttfamily void Polygon\+Primitive\+::left\+Button\+Up (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_primitive}{Primitive}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02856                                                                            \{}
+\DoxyCodeLine{02857   \textcolor{keywordflow}{if} (!m\_isEditing) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{02858   m\_isEditing = \textcolor{keyword}{false};}
+\DoxyCodeLine{02859 }
+\DoxyCodeLine{02860   m\_tool-\/>addStroke();}
+\DoxyCodeLine{02861 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_polygon_primitive_aa0381c97f2d00153d99da0c40af3e5a2}\label{class_polygon_primitive_aa0381c97f2d00153d99da0c40af3e5a2}} 
+\index{PolygonPrimitive@{PolygonPrimitive}!makeStroke@{makeStroke}}
+\index{makeStroke@{makeStroke}!PolygonPrimitive@{PolygonPrimitive}}
+\doxysubsubsection{\texorpdfstring{makeStroke()}{makeStroke()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$ Polygon\+Primitive\+::make\+Stroke (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_primitive}{Primitive}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02802                                             \{}
+\DoxyCodeLine{02803   \textcolor{keywordtype}{double} thick = getThickness();}
+\DoxyCodeLine{02804 }
+\DoxyCodeLine{02805   \textcolor{keywordtype}{int} edgeCount = m\_param-\/>m\_edgeCount.getValue();}
+\DoxyCodeLine{02806   \textcolor{keywordflow}{if} (edgeCount == 0) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{02807 }
+\DoxyCodeLine{02808   \textcolor{keywordtype}{double} angleDiff = M\_2PI / (double)edgeCount;}
+\DoxyCodeLine{02809   \textcolor{keywordtype}{double} angle     = (3 * M\_PI + angleDiff) * 0.5;}
+\DoxyCodeLine{02810 }
+\DoxyCodeLine{02811   \mbox{\hyperlink{class_t_stroke}{TStroke}} *stroke = 0;}
+\DoxyCodeLine{02812   \textcolor{keywordflow}{if} (m\_param-\/>m\_targetType \& TTool::Vectors) \{}
+\DoxyCodeLine{02813     std::vector<TThickPoint> points(4 * edgeCount + 1);}
+\DoxyCodeLine{02814     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{02815     \textcolor{comment}{// Posiziono gli angoli}}
+\DoxyCodeLine{02816     \textcolor{keywordflow}{for} (i = 0; i <= (int)points.size(); i += 4) \{}
+\DoxyCodeLine{02817       points[i] = \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(}
+\DoxyCodeLine{02818           m\_centre + \mbox{\hyperlink{class_t_point_t}{TPointD}}(cos(angle) * m\_radius, sin(angle) * m\_radius),}
+\DoxyCodeLine{02819           thick);}
+\DoxyCodeLine{02820       angle += angleDiff;}
+\DoxyCodeLine{02821     \}}
+\DoxyCodeLine{02822     \textcolor{comment}{// posiziono i punti medi e i punti per gestire la linearita'}}
+\DoxyCodeLine{02823     \textcolor{keywordflow}{for} (i = 0; i < (int)points.size() -\/ 1; i += 4) \{}
+\DoxyCodeLine{02824       \mbox{\hyperlink{class_t_point_t}{TPointD}} vertex           = convert(points[i]);}
+\DoxyCodeLine{02825       \mbox{\hyperlink{class_t_point_t}{TPointD}} nextVertex       = convert(points[i + 4]);}
+\DoxyCodeLine{02826       \mbox{\hyperlink{class_t_point_t}{TPointD}} speed            = computeSpeed(vertex, nextVertex, 0.01);}
+\DoxyCodeLine{02827       \mbox{\hyperlink{class_t_point_t}{TPointD}} speedOutPoint    = vertex + speed;}
+\DoxyCodeLine{02828       \mbox{\hyperlink{class_t_point_t}{TPointD}} speedInNextPoint = nextVertex -\/ speed;}
+\DoxyCodeLine{02829       \mbox{\hyperlink{class_t_point_t}{TPointD}} middlePoint      = 0.5 * (speedOutPoint + speedInNextPoint);}
+\DoxyCodeLine{02830       points[i + 1]            = \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(speedOutPoint, thick);}
+\DoxyCodeLine{02831       points[i + 2]            = \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(middlePoint, thick);}
+\DoxyCodeLine{02832       points[i + 3]            = \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(speedInNextPoint, thick);}
+\DoxyCodeLine{02833     \}}
+\DoxyCodeLine{02834     stroke = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_stroke}{TStroke}}(points);}
+\DoxyCodeLine{02835   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_param-\/>m\_targetType \& \mbox{\hyperlink{class_t_tool_adf0ea3a7f9d003f761fe57638dd6eff4a68b7e2c2f25d134cb0debc4548d23ce1}{TTool::ToonzImage}} ||}
+\DoxyCodeLine{02836              m\_param-\/>m\_targetType \& \mbox{\hyperlink{class_t_tool_adf0ea3a7f9d003f761fe57638dd6eff4a89c2e7968afae376f0be7abeff061859}{TTool::RasterImage}}) \{}
+\DoxyCodeLine{02837     std::vector<TThickPoint> points(edgeCount + edgeCount + 1);}
+\DoxyCodeLine{02838     points[0] = \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(}
+\DoxyCodeLine{02839         m\_centre + \mbox{\hyperlink{class_t_point_t}{TPointD}}(cos(angle) * m\_radius, sin(angle) * m\_radius),}
+\DoxyCodeLine{02840         thick);}
+\DoxyCodeLine{02841     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i <= edgeCount; i++) \{}
+\DoxyCodeLine{02842       angle += angleDiff;}
+\DoxyCodeLine{02843       points[i + i] = \mbox{\hyperlink{class_t_thick_point}{TThickPoint}}(}
+\DoxyCodeLine{02844           m\_centre + \mbox{\hyperlink{class_t_point_t}{TPointD}}(cos(angle) * m\_radius, sin(angle) * m\_radius),}
+\DoxyCodeLine{02845           thick);}
+\DoxyCodeLine{02846       points[i + i -\/ 1] = (points[i + i -\/ 2] + points[i + i]) * 0.5;}
+\DoxyCodeLine{02847     \}}
+\DoxyCodeLine{02848     stroke = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_stroke}{TStroke}}(points);}
+\DoxyCodeLine{02849   \}}
+\DoxyCodeLine{02850   stroke-\/>\mbox{\hyperlink{class_t_stroke_afa2c66ae11a70e68b3de3ce0b4cfb049}{setSelfLoop}}();}
+\DoxyCodeLine{02851   \textcolor{keywordflow}{return} stroke;}
+\DoxyCodeLine{02852 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_polygon_primitive_ad654524b6077f825f3012f4075eaa6a6}\label{class_polygon_primitive_ad654524b6077f825f3012f4075eaa6a6}} 
+\index{PolygonPrimitive@{PolygonPrimitive}!mouseMove@{mouseMove}}
+\index{mouseMove@{mouseMove}!PolygonPrimitive@{PolygonPrimitive}}
+\doxysubsubsection{\texorpdfstring{mouseMove()}{mouseMove()}}
+{\footnotesize\ttfamily void Polygon\+Primitive\+::mouse\+Move (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_primitive}{Primitive}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02865                                                                          \{}
+\DoxyCodeLine{02866   \mbox{\hyperlink{class_t_point_t}{TPointD}} newPos = calculateSnap(pos);}
+\DoxyCodeLine{02867   newPos         = checkGuideSnapping(pos);}
+\DoxyCodeLine{02868   m\_tool-\/>\mbox{\hyperlink{class_t_tool_a3e791336c642542c5648aa8ea86e2348}{invalidate}}();}
+\DoxyCodeLine{02869 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/geometrictool.\+cpp\end{DoxyCompactItemize}

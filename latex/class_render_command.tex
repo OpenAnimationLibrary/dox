@@ -1,0 +1,561 @@
+\hypertarget{class_render_command}{}\doxysection{Render\+Command Class Reference}
+\label{class_render_command}\index{RenderCommand@{RenderCommand}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_render_command_ae9478a6c901774d759c2909c459ae173}{init}} (bool is\+Preview)
+\item 
+void \mbox{\hyperlink{class_render_command_a719be4812e9e27958f2dce68d4a8feff}{raster\+Render}} (bool is\+Preview)
+\item 
+void \mbox{\hyperlink{class_render_command_a05c1d0a15649217b5218597719cff23e}{multimedia\+Render}} ()
+\begin{DoxyCompactList}\small\item\em Specialized render invocation for multimedia rendering. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_render_command_aa18238bc4ddc0ab09eb17585a52ce148}{on\+Render}} ()
+\item 
+void \mbox{\hyperlink{class_render_command_a0045283ec09c6e344682fe5f4e947e46}{on\+Fast\+Render}} ()
+\item 
+void \mbox{\hyperlink{class_render_command_a1ccd5e8b39ac86d467b723ef2c5698fc}{on\+Preview}} ()
+\item 
+void \mbox{\hyperlink{class_render_command_aad7d8dcaac8c807cf8505a371b27cbee}{do\+Render}} (bool is\+Preview)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_render_command_a42ced7d7bb157404ca185c5ce412b3f4}{reset\+Bg\+Color}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_render_command_af12021a0064de4456d18797d24618dc7}\label{class_render_command_af12021a0064de4456d18797d24618dc7}} 
+\index{RenderCommand@{RenderCommand}!RenderCommand@{RenderCommand}}
+\index{RenderCommand@{RenderCommand}!RenderCommand@{RenderCommand}}
+\doxysubsubsection{\texorpdfstring{RenderCommand()}{RenderCommand()}}
+{\footnotesize\ttfamily Render\+Command\+::\+Render\+Command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00206       : m\_r0(0)}
+\DoxyCodeLine{00207       , m\_r1(-\/1)}
+\DoxyCodeLine{00208       , m\_step(1)}
+\DoxyCodeLine{00209       , m\_numFrames(0)}
+\DoxyCodeLine{00210       , m\_r(0)}
+\DoxyCodeLine{00211       , m\_stepd(1)}
+\DoxyCodeLine{00212       , m\_oldCameraRes(0, 0)}
+\DoxyCodeLine{00213       , m\_timeStretchFactor(1)}
+\DoxyCodeLine{00214       , m\_multimediaRender(0) \{}
+\DoxyCodeLine{00215     setCommandHandler(\textcolor{stringliteral}{"{}MI\_Render"{}}, \textcolor{keyword}{this}, \&RenderCommand::onRender);}
+\DoxyCodeLine{00216     setCommandHandler(\textcolor{stringliteral}{"{}MI\_FastRender"{}}, \textcolor{keyword}{this}, \&RenderCommand::onFastRender);}
+\DoxyCodeLine{00217     setCommandHandler(\textcolor{stringliteral}{"{}MI\_Preview"{}}, \textcolor{keyword}{this}, \&RenderCommand::onPreview);}
+\DoxyCodeLine{00218   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_render_command_aad7d8dcaac8c807cf8505a371b27cbee}\label{class_render_command_aad7d8dcaac8c807cf8505a371b27cbee}} 
+\index{RenderCommand@{RenderCommand}!doRender@{doRender}}
+\index{doRender@{doRender}!RenderCommand@{RenderCommand}}
+\doxysubsubsection{\texorpdfstring{doRender()}{doRender()}}
+{\footnotesize\ttfamily void Render\+Command\+::do\+Render (\begin{DoxyParamCaption}\item[{bool}]{is\+Preview }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00822                                            \{}
+\DoxyCodeLine{00823   \textcolor{keywordtype}{bool} isWritable = \textcolor{keyword}{true};}
+\DoxyCodeLine{00824   \textcolor{keywordtype}{bool} isMultiFrame;}
+\DoxyCodeLine{00825   \textcolor{comment}{/*-\/-\/}}
+\DoxyCodeLine{00826 \textcolor{comment}{   * 初期化処理。フレーム範囲の計算や、Renderの場合はOutputSettingsから保存先パスも作る}}
+\DoxyCodeLine{00827 \textcolor{comment}{   * -\/-\/*/}}
+\DoxyCodeLine{00828   \textcolor{keywordflow}{if} (!init(isPreview)) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00829   \textcolor{keywordflow}{if} (m\_fp.\mbox{\hyperlink{class_t_file_path_a698bbf714436eb6923359044900cde2b}{getDots}}() == \textcolor{stringliteral}{"{}."{}}) \{}
+\DoxyCodeLine{00830     isMultiFrame = \textcolor{keyword}{false};}
+\DoxyCodeLine{00831     \mbox{\hyperlink{class_t_file_status}{TFileStatus}} fs(m\_fp);}
+\DoxyCodeLine{00832     \textcolor{keywordflow}{if} (fs.doesExist()) isWritable = fs.isWritable();}
+\DoxyCodeLine{00833   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00834     isMultiFrame  = \textcolor{keyword}{true};}
+\DoxyCodeLine{00835     \mbox{\hyperlink{class_t_file_path}{TFilePath}} dir = m\_fp.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}();}
+\DoxyCodeLine{00836     QDir qDir(QString::fromStdWString(dir.getWideString()));}
+\DoxyCodeLine{00837     QString levelName =}
+\DoxyCodeLine{00838         QRegExp::escape(QString::fromStdWString(m\_fp.getWideName()));}
+\DoxyCodeLine{00839     QString levelType = QString::fromStdString(m\_fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}());}
+\DoxyCodeLine{00840     QString exp(levelName + \textcolor{stringliteral}{"{}.[0-\/9]\{1,4\}."{}} + levelType);}
+\DoxyCodeLine{00841     QRegExp regExp(exp);}
+\DoxyCodeLine{00842     QStringList list        = qDir.entryList(QDir::Files);}
+\DoxyCodeLine{00843     QStringList livelFrames = list.filter(regExp);}
+\DoxyCodeLine{00844 }
+\DoxyCodeLine{00845     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00846     \textcolor{keywordflow}{for} (i = 0; i < livelFrames.size() \&\& isWritable; i++) \{}
+\DoxyCodeLine{00847       \mbox{\hyperlink{class_t_file_path}{TFilePath}} frame = dir + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(livelFrames[i].toStdWString());}
+\DoxyCodeLine{00848       \textcolor{keywordflow}{if} (frame.isEmpty() || !frame.isAbsolute()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00849       \mbox{\hyperlink{class_t_file_status}{TFileStatus}} fs(frame);}
+\DoxyCodeLine{00850       isWritable = fs.isWritable();}
+\DoxyCodeLine{00851     \}}
+\DoxyCodeLine{00852   \}}
+\DoxyCodeLine{00853   \textcolor{keywordflow}{if} (!isWritable) \{}
+\DoxyCodeLine{00854     QString str = QObject::tr(}
+\DoxyCodeLine{00855         \textcolor{stringliteral}{"{}It is not possible to write the output:  the file"{}}, \textcolor{stringliteral}{"{}RenderCommand"{}});}
+\DoxyCodeLine{00856     str += isMultiFrame ? QObject::tr(\textcolor{stringliteral}{"{}s are read only."{}}, \textcolor{stringliteral}{"{}RenderCommand"{}})}
+\DoxyCodeLine{00857                         : QObject::tr(\textcolor{stringliteral}{"{} is read only."{}}, \textcolor{stringliteral}{"{}RenderCommand"{}});}
+\DoxyCodeLine{00858     DVGui::warning(str);}
+\DoxyCodeLine{00859     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00860   \}}
+\DoxyCodeLine{00861 }
+\DoxyCodeLine{00862   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = 0;}
+\DoxyCodeLine{00863   \mbox{\hyperlink{class_t_camera}{TCamera}} *camera   = 0;}
+\DoxyCodeLine{00864 }
+\DoxyCodeLine{00865   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00866     \textcolor{comment}{/*-\/-\/ Xsheetノードに繋がっている各ラインごとに計算するモード。}}
+\DoxyCodeLine{00867 \textcolor{comment}{            MultipleRender で Schematic Flows または Fx Schematic Terminal Nodes}}
+\DoxyCodeLine{00868 \textcolor{comment}{    が選択されている場合}}
+\DoxyCodeLine{00869 \textcolor{comment}{    -\/-\/*/}}
+\DoxyCodeLine{00870     \textcolor{keywordflow}{if} (m\_multimediaRender)}
+\DoxyCodeLine{00871       \mbox{\hyperlink{class_render_command_a05c1d0a15649217b5218597719cff23e}{multimediaRender}}();}
+\DoxyCodeLine{00872 }
+\DoxyCodeLine{00873     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00874       \textcolor{comment}{/*-\/-\/ 通常のRendering -\/-\/*/}}
+\DoxyCodeLine{00875       rasterRender(isPreview);}
+\DoxyCodeLine{00876   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{00877     DVGui::warning(QString::fromStdString(::to\_string(e.getMessage())));}
+\DoxyCodeLine{00878   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00879     DVGui::warning(}
+\DoxyCodeLine{00880         QObject::tr(\textcolor{stringliteral}{"{}It is not possible to complete the rendering."{}}));}
+\DoxyCodeLine{00881   \}}
+\DoxyCodeLine{00882 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_command_ae9478a6c901774d759c2909c459ae173}\label{class_render_command_ae9478a6c901774d759c2909c459ae173}} 
+\index{RenderCommand@{RenderCommand}!init@{init}}
+\index{init@{init}!RenderCommand@{RenderCommand}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily bool Render\+Command\+::init (\begin{DoxyParamCaption}\item[{bool}]{is\+Preview }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00234                                        \{}
+\DoxyCodeLine{00235   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene       = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00236   \mbox{\hyperlink{class_t_scene_properties}{TSceneProperties}} *sprop = scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}();}
+\DoxyCodeLine{00237   \textcolor{comment}{/*-\/-\/ Preview/Renderに応じてそれぞれのSettingを取得 -\/-\/*/}}
+\DoxyCodeLine{00238   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}} \&outputSettings = isPreview ? *sprop-\/>\mbox{\hyperlink{class_t_scene_properties_a0b905e0ea16e27aa5e67da31e469026e}{getPreviewProperties}}()}
+\DoxyCodeLine{00239                                                 : *sprop-\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}();}
+\DoxyCodeLine{00240   outputSettings.\mbox{\hyperlink{class_t_output_properties_aae127cbd8b19eaed0b0fbaf589349176}{getRange}}(m\_r0, m\_r1, m\_step);}
+\DoxyCodeLine{00241   \textcolor{comment}{/*-\/-\/ シーン全体のレンダリングの場合、m\_r1をScene長に設定 -\/-\/*/}}
+\DoxyCodeLine{00242   \textcolor{keywordflow}{if} (m\_r0 == 0 \&\& m\_r1 == -\/1) \{}
+\DoxyCodeLine{00243     m\_r0 = 0;}
+\DoxyCodeLine{00244     m\_r1 = scene-\/>\mbox{\hyperlink{class_toonz_scene_ab5cd3ad6f894b1acc5656ca747a80627}{getFrameCount}}() -\/ 1;}
+\DoxyCodeLine{00245   \}}
+\DoxyCodeLine{00246   \textcolor{keywordflow}{if} (m\_r0 < 0) m\_r0                       = 0;}
+\DoxyCodeLine{00247   \textcolor{keywordflow}{if} (m\_r1 >= scene-\/>\mbox{\hyperlink{class_toonz_scene_ab5cd3ad6f894b1acc5656ca747a80627}{getFrameCount}}()) m\_r1 = scene-\/>\mbox{\hyperlink{class_toonz_scene_ab5cd3ad6f894b1acc5656ca747a80627}{getFrameCount}}() -\/ 1;}
+\DoxyCodeLine{00248   \textcolor{keywordflow}{if} (m\_r1 < m\_r0) \{}
+\DoxyCodeLine{00249     DVGui::warning(QObject::tr(}
+\DoxyCodeLine{00250         \textcolor{stringliteral}{"{}The command cannot be executed because the scene is empty."{}}));}
+\DoxyCodeLine{00251     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00252     \textcolor{comment}{// throw TException("{}empty scene"{});}}
+\DoxyCodeLine{00253     \textcolor{comment}{// non so perche', ma termina il programma}}
+\DoxyCodeLine{00254     \textcolor{comment}{// nonostante il try all'inizio}}
+\DoxyCodeLine{00255   \}}
+\DoxyCodeLine{00256 }
+\DoxyCodeLine{00257   \textcolor{comment}{// Initialize the preview case}}
+\DoxyCodeLine{00258 }
+\DoxyCodeLine{00259   \textcolor{comment}{/*TRenderSettings rs = sprop-\/>getPreviewProperties()-\/>getRenderSettings();}}
+\DoxyCodeLine{00260 \textcolor{comment}{TRenderSettings rso = sprop-\/>getOutputProperties()-\/>getRenderSettings();}}
+\DoxyCodeLine{00261 \textcolor{comment}{rs.m\_stereoscopic=true;}}
+\DoxyCodeLine{00262 \textcolor{comment}{rs.m\_stereoscopicShift=0.05;}}
+\DoxyCodeLine{00263 \textcolor{comment}{rso.m\_stereoscopic=true;}}
+\DoxyCodeLine{00264 \textcolor{comment}{rso.m\_stereoscopicShift=0.05;}}
+\DoxyCodeLine{00265 \textcolor{comment}{sprop-\/>getPreviewProperties()-\/>setRenderSettings(rs);}}
+\DoxyCodeLine{00266 \textcolor{comment}{sprop-\/>getOutputProperties()-\/>setRenderSettings(rso);*/}}
+\DoxyCodeLine{00267 }
+\DoxyCodeLine{00268   \textcolor{keywordflow}{if} (isPreview) \{}
+\DoxyCodeLine{00269     \textcolor{comment}{/*-\/-\/}}
+\DoxyCodeLine{00270 \textcolor{comment}{     * PreviewではTimeStretchを考慮しないので、そのままフレーム値を格納してゆく}}
+\DoxyCodeLine{00271 \textcolor{comment}{     * -\/-\/*/}}
+\DoxyCodeLine{00272     m\_numFrames        = (int)(m\_r1 -\/ m\_r0 + 1);}
+\DoxyCodeLine{00273     m\_r                = m\_r0;}
+\DoxyCodeLine{00274     m\_stepd            = m\_step;}
+\DoxyCodeLine{00275     m\_multimediaRender = 0;}
+\DoxyCodeLine{00276     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00277   \}}
+\DoxyCodeLine{00278 }
+\DoxyCodeLine{00279   \textcolor{comment}{// Full render case}}
+\DoxyCodeLine{00280 }
+\DoxyCodeLine{00281   \textcolor{comment}{// Read the output filepath}}
+\DoxyCodeLine{00282   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp = outputSettings.\mbox{\hyperlink{class_t_output_properties_ab082a7e84177a558484d648215e4b4f7}{getPath}}();}
+\DoxyCodeLine{00283 }
+\DoxyCodeLine{00284   \textcolor{comment}{// you cannot render an untitled scene to scene folder}}
+\DoxyCodeLine{00285   \textcolor{keywordflow}{if} (scene-\/>\mbox{\hyperlink{class_toonz_scene_a53cbaf09f551658479eb743e153ab6bc}{isUntitled}}() \&\& \mbox{\hyperlink{class_t_file_path}{TFilePath}}(\textcolor{stringliteral}{"{}\$scenefolder"{}}).isAncestorOf(fp)) \{}
+\DoxyCodeLine{00286     DVGui::warning(}
+\DoxyCodeLine{00287         QObject::tr(\textcolor{stringliteral}{"{}The scene is not yet saved and the output destination is "{}}}
+\DoxyCodeLine{00288                     \textcolor{stringliteral}{"{}set to \$scenefolder.\(\backslash\)nSave the scene first."{}}));}
+\DoxyCodeLine{00289     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00290   \}}
+\DoxyCodeLine{00291 }
+\DoxyCodeLine{00292   \textcolor{comment}{/*-\/-\/ ファイル名が指定されていない場合は、シーン名を出力ファイル名にする -\/-\/*/}}
+\DoxyCodeLine{00293   \textcolor{keywordflow}{if} (fp.getWideName() == L\textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{00294     fp = fp.\mbox{\hyperlink{class_t_file_path_a3ebf9ced558cfef97a60bba536b23c6f}{withName}}(scene-\/>\mbox{\hyperlink{class_toonz_scene_ad42b52b671b094f66e003c4b7ebefd45}{getScenePath}}().\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}());}
+\DoxyCodeLine{00295   \textcolor{comment}{/*-\/-\/ ラスタ画像の場合、ファイル名にフレーム番号を追加 -\/-\/*/}}
+\DoxyCodeLine{00296   \textcolor{keywordflow}{if} (TFileType::getInfo(fp) == TFileType::RASTER\_IMAGE ||}
+\DoxyCodeLine{00297       fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}pct"{}} || fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}pic"{}} ||}
+\DoxyCodeLine{00298       fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}pict"{}})  \textcolor{comment}{// pct e' un formato"{}livello"{} (ha i settings di}}
+\DoxyCodeLine{00299                                \textcolor{comment}{// quicktime) ma fatto di diversi frames}}
+\DoxyCodeLine{00300     fp = fp.\mbox{\hyperlink{class_t_file_path_a12f35b225e1882372ad7e02ad7fce543}{withFrame}}(TFrameId::EMPTY\_FRAME);}
+\DoxyCodeLine{00301   fp   = scene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(fp);}
+\DoxyCodeLine{00302   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(fp.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}()).doesExist()) \{}
+\DoxyCodeLine{00303     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00304       \mbox{\hyperlink{class_t_file_path}{TFilePath}} parent = fp.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}();}
+\DoxyCodeLine{00305       TSystem::mkDir(parent);}
+\DoxyCodeLine{00306       DvDirModel::instance()-\/>refreshFolder(parent.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}());}
+\DoxyCodeLine{00307     \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{00308       DVGui::warning(}
+\DoxyCodeLine{00309           QObject::tr(\textcolor{stringliteral}{"{}It is not possible to create folder : \%1"{}})}
+\DoxyCodeLine{00310               .arg(QString::fromStdString(::to\_string(e.getMessage()))));}
+\DoxyCodeLine{00311       \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00312     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00313       DVGui::warning(QObject::tr(\textcolor{stringliteral}{"{}It is not possible to create a folder."{}}));}
+\DoxyCodeLine{00314       \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00315     \}}
+\DoxyCodeLine{00316   \}}
+\DoxyCodeLine{00317   m\_fp = fp;}
+\DoxyCodeLine{00318 }
+\DoxyCodeLine{00319   \textcolor{comment}{// Retrieve camera infos}}
+\DoxyCodeLine{00320   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_camera}{TCamera}} *camera =}
+\DoxyCodeLine{00321       isPreview ? scene-\/>getCurrentPreviewCamera() : scene-\/>\mbox{\hyperlink{class_toonz_scene_a750b5ab623ccec744013b0c83bf20abc}{getCurrentCamera}}();}
+\DoxyCodeLine{00322   \mbox{\hyperlink{class_t_dimension_t}{TDimension}} cameraSize = camera-\/>\mbox{\hyperlink{class_t_camera_a9a7c573e7a2c397ffae4b747809ea2a5}{getRes}}();}
+\DoxyCodeLine{00323   \mbox{\hyperlink{class_t_point_t}{TPointD}} cameraDpi     = camera-\/>\mbox{\hyperlink{class_t_camera_adf45510b5dc53f6481308ef489fbd5a9}{getDpi}}();}
+\DoxyCodeLine{00324 }
+\DoxyCodeLine{00325   \textcolor{comment}{// Retrieve render interval/step/times}}
+\DoxyCodeLine{00326   \textcolor{keywordtype}{double} stretchTo = (double)outputSettings.\mbox{\hyperlink{class_t_output_properties_afa7c771452b57b50047aa4afc6032cad}{getRenderSettings}}().\mbox{\hyperlink{class_t_render_settings_a6b8313c094bdb0c2ab6902b1f895694e}{m\_timeStretchTo}};}
+\DoxyCodeLine{00327   \textcolor{keywordtype}{double} stretchFrom =}
+\DoxyCodeLine{00328       (double)outputSettings.\mbox{\hyperlink{class_t_output_properties_afa7c771452b57b50047aa4afc6032cad}{getRenderSettings}}().\mbox{\hyperlink{class_t_render_settings_aec1a905d4eec617a546c286480f41b2a}{m\_timeStretchFrom}};}
+\DoxyCodeLine{00329 }
+\DoxyCodeLine{00330   m\_timeStretchFactor = stretchTo / stretchFrom;}
+\DoxyCodeLine{00331   m\_stepd             = m\_step / m\_timeStretchFactor;}
+\DoxyCodeLine{00332 }
+\DoxyCodeLine{00333   \textcolor{keywordtype}{int} stretchedR0 = tfloor(m\_r0 * m\_timeStretchFactor);}
+\DoxyCodeLine{00334   \textcolor{keywordtype}{int} stretchedR1 = tceil((m\_r1 + 1) * m\_timeStretchFactor) -\/ 1;}
+\DoxyCodeLine{00335 }
+\DoxyCodeLine{00336   m\_r         = stretchedR0 / m\_timeStretchFactor;}
+\DoxyCodeLine{00337   m\_numFrames = (stretchedR1 -\/ stretchedR0) / m\_step + 1;}
+\DoxyCodeLine{00338 }
+\DoxyCodeLine{00339   \textcolor{comment}{// Update the multimedia render switch}}
+\DoxyCodeLine{00340   m\_multimediaRender = outputSettings.getMultimediaRendering();}
+\DoxyCodeLine{00341 }
+\DoxyCodeLine{00342   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00343 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_command_a05c1d0a15649217b5218597719cff23e}\label{class_render_command_a05c1d0a15649217b5218597719cff23e}} 
+\index{RenderCommand@{RenderCommand}!multimediaRender@{multimediaRender}}
+\index{multimediaRender@{multimediaRender}!RenderCommand@{RenderCommand}}
+\doxysubsubsection{\texorpdfstring{multimediaRender()}{multimediaRender()}}
+{\footnotesize\ttfamily void Render\+Command\+::multimedia\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Specialized render invocation for multimedia rendering. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00721                                      \{}
+\DoxyCodeLine{00722   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00723   std::string ext   = m\_fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}();}
+\DoxyCodeLine{00724 }
+\DoxyCodeLine{00725 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00726   \textcolor{keywordflow}{if} (ext == \textcolor{stringliteral}{"{}avi"{}}) \{}
+\DoxyCodeLine{00727     \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}} *props =}
+\DoxyCodeLine{00728         scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}()-\/>\mbox{\hyperlink{class_t_output_properties_a9ef174e6f6239219fa563b037246c8d4}{getFileFormatProperties}}(}
+\DoxyCodeLine{00729             ext);}
+\DoxyCodeLine{00730     std::string codecName = props-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(0)-\/>getValueAsString();}
+\DoxyCodeLine{00731     \mbox{\hyperlink{class_t_dimension_t}{TDimension}} res        = scene-\/>\mbox{\hyperlink{class_toonz_scene_a750b5ab623ccec744013b0c83bf20abc}{getCurrentCamera}}()-\/>\mbox{\hyperlink{class_t_camera_a9a7c573e7a2c397ffae4b747809ea2a5}{getRes}}();}
+\DoxyCodeLine{00732     \textcolor{keywordflow}{if} (!AviCodecRestrictions::canWriteMovie(::to\_wstring(codecName), res)) \{}
+\DoxyCodeLine{00733       QString msg(}
+\DoxyCodeLine{00734           QObject::tr(\textcolor{stringliteral}{"{}The resolution of the output camera does not fit with "{}}}
+\DoxyCodeLine{00735                       \textcolor{stringliteral}{"{}the options chosen for the output file format."{}}));}
+\DoxyCodeLine{00736       DVGui::warning(msg);}
+\DoxyCodeLine{00737       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00738     \}}
+\DoxyCodeLine{00739   \}}
+\DoxyCodeLine{00740 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00741 }
+\DoxyCodeLine{00742   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}} *prop = scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}();}
+\DoxyCodeLine{00743 }
+\DoxyCodeLine{00744   \textcolor{comment}{// Build thread count}}
+\DoxyCodeLine{00745   \textcolor{keywordtype}{int} index = prop-\/>getThreadIndex();}
+\DoxyCodeLine{00746 }
+\DoxyCodeLine{00747   \textcolor{keyword}{const} \textcolor{keywordtype}{int} procCount       = TSystem::getProcessorCount();}
+\DoxyCodeLine{00748   \textcolor{keyword}{const} \textcolor{keywordtype}{int} threadCounts[3] = \{1, procCount / 2, procCount\};}
+\DoxyCodeLine{00749 }
+\DoxyCodeLine{00750   \textcolor{keywordtype}{int} threadCount = threadCounts[index];}
+\DoxyCodeLine{00751 }
+\DoxyCodeLine{00752   \textcolor{comment}{// Build raster granularity size}}
+\DoxyCodeLine{00753   index = prop-\/>getMaxTileSizeIndex();}
+\DoxyCodeLine{00754 }
+\DoxyCodeLine{00755   \textcolor{keyword}{const} \textcolor{keywordtype}{int} maxTileSizes[4] = \{}
+\DoxyCodeLine{00756       (std::numeric\_limits<int>::max)(), TOutputProperties::LargeVal,}
+\DoxyCodeLine{00757       TOutputProperties::MediumVal, TOutputProperties::SmallVal\};}
+\DoxyCodeLine{00758 }
+\DoxyCodeLine{00759   \mbox{\hyperlink{class_t_render_settings}{TRenderSettings}} rs = prop-\/>\mbox{\hyperlink{class_t_output_properties_afa7c771452b57b50047aa4afc6032cad}{getRenderSettings}}();}
+\DoxyCodeLine{00760   rs.\mbox{\hyperlink{class_t_render_settings_a4b0770f4a243e1f32a60efefebf0e11b}{m\_maxTileSize}}   = maxTileSizes[index];}
+\DoxyCodeLine{00761 }
+\DoxyCodeLine{00762   \mbox{\hyperlink{class_multimedia_renderer}{MultimediaRenderer}} multimediaRenderer(}
+\DoxyCodeLine{00763       scene, m\_fp, prop-\/>getMultimediaRendering(), threadCount);}
+\DoxyCodeLine{00764   multimediaRenderer.setRenderSettings(rs);}
+\DoxyCodeLine{00765 }
+\DoxyCodeLine{00766   \mbox{\hyperlink{class_t_point_t}{TPointD}} cameraDpi = scene-\/>\mbox{\hyperlink{class_toonz_scene_a750b5ab623ccec744013b0c83bf20abc}{getCurrentCamera}}()-\/>\mbox{\hyperlink{class_t_camera_adf45510b5dc53f6481308ef489fbd5a9}{getDpi}}();}
+\DoxyCodeLine{00767   multimediaRenderer.setDpi(cameraDpi.x, cameraDpi.y);}
+\DoxyCodeLine{00768   multimediaRenderer.enablePrecomputing(\textcolor{keyword}{true});}
+\DoxyCodeLine{00769 }
+\DoxyCodeLine{00770   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_numFrames; ++i, m\_r += m\_stepd)}
+\DoxyCodeLine{00771     multimediaRenderer.addFrame(m\_r);}
+\DoxyCodeLine{00772 }
+\DoxyCodeLine{00773   \mbox{\hyperlink{class_multimedia_progress_bar}{MultimediaProgressBar}} *listener =}
+\DoxyCodeLine{00774       \textcolor{keyword}{new} \mbox{\hyperlink{class_multimedia_progress_bar}{MultimediaProgressBar}}(\&multimediaRenderer);}
+\DoxyCodeLine{00775   QObject::connect(listener, SIGNAL(canceled()), \&multimediaRenderer,}
+\DoxyCodeLine{00776                    SLOT(onCanceled()));}
+\DoxyCodeLine{00777   multimediaRenderer.addListener(listener);}
+\DoxyCodeLine{00778 }
+\DoxyCodeLine{00779   multimediaRenderer.start();}
+\DoxyCodeLine{00780 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00506}{Multimedia\+Renderer\+::add\+Frame()}}, \mbox{\hyperlink{l01472}{Toonz\+Scene\+::get\+Current\+Camera()}}, \mbox{\hyperlink{l00106}{TApp\+::get\+Current\+Scene()}}, \mbox{\hyperlink{l00062}{TCamera\+::get\+Dpi()}}, \mbox{\hyperlink{l00156}{TOutput\+Properties\+::get\+File\+Format\+Properties()}}, \mbox{\hyperlink{l00145}{TScene\+Properties\+::get\+Output\+Properties()}}, \mbox{\hyperlink{l00087}{Toonz\+Scene\+::get\+Properties()}}, \mbox{\hyperlink{l00067}{TProperty\+Group\+::get\+Property()}}, \mbox{\hyperlink{l00181}{TOutput\+Properties\+::get\+Render\+Settings()}}, \mbox{\hyperlink{l00072}{TCamera\+::get\+Res()}}, \mbox{\hyperlink{l00225}{TFile\+Path\+::get\+Type()}}, \mbox{\hyperlink{l00215}{TApp\+::instance()}}, \mbox{\hyperlink{l00120}{TRender\+Settings\+::m\+\_\+max\+Tile\+Size}}, and \mbox{\hyperlink{l00533}{Multimedia\+Renderer\+::start()}}.
+
+\mbox{\Hypertarget{class_render_command_a0045283ec09c6e344682fe5f4e947e46}\label{class_render_command_a0045283ec09c6e344682fe5f4e947e46}} 
+\index{RenderCommand@{RenderCommand}!onFastRender@{onFastRender}}
+\index{onFastRender@{onFastRender}!RenderCommand@{RenderCommand}}
+\doxysubsubsection{\texorpdfstring{onFastRender()}{onFastRender()}}
+{\footnotesize\ttfamily void Render\+Command\+::on\+Fast\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00786                                  \{}
+\DoxyCodeLine{00787   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}} *prop = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00788                                 -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00789                                 -\/>getScene()}
+\DoxyCodeLine{00790                                 -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00791                                 -\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}();}
+\DoxyCodeLine{00792   QString sceneName = QString::fromStdWString(}
+\DoxyCodeLine{00793       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentScene()-\/>getScene()-\/>getSceneName());}
+\DoxyCodeLine{00794   QString location = Preferences::instance()-\/>getFastRenderPath();}
+\DoxyCodeLine{00795   \textcolor{keywordflow}{if} (location == \textcolor{stringliteral}{"{}desktop"{}} || location == \textcolor{stringliteral}{"{}Desktop"{}}) \{}
+\DoxyCodeLine{00796     location =}
+\DoxyCodeLine{00797         QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);}
+\DoxyCodeLine{00798   \}}
+\DoxyCodeLine{00799   \mbox{\hyperlink{class_t_file_path}{TFilePath}} path     = \mbox{\hyperlink{class_t_file_path}{TFilePath}}(location) + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(sceneName + \textcolor{stringliteral}{"{}.mp4"{}});}
+\DoxyCodeLine{00800   \mbox{\hyperlink{class_t_file_path}{TFilePath}} currPath = prop-\/>\mbox{\hyperlink{class_t_output_properties_ab082a7e84177a558484d648215e4b4f7}{getPath}}();}
+\DoxyCodeLine{00801 }
+\DoxyCodeLine{00802   QStringList formats;}
+\DoxyCodeLine{00803   TImageWriter::getSupportedFormats(formats, \textcolor{keyword}{true});}
+\DoxyCodeLine{00804   TLevelWriter::getSupportedFormats(formats, \textcolor{keyword}{true});}
+\DoxyCodeLine{00805   Tiio::Writer::getSupportedFormats(formats, \textcolor{keyword}{true});}
+\DoxyCodeLine{00806   \textcolor{keywordflow}{if} (!formats.contains(\textcolor{stringliteral}{"{}mp4"{}})) \{}
+\DoxyCodeLine{00807     QString msg = QObject::tr(}
+\DoxyCodeLine{00808         \textcolor{stringliteral}{"{}FFmpeg not found, please set the location in the Preferences and "{}}}
+\DoxyCodeLine{00809         \textcolor{stringliteral}{"{}restart."{}});}
+\DoxyCodeLine{00810     DVGui::warning(msg);}
+\DoxyCodeLine{00811     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00812   \}}
+\DoxyCodeLine{00813   prop-\/>\mbox{\hyperlink{class_t_output_properties_abd2cedbcd56198c5d6e9e9ffcd51767e}{setPath}}(path);}
+\DoxyCodeLine{00814   doRender(\textcolor{keyword}{false});}
+\DoxyCodeLine{00815   prop-\/>\mbox{\hyperlink{class_t_output_properties_abd2cedbcd56198c5d6e9e9ffcd51767e}{setPath}}(currPath);}
+\DoxyCodeLine{00816 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_command_a1ccd5e8b39ac86d467b723ef2c5698fc}\label{class_render_command_a1ccd5e8b39ac86d467b723ef2c5698fc}} 
+\index{RenderCommand@{RenderCommand}!onPreview@{onPreview}}
+\index{onPreview@{onPreview}!RenderCommand@{RenderCommand}}
+\doxysubsubsection{\texorpdfstring{onPreview()}{onPreview()}}
+{\footnotesize\ttfamily void Render\+Command\+::on\+Preview (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00818 \{ doRender(\textcolor{keyword}{true}); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_command_aa18238bc4ddc0ab09eb17585a52ce148}\label{class_render_command_aa18238bc4ddc0ab09eb17585a52ce148}} 
+\index{RenderCommand@{RenderCommand}!onRender@{onRender}}
+\index{onRender@{onRender}!RenderCommand@{RenderCommand}}
+\doxysubsubsection{\texorpdfstring{onRender()}{onRender()}}
+{\footnotesize\ttfamily void Render\+Command\+::on\+Render (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00784 \{ doRender(\textcolor{keyword}{false}); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_command_a719be4812e9e27958f2dce68d4a8feff}\label{class_render_command_a719be4812e9e27958f2dce68d4a8feff}} 
+\index{RenderCommand@{RenderCommand}!rasterRender@{rasterRender}}
+\index{rasterRender@{rasterRender}!RenderCommand@{RenderCommand}}
+\doxysubsubsection{\texorpdfstring{rasterRender()}{rasterRender()}}
+{\footnotesize\ttfamily void Render\+Command\+::raster\+Render (\begin{DoxyParamCaption}\item[{bool}]{is\+Preview }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00446                                                \{}
+\DoxyCodeLine{00447   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00448 }
+\DoxyCodeLine{00449   \textcolor{keywordflow}{if} (isPreview) \{}
+\DoxyCodeLine{00450     \textcolor{comment}{// Let the PreviewFxManager own the rest. Just pass him the current output}}
+\DoxyCodeLine{00451     \textcolor{comment}{// node.}}
+\DoxyCodeLine{00452     \mbox{\hyperlink{class_preview_fx_manager_a540923ef1e799396ddf8bba11bb3c8c6}{PreviewFxManager::instance}}()-\/>\mbox{\hyperlink{class_preview_fx_manager_a5a633f9f858d2ea0e6ccee709d495b74}{showNewPreview}}(}
+\DoxyCodeLine{00453         (\mbox{\hyperlink{class_t_fx}{TFx}} *)scene-\/>\mbox{\hyperlink{class_toonz_scene_ae3c828e3223fd809fd59189233d0576a}{getXsheet}}()-\/>\mbox{\hyperlink{class_t_xsheet_adc7c74cce346abf3699bb250eb17a9c2}{getFxDag}}()-\/>getCurrentOutputFx());}
+\DoxyCodeLine{00454     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00455   \}}
+\DoxyCodeLine{00456 }
+\DoxyCodeLine{00457   std::string ext = m\_fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}();}
+\DoxyCodeLine{00458 }
+\DoxyCodeLine{00459 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00460   \textcolor{keywordflow}{if} (ext == \textcolor{stringliteral}{"{}avi"{}} \&\& !isPreview) \{}
+\DoxyCodeLine{00461     \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}} *props =}
+\DoxyCodeLine{00462         scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}()-\/>\mbox{\hyperlink{class_t_output_properties_a9ef174e6f6239219fa563b037246c8d4}{getFileFormatProperties}}(}
+\DoxyCodeLine{00463             ext);}
+\DoxyCodeLine{00464     std::string codecName = props-\/>\mbox{\hyperlink{class_t_property_group_afb08f3145e5f77da6f163cdc9decad2f}{getProperty}}(0)-\/>getValueAsString();}
+\DoxyCodeLine{00465     \mbox{\hyperlink{class_t_dimension_t}{TDimension}} res        = scene-\/>\mbox{\hyperlink{class_toonz_scene_a750b5ab623ccec744013b0c83bf20abc}{getCurrentCamera}}()-\/>\mbox{\hyperlink{class_t_camera_a9a7c573e7a2c397ffae4b747809ea2a5}{getRes}}();}
+\DoxyCodeLine{00466     \textcolor{keywordflow}{if} (!AviCodecRestrictions::canWriteMovie(::to\_wstring(codecName), res)) \{}
+\DoxyCodeLine{00467       QString msg(}
+\DoxyCodeLine{00468           QObject::tr(\textcolor{stringliteral}{"{}The resolution of the output camera does not fit with "{}}}
+\DoxyCodeLine{00469                       \textcolor{stringliteral}{"{}the options chosen for the output file format."{}}));}
+\DoxyCodeLine{00470       DVGui::warning(msg);}
+\DoxyCodeLine{00471       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00472     \}}
+\DoxyCodeLine{00473   \}}
+\DoxyCodeLine{00474 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00475 }
+\DoxyCodeLine{00476   TPixel32 currBgColor = scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_a64ab8a16be2294c8fc135286c45cc2cf}{getBgColor}}();}
+\DoxyCodeLine{00477   m\_priorBgColor       = currBgColor;}
+\DoxyCodeLine{00478   \textcolor{comment}{// fixes background colors for non alpha-\/enabled movie types (eventually}}
+\DoxyCodeLine{00479   \textcolor{comment}{// transparent gif would be good)}}
+\DoxyCodeLine{00480   currBgColor.m = 255;}
+\DoxyCodeLine{00481   \textcolor{comment}{// Mov may have alpha channel under some settings (Millions of Colors+ color}}
+\DoxyCodeLine{00482   \textcolor{comment}{// depth). I tried to make OT to detect the mov settings and adaptively switch}}
+\DoxyCodeLine{00483   \textcolor{comment}{// the behavior, but ended in vain :-\/(}}
+\DoxyCodeLine{00484   \textcolor{comment}{// So I just omitted every mov from applying solid background as a quick fix.}}
+\DoxyCodeLine{00485   \textcolor{keywordflow}{if} (isMovieType(ext) \&\& ext != \textcolor{stringliteral}{"{}mov"{}}) \{}
+\DoxyCodeLine{00486     scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_a56b62cc35382ceb147e19df2cf11750d}{setBgColor}}(currBgColor);}
+\DoxyCodeLine{00487   \}}
+\DoxyCodeLine{00488   \textcolor{comment}{// for non alpha-\/enabled images (like jpg), background color will be inserted}}
+\DoxyCodeLine{00489   \textcolor{comment}{// in  TImageWriter::save() (see timage\_io.cpp)}}
+\DoxyCodeLine{00490   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00491     TImageWriter::setBackgroundColor(currBgColor);}
+\DoxyCodeLine{00492 }
+\DoxyCodeLine{00493   \textcolor{comment}{// Extract output properties}}
+\DoxyCodeLine{00494   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}} *prop = isPreview}
+\DoxyCodeLine{00495                                 ? scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_a0b905e0ea16e27aa5e67da31e469026e}{getPreviewProperties}}()}
+\DoxyCodeLine{00496                                 : scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}();}
+\DoxyCodeLine{00497 }
+\DoxyCodeLine{00498   \textcolor{comment}{// Build thread count}}
+\DoxyCodeLine{00499   \textcolor{comment}{/*-\/-\/ Dedicated CPUs のコンボボックス (Single, Half, All) -\/-\/*/}}
+\DoxyCodeLine{00500   \textcolor{keywordtype}{int} index = prop-\/>getThreadIndex();}
+\DoxyCodeLine{00501 }
+\DoxyCodeLine{00502   \textcolor{keyword}{const} \textcolor{keywordtype}{int} procCount       = TSystem::getProcessorCount();}
+\DoxyCodeLine{00503   \textcolor{keyword}{const} \textcolor{keywordtype}{int} threadCounts[3] = \{1, procCount / 2, procCount\};}
+\DoxyCodeLine{00504 }
+\DoxyCodeLine{00505   \textcolor{keywordtype}{int} threadCount = threadCounts[index];}
+\DoxyCodeLine{00506 }
+\DoxyCodeLine{00507   \textcolor{comment}{/*-\/-\/ MovieRendererを作る。Previewの場合はファイルパスは空 -\/-\/*/}}
+\DoxyCodeLine{00508   \mbox{\hyperlink{class_movie_renderer}{MovieRenderer}} movieRenderer(scene, isPreview ? \mbox{\hyperlink{class_t_file_path}{TFilePath}}() : m\_fp,}
+\DoxyCodeLine{00509                               threadCount, isPreview);}
+\DoxyCodeLine{00510 }
+\DoxyCodeLine{00511   \mbox{\hyperlink{class_t_render_settings}{TRenderSettings}} rs = prop-\/>\mbox{\hyperlink{class_t_output_properties_afa7c771452b57b50047aa4afc6032cad}{getRenderSettings}}();}
+\DoxyCodeLine{00512 }
+\DoxyCodeLine{00513   \textcolor{comment}{// Build raster granularity size}}
+\DoxyCodeLine{00514   index = prop-\/>getMaxTileSizeIndex();}
+\DoxyCodeLine{00515 }
+\DoxyCodeLine{00516   \textcolor{keyword}{const} \textcolor{keywordtype}{int} maxTileSizes[4] = \{}
+\DoxyCodeLine{00517       (std::numeric\_limits<int>::max)(), TOutputProperties::LargeVal,}
+\DoxyCodeLine{00518       TOutputProperties::MediumVal, TOutputProperties::SmallVal\};}
+\DoxyCodeLine{00519   rs.\mbox{\hyperlink{class_t_render_settings_a4b0770f4a243e1f32a60efefebf0e11b}{m\_maxTileSize}} = maxTileSizes[index];}
+\DoxyCodeLine{00520 }
+\DoxyCodeLine{00521   \textcolor{comment}{// Build}}
+\DoxyCodeLine{00522 }
+\DoxyCodeLine{00523   \textcolor{comment}{/*-\/-\/ RenderSettingsをセット -\/-\/*/}}
+\DoxyCodeLine{00524   movieRenderer.setRenderSettings(rs);}
+\DoxyCodeLine{00525   \textcolor{comment}{/*-\/-\/ カメラDPIの取得、セット -\/-\/*/}}
+\DoxyCodeLine{00526   \mbox{\hyperlink{class_t_point_t}{TPointD}} cameraDpi = isPreview ? scene-\/>getCurrentPreviewCamera()-\/>\mbox{\hyperlink{class_t_camera_adf45510b5dc53f6481308ef489fbd5a9}{getDpi}}()}
+\DoxyCodeLine{00527                                 : scene-\/>\mbox{\hyperlink{class_toonz_scene_a750b5ab623ccec744013b0c83bf20abc}{getCurrentCamera}}()-\/>\mbox{\hyperlink{class_t_camera_adf45510b5dc53f6481308ef489fbd5a9}{getDpi}}();}
+\DoxyCodeLine{00528   movieRenderer.setDpi(cameraDpi.x, cameraDpi.y);}
+\DoxyCodeLine{00529   \textcolor{comment}{// Precomputing causes a long delay for ffmpeg imported types}}
+\DoxyCodeLine{00530   \textcolor{keywordflow}{if} (!isPreview \&\& !Preferences::instance()-\/>getPrecompute())}
+\DoxyCodeLine{00531     movieRenderer.enablePrecomputing(\textcolor{keyword}{false});}
+\DoxyCodeLine{00532   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00533     movieRenderer.enablePrecomputing(\textcolor{keyword}{true});}
+\DoxyCodeLine{00534 }
+\DoxyCodeLine{00535   \textcolor{comment}{/*-\/-\/ プログレス ダイアログの作成 -\/-\/*/}}
+\DoxyCodeLine{00536   \mbox{\hyperlink{class_render_listener}{RenderListener}} *listener =}
+\DoxyCodeLine{00537       \textcolor{keyword}{new} \mbox{\hyperlink{class_render_listener}{RenderListener}}(movieRenderer.getTRenderer(), m\_fp,}
+\DoxyCodeLine{00538                          ((m\_numFrames -\/ 1) / m\_step) + 1, isPreview);}
+\DoxyCodeLine{00539   QObject::connect(listener, SIGNAL(canceled()), \&movieRenderer,}
+\DoxyCodeLine{00540                    SLOT(onCanceled()));}
+\DoxyCodeLine{00541   movieRenderer.addListener(listener);}
+\DoxyCodeLine{00542 }
+\DoxyCodeLine{00543   \textcolor{keywordtype}{bool} fieldRendering = rs.\mbox{\hyperlink{class_t_render_settings_a48bbcbb6ca2cad3de97f4cabea09cd2f}{m\_fieldPrevalence}} != \mbox{\hyperlink{class_t_render_settings_aff548d2c58f7c6adea513ab32526eae8acc9a06de2f74e1ae1404282226d6a2d9}{TRenderSettings::NoField}};}
+\DoxyCodeLine{00544 }
+\DoxyCodeLine{00545   \textcolor{comment}{/*-\/-\/ buildSceneFxの進行状況を表示するプログレスバー -\/-\/*/}}
+\DoxyCodeLine{00546   QProgressBar *buildSceneProgressBar =}
+\DoxyCodeLine{00547       \textcolor{keyword}{new} QProgressBar(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow());}
+\DoxyCodeLine{00548   buildSceneProgressBar-\/>setAttribute(Qt::WA\_DeleteOnClose);}
+\DoxyCodeLine{00549   buildSceneProgressBar-\/>setWindowFlags(Qt::SubWindow | Qt::Dialog);}
+\DoxyCodeLine{00550   buildSceneProgressBar-\/>setMinimum(0);}
+\DoxyCodeLine{00551   buildSceneProgressBar-\/>setMaximum(m\_numFrames -\/ 1);}
+\DoxyCodeLine{00552   buildSceneProgressBar-\/>setValue(0);}
+\DoxyCodeLine{00553   buildSceneProgressBar-\/>move(600, 500);}
+\DoxyCodeLine{00554   buildSceneProgressBar-\/>setWindowTitle(}
+\DoxyCodeLine{00555       QObject::tr(\textcolor{stringliteral}{"{}Building Schematic..."{}}, \textcolor{stringliteral}{"{}RenderCommand"{}}));}
+\DoxyCodeLine{00556   buildSceneProgressBar-\/>show();}
+\DoxyCodeLine{00557 }
+\DoxyCodeLine{00558   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_numFrames; ++i, m\_r += m\_stepd) \{}
+\DoxyCodeLine{00559     buildSceneProgressBar-\/>setValue(i);}
+\DoxyCodeLine{00560 }
+\DoxyCodeLine{00561     \textcolor{keywordflow}{if} (rs.\mbox{\hyperlink{class_t_render_settings_aadbd5a3a50b242b366a93023d5f7da07}{m\_stereoscopic}}) scene-\/>shiftCameraX(-\/rs.\mbox{\hyperlink{class_t_render_settings_a8c9cade2391a50017b4ad623f653c82f}{m\_stereoscopicShift}} / 2);}
+\DoxyCodeLine{00562     \mbox{\hyperlink{class_t_fx_pair}{TFxPair}} fx;}
+\DoxyCodeLine{00563     fx.m\_frameA = buildSceneFx(scene, m\_r, rs.\mbox{\hyperlink{class_t_render_settings_a52dd41881bbf6aaf953fe300be2e233e}{m\_shrinkX}}, isPreview);}
+\DoxyCodeLine{00564 }
+\DoxyCodeLine{00565     \textcolor{keywordflow}{if} (fieldRendering \&\& !isPreview)}
+\DoxyCodeLine{00566       fx.m\_frameB = buildSceneFx(scene, m\_r + 0.5 / m\_timeStretchFactor,}
+\DoxyCodeLine{00567                                  rs.\mbox{\hyperlink{class_t_render_settings_a52dd41881bbf6aaf953fe300be2e233e}{m\_shrinkX}}, isPreview);}
+\DoxyCodeLine{00568     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (rs.\mbox{\hyperlink{class_t_render_settings_aadbd5a3a50b242b366a93023d5f7da07}{m\_stereoscopic}}) \{}
+\DoxyCodeLine{00569       scene-\/>shiftCameraX(rs.\mbox{\hyperlink{class_t_render_settings_a8c9cade2391a50017b4ad623f653c82f}{m\_stereoscopicShift}});}
+\DoxyCodeLine{00570       fx.m\_frameB = buildSceneFx(scene, m\_r + 0.5 / m\_timeStretchFactor,}
+\DoxyCodeLine{00571                                  rs.\mbox{\hyperlink{class_t_render_settings_a52dd41881bbf6aaf953fe300be2e233e}{m\_shrinkX}}, isPreview);}
+\DoxyCodeLine{00572       scene-\/>shiftCameraX(-\/rs.\mbox{\hyperlink{class_t_render_settings_a8c9cade2391a50017b4ad623f653c82f}{m\_stereoscopicShift}} / 2);}
+\DoxyCodeLine{00573     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00574       fx.m\_frameB = \mbox{\hyperlink{class_t_raster_fx_p}{TRasterFxP}}();}
+\DoxyCodeLine{00575     \textcolor{comment}{/*-\/-\/ movieRendererにフレーム毎のFxを登録 -\/-\/*/}}
+\DoxyCodeLine{00576     movieRenderer.addFrame(m\_r, fx);}
+\DoxyCodeLine{00577   \}}
+\DoxyCodeLine{00578   \textcolor{comment}{/*-\/-\/ プログレスバーを閉じる -\/-\/*/}}
+\DoxyCodeLine{00579   buildSceneProgressBar-\/>close();}
+\DoxyCodeLine{00580 }
+\DoxyCodeLine{00581   \textcolor{comment}{// resetViewer(); //TODO cancella le immagini dell'eventuale render precedente}}
+\DoxyCodeLine{00582   \textcolor{comment}{// FileViewerPopupPool::instance()-\/>getCurrent()-\/>onClose();}}
+\DoxyCodeLine{00583 }
+\DoxyCodeLine{00584   movieRenderer.start();}
+\DoxyCodeLine{00585 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_command_a42ced7d7bb157404ca185c5ce412b3f4}\label{class_render_command_a42ced7d7bb157404ca185c5ce412b3f4}} 
+\index{RenderCommand@{RenderCommand}!resetBgColor@{resetBgColor}}
+\index{resetBgColor@{resetBgColor}!RenderCommand@{RenderCommand}}
+\doxysubsubsection{\texorpdfstring{resetBgColor()}{resetBgColor()}}
+{\footnotesize\ttfamily void Render\+Command\+::reset\+Bg\+Color (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00589                                  \{}
+\DoxyCodeLine{00590   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00591   scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_a56b62cc35382ceb147e19df2cf11750d}{setBgColor}}(m\_priorBgColor);}
+\DoxyCodeLine{00592 }
+\DoxyCodeLine{00593   \textcolor{comment}{// revert background color settings}}
+\DoxyCodeLine{00594   TImageWriter::setBackgroundColor(}
+\DoxyCodeLine{00595       Preferences::instance()-\/>getRasterBackgroundColor());}
+\DoxyCodeLine{00596 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/rendercommand.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,112 @@
+\hypertarget{class_cast_selection}{}\doxysection{Cast\+Selection Class Reference}
+\label{class_cast_selection}\index{CastSelection@{CastSelection}}
+Inheritance diagram for Cast\+Selection\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_cast_selection}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_cast_selection_a8746854533dbf7b83ff8e9fae8bc29dc}{set\+Browser}} (\mbox{\hyperlink{class_cast_browser}{Cast\+Browser}} $\ast$browser)
+\item 
+void \mbox{\hyperlink{class_cast_selection_a9c8496ed923b0149f5d2c94bfe621d89}{get\+Selected\+Levels}} (std\+::vector$<$ \mbox{\hyperlink{class_t_xsh_level}{TXsh\+Level}} $\ast$ $>$ \&levels)
+\item 
+void \mbox{\hyperlink{class_cast_selection_a0ccf9003a9deff5ac48627bbd4eade3c}{enable\+Commands}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_cast_selection_a0872070960f3bb81856623f6951beab8}\label{class_cast_selection_a0872070960f3bb81856623f6951beab8}} 
+\index{CastSelection@{CastSelection}!CastSelection@{CastSelection}}
+\index{CastSelection@{CastSelection}!CastSelection@{CastSelection}}
+\doxysubsubsection{\texorpdfstring{CastSelection()}{CastSelection()}}
+{\footnotesize\ttfamily Cast\+Selection\+::\+Cast\+Selection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028 : m\_browser(0) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cast_selection_a3c2a45268430da7f8f4c2e430c2b2f7f}\label{class_cast_selection_a3c2a45268430da7f8f4c2e430c2b2f7f}} 
+\index{CastSelection@{CastSelection}!````~CastSelection@{$\sim$CastSelection}}
+\index{````~CastSelection@{$\sim$CastSelection}!CastSelection@{CastSelection}}
+\doxysubsubsection{\texorpdfstring{$\sim$CastSelection()}{~CastSelection()}}
+{\footnotesize\ttfamily Cast\+Selection\+::$\sim$\+Cast\+Selection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00032 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_cast_selection_a0ccf9003a9deff5ac48627bbd4eade3c}\label{class_cast_selection_a0ccf9003a9deff5ac48627bbd4eade3c}} 
+\index{CastSelection@{CastSelection}!enableCommands@{enableCommands}}
+\index{enableCommands@{enableCommands}!CastSelection@{CastSelection}}
+\doxysubsubsection{\texorpdfstring{enableCommands()}{enableCommands()}}
+{\footnotesize\ttfamily void Cast\+Selection\+::enable\+Commands (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_selection}{TSelection}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00050                                    \{}
+\DoxyCodeLine{00051   DvItemSelection::enableCommands();}
+\DoxyCodeLine{00052   assert(m\_browser);}
+\DoxyCodeLine{00053   \textcolor{keywordflow}{if} (m\_browser) \{}
+\DoxyCodeLine{00054     enableCommand(m\_browser, MI\_ExposeResource, \&CastBrowser::expose);}
+\DoxyCodeLine{00055     enableCommand(m\_browser, MI\_EditLevel, \&CastBrowser::edit);}
+\DoxyCodeLine{00056     \textcolor{comment}{// enableCommand(m\_browser, MI\_ConvertToVectors, \&CastBrowser::vectorize);}}
+\DoxyCodeLine{00057     enableCommand(m\_browser, MI\_ShowFolderContents,}
+\DoxyCodeLine{00058                   \&CastBrowser::showFolderContents);}
+\DoxyCodeLine{00059   \}}
+\DoxyCodeLine{00060 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cast_selection_a9c8496ed923b0149f5d2c94bfe621d89}\label{class_cast_selection_a9c8496ed923b0149f5d2c94bfe621d89}} 
+\index{CastSelection@{CastSelection}!getSelectedLevels@{getSelectedLevels}}
+\index{getSelectedLevels@{getSelectedLevels}!CastSelection@{CastSelection}}
+\doxysubsubsection{\texorpdfstring{getSelectedLevels()}{getSelectedLevels()}}
+{\footnotesize\ttfamily void Cast\+Selection\+::get\+Selected\+Levels (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_t_xsh_level}{TXsh\+Level}} $\ast$ $>$ \&}]{levels }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00036                                                                     \{}
+\DoxyCodeLine{00037   assert(m\_browser);}
+\DoxyCodeLine{00038   \mbox{\hyperlink{class_cast_items}{CastItems}} \textcolor{keyword}{const} \&castItems = m\_browser-\/>getCastItems();}
+\DoxyCodeLine{00039   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < castItems.getItemCount(); i++) \{}
+\DoxyCodeLine{00040     \textcolor{keywordflow}{if} (!isSelected(i)) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00041     \mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *level  = castItems.getItem(i)-\/>getSimpleLevel();}
+\DoxyCodeLine{00042     \textcolor{keywordflow}{if} (!level) level = castItems.getItem(i)-\/>getPaletteLevel();}
+\DoxyCodeLine{00043     \textcolor{keywordflow}{if} (!level) level = castItems.getItem(i)-\/>getSoundLevel();}
+\DoxyCodeLine{00044     \textcolor{keywordflow}{if} (level) levels.push\_back(level);}
+\DoxyCodeLine{00045   \}}
+\DoxyCodeLine{00046 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cast_selection_a8746854533dbf7b83ff8e9fae8bc29dc}\label{class_cast_selection_a8746854533dbf7b83ff8e9fae8bc29dc}} 
+\index{CastSelection@{CastSelection}!setBrowser@{setBrowser}}
+\index{setBrowser@{setBrowser}!CastSelection@{CastSelection}}
+\doxysubsubsection{\texorpdfstring{setBrowser()}{setBrowser()}}
+{\footnotesize\ttfamily void Cast\+Selection\+::set\+Browser (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_cast_browser}{Cast\+Browser}} $\ast$}]{browser }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027 \{ m\_browser = browser; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/castselection.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/castselection.\+cpp\end{DoxyCompactItemize}

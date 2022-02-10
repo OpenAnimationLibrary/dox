@@ -1,0 +1,108 @@
+\hypertarget{class_export_curve_popup}{}\doxysection{Export\+Curve\+Popup Class Reference}
+\label{class_export_curve_popup}\index{ExportCurvePopup@{ExportCurvePopup}}
+Inheritance diagram for Export\+Curve\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_export_curve_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_export_curve_popup_a8800c90a45ce9f10d5e1f5434593ae6a}{Export\+Curve\+Popup}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} folder\+Path, \mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$curve, const std\+::string \&name)
+\item 
+bool \mbox{\hyperlink{class_export_curve_popup_a7e93e652adb6056e186a77ea2a598ca7}{execute}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_export_curve_popup_a8800c90a45ce9f10d5e1f5434593ae6a}\label{class_export_curve_popup_a8800c90a45ce9f10d5e1f5434593ae6a}} 
+\index{ExportCurvePopup@{ExportCurvePopup}!ExportCurvePopup@{ExportCurvePopup}}
+\index{ExportCurvePopup@{ExportCurvePopup}!ExportCurvePopup@{ExportCurvePopup}}
+\doxysubsubsection{\texorpdfstring{ExportCurvePopup()}{ExportCurvePopup()}}
+{\footnotesize\ttfamily Export\+Curve\+Popup\+::\+Export\+Curve\+Popup (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}}}]{folder\+Path,  }\item[{\mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$}]{curve,  }\item[{const std\+::string \&}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00157       : \mbox{\hyperlink{class_curve_popup}{CurvePopup}}(QObject::tr(\textcolor{stringliteral}{"{}Export Curve"{}}), folderPath, curve)}
+\DoxyCodeLine{00158       , m\_name(name) \{}
+\DoxyCodeLine{00159     setOkText(QObject::tr(\textcolor{stringliteral}{"{}Export"{}}));}
+\DoxyCodeLine{00160     setFilterType(\textcolor{stringliteral}{"{}dat"{}});}
+\DoxyCodeLine{00161   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_export_curve_popup_a7e93e652adb6056e186a77ea2a598ca7}\label{class_export_curve_popup_a7e93e652adb6056e186a77ea2a598ca7}} 
+\index{ExportCurvePopup@{ExportCurvePopup}!execute@{execute}}
+\index{execute@{execute}!ExportCurvePopup@{ExportCurvePopup}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily bool Export\+Curve\+Popup\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Performs some action on m\+\_\+paths and returns whether the action was successful (accepted) -\/ in which case the popup closes. 
+
+Implements \mbox{\hyperlink{class_file_browser_popup_a8158b9b8756ac5dfa893b78cdc2fd9af}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00168                                \{}
+\DoxyCodeLine{00169   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.empty()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00170 }
+\DoxyCodeLine{00171   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp(*\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.begin());}
+\DoxyCodeLine{00172 }
+\DoxyCodeLine{00173   \textcolor{keywordflow}{if} (fp.getType() == \textcolor{stringliteral}{"{}"{}}) fp = fp.withType(\textcolor{stringliteral}{"{}dat"{}});}
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00175   \textcolor{keywordflow}{if} (!checkOverride(fp)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00176 }
+\DoxyCodeLine{00177   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00178     TSystem::touchParentDir(fp);}
+\DoxyCodeLine{00179     \mbox{\hyperlink{class_tofstream}{Tofstream}} os(fp);}
+\DoxyCodeLine{00180     os << \textcolor{stringliteral}{"{}\# RELEASE:      5.0"{}} << std::endl;}
+\DoxyCodeLine{00181     os << \textcolor{stringliteral}{"{}\# FILE NAME:    "{}} << ::to\_string(fp) << std::endl;}
+\DoxyCodeLine{00182     os << \textcolor{stringliteral}{"{}\# COMPOSED BY:  "{}} << TSystem::getUserName().toStdString()}
+\DoxyCodeLine{00183        << std::endl;}
+\DoxyCodeLine{00184     os << \textcolor{stringliteral}{"{}\# MACHINE NAME: "{}} << TSystem::getHostName().toStdString()}
+\DoxyCodeLine{00185        << std::endl;}
+\DoxyCodeLine{00186     \textcolor{comment}{// os << "{}\# DATE:         "{} << TSystem::getCurrentTime() << endl;}}
+\DoxyCodeLine{00187     os << std::endl << std::endl;}
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189     \textcolor{keywordtype}{int} frameCount      = 1;}
+\DoxyCodeLine{00190     \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve = getCurve();}
+\DoxyCodeLine{00191     \textcolor{keywordflow}{if} (curve-\/>getKeyframeCount() > 0)}
+\DoxyCodeLine{00192       frameCount =}
+\DoxyCodeLine{00193           curve-\/>\mbox{\hyperlink{class_t_double_param_af08442b9fd968fddada028a6f07983d5}{keyframeIndexToFrame}}(curve-\/>getKeyframeCount() -\/ 1) + 1;}
+\DoxyCodeLine{00194 }
+\DoxyCodeLine{00195     os << \textcolor{stringliteral}{"{}\# Dump of:     "{}} << m\_name << std::endl;}
+\DoxyCodeLine{00196     os << \textcolor{stringliteral}{"{}\# Frame range: 1 "{}} << frameCount << std::endl;}
+\DoxyCodeLine{00197     os << std::endl;}
+\DoxyCodeLine{00198 }
+\DoxyCodeLine{00199     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < frameCount; i++) \{}
+\DoxyCodeLine{00200       os.setf(std::ios::fixed, std::ios::floatfield);}
+\DoxyCodeLine{00201       os.setf(std::ios::showpoint);}
+\DoxyCodeLine{00202       os.precision(5);}
+\DoxyCodeLine{00203       os.width(12);}
+\DoxyCodeLine{00204       os << curve-\/>getValue(i) << std::endl;}
+\DoxyCodeLine{00205     \}}
+\DoxyCodeLine{00206   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00207     DVGui::warning(QObject::tr(\textcolor{stringliteral}{"{}It is not possible to export data."{}}));}
+\DoxyCodeLine{00208     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00209   \}}
+\DoxyCodeLine{00210 }
+\DoxyCodeLine{00211   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00212 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00225}{TFile\+Path\+::get\+Type()}}, \mbox{\hyperlink{l01000}{TDouble\+Param\+::keyframe\+Index\+To\+Frame()}}, \mbox{\hyperlink{l00090}{File\+Browser\+Popup\+::m\+\_\+selected\+Paths}}, and \mbox{\hyperlink{l00774}{TFile\+Path\+::with\+Type()}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/curveio.\+cpp\end{DoxyCompactItemize}

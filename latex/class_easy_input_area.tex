@@ -1,0 +1,247 @@
+\hypertarget{class_easy_input_area}{}\doxysection{Easy\+Input\+Area Class Reference}
+\label{class_easy_input_area}\index{EasyInputArea@{EasyInputArea}}
+Inheritance diagram for Easy\+Input\+Area\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_easy_input_area}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_easy_input_area_a1c7079d99a615a4de07c5b3cc7cb49a2}\label{class_easy_input_area_a1c7079d99a615a4de07c5b3cc7cb49a2}} 
+void {\bfseries word\+Clicked} (const QString \&)
+\item 
+\mbox{\Hypertarget{class_easy_input_area_a5a0c0b978b03b816d53bde101174dce4}\label{class_easy_input_area_a5a0c0b978b03b816d53bde101174dce4}} 
+void {\bfseries mouse\+Enter} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_easy_input_area_a0d0e513501a298a9ad29c28de15c3bcb}{Easy\+Input\+Area}} (QWidget $\ast$parent=0)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_easy_input_area_a2d17b49520de2fca51dc09bf7c7098d3}{add\+Word\+Button\+Clicked}} (const int)
+\item 
+void \mbox{\hyperlink{class_easy_input_area_a1cf60cea59800d49f04469e23a1b15f1}{on\+Remove\+Word}} (const QString \&)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_easy_input_area_ab12b108b83433f6b2921f1d9430b48d9}{enter\+Event}} (QEvent $\ast$) override
+\item 
+void \mbox{\hyperlink{class_easy_input_area_a25ac873104006eec9a4967dd792ef156}{resize\+Event}} (QResize\+Event $\ast$) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_easy_input_area_a0d0e513501a298a9ad29c28de15c3bcb}\label{class_easy_input_area_a0d0e513501a298a9ad29c28de15c3bcb}} 
+\index{EasyInputArea@{EasyInputArea}!EasyInputArea@{EasyInputArea}}
+\index{EasyInputArea@{EasyInputArea}!EasyInputArea@{EasyInputArea}}
+\doxysubsubsection{\texorpdfstring{EasyInputArea()}{EasyInputArea()}}
+{\footnotesize\ttfamily Easy\+Input\+Area\+::\+Easy\+Input\+Area (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00178                                             : QWidget(parent) \{}
+\DoxyCodeLine{00179   loadList();}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181   QHBoxLayout* mainLay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00182   mainLay-\/>setMargin(0);}
+\DoxyCodeLine{00183   mainLay-\/>setSpacing(3);}
+\DoxyCodeLine{00184   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} a = 0; a < WORD\_COLUMN\_AMOUNT; a++) \{}
+\DoxyCodeLine{00185     m\_scrollArea[a] = \textcolor{keyword}{new} QScrollArea(\textcolor{keyword}{this});}
+\DoxyCodeLine{00186     m\_scrollArea[a]-\/>setObjectName(\textcolor{stringliteral}{"{}SolidLineFrame"{}});}
+\DoxyCodeLine{00187 }
+\DoxyCodeLine{00188     QFrame* wordPanel       = \textcolor{keyword}{new} QFrame(\textcolor{keyword}{this});}
+\DoxyCodeLine{00189     QGridLayout* buttonsLay = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00190     buttonsLay-\/>setMargin(3);}
+\DoxyCodeLine{00191     buttonsLay-\/>setSpacing(3);}
+\DoxyCodeLine{00192     \{}
+\DoxyCodeLine{00193       \textcolor{keywordtype}{int} row = 0;}
+\DoxyCodeLine{00194       \textcolor{keywordtype}{int} col = 0;}
+\DoxyCodeLine{00195       \textcolor{comment}{// store word buttons}}
+\DoxyCodeLine{00196       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} s = 0; s < m\_wordList[a].size(); s++) \{}
+\DoxyCodeLine{00197         \mbox{\hyperlink{class_word_button}{WordButton}}* button = \textcolor{keyword}{new} \mbox{\hyperlink{class_word_button}{WordButton}}(m\_wordList[a].at(s), \textcolor{keyword}{this});}
+\DoxyCodeLine{00198         button-\/>setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{00199         buttonsLay-\/>addWidget(button, row, col);}
+\DoxyCodeLine{00200         connect(button, SIGNAL(clicked(\textcolor{keyword}{const} QString\&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00201                 SIGNAL(wordClicked(\textcolor{keyword}{const} QString\&)));}
+\DoxyCodeLine{00202         connect(button, SIGNAL(removeWord(\textcolor{keyword}{const} QString\&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00203                 SLOT(onRemoveWord(\textcolor{keyword}{const} QString\&)));}
+\DoxyCodeLine{00204         col++;}
+\DoxyCodeLine{00205         \textcolor{keywordflow}{if} (col == areaColCount[a]) \{}
+\DoxyCodeLine{00206           col = 0;}
+\DoxyCodeLine{00207           row++;}
+\DoxyCodeLine{00208         \}}
+\DoxyCodeLine{00209       \}}
+\DoxyCodeLine{00210       \textcolor{comment}{// add button}}
+\DoxyCodeLine{00211       \mbox{\hyperlink{class_add_word_button}{AddWordButton}}* addWordButton = \textcolor{keyword}{new} \mbox{\hyperlink{class_add_word_button}{AddWordButton}}(a, \textcolor{keyword}{this});}
+\DoxyCodeLine{00212       addWordButton-\/>setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{00213       buttonsLay-\/>addWidget(addWordButton, row, col);}
+\DoxyCodeLine{00214       connect(addWordButton, SIGNAL(clicked(\textcolor{keyword}{const} \textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00215               SLOT(addWordButtonClicked(\textcolor{keyword}{const} \textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00216     \}}
+\DoxyCodeLine{00217     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < areaColCount[a]; c++)}
+\DoxyCodeLine{00218       buttonsLay-\/>setColumnStretch(c, 1);}
+\DoxyCodeLine{00219     wordPanel-\/>setLayout(buttonsLay);}
+\DoxyCodeLine{00220     m\_wordLayout[a] = buttonsLay;}
+\DoxyCodeLine{00221 }
+\DoxyCodeLine{00222     m\_scrollArea[a]-\/>setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);}
+\DoxyCodeLine{00223     m\_scrollArea[a]-\/>setMinimumWidth(areaColCount[a] * 78 + 3);}
+\DoxyCodeLine{00224     m\_scrollArea[a]-\/>setWidget(wordPanel);}
+\DoxyCodeLine{00225     mainLay-\/>addWidget(m\_scrollArea[a], areaColCount[a]);}
+\DoxyCodeLine{00226   \}}
+\DoxyCodeLine{00227   setLayout(mainLay);}
+\DoxyCodeLine{00228 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_easy_input_area_a2d17b49520de2fca51dc09bf7c7098d3}\label{class_easy_input_area_a2d17b49520de2fca51dc09bf7c7098d3}} 
+\index{EasyInputArea@{EasyInputArea}!addWordButtonClicked@{addWordButtonClicked}}
+\index{addWordButtonClicked@{addWordButtonClicked}!EasyInputArea@{EasyInputArea}}
+\doxysubsubsection{\texorpdfstring{addWordButtonClicked}{addWordButtonClicked}}
+{\footnotesize\ttfamily void Easy\+Input\+Area\+::add\+Word\+Button\+Clicked (\begin{DoxyParamCaption}\item[{const int}]{column\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00232                                                            \{}
+\DoxyCodeLine{00233   \mbox{\hyperlink{class_new_word_dialog}{NewWordDialog}} dialog(\textcolor{keyword}{this});}
+\DoxyCodeLine{00234   \textcolor{keywordflow}{if} (dialog.exec() == QDialog::Rejected) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00235 }
+\DoxyCodeLine{00236   QString word = dialog.getName();}
+\DoxyCodeLine{00237   \textcolor{keywordflow}{if} (word.isEmpty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00238 }
+\DoxyCodeLine{00239   \textcolor{keywordtype}{bool} found = \textcolor{keyword}{false};}
+\DoxyCodeLine{00240   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < WORD\_COLUMN\_AMOUNT; i++) \{}
+\DoxyCodeLine{00241     found = m\_wordList[i].contains(word);}
+\DoxyCodeLine{00242     \textcolor{keywordflow}{if} (found) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00243   \}}
+\DoxyCodeLine{00244   \textcolor{keywordflow}{if} (found) \{}
+\DoxyCodeLine{00245     QMessageBox::warning(\textcolor{keyword}{this}, tr(\textcolor{stringliteral}{"{}Warning"{}}),}
+\DoxyCodeLine{00246                          tr(\textcolor{stringliteral}{"{}\%1 is already registered"{}}).arg(word));}
+\DoxyCodeLine{00247     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00248   \}}
+\DoxyCodeLine{00249 }
+\DoxyCodeLine{00250   \textcolor{comment}{// Append word to the list}}
+\DoxyCodeLine{00251   m\_wordList[columnId].append(word);}
+\DoxyCodeLine{00252   \textcolor{comment}{// Append new WordButton}}
+\DoxyCodeLine{00253   \mbox{\hyperlink{class_word_button}{WordButton}}* button = \textcolor{keyword}{new} \mbox{\hyperlink{class_word_button}{WordButton}}(word, \textcolor{keyword}{this});}
+\DoxyCodeLine{00254   connect(button, SIGNAL(clicked(\textcolor{keyword}{const} QString\&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00255           SIGNAL(wordClicked(\textcolor{keyword}{const} QString\&)));}
+\DoxyCodeLine{00256   connect(button, SIGNAL(removeWord(\textcolor{keyword}{const} QString\&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00257           SLOT(onRemoveWord(\textcolor{keyword}{const} QString\&)));}
+\DoxyCodeLine{00258   button-\/>setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{00259 }
+\DoxyCodeLine{00260   \textcolor{keywordtype}{int} wordCount   = m\_wordList[columnId].count();}
+\DoxyCodeLine{00261   \textcolor{keywordtype}{int} row         = indexToRow(wordCount -\/ 1, columnId);}
+\DoxyCodeLine{00262   \textcolor{keywordtype}{int} col         = indexToCol(wordCount -\/ 1, columnId);}
+\DoxyCodeLine{00263   QWidget* addBtn = m\_wordLayout[columnId]-\/>itemAtPosition(row, col)-\/>widget();}
+\DoxyCodeLine{00264   m\_wordLayout[columnId]-\/>addWidget(button, row, col);}
+\DoxyCodeLine{00265   \textcolor{comment}{// Move add button to the next index}}
+\DoxyCodeLine{00266   col++;}
+\DoxyCodeLine{00267   \textcolor{keywordflow}{if} (col == areaColCount[columnId]) \{}
+\DoxyCodeLine{00268     col = 0;}
+\DoxyCodeLine{00269     row++;}
+\DoxyCodeLine{00270   \}}
+\DoxyCodeLine{00271   m\_wordLayout[columnId]-\/>addWidget(addBtn, row, col);}
+\DoxyCodeLine{00272 }
+\DoxyCodeLine{00273   updatePanelSize(columnId);}
+\DoxyCodeLine{00274 }
+\DoxyCodeLine{00275   saveList();}
+\DoxyCodeLine{00276 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_easy_input_area_ab12b108b83433f6b2921f1d9430b48d9}\label{class_easy_input_area_ab12b108b83433f6b2921f1d9430b48d9}} 
+\index{EasyInputArea@{EasyInputArea}!enterEvent@{enterEvent}}
+\index{enterEvent@{enterEvent}!EasyInputArea@{EasyInputArea}}
+\doxysubsubsection{\texorpdfstring{enterEvent()}{enterEvent()}}
+{\footnotesize\ttfamily void Easy\+Input\+Area\+::enter\+Event (\begin{DoxyParamCaption}\item[{QEvent $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00327 \{ emit mouseEnter(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_easy_input_area_a1cf60cea59800d49f04469e23a1b15f1}\label{class_easy_input_area_a1cf60cea59800d49f04469e23a1b15f1}} 
+\index{EasyInputArea@{EasyInputArea}!onRemoveWord@{onRemoveWord}}
+\index{onRemoveWord@{onRemoveWord}!EasyInputArea@{EasyInputArea}}
+\doxysubsubsection{\texorpdfstring{onRemoveWord}{onRemoveWord}}
+{\footnotesize\ttfamily void Easy\+Input\+Area\+::on\+Remove\+Word (\begin{DoxyParamCaption}\item[{const QString \&}]{word }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00280                                                     \{}
+\DoxyCodeLine{00281   \textcolor{keywordtype}{int} a = -\/1;}
+\DoxyCodeLine{00282   \textcolor{keywordtype}{int} index;}
+\DoxyCodeLine{00283   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < WORD\_COLUMN\_AMOUNT; i++) \{}
+\DoxyCodeLine{00284     index = m\_wordList[i].indexOf(word);}
+\DoxyCodeLine{00285     \textcolor{keywordflow}{if} (index >= 0) \{}
+\DoxyCodeLine{00286       a = i;}
+\DoxyCodeLine{00287       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00288     \}}
+\DoxyCodeLine{00289   \}}
+\DoxyCodeLine{00290   \textcolor{keywordflow}{if} (a < 0 || a >= WORD\_COLUMN\_AMOUNT) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00291 }
+\DoxyCodeLine{00292   \textcolor{comment}{// delete button}}
+\DoxyCodeLine{00293   \textcolor{keywordtype}{int} row                = indexToRow(index, a);}
+\DoxyCodeLine{00294   \textcolor{keywordtype}{int} col                = indexToCol(index, a);}
+\DoxyCodeLine{00295   \mbox{\hyperlink{class_word_button}{WordButton}}* wordButton = qobject\_cast<WordButton*>(}
+\DoxyCodeLine{00296       m\_wordLayout[a]-\/>itemAtPosition(row, col)-\/>widget());}
+\DoxyCodeLine{00297   \textcolor{keywordflow}{if} (!wordButton) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00298   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00299   ret = ret \&\& disconnect(wordButton, SIGNAL(clicked(\textcolor{keyword}{const} QString\&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00300                           SIGNAL(wordClicked(\textcolor{keyword}{const} QString\&)));}
+\DoxyCodeLine{00301   ret = ret \&\& disconnect(wordButton, SIGNAL(removeWord(\textcolor{keyword}{const} QString\&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00302                           SLOT(onRemoveWord(\textcolor{keyword}{const} QString\&)));}
+\DoxyCodeLine{00303   assert(ret);}
+\DoxyCodeLine{00304   m\_wordLayout[a]-\/>removeWidget(wordButton);}
+\DoxyCodeLine{00305   wordButton-\/>deleteLater();}
+\DoxyCodeLine{00306   \textcolor{comment}{// move the following buttons}}
+\DoxyCodeLine{00307   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = index + 1; i <= m\_wordList[a].count(); i++) \{}
+\DoxyCodeLine{00308     \textcolor{keywordtype}{int} row         = indexToRow(i, a);}
+\DoxyCodeLine{00309     \textcolor{keywordtype}{int} col         = indexToCol(i, a);}
+\DoxyCodeLine{00310     QWidget* button = m\_wordLayout[a]-\/>itemAtPosition(row, col)-\/>widget();}
+\DoxyCodeLine{00311     col-\/-\/;}
+\DoxyCodeLine{00312     \textcolor{keywordflow}{if} (col < 0) \{}
+\DoxyCodeLine{00313       row-\/-\/;}
+\DoxyCodeLine{00314       col = areaColCount[a] -\/ 1;}
+\DoxyCodeLine{00315     \}}
+\DoxyCodeLine{00316     m\_wordLayout[a]-\/>addWidget(button, row, col);}
+\DoxyCodeLine{00317   \}}
+\DoxyCodeLine{00318 }
+\DoxyCodeLine{00319   \textcolor{comment}{// remove word from the list}}
+\DoxyCodeLine{00320   m\_wordList[a].removeAt(index);}
+\DoxyCodeLine{00321 }
+\DoxyCodeLine{00322   updatePanelSize(a);}
+\DoxyCodeLine{00323 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_easy_input_area_a25ac873104006eec9a4967dd792ef156}\label{class_easy_input_area_a25ac873104006eec9a4967dd792ef156}} 
+\index{EasyInputArea@{EasyInputArea}!resizeEvent@{resizeEvent}}
+\index{resizeEvent@{resizeEvent}!EasyInputArea@{EasyInputArea}}
+\doxysubsubsection{\texorpdfstring{resizeEvent()}{resizeEvent()}}
+{\footnotesize\ttfamily void Easy\+Input\+Area\+::resize\+Event (\begin{DoxyParamCaption}\item[{QResize\+Event $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00331                                              \{}
+\DoxyCodeLine{00332   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < WORD\_COLUMN\_AMOUNT; i++) \{}
+\DoxyCodeLine{00333     updatePanelSize(i);}
+\DoxyCodeLine{00334   \}}
+\DoxyCodeLine{00335 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/stylenameeditor.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/stylenameeditor.\+cpp\end{DoxyCompactItemize}

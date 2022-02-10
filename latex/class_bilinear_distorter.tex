@@ -1,0 +1,207 @@
+\hypertarget{class_bilinear_distorter}{}\doxysection{Bilinear\+Distorter Class Reference}
+\label{class_bilinear_distorter}\index{BilinearDistorter@{BilinearDistorter}}
+
+
+{\ttfamily \#include $<$tdistort.\+h$>$}
+
+Inheritance diagram for Bilinear\+Distorter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_bilinear_distorter}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_bilinear_distorter_a594d710c765b8ec65f81c66312b5a6bd}{Bilinear\+Distorter}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p00s, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p10s, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p01s, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p11s, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p00d, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p10d, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p01d, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p11d)
+\item 
+\mbox{\hyperlink{class_t_point_t}{TPointD}} \mbox{\hyperlink{class_bilinear_distorter_a4baf32acb53b0651dd4b9e7eaa3ac022}{map}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p) const override
+\begin{DoxyCompactList}\small\item\em Returns the distorted image of point {\bfseries{p}}. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_bilinear_distorter_a2a71bc3e42a49d96d2a90e04739f0caa}{inv\+Map}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p, \mbox{\hyperlink{class_t_point_t}{TPointD}} $\ast$results) const override
+\item 
+int \mbox{\hyperlink{class_bilinear_distorter_a8ce4d66fb491a2cfcfa0471c92f8106c}{max\+Inv\+Count}} () const override
+\item 
+\mbox{\hyperlink{class_t_rect_t}{TRectD}} \mbox{\hyperlink{class_bilinear_distorter_a439857d49638b672cf1e90d4f43af02c}{inv\+Map}} (const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&rect) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The Bilinear\+Distort class implements a quadrilateral distorter which maps bilinear combinations of the source corners into the same combinations of destination ones. The resulting image deformation is similar to bending a paper foil. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_bilinear_distorter_a594d710c765b8ec65f81c66312b5a6bd}\label{class_bilinear_distorter_a594d710c765b8ec65f81c66312b5a6bd}} 
+\index{BilinearDistorter@{BilinearDistorter}!BilinearDistorter@{BilinearDistorter}}
+\index{BilinearDistorter@{BilinearDistorter}!BilinearDistorter@{BilinearDistorter}}
+\doxysubsubsection{\texorpdfstring{BilinearDistorter()}{BilinearDistorter()}}
+{\footnotesize\ttfamily Bilinear\+Distorter\+::\+Bilinear\+Distorter (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p00s,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p10s,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p01s,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p11s,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p00d,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p10d,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p01d,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p11d }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00548     : \mbox{\hyperlink{class_t_quad_distorter}{TQuadDistorter}}(p00s, p10s, p01s, p11s, p00d, p10d, p01d, p11d) \{}
+\DoxyCodeLine{00549   m\_refToSource.m\_p00 = p00s;}
+\DoxyCodeLine{00550   m\_refToSource.m\_p10 = p10s;}
+\DoxyCodeLine{00551   m\_refToSource.m\_p01 = p01s;}
+\DoxyCodeLine{00552   m\_refToSource.m\_p11 = p11s;}
+\DoxyCodeLine{00553   m\_refToDest.m\_p00   = p00d;}
+\DoxyCodeLine{00554   m\_refToDest.m\_p10   = p10d;}
+\DoxyCodeLine{00555   m\_refToDest.m\_p01   = p01d;}
+\DoxyCodeLine{00556   m\_refToDest.m\_p11   = p11d;}
+\DoxyCodeLine{00557 }
+\DoxyCodeLine{00558   m\_refToSource.m\_A = p00s;}
+\DoxyCodeLine{00559   m\_refToSource.m\_B = p10s -\/ p00s;}
+\DoxyCodeLine{00560   m\_refToSource.m\_C = p01s -\/ p00s;}
+\DoxyCodeLine{00561   m\_refToSource.m\_D = p11s -\/ p01s -\/ p10s + p00s;}
+\DoxyCodeLine{00562   m\_refToDest.m\_A   = p00d;}
+\DoxyCodeLine{00563   m\_refToDest.m\_B   = p10d -\/ p00d;}
+\DoxyCodeLine{00564   m\_refToDest.m\_C   = p01d -\/ p00d;}
+\DoxyCodeLine{00565   m\_refToDest.m\_D   = p11d -\/ p01d -\/ p10d + p00d;}
+\DoxyCodeLine{00566 }
+\DoxyCodeLine{00567   m\_refToSource.m\_a = m\_refToSource.m\_D.x * m\_refToSource.m\_C.y -\/}
+\DoxyCodeLine{00568                       m\_refToSource.m\_C.x * m\_refToSource.m\_D.y;}
+\DoxyCodeLine{00569   m\_refToSource.m\_b0 = m\_refToSource.m\_B.x * m\_refToSource.m\_C.y -\/}
+\DoxyCodeLine{00570                        m\_refToSource.m\_C.x * m\_refToSource.m\_B.y;}
+\DoxyCodeLine{00571   m\_refToDest.m\_a = m\_refToDest.m\_D.x * m\_refToDest.m\_C.y -\/}
+\DoxyCodeLine{00572                     m\_refToDest.m\_C.x * m\_refToDest.m\_D.y;}
+\DoxyCodeLine{00573   m\_refToDest.m\_b0 = m\_refToDest.m\_B.x * m\_refToDest.m\_C.y -\/}
+\DoxyCodeLine{00574                      m\_refToDest.m\_C.x * m\_refToDest.m\_B.y;}
+\DoxyCodeLine{00575 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_bilinear_distorter_aa27d148a48b56dd4290ae60fab7e6099}\label{class_bilinear_distorter_aa27d148a48b56dd4290ae60fab7e6099}} 
+\index{BilinearDistorter@{BilinearDistorter}!````~BilinearDistorter@{$\sim$BilinearDistorter}}
+\index{````~BilinearDistorter@{$\sim$BilinearDistorter}!BilinearDistorter@{BilinearDistorter}}
+\doxysubsubsection{\texorpdfstring{$\sim$BilinearDistorter()}{~BilinearDistorter()}}
+{\footnotesize\ttfamily Bilinear\+Distorter\+::$\sim$\+Bilinear\+Distorter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00579 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_bilinear_distorter_a2a71bc3e42a49d96d2a90e04739f0caa}\label{class_bilinear_distorter_a2a71bc3e42a49d96d2a90e04739f0caa}} 
+\index{BilinearDistorter@{BilinearDistorter}!invMap@{invMap}}
+\index{invMap@{invMap}!BilinearDistorter@{BilinearDistorter}}
+\doxysubsubsection{\texorpdfstring{invMap()}{invMap()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily int Bilinear\+Distorter\+::inv\+Map (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p,  }\item[{\mbox{\hyperlink{class_t_point_t}{TPointD}} $\ast$}]{results }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Returns the pre-\/images of distorted point {\bfseries{p}}. The results are overed on the output image as they appear in the returned vector, so the user must be sure to sort them accordingly. {\bfseries{NOTE\+:}} The results array is already allocated with the number of entries specified by the max\+Inv\+Count() function in order to avoid allocation at this level; however, the number of effective inverses must be specified as a return value. 
+
+Implements \mbox{\hyperlink{class_t_distorter_aa1f4e823ae575d0585407b08ed0881d5}{TDistorter}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00593                                                                              \{}
+\DoxyCodeLine{00594   \textcolor{keywordtype}{int} returnCount = m\_refToDest.invMap(p, results);}
+\DoxyCodeLine{00595   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i   = 0; i < returnCount; ++i)}
+\DoxyCodeLine{00596     results[i] = m\_refToSource.map(results[i]);}
+\DoxyCodeLine{00597   \textcolor{keywordflow}{return} returnCount;}
+\DoxyCodeLine{00598 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_bilinear_distorter_a439857d49638b672cf1e90d4f43af02c}\label{class_bilinear_distorter_a439857d49638b672cf1e90d4f43af02c}} 
+\index{BilinearDistorter@{BilinearDistorter}!invMap@{invMap}}
+\index{invMap@{invMap}!BilinearDistorter@{BilinearDistorter}}
+\doxysubsubsection{\texorpdfstring{invMap()}{invMap()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_rect_t}{TRectD}} Bilinear\+Distorter\+::inv\+Map (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{rect }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+This function is reimplementable to provide a mean of bounding the source region that will be mapped to the passed rect, typically for fxs efficiency support. 
+
+Reimplemented from \mbox{\hyperlink{class_t_quad_distorter_a5914f39e4378349802408d70b439e4fd}{TQuad\+Distorter}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01115                                                          \{}
+\DoxyCodeLine{01116   \textcolor{comment}{// Build the convex coordinates of the rect's corners.}}
+\DoxyCodeLine{01117   \mbox{\hyperlink{class_t_point_t}{TPointD}} invs[8];}
+\DoxyCodeLine{01118   \textcolor{keywordtype}{int} count[4];}
+\DoxyCodeLine{01119 }
+\DoxyCodeLine{01120   count[0] = m\_refToDest.invMap(rect.getP00(), \&invs[0]);}
+\DoxyCodeLine{01121   count[1] = m\_refToDest.invMap(rect.getP10(), \&invs[2]);}
+\DoxyCodeLine{01122   count[2] = m\_refToDest.invMap(rect.getP01(), \&invs[4]);}
+\DoxyCodeLine{01123   count[3] = m\_refToDest.invMap(rect.getP11(), \&invs[6]);}
+\DoxyCodeLine{01124 }
+\DoxyCodeLine{01125   \textcolor{keywordtype}{double} maxD = (std::numeric\_limits<double>::max)();}
+\DoxyCodeLine{01126   \mbox{\hyperlink{class_t_rect_t}{TRectD}} bbox(maxD, maxD, -\/maxD, -\/maxD);}
+\DoxyCodeLine{01127 }
+\DoxyCodeLine{01128   \textcolor{keywordtype}{int} i, j;}
+\DoxyCodeLine{01129   \textcolor{keywordflow}{for} (i = 0; i < 4; ++i) \{}
+\DoxyCodeLine{01130     \textcolor{keywordflow}{for} (j = 0; j < count[i]; ++j) \{}
+\DoxyCodeLine{01131       \mbox{\hyperlink{class_t_point_t}{TPointD}} \&inv(invs[j + 2 * i]);}
+\DoxyCodeLine{01132       bbox.x0 = std::min(bbox.x0, inv.x);}
+\DoxyCodeLine{01133       bbox.y0 = std::min(bbox.y0, inv.y);}
+\DoxyCodeLine{01134       bbox.x1 = std::max(bbox.x1, inv.x);}
+\DoxyCodeLine{01135       bbox.y1 = std::max(bbox.y1, inv.y);}
+\DoxyCodeLine{01136     \}}
+\DoxyCodeLine{01137   \}}
+\DoxyCodeLine{01138 }
+\DoxyCodeLine{01139   \textcolor{keywordflow}{if} (bbox.x1 <= bbox.x0 || bbox.y1 <= bbox.y0)}
+\DoxyCodeLine{01140     \textcolor{keywordflow}{return} TConsts::infiniteRectD;  \textcolor{comment}{// Should happen only if all counts are 0}}
+\DoxyCodeLine{01141 }
+\DoxyCodeLine{01142   invs[0] = m\_refToSource.map(bbox.getP00());}
+\DoxyCodeLine{01143   invs[1] = m\_refToSource.map(bbox.getP10());}
+\DoxyCodeLine{01144   invs[2] = m\_refToSource.map(bbox.getP01());}
+\DoxyCodeLine{01145   invs[3] = m\_refToSource.map(bbox.getP11());}
+\DoxyCodeLine{01146 }
+\DoxyCodeLine{01147   bbox.x0 = std::min(\{invs[0].x, invs[1].x, invs[2].x, invs[3].x\});}
+\DoxyCodeLine{01148   bbox.y0 = std::min(\{invs[0].y, invs[1].y, invs[2].y, invs[3].y\});}
+\DoxyCodeLine{01149   bbox.x1 = std::max(\{invs[0].x, invs[1].x, invs[2].x, invs[3].x\});}
+\DoxyCodeLine{01150   bbox.y1 = std::max(\{invs[0].y, invs[1].y, invs[2].y, invs[3].y\});}
+\DoxyCodeLine{01151 }
+\DoxyCodeLine{01152   \textcolor{keywordflow}{return} bbox.enlarge(5);  \textcolor{comment}{// Enlarge a little just to be sure}}
+\DoxyCodeLine{01153 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00557}{TRect\+T$<$ T $>$\+::x0}}.
+
+\mbox{\Hypertarget{class_bilinear_distorter_a4baf32acb53b0651dd4b9e7eaa3ac022}\label{class_bilinear_distorter_a4baf32acb53b0651dd4b9e7eaa3ac022}} 
+\index{BilinearDistorter@{BilinearDistorter}!map@{map}}
+\index{map@{map}!BilinearDistorter@{BilinearDistorter}}
+\doxysubsubsection{\texorpdfstring{map()}{map()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_point_t}{TPointD}} Bilinear\+Distorter\+::map (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns the distorted image of point {\bfseries{p}}. 
+
+
+
+Implements \mbox{\hyperlink{class_t_distorter_a9e7047acf8cc0698ebc9b2041c15cc9d}{TDistorter}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00583                                                      \{}
+\DoxyCodeLine{00584   \mbox{\hyperlink{class_t_point_t}{TPointD}} sourceToRefPoints[2];}
+\DoxyCodeLine{00585   \textcolor{keywordtype}{int} returnCount = m\_refToSource.invMap(p, sourceToRefPoints);}
+\DoxyCodeLine{00586   \textcolor{keywordflow}{if} (returnCount > 0) \textcolor{keywordflow}{return} m\_refToDest.map(sourceToRefPoints[0]);}
+\DoxyCodeLine{00587 }
+\DoxyCodeLine{00588   \textcolor{keywordflow}{return} TConsts::napd;}
+\DoxyCodeLine{00589 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_bilinear_distorter_a8ce4d66fb491a2cfcfa0471c92f8106c}\label{class_bilinear_distorter_a8ce4d66fb491a2cfcfa0471c92f8106c}} 
+\index{BilinearDistorter@{BilinearDistorter}!maxInvCount@{maxInvCount}}
+\index{maxInvCount@{maxInvCount}!BilinearDistorter@{BilinearDistorter}}
+\doxysubsubsection{\texorpdfstring{maxInvCount()}{maxInvCount()}}
+{\footnotesize\ttfamily int Bilinear\+Distorter\+::max\+Inv\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_distorter}{TDistorter}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00159 \{ \textcolor{keywordflow}{return} 2; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/tdistort.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tdistort.\+cpp\end{DoxyCompactItemize}

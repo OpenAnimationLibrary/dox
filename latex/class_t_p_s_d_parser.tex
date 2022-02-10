@@ -1,0 +1,267 @@
+\hypertarget{class_t_p_s_d_parser}{}\doxysection{TPSDParser Class Reference}
+\label{class_t_p_s_d_parser}\index{TPSDParser@{TPSDParser}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_p_s_d_parser_aadcdb69c7e32c5a0460eef688586e2de}{TPSDParser}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path)
+\item 
+int \mbox{\hyperlink{class_t_p_s_d_parser_a7180db2b08f49cf00471b01ec6baa370}{get\+Levels\+Count}} ()
+\item 
+void \mbox{\hyperlink{class_t_p_s_d_parser_af4ac75f2b214e0d2c9ae63e112639ab2}{load}} (\mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&rasP, int layer\+Id=0)
+\item 
+int \mbox{\hyperlink{class_t_p_s_d_parser_adbbf13aa7f37edf78cc18d6872bb89ab}{get\+Level\+Id}} (int index)
+\item 
+bool \mbox{\hyperlink{class_t_p_s_d_parser_a9f840964c7c31d073ba75f0e9c35ec5d}{is\+Folder}} (int level\+Index)
+\item 
+int \mbox{\hyperlink{class_t_p_s_d_parser_a9bbd14164570ab098a4e7149a78c8ead}{get\+Level\+Index\+By\+Id}} (int level\+Id)
+\item 
+int \mbox{\hyperlink{class_t_p_s_d_parser_a1d55e91046233b923982eedda21f3990}{get\+Level\+Id\+By\+Name}} (std\+::string level\+Name)
+\item 
+int \mbox{\hyperlink{class_t_p_s_d_parser_a55f387caad384979e11290dbe785e75b}{get\+Frame\+Id}} (int layer\+Id, int frame\+Index)
+\item 
+int \mbox{\hyperlink{class_t_p_s_d_parser_a496fe112859e806d11e00ae67220b8df}{get\+Frames\+Count}} (int level\+Id)
+\item 
+bool \mbox{\hyperlink{class_t_p_s_d_parser_afd6ef931484f63d41ee2f2a905452751}{is\+Sub\+Folder}} (int level\+Index, int frame\+Index)
+\item 
+std\+::string \mbox{\hyperlink{class_t_p_s_d_parser_abad1fc5d3ffeeb6d3e414813510c0dd2}{get\+Level\+Name}} (int level\+Id)
+\item 
+std\+::string \mbox{\hyperlink{class_t_p_s_d_parser_a08d6d69d54c0f5f131c647b51bb7a93d}{get\+Level\+Name\+With\+Counter}} (int level\+Id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_p_s_d_parser_aadcdb69c7e32c5a0460eef688586e2de}\label{class_t_p_s_d_parser_aadcdb69c7e32c5a0460eef688586e2de}} 
+\index{TPSDParser@{TPSDParser}!TPSDParser@{TPSDParser}}
+\index{TPSDParser@{TPSDParser}!TPSDParser@{TPSDParser}}
+\doxysubsubsection{\texorpdfstring{TPSDParser()}{TPSDParser()}}
+{\footnotesize\ttfamily TPSDParser\+::\+TPSDParser (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01140                                             \{}
+\DoxyCodeLine{01141   m\_path       = path;}
+\DoxyCodeLine{01142   QString name = path.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}().c\_str();}
+\DoxyCodeLine{01143   name.append(path.\mbox{\hyperlink{class_t_file_path_ae69f3fd881d12ebb858c7462417c82b8}{getDottedType}}().c\_str());}
+\DoxyCodeLine{01144   \textcolor{keywordtype}{int} sepPos = name.indexOf(\textcolor{stringliteral}{"{}\#"{}});}
+\DoxyCodeLine{01145   \textcolor{keywordtype}{int} dotPos = name.indexOf(\textcolor{stringliteral}{"{}."{}}, sepPos);}
+\DoxyCodeLine{01146   name.remove(sepPos, dotPos -\/ sepPos);}
+\DoxyCodeLine{01147   \mbox{\hyperlink{class_t_file_path}{TFilePath}} psdpath = m\_path.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(name.toStdString());}
+\DoxyCodeLine{01148   m\_psdreader       = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_p_s_d_reader}{TPSDReader}}(psdpath);}
+\DoxyCodeLine{01149   doLevels();}
+\DoxyCodeLine{01150 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_parser_a7f64659940819b99dd048c7921a687e3}\label{class_t_p_s_d_parser_a7f64659940819b99dd048c7921a687e3}} 
+\index{TPSDParser@{TPSDParser}!````~TPSDParser@{$\sim$TPSDParser}}
+\index{````~TPSDParser@{$\sim$TPSDParser}!TPSDParser@{TPSDParser}}
+\doxysubsubsection{\texorpdfstring{$\sim$TPSDParser()}{~TPSDParser()}}
+{\footnotesize\ttfamily TPSDParser\+::$\sim$\+TPSDParser (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01152 \{ \textcolor{keyword}{delete} m\_psdreader; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_p_s_d_parser_a55f387caad384979e11290dbe785e75b}\label{class_t_p_s_d_parser_a55f387caad384979e11290dbe785e75b}} 
+\index{TPSDParser@{TPSDParser}!getFrameId@{getFrameId}}
+\index{getFrameId@{getFrameId}!TPSDParser@{TPSDParser}}
+\doxysubsubsection{\texorpdfstring{getFrameId()}{getFrameId()}}
+{\footnotesize\ttfamily int TPSDParser\+::get\+Frame\+Id (\begin{DoxyParamCaption}\item[{int}]{layer\+Id,  }\item[{int}]{frame\+Index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00279                                               \{}
+\DoxyCodeLine{00280     \textcolor{keywordflow}{return} m\_levels[getLevelIndexById(layerId)].getFrameId(frameIndex);}
+\DoxyCodeLine{00281   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_parser_a496fe112859e806d11e00ae67220b8df}\label{class_t_p_s_d_parser_a496fe112859e806d11e00ae67220b8df}} 
+\index{TPSDParser@{TPSDParser}!getFramesCount@{getFramesCount}}
+\index{getFramesCount@{getFramesCount}!TPSDParser@{TPSDParser}}
+\doxysubsubsection{\texorpdfstring{getFramesCount()}{getFramesCount()}}
+{\footnotesize\ttfamily int TPSDParser\+::get\+Frames\+Count (\begin{DoxyParamCaption}\item[{int}]{level\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01302                                           \{}
+\DoxyCodeLine{01303   \textcolor{keywordtype}{int} levelIndex = getLevelIndexById(levelId);}
+\DoxyCodeLine{01304   assert(levelIndex >= 0 \&\& levelIndex < (\textcolor{keywordtype}{int})m\_levels.size());}
+\DoxyCodeLine{01305   \textcolor{keywordflow}{return} m\_levels[levelIndex].getFrameCount();}
+\DoxyCodeLine{01306 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_parser_adbbf13aa7f37edf78cc18d6872bb89ab}\label{class_t_p_s_d_parser_adbbf13aa7f37edf78cc18d6872bb89ab}} 
+\index{TPSDParser@{TPSDParser}!getLevelId@{getLevelId}}
+\index{getLevelId@{getLevelId}!TPSDParser@{TPSDParser}}
+\doxysubsubsection{\texorpdfstring{getLevelId()}{getLevelId()}}
+{\footnotesize\ttfamily int TPSDParser\+::get\+Level\+Id (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00267                             \{}
+\DoxyCodeLine{00268     assert(index >= 0 \&\& index < (\textcolor{keywordtype}{int})m\_levels.size());}
+\DoxyCodeLine{00269     \textcolor{keywordflow}{return} m\_levels[index].getLayerId();}
+\DoxyCodeLine{00270   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_parser_a1d55e91046233b923982eedda21f3990}\label{class_t_p_s_d_parser_a1d55e91046233b923982eedda21f3990}} 
+\index{TPSDParser@{TPSDParser}!getLevelIdByName@{getLevelIdByName}}
+\index{getLevelIdByName@{getLevelIdByName}!TPSDParser@{TPSDParser}}
+\doxysubsubsection{\texorpdfstring{getLevelIdByName()}{getLevelIdByName()}}
+{\footnotesize\ttfamily int TPSDParser\+::get\+Level\+Id\+By\+Name (\begin{DoxyParamCaption}\item[{std\+::string}]{level\+Name }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01281                                                     \{}
+\DoxyCodeLine{01282   \textcolor{keywordtype}{int} pos     = levelName.find\_last\_of(LEVEL\_NAME\_INDEX\_SEP);}
+\DoxyCodeLine{01283   \textcolor{keywordtype}{int} counter = 0;}
+\DoxyCodeLine{01284   \textcolor{keywordflow}{if} (pos != std::string::npos) \{}
+\DoxyCodeLine{01285     counter   = atoi(levelName.substr(pos + 1).c\_str());}
+\DoxyCodeLine{01286     levelName = levelName.substr(0, pos);}
+\DoxyCodeLine{01287   \}}
+\DoxyCodeLine{01288   \textcolor{keywordtype}{int} lyid           = -\/1;}
+\DoxyCodeLine{01289   \textcolor{keywordtype}{int} levelNameCount = 0;}
+\DoxyCodeLine{01290   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_levels.size(); i++) \{}
+\DoxyCodeLine{01291     \textcolor{keywordflow}{if} (m\_levels[i].getName() == levelName) \{}
+\DoxyCodeLine{01292       lyid = m\_levels[i].getLayerId();}
+\DoxyCodeLine{01293       \textcolor{keywordflow}{if} (counter == levelNameCount) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01294       levelNameCount++;}
+\DoxyCodeLine{01295     \}}
+\DoxyCodeLine{01296   \}}
+\DoxyCodeLine{01297   \textcolor{keywordflow}{if} (lyid == 0 \&\& lyid < 0) lyid = 0;}
+\DoxyCodeLine{01298   \textcolor{keywordflow}{if} (lyid < 0 \&\& lyid != 0)}
+\DoxyCodeLine{01299     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_image_exception}{TImageException}}(m\_path, \textcolor{stringliteral}{"{}Layer ID not exists"{}});}
+\DoxyCodeLine{01300   \textcolor{keywordflow}{return} lyid;}
+\DoxyCodeLine{01301 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_parser_a9bbd14164570ab098a4e7149a78c8ead}\label{class_t_p_s_d_parser_a9bbd14164570ab098a4e7149a78c8ead}} 
+\index{TPSDParser@{TPSDParser}!getLevelIndexById@{getLevelIndexById}}
+\index{getLevelIndexById@{getLevelIndexById}!TPSDParser@{TPSDParser}}
+\doxysubsubsection{\texorpdfstring{getLevelIndexById()}{getLevelIndexById()}}
+{\footnotesize\ttfamily int TPSDParser\+::get\+Level\+Index\+By\+Id (\begin{DoxyParamCaption}\item[{int}]{level\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01268                                              \{}
+\DoxyCodeLine{01269   \textcolor{keywordtype}{int} layerIndex = -\/1;}
+\DoxyCodeLine{01270   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_levels.size(); i++) \{}
+\DoxyCodeLine{01271     \textcolor{keywordflow}{if} (m\_levels[i].getLayerId() == layerId) \{}
+\DoxyCodeLine{01272       layerIndex = i;}
+\DoxyCodeLine{01273       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01274     \}}
+\DoxyCodeLine{01275   \}}
+\DoxyCodeLine{01276   \textcolor{keywordflow}{if} (layerId == 0 \&\& layerIndex < 0) layerIndex = 0;}
+\DoxyCodeLine{01277   \textcolor{keywordflow}{if} (layerIndex < 0 \&\& layerId != 0)}
+\DoxyCodeLine{01278     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_image_exception}{TImageException}}(m\_path, \textcolor{stringliteral}{"{}Layer ID not exists"{}});}
+\DoxyCodeLine{01279   \textcolor{keywordflow}{return} layerIndex;}
+\DoxyCodeLine{01280 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_parser_abad1fc5d3ffeeb6d3e414813510c0dd2}\label{class_t_p_s_d_parser_abad1fc5d3ffeeb6d3e414813510c0dd2}} 
+\index{TPSDParser@{TPSDParser}!getLevelName@{getLevelName}}
+\index{getLevelName@{getLevelName}!TPSDParser@{TPSDParser}}
+\doxysubsubsection{\texorpdfstring{getLevelName()}{getLevelName()}}
+{\footnotesize\ttfamily std\+::string TPSDParser\+::get\+Level\+Name (\begin{DoxyParamCaption}\item[{int}]{level\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01307                                               \{}
+\DoxyCodeLine{01308   \textcolor{keywordtype}{int} levelIndex = getLevelIndexById(levelId);}
+\DoxyCodeLine{01309   assert(levelIndex >= 0 \&\& levelIndex < (\textcolor{keywordtype}{int})m\_levels.size());}
+\DoxyCodeLine{01310   \textcolor{keywordflow}{return} m\_levels[levelIndex].getName();}
+\DoxyCodeLine{01311 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_parser_a08d6d69d54c0f5f131c647b51bb7a93d}\label{class_t_p_s_d_parser_a08d6d69d54c0f5f131c647b51bb7a93d}} 
+\index{TPSDParser@{TPSDParser}!getLevelNameWithCounter@{getLevelNameWithCounter}}
+\index{getLevelNameWithCounter@{getLevelNameWithCounter}!TPSDParser@{TPSDParser}}
+\doxysubsubsection{\texorpdfstring{getLevelNameWithCounter()}{getLevelNameWithCounter()}}
+{\footnotesize\ttfamily std\+::string TPSDParser\+::get\+Level\+Name\+With\+Counter (\begin{DoxyParamCaption}\item[{int}]{level\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01312                                                          \{}
+\DoxyCodeLine{01313   std::string levelName = getLevelName(levelId);}
+\DoxyCodeLine{01314   \textcolor{keywordtype}{int} count             = 0;}
+\DoxyCodeLine{01315   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_levels.size(); i++) \{}
+\DoxyCodeLine{01316     \textcolor{keywordflow}{if} (m\_levels[i].getName() == levelName) \{}
+\DoxyCodeLine{01317       \textcolor{keywordflow}{if} (m\_levels[i].getLayerId() == levelId) \{}
+\DoxyCodeLine{01318         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01319       \}}
+\DoxyCodeLine{01320       count++;}
+\DoxyCodeLine{01321     \}}
+\DoxyCodeLine{01322   \}}
+\DoxyCodeLine{01323   \textcolor{keywordflow}{if} (count > 0) \{}
+\DoxyCodeLine{01324     levelName.append(LEVEL\_NAME\_INDEX\_SEP);}
+\DoxyCodeLine{01325     std::string c = QString::number(count).toStdString();}
+\DoxyCodeLine{01326     levelName.append(c);}
+\DoxyCodeLine{01327   \}}
+\DoxyCodeLine{01328   \textcolor{keywordflow}{return} levelName;}
+\DoxyCodeLine{01329 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_parser_a7180db2b08f49cf00471b01ec6baa370}\label{class_t_p_s_d_parser_a7180db2b08f49cf00471b01ec6baa370}} 
+\index{TPSDParser@{TPSDParser}!getLevelsCount@{getLevelsCount}}
+\index{getLevelsCount@{getLevelsCount}!TPSDParser@{TPSDParser}}
+\doxysubsubsection{\texorpdfstring{getLevelsCount()}{getLevelsCount()}}
+{\footnotesize\ttfamily int TPSDParser\+::get\+Levels\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00261 \{ \textcolor{keywordflow}{return} (\textcolor{keywordtype}{int})m\_levels.size(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_parser_a9f840964c7c31d073ba75f0e9c35ec5d}\label{class_t_p_s_d_parser_a9f840964c7c31d073ba75f0e9c35ec5d}} 
+\index{TPSDParser@{TPSDParser}!isFolder@{isFolder}}
+\index{isFolder@{isFolder}!TPSDParser@{TPSDParser}}
+\doxysubsubsection{\texorpdfstring{isFolder()}{isFolder()}}
+{\footnotesize\ttfamily bool TPSDParser\+::is\+Folder (\begin{DoxyParamCaption}\item[{int}]{level\+Index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00271                                 \{}
+\DoxyCodeLine{00272     assert(levelIndex >= 0 \&\& levelIndex < (\textcolor{keywordtype}{int})m\_levels.size());}
+\DoxyCodeLine{00273     \textcolor{keywordflow}{return} m\_levels[levelIndex].isFolder();}
+\DoxyCodeLine{00274   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_parser_afd6ef931484f63d41ee2f2a905452751}\label{class_t_p_s_d_parser_afd6ef931484f63d41ee2f2a905452751}} 
+\index{TPSDParser@{TPSDParser}!isSubFolder@{isSubFolder}}
+\index{isSubFolder@{isSubFolder}!TPSDParser@{TPSDParser}}
+\doxysubsubsection{\texorpdfstring{isSubFolder()}{isSubFolder()}}
+{\footnotesize\ttfamily bool TPSDParser\+::is\+Sub\+Folder (\begin{DoxyParamCaption}\item[{int}]{level\+Index,  }\item[{int}]{frame\+Index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00283                                                    \{}
+\DoxyCodeLine{00284     assert(levelIndex >= 0 \&\& levelIndex < (\textcolor{keywordtype}{int})m\_levels.size());}
+\DoxyCodeLine{00285     \textcolor{keywordflow}{return} m\_levels[levelIndex].isSubFolder(frameIndex);}
+\DoxyCodeLine{00286   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_p_s_d_parser_af4ac75f2b214e0d2c9ae63e112639ab2}\label{class_t_p_s_d_parser_af4ac75f2b214e0d2c9ae63e112639ab2}} 
+\index{TPSDParser@{TPSDParser}!load@{load}}
+\index{load@{load}!TPSDParser@{TPSDParser}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily void TPSDParser\+::load (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_raster_image_p}{TRaster\+ImageP}} \&}]{rasP,  }\item[{int}]{layer\+Id = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01264                                                       \{}
+\DoxyCodeLine{01265   m\_psdreader-\/>load(rasP, layerId);}
+\DoxyCodeLine{01266 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/psdlib/psd.\+h\item 
+E\+:/opentoonz/toonz/sources/common/psdlib/psd.\+cpp\end{DoxyCompactItemize}

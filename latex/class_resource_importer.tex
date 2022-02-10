@@ -1,0 +1,249 @@
+\hypertarget{class_resource_importer}{}\doxysection{Resource\+Importer Class Reference}
+\label{class_resource_importer}\index{ResourceImporter@{ResourceImporter}}
+Inheritance diagram for Resource\+Importer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_resource_importer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_resource_importer_a18927b14436b885d77797e6562f0f377}{Resource\+Importer}} (\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$scene, \mbox{\hyperlink{class_t_project}{TProject}} $\ast$dst\+Project, \mbox{\hyperlink{class_resource_import_strategy}{Resource\+Import\+Strategy}} \&strategy)
+\item 
+bool \mbox{\hyperlink{class_resource_importer_af96ca2f2ad88c1c83657921b014e2575}{make\+Unique}} (\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path)
+\item 
+\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \mbox{\hyperlink{class_resource_importer_a47beb618130ebcaecdba58ee59be013d}{get\+Imported\+Scene\+Path}} () const
+\item 
+\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \mbox{\hyperlink{class_resource_importer_aef7268833023a495107d93dfd44e51a5}{code\+Path}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&old\+Coded\+Path, const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&new\+Actual\+Path)
+\item 
+void \mbox{\hyperlink{class_resource_importer_a587e314c138f8149c6383a34f2d2508d}{process}} (\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$sl) override
+\item 
+void \mbox{\hyperlink{class_resource_importer_a7163d335158373941a143fb301f0545f}{process}} (\mbox{\hyperlink{class_t_xsh_palette_level}{TXsh\+Palette\+Level}} $\ast$sl) override
+\item 
+void \mbox{\hyperlink{class_resource_importer_a1a511c4864397cb91c5cb12a6beea3c0}{process}} (\mbox{\hyperlink{class_t_xsh_sound_level}{TXsh\+Sound\+Level}} $\ast$sl) override
+\item 
+bool \mbox{\hyperlink{class_resource_importer_af7d1c17c304677310355dd49998cdef6}{aborted}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::string \mbox{\hyperlink{class_resource_importer_a180ecb74c3b81f9bdc4360cc7e431e8d}{extract\+Psd\+Suffix}} (\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path)
+\item 
+static \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \mbox{\hyperlink{class_resource_importer_a2cac2df5241dc935c1418a57c05c248a}{build\+Psd}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, const std\+::string \&suffix)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_resource_importer_a18927b14436b885d77797e6562f0f377}\label{class_resource_importer_a18927b14436b885d77797e6562f0f377}} 
+\index{ResourceImporter@{ResourceImporter}!ResourceImporter@{ResourceImporter}}
+\index{ResourceImporter@{ResourceImporter}!ResourceImporter@{ResourceImporter}}
+\doxysubsubsection{\texorpdfstring{ResourceImporter()}{ResourceImporter()}}
+{\footnotesize\ttfamily Resource\+Importer\+::\+Resource\+Importer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$}]{scene,  }\item[{\mbox{\hyperlink{class_t_project}{TProject}} $\ast$}]{dst\+Project,  }\item[{\mbox{\hyperlink{class_resource_import_strategy}{Resource\+Import\+Strategy}} \&}]{strategy }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00568     : m\_scene(scene)}
+\DoxyCodeLine{00569     , m\_dstProject(dstProject)}
+\DoxyCodeLine{00570     , m\_dstScene(\textcolor{keyword}{new} \mbox{\hyperlink{class_toonz_scene}{ToonzScene}}())}
+\DoxyCodeLine{00571     , m\_importStrategy(importStrategy) \{}
+\DoxyCodeLine{00572   m\_dstScene-\/>\mbox{\hyperlink{class_toonz_scene_aa7aac33fc53c47ea5baff597e5f18a9b}{setProject}}(dstProject);}
+\DoxyCodeLine{00573   \textcolor{comment}{// scene file may not be in the "{}+scenes"{} path for the sandbox project.}}
+\DoxyCodeLine{00574   \textcolor{comment}{// in such case, try to save as "{}+scenes/filename.tnz"{} on import.}}
+\DoxyCodeLine{00575   \mbox{\hyperlink{class_t_file_path}{TFilePath}} relativeScenePath =}
+\DoxyCodeLine{00576       scene-\/>\mbox{\hyperlink{class_toonz_scene_ad42b52b671b094f66e003c4b7ebefd45}{getScenePath}}() -\/ scene-\/>\mbox{\hyperlink{class_toonz_scene_afec1477d4fe0bb1e1152e80c3a0b20ab}{getProject}}()-\/>\mbox{\hyperlink{class_t_project_a62c3e40e2395b6cbc4ec8ddecf1494b5}{getScenesPath}}();}
+\DoxyCodeLine{00577   \textcolor{keywordflow}{if} (relativeScenePath.isAbsolute())}
+\DoxyCodeLine{00578     relativeScenePath = scene-\/>\mbox{\hyperlink{class_toonz_scene_ad42b52b671b094f66e003c4b7ebefd45}{getScenePath}}().\mbox{\hyperlink{class_t_file_path_ac17d65d827432f0fae28fed699bf4afa}{withoutParentDir}}();}
+\DoxyCodeLine{00579   \mbox{\hyperlink{class_t_file_path}{TFilePath}} newFp = dstProject-\/>\mbox{\hyperlink{class_t_project_a62c3e40e2395b6cbc4ec8ddecf1494b5}{getScenesPath}}() + relativeScenePath;}
+\DoxyCodeLine{00580   makeUnique(newFp);}
+\DoxyCodeLine{00581   m\_dstScene-\/>\mbox{\hyperlink{class_toonz_scene_a815ecf4f07a92f9f9fef693f762c1228}{setScenePath}}(newFp);}
+\DoxyCodeLine{00582 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resource_importer_a69fc35cb114adf1b7f07b451250dac10}\label{class_resource_importer_a69fc35cb114adf1b7f07b451250dac10}} 
+\index{ResourceImporter@{ResourceImporter}!````~ResourceImporter@{$\sim$ResourceImporter}}
+\index{````~ResourceImporter@{$\sim$ResourceImporter}!ResourceImporter@{ResourceImporter}}
+\doxysubsubsection{\texorpdfstring{$\sim$ResourceImporter()}{~ResourceImporter()}}
+{\footnotesize\ttfamily Resource\+Importer\+::$\sim$\+Resource\+Importer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00586 \{ \textcolor{keyword}{delete} m\_dstScene; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_resource_importer_af7d1c17c304677310355dd49998cdef6}\label{class_resource_importer_af7d1c17c304677310355dd49998cdef6}} 
+\index{ResourceImporter@{ResourceImporter}!aborted@{aborted}}
+\index{aborted@{aborted}!ResourceImporter@{ResourceImporter}}
+\doxysubsubsection{\texorpdfstring{aborted()}{aborted()}}
+{\footnotesize\ttfamily bool Resource\+Importer\+::aborted (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_resource_processor}{Resource\+Processor}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00350 \{ \textcolor{keywordflow}{return} m\_importStrategy.aborted(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resource_importer_a2cac2df5241dc935c1418a57c05c248a}\label{class_resource_importer_a2cac2df5241dc935c1418a57c05c248a}} 
+\index{ResourceImporter@{ResourceImporter}!buildPsd@{buildPsd}}
+\index{buildPsd@{buildPsd}!ResourceImporter@{ResourceImporter}}
+\doxysubsubsection{\texorpdfstring{buildPsd()}{buildPsd()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} Resource\+Importer\+::build\+Psd (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{const std\+::string \&}]{suffix }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00622                                                               \{}
+\DoxyCodeLine{00623   \textcolor{keywordflow}{return} basePath.withName(basePath.getName() + suffix);}
+\DoxyCodeLine{00624 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resource_importer_aef7268833023a495107d93dfd44e51a5}\label{class_resource_importer_aef7268833023a495107d93dfd44e51a5}} 
+\index{ResourceImporter@{ResourceImporter}!codePath@{codePath}}
+\index{codePath@{codePath}!ResourceImporter@{ResourceImporter}}
+\doxysubsubsection{\texorpdfstring{codePath()}{codePath()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} Resource\+Importer\+::code\+Path (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{old\+Coded\+Path,  }\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{new\+Actual\+Path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00603                                                                      \{}
+\DoxyCodeLine{00604   \textcolor{keywordflow}{return} oldPath.withName(newActualPath.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}());}
+\DoxyCodeLine{00605 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resource_importer_a180ecb74c3b81f9bdc4360cc7e431e8d}\label{class_resource_importer_a180ecb74c3b81f9bdc4360cc7e431e8d}} 
+\index{ResourceImporter@{ResourceImporter}!extractPsdSuffix@{extractPsdSuffix}}
+\index{extractPsdSuffix@{extractPsdSuffix}!ResourceImporter@{ResourceImporter}}
+\doxysubsubsection{\texorpdfstring{extractPsdSuffix()}{extractPsdSuffix()}}
+{\footnotesize\ttfamily std\+::string Resource\+Importer\+::extract\+Psd\+Suffix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00609                                                             \{}
+\DoxyCodeLine{00610   \textcolor{keywordflow}{if} (path.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() != \textcolor{stringliteral}{"{}psd"{}}) \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00611   std::string name = path.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}();}
+\DoxyCodeLine{00612   \textcolor{keywordtype}{int} i            = name.find(\textcolor{stringliteral}{"{}\#"{}});}
+\DoxyCodeLine{00613   \textcolor{keywordflow}{if} (i == std::string::npos) \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00614   std::string suffix = name.substr(i);}
+\DoxyCodeLine{00615   path               = path.\mbox{\hyperlink{class_t_file_path_a3ebf9ced558cfef97a60bba536b23c6f}{withName}}(name.substr(0, i));}
+\DoxyCodeLine{00616   \textcolor{keywordflow}{return} suffix;}
+\DoxyCodeLine{00617 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resource_importer_a47beb618130ebcaecdba58ee59be013d}\label{class_resource_importer_a47beb618130ebcaecdba58ee59be013d}} 
+\index{ResourceImporter@{ResourceImporter}!getImportedScenePath@{getImportedScenePath}}
+\index{getImportedScenePath@{getImportedScenePath}!ResourceImporter@{ResourceImporter}}
+\doxysubsubsection{\texorpdfstring{getImportedScenePath()}{getImportedScenePath()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} Resource\+Importer\+::get\+Imported\+Scene\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00596                                                        \{}
+\DoxyCodeLine{00597   \textcolor{keywordflow}{return} m\_dstScene-\/>\mbox{\hyperlink{class_toonz_scene_ad42b52b671b094f66e003c4b7ebefd45}{getScenePath}}();}
+\DoxyCodeLine{00598 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resource_importer_af96ca2f2ad88c1c83657921b014e2575}\label{class_resource_importer_af96ca2f2ad88c1c83657921b014e2575}} 
+\index{ResourceImporter@{ResourceImporter}!makeUnique@{makeUnique}}
+\index{makeUnique@{makeUnique}!ResourceImporter@{ResourceImporter}}
+\doxysubsubsection{\texorpdfstring{makeUnique()}{makeUnique()}}
+{\footnotesize\ttfamily bool Resource\+Importer\+::make\+Unique (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00590                                                  \{}
+\DoxyCodeLine{00591   \textcolor{keywordflow}{return} makePathUnique(m\_dstScene, path);}
+\DoxyCodeLine{00592 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resource_importer_a7163d335158373941a143fb301f0545f}\label{class_resource_importer_a7163d335158373941a143fb301f0545f}} 
+\index{ResourceImporter@{ResourceImporter}!process@{process}}
+\index{process@{process}!ResourceImporter@{ResourceImporter}}
+\doxysubsubsection{\texorpdfstring{process()}{process()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void Resource\+Importer\+::process (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsh_palette_level}{TXsh\+Palette\+Level}} $\ast$}]{sl }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_resource_processor}{Resource\+Processor}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00655                                                    \{}
+\DoxyCodeLine{00656   \textcolor{keywordflow}{if} (pl-\/>getPath().isAbsolute()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00657   \mbox{\hyperlink{class_t_file_path}{TFilePath}} newPath;}
+\DoxyCodeLine{00658   newPath = m\_importStrategy.process(m\_dstScene, m\_scene, pl-\/>getPath());}
+\DoxyCodeLine{00659   pl-\/>setPath(newPath);}
+\DoxyCodeLine{00660 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resource_importer_a587e314c138f8149c6383a34f2d2508d}\label{class_resource_importer_a587e314c138f8149c6383a34f2d2508d}} 
+\index{ResourceImporter@{ResourceImporter}!process@{process}}
+\index{process@{process}!ResourceImporter@{ResourceImporter}}
+\doxysubsubsection{\texorpdfstring{process()}{process()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void Resource\+Importer\+::process (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{sl }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_resource_processor}{Resource\+Processor}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00628                                                   \{}
+\DoxyCodeLine{00629   \textcolor{keywordflow}{if} (sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a668293d53a70cca8811db28d87011c55}{getPath}}().isAbsolute()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00630   \mbox{\hyperlink{class_t_file_path}{TFilePath}} newPath;}
+\DoxyCodeLine{00631 }
+\DoxyCodeLine{00632   \mbox{\hyperlink{class_t_file_path}{TFilePath}} slPath   = sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a668293d53a70cca8811db28d87011c55}{getPath}}();}
+\DoxyCodeLine{00633   std::string suffix = extractPsdSuffix(slPath);}
+\DoxyCodeLine{00634 }
+\DoxyCodeLine{00635   \mbox{\hyperlink{class_t_file_path}{TFilePath}} imgRefPath;}
+\DoxyCodeLine{00636   \textcolor{keywordflow}{if} (sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}()) imgRefPath = sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}()-\/>\mbox{\hyperlink{class_t_palette_a7eda1d7f3a27e8e90d0c12faaedaf5a6}{getRefImgPath}}();}
+\DoxyCodeLine{00637   newPath = m\_importStrategy.process(m\_dstScene, m\_scene, slPath);}
+\DoxyCodeLine{00638   \textcolor{keywordflow}{if} (imgRefPath != \mbox{\hyperlink{class_t_file_path}{TFilePath}}() \&\&}
+\DoxyCodeLine{00639       !m\_dstScene-\/>\mbox{\hyperlink{class_toonz_scene_a657e45d8e257f7c2047022b75dc8600d}{isExternPath}}(m\_dstScene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(imgRefPath)))}
+\DoxyCodeLine{00640     m\_importStrategy.process(m\_dstScene, m\_scene, imgRefPath);}
+\DoxyCodeLine{00641 }
+\DoxyCodeLine{00642   \textcolor{keywordflow}{if} (suffix != \textcolor{stringliteral}{"{}"{}}) newPath = buildPsd(newPath, suffix);}
+\DoxyCodeLine{00643 }
+\DoxyCodeLine{00644   sl-\/>setPath(newPath);}
+\DoxyCodeLine{00645   \textcolor{keywordflow}{if} (sl-\/>getScannedPath() != \mbox{\hyperlink{class_t_file_path}{TFilePath}}()) \{}
+\DoxyCodeLine{00646     newPath =}
+\DoxyCodeLine{00647         m\_importStrategy.process(m\_dstScene, m\_scene, sl-\/>getScannedPath());}
+\DoxyCodeLine{00648     sl-\/>setScannedPath(newPath);}
+\DoxyCodeLine{00649   \}}
+\DoxyCodeLine{00650   sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a2d43337766628739707849f8808bf300}{setDirtyFlag}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{00651 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_resource_importer_a1a511c4864397cb91c5cb12a6beea3c0}\label{class_resource_importer_a1a511c4864397cb91c5cb12a6beea3c0}} 
+\index{ResourceImporter@{ResourceImporter}!process@{process}}
+\index{process@{process}!ResourceImporter@{ResourceImporter}}
+\doxysubsubsection{\texorpdfstring{process()}{process()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void Resource\+Importer\+::process (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsh_sound_level}{TXsh\+Sound\+Level}} $\ast$}]{sl }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_resource_processor}{Resource\+Processor}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00664                                                  \{}
+\DoxyCodeLine{00665   \textcolor{keywordflow}{if} (sl-\/>\mbox{\hyperlink{class_t_xsh_sound_level_a929c0a20b8447d38189edc3bae5d3d37}{getPath}}().isAbsolute()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00666   \mbox{\hyperlink{class_t_file_path}{TFilePath}} newPath;}
+\DoxyCodeLine{00667   newPath = m\_importStrategy.process(m\_dstScene, m\_scene, sl-\/>\mbox{\hyperlink{class_t_xsh_sound_level_a929c0a20b8447d38189edc3bae5d3d37}{getPath}}());}
+\DoxyCodeLine{00668   sl-\/>setPath(newPath);}
+\DoxyCodeLine{00669 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/sceneresources.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/sceneresources.\+cpp\end{DoxyCompactItemize}

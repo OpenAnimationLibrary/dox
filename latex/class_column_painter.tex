@@ -1,0 +1,300 @@
+\hypertarget{class_column_painter}{}\doxysection{Column\+Painter Class Reference}
+\label{class_column_painter}\index{ColumnPainter@{ColumnPainter}}
+Inheritance diagram for Column\+Painter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_column_painter}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_column_painter_a2915da48b31db46d6937d0a2548d5708}{on\+Icon\+Generated}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_column_painter_a3986802c0a9669b9535156fcfcbc91c2}{Column\+Painter}} (\mbox{\hyperlink{class_stage_schematic_column_node}{Stage\+Schematic\+Column\+Node}} $\ast$parent, double width, double height, const QString \&name)
+\item 
+QRectF \mbox{\hyperlink{class_column_painter_a16cd80b75884e4e84d1070928f4f6ac1}{bounding\+Rect}} () const override
+\item 
+void \mbox{\hyperlink{class_column_painter_a02f01c9ea2b78d89841b9c69949d6305}{paint}} (QPainter $\ast$painter, const QStyle\+Option\+Graphics\+Item $\ast$option, QWidget $\ast$widget=0) override
+\item 
+void \mbox{\hyperlink{class_column_painter_afcdf359358f3bc89e54428be01ce3b22}{set\+Name}} (const QString \&name)
+\item 
+void \mbox{\hyperlink{class_column_painter_a36556acf19654509da6fcd720b7648e9}{set\+Is\+Reference}} (bool ref=true)
+\item 
+\mbox{\Hypertarget{class_column_painter_a59bb110bce72d6acf15fc694bbe8077d}\label{class_column_painter_a59bb110bce72d6acf15fc694bbe8077d}} 
+QLinear\+Gradient {\bfseries get\+Gradient\+By\+Level\+Type} (int type)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_column_painter_ab0386643ca9c3921a0ae82a30b95d938}{context\+Menu\+Event}} (QGraphics\+Scene\+Context\+Menu\+Event $\ast$cme) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_column_painter_a3986802c0a9669b9535156fcfcbc91c2}\label{class_column_painter_a3986802c0a9669b9535156fcfcbc91c2}} 
+\index{ColumnPainter@{ColumnPainter}!ColumnPainter@{ColumnPainter}}
+\index{ColumnPainter@{ColumnPainter}!ColumnPainter@{ColumnPainter}}
+\doxysubsubsection{\texorpdfstring{ColumnPainter()}{ColumnPainter()}}
+{\footnotesize\ttfamily Column\+Painter\+::\+Column\+Painter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_stage_schematic_column_node}{Stage\+Schematic\+Column\+Node}} $\ast$}]{parent,  }\item[{double}]{width,  }\item[{double}]{height,  }\item[{const QString \&}]{name }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00083     : QGraphicsItem(parent)}
+\DoxyCodeLine{00084     , m\_parent(parent)}
+\DoxyCodeLine{00085     , m\_width(width)}
+\DoxyCodeLine{00086     , m\_height(height)}
+\DoxyCodeLine{00087     , m\_name(name) \{}
+\DoxyCodeLine{00088   setFlag(QGraphicsItem::ItemIsMovable, \textcolor{keyword}{false});}
+\DoxyCodeLine{00089   setFlag(QGraphicsItem::ItemIsSelectable, \textcolor{keyword}{false});}
+\DoxyCodeLine{00090   setFlag(QGraphicsItem::ItemIsFocusable, \textcolor{keyword}{false});}
+\DoxyCodeLine{00091   assert(parent-\/>getStageObject()-\/>\mbox{\hyperlink{class_t_stage_object_a7acac7f9d2b8aabae125a81cc4ac5b10}{getId}}().\mbox{\hyperlink{class_t_stage_object_id_af6d13fcf31e7e10eef28f085855f469c}{isColumn}}());}
+\DoxyCodeLine{00092   connect(IconGenerator::instance(), SIGNAL(iconGenerated()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00093           SLOT(onIconGenerated()));}
+\DoxyCodeLine{00094 }
+\DoxyCodeLine{00095   \mbox{\hyperlink{class_stage_schematic_scene}{StageSchematicScene}} *stageScene =}
+\DoxyCodeLine{00096       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_stage_schematic_scene}{StageSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{00097   \textcolor{keywordflow}{if} (!stageScene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00098 }
+\DoxyCodeLine{00099   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = stageScene-\/>getXsheet();}
+\DoxyCodeLine{00100   \textcolor{keywordtype}{int} r0, r1, index = parent-\/>getStageObject()-\/>\mbox{\hyperlink{class_t_stage_object_a7acac7f9d2b8aabae125a81cc4ac5b10}{getId}}().getIndex();}
+\DoxyCodeLine{00101   xsh-\/>\mbox{\hyperlink{class_t_xsheet_a26850469fb0f2886b717479050c32be2}{getCellRange}}(index, r0, r1);}
+\DoxyCodeLine{00102   \textcolor{keywordflow}{if} (r0 > r1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00103   \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} firstCell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r0, index);}
+\DoxyCodeLine{00104   \textcolor{keywordflow}{if} (!firstCell.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}())}
+\DoxyCodeLine{00105     m\_type = firstCell.m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a1a147f1e970a62120c0bbaf0020a8932}{getType}}();}
+\DoxyCodeLine{00106   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00107     m\_type = NO\_XSHLEVEL;}
+\DoxyCodeLine{00108 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_column_painter_a0b1c3dcd4f65d58d171b824ac146e7bb}\label{class_column_painter_a0b1c3dcd4f65d58d171b824ac146e7bb}} 
+\index{ColumnPainter@{ColumnPainter}!````~ColumnPainter@{$\sim$ColumnPainter}}
+\index{````~ColumnPainter@{$\sim$ColumnPainter}!ColumnPainter@{ColumnPainter}}
+\doxysubsubsection{\texorpdfstring{$\sim$ColumnPainter()}{~ColumnPainter()}}
+{\footnotesize\ttfamily Column\+Painter\+::$\sim$\+Column\+Painter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00112 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_column_painter_a16cd80b75884e4e84d1070928f4f6ac1}\label{class_column_painter_a16cd80b75884e4e84d1070928f4f6ac1}} 
+\index{ColumnPainter@{ColumnPainter}!boundingRect@{boundingRect}}
+\index{boundingRect@{boundingRect}!ColumnPainter@{ColumnPainter}}
+\doxysubsubsection{\texorpdfstring{boundingRect()}{boundingRect()}}
+{\footnotesize\ttfamily QRectF Column\+Painter\+::bounding\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00116                                          \{}
+\DoxyCodeLine{00117   \textcolor{comment}{// iwasawa}}
+\DoxyCodeLine{00118   \textcolor{keywordflow}{if} (m\_parent-\/>isOpened())}
+\DoxyCodeLine{00119     \textcolor{keywordflow}{return} QRectF(-\/5, -\/54, m\_width + 10, m\_height + 59);}
+\DoxyCodeLine{00120   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00121     \textcolor{keywordflow}{return} QRectF(-\/5, -\/5, m\_width + 10, m\_height + 10);}
+\DoxyCodeLine{00122 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_column_painter_ab0386643ca9c3921a0ae82a30b95d938}\label{class_column_painter_ab0386643ca9c3921a0ae82a30b95d938}} 
+\index{ColumnPainter@{ColumnPainter}!contextMenuEvent@{contextMenuEvent}}
+\index{contextMenuEvent@{contextMenuEvent}!ColumnPainter@{ColumnPainter}}
+\doxysubsubsection{\texorpdfstring{contextMenuEvent()}{contextMenuEvent()}}
+{\footnotesize\ttfamily void Column\+Painter\+::context\+Menu\+Event (\begin{DoxyParamCaption}\item[{QGraphics\+Scene\+Context\+Menu\+Event $\ast$}]{cme }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00203                                                                         \{}
+\DoxyCodeLine{00204   \mbox{\hyperlink{class_stage_schematic_scene}{StageSchematicScene}} *stageScene =}
+\DoxyCodeLine{00205       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_stage_schematic_scene}{StageSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{00206   QMenu menu(stageScene-\/>views()[0]);}
+\DoxyCodeLine{00207 }
+\DoxyCodeLine{00208   QAction *resetCenter = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Reset Center"{}}), \&menu);}
+\DoxyCodeLine{00209   connect(resetCenter, SIGNAL(triggered()), stageScene, SLOT(onResetCenter()));}
+\DoxyCodeLine{00210   QAction *collapse   = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Collapse"{}});}
+\DoxyCodeLine{00211   QAction *openSubxsh = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_OpenChild"{}});}
+\DoxyCodeLine{00212   QAction *explodeChild =}
+\DoxyCodeLine{00213       CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_ExplodeChild"{}});}
+\DoxyCodeLine{00214   QAction *group = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Group"{}});}
+\DoxyCodeLine{00215 }
+\DoxyCodeLine{00216   QAction *clear = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Clear"{}});}
+\DoxyCodeLine{00217   QAction *\mbox{\hyperlink{namespace_t_rop_a229eb7fd85c23c325ea4ba55478d5712}{copy}}  = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Copy"{}});}
+\DoxyCodeLine{00218   QAction *cut   = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Cut"{}});}
+\DoxyCodeLine{00219   QAction *paste = CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}MI\_Paste"{}});}
+\DoxyCodeLine{00220 }
+\DoxyCodeLine{00221   menu.addAction(resetCenter);}
+\DoxyCodeLine{00222   menu.addSeparator();}
+\DoxyCodeLine{00223   menu.addAction(collapse);}
+\DoxyCodeLine{00224   \mbox{\hyperlink{class_t_frame_handle}{TFrameHandle}} *frameHandle = stageScene-\/>getFrameHandle();}
+\DoxyCodeLine{00225   \textcolor{keywordflow}{if} (frameHandle-\/>getFrameType() == TFrameHandle::SceneFrame) \{}
+\DoxyCodeLine{00226     \textcolor{keywordtype}{int} col       = m\_parent-\/>getStageObject()-\/>\mbox{\hyperlink{class_t_stage_object_a7acac7f9d2b8aabae125a81cc4ac5b10}{getId}}().getIndex();}
+\DoxyCodeLine{00227     \textcolor{keywordtype}{int} fr        = frameHandle-\/>getFrame();}
+\DoxyCodeLine{00228     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh  = stageScene-\/>getXsheet();}
+\DoxyCodeLine{00229     \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(fr, col);}
+\DoxyCodeLine{00230     \textcolor{keywordflow}{if} (\textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_xsh_child_level}{TXshChildLevel}} *\textcolor{keyword}{>}(cell.m\_level.getPointer())) \{}
+\DoxyCodeLine{00231       menu.addAction(openSubxsh);}
+\DoxyCodeLine{00232       menu.addAction(explodeChild);}
+\DoxyCodeLine{00233     \}}
+\DoxyCodeLine{00234   \}}
+\DoxyCodeLine{00235   menu.addSeparator();}
+\DoxyCodeLine{00236 }
+\DoxyCodeLine{00237   menu.addAction(clear);}
+\DoxyCodeLine{00238   menu.addAction(copy);}
+\DoxyCodeLine{00239   menu.addAction(cut);}
+\DoxyCodeLine{00240   menu.addAction(paste);}
+\DoxyCodeLine{00241   menu.addSeparator();}
+\DoxyCodeLine{00242 }
+\DoxyCodeLine{00243   menu.addAction(group);}
+\DoxyCodeLine{00244   menu.exec(cme-\/>screenPos());}
+\DoxyCodeLine{00245 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_column_painter_a2915da48b31db46d6937d0a2548d5708}\label{class_column_painter_a2915da48b31db46d6937d0a2548d5708}} 
+\index{ColumnPainter@{ColumnPainter}!onIconGenerated@{onIconGenerated}}
+\index{onIconGenerated@{onIconGenerated}!ColumnPainter@{ColumnPainter}}
+\doxysubsubsection{\texorpdfstring{onIconGenerated}{onIconGenerated}}
+{\footnotesize\ttfamily void Column\+Painter\+::on\+Icon\+Generated (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00249                                     \{}
+\DoxyCodeLine{00250   \textcolor{keywordflow}{if} (m\_type != OVL\_XSHLEVEL) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00251   \mbox{\hyperlink{class_stage_schematic_scene}{StageSchematicScene}} *stageScene =}
+\DoxyCodeLine{00252       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_stage_schematic_scene}{StageSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{00253   \textcolor{keywordflow}{if} (!stageScene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00254 }
+\DoxyCodeLine{00255   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = stageScene-\/>getXsheet();}
+\DoxyCodeLine{00256   \textcolor{keywordtype}{int} r0, r1, index = m\_parent-\/>getStageObject()-\/>\mbox{\hyperlink{class_t_stage_object_a7acac7f9d2b8aabae125a81cc4ac5b10}{getId}}().getIndex();}
+\DoxyCodeLine{00257   xsh-\/>\mbox{\hyperlink{class_t_xsheet_a26850469fb0f2886b717479050c32be2}{getCellRange}}(index, r0, r1);}
+\DoxyCodeLine{00258   \textcolor{keywordflow}{if} (r0 > r1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00259   \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} firstCell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r0, index);}
+\DoxyCodeLine{00260   \textcolor{keywordtype}{int} type           = firstCell.m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a1a147f1e970a62120c0bbaf0020a8932}{getType}}();}
+\DoxyCodeLine{00261   \textcolor{keywordflow}{if} (m\_type != type) \{}
+\DoxyCodeLine{00262     m\_type = type;}
+\DoxyCodeLine{00263     update();}
+\DoxyCodeLine{00264   \}}
+\DoxyCodeLine{00265 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_column_painter_a02f01c9ea2b78d89841b9c69949d6305}\label{class_column_painter_a02f01c9ea2b78d89841b9c69949d6305}} 
+\index{ColumnPainter@{ColumnPainter}!paint@{paint}}
+\index{paint@{paint}!ColumnPainter@{ColumnPainter}}
+\doxysubsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Column\+Painter\+::paint (\begin{DoxyParamCaption}\item[{QPainter $\ast$}]{painter,  }\item[{const QStyle\+Option\+Graphics\+Item $\ast$}]{option,  }\item[{QWidget $\ast$}]{widget = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+draw the name only if it is not editing
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00128                                            \{}
+\DoxyCodeLine{00129   \mbox{\hyperlink{class_stage_schematic_scene}{StageSchematicScene}} *stageScene =}
+\DoxyCodeLine{00130       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_stage_schematic_scene}{StageSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{00131   \textcolor{keywordflow}{if} (!stageScene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00132   \textcolor{comment}{// obtain level name and type}}
+\DoxyCodeLine{00133   \textcolor{keywordtype}{int} levelType;}
+\DoxyCodeLine{00134   QString levelName;}
+\DoxyCodeLine{00135   m\_parent-\/>getLevelTypeAndName(levelType, levelName);}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137   QColor nodeColor;}
+\DoxyCodeLine{00138   \mbox{\hyperlink{class_schematic_viewer}{SchematicViewer}} *viewer = stageScene-\/>getSchematicViewer();}
+\DoxyCodeLine{00139   viewer-\/>getNodeColor(levelType, nodeColor);}
+\DoxyCodeLine{00140 }
+\DoxyCodeLine{00141   \textcolor{keywordflow}{if} (m\_isReference \&\& levelType != PLT\_XSHLEVEL) \{}
+\DoxyCodeLine{00142     painter-\/>setBrush(viewer-\/>getReferenceColumnColor());}
+\DoxyCodeLine{00143     painter-\/>setPen(nodeColor);}
+\DoxyCodeLine{00144   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00145     painter-\/>setBrush(nodeColor);}
+\DoxyCodeLine{00146     painter-\/>setPen(Qt::NoPen);}
+\DoxyCodeLine{00147   \}}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149   \textcolor{keywordflow}{if} (levelType == PLT\_XSHLEVEL)}
+\DoxyCodeLine{00150     painter-\/>drawRoundRect(0, 0, m\_width, m\_height, 32, 99);}
+\DoxyCodeLine{00151   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00152     painter-\/>drawRect(0, 0, m\_width, m\_height);}
+\DoxyCodeLine{00153 }
+\DoxyCodeLine{00154   \textcolor{comment}{// draw palette icon for palette node}}
+\DoxyCodeLine{00155   \textcolor{keywordflow}{if} (levelType == PLT\_XSHLEVEL) \{}
+\DoxyCodeLine{00156     QPixmap palettePm = QPixmap(\textcolor{stringliteral}{"{}:Resources/schematic\_palette.png"{}});}
+\DoxyCodeLine{00157     QRect paletteRect(-\/3, -\/1, 20, 16);}
+\DoxyCodeLine{00158     painter-\/>drawPixmap(paletteRect, palettePm);}
+\DoxyCodeLine{00159   \}}
+\DoxyCodeLine{00160 }
+\DoxyCodeLine{00161   \textcolor{keywordflow}{if} (m\_parent-\/>isOpened()) \{}
+\DoxyCodeLine{00162     \textcolor{comment}{// Draw the pixmap}}
+\DoxyCodeLine{00163     painter-\/>setBrush(Qt::NoBrush);}
+\DoxyCodeLine{00164     painter-\/>setPen(QColor(0, 0, 0, 255));}
+\DoxyCodeLine{00165     QPixmap pixmap = scalePixmapKeepingAspectRatio(}
+\DoxyCodeLine{00166         m\_parent-\/>getPixmap(), QSize(m\_width, 49), Qt::transparent);}
+\DoxyCodeLine{00167     \textcolor{keywordflow}{if} (!pixmap.isNull()) \{}
+\DoxyCodeLine{00168       painter-\/>drawPixmap(QPointF(0, -\/pixmap.height()), pixmap);}
+\DoxyCodeLine{00169     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00170       painter-\/>setBrush(QColor(255, 255, 255, 255));}
+\DoxyCodeLine{00171       painter-\/>drawRect(0, -\/pixmap.height(), m\_width, pixmap.height());}
+\DoxyCodeLine{00172     \}}
+\DoxyCodeLine{00173   \}}
+\DoxyCodeLine{00174   painter-\/>setPen(viewer-\/>getTextColor());}
+\DoxyCodeLine{00175   painter-\/>setBrush(Qt::NoBrush);}
+\DoxyCodeLine{00176 }
+\DoxyCodeLine{00178   \textcolor{keywordflow}{if} (!m\_parent-\/>isNameEditing()) \{}
+\DoxyCodeLine{00179     \mbox{\hyperlink{class_stage_schematic_scene}{StageSchematicScene}} *stageScene =}
+\DoxyCodeLine{00180         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_stage_schematic_scene}{StageSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{00181     \textcolor{keywordflow}{if} (!stageScene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00182 }
+\DoxyCodeLine{00183     \textcolor{comment}{// if this is current object}}
+\DoxyCodeLine{00184     \textcolor{keywordflow}{if} (stageScene-\/>getCurrentObject() == m\_parent-\/>getStageObject()-\/>\mbox{\hyperlink{class_t_stage_object_a7acac7f9d2b8aabae125a81cc4ac5b10}{getId}}())}
+\DoxyCodeLine{00185       painter-\/>setPen(viewer-\/>getSelectedNodeTextColor());}
+\DoxyCodeLine{00186     QRectF columnNameRect(18, 2, 54, 14);}
+\DoxyCodeLine{00187     QString elidedName =}
+\DoxyCodeLine{00188         elideText(m\_name, painter-\/>font(), columnNameRect.width());}
+\DoxyCodeLine{00189     painter-\/>drawText(columnNameRect, Qt::AlignLeft | Qt::AlignVCenter,}
+\DoxyCodeLine{00190                       elidedName);}
+\DoxyCodeLine{00191   \}}
+\DoxyCodeLine{00192 }
+\DoxyCodeLine{00193   \textcolor{comment}{// level names}}
+\DoxyCodeLine{00194   QRectF levelNameRect(18, 16, 54, 14);}
+\DoxyCodeLine{00195   QString elidedName =}
+\DoxyCodeLine{00196       elideText(levelName, painter-\/>font(), levelNameRect.width());}
+\DoxyCodeLine{00197   painter-\/>drawText(levelNameRect, Qt::AlignLeft | Qt::AlignVCenter,}
+\DoxyCodeLine{00198                     elidedName);}
+\DoxyCodeLine{00199 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00520}{TStage\+Object\+::get\+Id()}}.
+
+\mbox{\Hypertarget{class_column_painter_a36556acf19654509da6fcd720b7648e9}\label{class_column_painter_a36556acf19654509da6fcd720b7648e9}} 
+\index{ColumnPainter@{ColumnPainter}!setIsReference@{setIsReference}}
+\index{setIsReference@{setIsReference}!ColumnPainter@{ColumnPainter}}
+\doxysubsubsection{\texorpdfstring{setIsReference()}{setIsReference()}}
+{\footnotesize\ttfamily void Column\+Painter\+::set\+Is\+Reference (\begin{DoxyParamCaption}\item[{bool}]{ref = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00060 \{ m\_isReference = ref; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_column_painter_afcdf359358f3bc89e54428be01ce3b22}\label{class_column_painter_afcdf359358f3bc89e54428be01ce3b22}} 
+\index{ColumnPainter@{ColumnPainter}!setName@{setName}}
+\index{setName@{setName}!ColumnPainter@{ColumnPainter}}
+\doxysubsubsection{\texorpdfstring{setName()}{setName()}}
+{\footnotesize\ttfamily void Column\+Painter\+::set\+Name (\begin{DoxyParamCaption}\item[{const QString \&}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059 \{ m\_name = name; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/stageschematicnode.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/stageschematicnode.\+cpp\end{DoxyCompactItemize}

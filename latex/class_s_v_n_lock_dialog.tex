@@ -1,0 +1,379 @@
+\hypertarget{class_s_v_n_lock_dialog}{}\doxysection{SVNLock\+Dialog Class Reference}
+\label{class_s_v_n_lock_dialog}\index{SVNLockDialog@{SVNLockDialog}}
+Inheritance diagram for SVNLock\+Dialog\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_s_v_n_lock_dialog}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_s_v_n_lock_dialog_adf79153ae28e37af5795de4070254c2e}\label{class_s_v_n_lock_dialog_adf79153ae28e37af5795de4070254c2e}} 
+void {\bfseries done} (const QString\+List \&)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_v_n_lock_dialog_ac7d3938b2aaaae8c95478e27e663954e}{SVNLock\+Dialog}} (QWidget $\ast$parent, const QString \&working\+Dir, const QString\+List \&files\+To\+Edit, bool lock, int scene\+Icon\+Added)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_v_n_lock_dialog_adc22b0de2c27d613e169bcbfae932d5b}{on\+Status\+Retrieved}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_s_v_n_lock_dialog_ad82607d45437331225828ecdc6ee2499}{on\+Error}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_s_v_n_lock_dialog_a6e2a82af4c8da1129d71a79781a5a9a4}{on\+Lock\+Button\+Clicked}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_lock_dialog_a0567e4a042ab0e78e1482bd0e8e7f32e}{on\+Lock\+Done}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_lock_dialog_af083a647df6f846606a45d28492caca4}{on\+Scene\+Resources\+Status\+Retrieved}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_s_v_n_lock_dialog_acb7d540dd8d767aa5492589b95b0927e}{on\+Edit\+Scene\+Contents\+Toggled}} (bool checked)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_v_n_lock_dialog_ac7d3938b2aaaae8c95478e27e663954e}\label{class_s_v_n_lock_dialog_ac7d3938b2aaaae8c95478e27e663954e}} 
+\index{SVNLockDialog@{SVNLockDialog}!SVNLockDialog@{SVNLockDialog}}
+\index{SVNLockDialog@{SVNLockDialog}!SVNLockDialog@{SVNLockDialog}}
+\doxysubsubsection{\texorpdfstring{SVNLockDialog()}{SVNLockDialog()}}
+{\footnotesize\ttfamily SVNLock\+Dialog\+::\+SVNLock\+Dialog (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{const QString \&}]{working\+Dir,  }\item[{const QString\+List \&}]{files\+To\+Edit,  }\item[{bool}]{lock,  }\item[{int}]{scene\+Icon\+Added }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039     : Dialog(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false})}
+\DoxyCodeLine{00040     , m\_editSceneContentsCheckBox(0)}
+\DoxyCodeLine{00041     , m\_workingDir(workingDir)}
+\DoxyCodeLine{00042     , m\_files(files)}
+\DoxyCodeLine{00043     , m\_lock(lock)}
+\DoxyCodeLine{00044     , m\_hasError(\textcolor{keyword}{false})}
+\DoxyCodeLine{00045     , m\_sceneIconAdded(sceneIconAdded)}
+\DoxyCodeLine{00046     , m\_targetTempFile(0) \{}
+\DoxyCodeLine{00047   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00048   setAttribute(Qt::WA\_DeleteOnClose, \textcolor{keyword}{true});}
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00050   \textcolor{keywordflow}{if} (m\_lock)}
+\DoxyCodeLine{00051     setWindowTitle(tr(\textcolor{stringliteral}{"{}Version Control: Edit"{}}));}
+\DoxyCodeLine{00052   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00053     setWindowTitle(tr(\textcolor{stringliteral}{"{}Version Control: Unlock"{}}));}
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055   setMinimumSize(300, 150);}
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00057   QWidget *container = \textcolor{keyword}{new} QWidget;}
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout;}
+\DoxyCodeLine{00060   mainLayout-\/>setAlignment(Qt::AlignHCenter);}
+\DoxyCodeLine{00061   mainLayout-\/>setMargin(0);}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063   QHBoxLayout *hLayout = \textcolor{keyword}{new} QHBoxLayout;}
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00065   m\_waitingLabel = \textcolor{keyword}{new} QLabel;}
+\DoxyCodeLine{00066   m\_waitingLabel-\/>setMaximumHeight(55);}
+\DoxyCodeLine{00067 }
+\DoxyCodeLine{00068   QMovie *waitingMove = \textcolor{keyword}{new} QMovie(\textcolor{stringliteral}{"{}:Resources/waiting.gif"{}});}
+\DoxyCodeLine{00069   waitingMove-\/>setParent(\textcolor{keyword}{this});}
+\DoxyCodeLine{00070 }
+\DoxyCodeLine{00071   m\_waitingLabel-\/>setMovie(waitingMove);}
+\DoxyCodeLine{00072   waitingMove-\/>setCacheMode(QMovie::CacheAll);}
+\DoxyCodeLine{00073   waitingMove-\/>start();}
+\DoxyCodeLine{00074 }
+\DoxyCodeLine{00075   m\_textLabel = \textcolor{keyword}{new} QLabel;}
+\DoxyCodeLine{00076 }
+\DoxyCodeLine{00077   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Getting repository status..."{}}));}
+\DoxyCodeLine{00078 }
+\DoxyCodeLine{00079   hLayout-\/>addStretch();}
+\DoxyCodeLine{00080   hLayout-\/>addWidget(m\_waitingLabel);}
+\DoxyCodeLine{00081   hLayout-\/>addWidget(m\_textLabel);}
+\DoxyCodeLine{00082   hLayout-\/>addStretch();}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084   mainLayout-\/>addLayout(hLayout);}
+\DoxyCodeLine{00085 }
+\DoxyCodeLine{00086   m\_treeWidget = \textcolor{keyword}{new} QTreeWidget;}
+\DoxyCodeLine{00087   m\_treeWidget-\/>setStyleSheet(\textcolor{stringliteral}{"{}QTreeWidget \{ border: 1px solid gray; \}"{}});}
+\DoxyCodeLine{00088   m\_treeWidget-\/>header()-\/>hide();}
+\DoxyCodeLine{00089   m\_treeWidget-\/>hide();}
+\DoxyCodeLine{00090   mainLayout-\/>addWidget(m\_treeWidget);}
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00092   QFormLayout *formLayout = \textcolor{keyword}{new} QFormLayout;}
+\DoxyCodeLine{00093   formLayout-\/>setLabelAlignment(Qt::AlignRight);}
+\DoxyCodeLine{00094   formLayout-\/>setFormAlignment(Qt::AlignHCenter | Qt::AlignTop);}
+\DoxyCodeLine{00095   formLayout-\/>setSpacing(10);}
+\DoxyCodeLine{00096   formLayout-\/>setMargin(0);}
+\DoxyCodeLine{00097 }
+\DoxyCodeLine{00098   m\_commentTextEdit = \textcolor{keyword}{new} QPlainTextEdit;}
+\DoxyCodeLine{00099   m\_commentTextEdit-\/>setMaximumHeight(50);}
+\DoxyCodeLine{00100 }
+\DoxyCodeLine{00101   m\_commentLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Comment:"{}}));}
+\DoxyCodeLine{00102   m\_commentLabel-\/>setFixedWidth(55);}
+\DoxyCodeLine{00103 }
+\DoxyCodeLine{00104   \textcolor{keywordflow}{if} (!m\_lock) \{}
+\DoxyCodeLine{00105     m\_commentTextEdit-\/>hide();}
+\DoxyCodeLine{00106     m\_commentLabel-\/>hide();}
+\DoxyCodeLine{00107   \}}
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00109   formLayout-\/>addRow(m\_commentLabel, m\_commentTextEdit);}
+\DoxyCodeLine{00110 }
+\DoxyCodeLine{00111   m\_editSceneContentsCheckBox = \textcolor{keyword}{new} QCheckBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00112   m\_editSceneContentsCheckBox-\/>setChecked(\textcolor{keyword}{false});}
+\DoxyCodeLine{00113   \textcolor{keywordflow}{if} (m\_lock)}
+\DoxyCodeLine{00114     m\_editSceneContentsCheckBox-\/>setText(tr(\textcolor{stringliteral}{"{}Edit Scene Contents"{}}));}
+\DoxyCodeLine{00115   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00116     m\_editSceneContentsCheckBox-\/>setText(tr(\textcolor{stringliteral}{"{}Unlock Scene Contents"{}}));}
+\DoxyCodeLine{00117 }
+\DoxyCodeLine{00118   m\_editSceneContentsCheckBox-\/>hide();}
+\DoxyCodeLine{00119 }
+\DoxyCodeLine{00120   connect(m\_editSceneContentsCheckBox, SIGNAL(toggled(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00121           SLOT(onEditSceneContentsToggled(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00122 }
+\DoxyCodeLine{00123   \textcolor{keywordtype}{int} fileSize = m\_files.size();}
+\DoxyCodeLine{00124   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < fileSize; i++) \{}
+\DoxyCodeLine{00125     \textcolor{keywordflow}{if} (m\_files.at(i).endsWith(\textcolor{stringliteral}{"{}.tnz"{}})) \{}
+\DoxyCodeLine{00126       m\_editSceneContentsCheckBox-\/>show();}
+\DoxyCodeLine{00127       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00128     \}}
+\DoxyCodeLine{00129   \}}
+\DoxyCodeLine{00130 }
+\DoxyCodeLine{00131   formLayout-\/>addRow(\textcolor{stringliteral}{"{}"{}}, m\_editSceneContentsCheckBox);}
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00133   mainLayout-\/>addLayout(formLayout);}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135   container-\/>setLayout(mainLayout);}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a21628a44d453352094b61b62b4407c6b}{beginHLayout}}();}
+\DoxyCodeLine{00138   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(container, \textcolor{keyword}{false});}
+\DoxyCodeLine{00139   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_abe29ee90829fe5e0351fbdee41089252}{endHLayout}}();}
+\DoxyCodeLine{00140 }
+\DoxyCodeLine{00141   m\_lockButton = \textcolor{keyword}{new} QPushButton();}
+\DoxyCodeLine{00142   \textcolor{keywordflow}{if} (m\_lock)}
+\DoxyCodeLine{00143     m\_lockButton-\/>setText(tr(\textcolor{stringliteral}{"{}Edit"{}}));}
+\DoxyCodeLine{00144   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00145     m\_lockButton-\/>setText(tr(\textcolor{stringliteral}{"{}Unlock"{}}));}
+\DoxyCodeLine{00146 }
+\DoxyCodeLine{00147   m\_lockButton-\/>hide();}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149   connect(m\_lockButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onLockButtonClicked()));}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   m\_cancelButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cancel"{}}));}
+\DoxyCodeLine{00152   connect(m\_cancelButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(reject()));}
+\DoxyCodeLine{00153 }
+\DoxyCodeLine{00154   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(m\_lockButton, m\_cancelButton);}
+\DoxyCodeLine{00155 }
+\DoxyCodeLine{00156   \textcolor{comment}{// 0. Connect for svn errors (that may occur every time)}}
+\DoxyCodeLine{00157   connect(\&m\_thread, SIGNAL(error(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00158           SLOT(onError(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00159 }
+\DoxyCodeLine{00160   \textcolor{comment}{// 1. Getting status}}
+\DoxyCodeLine{00161   connect(\&m\_thread, SIGNAL(statusRetrieved(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00162           SLOT(onStatusRetrieved(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00163   m\_thread.getSVNStatus(m\_workingDir, \textcolor{keyword}{true});}
+\DoxyCodeLine{00164 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_v_n_lock_dialog_acb7d540dd8d767aa5492589b95b0927e}\label{class_s_v_n_lock_dialog_acb7d540dd8d767aa5492589b95b0927e}} 
+\index{SVNLockDialog@{SVNLockDialog}!onEditSceneContentsToggled@{onEditSceneContentsToggled}}
+\index{onEditSceneContentsToggled@{onEditSceneContentsToggled}!SVNLockDialog@{SVNLockDialog}}
+\doxysubsubsection{\texorpdfstring{onEditSceneContentsToggled}{onEditSceneContentsToggled}}
+{\footnotesize\ttfamily void SVNLock\+Dialog\+::on\+Edit\+Scene\+Contents\+Toggled (\begin{DoxyParamCaption}\item[{bool}]{checked }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00413                                                            \{}
+\DoxyCodeLine{00414   \textcolor{keywordflow}{if} (!checked)}
+\DoxyCodeLine{00415     m\_sceneResources.clear();}
+\DoxyCodeLine{00416   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00417     \mbox{\hyperlink{class_version_control}{VersionControl}} *vc = VersionControl::instance();}
+\DoxyCodeLine{00418 }
+\DoxyCodeLine{00419     \textcolor{keywordtype}{int} fileSize = m\_files.count();}
+\DoxyCodeLine{00420     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < fileSize; i++) \{}
+\DoxyCodeLine{00421       QString fileName = m\_files.at(i);}
+\DoxyCodeLine{00422       \textcolor{keywordflow}{if} (fileName.endsWith(\textcolor{stringliteral}{"{}.tnz"{}}))}
+\DoxyCodeLine{00423         m\_sceneResources.append(vc-\/>getSceneContents(m\_workingDir, fileName));}
+\DoxyCodeLine{00424     \}}
+\DoxyCodeLine{00425   \}}
+\DoxyCodeLine{00426 }
+\DoxyCodeLine{00427   \textcolor{keywordflow}{if} (m\_lock)}
+\DoxyCodeLine{00428     m\_textLabel-\/>setText(}
+\DoxyCodeLine{00429         tr(\textcolor{stringliteral}{"{}\%1 items to edit."{}})}
+\DoxyCodeLine{00430             .arg(m\_filesToEdit.size() + m\_sceneResources.size() == 1}
+\DoxyCodeLine{00431                      ? 1}
+\DoxyCodeLine{00432                      : m\_filesToEdit.size() + m\_sceneResources.size() -\/}
+\DoxyCodeLine{00433                            m\_sceneIconAdded));}
+\DoxyCodeLine{00434   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00435     m\_textLabel-\/>setText(}
+\DoxyCodeLine{00436         tr(\textcolor{stringliteral}{"{}\%1 items to unlock."{}})}
+\DoxyCodeLine{00437             .arg(m\_filesToEdit.size() + m\_sceneResources.size() == 1}
+\DoxyCodeLine{00438                      ? 1}
+\DoxyCodeLine{00439                      : m\_filesToEdit.size() + m\_sceneResources.size() -\/}
+\DoxyCodeLine{00440                            m\_sceneIconAdded));}
+\DoxyCodeLine{00441 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_lock_dialog_ad82607d45437331225828ecdc6ee2499}\label{class_s_v_n_lock_dialog_ad82607d45437331225828ecdc6ee2499}} 
+\index{SVNLockDialog@{SVNLockDialog}!onError@{onError}}
+\index{onError@{onError}!SVNLockDialog@{SVNLockDialog}}
+\doxysubsubsection{\texorpdfstring{onError}{onError}}
+{\footnotesize\ttfamily void SVNLock\+Dialog\+::on\+Error (\begin{DoxyParamCaption}\item[{const QString \&}]{error\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00235                                                       \{}
+\DoxyCodeLine{00236   \textcolor{keywordflow}{if} (m\_targetTempFile) \{}
+\DoxyCodeLine{00237     QFile::remove(m\_targetTempFile-\/>fileName());}
+\DoxyCodeLine{00238     \textcolor{keyword}{delete} m\_targetTempFile;}
+\DoxyCodeLine{00239     m\_targetTempFile = 0;}
+\DoxyCodeLine{00240   \}}
+\DoxyCodeLine{00241 }
+\DoxyCodeLine{00242   m\_textLabel-\/>setText(errorString);}
+\DoxyCodeLine{00243   switchToCloseButton();}
+\DoxyCodeLine{00244   update();}
+\DoxyCodeLine{00245   m\_hasError = \textcolor{keyword}{true};}
+\DoxyCodeLine{00246 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_lock_dialog_a6e2a82af4c8da1129d71a79781a5a9a4}\label{class_s_v_n_lock_dialog_a6e2a82af4c8da1129d71a79781a5a9a4}} 
+\index{SVNLockDialog@{SVNLockDialog}!onLockButtonClicked@{onLockButtonClicked}}
+\index{onLockButtonClicked@{onLockButtonClicked}!SVNLockDialog@{SVNLockDialog}}
+\doxysubsubsection{\texorpdfstring{onLockButtonClicked}{onLockButtonClicked}}
+{\footnotesize\ttfamily void SVNLock\+Dialog\+::on\+Lock\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00250                                         \{}
+\DoxyCodeLine{00251   m\_waitingLabel-\/>show();}
+\DoxyCodeLine{00252   m\_commentLabel-\/>hide();}
+\DoxyCodeLine{00253   m\_commentTextEdit-\/>hide();}
+\DoxyCodeLine{00254   m\_treeWidget-\/>hide();}
+\DoxyCodeLine{00255   m\_editSceneContentsCheckBox-\/>hide();}
+\DoxyCodeLine{00256 }
+\DoxyCodeLine{00257   \textcolor{comment}{// Check the status of sceneResources}}
+\DoxyCodeLine{00258   \textcolor{keywordflow}{if} (!m\_sceneResources.empty()) \{}
+\DoxyCodeLine{00259     m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00260     connect(\&m\_thread, SIGNAL(statusRetrieved(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00261             SLOT(onSceneResourcesStatusRetrieved(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00262     m\_thread.getSVNStatus(m\_workingDir, m\_sceneResources);}
+\DoxyCodeLine{00263     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00264   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00265     executeCommand();}
+\DoxyCodeLine{00266 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_lock_dialog_a0567e4a042ab0e78e1482bd0e8e7f32e}\label{class_s_v_n_lock_dialog_a0567e4a042ab0e78e1482bd0e8e7f32e}} 
+\index{SVNLockDialog@{SVNLockDialog}!onLockDone@{onLockDone}}
+\index{onLockDone@{onLockDone}!SVNLockDialog@{SVNLockDialog}}
+\doxysubsubsection{\texorpdfstring{onLockDone}{onLockDone}}
+{\footnotesize\ttfamily void SVNLock\+Dialog\+::on\+Lock\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00322                                \{}
+\DoxyCodeLine{00323   \textcolor{keywordflow}{if} (m\_targetTempFile) \{}
+\DoxyCodeLine{00324     QFile::remove(m\_targetTempFile-\/>fileName());}
+\DoxyCodeLine{00325     \textcolor{keyword}{delete} m\_targetTempFile;}
+\DoxyCodeLine{00326     m\_targetTempFile = 0;}
+\DoxyCodeLine{00327   \}}
+\DoxyCodeLine{00328 }
+\DoxyCodeLine{00329   \textcolor{keywordflow}{if} (!m\_hasError) \{}
+\DoxyCodeLine{00330     QStringList files;}
+\DoxyCodeLine{00331     \textcolor{keywordtype}{int} fileCount = m\_files.size();}
+\DoxyCodeLine{00332     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < fileCount; i++) files.append(m\_files.at(i));}
+\DoxyCodeLine{00333     emit done(files);}
+\DoxyCodeLine{00334     close();}
+\DoxyCodeLine{00335   \}}
+\DoxyCodeLine{00336 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_lock_dialog_af083a647df6f846606a45d28492caca4}\label{class_s_v_n_lock_dialog_af083a647df6f846606a45d28492caca4}} 
+\index{SVNLockDialog@{SVNLockDialog}!onSceneResourcesStatusRetrieved@{onSceneResourcesStatusRetrieved}}
+\index{onSceneResourcesStatusRetrieved@{onSceneResourcesStatusRetrieved}!SVNLockDialog@{SVNLockDialog}}
+\doxysubsubsection{\texorpdfstring{onSceneResourcesStatusRetrieved}{onSceneResourcesStatusRetrieved}}
+{\footnotesize\ttfamily void SVNLock\+Dialog\+::on\+Scene\+Resources\+Status\+Retrieved (\begin{DoxyParamCaption}\item[{const QString \&}]{xml\+Response }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00214                                 \{}
+\DoxyCodeLine{00215   \mbox{\hyperlink{class_s_v_n_status_reader}{SVNStatusReader}} sr(xmlResponse);}
+\DoxyCodeLine{00216   m\_status = sr.getStatus();}
+\DoxyCodeLine{00217 }
+\DoxyCodeLine{00218   m\_thread.disconnect(SIGNAL(statusRetrieved(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00219 }
+\DoxyCodeLine{00220   \textcolor{keywordtype}{int} statusCount = m\_status.size();}
+\DoxyCodeLine{00221   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < statusCount; i++) \{}
+\DoxyCodeLine{00222     \mbox{\hyperlink{struct_s_v_n_status}{SVNStatus}} s = m\_status.at(i);}
+\DoxyCodeLine{00223     \textcolor{keywordflow}{if} (s.m\_path == \textcolor{stringliteral}{"{}."{}} || s.m\_path == \textcolor{stringliteral}{"{}.."{}}) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00224     \textcolor{keywordflow}{if} (s.m\_item != \textcolor{stringliteral}{"{}unversioned"{}} \&\& s.m\_item != \textcolor{stringliteral}{"{}missing"{}}) \{}
+\DoxyCodeLine{00225       \textcolor{keywordflow}{if} (m\_lock \&\& !s.m\_isLocked) m\_filesToEdit.append(s.m\_path);}
+\DoxyCodeLine{00226       \textcolor{keywordflow}{if} (!m\_lock \&\& s.m\_isLocked) m\_filesToEdit.append(s.m\_path);}
+\DoxyCodeLine{00227     \}}
+\DoxyCodeLine{00228   \}}
+\DoxyCodeLine{00229 }
+\DoxyCodeLine{00230   executeCommand();}
+\DoxyCodeLine{00231 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_lock_dialog_adc22b0de2c27d613e169bcbfae932d5b}\label{class_s_v_n_lock_dialog_adc22b0de2c27d613e169bcbfae932d5b}} 
+\index{SVNLockDialog@{SVNLockDialog}!onStatusRetrieved@{onStatusRetrieved}}
+\index{onStatusRetrieved@{onStatusRetrieved}!SVNLockDialog@{SVNLockDialog}}
+\doxysubsubsection{\texorpdfstring{onStatusRetrieved}{onStatusRetrieved}}
+{\footnotesize\ttfamily void SVNLock\+Dialog\+::on\+Status\+Retrieved (\begin{DoxyParamCaption}\item[{const QString \&}]{xml\+Response }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00168                                                                 \{}
+\DoxyCodeLine{00169   \mbox{\hyperlink{class_s_v_n_status_reader}{SVNStatusReader}} sr(xmlResponse);}
+\DoxyCodeLine{00170   m\_status = sr.getStatus();}
+\DoxyCodeLine{00171 }
+\DoxyCodeLine{00172   m\_thread.disconnect(SIGNAL(statusRetrieved(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00173 }
+\DoxyCodeLine{00174   checkFiles();}
+\DoxyCodeLine{00175 }
+\DoxyCodeLine{00176   initTreeWidget();}
+\DoxyCodeLine{00177 }
+\DoxyCodeLine{00178   \textcolor{keywordflow}{if} (m\_filesToEdit.size() == 0) \{}
+\DoxyCodeLine{00179     \textcolor{keywordflow}{if} (m\_lock) \{}
+\DoxyCodeLine{00180       m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}No items to edit."{}}));}
+\DoxyCodeLine{00181       m\_commentTextEdit-\/>show();}
+\DoxyCodeLine{00182       m\_commentLabel-\/>show();}
+\DoxyCodeLine{00183     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00184       m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}No items to unlock."{}}));}
+\DoxyCodeLine{00185 }
+\DoxyCodeLine{00186     switchToCloseButton();}
+\DoxyCodeLine{00187   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00188     \textcolor{keywordtype}{int} height = m\_lock ? 160 : 50;}
+\DoxyCodeLine{00189     \textcolor{keywordflow}{if} (m\_treeWidget-\/>isVisible())}
+\DoxyCodeLine{00190       height += (m\_filesToEdit.size() * (m\_lock ? 25 : 50));}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192     setMinimumSize(300, std::min(height, 350));}
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00194     m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{00195 }
+\DoxyCodeLine{00196     \textcolor{keywordflow}{if} (m\_lock)}
+\DoxyCodeLine{00197       m\_textLabel-\/>setText(}
+\DoxyCodeLine{00198           tr(\textcolor{stringliteral}{"{}\%1 items to edit."{}})}
+\DoxyCodeLine{00199               .arg(m\_filesToEdit.size() == 1 ? 1 : m\_filesToEdit.size() -\/}
+\DoxyCodeLine{00200                                                        m\_sceneIconAdded));}
+\DoxyCodeLine{00201     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00202       m\_textLabel-\/>setText(}
+\DoxyCodeLine{00203           tr(\textcolor{stringliteral}{"{}\%1 items to unlock."{}})}
+\DoxyCodeLine{00204               .arg(m\_filesToEdit.size() == 1 ? 1 : m\_filesToEdit.size() -\/}
+\DoxyCodeLine{00205                                                        m\_sceneIconAdded));}
+\DoxyCodeLine{00206 }
+\DoxyCodeLine{00207     m\_lockButton-\/>show();}
+\DoxyCodeLine{00208   \}}
+\DoxyCodeLine{00209 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/svnlockdialog.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/svnlockdialog.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,123 @@
+\hypertarget{class_t_shift_trace_toggle_command}{}\doxysection{TShift\+Trace\+Toggle\+Command Class Reference}
+\label{class_t_shift_trace_toggle_command}\index{TShiftTraceToggleCommand@{TShiftTraceToggleCommand}}
+Inheritance diagram for TShift\+Trace\+Toggle\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_t_shift_trace_toggle_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_shift_trace_toggle_command_af26b01804bf1e0ea3de16d7f955e30b4}{TShift\+Trace\+Toggle\+Command}} (Command\+Id cmd\+Id)
+\item 
+void \mbox{\hyperlink{class_t_shift_trace_toggle_command_a0d70eaa3e4f1c226a60b70a837446f25}{execute}} () override
+\item 
+bool \mbox{\hyperlink{class_t_shift_trace_toggle_command_a83dad6be3c44fcc3b9c5537aea7d742c}{is\+Checked}} (Command\+Id id) const
+\item 
+void \mbox{\hyperlink{class_t_shift_trace_toggle_command_abaa97eee9ba1e99dcf7d2c183156d54c}{update\+Shift\+Trace\+Status}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_shift_trace_toggle_command_af26b01804bf1e0ea3de16d7f955e30b4}\label{class_t_shift_trace_toggle_command_af26b01804bf1e0ea3de16d7f955e30b4}} 
+\index{TShiftTraceToggleCommand@{TShiftTraceToggleCommand}!TShiftTraceToggleCommand@{TShiftTraceToggleCommand}}
+\index{TShiftTraceToggleCommand@{TShiftTraceToggleCommand}!TShiftTraceToggleCommand@{TShiftTraceToggleCommand}}
+\doxysubsubsection{\texorpdfstring{TShiftTraceToggleCommand()}{TShiftTraceToggleCommand()}}
+{\footnotesize\ttfamily TShift\+Trace\+Toggle\+Command\+::\+TShift\+Trace\+Toggle\+Command (\begin{DoxyParamCaption}\item[{Command\+Id}]{cmd\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00399       : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(cmdId), m\_cmdId(cmdId) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_shift_trace_toggle_command_a0d70eaa3e4f1c226a60b70a837446f25}\label{class_t_shift_trace_toggle_command_a0d70eaa3e4f1c226a60b70a837446f25}} 
+\index{TShiftTraceToggleCommand@{TShiftTraceToggleCommand}!execute@{execute}}
+\index{execute@{execute}!TShiftTraceToggleCommand@{TShiftTraceToggleCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void TShift\+Trace\+Toggle\+Command\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00400                           \{}
+\DoxyCodeLine{00401     \mbox{\hyperlink{class_command_manager}{CommandManager}} *cm = CommandManager::instance();}
+\DoxyCodeLine{00402     QAction *action    = cm-\/>getAction(m\_cmdId);}
+\DoxyCodeLine{00403     \textcolor{keywordtype}{bool} checked       = action-\/>isChecked();}
+\DoxyCodeLine{00404     \textcolor{keywordflow}{if} (std::string(m\_cmdId) == MI\_ShiftTrace) \{}
+\DoxyCodeLine{00405       cm-\/>enable(MI\_EditShift, checked);}
+\DoxyCodeLine{00406       cm-\/>enable(MI\_NoShift, checked);}
+\DoxyCodeLine{00407       \textcolor{keywordflow}{if} (checked) OnioniSkinMaskGUI::resetShiftTraceFrameOffset();}
+\DoxyCodeLine{00408       \textcolor{comment}{//     cm-\/>getAction(MI\_NoShift)-\/>setChecked(false);}}
+\DoxyCodeLine{00409       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_afcdd56d9130b7c39a5227de08a0b65e4}{getCurrentOnionSkin}}()-\/>notifyOnionSkinMaskChanged();}
+\DoxyCodeLine{00410     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (std::string(m\_cmdId) == MI\_EditShift) \{}
+\DoxyCodeLine{00411       \textcolor{keywordflow}{if} (checked) \{}
+\DoxyCodeLine{00412         QAction *noShiftAction =}
+\DoxyCodeLine{00413             CommandManager::instance()-\/>getAction(MI\_NoShift);}
+\DoxyCodeLine{00414         \textcolor{keywordflow}{if} (noShiftAction) noShiftAction-\/>setChecked(\textcolor{keyword}{false});}
+\DoxyCodeLine{00415         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad70b447aff489792cfc3dbac7150a540}{getCurrentTool}}()-\/>setPseudoTool(\textcolor{stringliteral}{"{}T\_ShiftTrace"{}});}
+\DoxyCodeLine{00416       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00417         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad70b447aff489792cfc3dbac7150a540}{getCurrentTool}}()-\/>unsetPseudoTool();}
+\DoxyCodeLine{00418       \}}
+\DoxyCodeLine{00419       CommandManager::instance()-\/>enable(MI\_NoShift, !checked);}
+\DoxyCodeLine{00420     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (std::string(m\_cmdId) == MI\_NoShift) \{}
+\DoxyCodeLine{00421     \}}
+\DoxyCodeLine{00422     updateShiftTraceStatus();}
+\DoxyCodeLine{00423   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_shift_trace_toggle_command_a83dad6be3c44fcc3b9c5537aea7d742c}\label{class_t_shift_trace_toggle_command_a83dad6be3c44fcc3b9c5537aea7d742c}} 
+\index{TShiftTraceToggleCommand@{TShiftTraceToggleCommand}!isChecked@{isChecked}}
+\index{isChecked@{isChecked}!TShiftTraceToggleCommand@{TShiftTraceToggleCommand}}
+\doxysubsubsection{\texorpdfstring{isChecked()}{isChecked()}}
+{\footnotesize\ttfamily bool TShift\+Trace\+Toggle\+Command\+::is\+Checked (\begin{DoxyParamCaption}\item[{Command\+Id}]{id }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00425                                      \{}
+\DoxyCodeLine{00426     QAction *action = CommandManager::instance()-\/>getAction(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00427     \textcolor{keywordflow}{return} action != 0 \&\& action-\/>isChecked();}
+\DoxyCodeLine{00428   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_shift_trace_toggle_command_abaa97eee9ba1e99dcf7d2c183156d54c}\label{class_t_shift_trace_toggle_command_abaa97eee9ba1e99dcf7d2c183156d54c}} 
+\index{TShiftTraceToggleCommand@{TShiftTraceToggleCommand}!updateShiftTraceStatus@{updateShiftTraceStatus}}
+\index{updateShiftTraceStatus@{updateShiftTraceStatus}!TShiftTraceToggleCommand@{TShiftTraceToggleCommand}}
+\doxysubsubsection{\texorpdfstring{updateShiftTraceStatus()}{updateShiftTraceStatus()}}
+{\footnotesize\ttfamily void TShift\+Trace\+Toggle\+Command\+::update\+Shift\+Trace\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00429                                 \{}
+\DoxyCodeLine{00430     OnionSkinMask::ShiftTraceStatus status = OnionSkinMask::DISABLED;}
+\DoxyCodeLine{00431     \textcolor{keywordflow}{if} (isChecked(MI\_ShiftTrace)) \{}
+\DoxyCodeLine{00432       \textcolor{keywordflow}{if} (isChecked(MI\_EditShift))}
+\DoxyCodeLine{00433         status = OnionSkinMask::EDITING\_GHOST;}
+\DoxyCodeLine{00434       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isChecked(MI\_NoShift))}
+\DoxyCodeLine{00435         status = OnionSkinMask::ENABLED\_WITHOUT\_GHOST\_MOVEMENTS;}
+\DoxyCodeLine{00436       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00437         status = OnionSkinMask::ENABLED;}
+\DoxyCodeLine{00438     \}}
+\DoxyCodeLine{00439     \mbox{\hyperlink{class_onion_skin_mask}{OnionSkinMask}} osm =}
+\DoxyCodeLine{00440         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_afcdd56d9130b7c39a5227de08a0b65e4}{getCurrentOnionSkin}}()-\/>getOnionSkinMask();}
+\DoxyCodeLine{00441     osm.setShiftTraceStatus(status);}
+\DoxyCodeLine{00442     osm.clearGhostFlipKey();}
+\DoxyCodeLine{00443     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00444     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_afcdd56d9130b7c39a5227de08a0b65e4}{getCurrentOnionSkin}}()-\/>setOnionSkinMask(osm);}
+\DoxyCodeLine{00445   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/sceneviewer.\+cpp\end{DoxyCompactItemize}

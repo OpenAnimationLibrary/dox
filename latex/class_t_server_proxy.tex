@@ -1,0 +1,108 @@
+\hypertarget{class_t_server_proxy}{}\doxysection{TServer\+Proxy Class Reference}
+\label{class_t_server_proxy}\index{TServerProxy@{TServerProxy}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_server_proxy_a44966fce675dafddcdb5084ab47a6cb8}{TServer\+Proxy}} (const std\+::string host\+Name, int port\+Id)
+\item 
+bool \mbox{\hyperlink{class_t_server_proxy_a554b255ae0fd30aea80437b58c16144b}{test\+Connection}} () const
+\item 
+int \mbox{\hyperlink{class_t_server_proxy_a5ea1a89e0f10569f3aebd37e847f622e}{exec}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]}, std\+::string \&reply)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_server_proxy_a44966fce675dafddcdb5084ab47a6cb8}\label{class_t_server_proxy_a44966fce675dafddcdb5084ab47a6cb8}} 
+\index{TServerProxy@{TServerProxy}!TServerProxy@{TServerProxy}}
+\index{TServerProxy@{TServerProxy}!TServerProxy@{TServerProxy}}
+\doxysubsubsection{\texorpdfstring{TServerProxy()}{TServerProxy()}}
+{\footnotesize\ttfamily TServer\+Proxy\+::\+TServer\+Proxy (\begin{DoxyParamCaption}\item[{const std\+::string}]{host\+Name,  }\item[{int}]{port\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00066     : m\_hostName(hostName), m\_portId(portId) \{}
+\DoxyCodeLine{00067 \textcolor{preprocessor}{\#ifdef WIN32}}
+\DoxyCodeLine{00068   WSADATA wsaData;}
+\DoxyCodeLine{00069   WORD wVersionRequested = MAKEWORD(1, 1);}
+\DoxyCodeLine{00070   \textcolor{keywordtype}{int} irc                = WSAStartup(wVersionRequested, \&wsaData);}
+\DoxyCodeLine{00071 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00072 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_server_proxy_ac60e3f74311d68315006b7efaefadb9c}\label{class_t_server_proxy_ac60e3f74311d68315006b7efaefadb9c}} 
+\index{TServerProxy@{TServerProxy}!````~TServerProxy@{$\sim$TServerProxy}}
+\index{````~TServerProxy@{$\sim$TServerProxy}!TServerProxy@{TServerProxy}}
+\doxysubsubsection{\texorpdfstring{$\sim$TServerProxy()}{~TServerProxy()}}
+{\footnotesize\ttfamily TServer\+Proxy\+::$\sim$\+TServer\+Proxy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00076                             \{}
+\DoxyCodeLine{00077 \textcolor{preprocessor}{\#ifdef WIN32}}
+\DoxyCodeLine{00078   WSACleanup();}
+\DoxyCodeLine{00079 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00080 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_server_proxy_a5ea1a89e0f10569f3aebd37e847f622e}\label{class_t_server_proxy_a5ea1a89e0f10569f3aebd37e847f622e}} 
+\index{TServerProxy@{TServerProxy}!exec@{exec}}
+\index{exec@{exec}!TServerProxy@{TServerProxy}}
+\doxysubsubsection{\texorpdfstring{exec()}{exec()}}
+{\footnotesize\ttfamily int TServer\+Proxy\+::exec (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]},  }\item[{std\+::string \&}]{reply }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00104                                                             \{}
+\DoxyCodeLine{00105   \textcolor{keywordtype}{string} cmd;}
+\DoxyCodeLine{00106   assert(argc > 0);}
+\DoxyCodeLine{00107   \textcolor{keywordflow}{if} (argc > 0) \{}
+\DoxyCodeLine{00108     cmd = argv[0];}
+\DoxyCodeLine{00109     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < argc; ++i) \{}
+\DoxyCodeLine{00110       cmd += \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{00111       cmd += argv[i];}
+\DoxyCodeLine{00112     \}}
+\DoxyCodeLine{00113   \}}
+\DoxyCodeLine{00114 }
+\DoxyCodeLine{00115   \textcolor{keywordflow}{return} askServer(m\_hostName, m\_portId, cmd, reply);}
+\DoxyCodeLine{00116 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_server_proxy_a554b255ae0fd30aea80437b58c16144b}\label{class_t_server_proxy_a554b255ae0fd30aea80437b58c16144b}} 
+\index{TServerProxy@{TServerProxy}!testConnection@{testConnection}}
+\index{testConnection@{testConnection}!TServerProxy@{TServerProxy}}
+\doxysubsubsection{\texorpdfstring{testConnection()}{testConnection()}}
+{\footnotesize\ttfamily bool TServer\+Proxy\+::test\+Connection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00084                                         \{}
+\DoxyCodeLine{00085   \textcolor{keyword}{struct }hostent *he = gethostbyname(m\_hostName.c\_str());}
+\DoxyCodeLine{00086   \textcolor{keywordflow}{if} (!he) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088   \textcolor{keywordtype}{int} socket\_id = socket(AF\_INET, SOCK\_STREAM, 0);}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090   \textcolor{keyword}{struct }sockaddr\_in addr;}
+\DoxyCodeLine{00091   memset((\textcolor{keywordtype}{char} *)\&addr, 0, \textcolor{keyword}{sizeof} addr);}
+\DoxyCodeLine{00092   addr.sin\_family = he-\/>h\_addrtype;}
+\DoxyCodeLine{00093   addr.sin\_port   = htons(m\_portId);}
+\DoxyCodeLine{00094   memcpy((\textcolor{keywordtype}{char} *)\&(addr.sin\_addr), he-\/>h\_addr, he-\/>h\_length);}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096   \textcolor{keywordtype}{bool} ret = (SOCKET\_ERROR !=}
+\DoxyCodeLine{00097               connect(socket\_id, (\textcolor{keyword}{struct} sockaddr *)\&(addr), \textcolor{keyword}{sizeof} addr));}
+\DoxyCodeLine{00098   closesocket(socket\_id);}
+\DoxyCodeLine{00099   \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{00100 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/include/tserverproxy.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tfarm/tserverproxy.\+cpp\end{DoxyCompactItemize}

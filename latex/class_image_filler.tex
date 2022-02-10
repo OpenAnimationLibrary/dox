@@ -1,0 +1,152 @@
+\hypertarget{class_image_filler}{}\doxysection{Image\+Filler Class Reference}
+\label{class_image_filler}\index{ImageFiller@{ImageFiller}}
+Inheritance diagram for Image\+Filler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_image_filler}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_image_filler_a28f4940fed7d0a87284acaa64515ba20}{is\+Image\+Compatible}} (int im\+Flags, void $\ast$ext\+Data) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_image_filler_a3bcee2c26d3189115a2fe65d3fbfaafd}{get\+Info}} (\mbox{\hyperlink{class_t_image_info}{TImage\+Info}} \&info, int im\+Flags, void $\ast$ext\+Data) override
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \mbox{\hyperlink{class_image_filler_ae7ff599947f4ef042618053c03349324}{build}} (int im\+Flags, void $\ast$ext\+Data) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_image_filler_ae9882d219c46ea31ce5b5c472ee7847d}\label{class_image_filler_ae9882d219c46ea31ce5b5c472ee7847d}} 
+\index{ImageFiller@{ImageFiller}!ImageFiller@{ImageFiller}}
+\index{ImageFiller@{ImageFiller}!ImageFiller@{ImageFiller}}
+\doxysubsubsection{\texorpdfstring{ImageFiller()}{ImageFiller()}}
+{\footnotesize\ttfamily Image\+Filler\+::\+Image\+Filler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00101 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_image_filler_a023d6ac38b92c4b4db3b2f98982f2c07}\label{class_image_filler_a023d6ac38b92c4b4db3b2f98982f2c07}} 
+\index{ImageFiller@{ImageFiller}!````~ImageFiller@{$\sim$ImageFiller}}
+\index{````~ImageFiller@{$\sim$ImageFiller}!ImageFiller@{ImageFiller}}
+\doxysubsubsection{\texorpdfstring{$\sim$ImageFiller()}{~ImageFiller()}}
+{\footnotesize\ttfamily Image\+Filler\+::$\sim$\+Image\+Filler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00102 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_image_filler_ae7ff599947f4ef042618053c03349324}\label{class_image_filler_ae7ff599947f4ef042618053c03349324}} 
+\index{ImageFiller@{ImageFiller}!build@{build}}
+\index{build@{build}!ImageFiller@{ImageFiller}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} Image\+Filler\+::build (\begin{DoxyParamCaption}\item[{int}]{im\+Flags,  }\item[{void $\ast$}]{ext\+Data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+Builds the image as specified by the supplied control flags and external data. 
+
+Implements \mbox{\hyperlink{class_image_builder_ac009ac3e258ce6f020d729987c40ec4c}{Image\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00360                                                      \{}
+\DoxyCodeLine{00361   assert(imFlags == ImageManager::none);}
+\DoxyCodeLine{00362 }
+\DoxyCodeLine{00363   \textcolor{comment}{// Fetch image}}
+\DoxyCodeLine{00364   assert(extData);}
+\DoxyCodeLine{00365 }
+\DoxyCodeLine{00366   \mbox{\hyperlink{struct_image_loader_1_1_build_ext_data}{ImageLoader::BuildExtData}} *data = (\mbox{\hyperlink{struct_image_loader_1_1_build_ext_data}{ImageLoader::BuildExtData}} *)extData;}
+\DoxyCodeLine{00367   assert(data-\/>\mbox{\hyperlink{struct_image_loader_1_1_build_ext_data_ae38e66d54db1c06458fde23fdd47a016}{m\_subs}} == 0);}
+\DoxyCodeLine{00368 }
+\DoxyCodeLine{00369   \textcolor{keyword}{const} std::string \&srcImgId = data-\/>\mbox{\hyperlink{struct_image_loader_1_1_build_ext_data_a7f49ea5b9a78fc465ff712eeabc7f4f0}{m\_sl}}-\/>getImageId(data-\/>\mbox{\hyperlink{struct_image_loader_1_1_build_ext_data_a20e6641a270ec24a687a734e9fb449c1}{m\_fid}});}
+\DoxyCodeLine{00370 }
+\DoxyCodeLine{00371   \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} img = ImageManager::instance()-\/>\mbox{\hyperlink{class_image_manager_a534298d4e7278e9e42764965e2389576}{getImage}}(srcImgId, imFlags, extData);}
+\DoxyCodeLine{00372   \textcolor{keywordflow}{if} (img) \{}
+\DoxyCodeLine{00373     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} ri = img;}
+\DoxyCodeLine{00374     \textcolor{keywordflow}{if} (ri) \{}
+\DoxyCodeLine{00375       \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras = ri-\/>getRaster();}
+\DoxyCodeLine{00376       \textcolor{keywordflow}{if} (ras) \{}
+\DoxyCodeLine{00377         \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} newRas = ras-\/>clone();}
+\DoxyCodeLine{00378         \mbox{\hyperlink{class_full_color_area_filler}{FullColorAreaFiller}} filler(newRas);}
+\DoxyCodeLine{00379 }
+\DoxyCodeLine{00380         \mbox{\hyperlink{class_t_smart_pointer_t}{TPaletteP}} palette = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_palette}{TPalette}}();}
+\DoxyCodeLine{00381         \textcolor{keywordtype}{int} styleId       = palette-\/>getPage(0)-\/>addStyle(TPixel32::White);}
+\DoxyCodeLine{00382 }
+\DoxyCodeLine{00383         \mbox{\hyperlink{class_fill_parameters}{FillParameters}} params;}
+\DoxyCodeLine{00384         params.m\_palette      = palette.getPointer();}
+\DoxyCodeLine{00385         params.m\_styleId      = styleId;}
+\DoxyCodeLine{00386         params.m\_minFillDepth = 0;}
+\DoxyCodeLine{00387         params.m\_maxFillDepth = 15;}
+\DoxyCodeLine{00388         filler.rectFill(newRas-\/>getBounds(), params, \textcolor{keyword}{false});}
+\DoxyCodeLine{00389 }
+\DoxyCodeLine{00390         \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} ri = \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}(newRas);}
+\DoxyCodeLine{00391         \textcolor{keywordflow}{return} ri;}
+\DoxyCodeLine{00392       \}}
+\DoxyCodeLine{00393     \}}
+\DoxyCodeLine{00394   \}}
+\DoxyCodeLine{00395 }
+\DoxyCodeLine{00396   \textcolor{comment}{// Error case: return a dummy image (is it really required?)}}
+\DoxyCodeLine{00397 }
+\DoxyCodeLine{00398   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras(10, 10);}
+\DoxyCodeLine{00399   ras-\/>fill(TPixel32(127, 0, 127, 127));}
+\DoxyCodeLine{00400 }
+\DoxyCodeLine{00401   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}(ras);}
+\DoxyCodeLine{00402 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00310}{Image\+Manager\+::get\+Image()}}, \mbox{\hyperlink{l00036}{Image\+Loader\+::\+Build\+Ext\+Data\+::m\+\_\+fid}}, \mbox{\hyperlink{l00034}{Image\+Loader\+::\+Build\+Ext\+Data\+::m\+\_\+sl}}, \mbox{\hyperlink{l00038}{Image\+Loader\+::\+Build\+Ext\+Data\+::m\+\_\+subs}}, and \mbox{\hyperlink{l00316}{Full\+Color\+Area\+Filler\+::rect\+Fill()}}.
+
+\mbox{\Hypertarget{class_image_filler_a3bcee2c26d3189115a2fe65d3fbfaafd}\label{class_image_filler_a3bcee2c26d3189115a2fe65d3fbfaafd}} 
+\index{ImageFiller@{ImageFiller}!getInfo@{getInfo}}
+\index{getInfo@{getInfo}!ImageFiller@{ImageFiller}}
+\doxysubsubsection{\texorpdfstring{getInfo()}{getInfo()}}
+{\footnotesize\ttfamily bool Image\+Filler\+::get\+Info (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_image_info}{TImage\+Info}} \&}]{info,  }\item[{int}]{im\+Flags,  }\item[{void $\ast$}]{ext\+Data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+Returns the image infos as specified by the supplied control flags and external data. 
+
+Implements \mbox{\hyperlink{class_image_builder_a16613d50918a7b59ba67ba8bc6dab8ff}{Image\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00353                                                                       \{}
+\DoxyCodeLine{00354   assert(\textcolor{keyword}{false});  \textcolor{comment}{// None should get these... in case, TODO}}
+\DoxyCodeLine{00355   \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00356 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_image_filler_a28f4940fed7d0a87284acaa64515ba20}\label{class_image_filler_a28f4940fed7d0a87284acaa64515ba20}} 
+\index{ImageFiller@{ImageFiller}!isImageCompatible@{isImageCompatible}}
+\index{isImageCompatible@{isImageCompatible}!ImageFiller@{ImageFiller}}
+\doxysubsubsection{\texorpdfstring{isImageCompatible()}{isImageCompatible()}}
+{\footnotesize\ttfamily bool Image\+Filler\+::is\+Image\+Compatible (\begin{DoxyParamCaption}\item[{int}]{im\+Flags,  }\item[{void $\ast$}]{ext\+Data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Returns whether any currently cached image is compatible with requested specifications, Returning true prevents Image\+Builder\+::build() invocations, fetching the cached data instead. The default implementation returns true if m\+\_\+info has positive m\+\_\+lx and m\+\_\+ly. 
+
+Reimplemented from \mbox{\hyperlink{class_image_builder_a23048fae4829baddc1869516df7f58ce}{Image\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00104 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{true}; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/imagebuilders.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/imagebuilders.\+cpp\end{DoxyCompactItemize}

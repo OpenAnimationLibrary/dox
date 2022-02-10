@@ -1,0 +1,92 @@
+\hypertarget{class_cleanup_save_in_field}{}\doxysection{Cleanup\+Save\+In\+Field Class Reference}
+\label{class_cleanup_save_in_field}\index{CleanupSaveInField@{CleanupSaveInField}}
+Inheritance diagram for Cleanup\+Save\+In\+Field\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_cleanup_save_in_field}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_cleanup_save_in_field_ac50d7199d6a14601e50fc176222d3e35}{Cleanup\+Save\+In\+Field}} (QWidget $\ast$parent=0, QString path=0)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_cleanup_save_in_field_aaf7d85a3e70489fb01ee0052f99d57dc}{browse\+Directory}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_cleanup_save_in_field_ac50d7199d6a14601e50fc176222d3e35}\label{class_cleanup_save_in_field_ac50d7199d6a14601e50fc176222d3e35}} 
+\index{CleanupSaveInField@{CleanupSaveInField}!CleanupSaveInField@{CleanupSaveInField}}
+\index{CleanupSaveInField@{CleanupSaveInField}!CleanupSaveInField@{CleanupSaveInField}}
+\doxysubsubsection{\texorpdfstring{CleanupSaveInField()}{CleanupSaveInField()}}
+{\footnotesize\ttfamily Cleanup\+Save\+In\+Field\+::\+Cleanup\+Save\+In\+Field (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0},  }\item[{QString}]{path = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00038       : \mbox{\hyperlink{class_d_v_gui_1_1_file_field}{DVGui::FileField}}(parent, path) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_cleanup_save_in_field_aaf7d85a3e70489fb01ee0052f99d57dc}\label{class_cleanup_save_in_field_aaf7d85a3e70489fb01ee0052f99d57dc}} 
+\index{CleanupSaveInField@{CleanupSaveInField}!browseDirectory@{browseDirectory}}
+\index{browseDirectory@{browseDirectory}!CleanupSaveInField@{CleanupSaveInField}}
+\doxysubsubsection{\texorpdfstring{browseDirectory}{browseDirectory}}
+{\footnotesize\ttfamily void Cleanup\+Save\+In\+Field\+::browse\+Directory (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041                                          \{}
+\DoxyCodeLine{00042   \textcolor{keywordflow}{if} (!m\_fileBrowseButton-\/>hasFocus()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00043   QString directory = QString();}
+\DoxyCodeLine{00044 }
+\DoxyCodeLine{00045   \textcolor{keywordflow}{if} (!m\_browserPopupController) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047   \textcolor{comment}{/*}}
+\DoxyCodeLine{00048 \textcolor{comment}{  ここで、m\_lastSelectedPathが空のとき、カレントレベルがScan画像の場合、}}
+\DoxyCodeLine{00049 \textcolor{comment}{  そのファイルの入っているフォルダの１つ上のフォルダを初期フォルダにする}}
+\DoxyCodeLine{00050 \textcolor{comment}{  */}}
+\DoxyCodeLine{00051   QString initialFolder = m\_lastSelectedPath;}
+\DoxyCodeLine{00052   \textcolor{keywordflow}{if} (initialFolder.isEmpty()) \{}
+\DoxyCodeLine{00053     \textcolor{comment}{/*-\/-\/-\/ 親Widgetを取得する -\/-\/-\/*/}}
+\DoxyCodeLine{00054     \mbox{\hyperlink{class_cleanup_settings_pane}{CleanupSettingsPane}} *parentCSP =}
+\DoxyCodeLine{00055         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_cleanup_settings_pane}{CleanupSettingsPane}} *\textcolor{keyword}{>}(parentWidget());}
+\DoxyCodeLine{00056     \textcolor{keywordflow}{if} (parentCSP) \{}
+\DoxyCodeLine{00057       \mbox{\hyperlink{class_t_file_path}{TFilePath}} lastSelectedPath = parentCSP-\/>getLastSelectedPath();}
+\DoxyCodeLine{00058       \textcolor{keywordflow}{if} (!lastSelectedPath.isEmpty()) \{}
+\DoxyCodeLine{00059         \textcolor{comment}{/*-\/-\/-\/-\/}}
+\DoxyCodeLine{00060 \textcolor{comment}{         * 親Widgetのm\_lastSelectedPathが、CLNファイルの見込み所在地なので、その１つ上のフォルダを初期フォルダにする。-\/-\/-\/*/}}
+\DoxyCodeLine{00061         initialFolder = QString::fromStdWString(}
+\DoxyCodeLine{00062             lastSelectedPath.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}().\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}().getWideString());}
+\DoxyCodeLine{00063       \}}
+\DoxyCodeLine{00064     \}}
+\DoxyCodeLine{00065   \}}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067   m\_browserPopupController-\/>openPopup(QStringList(), \textcolor{keyword}{true}, initialFolder);}
+\DoxyCodeLine{00068   \textcolor{keywordflow}{if} (m\_browserPopupController-\/>isExecute())}
+\DoxyCodeLine{00069     directory = m\_browserPopupController-\/>getPath();}
+\DoxyCodeLine{00070 }
+\DoxyCodeLine{00071   \textcolor{keywordflow}{if} (!directory.isEmpty()) \{}
+\DoxyCodeLine{00072     setPath(directory);}
+\DoxyCodeLine{00073     m\_lastSelectedPath = directory;}
+\DoxyCodeLine{00074     emit \mbox{\hyperlink{class_d_v_gui_1_1_file_field_a0826f7ab694db0691da17a457d847127}{pathChanged}}();}
+\DoxyCodeLine{00075     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00076   \}}
+\DoxyCodeLine{00077 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanupsettingspane.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanupsettingspane.\+cpp\end{DoxyCompactItemize}

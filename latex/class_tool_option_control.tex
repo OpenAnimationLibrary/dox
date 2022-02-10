@@ -1,0 +1,163 @@
+\hypertarget{class_tool_option_control}{}\doxysection{Tool\+Option\+Control Class Reference}
+\label{class_tool_option_control}\index{ToolOptionControl@{ToolOptionControl}}
+
+
+\mbox{\hyperlink{class_tool_option_control}{Tool\+Option\+Control}} is the base class for tool property toolbar controls.  
+
+
+
+
+{\ttfamily \#include $<$tooloptionscontrols.\+h$>$}
+
+Inheritance diagram for Tool\+Option\+Control\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=12.000000cm]{class_tool_option_control}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_tool_option_control_a00199b1d8e8e9b469c62eb83ea8c7bbc}{Tool\+Option\+Control}} (\mbox{\hyperlink{class_t_tool}{TTool}} $\ast$tool, std\+::string property\+Name, \mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$tool\+Handle=0)
+\item 
+const std\+::string \& \mbox{\hyperlink{class_tool_option_control_a48d8c128d986dfc1335cc4483bbf402e}{property\+Name}} () const
+\item 
+void \mbox{\hyperlink{class_tool_option_control_a8e8c4d7aae6cc8567b844ac3d1357087}{on\+Property\+Changed}} () override
+\item 
+void \mbox{\hyperlink{class_tool_option_control_ab6be6b1974edb2bdac7e27fbb98895c0}{notify\+Tool}} (bool add\+To\+Undo=false)
+\item 
+bool \mbox{\hyperlink{class_tool_option_control_adf1e4444edbb911ef5f7a4409a121080}{is\+In\+Visible\+Viewer}} (QWidget $\ast$widget)
+\item 
+\mbox{\Hypertarget{class_tool_option_control_a14484b08f8f86288f0e51ae684e11eb3}\label{class_tool_option_control_a14484b08f8f86288f0e51ae684e11eb3}} 
+virtual void {\bfseries update\+Status} ()=0
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{class_tool_option_control_a4022d3fe3cbccb3fb5c3d2147ecc1680}{m\+\_\+property\+Name}}
+\item 
+\mbox{\hyperlink{class_t_tool}{TTool}} $\ast$ \mbox{\hyperlink{class_tool_option_control_a69ff04c3c96b9dd9b527a373ffa0d77a}{m\+\_\+tool}}
+\item 
+\mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$ \mbox{\hyperlink{class_tool_option_control_a1715560862109bdca7d9eaf3939509ed}{m\+\_\+tool\+Handle}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_tool_option_control}{Tool\+Option\+Control}} is the base class for tool property toolbar controls. 
+
+This class implements the basic methods the allow toolbar controls to interact with the tool properties. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_tool_option_control_a00199b1d8e8e9b469c62eb83ea8c7bbc}\label{class_tool_option_control_a00199b1d8e8e9b469c62eb83ea8c7bbc}} 
+\index{ToolOptionControl@{ToolOptionControl}!ToolOptionControl@{ToolOptionControl}}
+\index{ToolOptionControl@{ToolOptionControl}!ToolOptionControl@{ToolOptionControl}}
+\doxysubsubsection{\texorpdfstring{ToolOptionControl()}{ToolOptionControl()}}
+{\footnotesize\ttfamily Tool\+Option\+Control\+::\+Tool\+Option\+Control (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_tool}{TTool}} $\ast$}]{tool,  }\item[{std\+::string}]{property\+Name,  }\item[{\mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$}]{tool\+Handle = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052     : m\_tool(tool), m\_propertyName(propertyName), m\_toolHandle(toolHandle) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tool_option_control_adf1e4444edbb911ef5f7a4409a121080}\label{class_tool_option_control_adf1e4444edbb911ef5f7a4409a121080}} 
+\index{ToolOptionControl@{ToolOptionControl}!isInVisibleViewer@{isInVisibleViewer}}
+\index{isInVisibleViewer@{isInVisibleViewer}!ToolOptionControl@{ToolOptionControl}}
+\doxysubsubsection{\texorpdfstring{isInVisibleViewer()}{isInVisibleViewer()}}
+{\footnotesize\ttfamily bool Tool\+Option\+Control\+::is\+In\+Visible\+Viewer (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{widget }\end{DoxyParamCaption})}
+
+return true if the control is belonging to the visible combo viewer. very dirty implementation. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067                                                          \{}
+\DoxyCodeLine{00068   \textcolor{keywordflow}{if} (!widget) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00069 }
+\DoxyCodeLine{00070   \textcolor{keywordflow}{if} (widget-\/>isVisible()) \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00072   \mbox{\hyperlink{class_tool_options_box}{ToolOptionsBox}} *parentTOB =}
+\DoxyCodeLine{00073       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_tool_options_box}{ToolOptionsBox}} *\textcolor{keyword}{>}(widget-\/>parentWidget());}
+\DoxyCodeLine{00074   \textcolor{keywordflow}{if} (!parentTOB) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00075 }
+\DoxyCodeLine{00076   \mbox{\hyperlink{class_tool_options}{ToolOptions}} *grandParentTO =}
+\DoxyCodeLine{00077       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_tool_options}{ToolOptions}} *\textcolor{keyword}{>}(parentTOB-\/>parentWidget());}
+\DoxyCodeLine{00078   \textcolor{keywordflow}{if} (!grandParentTO) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080   \textcolor{comment}{// There must be a QFrame between a ComboViewerPanel and a ToolOptions}}
+\DoxyCodeLine{00081   QFrame *greatGrandParentFrame =}
+\DoxyCodeLine{00082       \textcolor{keyword}{dynamic\_cast<}QFrame *\textcolor{keyword}{>}(grandParentTO-\/>parentWidget());}
+\DoxyCodeLine{00083   \textcolor{keywordflow}{if} (!greatGrandParentFrame) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00084 }
+\DoxyCodeLine{00085   \textcolor{keywordflow}{return} greatGrandParentFrame-\/>isVisible();}
+\DoxyCodeLine{00086 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tool_option_control_ab6be6b1974edb2bdac7e27fbb98895c0}\label{class_tool_option_control_ab6be6b1974edb2bdac7e27fbb98895c0}} 
+\index{ToolOptionControl@{ToolOptionControl}!notifyTool@{notifyTool}}
+\index{notifyTool@{notifyTool}!ToolOptionControl@{ToolOptionControl}}
+\doxysubsubsection{\texorpdfstring{notifyTool()}{notifyTool()}}
+{\footnotesize\ttfamily void Tool\+Option\+Control\+::notify\+Tool (\begin{DoxyParamCaption}\item[{bool}]{add\+To\+Undo = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00056                                                  \{}
+\DoxyCodeLine{00057   std::string tempPropertyName = m\_propertyName;}
+\DoxyCodeLine{00058   \textcolor{keywordflow}{if} (addToUndo \&\& m\_propertyName == \textcolor{stringliteral}{"{}Maximum Gap"{}})}
+\DoxyCodeLine{00059     tempPropertyName = tempPropertyName + \textcolor{stringliteral}{"{}withUndo"{}};}
+\DoxyCodeLine{00060   m\_tool-\/>\mbox{\hyperlink{class_t_tool_a06694e0586f807c34b18e16341aa9ee2}{onPropertyChanged}}(tempPropertyName);}
+\DoxyCodeLine{00061 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tool_option_control_a8e8c4d7aae6cc8567b844ac3d1357087}\label{class_tool_option_control_a8e8c4d7aae6cc8567b844ac3d1357087}} 
+\index{ToolOptionControl@{ToolOptionControl}!onPropertyChanged@{onPropertyChanged}}
+\index{onPropertyChanged@{onPropertyChanged}!ToolOptionControl@{ToolOptionControl}}
+\doxysubsubsection{\texorpdfstring{onPropertyChanged()}{onPropertyChanged()}}
+{\footnotesize\ttfamily void Tool\+Option\+Control\+::on\+Property\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_property_1_1_listener}{TProperty\+::\+Listener}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075 \{ updateStatus(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tool_option_control_a48d8c128d986dfc1335cc4483bbf402e}\label{class_tool_option_control_a48d8c128d986dfc1335cc4483bbf402e}} 
+\index{ToolOptionControl@{ToolOptionControl}!propertyName@{propertyName}}
+\index{propertyName@{propertyName}!ToolOptionControl@{ToolOptionControl}}
+\doxysubsubsection{\texorpdfstring{propertyName()}{propertyName()}}
+{\footnotesize\ttfamily const std\+::string \& Tool\+Option\+Control\+::property\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073 \{ \textcolor{keywordflow}{return} m\_propertyName; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_tool_option_control_a4022d3fe3cbccb3fb5c3d2147ecc1680}\label{class_tool_option_control_a4022d3fe3cbccb3fb5c3d2147ecc1680}} 
+\index{ToolOptionControl@{ToolOptionControl}!m\_propertyName@{m\_propertyName}}
+\index{m\_propertyName@{m\_propertyName}!ToolOptionControl@{ToolOptionControl}}
+\doxysubsubsection{\texorpdfstring{m\_propertyName}{m\_propertyName}}
+{\footnotesize\ttfamily std\+::string Tool\+Option\+Control\+::m\+\_\+property\+Name\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_tool_option_control_a69ff04c3c96b9dd9b527a373ffa0d77a}\label{class_tool_option_control_a69ff04c3c96b9dd9b527a373ffa0d77a}} 
+\index{ToolOptionControl@{ToolOptionControl}!m\_tool@{m\_tool}}
+\index{m\_tool@{m\_tool}!ToolOptionControl@{ToolOptionControl}}
+\doxysubsubsection{\texorpdfstring{m\_tool}{m\_tool}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_tool}{TTool}}$\ast$ Tool\+Option\+Control\+::m\+\_\+tool\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_tool_option_control_a1715560862109bdca7d9eaf3939509ed}\label{class_tool_option_control_a1715560862109bdca7d9eaf3939509ed}} 
+\index{ToolOptionControl@{ToolOptionControl}!m\_toolHandle@{m\_toolHandle}}
+\index{m\_toolHandle@{m\_toolHandle}!ToolOptionControl@{ToolOptionControl}}
+\doxysubsubsection{\texorpdfstring{m\_toolHandle}{m\_toolHandle}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_tool_handle}{Tool\+Handle}}$\ast$ Tool\+Option\+Control\+::m\+\_\+tool\+Handle\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptionscontrols.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptionscontrols.\+cpp\end{DoxyCompactItemize}

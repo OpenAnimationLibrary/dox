@@ -1,0 +1,309 @@
+\hypertarget{class_item_list_view}{}\doxysection{Item\+List\+View Class Reference}
+\label{class_item_list_view}\index{ItemListView@{ItemListView}}
+Inheritance diagram for Item\+List\+View\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_item_list_view}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_item_list_view_a8eb146fadcf142db94826699023c3d62}\label{class_item_list_view_a8eb146fadcf142db94826699023c3d62}} 
+void {\bfseries current\+Item\+Switched} (int)
+\item 
+\mbox{\Hypertarget{class_item_list_view_a93e9e1c7b96042cc34e13995b44776e3}\label{class_item_list_view_a93e9e1c7b96042cc34e13995b44776e3}} 
+void {\bfseries item\+Added\+Or\+Deleted} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_item_list_view_acb7c7330ff8b3582ef8d91d1e95800bf}{Item\+List\+View}} (QWidget $\ast$parent=nullptr)
+\item 
+void \mbox{\hyperlink{class_item_list_view_a2be96f452ec44944675017505e91191e}{initialize}} ()
+\item 
+void \mbox{\hyperlink{class_item_list_view_a1019391a07d024a52413a4b40e3e531e}{update\+Current\+Item}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_item_list_view_aa062d72da1deb6ba6b02b770110f4672}{on\+Current\+Item\+Switched}} (int)
+\item 
+void \mbox{\hyperlink{class_item_list_view_a0ab3c941aa3a06c7ffcf86cc9073b101}{on\+New\+Item\+Button\+Clicked}} ()
+\item 
+void \mbox{\hyperlink{class_item_list_view_a2ddb133ae208e71792d21819386936a1}{on\+Delete\+Item\+Button\+Clicked}} ()
+\item 
+void \mbox{\hyperlink{class_item_list_view_a36f6606a5925266422bcb0004b261dd8}{on\+Move\+Up\+Button\+Clicked}} ()
+\item 
+void \mbox{\hyperlink{class_item_list_view_aff4ac653830cb58a53797acd9759e0dd}{on\+Move\+Down\+Button\+Clicked}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_item_list_view_acb7c7330ff8b3582ef8d91d1e95800bf}\label{class_item_list_view_acb7c7330ff8b3582ef8d91d1e95800bf}} 
+\index{ItemListView@{ItemListView}!ItemListView@{ItemListView}}
+\index{ItemListView@{ItemListView}!ItemListView@{ItemListView}}
+\doxysubsubsection{\texorpdfstring{ItemListView()}{ItemListView()}}
+{\footnotesize\ttfamily Item\+List\+View\+::\+Item\+List\+View (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00658                                           : QWidget(parent) \{}
+\DoxyCodeLine{00659   QPushButton* newItemBtn =}
+\DoxyCodeLine{00660       \textcolor{keyword}{new} QPushButton(createQIcon(\textcolor{stringliteral}{"{}plus"{}}), tr(\textcolor{stringliteral}{"{}Add"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00661   m\_deleteItemBtn = \textcolor{keyword}{new} QPushButton(createQIcon(\textcolor{stringliteral}{"{}delete"{}}), tr(\textcolor{stringliteral}{"{}Remove"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00662   m\_moveUpBtn     = \textcolor{keyword}{new} QPushButton(createQIcon(\textcolor{stringliteral}{"{}fb\_up"{}}), tr(\textcolor{stringliteral}{"{}Move Up"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00663   m\_moveDownBtn =}
+\DoxyCodeLine{00664       \textcolor{keyword}{new} QPushButton(createQIcon(\textcolor{stringliteral}{"{}fb\_down"{}}), tr(\textcolor{stringliteral}{"{}Move Down"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00665 }
+\DoxyCodeLine{00666   m\_list = \textcolor{keyword}{new} QListWidget(\textcolor{keyword}{this});}
+\DoxyCodeLine{00667 }
+\DoxyCodeLine{00668   QSize iconSize(16, 16);}
+\DoxyCodeLine{00669 }
+\DoxyCodeLine{00670   newItemBtn-\/>setIconSize(iconSize);}
+\DoxyCodeLine{00671   m\_deleteItemBtn-\/>setIconSize(iconSize);}
+\DoxyCodeLine{00672   m\_moveUpBtn-\/>setIconSize(iconSize);}
+\DoxyCodeLine{00673   m\_moveDownBtn-\/>setIconSize(iconSize);}
+\DoxyCodeLine{00674 }
+\DoxyCodeLine{00675   m\_list-\/>setIconSize(QSize(20, 20));}
+\DoxyCodeLine{00676   m\_list-\/>setAlternatingRowColors(\textcolor{keyword}{true});}
+\DoxyCodeLine{00677   m\_list-\/>setMaximumWidth(225);}
+\DoxyCodeLine{00678 }
+\DoxyCodeLine{00679   QHBoxLayout* mainLay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00680   mainLay-\/>setMargin(5);}
+\DoxyCodeLine{00681   mainLay-\/>setSpacing(5);}
+\DoxyCodeLine{00682   \{}
+\DoxyCodeLine{00683     QVBoxLayout* buttonsLay = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00684     buttonsLay-\/>setMargin(0);}
+\DoxyCodeLine{00685     buttonsLay-\/>setSpacing(3);}
+\DoxyCodeLine{00686     \{}
+\DoxyCodeLine{00687       buttonsLay-\/>addWidget(newItemBtn, 0);}
+\DoxyCodeLine{00688       buttonsLay-\/>addWidget(m\_deleteItemBtn, 0);}
+\DoxyCodeLine{00689       buttonsLay-\/>addWidget(m\_moveUpBtn, 0);}
+\DoxyCodeLine{00690       buttonsLay-\/>addWidget(m\_moveDownBtn, 0);}
+\DoxyCodeLine{00691       buttonsLay-\/>addStretch(1);}
+\DoxyCodeLine{00692     \}}
+\DoxyCodeLine{00693     mainLay-\/>addLayout(buttonsLay, 0);}
+\DoxyCodeLine{00694 }
+\DoxyCodeLine{00695     mainLay-\/>addWidget(m\_list, 1);}
+\DoxyCodeLine{00696   \}}
+\DoxyCodeLine{00697   setLayout(mainLay);}
+\DoxyCodeLine{00698 }
+\DoxyCodeLine{00699   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00700   ret      = ret \&\& connect(m\_list, SIGNAL(currentRowChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00701                        SLOT(onCurrentItemSwitched(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00702   ret = ret \&\& connect(newItemBtn, SIGNAL(clicked(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00703                        SLOT(onNewItemButtonClicked()));}
+\DoxyCodeLine{00704   ret = ret \&\& connect(m\_deleteItemBtn, SIGNAL(clicked(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00705                        SLOT(onDeleteItemButtonClicked()));}
+\DoxyCodeLine{00706   ret = ret \&\& connect(m\_moveUpBtn, SIGNAL(clicked(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00707                        SLOT(onMoveUpButtonClicked()));}
+\DoxyCodeLine{00708   ret = ret \&\& connect(m\_moveDownBtn, SIGNAL(clicked(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00709                        SLOT(onMoveDownButtonClicked()));}
+\DoxyCodeLine{00710   assert(ret);}
+\DoxyCodeLine{00711 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_item_list_view_a2be96f452ec44944675017505e91191e}\label{class_item_list_view_a2be96f452ec44944675017505e91191e}} 
+\index{ItemListView@{ItemListView}!initialize@{initialize}}
+\index{initialize@{initialize}!ItemListView@{ItemListView}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily void Item\+List\+View\+::initialize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00713                               \{}
+\DoxyCodeLine{00714   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}}* scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00715   \textcolor{keywordflow}{if} (!scene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00716   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}}* outProp   = scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}();}
+\DoxyCodeLine{00717   \mbox{\hyperlink{class_board_settings}{BoardSettings}}* boardSettings = outProp-\/>getBoardSettings();}
+\DoxyCodeLine{00718 }
+\DoxyCodeLine{00719   \textcolor{comment}{// first, clear all the list items}}
+\DoxyCodeLine{00720   m\_list-\/>clear();}
+\DoxyCodeLine{00721 }
+\DoxyCodeLine{00722   \textcolor{keywordflow}{if} (boardSettings-\/>getItemCount() == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00723 }
+\DoxyCodeLine{00724   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < boardSettings-\/>getItemCount(); i++) \{}
+\DoxyCodeLine{00725     \mbox{\hyperlink{class_board_item}{BoardItem}}* item           = \&(boardSettings-\/>getItem(i));}
+\DoxyCodeLine{00726     QListWidgetItem* listItem = \textcolor{keyword}{new} QListWidgetItem(m\_list);}
+\DoxyCodeLine{00727 }
+\DoxyCodeLine{00728     editListWidgetItem(listItem, item);}
+\DoxyCodeLine{00729   \}}
+\DoxyCodeLine{00730 }
+\DoxyCodeLine{00731   \textcolor{comment}{// this will update information view}}
+\DoxyCodeLine{00732   m\_list-\/>setCurrentRow(0, QItemSelectionModel::ClearAndSelect);}
+\DoxyCodeLine{00733 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_list_view_aa062d72da1deb6ba6b02b770110f4672}\label{class_item_list_view_aa062d72da1deb6ba6b02b770110f4672}} 
+\index{ItemListView@{ItemListView}!onCurrentItemSwitched@{onCurrentItemSwitched}}
+\index{onCurrentItemSwitched@{onCurrentItemSwitched}!ItemListView@{ItemListView}}
+\doxysubsubsection{\texorpdfstring{onCurrentItemSwitched}{onCurrentItemSwitched}}
+{\footnotesize\ttfamily void Item\+List\+View\+::on\+Current\+Item\+Switched (\begin{DoxyParamCaption}\item[{int}]{current\+Row }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00751                                                        \{}
+\DoxyCodeLine{00752   \textcolor{keywordflow}{if} (currentRow == -\/1) \{}
+\DoxyCodeLine{00753     m\_moveUpBtn-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00754     m\_moveDownBtn-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00755   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00756     m\_moveUpBtn-\/>setEnabled(currentRow != 0);}
+\DoxyCodeLine{00757     m\_moveDownBtn-\/>setEnabled(currentRow != m\_list-\/>count() -\/ 1);}
+\DoxyCodeLine{00758   \}}
+\DoxyCodeLine{00759   emit currentItemSwitched(currentRow);}
+\DoxyCodeLine{00760 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_list_view_a2ddb133ae208e71792d21819386936a1}\label{class_item_list_view_a2ddb133ae208e71792d21819386936a1}} 
+\index{ItemListView@{ItemListView}!onDeleteItemButtonClicked@{onDeleteItemButtonClicked}}
+\index{onDeleteItemButtonClicked@{onDeleteItemButtonClicked}!ItemListView@{ItemListView}}
+\doxysubsubsection{\texorpdfstring{onDeleteItemButtonClicked}{onDeleteItemButtonClicked}}
+{\footnotesize\ttfamily void Item\+List\+View\+::on\+Delete\+Item\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00783                                              \{}
+\DoxyCodeLine{00784   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}}* scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00785   \textcolor{keywordflow}{if} (!scene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00786   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}}* outProp   = scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}();}
+\DoxyCodeLine{00787   \mbox{\hyperlink{class_board_settings}{BoardSettings}}* boardSettings = outProp-\/>getBoardSettings();}
+\DoxyCodeLine{00788 }
+\DoxyCodeLine{00789   \textcolor{keywordtype}{int} currentRow = m\_list-\/>currentRow();}
+\DoxyCodeLine{00790 }
+\DoxyCodeLine{00791   assert(currentRow != -\/1);}
+\DoxyCodeLine{00792 }
+\DoxyCodeLine{00793   boardSettings-\/>removeItem(currentRow);}
+\DoxyCodeLine{00794 }
+\DoxyCodeLine{00795   \textcolor{keywordflow}{if} (m\_list-\/>count() == 1) \{}
+\DoxyCodeLine{00796     m\_deleteItemBtn-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00797     m\_list-\/>setCurrentRow(-\/1, QItemSelectionModel::ClearAndSelect);}
+\DoxyCodeLine{00798   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (currentRow == m\_list-\/>count() -\/ 1)}
+\DoxyCodeLine{00799     m\_list-\/>setCurrentRow(m\_list-\/>count() -\/ 2,}
+\DoxyCodeLine{00800                           QItemSelectionModel::ClearAndSelect);}
+\DoxyCodeLine{00801 }
+\DoxyCodeLine{00802   \textcolor{keyword}{delete} m\_list-\/>takeItem(currentRow);}
+\DoxyCodeLine{00803 }
+\DoxyCodeLine{00804   emit itemAddedOrDeleted();}
+\DoxyCodeLine{00805 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_list_view_aff4ac653830cb58a53797acd9759e0dd}\label{class_item_list_view_aff4ac653830cb58a53797acd9759e0dd}} 
+\index{ItemListView@{ItemListView}!onMoveDownButtonClicked@{onMoveDownButtonClicked}}
+\index{onMoveDownButtonClicked@{onMoveDownButtonClicked}!ItemListView@{ItemListView}}
+\doxysubsubsection{\texorpdfstring{onMoveDownButtonClicked}{onMoveDownButtonClicked}}
+{\footnotesize\ttfamily void Item\+List\+View\+::on\+Move\+Down\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00824                                            \{}
+\DoxyCodeLine{00825   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}}* scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00826   \textcolor{keywordflow}{if} (!scene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00827   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}}* outProp   = scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}();}
+\DoxyCodeLine{00828   \mbox{\hyperlink{class_board_settings}{BoardSettings}}* boardSettings = outProp-\/>getBoardSettings();}
+\DoxyCodeLine{00829 }
+\DoxyCodeLine{00830   \textcolor{keywordtype}{int} currentRow = m\_list-\/>currentRow();}
+\DoxyCodeLine{00831   assert(currentRow < m\_list-\/>count() -\/ 1);}
+\DoxyCodeLine{00832 }
+\DoxyCodeLine{00833   boardSettings-\/>swapItems(currentRow, currentRow + 1);}
+\DoxyCodeLine{00834 }
+\DoxyCodeLine{00835   QListWidgetItem* item = m\_list-\/>takeItem(currentRow);}
+\DoxyCodeLine{00836   m\_list-\/>insertItem(currentRow + 1, item);}
+\DoxyCodeLine{00837   m\_list-\/>setCurrentRow(currentRow + 1);}
+\DoxyCodeLine{00838 }
+\DoxyCodeLine{00839   emit itemAddedOrDeleted();}
+\DoxyCodeLine{00840 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_list_view_a36f6606a5925266422bcb0004b261dd8}\label{class_item_list_view_a36f6606a5925266422bcb0004b261dd8}} 
+\index{ItemListView@{ItemListView}!onMoveUpButtonClicked@{onMoveUpButtonClicked}}
+\index{onMoveUpButtonClicked@{onMoveUpButtonClicked}!ItemListView@{ItemListView}}
+\doxysubsubsection{\texorpdfstring{onMoveUpButtonClicked}{onMoveUpButtonClicked}}
+{\footnotesize\ttfamily void Item\+List\+View\+::on\+Move\+Up\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00807                                          \{}
+\DoxyCodeLine{00808   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}}* scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00809   \textcolor{keywordflow}{if} (!scene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00810   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}}* outProp   = scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}();}
+\DoxyCodeLine{00811   \mbox{\hyperlink{class_board_settings}{BoardSettings}}* boardSettings = outProp-\/>getBoardSettings();}
+\DoxyCodeLine{00812 }
+\DoxyCodeLine{00813   \textcolor{keywordtype}{int} currentRow = m\_list-\/>currentRow();}
+\DoxyCodeLine{00814   assert(currentRow > 0);}
+\DoxyCodeLine{00815 }
+\DoxyCodeLine{00816   boardSettings-\/>swapItems(currentRow -\/ 1, currentRow);}
+\DoxyCodeLine{00817 }
+\DoxyCodeLine{00818   m\_list-\/>insertItem(currentRow -\/ 1, m\_list-\/>takeItem(currentRow));}
+\DoxyCodeLine{00819   m\_list-\/>setCurrentRow(currentRow -\/ 1);}
+\DoxyCodeLine{00820 }
+\DoxyCodeLine{00821   emit itemAddedOrDeleted();}
+\DoxyCodeLine{00822 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_list_view_a0ab3c941aa3a06c7ffcf86cc9073b101}\label{class_item_list_view_a0ab3c941aa3a06c7ffcf86cc9073b101}} 
+\index{ItemListView@{ItemListView}!onNewItemButtonClicked@{onNewItemButtonClicked}}
+\index{onNewItemButtonClicked@{onNewItemButtonClicked}!ItemListView@{ItemListView}}
+\doxysubsubsection{\texorpdfstring{onNewItemButtonClicked}{onNewItemButtonClicked}}
+{\footnotesize\ttfamily void Item\+List\+View\+::on\+New\+Item\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00762                                           \{}
+\DoxyCodeLine{00763   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}}* scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00764   \textcolor{keywordflow}{if} (!scene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00765   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}}* outProp   = scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}();}
+\DoxyCodeLine{00766   \mbox{\hyperlink{class_board_settings}{BoardSettings}}* boardSettings = outProp-\/>getBoardSettings();}
+\DoxyCodeLine{00767 }
+\DoxyCodeLine{00768   boardSettings-\/>addNewItem();}
+\DoxyCodeLine{00769 }
+\DoxyCodeLine{00770   QListWidgetItem* listItem = \textcolor{keyword}{new} QListWidgetItem();}
+\DoxyCodeLine{00771   \mbox{\hyperlink{class_board_item}{BoardItem}}* item           = \&(boardSettings-\/>getItem(0));}
+\DoxyCodeLine{00772 }
+\DoxyCodeLine{00773   editListWidgetItem(listItem, item);}
+\DoxyCodeLine{00774 }
+\DoxyCodeLine{00775   m\_list-\/>insertItem(0, listItem);}
+\DoxyCodeLine{00776   m\_list-\/>setCurrentRow(0, QItemSelectionModel::ClearAndSelect);}
+\DoxyCodeLine{00777 }
+\DoxyCodeLine{00778   m\_deleteItemBtn-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00779 }
+\DoxyCodeLine{00780   emit itemAddedOrDeleted();}
+\DoxyCodeLine{00781 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_list_view_a1019391a07d024a52413a4b40e3e531e}\label{class_item_list_view_a1019391a07d024a52413a4b40e3e531e}} 
+\index{ItemListView@{ItemListView}!updateCurrentItem@{updateCurrentItem}}
+\index{updateCurrentItem@{updateCurrentItem}!ItemListView@{ItemListView}}
+\doxysubsubsection{\texorpdfstring{updateCurrentItem()}{updateCurrentItem()}}
+{\footnotesize\ttfamily void Item\+List\+View\+::update\+Current\+Item (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00736                                      \{}
+\DoxyCodeLine{00737   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}}* scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00738   \textcolor{keywordflow}{if} (!scene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00739   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}}* outProp   = scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}();}
+\DoxyCodeLine{00740   \mbox{\hyperlink{class_board_settings}{BoardSettings}}* boardSettings = outProp-\/>getBoardSettings();}
+\DoxyCodeLine{00741 }
+\DoxyCodeLine{00742   \textcolor{keywordtype}{int} currentItemIndex = m\_list-\/>currentRow();}
+\DoxyCodeLine{00743 }
+\DoxyCodeLine{00744   \textcolor{keywordflow}{if} (currentItemIndex < 0 || currentItemIndex >= boardSettings-\/>getItemCount())}
+\DoxyCodeLine{00745     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00746 }
+\DoxyCodeLine{00747   \mbox{\hyperlink{class_board_item}{BoardItem}}* item = \&(boardSettings-\/>getItem(currentItemIndex));}
+\DoxyCodeLine{00748   editListWidgetItem(m\_list-\/>item(currentItemIndex), item);}
+\DoxyCodeLine{00749 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/boardsettingspopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/boardsettingspopup.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,145 @@
+\hypertarget{class_columns_status_command}{}\doxysection{Columns\+Status\+Command Class Reference}
+\label{class_columns_status_command}\index{ColumnsStatusCommand@{ColumnsStatusCommand}}
+Inheritance diagram for Columns\+Status\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_columns_status_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_columns_status_command_a4d959b65f9ebe342294e27f3a1dbba18}{Columns\+Status\+Command}} (Command\+Id id, int cmd, int target)
+\item 
+void \mbox{\hyperlink{class_columns_status_command_a6a4ea610984807f0650812dfedae25ad}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_columns_status_command_a4d959b65f9ebe342294e27f3a1dbba18}\label{class_columns_status_command_a4d959b65f9ebe342294e27f3a1dbba18}} 
+\index{ColumnsStatusCommand@{ColumnsStatusCommand}!ColumnsStatusCommand@{ColumnsStatusCommand}}
+\index{ColumnsStatusCommand@{ColumnsStatusCommand}!ColumnsStatusCommand@{ColumnsStatusCommand}}
+\doxysubsubsection{\texorpdfstring{ColumnsStatusCommand()}{ColumnsStatusCommand()}}
+{\footnotesize\ttfamily Columns\+Status\+Command\+::\+Columns\+Status\+Command (\begin{DoxyParamCaption}\item[{Command\+Id}]{id,  }\item[{int}]{cmd,  }\item[{int}]{target }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01431       : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(\textcolor{keywordtype}{id}), m\_cmd(cmd), m\_target(target) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_columns_status_command_a6a4ea610984807f0650812dfedae25ad}\label{class_columns_status_command_a6a4ea610984807f0650812dfedae25ad}} 
+\index{ColumnsStatusCommand@{ColumnsStatusCommand}!execute@{execute}}
+\index{execute@{execute}!ColumnsStatusCommand@{ColumnsStatusCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Columns\+Status\+Command\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01433                           \{}
+\DoxyCodeLine{01434     \mbox{\hyperlink{class_t_column_selection}{TColumnSelection}} *selection = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_column_selection}{TColumnSelection}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{01435         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}()-\/>getSelection());}
+\DoxyCodeLine{01436     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh       = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{01437     \textcolor{keywordtype}{int} cc             = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a1e294e7cff300851d12a8c3d196943f6}{getCurrentColumn}}()-\/>getColumnIndex();}
+\DoxyCodeLine{01438     \textcolor{keywordtype}{bool} sound\_changed = \textcolor{keyword}{false};}
+\DoxyCodeLine{01439     \mbox{\hyperlink{class_t_tool}{TTool}} *tool        = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad70b447aff489792cfc3dbac7150a540}{getCurrentTool}}()-\/>getTool();}
+\DoxyCodeLine{01440     \mbox{\hyperlink{class_t_tool_1_1_viewer}{TTool::Viewer}} *viewer = tool ? tool-\/>getViewer() : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{01441     \textcolor{keywordtype}{bool} viewer\_changed   = \textcolor{keyword}{false};}
+\DoxyCodeLine{01442 }
+\DoxyCodeLine{01443     \textcolor{keywordtype}{int} startCol =}
+\DoxyCodeLine{01444         Preferences::instance()-\/>isXsheetCameraColumnVisible() ? -\/1 : 0;}
+\DoxyCodeLine{01445 }
+\DoxyCodeLine{01446     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = startCol; i < xsh-\/>\mbox{\hyperlink{class_t_xsheet_a17464dc5617cf87a46f03e1a52d36cc1}{getColumnCount}}(); i++) \{}
+\DoxyCodeLine{01447       \textcolor{comment}{/*-\/ Skip if empty column -\/*/}}
+\DoxyCodeLine{01448       \textcolor{keywordflow}{if} (i >= 0 \&\& xsh-\/>\mbox{\hyperlink{class_t_xsheet_a83aecebd1b7714017a64e2b786e91a4e}{isColumnEmpty}}(i)) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01449       \textcolor{comment}{/*-\/ Skip if column cannot be obtained -\/*/}}
+\DoxyCodeLine{01450       \mbox{\hyperlink{class_t_xsh_column}{TXshColumn}} *column = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a3e1a216c019a0ebdf73d95acac95d8d0}{getColumn}}(i);}
+\DoxyCodeLine{01451       \textcolor{keywordflow}{if} (!column) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01452       \textcolor{comment}{/*-\/ Skip if target is in selected column mode and not selected -\/*/}}
+\DoxyCodeLine{01453       \textcolor{keywordtype}{bool} isSelected = selection \&\& selection-\/>isColumnSelected(i);}
+\DoxyCodeLine{01454       \textcolor{keywordflow}{if} (m\_target == TARGET\_SELECTED \&\& !isSelected) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01455 }
+\DoxyCodeLine{01456       \textcolor{comment}{/*-\/}}
+\DoxyCodeLine{01457 \textcolor{comment}{       * Skip if target is "{}right side of current column"{} mode and i is left of}}
+\DoxyCodeLine{01458 \textcolor{comment}{       * current column}}
+\DoxyCodeLine{01459 \textcolor{comment}{       * -\/*/}}
+\DoxyCodeLine{01460       \textcolor{keywordflow}{if} (m\_target == TARGET\_UPPER \&\& i < cc) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01461 }
+\DoxyCodeLine{01462       \textcolor{keywordtype}{bool} negate = ((m\_target == TARGET\_CURRENT \&\& cc != i) ||}
+\DoxyCodeLine{01463                      (m\_target == TARGET\_OTHER \&\& cc == i) ||}
+\DoxyCodeLine{01464                      (m\_target == TARGET\_UPPER \&\& cc == i));}
+\DoxyCodeLine{01465 }
+\DoxyCodeLine{01466       \textcolor{keywordtype}{int} cmd = m\_cmd;}
+\DoxyCodeLine{01467 }
+\DoxyCodeLine{01468       \textcolor{keywordflow}{if} (cmd \& (CMD\_LOCK | CMD\_UNLOCK | CMD\_TOGGLE\_LOCK)) \{}
+\DoxyCodeLine{01469         \textcolor{keywordflow}{if} (cmd \& CMD\_LOCK)}
+\DoxyCodeLine{01470           column-\/>lock(!negate);}
+\DoxyCodeLine{01471         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (cmd \& CMD\_UNLOCK)}
+\DoxyCodeLine{01472           column-\/>lock(negate);}
+\DoxyCodeLine{01473         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01474           column-\/>lock(!column-\/>isLocked());}
+\DoxyCodeLine{01475         viewer\_changed = \textcolor{keyword}{true};}
+\DoxyCodeLine{01476       \}}
+\DoxyCodeLine{01477       \textcolor{keywordflow}{if} (cmd \&}
+\DoxyCodeLine{01478           (CMD\_ENABLE\_PREVIEW | CMD\_DISABLE\_PREVIEW | CMD\_TOGGLE\_PREVIEW)) \{}
+\DoxyCodeLine{01479         \textcolor{keywordflow}{if} (cmd \& CMD\_ENABLE\_PREVIEW)}
+\DoxyCodeLine{01480           column-\/>setPreviewVisible(!negate);}
+\DoxyCodeLine{01481         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (cmd \& CMD\_DISABLE\_PREVIEW)}
+\DoxyCodeLine{01482           column-\/>setPreviewVisible(negate);}
+\DoxyCodeLine{01483         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01484           column-\/>setPreviewVisible(!column-\/>isPreviewVisible());}
+\DoxyCodeLine{01485       \}}
+\DoxyCodeLine{01486       \textcolor{keywordflow}{if} (cmd \&}
+\DoxyCodeLine{01487           (CMD\_ENABLE\_CAMSTAND | CMD\_DISABLE\_CAMSTAND | CMD\_TOGGLE\_CAMSTAND)) \{}
+\DoxyCodeLine{01488         \textcolor{keywordflow}{if} (cmd \& CMD\_ENABLE\_CAMSTAND)}
+\DoxyCodeLine{01489           column-\/>setCamstandVisible(!negate);}
+\DoxyCodeLine{01490         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (cmd \& CMD\_DISABLE\_CAMSTAND)}
+\DoxyCodeLine{01491           column-\/>setCamstandVisible(negate);}
+\DoxyCodeLine{01492         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01493           column-\/>setCamstandVisible(!column-\/>isCamstandVisible());}
+\DoxyCodeLine{01494         \textcolor{keywordflow}{if} (column-\/>getSoundColumn()) sound\_changed = \textcolor{keyword}{true};}
+\DoxyCodeLine{01495         viewer\_changed = \textcolor{keyword}{true};}
+\DoxyCodeLine{01496       \}}
+\DoxyCodeLine{01497       \textcolor{comment}{/*TAB}}
+\DoxyCodeLine{01498 \textcolor{comment}{if(cmd \& (CMD\_ENABLE\_PREVIEW|CMD\_DISABLE\_PREVIEW|CMD\_TOGGLE\_PREVIEW))}}
+\DoxyCodeLine{01499 \textcolor{comment}{\{ //In Tab preview e cameraStand vanno settati entrambi}}
+\DoxyCodeLine{01500 \textcolor{comment}{if(cmd\&CMD\_ENABLE\_PREVIEW)}}
+\DoxyCodeLine{01501 \textcolor{comment}{\{}}
+\DoxyCodeLine{01502 \textcolor{comment}{column-\/>setPreviewVisible(!negate);}}
+\DoxyCodeLine{01503 \textcolor{comment}{column-\/>setCamstandVisible(!negate);}}
+\DoxyCodeLine{01504 \textcolor{comment}{\}}}
+\DoxyCodeLine{01505 \textcolor{comment}{else if(cmd\&CMD\_DISABLE\_PREVIEW)}}
+\DoxyCodeLine{01506 \textcolor{comment}{\{}}
+\DoxyCodeLine{01507 \textcolor{comment}{column-\/>setPreviewVisible(negate);}}
+\DoxyCodeLine{01508 \textcolor{comment}{column-\/>setCamstandVisible(negate);}}
+\DoxyCodeLine{01509 \textcolor{comment}{\}}}
+\DoxyCodeLine{01510 \textcolor{comment}{else}}
+\DoxyCodeLine{01511 \textcolor{comment}{\{}}
+\DoxyCodeLine{01512 \textcolor{comment}{column-\/>setPreviewVisible(!column-\/>isPreviewVisible());}}
+\DoxyCodeLine{01513 \textcolor{comment}{column-\/>setCamstandVisible(!column-\/>isCamstandVisible());}}
+\DoxyCodeLine{01514 \textcolor{comment}{\}}}
+\DoxyCodeLine{01515 \textcolor{comment}{\}}}
+\DoxyCodeLine{01516 \textcolor{comment}{      */}}
+\DoxyCodeLine{01517     \}}
+\DoxyCodeLine{01518     \textcolor{keywordflow}{if} (sound\_changed)}
+\DoxyCodeLine{01519       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetSoundChanged();}
+\DoxyCodeLine{01520     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{01521     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{01522     \textcolor{keywordflow}{if} (viewer \&\& viewer\_changed) viewer-\/>\mbox{\hyperlink{class_t_tool_1_1_viewer_ac9783019e219f37d1c4bc038302e3485}{invalidateToolStatus}}();}
+\DoxyCodeLine{01523   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/columncommand.\+cpp\end{DoxyCompactItemize}

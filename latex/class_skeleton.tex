@@ -1,0 +1,276 @@
+\hypertarget{class_skeleton}{}\doxysection{Skeleton Class Reference}
+\label{class_skeleton}\index{Skeleton@{Skeleton}}
+
+
+The \mbox{\hyperlink{class_skeleton}{Skeleton}} is the data structure used by the \mbox{\hyperlink{class_skeleton}{Skeleton}} Tool.  
+
+
+
+
+{\ttfamily \#include $<$skeleton.\+h$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_skeleton_1_1_bone}{Bone}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_skeleton_a59308709940f88923301d3413962fab1}{build}} (\mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$xsh, int row, int col, const std\+::set$<$ int $>$ \&temp\+Pinned\+Columns=std\+::set$<$ int $>$())
+\item 
+void \mbox{\hyperlink{class_skeleton_a3d78f173777de2ecd4bdaa3804234e56}{clear}} ()
+\begin{DoxyCompactList}\small\item\em reset the skeleton \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_skeleton_a58f7d2712a41cbe318bba73aeb111a94}{get\+Bone\+Count}} () const
+\item 
+\mbox{\hyperlink{class_skeleton_1_1_bone}{Bone}} $\ast$ \mbox{\hyperlink{class_skeleton_a264a2aa687f1812733c66a6001f88811}{get\+Bone}} (int index) const
+\item 
+\mbox{\hyperlink{class_skeleton_1_1_bone}{Bone}} $\ast$ \mbox{\hyperlink{class_skeleton_a774da19f0f3c77848dd981d2d9f63b38}{get\+Bone\+By\+Column\+Index}} (int column\+Index) const
+\item 
+\mbox{\hyperlink{class_skeleton_1_1_bone}{Bone}} $\ast$ \mbox{\hyperlink{class_skeleton_a05a444ea535b7834f4b25da24afc9764}{get\+Root\+Bone}} () const
+\begin{DoxyCompactList}\small\item\em the root is the ancestor of each bone in the skeleton \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_skeleton_a855093b6a8ddfb62de5b33c48c1e6f0a}{is\+IKEnabled}} () const
+\item 
+bool \mbox{\hyperlink{class_skeleton_a889ced33966ac3e56e72ada84a2add39}{has\+Pinned\+Ranges}} () const
+\begin{DoxyCompactList}\small\item\em Some bone has a not empty pinned range. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_skeleton_ae645b7364861e2e758d30e591046d58e}{clear\+All\+Pinned\+Ranges}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_skeleton}{Skeleton}} is the data structure used by the \mbox{\hyperlink{class_skeleton}{Skeleton}} Tool. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_skeleton_af01a02f1ce9ae4c801cd6e66ccf7407f}\label{class_skeleton_af01a02f1ce9ae4c801cd6e66ccf7407f}} 
+\index{Skeleton@{Skeleton}!Skeleton@{Skeleton}}
+\index{Skeleton@{Skeleton}!Skeleton@{Skeleton}}
+\doxysubsubsection{\texorpdfstring{Skeleton()}{Skeleton()}}
+{\footnotesize\ttfamily Skeleton\+::\+Skeleton (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039 : m\_rootBone(0) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_skeleton_aeece886a4e2f039128144f94f25efd10}\label{class_skeleton_aeece886a4e2f039128144f94f25efd10}} 
+\index{Skeleton@{Skeleton}!````~Skeleton@{$\sim$Skeleton}}
+\index{````~Skeleton@{$\sim$Skeleton}!Skeleton@{Skeleton}}
+\doxysubsubsection{\texorpdfstring{$\sim$Skeleton()}{~Skeleton()}}
+{\footnotesize\ttfamily Skeleton\+::$\sim$\+Skeleton (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00043 \{ clearPointerContainer(m\_bones); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_skeleton_a59308709940f88923301d3413962fab1}\label{class_skeleton_a59308709940f88923301d3413962fab1}} 
+\index{Skeleton@{Skeleton}!build@{build}}
+\index{build@{build}!Skeleton@{Skeleton}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily void Skeleton\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$}]{xsh,  }\item[{int}]{row,  }\item[{int}]{col,  }\item[{const std\+::set$<$ int $>$ \&}]{temp\+Pinned\+Columns = {\ttfamily std\+:\+:set$<$int$>$()} }\end{DoxyParamCaption})}
+
+create a skeleton containing \textquotesingle{}col\textquotesingle{}. temp\+Pinned\+Columns contains the column indices of the temporarily pinned bones 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055                                                            \{}
+\DoxyCodeLine{00056   \textcolor{comment}{// clear}}
+\DoxyCodeLine{00057   m\_rootBone = 0;}
+\DoxyCodeLine{00058   clearPointerContainer(m\_bones);}
+\DoxyCodeLine{00059 }
+\DoxyCodeLine{00060   \textcolor{comment}{// antenato (colonna) della colonna corrente}}
+\DoxyCodeLine{00061   \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} ancestorId = getAncestor(xsh, TStageObjectId::ColumnId(col));}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063   \textcolor{comment}{// costruisco le "{}ossa"{}}}
+\DoxyCodeLine{00064   std::map<TStageObjectId, Bone *> boneTable;}
+\DoxyCodeLine{00065   \textcolor{keywordtype}{int} columnCount = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a17464dc5617cf87a46f03e1a52d36cc1}{getColumnCount}}();}
+\DoxyCodeLine{00066   \textcolor{keywordtype}{int} pinnedCount = 0;}
+\DoxyCodeLine{00067   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < columnCount; i++) \{}
+\DoxyCodeLine{00068     \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} columnId(TStageObjectId::ColumnId(i));}
+\DoxyCodeLine{00069     \textcolor{keywordflow}{if} (getAncestor(xsh, columnId) != ancestorId) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00070 }
+\DoxyCodeLine{00071     \mbox{\hyperlink{class_t_affine}{TAffine}} aff         = xsh-\/>\mbox{\hyperlink{class_t_xsheet_abd766f516cac9898a2a952463618a9fe}{getPlacement}}(columnId, row);}
+\DoxyCodeLine{00072     \mbox{\hyperlink{class_t_point_t}{TPointD}} center      = \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}} * xsh-\/>\mbox{\hyperlink{class_t_xsheet_ad762600c9d9d3b5173fcc1e79a802793}{getCenter}}(columnId, row);}
+\DoxyCodeLine{00073     \mbox{\hyperlink{class_t_point_t}{TPointD}} p           = aff * center;}
+\DoxyCodeLine{00074     \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *obj   = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(columnId);}
+\DoxyCodeLine{00075     Bone *bone          = \textcolor{keyword}{new} Bone(obj, p);}
+\DoxyCodeLine{00076     boneTable[columnId] = bone;}
+\DoxyCodeLine{00077     m\_bones.push\_back(bone);}
+\DoxyCodeLine{00078     \textcolor{keywordflow}{if} (columnId == ancestorId) m\_rootBone = bone;}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080     \textcolor{keywordflow}{if} (obj-\/>getPinnedRangeSet()-\/>isPinned(row)) \{}
+\DoxyCodeLine{00081       pinnedCount++;}
+\DoxyCodeLine{00082       bone-\/>setPinnedStatus(Bone::PINNED);}
+\DoxyCodeLine{00083     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tempPinnedColumns.count(i) > 0)}
+\DoxyCodeLine{00084       bone-\/>setPinnedStatus(Bone::TEMP\_PINNED);}
+\DoxyCodeLine{00085   \}}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087   \textcolor{comment}{// if no bone is pinned then the root is considered pinned}}
+\DoxyCodeLine{00088   \textcolor{keywordflow}{if} (pinnedCount == 0 \&\& m\_rootBone) m\_rootBone-\/>setPinnedStatus(Bone::PINNED);}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090   \textcolor{comment}{// The skeleton could possibly be empty}}
+\DoxyCodeLine{00091   \textcolor{keywordflow}{if} (boneTable.empty()) \{}
+\DoxyCodeLine{00092     assert(!m\_rootBone);}
+\DoxyCodeLine{00093     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00094   \}}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096   \textcolor{comment}{// assign parents}}
+\DoxyCodeLine{00097   std::map<TStageObjectId, Bone *>::iterator it, sit;}
+\DoxyCodeLine{00098   \textcolor{keywordflow}{for} (it = boneTable.begin(); it != boneTable.end(); ++it) \{}
+\DoxyCodeLine{00099     sit = boneTable.find(xsh-\/>\mbox{\hyperlink{class_t_xsheet_a0a27744ce52cae25ec261a853a554cd1}{getStageObjectParent}}(it-\/>first));}
+\DoxyCodeLine{00100     \textcolor{keywordflow}{if} (sit != boneTable.end()) it-\/>second-\/>setParent(sit-\/>second);}
+\DoxyCodeLine{00101   \}}
+\DoxyCodeLine{00102 }
+\DoxyCodeLine{00103   \textcolor{comment}{// select the "{}active chain"{}, i.e. the starting bone (columnIndex=col) and the}}
+\DoxyCodeLine{00104   \textcolor{comment}{// ancestors}}
+\DoxyCodeLine{00105   it = boneTable.find(TStageObjectId::ColumnId(col));}
+\DoxyCodeLine{00106   \textcolor{keywordflow}{if} (it != boneTable.end()) \{}
+\DoxyCodeLine{00107     Bone *bone = it-\/>second;}
+\DoxyCodeLine{00108     \textcolor{keywordflow}{while} (bone) \{}
+\DoxyCodeLine{00109       bone-\/>select();}
+\DoxyCodeLine{00110       bone = bone-\/>getParent();}
+\DoxyCodeLine{00111     \}}
+\DoxyCodeLine{00112   \}}
+\DoxyCodeLine{00113 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00583}{TXsheet\+::get\+Center()}}, \mbox{\hyperlink{l01425}{TXsheet\+::get\+Column\+Count()}}, \mbox{\hyperlink{l00555}{TXsheet\+::get\+Placement()}}, \mbox{\hyperlink{l00542}{TXsheet\+::get\+Stage\+Object()}}, \mbox{\hyperlink{l00598}{TXsheet\+::get\+Stage\+Object\+Parent()}}, and \mbox{\hyperlink{l00037}{Stage\+::inch}}.
+
+\mbox{\Hypertarget{class_skeleton_a3d78f173777de2ecd4bdaa3804234e56}\label{class_skeleton_a3d78f173777de2ecd4bdaa3804234e56}} 
+\index{Skeleton@{Skeleton}!clear@{clear}}
+\index{clear@{clear}!Skeleton@{Skeleton}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void Skeleton\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+reset the skeleton 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00047                      \{}
+\DoxyCodeLine{00048   clearPointerContainer(m\_bones);}
+\DoxyCodeLine{00049   m\_rootBone = 0;}
+\DoxyCodeLine{00050 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_skeleton_ae645b7364861e2e758d30e591046d58e}\label{class_skeleton_ae645b7364861e2e758d30e591046d58e}} 
+\index{Skeleton@{Skeleton}!clearAllPinnedRanges@{clearAllPinnedRanges}}
+\index{clearAllPinnedRanges@{clearAllPinnedRanges}!Skeleton@{Skeleton}}
+\doxysubsubsection{\texorpdfstring{clearAllPinnedRanges()}{clearAllPinnedRanges()}}
+{\footnotesize\ttfamily void Skeleton\+::clear\+All\+Pinned\+Ranges (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00149                                     \{}
+\DoxyCodeLine{00150   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < getBoneCount(); i++) \{}
+\DoxyCodeLine{00151     \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *obj = getBone(i)-\/>getStageObject();}
+\DoxyCodeLine{00152     obj-\/>getPinnedRangeSet()-\/>removeAllRanges();}
+\DoxyCodeLine{00153     obj-\/>\mbox{\hyperlink{class_t_stage_object_add34b90eaaa8ff75b9ed098c4d9bec27}{invalidate}}();}
+\DoxyCodeLine{00154   \}}
+\DoxyCodeLine{00155 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_skeleton_a264a2aa687f1812733c66a6001f88811}\label{class_skeleton_a264a2aa687f1812733c66a6001f88811}} 
+\index{Skeleton@{Skeleton}!getBone@{getBone}}
+\index{getBone@{getBone}!Skeleton@{Skeleton}}
+\doxysubsubsection{\texorpdfstring{getBone()}{getBone()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_skeleton_1_1_bone}{Skeleton\+::\+Bone}} $\ast$ Skeleton\+::get\+Bone (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00117                                                \{}
+\DoxyCodeLine{00118   assert(0 <= index \&\& index < (\textcolor{keywordtype}{int})m\_bones.size());}
+\DoxyCodeLine{00119   \textcolor{keywordflow}{return} m\_bones[index];}
+\DoxyCodeLine{00120 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_skeleton_a774da19f0f3c77848dd981d2d9f63b38}\label{class_skeleton_a774da19f0f3c77848dd981d2d9f63b38}} 
+\index{Skeleton@{Skeleton}!getBoneByColumnIndex@{getBoneByColumnIndex}}
+\index{getBoneByColumnIndex@{getBoneByColumnIndex}!Skeleton@{Skeleton}}
+\doxysubsubsection{\texorpdfstring{getBoneByColumnIndex()}{getBoneByColumnIndex()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_skeleton_1_1_bone}{Skeleton\+::\+Bone}} $\ast$ Skeleton\+::get\+Bone\+By\+Column\+Index (\begin{DoxyParamCaption}\item[{int}]{column\+Index }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00124                                                                   \{}
+\DoxyCodeLine{00125   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_bones.size(); i++)}
+\DoxyCodeLine{00126     \textcolor{keywordflow}{if} (m\_bones[i]-\/>getColumnIndex() == columnIndex) \textcolor{keywordflow}{return} m\_bones[i];}
+\DoxyCodeLine{00127   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00128 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_skeleton_a58f7d2712a41cbe318bba73aeb111a94}\label{class_skeleton_a58f7d2712a41cbe318bba73aeb111a94}} 
+\index{Skeleton@{Skeleton}!getBoneCount@{getBoneCount}}
+\index{getBoneCount@{getBoneCount}!Skeleton@{Skeleton}}
+\doxysubsubsection{\texorpdfstring{getBoneCount()}{getBoneCount()}}
+{\footnotesize\ttfamily int Skeleton\+::get\+Bone\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086 \{ \textcolor{keywordflow}{return} m\_bones.size(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_skeleton_a05a444ea535b7834f4b25da24afc9764}\label{class_skeleton_a05a444ea535b7834f4b25da24afc9764}} 
+\index{Skeleton@{Skeleton}!getRootBone@{getRootBone}}
+\index{getRootBone@{getRootBone}!Skeleton@{Skeleton}}
+\doxysubsubsection{\texorpdfstring{getRootBone()}{getRootBone()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_skeleton_1_1_bone}{Bone}} $\ast$ Skeleton\+::get\+Root\+Bone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+the root is the ancestor of each bone in the skeleton 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00091 \{ \textcolor{keywordflow}{return} m\_rootBone; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_skeleton_a889ced33966ac3e56e72ada84a2add39}\label{class_skeleton_a889ced33966ac3e56e72ada84a2add39}} 
+\index{Skeleton@{Skeleton}!hasPinnedRanges@{hasPinnedRanges}}
+\index{hasPinnedRanges@{hasPinnedRanges}!Skeleton@{Skeleton}}
+\doxysubsubsection{\texorpdfstring{hasPinnedRanges()}{hasPinnedRanges()}}
+{\footnotesize\ttfamily bool Skeleton\+::has\+Pinned\+Ranges (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Some bone has a not empty pinned range. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00139                                      \{}
+\DoxyCodeLine{00140   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < getBoneCount(); i++) \{}
+\DoxyCodeLine{00141     \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *obj = getBone(i)-\/>getStageObject();}
+\DoxyCodeLine{00142     \textcolor{keywordflow}{if} (obj-\/>getPinnedRangeSet()-\/>getRangeCount() > 0) \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00143   \}}
+\DoxyCodeLine{00144   \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00145 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_skeleton_a855093b6a8ddfb62de5b33c48c1e6f0a}\label{class_skeleton_a855093b6a8ddfb62de5b33c48c1e6f0a}} 
+\index{Skeleton@{Skeleton}!isIKEnabled@{isIKEnabled}}
+\index{isIKEnabled@{isIKEnabled}!Skeleton@{Skeleton}}
+\doxysubsubsection{\texorpdfstring{isIKEnabled()}{isIKEnabled()}}
+{\footnotesize\ttfamily bool Skeleton\+::is\+IKEnabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+helper functions. see \mbox{\hyperlink{class_t_pinned_range_set}{TPinned\+Range\+Set}} the root status is \mbox{\hyperlink{class_t_stage_object_a4c228002778d80aa07ed34abde5dec84a7e9784777840246d5ed3b4aba27c7d26}{TStage\+Object\+::\+IK}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00132                                  \{}
+\DoxyCodeLine{00133   \textcolor{keywordflow}{return} m\_rootBone \&\&}
+\DoxyCodeLine{00134          m\_rootBone-\/>getStageObject()-\/>\mbox{\hyperlink{class_t_stage_object_a07637c4e2334bf60a17404b817c4a1ce}{getStatus}}() == \mbox{\hyperlink{class_t_stage_object_a4c228002778d80aa07ed34abde5dec84a7e9784777840246d5ed3b4aba27c7d26}{TStageObject::IK}};}
+\DoxyCodeLine{00135 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00235}{TStage\+Object\+::get\+Status()}}, and \mbox{\hyperlink{l00112}{TStage\+Object\+::\+IK}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/skeleton.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/skeleton.\+cpp\end{DoxyCompactItemize}

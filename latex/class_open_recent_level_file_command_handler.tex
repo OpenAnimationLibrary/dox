@@ -1,0 +1,68 @@
+\hypertarget{class_open_recent_level_file_command_handler}{}\doxysection{Open\+Recent\+Level\+File\+Command\+Handler Class Reference}
+\label{class_open_recent_level_file_command_handler}\index{OpenRecentLevelFileCommandHandler@{OpenRecentLevelFileCommandHandler}}
+Inheritance diagram for Open\+Recent\+Level\+File\+Command\+Handler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_open_recent_level_file_command_handler}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_open_recent_level_file_command_handler_a77119b98119c930ceb462bc2b5ed2cae}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_open_recent_level_file_command_handler_a17716b5a93fa031e160af4555b6dc479}\label{class_open_recent_level_file_command_handler_a17716b5a93fa031e160af4555b6dc479}} 
+\index{OpenRecentLevelFileCommandHandler@{OpenRecentLevelFileCommandHandler}!OpenRecentLevelFileCommandHandler@{OpenRecentLevelFileCommandHandler}}
+\index{OpenRecentLevelFileCommandHandler@{OpenRecentLevelFileCommandHandler}!OpenRecentLevelFileCommandHandler@{OpenRecentLevelFileCommandHandler}}
+\doxysubsubsection{\texorpdfstring{OpenRecentLevelFileCommandHandler()}{OpenRecentLevelFileCommandHandler()}}
+{\footnotesize\ttfamily Open\+Recent\+Level\+File\+Command\+Handler\+::\+Open\+Recent\+Level\+File\+Command\+Handler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02944 : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(MI\_OpenRecentLevel) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_open_recent_level_file_command_handler_a77119b98119c930ceb462bc2b5ed2cae}\label{class_open_recent_level_file_command_handler_a77119b98119c930ceb462bc2b5ed2cae}} 
+\index{OpenRecentLevelFileCommandHandler@{OpenRecentLevelFileCommandHandler}!execute@{execute}}
+\index{execute@{execute}!OpenRecentLevelFileCommandHandler@{OpenRecentLevelFileCommandHandler}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Open\+Recent\+Level\+File\+Command\+Handler\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02945                           \{}
+\DoxyCodeLine{02946     QAction *act = CommandManager::instance()-\/>getAction(MI\_OpenRecentLevel);}
+\DoxyCodeLine{02947     \mbox{\hyperlink{class_d_v_menu_action}{DVMenuAction}} *menu = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_d_v_menu_action}{DVMenuAction}} *\textcolor{keyword}{>}(act-\/>menu());}
+\DoxyCodeLine{02948     \textcolor{keywordtype}{int} index          = menu-\/>getTriggeredActionIndex();}
+\DoxyCodeLine{02949     QString path =}
+\DoxyCodeLine{02950         RecentFiles::instance()-\/>getFilePath(index, RecentFiles::Level);}
+\DoxyCodeLine{02951     \mbox{\hyperlink{struct_io_cmd_1_1_load_resource_arguments}{IoCmd::LoadResourceArguments}} args(\mbox{\hyperlink{class_t_file_path}{TFilePath}}(path.toStdWString()));}
+\DoxyCodeLine{02952     \mbox{\hyperlink{namespace_io_cmd_a107f6d3100b922e0c09e9b4aa1a8602a}{IoCmd::loadResources}}(args, \textcolor{keyword}{false});}
+\DoxyCodeLine{02953 }
+\DoxyCodeLine{02954     RecentFiles::instance()-\/>moveFilePath(index, 0, RecentFiles::Level);}
+\DoxyCodeLine{02955     \textcolor{keywordflow}{if} (args.loadedLevels.empty()) \{}
+\DoxyCodeLine{02956       QString msg;}
+\DoxyCodeLine{02957       msg = QObject::tr(\textcolor{stringliteral}{"{}It is not possible to load the \%1 level."{}}).arg(path);}
+\DoxyCodeLine{02958       DVGui::error(msg);}
+\DoxyCodeLine{02959     \}}
+\DoxyCodeLine{02960   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/iocommand.\+cpp\end{DoxyCompactItemize}

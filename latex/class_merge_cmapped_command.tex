@@ -1,0 +1,128 @@
+\hypertarget{class_merge_cmapped_command}{}\doxysection{Merge\+Cmapped\+Command Class Reference}
+\label{class_merge_cmapped_command}\index{MergeCmappedCommand@{MergeCmappedCommand}}
+Inheritance diagram for Merge\+Cmapped\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_merge_cmapped_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_merge_cmapped_command_a8f975deb31ae13f6db8c0a5588fc89ff}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_merge_cmapped_command_a77c2808a9e2bb80dde3566d1fb7a667d}\label{class_merge_cmapped_command_a77c2808a9e2bb80dde3566d1fb7a667d}} 
+\index{MergeCmappedCommand@{MergeCmappedCommand}!MergeCmappedCommand@{MergeCmappedCommand}}
+\index{MergeCmappedCommand@{MergeCmappedCommand}!MergeCmappedCommand@{MergeCmappedCommand}}
+\doxysubsubsection{\texorpdfstring{MergeCmappedCommand()}{MergeCmappedCommand()}}
+{\footnotesize\ttfamily Merge\+Cmapped\+Command\+::\+Merge\+Cmapped\+Command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00445 : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(MI\_MergeCmapped) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_merge_cmapped_command_a8f975deb31ae13f6db8c0a5588fc89ff}\label{class_merge_cmapped_command_a8f975deb31ae13f6db8c0a5588fc89ff}} 
+\index{MergeCmappedCommand@{MergeCmappedCommand}!execute@{execute}}
+\index{execute@{execute}!MergeCmappedCommand@{MergeCmappedCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Merge\+Cmapped\+Command\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00446                           \{}
+\DoxyCodeLine{00447     \mbox{\hyperlink{class_t_column_selection}{TColumnSelection}} *selection =}
+\DoxyCodeLine{00448         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_column_selection}{TColumnSelection}} *\textcolor{keyword}{>}(TSelection::getCurrent());}
+\DoxyCodeLine{00449     \textcolor{keywordflow}{if} (!selection) \{}
+\DoxyCodeLine{00450       DVGui::warning(QObject::tr(}
+\DoxyCodeLine{00451           \textcolor{stringliteral}{"{}It is not possible to merge tlv columns because no column was "{}}}
+\DoxyCodeLine{00452           \textcolor{stringliteral}{"{}selected."{}}));}
+\DoxyCodeLine{00453       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00454     \}}
+\DoxyCodeLine{00455 }
+\DoxyCodeLine{00456     std::set<int> indices = selection-\/>getIndices();}
+\DoxyCodeLine{00457 }
+\DoxyCodeLine{00458     \textcolor{keywordflow}{if} (indices.size() < 2) \{}
+\DoxyCodeLine{00459       DVGui::warning(QObject::tr(}
+\DoxyCodeLine{00460           \textcolor{stringliteral}{"{}It is not possible to merge tlv columns because at least two "{}}}
+\DoxyCodeLine{00461           \textcolor{stringliteral}{"{}columns have to be selected."{}}));}
+\DoxyCodeLine{00462       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00463     \}}
+\DoxyCodeLine{00464 }
+\DoxyCodeLine{00465     std::set<int>::iterator it = indices.begin();}
+\DoxyCodeLine{00466     \textcolor{keywordtype}{int} destColumn             = *it;}
+\DoxyCodeLine{00467 }
+\DoxyCodeLine{00468     \mbox{\hyperlink{class_t_cell_selection_1_1_range}{TCellSelection::Range}} cells;}
+\DoxyCodeLine{00469     cells.m\_c0 = cells.m\_c1 = destColumn;}
+\DoxyCodeLine{00470     \mbox{\hyperlink{class_t_xsh_column}{TXshColumn}} *column =}
+\DoxyCodeLine{00471         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet()-\/>\mbox{\hyperlink{class_t_xsheet_a3e1a216c019a0ebdf73d95acac95d8d0}{getColumn}}(}
+\DoxyCodeLine{00472             destColumn);}
+\DoxyCodeLine{00473     column-\/>getRange(cells.m\_r0, cells.m\_r1);}
+\DoxyCodeLine{00474 }
+\DoxyCodeLine{00475     \textcolor{comment}{// column-\/>getLevelColumn()}}
+\DoxyCodeLine{00476 }
+\DoxyCodeLine{00477     \mbox{\hyperlink{class_t_file_path}{TFilePath}} newLevelPath;}
+\DoxyCodeLine{00478     \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} c = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet()-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(}
+\DoxyCodeLine{00479         cells.m\_r0, destColumn);}
+\DoxyCodeLine{00480     \textcolor{keywordflow}{if} (!c.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}() \&\& c.\mbox{\hyperlink{class_t_xsh_cell_a8898cc47eba24e59477bfba8e2511f1d}{getSimpleLevel}}())}
+\DoxyCodeLine{00481       newLevelPath = c.\mbox{\hyperlink{class_t_xsh_cell_a8898cc47eba24e59477bfba8e2511f1d}{getSimpleLevel}}()-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a668293d53a70cca8811db28d87011c55}{getPath}}();}
+\DoxyCodeLine{00482 }
+\DoxyCodeLine{00483     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_merge_cmapped_dialog}{MergeCmappedDialog}}(newLevelPath).exec() != QDialog::Accepted) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00484 }
+\DoxyCodeLine{00485     it = indices.begin();}
+\DoxyCodeLine{00486     \textcolor{keywordflow}{for} (; it != indices.end(); ++it)}
+\DoxyCodeLine{00487       \textcolor{keywordflow}{if} (!checkColumnValidity(*it)) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00488 }
+\DoxyCodeLine{00489     \mbox{\hyperlink{class_d_v_gui_1_1_progress_dialog}{DVGui::ProgressDialog}} progress(QObject::tr(\textcolor{stringliteral}{"{}Merging Tlv Levels..."{}}),}
+\DoxyCodeLine{00490                                    QString(), 0, indices.size() -\/ 1,}
+\DoxyCodeLine{00491                                    \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_aa229713538a33215a03db85064ef4012}{getMainWindow}}());}
+\DoxyCodeLine{00492     progress.setWindowModality(Qt::WindowModal);}
+\DoxyCodeLine{00493     progress.setWindowTitle(QObject::tr(\textcolor{stringliteral}{"{}Merging Tlv Levels..."{}}));}
+\DoxyCodeLine{00494     progress.setValue(0);}
+\DoxyCodeLine{00495     progress.show();}
+\DoxyCodeLine{00496 }
+\DoxyCodeLine{00497     QCoreApplication::instance()-\/>processEvents();}
+\DoxyCodeLine{00498 }
+\DoxyCodeLine{00499     TUndoManager::manager()-\/>beginBlock();}
+\DoxyCodeLine{00500 }
+\DoxyCodeLine{00501     cloneColumn(cells, newLevelPath);}
+\DoxyCodeLine{00502 }
+\DoxyCodeLine{00503     \mbox{\hyperlink{class_t_file_path}{TFilePath}} tmpPath = newLevelPath.\mbox{\hyperlink{class_t_file_path_a3ebf9ced558cfef97a60bba536b23c6f}{withName}}(}
+\DoxyCodeLine{00504         QString::fromStdString(newLevelPath.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}() + \textcolor{stringliteral}{"{}\_tmp"{}}).toStdWString());}
+\DoxyCodeLine{00505 }
+\DoxyCodeLine{00506     it = indices.begin();}
+\DoxyCodeLine{00507     ++it;}
+\DoxyCodeLine{00508     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} count = 0; it != indices.end();) \{}
+\DoxyCodeLine{00509       \textcolor{keywordtype}{int} index = *it;}
+\DoxyCodeLine{00510       it++;}
+\DoxyCodeLine{00511       mergeCmapped(destColumn, index -\/ count,}
+\DoxyCodeLine{00512                    it == indices.end() ? newLevelPath.getQString()}
+\DoxyCodeLine{00513                                        : tmpPath.getQString(),}
+\DoxyCodeLine{00514                    \textcolor{keyword}{false});}
+\DoxyCodeLine{00515       ColumnCmd::deleteColumn(index -\/ count);}
+\DoxyCodeLine{00516       progress.setValue(++count);}
+\DoxyCodeLine{00517       QCoreApplication::instance()-\/>processEvents();}
+\DoxyCodeLine{00518     \}}
+\DoxyCodeLine{00519     TUndoManager::manager()-\/>endBlock();}
+\DoxyCodeLine{00520     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00521   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/matchlinecommand.\+cpp\end{DoxyCompactItemize}

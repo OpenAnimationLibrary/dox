@@ -1,0 +1,191 @@
+\hypertarget{class_channel_histo_graph}{}\doxysection{Channel\+Histo\+Graph Class Reference}
+\label{class_channel_histo_graph}\index{ChannelHistoGraph@{ChannelHistoGraph}}
+Inheritance diagram for Channel\+Histo\+Graph\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_channel_histo_graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_channel_histo_graph_ab0f5377dc8b290c0d322770b8108a026}{Channel\+Histo\+Graph}} (int index, QWidget $\ast$parent=nullptr, bool $\ast$show\+Compare\+Ptr=nullptr)
+\item 
+virtual void \mbox{\hyperlink{class_channel_histo_graph_a454cd81f039d99130378b17cbdd722c9}{set\+Values}} (int $\ast$buf, bool is\+Comp)
+\item 
+void \mbox{\hyperlink{class_channel_histo_graph_a87d8728ee49bdf1efbafb6eecd9573af}{show\+Current\+Channel\+Value}} (int val)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool $\ast$ \mbox{\hyperlink{class_channel_histo_graph_a8bb3839e6bed0c6b917d670c785117c3}{m\+\_\+show\+Compare\+Ptr}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_channel_histo_graph_af78b0851246990c2e072ab0e208d3c27}{paint\+Event}} (QPaint\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_channel_histo_graph_ab0f5377dc8b290c0d322770b8108a026}\label{class_channel_histo_graph_ab0f5377dc8b290c0d322770b8108a026}} 
+\index{ChannelHistoGraph@{ChannelHistoGraph}!ChannelHistoGraph@{ChannelHistoGraph}}
+\index{ChannelHistoGraph@{ChannelHistoGraph}!ChannelHistoGraph@{ChannelHistoGraph}}
+\doxysubsubsection{\texorpdfstring{ChannelHistoGraph()}{ChannelHistoGraph()}}
+{\footnotesize\ttfamily Channel\+Histo\+Graph\+::\+Channel\+Histo\+Graph (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{QWidget $\ast$}]{parent = {\ttfamily nullptr},  }\item[{bool $\ast$}]{show\+Compare\+Ptr = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040     : QWidget(parent)}
+\DoxyCodeLine{00041     , m\_showComparePtr(showComparePtr)}
+\DoxyCodeLine{00042     , m\_channelIndex(index)}
+\DoxyCodeLine{00043     , m\_pickedValue(-\/1) \{}
+\DoxyCodeLine{00044   \textcolor{comment}{// width 256+2 pixels, height 100+2 pixels (with margin)}}
+\DoxyCodeLine{00045   setFixedSize(COMBOHIST\_RESOLUTION\_W + 2, COMBOHIST\_RESOLUTION\_H + 2);}
+\DoxyCodeLine{00046   m\_values[0].reserve(COMBOHIST\_RESOLUTION\_W);}
+\DoxyCodeLine{00047   m\_values[1].reserve(COMBOHIST\_RESOLUTION\_W);}
+\DoxyCodeLine{00048 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_channel_histo_graph_a43f74f751156bddbfc62128e03f9c5e0}\label{class_channel_histo_graph_a43f74f751156bddbfc62128e03f9c5e0}} 
+\index{ChannelHistoGraph@{ChannelHistoGraph}!````~ChannelHistoGraph@{$\sim$ChannelHistoGraph}}
+\index{````~ChannelHistoGraph@{$\sim$ChannelHistoGraph}!ChannelHistoGraph@{ChannelHistoGraph}}
+\doxysubsubsection{\texorpdfstring{$\sim$ChannelHistoGraph()}{~ChannelHistoGraph()}}
+{\footnotesize\ttfamily Channel\+Histo\+Graph\+::$\sim$\+Channel\+Histo\+Graph (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052                                       \{}
+\DoxyCodeLine{00053   m\_values[0].clear();}
+\DoxyCodeLine{00054   m\_values[1].clear();}
+\DoxyCodeLine{00055 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_channel_histo_graph_af78b0851246990c2e072ab0e208d3c27}\label{class_channel_histo_graph_af78b0851246990c2e072ab0e208d3c27}} 
+\index{ChannelHistoGraph@{ChannelHistoGraph}!paintEvent@{paintEvent}}
+\index{paintEvent@{paintEvent}!ChannelHistoGraph@{ChannelHistoGraph}}
+\doxysubsubsection{\texorpdfstring{paintEvent()}{paintEvent()}}
+{\footnotesize\ttfamily void Channel\+Histo\+Graph\+::paint\+Event (\begin{DoxyParamCaption}\item[{QPaint\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00081                                                      \{}
+\DoxyCodeLine{00082   QPainter p(\textcolor{keyword}{this});}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084   p.setPen(QColor(144, 144, 144));}
+\DoxyCodeLine{00085   p.setBrush(QColor(214, 214, 214));}
+\DoxyCodeLine{00086   p.drawRect(rect().x(), rect().y(), rect().width() -\/ 1, rect().height() -\/ 1);}
+\DoxyCodeLine{00087   p.setBrush(Qt::NoBrush);}
+\DoxyCodeLine{00088 }
+\DoxyCodeLine{00089   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091   \textcolor{comment}{// draw scale marks}}
+\DoxyCodeLine{00092   p.setPen(QColor(144, 144, 144));}
+\DoxyCodeLine{00093   \textcolor{keywordflow}{for} (i = 1; i < 10; i++) \{}
+\DoxyCodeLine{00094     \textcolor{keywordtype}{int} posx = rect().width() * i / 10;}
+\DoxyCodeLine{00095     p.drawLine(posx, 1, posx, COMBOHIST\_RESOLUTION\_H);}
+\DoxyCodeLine{00096   \}}
+\DoxyCodeLine{00097 }
+\DoxyCodeLine{00098   QColor compColor = (m\_channelIndex == 0)}
+\DoxyCodeLine{00099                          ? Qt::red}
+\DoxyCodeLine{00100                          : (m\_channelIndex == 1)}
+\DoxyCodeLine{00101                                ? Qt::green}
+\DoxyCodeLine{00102                                : (m\_channelIndex == 2) ? Qt::blue : Qt::magenta;}
+\DoxyCodeLine{00103   compColor.setAlpha(120);}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105   \textcolor{keywordtype}{int} maxValue = m\_maxValue[0];}
+\DoxyCodeLine{00106   \textcolor{keywordflow}{if} (!m\_values[1].isEmpty() \&\& m\_showComparePtr \&\& *m\_showComparePtr \&\&}
+\DoxyCodeLine{00107       m\_maxValue[0] < m\_maxValue[1])}
+\DoxyCodeLine{00108     maxValue = m\_maxValue[1];}
+\DoxyCodeLine{00109 }
+\DoxyCodeLine{00110   p.translate(0, COMBOHIST\_RESOLUTION\_H);}
+\DoxyCodeLine{00111   p.scale(1.0, -\/(\textcolor{keywordtype}{double})COMBOHIST\_RESOLUTION\_H / (double)maxValue);}
+\DoxyCodeLine{00112 }
+\DoxyCodeLine{00113   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} \textcolor{keywordtype}{id} = 0; \textcolor{keywordtype}{id} < 2; \textcolor{keywordtype}{id}++) \{}
+\DoxyCodeLine{00114     \textcolor{keywordflow}{if} (m\_values[\textcolor{keywordtype}{id}].isEmpty()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00115     \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id} == 1 \&\& (!m\_showComparePtr || !(*m\_showComparePtr))) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00116 }
+\DoxyCodeLine{00117     p.setPen((\textcolor{keywordtype}{id} == 0) ? Qt::black : compColor);}
+\DoxyCodeLine{00118 }
+\DoxyCodeLine{00119     \textcolor{comment}{// draw each histogram}}
+\DoxyCodeLine{00120     \textcolor{keywordflow}{for} (i = 0; i < COMBOHIST\_RESOLUTION\_W; i++) \{}
+\DoxyCodeLine{00121       \textcolor{keywordtype}{int} v = m\_values[id][i];}
+\DoxyCodeLine{00122       \textcolor{keywordflow}{if} (v <= 0) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00123       \textcolor{keywordtype}{int} x = 1 + i;}
+\DoxyCodeLine{00124       p.drawLine(x, 0, x, v);}
+\DoxyCodeLine{00125     \}}
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127     \textcolor{comment}{// draw picked color's channel value}}
+\DoxyCodeLine{00128     \textcolor{keywordflow}{if} (m\_pickedValue > -\/1) \{}
+\DoxyCodeLine{00129       p.setPen(Qt::white);}
+\DoxyCodeLine{00130       \textcolor{keywordtype}{int} x = 1 + m\_pickedValue;}
+\DoxyCodeLine{00131       p.drawLine(x, 1, x, maxValue);}
+\DoxyCodeLine{00132     \}}
+\DoxyCodeLine{00133   \}}
+\DoxyCodeLine{00134 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_channel_histo_graph_a454cd81f039d99130378b17cbdd722c9}\label{class_channel_histo_graph_a454cd81f039d99130378b17cbdd722c9}} 
+\index{ChannelHistoGraph@{ChannelHistoGraph}!setValues@{setValues}}
+\index{setValues@{setValues}!ChannelHistoGraph@{ChannelHistoGraph}}
+\doxysubsubsection{\texorpdfstring{setValues()}{setValues()}}
+{\footnotesize\ttfamily void Channel\+Histo\+Graph\+::set\+Values (\begin{DoxyParamCaption}\item[{int $\ast$}]{buf,  }\item[{bool}]{is\+Comp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059                                                        \{}
+\DoxyCodeLine{00060   \textcolor{keywordtype}{int} \textcolor{keywordtype}{id} = (isComp) ? 1 : 0;}
+\DoxyCodeLine{00061   m\_values[id].clear();}
+\DoxyCodeLine{00062   m\_values[id].resize(COMBOHIST\_RESOLUTION\_W);}
+\DoxyCodeLine{00063   m\_maxValue[id] = 1;}
+\DoxyCodeLine{00064   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00065   \textcolor{comment}{// normalize with the maximum value}}
+\DoxyCodeLine{00066   \textcolor{keywordtype}{int} maxValue = 1;}
+\DoxyCodeLine{00067   \textcolor{keywordflow}{for} (i = 0; i < COMBOHIST\_RESOLUTION\_W; i++) \{}
+\DoxyCodeLine{00068     m\_values[id][i] = buf[i];}
+\DoxyCodeLine{00069     \textcolor{keywordflow}{if} (m\_maxValue[\textcolor{keywordtype}{id}] < buf[i]) m\_maxValue[id] = buf[i];}
+\DoxyCodeLine{00070   \}}
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00072   \textcolor{comment}{// for (i = 0; i < COMBOHIST\_RESOLUTION\_W; i++) \{}}
+\DoxyCodeLine{00073   \textcolor{comment}{//  int v = buf[i];}}
+\DoxyCodeLine{00074   \textcolor{comment}{//  m\_values[id][i] =}}
+\DoxyCodeLine{00075   \textcolor{comment}{//      tround((double)(v * COMBOHIST\_RESOLUTION\_H) / (double)maxValue);}}
+\DoxyCodeLine{00076   \textcolor{comment}{//\}}}
+\DoxyCodeLine{00077 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_channel_histo_graph_a87d8728ee49bdf1efbafb6eecd9573af}\label{class_channel_histo_graph_a87d8728ee49bdf1efbafb6eecd9573af}} 
+\index{ChannelHistoGraph@{ChannelHistoGraph}!showCurrentChannelValue@{showCurrentChannelValue}}
+\index{showCurrentChannelValue@{showCurrentChannelValue}!ChannelHistoGraph@{ChannelHistoGraph}}
+\doxysubsubsection{\texorpdfstring{showCurrentChannelValue()}{showCurrentChannelValue()}}
+{\footnotesize\ttfamily void Channel\+Histo\+Graph\+::show\+Current\+Channel\+Value (\begin{DoxyParamCaption}\item[{int}]{val }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00138                                                        \{}
+\DoxyCodeLine{00139   m\_pickedValue = val;}
+\DoxyCodeLine{00140   update();}
+\DoxyCodeLine{00141 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_channel_histo_graph_a8bb3839e6bed0c6b917d670c785117c3}\label{class_channel_histo_graph_a8bb3839e6bed0c6b917d670c785117c3}} 
+\index{ChannelHistoGraph@{ChannelHistoGraph}!m\_showComparePtr@{m\_showComparePtr}}
+\index{m\_showComparePtr@{m\_showComparePtr}!ChannelHistoGraph@{ChannelHistoGraph}}
+\doxysubsubsection{\texorpdfstring{m\_showComparePtr}{m\_showComparePtr}}
+{\footnotesize\ttfamily bool$\ast$ Channel\+Histo\+Graph\+::m\+\_\+show\+Compare\+Ptr}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/combohistogram.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/combohistogram.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,188 @@
+\hypertarget{class_tool_option_combo}{}\doxysection{Tool\+Option\+Combo Class Reference}
+\label{class_tool_option_combo}\index{ToolOptionCombo@{ToolOptionCombo}}
+Inheritance diagram for Tool\+Option\+Combo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_tool_option_combo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_tool_option_combo_ac19b79869c11a3b756fd4e503e75e2f4}{reload\+Combo\+Box\+List}} (std\+::string)
+\item 
+void \mbox{\hyperlink{class_tool_option_combo_abc8461ab2f856dbc5c03270cebc8cabc}{load\+Entries}} ()
+\item 
+void \mbox{\hyperlink{class_tool_option_combo_af6b548107c2424dc99bef40629bbe577}{on\+Activated}} (int)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_tool_option_combo_ab3f0af8951df88b6810f22cc51cb00f3}{Tool\+Option\+Combo}} (\mbox{\hyperlink{class_t_tool}{TTool}} $\ast$tool, \mbox{\hyperlink{class_t_enum_property}{TEnum\+Property}} $\ast$property, \mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$tool\+Handle=0)
+\item 
+void \mbox{\hyperlink{class_tool_option_combo_a9262c927c45db26d901fc3f4f7138c56}{update\+Status}} () override
+\item 
+\mbox{\hyperlink{class_t_enum_property}{TEnum\+Property}} $\ast$ \mbox{\hyperlink{class_tool_option_combo_a6ff192ed6eb1d09fe0b6c7ebaf85bc1f}{get\+Property}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_enum_property}{TEnum\+Property}} $\ast$ \mbox{\hyperlink{class_tool_option_combo_ab277f1757e4c3c20ee707b514820b687}{m\+\_\+property}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_tool_option_combo_ab3f0af8951df88b6810f22cc51cb00f3}\label{class_tool_option_combo_ab3f0af8951df88b6810f22cc51cb00f3}} 
+\index{ToolOptionCombo@{ToolOptionCombo}!ToolOptionCombo@{ToolOptionCombo}}
+\index{ToolOptionCombo@{ToolOptionCombo}!ToolOptionCombo@{ToolOptionCombo}}
+\doxysubsubsection{\texorpdfstring{ToolOptionCombo()}{ToolOptionCombo()}}
+{\footnotesize\ttfamily Tool\+Option\+Combo\+::\+Tool\+Option\+Combo (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_tool}{TTool}} $\ast$}]{tool,  }\item[{\mbox{\hyperlink{class_t_enum_property}{TEnum\+Property}} $\ast$}]{property,  }\item[{\mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$}]{tool\+Handle = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00309     : QComboBox()}
+\DoxyCodeLine{00310     , \mbox{\hyperlink{class_tool_option_control}{ToolOptionControl}}(tool, property-\/>getName(), toolHandle)}
+\DoxyCodeLine{00311     , m\_property(property) \{}
+\DoxyCodeLine{00312   setMinimumWidth(65);}
+\DoxyCodeLine{00313   m\_property-\/>addListener(\textcolor{keyword}{this});}
+\DoxyCodeLine{00314   loadEntries();}
+\DoxyCodeLine{00315   setSizeAdjustPolicy(QComboBox::AdjustToContents);}
+\DoxyCodeLine{00316   connect(\textcolor{keyword}{this}, SIGNAL(activated(\textcolor{keywordtype}{int})), \textcolor{keyword}{this}, SLOT(onActivated(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00317   \textcolor{comment}{// synchronize the state with the same widgets in other tool option bars}}
+\DoxyCodeLine{00318   \textcolor{keywordflow}{if} (toolHandle) \{}
+\DoxyCodeLine{00319     connect(\textcolor{keyword}{this}, SIGNAL(activated(\textcolor{keywordtype}{int})), toolHandle, SIGNAL(toolChanged()));}
+\DoxyCodeLine{00320   \}}
+\DoxyCodeLine{00321 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tool_option_combo_a6ff192ed6eb1d09fe0b6c7ebaf85bc1f}\label{class_tool_option_combo_a6ff192ed6eb1d09fe0b6c7ebaf85bc1f}} 
+\index{ToolOptionCombo@{ToolOptionCombo}!getProperty@{getProperty}}
+\index{getProperty@{getProperty}!ToolOptionCombo@{ToolOptionCombo}}
+\doxysubsubsection{\texorpdfstring{getProperty()}{getProperty()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_enum_property}{TEnum\+Property}} $\ast$ Tool\+Option\+Combo\+::get\+Property (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00190 \{ \textcolor{keywordflow}{return} m\_property; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tool_option_combo_abc8461ab2f856dbc5c03270cebc8cabc}\label{class_tool_option_combo_abc8461ab2f856dbc5c03270cebc8cabc}} 
+\index{ToolOptionCombo@{ToolOptionCombo}!loadEntries@{loadEntries}}
+\index{loadEntries@{loadEntries}!ToolOptionCombo@{ToolOptionCombo}}
+\doxysubsubsection{\texorpdfstring{loadEntries}{loadEntries}}
+{\footnotesize\ttfamily void Tool\+Option\+Combo\+::load\+Entries (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00332                                   \{}
+\DoxyCodeLine{00333   \textcolor{keyword}{const} TEnumProperty::Range \&range = m\_property-\/>getRange();}
+\DoxyCodeLine{00334   \textcolor{keyword}{const} TEnumProperty::Items \&items = m\_property-\/>getItems();}
+\DoxyCodeLine{00335 }
+\DoxyCodeLine{00336   \textcolor{keyword}{const} \textcolor{keywordtype}{int} count = m\_property-\/>getCount();}
+\DoxyCodeLine{00337   \textcolor{keywordtype}{int} maxWidth    = 0;}
+\DoxyCodeLine{00338 }
+\DoxyCodeLine{00339   clear();}
+\DoxyCodeLine{00340   \textcolor{keywordtype}{bool} hasIcon = \textcolor{keyword}{false};}
+\DoxyCodeLine{00341   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; ++i) \{}
+\DoxyCodeLine{00342     QString itemStr = QString::fromStdWString(range[i]);}
+\DoxyCodeLine{00343     \textcolor{keywordflow}{if} (items[i].iconName.isEmpty())}
+\DoxyCodeLine{00344       addItem(items[i].UIName, itemStr);}
+\DoxyCodeLine{00345     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00346       addItem(createQIcon(items[i].iconName.toUtf8()), items[i].UIName,}
+\DoxyCodeLine{00347               itemStr);}
+\DoxyCodeLine{00348       \textcolor{keywordflow}{if} (!hasIcon) \{}
+\DoxyCodeLine{00349         hasIcon = \textcolor{keyword}{true};}
+\DoxyCodeLine{00350         setIconSize(QSize(18, 18));}
+\DoxyCodeLine{00351         \textcolor{comment}{// add margin between items if they are with icons}}
+\DoxyCodeLine{00352         setView(\textcolor{keyword}{new} QListView());}
+\DoxyCodeLine{00353         view()-\/>setIconSize(QSize(18, 18));}
+\DoxyCodeLine{00354         setStyleSheet(}
+\DoxyCodeLine{00355             \textcolor{stringliteral}{"{}QComboBox  QAbstractItemView::item\{ \(\backslash\)}}
+\DoxyCodeLine{00356 \textcolor{stringliteral}{                       margin: 5 0 0 0;\(\backslash\)}}
+\DoxyCodeLine{00357 \textcolor{stringliteral}{                      \}"{}});}
+\DoxyCodeLine{00358       \}}
+\DoxyCodeLine{00359     \}}
+\DoxyCodeLine{00360     \textcolor{keywordtype}{int} tmpWidth = fontMetrics().width(items[i].UIName);}
+\DoxyCodeLine{00361     \textcolor{keywordflow}{if} (tmpWidth > maxWidth) maxWidth = tmpWidth;}
+\DoxyCodeLine{00362   \}}
+\DoxyCodeLine{00363 }
+\DoxyCodeLine{00364   \textcolor{comment}{// set the maximum width according to the longest item with 25 pixels for}}
+\DoxyCodeLine{00365   \textcolor{comment}{// arrow button and margin}}
+\DoxyCodeLine{00366   setMaximumWidth(maxWidth + 25 + (hasIcon ? 23 : 0));}
+\DoxyCodeLine{00367 }
+\DoxyCodeLine{00368   updateStatus();}
+\DoxyCodeLine{00369 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tool_option_combo_af6b548107c2424dc99bef40629bbe577}\label{class_tool_option_combo_af6b548107c2424dc99bef40629bbe577}} 
+\index{ToolOptionCombo@{ToolOptionCombo}!onActivated@{onActivated}}
+\index{onActivated@{onActivated}!ToolOptionCombo@{ToolOptionCombo}}
+\doxysubsubsection{\texorpdfstring{onActivated}{onActivated}}
+{\footnotesize\ttfamily void Tool\+Option\+Combo\+::on\+Activated (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00381                                            \{}
+\DoxyCodeLine{00382   \textcolor{keyword}{const} TEnumProperty::Range \&range = m\_property-\/>getRange();}
+\DoxyCodeLine{00383   \textcolor{keywordflow}{if} (index < 0 || index >= (\textcolor{keywordtype}{int})range.size()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00384 }
+\DoxyCodeLine{00385   std::wstring item = range[index];}
+\DoxyCodeLine{00386   m\_property-\/>setValue(item);}
+\DoxyCodeLine{00387   notifyTool();}
+\DoxyCodeLine{00388 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tool_option_combo_ac19b79869c11a3b756fd4e503e75e2f4}\label{class_tool_option_combo_ac19b79869c11a3b756fd4e503e75e2f4}} 
+\index{ToolOptionCombo@{ToolOptionCombo}!reloadComboBoxList@{reloadComboBoxList}}
+\index{reloadComboBoxList@{reloadComboBoxList}!ToolOptionCombo@{ToolOptionCombo}}
+\doxysubsubsection{\texorpdfstring{reloadComboBoxList}{reloadComboBoxList}}
+{\footnotesize\ttfamily void Tool\+Option\+Combo\+::reload\+Combo\+Box\+List (\begin{DoxyParamCaption}\item[{std\+::string}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00325                                                      \{}
+\DoxyCodeLine{00326   \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id} == \textcolor{stringliteral}{"{}"{}} || m\_property-\/>getName() != \textcolor{keywordtype}{id}) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00327   loadEntries();}
+\DoxyCodeLine{00328 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tool_option_combo_a9262c927c45db26d901fc3f4f7138c56}\label{class_tool_option_combo_a9262c927c45db26d901fc3f4f7138c56}} 
+\index{ToolOptionCombo@{ToolOptionCombo}!updateStatus@{updateStatus}}
+\index{updateStatus@{updateStatus}!ToolOptionCombo@{ToolOptionCombo}}
+\doxysubsubsection{\texorpdfstring{updateStatus()}{updateStatus()}}
+{\footnotesize\ttfamily void Tool\+Option\+Combo\+::update\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tool_option_control}{Tool\+Option\+Control}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00373                                    \{}
+\DoxyCodeLine{00374   QString value = QString::fromStdWString(m\_property-\/>getValue());}
+\DoxyCodeLine{00375   \textcolor{keywordtype}{int} index     = findData(value);}
+\DoxyCodeLine{00376   \textcolor{keywordflow}{if} (index >= 0 \&\& index != currentIndex()) setCurrentIndex(index);}
+\DoxyCodeLine{00377 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_tool_option_combo_ab277f1757e4c3c20ee707b514820b687}\label{class_tool_option_combo_ab277f1757e4c3c20ee707b514820b687}} 
+\index{ToolOptionCombo@{ToolOptionCombo}!m\_property@{m\_property}}
+\index{m\_property@{m\_property}!ToolOptionCombo@{ToolOptionCombo}}
+\doxysubsubsection{\texorpdfstring{m\_property}{m\_property}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_enum_property}{TEnum\+Property}}$\ast$ Tool\+Option\+Combo\+::m\+\_\+property\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptionscontrols.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptionscontrols.\+cpp\end{DoxyCompactItemize}

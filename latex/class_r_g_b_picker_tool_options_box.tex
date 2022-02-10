@@ -1,0 +1,126 @@
+\hypertarget{class_r_g_b_picker_tool_options_box}{}\doxysection{RGBPicker\+Tool\+Options\+Box Class Reference}
+\label{class_r_g_b_picker_tool_options_box}\index{RGBPickerToolOptionsBox@{RGBPickerToolOptionsBox}}
+Inheritance diagram for RGBPicker\+Tool\+Options\+Box\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_r_g_b_picker_tool_options_box}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_r_g_b_picker_tool_options_box_aef31f00be624236145c4c897e5540c62}{RGBPicker\+Tool\+Options\+Box}} (QWidget $\ast$parent, \mbox{\hyperlink{class_t_tool}{TTool}} $\ast$tool, \mbox{\hyperlink{class_t_palette_handle}{TPalette\+Handle}} $\ast$plt\+Handle, \mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$tool\+Handle, \mbox{\hyperlink{class_palette_controller}{Palette\+Controller}} $\ast$palette\+Controller)
+\item 
+void \mbox{\hyperlink{class_r_g_b_picker_tool_options_box_a1e41032c4c74b551f7e1c0595d29f613}{update\+Status}} ()
+\begin{DoxyCompactList}\small\item\em Invokes \mbox{\hyperlink{class_r_g_b_picker_tool_options_box_a1e41032c4c74b551f7e1c0595d29f613}{update\+Status()}} on all registered controls. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_r_g_b_picker_tool_options_box_a602156c71b40fd5136de2dc74ffb4d90}{update\+Real\+Time\+Pick\+Label}} (const QColor \&)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_r_g_b_picker_tool_options_box_aef31f00be624236145c4c897e5540c62}\label{class_r_g_b_picker_tool_options_box_aef31f00be624236145c4c897e5540c62}} 
+\index{RGBPickerToolOptionsBox@{RGBPickerToolOptionsBox}!RGBPickerToolOptionsBox@{RGBPickerToolOptionsBox}}
+\index{RGBPickerToolOptionsBox@{RGBPickerToolOptionsBox}!RGBPickerToolOptionsBox@{RGBPickerToolOptionsBox}}
+\doxysubsubsection{\texorpdfstring{RGBPickerToolOptionsBox()}{RGBPickerToolOptionsBox()}}
+{\footnotesize\ttfamily RGBPicker\+Tool\+Options\+Box\+::\+RGBPicker\+Tool\+Options\+Box (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{\mbox{\hyperlink{class_t_tool}{TTool}} $\ast$}]{tool,  }\item[{\mbox{\hyperlink{class_t_palette_handle}{TPalette\+Handle}} $\ast$}]{plt\+Handle,  }\item[{\mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$}]{tool\+Handle,  }\item[{\mbox{\hyperlink{class_palette_controller}{Palette\+Controller}} $\ast$}]{palette\+Controller }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02287     : \mbox{\hyperlink{class_tool_options_box}{ToolOptionsBox}}(parent) \{}
+\DoxyCodeLine{02288   setFrameStyle(QFrame::StyledPanel);}
+\DoxyCodeLine{02289   setFixedHeight(26);}
+\DoxyCodeLine{02290 }
+\DoxyCodeLine{02291   m\_currentRGBLabel = \textcolor{keyword}{new} \mbox{\hyperlink{class_r_g_b_label}{RGBLabel}}(QColor(128, 128, 128), \textcolor{keyword}{this});}
+\DoxyCodeLine{02292 }
+\DoxyCodeLine{02293   QAction *pickScreenAction =}
+\DoxyCodeLine{02294       CommandManager::instance()-\/>getAction(\textcolor{stringliteral}{"{}A\_ToolOption\_PickScreen"{}});}
+\DoxyCodeLine{02295 }
+\DoxyCodeLine{02296   QPushButton *button = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Pick Screen"{}}));}
+\DoxyCodeLine{02297   \textcolor{keywordtype}{int} buttonWidth     = fontMetrics().width(button-\/>text()) + 10;}
+\DoxyCodeLine{02298   button-\/>setFixedWidth(buttonWidth);}
+\DoxyCodeLine{02299   button-\/>setFixedHeight(20);}
+\DoxyCodeLine{02300   button-\/>addAction(pickScreenAction);}
+\DoxyCodeLine{02301   connect(button, SIGNAL(clicked()), pickScreenAction, SLOT(trigger()));}
+\DoxyCodeLine{02302 }
+\DoxyCodeLine{02303   \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}} *props = tool-\/>getProperties(0);}
+\DoxyCodeLine{02304   assert(props-\/>getPropertyCount() > 0);}
+\DoxyCodeLine{02305 }
+\DoxyCodeLine{02306   \mbox{\hyperlink{class_tool_option_control_builder}{ToolOptionControlBuilder}} builder(\textcolor{keyword}{this}, tool, pltHandle, toolHandle);}
+\DoxyCodeLine{02307   \textcolor{keywordflow}{if} (tool \&\& tool-\/>getProperties(0)) tool-\/>getProperties(0)-\/>accept(builder);}
+\DoxyCodeLine{02308 }
+\DoxyCodeLine{02309   m\_realTimePickMode =}
+\DoxyCodeLine{02310       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_tool_option_checkbox}{ToolOptionCheckbox}} *\textcolor{keyword}{>}(\mbox{\hyperlink{class_tool_options_box_a111acd54b0b8c1ba3b1b847267b0dd7b}{m\_controls}}.value(\textcolor{stringliteral}{"{}Passive Pick"{}}));}
+\DoxyCodeLine{02311 }
+\DoxyCodeLine{02312   m\_layout-\/>addWidget(m\_currentRGBLabel, 0);}
+\DoxyCodeLine{02313   m\_layout-\/>addStretch(1);}
+\DoxyCodeLine{02314   m\_layout-\/>addWidget(button, 0);}
+\DoxyCodeLine{02315   m\_layout-\/>addSpacing(5);}
+\DoxyCodeLine{02316 }
+\DoxyCodeLine{02317   \textcolor{keywordflow}{if} (m\_realTimePickMode) \{}
+\DoxyCodeLine{02318     connect(m\_realTimePickMode, SIGNAL(toggled(\textcolor{keywordtype}{bool})), m\_currentRGBLabel,}
+\DoxyCodeLine{02319             SLOT(setVisible(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{02320     m\_currentRGBLabel-\/>setVisible(m\_realTimePickMode-\/>isChecked());}
+\DoxyCodeLine{02321   \}}
+\DoxyCodeLine{02322 }
+\DoxyCodeLine{02323   \textcolor{comment}{// for passive pick}}
+\DoxyCodeLine{02324   connect(paletteController, SIGNAL(colorPassivePicked(\textcolor{keyword}{const} QColor \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{02325           SLOT(updateRealTimePickLabel(\textcolor{keyword}{const} QColor \&)));}
+\DoxyCodeLine{02326 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_r_g_b_picker_tool_options_box_a602156c71b40fd5136de2dc74ffb4d90}\label{class_r_g_b_picker_tool_options_box_a602156c71b40fd5136de2dc74ffb4d90}} 
+\index{RGBPickerToolOptionsBox@{RGBPickerToolOptionsBox}!updateRealTimePickLabel@{updateRealTimePickLabel}}
+\index{updateRealTimePickLabel@{updateRealTimePickLabel}!RGBPickerToolOptionsBox@{RGBPickerToolOptionsBox}}
+\doxysubsubsection{\texorpdfstring{updateRealTimePickLabel}{updateRealTimePickLabel}}
+{\footnotesize\ttfamily void RGBPicker\+Tool\+Options\+Box\+::update\+Real\+Time\+Pick\+Label (\begin{DoxyParamCaption}\item[{const QColor \&}]{pix }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02338                                                                        \{}
+\DoxyCodeLine{02339   \textcolor{keywordflow}{if} (isVisible()) m\_currentRGBLabel-\/>setColorAndUpdate(pix);}
+\DoxyCodeLine{02340 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_r_g_b_picker_tool_options_box_a1e41032c4c74b551f7e1c0595d29f613}\label{class_r_g_b_picker_tool_options_box_a1e41032c4c74b551f7e1c0595d29f613}} 
+\index{RGBPickerToolOptionsBox@{RGBPickerToolOptionsBox}!updateStatus@{updateStatus}}
+\index{updateStatus@{updateStatus}!RGBPickerToolOptionsBox@{RGBPickerToolOptionsBox}}
+\doxysubsubsection{\texorpdfstring{updateStatus()}{updateStatus()}}
+{\footnotesize\ttfamily void RGBPicker\+Tool\+Options\+Box\+::update\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Invokes \mbox{\hyperlink{class_r_g_b_picker_tool_options_box_a1e41032c4c74b551f7e1c0595d29f613}{update\+Status()}} on all registered controls. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tool_options_box_a475daf4252f0d89d4968d25bb57783ab}{Tool\+Options\+Box}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02330                                            \{}
+\DoxyCodeLine{02331   QMap<std::string, ToolOptionControl *>::iterator it;}
+\DoxyCodeLine{02332   \textcolor{keywordflow}{for} (it = \mbox{\hyperlink{class_tool_options_box_a111acd54b0b8c1ba3b1b847267b0dd7b}{m\_controls}}.begin(); it != \mbox{\hyperlink{class_tool_options_box_a111acd54b0b8c1ba3b1b847267b0dd7b}{m\_controls}}.end(); it++)}
+\DoxyCodeLine{02333     it.value()-\/>updateStatus();}
+\DoxyCodeLine{02334 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00106}{Tool\+Options\+Box\+::m\+\_\+controls}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tools/tooloptions.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptions.\+cpp\end{DoxyCompactItemize}

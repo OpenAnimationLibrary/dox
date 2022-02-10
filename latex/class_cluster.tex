@@ -1,0 +1,289 @@
+\hypertarget{class_cluster}{}\doxysection{Cluster Class Reference}
+\label{class_cluster}\index{Cluster@{Cluster}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_cluster_a9286397029eff3c790c69cc8cf4a5844}{Cluster}} (const \mbox{\hyperlink{class_cluster}{Cluster}} \&rhs)
+\item 
+void \mbox{\hyperlink{class_cluster_adb5da76278329d57b5d92015d54cb798}{compute\+Covariance}} ()
+\item 
+void \mbox{\hyperlink{class_cluster_a1212954f19c4c0dab71034de6538e23d}{insert}} (\mbox{\hyperlink{class_cluster_elem}{Cluster\+Elem}} $\ast$elem)
+\item 
+void \mbox{\hyperlink{class_cluster_a4b5e2dd917f3f03bbd843513ec82ddbf}{compute\+Statistics}} ()
+\item 
+void \mbox{\hyperlink{class_cluster_a8249fbf8cc9e8839572bec2b6e8a0d12}{get\+Mean\+Axis}} (KEYER\+\_\+\+FLOAT axis\mbox{[}3\mbox{]})
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_cluster_statistic}{Cluster\+Statistic}} \mbox{\hyperlink{class_cluster_a7d8c22a8a9d5eb6672c96e0d77454174}{statistic}}
+\item 
+Cluster\+Elem\+Container \mbox{\hyperlink{class_cluster_a0cb9fd18d995811d40a11704cfa67abc}{data}}
+\item 
+KEYER\+\_\+\+FLOAT \mbox{\hyperlink{class_cluster_af0d81428f77353be41acf20260fbf314}{eigen\+Vector}} \mbox{[}3\mbox{]}
+\item 
+KEYER\+\_\+\+FLOAT \mbox{\hyperlink{class_cluster_ae0087d2a3c8b22b358aee89405de2cf2}{eigen\+Value}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_cluster_aee7feb1d599d4c8fda6c3ee83e86ba81}\label{class_cluster_aee7feb1d599d4c8fda6c3ee83e86ba81}} 
+\index{Cluster@{Cluster}!Cluster@{Cluster}}
+\index{Cluster@{Cluster}!Cluster@{Cluster}}
+\doxysubsubsection{\texorpdfstring{Cluster()}{Cluster()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Cluster\+::\+Cluster (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00559 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cluster_a9286397029eff3c790c69cc8cf4a5844}\label{class_cluster_a9286397029eff3c790c69cc8cf4a5844}} 
+\index{Cluster@{Cluster}!Cluster@{Cluster}}
+\index{Cluster@{Cluster}!Cluster@{Cluster}}
+\doxysubsubsection{\texorpdfstring{Cluster()}{Cluster()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Cluster\+::\+Cluster (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_cluster}{Cluster}} \&}]{rhs }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00563                                    : statistic(rhs.statistic) \{}
+\DoxyCodeLine{00564   ClusterElemContainer::const\_iterator it = rhs.data.begin();}
+\DoxyCodeLine{00565   \textcolor{keywordflow}{for} (; it != rhs.data.end(); ++it) data.push\_back(\textcolor{keyword}{new} \mbox{\hyperlink{class_cluster_elem}{ClusterElem}}(**it));}
+\DoxyCodeLine{00566 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cluster_a4bddfc88ac859610acab15dd12851b58}\label{class_cluster_a4bddfc88ac859610acab15dd12851b58}} 
+\index{Cluster@{Cluster}!````~Cluster@{$\sim$Cluster}}
+\index{````~Cluster@{$\sim$Cluster}!Cluster@{Cluster}}
+\doxysubsubsection{\texorpdfstring{$\sim$Cluster()}{~Cluster()}}
+{\footnotesize\ttfamily Cluster\+::$\sim$\+Cluster (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00570 \{ clearPointerContainer(data); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_cluster_adb5da76278329d57b5d92015d54cb798}\label{class_cluster_adb5da76278329d57b5d92015d54cb798}} 
+\index{Cluster@{Cluster}!computeCovariance@{computeCovariance}}
+\index{computeCovariance@{computeCovariance}!Cluster@{Cluster}}
+\doxysubsubsection{\texorpdfstring{computeCovariance()}{computeCovariance()}}
+{\footnotesize\ttfamily void Cluster\+::compute\+Covariance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00574                                 \{}
+\DoxyCodeLine{00575   KEYER\_FLOAT sumComponentsMatrix[9];}
+\DoxyCodeLine{00576 }
+\DoxyCodeLine{00577   KEYER\_FLOAT sumR = statistic.sumComponents[0];}
+\DoxyCodeLine{00578   KEYER\_FLOAT sumG = statistic.sumComponents[1];}
+\DoxyCodeLine{00579   KEYER\_FLOAT sumB = statistic.sumComponents[2];}
+\DoxyCodeLine{00580 }
+\DoxyCodeLine{00581   sumComponentsMatrix[0] = sumR * sumR;}
+\DoxyCodeLine{00582   sumComponentsMatrix[1] = sumR * sumG;}
+\DoxyCodeLine{00583   sumComponentsMatrix[2] = sumR * sumB;}
+\DoxyCodeLine{00584 }
+\DoxyCodeLine{00585   sumComponentsMatrix[3] = sumComponentsMatrix[1];}
+\DoxyCodeLine{00586   sumComponentsMatrix[4] = sumG * sumG;}
+\DoxyCodeLine{00587   sumComponentsMatrix[5] = sumG * sumB;}
+\DoxyCodeLine{00588 }
+\DoxyCodeLine{00589   sumComponentsMatrix[6] = sumComponentsMatrix[2];}
+\DoxyCodeLine{00590   sumComponentsMatrix[7] = sumComponentsMatrix[5];}
+\DoxyCodeLine{00591   sumComponentsMatrix[8] = sumB * sumB;}
+\DoxyCodeLine{00592 }
+\DoxyCodeLine{00593   KEYER\_FLOAT n = (KEYER\_FLOAT)statistic.elemsCount;}
+\DoxyCodeLine{00594   assert(n > 0);}
+\DoxyCodeLine{00595   \textcolor{keywordtype}{int} i = 0;}
+\DoxyCodeLine{00596   \textcolor{keywordflow}{for} (; i < 9; ++i) \{}
+\DoxyCodeLine{00597     statistic.covariance[i] = statistic.matrixR[i] -\/ sumComponentsMatrix[i] / n;}
+\DoxyCodeLine{00598     assert(!std::isnan(statistic.matrixR[i]));}
+\DoxyCodeLine{00599     \textcolor{comment}{// assert(statistic.covariance[i] >= 0.0);}}
+\DoxyCodeLine{00600     \textcolor{comment}{// numerical instability???}}
+\DoxyCodeLine{00601     \textcolor{keywordflow}{if} (statistic.covariance[i] < 0.0) statistic.covariance[i] = 0.0;}
+\DoxyCodeLine{00602   \}}
+\DoxyCodeLine{00603 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cluster_a4b5e2dd917f3f03bbd843513ec82ddbf}\label{class_cluster_a4b5e2dd917f3f03bbd843513ec82ddbf}} 
+\index{Cluster@{Cluster}!computeStatistics@{computeStatistics}}
+\index{computeStatistics@{computeStatistics}!Cluster@{Cluster}}
+\doxysubsubsection{\texorpdfstring{computeStatistics()}{computeStatistics()}}
+{\footnotesize\ttfamily void Cluster\+::compute\+Statistics (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00621                                 \{}
+\DoxyCodeLine{00622   \textcolor{comment}{// Initializes the cluster statistics.}}
+\DoxyCodeLine{00623   statistic.elemsCount = 0;}
+\DoxyCodeLine{00624 }
+\DoxyCodeLine{00625   statistic.sumCoords = \mbox{\hyperlink{class_t_point_t}{TPoint}}(0, 0);}
+\DoxyCodeLine{00626 }
+\DoxyCodeLine{00627   \textcolor{keywordtype}{int} i                                         = 0;}
+\DoxyCodeLine{00628   \textcolor{keywordflow}{for} (; i < 3; ++i) statistic.sumComponents[i] = 0.0;}
+\DoxyCodeLine{00629 }
+\DoxyCodeLine{00630   for (i = 0; i < 9; ++i) statistic.matrixR[i] = 0.0;}
+\DoxyCodeLine{00631 }
+\DoxyCodeLine{00632   \textcolor{comment}{// Compute cluster statistics.}}
+\DoxyCodeLine{00633   ClusterElemContainer::const\_iterator it = data.begin();}
+\DoxyCodeLine{00634   \textcolor{keywordflow}{for} (; it != data.end(); ++it) \{}
+\DoxyCodeLine{00635     \textcolor{keyword}{const} \mbox{\hyperlink{class_cluster_elem}{ClusterElem}} *elem = *it;}
+\DoxyCodeLine{00636 }
+\DoxyCodeLine{00637 \textcolor{preprocessor}{\#ifdef WITH\_ALPHA\_IN\_STATISTICS}}
+\DoxyCodeLine{00638     KEYER\_FLOAT alpha = elem-\/>a;}
+\DoxyCodeLine{00639 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00640     KEYER\_FLOAT r = (KEYER\_FLOAT)elem-\/>r;}
+\DoxyCodeLine{00641     KEYER\_FLOAT g = (KEYER\_FLOAT)elem-\/>g;}
+\DoxyCodeLine{00642     KEYER\_FLOAT b = (KEYER\_FLOAT)elem-\/>b;}
+\DoxyCodeLine{00643 }
+\DoxyCodeLine{00644     statistic.sumComponents[0] += r;}
+\DoxyCodeLine{00645     statistic.sumComponents[1] += g;}
+\DoxyCodeLine{00646     statistic.sumComponents[2] += b;}
+\DoxyCodeLine{00647 }
+\DoxyCodeLine{00648 \#ifdef WITH\_ALPHA\_IN\_STATISTICS}
+\DoxyCodeLine{00649 }
+\DoxyCodeLine{00650     statistic.sumAlpha += alpha;}
+\DoxyCodeLine{00651 }
+\DoxyCodeLine{00652 \#endif}
+\DoxyCodeLine{00653 }
+\DoxyCodeLine{00654     \textcolor{comment}{// The first row of the matrix R}}
+\DoxyCodeLine{00655     statistic.matrixR[0] += r * r;}
+\DoxyCodeLine{00656     statistic.matrixR[1] += r * g;}
+\DoxyCodeLine{00657     statistic.matrixR[2] += r * b;}
+\DoxyCodeLine{00658 }
+\DoxyCodeLine{00659     \textcolor{comment}{// Second row of the matrix R}}
+\DoxyCodeLine{00660     statistic.matrixR[3] += r * g;}
+\DoxyCodeLine{00661     statistic.matrixR[4] += g * g;}
+\DoxyCodeLine{00662     statistic.matrixR[5] += g * b;}
+\DoxyCodeLine{00663 }
+\DoxyCodeLine{00664     \textcolor{comment}{// The third row of the matrix R}}
+\DoxyCodeLine{00665     statistic.matrixR[6] += r * b;}
+\DoxyCodeLine{00666     statistic.matrixR[7] += b * g;}
+\DoxyCodeLine{00667     statistic.matrixR[8] += b * b;}
+\DoxyCodeLine{00668 }
+\DoxyCodeLine{00669     statistic.sumCoords.x += elem-\/>x;}
+\DoxyCodeLine{00670     statistic.sumCoords.y += elem-\/>y;}
+\DoxyCodeLine{00671 }
+\DoxyCodeLine{00672     ++statistic.elemsCount;}
+\DoxyCodeLine{00673   \}}
+\DoxyCodeLine{00674 }
+\DoxyCodeLine{00675   assert(statistic.elemsCount > 0);}
+\DoxyCodeLine{00676 }
+\DoxyCodeLine{00677   computeCovariance();}
+\DoxyCodeLine{00678 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cluster_a8249fbf8cc9e8839572bec2b6e8a0d12}\label{class_cluster_a8249fbf8cc9e8839572bec2b6e8a0d12}} 
+\index{Cluster@{Cluster}!getMeanAxis@{getMeanAxis}}
+\index{getMeanAxis@{getMeanAxis}!Cluster@{Cluster}}
+\doxysubsubsection{\texorpdfstring{getMeanAxis()}{getMeanAxis()}}
+{\footnotesize\ttfamily void Cluster\+::get\+Mean\+Axis (\begin{DoxyParamCaption}\item[{KEYER\+\_\+\+FLOAT}]{axis\mbox{[}3\mbox{]} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00682                                              \{}
+\DoxyCodeLine{00683   KEYER\_FLOAT n = (KEYER\_FLOAT)statistic.elemsCount;}
+\DoxyCodeLine{00684 }
+\DoxyCodeLine{00685 \#\textcolor{keywordflow}{if} 1}
+\DoxyCodeLine{00686 }
+\DoxyCodeLine{00687   axis[0] = (KEYER\_FLOAT)(sqrt(statistic.covariance[0]) / n);}
+\DoxyCodeLine{00688   axis[1] = (KEYER\_FLOAT)(sqrt(statistic.covariance[4]) / n);}
+\DoxyCodeLine{00689   axis[2] = (KEYER\_FLOAT)(sqrt(statistic.covariance[8]) / n);}
+\DoxyCodeLine{00690 }
+\DoxyCodeLine{00691 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00692 }
+\DoxyCodeLine{00693   KEYER\_FLOAT I[3];}
+\DoxyCodeLine{00694   KEYER\_FLOAT J[3];}
+\DoxyCodeLine{00695   KEYER\_FLOAT K[3];}
+\DoxyCodeLine{00696 }
+\DoxyCodeLine{00697   I[0] = statistic.covariance[0];}
+\DoxyCodeLine{00698   I[1] = statistic.covariance[1];}
+\DoxyCodeLine{00699   I[2] = statistic.covariance[2];}
+\DoxyCodeLine{00700 }
+\DoxyCodeLine{00701   J[0] = statistic.covariance[3];}
+\DoxyCodeLine{00702   J[1] = statistic.covariance[4];}
+\DoxyCodeLine{00703   J[2] = statistic.covariance[5];}
+\DoxyCodeLine{00704 }
+\DoxyCodeLine{00705   K[0] = statistic.covariance[6];}
+\DoxyCodeLine{00706   K[1] = statistic.covariance[7];}
+\DoxyCodeLine{00707   K[2] = statistic.covariance[8];}
+\DoxyCodeLine{00708 }
+\DoxyCodeLine{00709   KEYER\_FLOAT magnitudeI = I[0] * I[0] + I[1] * I[1] + I[2] * I[2];}
+\DoxyCodeLine{00710   KEYER\_FLOAT magnitudeJ = J[0] * J[0] + J[1] * J[1] + J[2] * I[2];}
+\DoxyCodeLine{00711   KEYER\_FLOAT magnitudeK = K[0] * K[0] + K[1] * K[1] + K[2] * I[2];}
+\DoxyCodeLine{00712 }
+\DoxyCodeLine{00713   \textcolor{keywordflow}{if} (magnitudeI >= magnitudeJ \&\& magnitudeI >= magnitudeK) \{}
+\DoxyCodeLine{00714     axis[0] = sqrt(I[0] / n);}
+\DoxyCodeLine{00715     axis[1] = sqrt(I[1] / n);}
+\DoxyCodeLine{00716     axis[2] = sqrt(I[2] / n);}
+\DoxyCodeLine{00717   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (magnitudeJ >= magnitudeI \&\& magnitudeJ >= magnitudeK) \{}
+\DoxyCodeLine{00718     axis[0] = sqrt(J[0] / n);}
+\DoxyCodeLine{00719     axis[1] = sqrt(J[1] / n);}
+\DoxyCodeLine{00720     axis[2] = sqrt(J[2] / n);}
+\DoxyCodeLine{00721   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (magnitudeK >= magnitudeI \&\& magnitudeK >= magnitudeJ) \{}
+\DoxyCodeLine{00722     axis[0] = sqrt(K[0] / n);}
+\DoxyCodeLine{00723     axis[1] = sqrt(K[1] / n);}
+\DoxyCodeLine{00724     axis[2] = sqrt(K[2] / n);}
+\DoxyCodeLine{00725   \}}
+\DoxyCodeLine{00726 }
+\DoxyCodeLine{00727 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00728 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cluster_a1212954f19c4c0dab71034de6538e23d}\label{class_cluster_a1212954f19c4c0dab71034de6538e23d}} 
+\index{Cluster@{Cluster}!insert@{insert}}
+\index{insert@{insert}!Cluster@{Cluster}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily void Cluster\+::insert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_cluster_elem}{Cluster\+Elem}} $\ast$}]{elem }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00607                                       \{}
+\DoxyCodeLine{00608 \textcolor{preprocessor}{\#ifdef CLUSTER\_ELEM\_CONTAINER\_IS\_A\_SET}}
+\DoxyCodeLine{00609 }
+\DoxyCodeLine{00610   data.insert(elem);}
+\DoxyCodeLine{00611 }
+\DoxyCodeLine{00612 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00613 }
+\DoxyCodeLine{00614   data.push\_back(elem);}
+\DoxyCodeLine{00615 }
+\DoxyCodeLine{00616 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00617 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_cluster_a0cb9fd18d995811d40a11704cfa67abc}\label{class_cluster_a0cb9fd18d995811d40a11704cfa67abc}} 
+\index{Cluster@{Cluster}!data@{data}}
+\index{data@{data}!Cluster@{Cluster}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily Cluster\+Elem\+Container Cluster\+::data}
+
+\mbox{\Hypertarget{class_cluster_ae0087d2a3c8b22b358aee89405de2cf2}\label{class_cluster_ae0087d2a3c8b22b358aee89405de2cf2}} 
+\index{Cluster@{Cluster}!eigenValue@{eigenValue}}
+\index{eigenValue@{eigenValue}!Cluster@{Cluster}}
+\doxysubsubsection{\texorpdfstring{eigenValue}{eigenValue}}
+{\footnotesize\ttfamily KEYER\+\_\+\+FLOAT Cluster\+::eigen\+Value}
+
+\mbox{\Hypertarget{class_cluster_af0d81428f77353be41acf20260fbf314}\label{class_cluster_af0d81428f77353be41acf20260fbf314}} 
+\index{Cluster@{Cluster}!eigenVector@{eigenVector}}
+\index{eigenVector@{eigenVector}!Cluster@{Cluster}}
+\doxysubsubsection{\texorpdfstring{eigenVector}{eigenVector}}
+{\footnotesize\ttfamily KEYER\+\_\+\+FLOAT Cluster\+::eigen\+Vector\mbox{[}3\mbox{]}}
+
+\mbox{\Hypertarget{class_cluster_a7d8c22a8a9d5eb6672c96e0d77454174}\label{class_cluster_a7d8c22a8a9d5eb6672c96e0d77454174}} 
+\index{Cluster@{Cluster}!statistic@{statistic}}
+\index{statistic@{statistic}!Cluster@{Cluster}}
+\doxysubsubsection{\texorpdfstring{statistic}{statistic}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_cluster_statistic}{Cluster\+Statistic}} Cluster\+::statistic}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tapptools/tcolorutils.\+cpp\end{DoxyCompactItemize}

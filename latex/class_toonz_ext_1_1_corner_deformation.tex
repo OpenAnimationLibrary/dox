@@ -1,0 +1,187 @@
+\hypertarget{class_toonz_ext_1_1_corner_deformation}{}\doxysection{Toonz\+Ext\+::Corner\+Deformation Class Reference}
+\label{class_toonz_ext_1_1_corner_deformation}\index{ToonzExt::CornerDeformation@{ToonzExt::CornerDeformation}}
+Inheritance diagram for Toonz\+Ext\+::Corner\+Deformation\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_toonz_ext_1_1_corner_deformation}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_toonz_ext_1_1_corner_deformation_aa1a0a340c82cce510483a47bc039486b}{check\+\_\+}} (const \mbox{\hyperlink{struct_toonz_ext_1_1_context_status}{Context\+Status}} $\ast$status) override
+\item 
+bool \mbox{\hyperlink{class_toonz_ext_1_1_corner_deformation_a33702122ce08d1c190e25a5d479d9fd3}{find\+Extremes\+\_\+}} (const \mbox{\hyperlink{struct_toonz_ext_1_1_context_status}{Context\+Status}} $\ast$, \mbox{\hyperlink{namespace_toonz_ext_af0f90ec10aea6fde591103d3611b638b}{Interval}} \&) override
+\item 
+double \mbox{\hyperlink{class_toonz_ext_1_1_corner_deformation_a0b368325041a3a8bc3597aac685aeabd}{find\+Action\+Length}} () override
+\item 
+void \mbox{\hyperlink{class_toonz_ext_1_1_corner_deformation_a3b060ba9dcadf5f5e445b6806a6bdf65}{draw}} (\mbox{\hyperlink{class_toonz_ext_1_1_designer}{Designer}} $\ast$) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_toonz_ext_1_1_corner_deformation}{Corner\+Deformation}} $\ast$ \mbox{\hyperlink{class_toonz_ext_1_1_corner_deformation_acf18355125937dd2f8636a63ab06a11e}{instance}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_toonz_ext_1_1_corner_deformation_a1c7c09a393c3b9d38edd61ff94d0ee6d}\label{class_toonz_ext_1_1_corner_deformation_a1c7c09a393c3b9d38edd61ff94d0ee6d}} 
+\index{ToonzExt::CornerDeformation@{ToonzExt::CornerDeformation}!````~CornerDeformation@{$\sim$CornerDeformation}}
+\index{````~CornerDeformation@{$\sim$CornerDeformation}!ToonzExt::CornerDeformation@{ToonzExt::CornerDeformation}}
+\doxysubsubsection{\texorpdfstring{$\sim$CornerDeformation()}{~CornerDeformation()}}
+{\footnotesize\ttfamily Corner\+Deformation\+::$\sim$\+Corner\+Deformation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_toonz_ext_1_1_corner_deformation_aa1a0a340c82cce510483a47bc039486b}\label{class_toonz_ext_1_1_corner_deformation_aa1a0a340c82cce510483a47bc039486b}} 
+\index{ToonzExt::CornerDeformation@{ToonzExt::CornerDeformation}!check\_@{check\_}}
+\index{check\_@{check\_}!ToonzExt::CornerDeformation@{ToonzExt::CornerDeformation}}
+\doxysubsubsection{\texorpdfstring{check\_()}{check\_()}}
+{\footnotesize\ttfamily bool Corner\+Deformation\+::check\+\_\+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_toonz_ext_1_1_context_status}{Context\+Status}} $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Is this the correct deformation? 
+
+Implements \mbox{\hyperlink{class_toonz_ext_1_1_stroke_deformation_impl_afa80ae95b9c30163453dc08fdc9610e2}{Toonz\+Ext\+::\+Stroke\+Deformation\+Impl}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00061                                                           \{}
+\DoxyCodeLine{00062   assert(status \&\& \textcolor{stringliteral}{"{}Not status available"{}});}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064   \mbox{\hyperlink{class_t_stroke}{TStroke}} *s = status-\/>stroke2change\_;}
+\DoxyCodeLine{00065   \textcolor{keywordtype}{double} w   = status-\/>w\_;}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067   \textcolor{keywordflow}{if} (isASpireCorner(s, w, status-\/>cornerSize\_, \&this-\/>getSpiresList()))}
+\DoxyCodeLine{00068     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00069 }
+\DoxyCodeLine{00070 \textcolor{preprocessor}{\#ifdef USE\_TOLERANCE\_IN\_SELECTION}}
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00072   \textcolor{comment}{// analyse if the selected distance is close to an extreme if an}}
+\DoxyCodeLine{00073   \textcolor{comment}{//  extreme is almost an extreme prefer to select extreme}}
+\DoxyCodeLine{00074   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_point_t}{TPointD}} pressed = status-\/>stroke2change\_-\/>getPoint(status-\/>w\_);}
+\DoxyCodeLine{00075 }
+\DoxyCodeLine{00076   \textcolor{keywordtype}{double} pixelTolerance2 = sq(5 * status-\/>pixelSize\_);}
+\DoxyCodeLine{00077 }
+\DoxyCodeLine{00078   \textcolor{comment}{// array of corners}}
+\DoxyCodeLine{00079   std::vector<double> corners;}
+\DoxyCodeLine{00080 }
+\DoxyCodeLine{00081   \textcolor{comment}{// also if an straight extreme was not found prefer smooth}}
+\DoxyCodeLine{00082   \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespace_toonz_ext_a192dcaf5d96235356ae59ae418b125fe}{cornersDetector}}(status-\/>stroke2change\_, status-\/>cornerSize\_, corners)) \{}
+\DoxyCodeLine{00083     \textcolor{keywordflow}{while} (!corners.empty()) \{}
+\DoxyCodeLine{00084       \mbox{\hyperlink{class_t_point_t}{TPointD}} actual = status-\/>stroke2change\_-\/>getPoint(corners.back());}
+\DoxyCodeLine{00085       \textcolor{keywordflow}{if} (tdistance2(actual, pressed) < pixelTolerance2) \{}
+\DoxyCodeLine{00086         \textcolor{comment}{// status-\/>w\_ = corners.back();}}
+\DoxyCodeLine{00087         \textcolor{comment}{// out = CornerDeformation::instance();}}
+\DoxyCodeLine{00088         \textcolor{comment}{// break;}}
+\DoxyCodeLine{00089         this-\/>w\_ = corners.back();}
+\DoxyCodeLine{00090         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00091       \}}
+\DoxyCodeLine{00092       corners.pop\_back();}
+\DoxyCodeLine{00093     \}}
+\DoxyCodeLine{00094   \}}
+\DoxyCodeLine{00095 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00096 }
+\DoxyCodeLine{00097   \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00098 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01025}{Toonz\+Ext\+::corners\+Detector()}}, and \mbox{\hyperlink{l00236}{TStroke\+::get\+Point()}}.
+
+\mbox{\Hypertarget{class_toonz_ext_1_1_corner_deformation_a3b060ba9dcadf5f5e445b6806a6bdf65}\label{class_toonz_ext_1_1_corner_deformation_a3b060ba9dcadf5f5e445b6806a6bdf65}} 
+\index{ToonzExt::CornerDeformation@{ToonzExt::CornerDeformation}!draw@{draw}}
+\index{draw@{draw}!ToonzExt::CornerDeformation@{ToonzExt::CornerDeformation}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Corner\+Deformation\+::draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_toonz_ext_1_1_designer}{Designer}} $\ast$}]{designer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Apply a designer on current deformation. 
+
+Reimplemented from \mbox{\hyperlink{class_toonz_ext_1_1_stroke_deformation_impl_af5328002d2be2c15cdee226795163436}{Toonz\+Ext\+::\+Stroke\+Deformation\+Impl}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00045                                                \{}
+\DoxyCodeLine{00046   \mbox{\hyperlink{class_toonz_ext_1_1_stroke_deformation_impl_af5328002d2be2c15cdee226795163436}{StrokeDeformationImpl::draw}}(0);}
+\DoxyCodeLine{00047   designer-\/>draw(\textcolor{keyword}{this});}
+\DoxyCodeLine{00048 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00562}{Toonz\+Ext\+::\+Stroke\+Deformation\+Impl\+::draw()}}.
+
+\mbox{\Hypertarget{class_toonz_ext_1_1_corner_deformation_a0b368325041a3a8bc3597aac685aeabd}\label{class_toonz_ext_1_1_corner_deformation_a0b368325041a3a8bc3597aac685aeabd}} 
+\index{ToonzExt::CornerDeformation@{ToonzExt::CornerDeformation}!findActionLength@{findActionLength}}
+\index{findActionLength@{findActionLength}!ToonzExt::CornerDeformation@{ToonzExt::CornerDeformation}}
+\doxysubsubsection{\texorpdfstring{findActionLength()}{findActionLength()}}
+{\footnotesize\ttfamily double Corner\+Deformation\+::find\+Action\+Length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_toonz_ext_1_1_stroke_deformation_impl}{Toonz\+Ext\+::\+Stroke\+Deformation\+Impl}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00102                                            \{}
+\DoxyCodeLine{00103   \textcolor{comment}{// just to limit action until parameters are not computed}}
+\DoxyCodeLine{00104   \textcolor{comment}{//  return  lengthOfAction\_ < stroke2transform\_-\/>getLength() ?}}
+\DoxyCodeLine{00105   \textcolor{comment}{//          lengthOfAction\_ : stroke2transform\_-\/>getLength();}}
+\DoxyCodeLine{00106   \textcolor{comment}{// return -\/1;//}}
+\DoxyCodeLine{00107   \textcolor{keywordflow}{return} stroke2manipulate\_-\/>\mbox{\hyperlink{class_t_stroke_a079a513cb8a60d9a759b4f0c8211eab4}{getLength}}();}
+\DoxyCodeLine{00108 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_toonz_ext_1_1_corner_deformation_a33702122ce08d1c190e25a5d479d9fd3}\label{class_toonz_ext_1_1_corner_deformation_a33702122ce08d1c190e25a5d479d9fd3}} 
+\index{ToonzExt::CornerDeformation@{ToonzExt::CornerDeformation}!findExtremes\_@{findExtremes\_}}
+\index{findExtremes\_@{findExtremes\_}!ToonzExt::CornerDeformation@{ToonzExt::CornerDeformation}}
+\doxysubsubsection{\texorpdfstring{findExtremes\_()}{findExtremes\_()}}
+{\footnotesize\ttfamily bool Corner\+Deformation\+::find\+Extremes\+\_\+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_toonz_ext_1_1_context_status}{Context\+Status}} $\ast$}]{,  }\item[{\mbox{\hyperlink{namespace_toonz_ext_af0f90ec10aea6fde591103d3611b638b}{Interval}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Retrieve the nearest extremes to point selected. 
+
+Implements \mbox{\hyperlink{class_toonz_ext_1_1_stroke_deformation_impl_a9ed4c2e1089ad53f7cd5699d3fde0061}{Toonz\+Ext\+::\+Stroke\+Deformation\+Impl}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053                                                      \{}
+\DoxyCodeLine{00054   \textcolor{keywordflow}{return} \mbox{\hyperlink{namespace_toonz_ext_af9eab69f85f85841b9bf44c85ac86765}{ToonzExt::findNearestSpireCorners}}(status-\/>stroke2change\_, status-\/>w\_,}
+\DoxyCodeLine{00055                                            ret, status-\/>cornerSize\_,}
+\DoxyCodeLine{00056                                            \&this-\/>getSpiresList());}
+\DoxyCodeLine{00057 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00598}{Toonz\+Ext\+::find\+Nearest\+Spire\+Corners()}}.
+
+\mbox{\Hypertarget{class_toonz_ext_1_1_corner_deformation_acf18355125937dd2f8636a63ab06a11e}\label{class_toonz_ext_1_1_corner_deformation_acf18355125937dd2f8636a63ab06a11e}} 
+\index{ToonzExt::CornerDeformation@{ToonzExt::CornerDeformation}!instance@{instance}}
+\index{instance@{instance}!ToonzExt::CornerDeformation@{ToonzExt::CornerDeformation}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_toonz_ext_1_1_corner_deformation}{Corner\+Deformation}} $\ast$ Corner\+Deformation\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00112                                                \{}
+\DoxyCodeLine{00113   \textcolor{keyword}{static} \mbox{\hyperlink{class_toonz_ext_1_1_corner_deformation}{CornerDeformation}} singleton;}
+\DoxyCodeLine{00114   \textcolor{keywordflow}{return} \&singleton;}
+\DoxyCodeLine{00115 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/ext/Corner\+Deformation.\+h\item 
+E\+:/opentoonz/toonz/sources/tnzext/Corner\+Deformation.\+cpp\end{DoxyCompactItemize}

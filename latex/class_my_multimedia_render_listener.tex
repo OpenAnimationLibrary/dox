@@ -1,0 +1,192 @@
+\hypertarget{class_my_multimedia_render_listener}{}\doxysection{My\+Multimedia\+Render\+Listener Class Reference}
+\label{class_my_multimedia_render_listener}\index{MyMultimediaRenderListener@{MyMultimediaRenderListener}}
+Inheritance diagram for My\+Multimedia\+Render\+Listener\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_my_multimedia_render_listener}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_my_multimedia_render_listener_aced58159634b67c96693ebf79ebd42cb}{My\+Multimedia\+Render\+Listener}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&fp, int frame\+Count)
+\item 
+bool \mbox{\hyperlink{class_my_multimedia_render_listener_ad00f77e67be323839d29bcf4eaf52ae0}{on\+Frame\+Completed}} (int frame, int column) override
+\item 
+bool \mbox{\hyperlink{class_my_multimedia_render_listener_aabbe73c8b27ff91a2a0de9075fe442ba}{on\+Frame\+Failed}} (int frame, int column, \mbox{\hyperlink{class_t_exception}{TException}} \&e) override
+\item 
+void \mbox{\hyperlink{class_my_multimedia_render_listener_adacd5473b08afa4de274bdc12b60f8d3}{on\+Sequence\+Completed}} (int column) override
+\item 
+void \mbox{\hyperlink{class_my_multimedia_render_listener_afff9631ccc7d099b4d45e942169b9b0a}{on\+Render\+Completed}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \mbox{\hyperlink{class_my_multimedia_render_listener_a31878be6ad010c6c14de11f81eb6a3b3}{m\+\_\+fp}}
+\item 
+int \mbox{\hyperlink{class_my_multimedia_render_listener_ab69aeadef68599fb84dd4f575838a35c}{m\+\_\+frame\+Count}}
+\item 
+int \mbox{\hyperlink{class_my_multimedia_render_listener_a12e54a2c38cdfa29a033c96558e89a57}{m\+\_\+frame\+Completed\+Count}}
+\item 
+int \mbox{\hyperlink{class_my_multimedia_render_listener_a33ea59ac4e9b2a1a9e92db3899037910}{m\+\_\+frame\+Failed\+Count}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_my_multimedia_render_listener_aced58159634b67c96693ebf79ebd42cb}\label{class_my_multimedia_render_listener_aced58159634b67c96693ebf79ebd42cb}} 
+\index{MyMultimediaRenderListener@{MyMultimediaRenderListener}!MyMultimediaRenderListener@{MyMultimediaRenderListener}}
+\index{MyMultimediaRenderListener@{MyMultimediaRenderListener}!MyMultimediaRenderListener@{MyMultimediaRenderListener}}
+\doxysubsubsection{\texorpdfstring{MyMultimediaRenderListener()}{MyMultimediaRenderListener()}}
+{\footnotesize\ttfamily My\+Multimedia\+Render\+Listener\+::\+My\+Multimedia\+Render\+Listener (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{fp,  }\item[{int}]{frame\+Count }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00365       : m\_fp(fp)}
+\DoxyCodeLine{00366       , m\_frameCount(frameCount)}
+\DoxyCodeLine{00367       , m\_frameCompletedCount(0)}
+\DoxyCodeLine{00368       , m\_frameFailedCount(0) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_my_multimedia_render_listener_ad00f77e67be323839d29bcf4eaf52ae0}\label{class_my_multimedia_render_listener_ad00f77e67be323839d29bcf4eaf52ae0}} 
+\index{MyMultimediaRenderListener@{MyMultimediaRenderListener}!onFrameCompleted@{onFrameCompleted}}
+\index{onFrameCompleted@{onFrameCompleted}!MyMultimediaRenderListener@{MyMultimediaRenderListener}}
+\doxysubsubsection{\texorpdfstring{onFrameCompleted()}{onFrameCompleted()}}
+{\footnotesize\ttfamily bool My\+Multimedia\+Render\+Listener\+::on\+Frame\+Completed (\begin{DoxyParamCaption}\item[{int}]{frame,  }\item[{int}]{column }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_multimedia_renderer_1_1_listener}{Multimedia\+Renderer\+::\+Listener}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00378                                                                        \{}
+\DoxyCodeLine{00379   \textcolor{keywordtype}{int} actualFrame = frame + 1;}
+\DoxyCodeLine{00380   \textcolor{keywordtype}{string} msg      = ::to\_string(m\_fp) + \textcolor{stringliteral}{"{}, column "{}} + std::to\_string(column) +}
+\DoxyCodeLine{00381                \textcolor{stringliteral}{"{}, frame "{}} + std::to\_string(actualFrame) + \textcolor{stringliteral}{"{} computed"{}};}
+\DoxyCodeLine{00382   cout << msg << endl;}
+\DoxyCodeLine{00383   m\_userLog-\/>info(msg);}
+\DoxyCodeLine{00384   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_farm_controller}{FarmController}}) \{}
+\DoxyCodeLine{00385     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00386       \mbox{\hyperlink{class_farm_controller}{FarmController}}-\/>taskProgress(\mbox{\hyperlink{class_task_id}{TaskId}},}
+\DoxyCodeLine{00387                                    m\_frameCompletedCount + m\_frameFailedCount,}
+\DoxyCodeLine{00388                                    m\_frameCount, actualFrame, FrameDone);}
+\DoxyCodeLine{00389     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00390       msg = \textcolor{stringliteral}{"{}Unable to connect to "{}} + std::to\_string(FarmControllerPort) + \textcolor{stringliteral}{"{}@"{}} +}
+\DoxyCodeLine{00391             FarmControllerName.toStdString();}
+\DoxyCodeLine{00392       cout << msg;}
+\DoxyCodeLine{00393       m\_userLog-\/>error(msg);}
+\DoxyCodeLine{00394     \}}
+\DoxyCodeLine{00395   \}}
+\DoxyCodeLine{00396 }
+\DoxyCodeLine{00397   m\_frameCompletedCount++;}
+\DoxyCodeLine{00398   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00399 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_multimedia_render_listener_aabbe73c8b27ff91a2a0de9075fe442ba}\label{class_my_multimedia_render_listener_aabbe73c8b27ff91a2a0de9075fe442ba}} 
+\index{MyMultimediaRenderListener@{MyMultimediaRenderListener}!onFrameFailed@{onFrameFailed}}
+\index{onFrameFailed@{onFrameFailed}!MyMultimediaRenderListener@{MyMultimediaRenderListener}}
+\doxysubsubsection{\texorpdfstring{onFrameFailed()}{onFrameFailed()}}
+{\footnotesize\ttfamily bool My\+Multimedia\+Render\+Listener\+::on\+Frame\+Failed (\begin{DoxyParamCaption}\item[{int}]{frame,  }\item[{int}]{column,  }\item[{\mbox{\hyperlink{class_t_exception}{TException}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_multimedia_renderer_1_1_listener}{Multimedia\+Renderer\+::\+Listener}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00404                                                               \{}
+\DoxyCodeLine{00405   \textcolor{keywordtype}{int} actualFrame = frame + 1;}
+\DoxyCodeLine{00406   \textcolor{keywordtype}{string} msg      = ::to\_string(m\_fp) + \textcolor{stringliteral}{"{}, column "{}} + std::to\_string(column) +}
+\DoxyCodeLine{00407                \textcolor{stringliteral}{"{}, frame "{}} + std::to\_string(actualFrame) + \textcolor{stringliteral}{"{} failed"{}};}
+\DoxyCodeLine{00408 }
+\DoxyCodeLine{00409   \textcolor{keywordflow}{if} (!e.getMessage().empty()) msg += \textcolor{stringliteral}{"{}: "{}} + ::to\_string(e.getMessage());}
+\DoxyCodeLine{00410 }
+\DoxyCodeLine{00411   cout << msg << endl;}
+\DoxyCodeLine{00412   m\_userLog-\/>error(msg);}
+\DoxyCodeLine{00413   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_farm_controller}{FarmController}}) \{}
+\DoxyCodeLine{00414     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00415       \mbox{\hyperlink{class_farm_controller}{FarmController}}-\/>taskProgress(\mbox{\hyperlink{class_task_id}{TaskId}},}
+\DoxyCodeLine{00416                                    m\_frameCompletedCount + m\_frameFailedCount,}
+\DoxyCodeLine{00417                                    m\_frameCount, actualFrame, FrameFailed);}
+\DoxyCodeLine{00418     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00419       msg = \textcolor{stringliteral}{"{}Unable to connect to "{}} + std::to\_string(FarmControllerPort) + \textcolor{stringliteral}{"{}@"{}} +}
+\DoxyCodeLine{00420             FarmControllerName.toStdString();}
+\DoxyCodeLine{00421       cout << msg;}
+\DoxyCodeLine{00422       m\_userLog-\/>error(msg);}
+\DoxyCodeLine{00423     \}}
+\DoxyCodeLine{00424   \}}
+\DoxyCodeLine{00425 }
+\DoxyCodeLine{00426   m\_frameFailedCount++;}
+\DoxyCodeLine{00427   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00428 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_multimedia_render_listener_afff9631ccc7d099b4d45e942169b9b0a}\label{class_my_multimedia_render_listener_afff9631ccc7d099b4d45e942169b9b0a}} 
+\index{MyMultimediaRenderListener@{MyMultimediaRenderListener}!onRenderCompleted@{onRenderCompleted}}
+\index{onRenderCompleted@{onRenderCompleted}!MyMultimediaRenderListener@{MyMultimediaRenderListener}}
+\doxysubsubsection{\texorpdfstring{onRenderCompleted()}{onRenderCompleted()}}
+{\footnotesize\ttfamily void My\+Multimedia\+Render\+Listener\+::on\+Render\+Completed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_multimedia_renderer_1_1_listener}{Multimedia\+Renderer\+::\+Listener}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00373 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_my_multimedia_render_listener_adacd5473b08afa4de274bdc12b60f8d3}\label{class_my_multimedia_render_listener_adacd5473b08afa4de274bdc12b60f8d3}} 
+\index{MyMultimediaRenderListener@{MyMultimediaRenderListener}!onSequenceCompleted@{onSequenceCompleted}}
+\index{onSequenceCompleted@{onSequenceCompleted}!MyMultimediaRenderListener@{MyMultimediaRenderListener}}
+\doxysubsubsection{\texorpdfstring{onSequenceCompleted()}{onSequenceCompleted()}}
+{\footnotesize\ttfamily void My\+Multimedia\+Render\+Listener\+::on\+Sequence\+Completed (\begin{DoxyParamCaption}\item[{int}]{column }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_multimedia_renderer_1_1_listener}{Multimedia\+Renderer\+::\+Listener}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00372 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_my_multimedia_render_listener_a31878be6ad010c6c14de11f81eb6a3b3}\label{class_my_multimedia_render_listener_a31878be6ad010c6c14de11f81eb6a3b3}} 
+\index{MyMultimediaRenderListener@{MyMultimediaRenderListener}!m\_fp@{m\_fp}}
+\index{m\_fp@{m\_fp}!MyMultimediaRenderListener@{MyMultimediaRenderListener}}
+\doxysubsubsection{\texorpdfstring{m\_fp}{m\_fp}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} My\+Multimedia\+Render\+Listener\+::m\+\_\+fp}
+
+\mbox{\Hypertarget{class_my_multimedia_render_listener_a12e54a2c38cdfa29a033c96558e89a57}\label{class_my_multimedia_render_listener_a12e54a2c38cdfa29a033c96558e89a57}} 
+\index{MyMultimediaRenderListener@{MyMultimediaRenderListener}!m\_frameCompletedCount@{m\_frameCompletedCount}}
+\index{m\_frameCompletedCount@{m\_frameCompletedCount}!MyMultimediaRenderListener@{MyMultimediaRenderListener}}
+\doxysubsubsection{\texorpdfstring{m\_frameCompletedCount}{m\_frameCompletedCount}}
+{\footnotesize\ttfamily int My\+Multimedia\+Render\+Listener\+::m\+\_\+frame\+Completed\+Count}
+
+\mbox{\Hypertarget{class_my_multimedia_render_listener_ab69aeadef68599fb84dd4f575838a35c}\label{class_my_multimedia_render_listener_ab69aeadef68599fb84dd4f575838a35c}} 
+\index{MyMultimediaRenderListener@{MyMultimediaRenderListener}!m\_frameCount@{m\_frameCount}}
+\index{m\_frameCount@{m\_frameCount}!MyMultimediaRenderListener@{MyMultimediaRenderListener}}
+\doxysubsubsection{\texorpdfstring{m\_frameCount}{m\_frameCount}}
+{\footnotesize\ttfamily int My\+Multimedia\+Render\+Listener\+::m\+\_\+frame\+Count}
+
+\mbox{\Hypertarget{class_my_multimedia_render_listener_a33ea59ac4e9b2a1a9e92db3899037910}\label{class_my_multimedia_render_listener_a33ea59ac4e9b2a1a9e92db3899037910}} 
+\index{MyMultimediaRenderListener@{MyMultimediaRenderListener}!m\_frameFailedCount@{m\_frameFailedCount}}
+\index{m\_frameFailedCount@{m\_frameFailedCount}!MyMultimediaRenderListener@{MyMultimediaRenderListener}}
+\doxysubsubsection{\texorpdfstring{m\_frameFailedCount}{m\_frameFailedCount}}
+{\footnotesize\ttfamily int My\+Multimedia\+Render\+Listener\+::m\+\_\+frame\+Failed\+Count}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tcomposer/tcomposer.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,216 @@
+\hypertarget{class_t_main_window}{}\doxysection{TMain\+Window Class Reference}
+\label{class_t_main_window}\index{TMainWindow@{TMainWindow}}
+
+
+{\ttfamily \#include $<$tdockwindows.\+h$>$}
+
+Inheritance diagram for TMain\+Window\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_t_main_window}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_main_window_abade961efef8053d29daccff09d02962}{TMain\+Window}} (QWidget $\ast$parent=0, Qt\+::\+Window\+Flags flags=0)
+\item 
+void \mbox{\hyperlink{class_t_main_window_a5bd7a251e7bca80111d0d9bd90943015}{add\+Dock\+Widget}} (\mbox{\hyperlink{class_t_dock_widget}{TDock\+Widget}} $\ast$item)
+\item 
+void \mbox{\hyperlink{class_t_main_window_a56419dc52975f0243f8ffa0d2b1e70d9}{remove\+Dock\+Widget}} (\mbox{\hyperlink{class_t_dock_widget}{TDock\+Widget}} $\ast$item)
+\item 
+void \mbox{\hyperlink{class_t_main_window_a716178e8b8a87fe55c6c93f29556b7cd}{set\+Menu\+Widget}} (QWidget $\ast$menubar)
+\item 
+QWidget $\ast$ \mbox{\hyperlink{class_t_main_window_a26fc70432d052d506fe36fd2916d29cb}{menu\+Widget}} () const
+\item 
+void \mbox{\hyperlink{class_t_main_window_a781dd41b5b24e8f0ae58e60f198a1a30}{set\+Deco\+Allocator}} (\mbox{\hyperlink{class_dock_deco_allocator}{Dock\+Deco\+Allocator}} $\ast$allocator)
+\item 
+void \mbox{\hyperlink{class_t_main_window_a9f2c1cd23cf4cc90242abaeae516762a}{set\+Separators\+Thickness}} (int thick)
+\begin{DoxyCompactList}\small\item\em Sets global thickness of separators between dock widget. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_dock_layout}{Dock\+Layout}} $\ast$ \mbox{\hyperlink{class_t_main_window_ada554f5523486d6da0d7cdb09753f44e}{dock\+Layout}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_main_window_a23a97e9cd3d48b64562b0a3f1248d4d9}{resize\+Event}} (QResize\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_t_main_window}{TMain\+Window}} class is intended as a convenience QMain\+Window-\/like interface for \mbox{\hyperlink{class_dock_layout}{Dock\+Layout}}.
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_t_dock_widget}{TDock\+Widget}} class. 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_main_window_abade961efef8053d29daccff09d02962}\label{class_t_main_window_abade961efef8053d29daccff09d02962}} 
+\index{TMainWindow@{TMainWindow}!TMainWindow@{TMainWindow}}
+\index{TMainWindow@{TMainWindow}!TMainWindow@{TMainWindow}}
+\doxysubsubsection{\texorpdfstring{TMainWindow()}{TMainWindow()}}
+{\footnotesize\ttfamily TMain\+Window\+::\+TMain\+Window (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0},  }\item[{Qt\+::\+Window\+Flags}]{flags = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00034     : QWidget(parent, flags) \{}
+\DoxyCodeLine{00035   \textcolor{comment}{// Delete on close}}
+\DoxyCodeLine{00036   setAttribute(Qt::WidgetAttribute(Qt::WA\_DeleteOnClose));}
+\DoxyCodeLine{00037 }
+\DoxyCodeLine{00038   \textcolor{comment}{// Set a vertical layout to include menu bars}}
+\DoxyCodeLine{00039   QVBoxLayout *vlayout = \textcolor{keyword}{new} QVBoxLayout;}
+\DoxyCodeLine{00040   vlayout-\/>setMargin(0);}
+\DoxyCodeLine{00041   vlayout-\/>setSpacing(4);}
+\DoxyCodeLine{00042   setLayout(vlayout);}
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00044   \textcolor{comment}{// Allocate the dock layout}}
+\DoxyCodeLine{00045   m\_layout = \textcolor{keyword}{new} \mbox{\hyperlink{class_dock_layout}{DockLayout}};}
+\DoxyCodeLine{00046   m\_layout-\/>setContentsMargins(0, 0, 0, 0);}
+\DoxyCodeLine{00047   m\_layout-\/>setSpacing(4);}
+\DoxyCodeLine{00048   m\_layout-\/>\mbox{\hyperlink{class_dock_layout_a65ee3347a86fa365b7ce4f99ad91cec2}{setDecoAllocator}}(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_dock_deco_allocator}{TDockDecoAllocator}});}
+\DoxyCodeLine{00049   vlayout-\/>addLayout(m\_layout);}
+\DoxyCodeLine{00050   vlayout-\/>setAlignment(m\_layout, Qt::AlignTop);}
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{00052   show();  \textcolor{comment}{// NOTA: E' NECESSARIO MOSTRARE LA FINESTRA, prima di dockare}}
+\DoxyCodeLine{00053            \textcolor{comment}{// qualcosa (altrimenti non viene fatto}}
+\DoxyCodeLine{00054   \textcolor{comment}{// l'update della geometria della main window, e il contentsRect del layout}}
+\DoxyCodeLine{00055   \textcolor{comment}{// viene sballato!!).}}
+\DoxyCodeLine{00056 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_main_window_a522427b3d8335b10caac5eceba9dc89e}\label{class_t_main_window_a522427b3d8335b10caac5eceba9dc89e}} 
+\index{TMainWindow@{TMainWindow}!````~TMainWindow@{$\sim$TMainWindow}}
+\index{````~TMainWindow@{$\sim$TMainWindow}!TMainWindow@{TMainWindow}}
+\doxysubsubsection{\texorpdfstring{$\sim$TMainWindow()}{~TMainWindow()}}
+{\footnotesize\ttfamily TMain\+Window\+::$\sim$\+TMain\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00060 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_main_window_a5bd7a251e7bca80111d0d9bd90943015}\label{class_t_main_window_a5bd7a251e7bca80111d0d9bd90943015}} 
+\index{TMainWindow@{TMainWindow}!addDockWidget@{addDockWidget}}
+\index{addDockWidget@{addDockWidget}!TMainWindow@{TMainWindow}}
+\doxysubsubsection{\texorpdfstring{addDockWidget()}{addDockWidget()}}
+{\footnotesize\ttfamily void TMain\+Window\+::add\+Dock\+Widget (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_dock_widget}{TDock\+Widget}} $\ast$}]{item }\end{DoxyParamCaption})}
+
+Adds input {\bfseries{item}} to this \mbox{\hyperlink{class_t_main_window}{TMain\+Window}}. If item was already assigned to {\bfseries{this}} \mbox{\hyperlink{class_t_main_window}{TMain\+Window}}, nothing happens. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00066                                                  \{}
+\DoxyCodeLine{00067   \textcolor{keywordflow}{if} (!m\_layout-\/>find(item)) m\_layout-\/>addWidget(item);}
+\DoxyCodeLine{00068 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l00875}{Flip\+Book\+Pool\+::pop()}}, and \mbox{\hyperlink{l00121}{TDock\+Widget\+::\+TDock\+Widget()}}.
+
+\mbox{\Hypertarget{class_t_main_window_ada554f5523486d6da0d7cdb09753f44e}\label{class_t_main_window_ada554f5523486d6da0d7cdb09753f44e}} 
+\index{TMainWindow@{TMainWindow}!dockLayout@{dockLayout}}
+\index{dockLayout@{dockLayout}!TMainWindow@{TMainWindow}}
+\doxysubsubsection{\texorpdfstring{dockLayout()}{dockLayout()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_dock_layout}{Dock\+Layout}} $\ast$ TMain\+Window\+::dock\+Layout (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059 \{ \textcolor{keywordflow}{return} m\_layout; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_main_window_a26fc70432d052d506fe36fd2916d29cb}\label{class_t_main_window_a26fc70432d052d506fe36fd2916d29cb}} 
+\index{TMainWindow@{TMainWindow}!menuWidget@{menuWidget}}
+\index{menuWidget@{menuWidget}!TMainWindow@{TMainWindow}}
+\doxysubsubsection{\texorpdfstring{menuWidget()}{menuWidget()}}
+{\footnotesize\ttfamily QWidget $\ast$ TMain\+Window\+::menu\+Widget (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053 \{ \textcolor{keywordflow}{return} m\_menu; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_main_window_a56419dc52975f0243f8ffa0d2b1e70d9}\label{class_t_main_window_a56419dc52975f0243f8ffa0d2b1e70d9}} 
+\index{TMainWindow@{TMainWindow}!removeDockWidget@{removeDockWidget}}
+\index{removeDockWidget@{removeDockWidget}!TMainWindow@{TMainWindow}}
+\doxysubsubsection{\texorpdfstring{removeDockWidget()}{removeDockWidget()}}
+{\footnotesize\ttfamily void TMain\+Window\+::remove\+Dock\+Widget (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_dock_widget}{TDock\+Widget}} $\ast$}]{item }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00072                                                     \{}
+\DoxyCodeLine{00073   m\_layout-\/>removeWidget(item);}
+\DoxyCodeLine{00074 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_main_window_a23a97e9cd3d48b64562b0a3f1248d4d9}\label{class_t_main_window_a23a97e9cd3d48b64562b0a3f1248d4d9}} 
+\index{TMainWindow@{TMainWindow}!resizeEvent@{resizeEvent}}
+\index{resizeEvent@{resizeEvent}!TMainWindow@{TMainWindow}}
+\doxysubsubsection{\texorpdfstring{resizeEvent()}{resizeEvent()}}
+{\footnotesize\ttfamily void TMain\+Window\+::resize\+Event (\begin{DoxyParamCaption}\item[{QResize\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00109 \{ m\_layout-\/>redistribute(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_main_window_a781dd41b5b24e8f0ae58e60f198a1a30}\label{class_t_main_window_a781dd41b5b24e8f0ae58e60f198a1a30}} 
+\index{TMainWindow@{TMainWindow}!setDecoAllocator@{setDecoAllocator}}
+\index{setDecoAllocator@{setDecoAllocator}!TMainWindow@{TMainWindow}}
+\doxysubsubsection{\texorpdfstring{setDecoAllocator()}{setDecoAllocator()}}
+{\footnotesize\ttfamily void TMain\+Window\+::set\+Deco\+Allocator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_dock_deco_allocator}{Dock\+Deco\+Allocator}} $\ast$}]{allocator }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00093                                                                \{}
+\DoxyCodeLine{00094   m\_layout-\/>\mbox{\hyperlink{class_dock_layout_a65ee3347a86fa365b7ce4f99ad91cec2}{setDecoAllocator}}(allocator);}
+\DoxyCodeLine{00095 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_main_window_a716178e8b8a87fe55c6c93f29556b7cd}\label{class_t_main_window_a716178e8b8a87fe55c6c93f29556b7cd}} 
+\index{TMainWindow@{TMainWindow}!setMenuWidget@{setMenuWidget}}
+\index{setMenuWidget@{setMenuWidget}!TMainWindow@{TMainWindow}}
+\doxysubsubsection{\texorpdfstring{setMenuWidget()}{setMenuWidget()}}
+{\footnotesize\ttfamily void TMain\+Window\+::set\+Menu\+Widget (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{menubar }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080                                                 \{}
+\DoxyCodeLine{00081   \textcolor{keywordflow}{if} (menubar) \{}
+\DoxyCodeLine{00082     QVBoxLayout *vlayout = \textcolor{keyword}{static\_cast<}QVBoxLayout *\textcolor{keyword}{>}(layout());}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084     \textcolor{comment}{// If necessary, remove current menu bar}}
+\DoxyCodeLine{00085     \textcolor{keywordflow}{if} (m\_menu \&\& m\_menu != menubar) vlayout-\/>removeWidget(m\_menu);}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087     vlayout-\/>insertWidget(0, menubar);}
+\DoxyCodeLine{00088   \}}
+\DoxyCodeLine{00089 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_main_window_a9f2c1cd23cf4cc90242abaeae516762a}\label{class_t_main_window_a9f2c1cd23cf4cc90242abaeae516762a}} 
+\index{TMainWindow@{TMainWindow}!setSeparatorsThickness@{setSeparatorsThickness}}
+\index{setSeparatorsThickness@{setSeparatorsThickness}!TMainWindow@{TMainWindow}}
+\doxysubsubsection{\texorpdfstring{setSeparatorsThickness()}{setSeparatorsThickness()}}
+{\footnotesize\ttfamily void TMain\+Window\+::set\+Separators\+Thickness (\begin{DoxyParamCaption}\item[{int}]{thick }\end{DoxyParamCaption})}
+
+
+
+Sets global thickness of separators between dock widget. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00100                                                   \{}
+\DoxyCodeLine{00101   \textcolor{keywordflow}{if} (thick > 0) \{}
+\DoxyCodeLine{00102     m\_layout-\/>setSpacing(thick);}
+\DoxyCodeLine{00103     m\_layout-\/>redistribute();}
+\DoxyCodeLine{00104   \}}
+\DoxyCodeLine{00105 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/tdockwindows.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/tdockwindows.\+cpp\end{DoxyCompactItemize}

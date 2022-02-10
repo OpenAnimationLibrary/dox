@@ -1,0 +1,200 @@
+\hypertarget{class_fx_resource_builder}{}\doxysection{Fx\+Resource\+Builder Class Reference}
+\label{class_fx_resource_builder}\index{FxResourceBuilder@{FxResourceBuilder}}
+Inheritance diagram for Fx\+Resource\+Builder\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_fx_resource_builder}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_fx_resource_builder_a796f2ab138f968bad33ede4267460f59}{Fx\+Resource\+Builder}} (const std\+::string \&resource\+Name, const \mbox{\hyperlink{class_t_raster_fx_p}{TRaster\+FxP}} \&fx, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&rs, double frame)
+\item 
+void \mbox{\hyperlink{class_fx_resource_builder_aa9c8156373e178ba747b96d0afb97303}{build}} (\mbox{\hyperlink{class_t_tile}{TTile}} \&tile)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_fx_resource_builder_a402c5e02ece43dc79c0bdb64dfcce476}{sim\+Compute}} (const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&rect) override
+\item 
+void \mbox{\hyperlink{class_fx_resource_builder_a22415d83892b7d38d90c2648e83cd7c2}{build\+Tile\+To\+Calculate}} (const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&tile\+Rect)
+\item 
+void \mbox{\hyperlink{class_fx_resource_builder_a55c1266e4a193b575df220c994f76f31}{compute}} (const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&tile\+Rect) override
+\item 
+void \mbox{\hyperlink{class_fx_resource_builder_abab90a95d13b640d77b691cbb72e70f0}{upload}} (\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}} \&resource) override
+\item 
+bool \mbox{\hyperlink{class_fx_resource_builder_a24f8ac272c68308e90be3875e6663fbf}{download}} (\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}} \&resource) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_fx_resource_builder_a796f2ab138f968bad33ede4267460f59}\label{class_fx_resource_builder_a796f2ab138f968bad33ede4267460f59}} 
+\index{FxResourceBuilder@{FxResourceBuilder}!FxResourceBuilder@{FxResourceBuilder}}
+\index{FxResourceBuilder@{FxResourceBuilder}!FxResourceBuilder@{FxResourceBuilder}}
+\doxysubsubsection{\texorpdfstring{FxResourceBuilder()}{FxResourceBuilder()}}
+{\footnotesize\ttfamily Fx\+Resource\+Builder\+::\+Fx\+Resource\+Builder (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{resource\+Name,  }\item[{const \mbox{\hyperlink{class_t_raster_fx_p}{TRaster\+FxP}} \&}]{fx,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{rs,  }\item[{double}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00377       : \mbox{\hyperlink{class_resource_builder}{ResourceBuilder}}(resourceName, fx.getPointer(), frame, rs)}
+\DoxyCodeLine{00378       , m\_rfx(fx)}
+\DoxyCodeLine{00379       , m\_frame(frame)}
+\DoxyCodeLine{00380       , m\_rs(\&rs)}
+\DoxyCodeLine{00381       , m\_currTile(0) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_fx_resource_builder_aa9c8156373e178ba747b96d0afb97303}\label{class_fx_resource_builder_aa9c8156373e178ba747b96d0afb97303}} 
+\index{FxResourceBuilder@{FxResourceBuilder}!build@{build}}
+\index{build@{build}!FxResourceBuilder@{FxResourceBuilder}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily void Fx\+Resource\+Builder\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_tile}{TTile}} \&}]{tile }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00401                                                 \{}
+\DoxyCodeLine{00402   m\_outTile = \&tile;}
+\DoxyCodeLine{00403 }
+\DoxyCodeLine{00404   \mbox{\hyperlink{class_t_dimension_t}{TDimension}} dim(tile.getRaster()-\/>getSize());}
+\DoxyCodeLine{00405   m\_outRect = \mbox{\hyperlink{class_t_rect_t}{TRectD}}(tile.m\_pos, \mbox{\hyperlink{class_t_dimension_t}{TDimensionD}}(dim.lx, dim.ly));}
+\DoxyCodeLine{00406 }
+\DoxyCodeLine{00407   ResourceBuilder::build(m\_outRect);}
+\DoxyCodeLine{00408 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_resource_builder_a22415d83892b7d38d90c2648e83cd7c2}\label{class_fx_resource_builder_a22415d83892b7d38d90c2648e83cd7c2}} 
+\index{FxResourceBuilder@{FxResourceBuilder}!buildTileToCalculate@{buildTileToCalculate}}
+\index{buildTileToCalculate@{buildTileToCalculate}!FxResourceBuilder@{FxResourceBuilder}}
+\doxysubsubsection{\texorpdfstring{buildTileToCalculate()}{buildTileToCalculate()}}
+{\footnotesize\ttfamily void Fx\+Resource\+Builder\+::build\+Tile\+To\+Calculate (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{tile\+Rect }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00412                                                                    \{}
+\DoxyCodeLine{00413   \textcolor{keywordflow}{if} (tileGeom == m\_outRect) \{}
+\DoxyCodeLine{00414     m\_currTile = m\_outTile;}
+\DoxyCodeLine{00415     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00416   \}}
+\DoxyCodeLine{00417 }
+\DoxyCodeLine{00418   m\_newTile.m\_pos = tileGeom.getP00();}
+\DoxyCodeLine{00419 }
+\DoxyCodeLine{00420   \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} outRas(m\_outTile-\/>getRaster());}
+\DoxyCodeLine{00421 }
+\DoxyCodeLine{00422   \textcolor{comment}{// If possible, try to reuse outRas's buffer.}}
+\DoxyCodeLine{00423 }
+\DoxyCodeLine{00424   \mbox{\hyperlink{class_t_dimension_t}{TDimension}} outputSize(outRas-\/>getSize());}
+\DoxyCodeLine{00425   \mbox{\hyperlink{class_t_dimension_t}{TDimension}} requiredSize(tceil(tileGeom.getLx()), tceil(tileGeom.getLy()));}
+\DoxyCodeLine{00426 }
+\DoxyCodeLine{00427   \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras;}
+\DoxyCodeLine{00428   \textcolor{keywordflow}{if} (outputSize.lx >= requiredSize.lx \&\& outputSize.ly >= requiredSize.ly) \{}
+\DoxyCodeLine{00429     \textcolor{comment}{// Reuse fxOutput's buffer}}
+\DoxyCodeLine{00430     \mbox{\hyperlink{class_t_rect_t}{TRect}} rect(0, 0, requiredSize.lx -\/ 1, requiredSize.ly -\/ 1);}
+\DoxyCodeLine{00431     ras = outRas-\/>extract(rect);}
+\DoxyCodeLine{00432     ras-\/>clear();}
+\DoxyCodeLine{00433   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00434     ras = outRas-\/>create(requiredSize.lx, requiredSize.ly);}
+\DoxyCodeLine{00435 }
+\DoxyCodeLine{00436   m\_newTile.setRaster(ras);}
+\DoxyCodeLine{00437 }
+\DoxyCodeLine{00438   m\_currTile = \&m\_newTile;}
+\DoxyCodeLine{00439 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_resource_builder_a55c1266e4a193b575df220c994f76f31}\label{class_fx_resource_builder_a55c1266e4a193b575df220c994f76f31}} 
+\index{FxResourceBuilder@{FxResourceBuilder}!compute@{compute}}
+\index{compute@{compute}!FxResourceBuilder@{FxResourceBuilder}}
+\doxysubsubsection{\texorpdfstring{compute()}{compute()}}
+{\footnotesize\ttfamily void Fx\+Resource\+Builder\+::compute (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{tile\+Rect }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_resource_builder}{Resource\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00443                                                       \{}
+\DoxyCodeLine{00444 \textcolor{preprocessor}{\#ifdef DIAGNOSTICS}}
+\DoxyCodeLine{00445   \mbox{\hyperlink{class_t_stop_watch}{TStopWatch}} sw;}
+\DoxyCodeLine{00446   sw.\mbox{\hyperlink{class_t_stop_watch_a81eefb8cd2dc776cc31799973be063a8}{start}}();}
+\DoxyCodeLine{00447 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00448 }
+\DoxyCodeLine{00449   buildTileToCalculate(tileRect);}
+\DoxyCodeLine{00450   m\_rfx-\/>doCompute(*m\_currTile, m\_frame, *m\_rs);}
+\DoxyCodeLine{00451 }
+\DoxyCodeLine{00452 \textcolor{preprocessor}{\#ifdef DIAGNOSTICS}}
+\DoxyCodeLine{00453   sw.stop();}
+\DoxyCodeLine{00454 }
+\DoxyCodeLine{00455   DIAGNOSTICS\_THRSET(\textcolor{stringliteral}{"{}FComputeTime"{}}, sw.\mbox{\hyperlink{class_t_stop_watch_a0c8ade9d86862151c7f151394c04b0f8}{getTotalTime}}());}
+\DoxyCodeLine{00456 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00457 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_resource_builder_a24f8ac272c68308e90be3875e6663fbf}\label{class_fx_resource_builder_a24f8ac272c68308e90be3875e6663fbf}} 
+\index{FxResourceBuilder@{FxResourceBuilder}!download@{download}}
+\index{download@{download}!FxResourceBuilder@{FxResourceBuilder}}
+\doxysubsubsection{\texorpdfstring{download()}{download()}}
+{\footnotesize\ttfamily bool Fx\+Resource\+Builder\+::download (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}} \&}]{resource }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_resource_builder}{Resource\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00468                                                           \{}
+\DoxyCodeLine{00469   \textcolor{comment}{// In case the output tile was used to calculate the fx, avoid downloading}}
+\DoxyCodeLine{00470   \textcolor{keywordflow}{if} (m\_currTile == m\_outTile) \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00471 }
+\DoxyCodeLine{00472   \textcolor{keywordflow}{return} resource-\/>downloadAll(*m\_outTile);}
+\DoxyCodeLine{00473 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_resource_builder_a402c5e02ece43dc79c0bdb64dfcce476}\label{class_fx_resource_builder_a402c5e02ece43dc79c0bdb64dfcce476}} 
+\index{FxResourceBuilder@{FxResourceBuilder}!simCompute@{simCompute}}
+\index{simCompute@{simCompute}!FxResourceBuilder@{FxResourceBuilder}}
+\doxysubsubsection{\texorpdfstring{simCompute()}{simCompute()}}
+{\footnotesize\ttfamily void Fx\+Resource\+Builder\+::sim\+Compute (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{rect }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_resource_builder}{Resource\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00386                                                \{}
+\DoxyCodeLine{00387     \mbox{\hyperlink{class_t_rect_t}{TRectD}} rectCpy(}
+\DoxyCodeLine{00388         rect);  \textcolor{comment}{// Why the hell dryCompute(..) has non-\/const TRectD\& input ????}}
+\DoxyCodeLine{00389     m\_rfx-\/>doDryCompute(rectCpy, m\_frame, *m\_rs);}
+\DoxyCodeLine{00390   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_resource_builder_abab90a95d13b640d77b691cbb72e70f0}\label{class_fx_resource_builder_abab90a95d13b640d77b691cbb72e70f0}} 
+\index{FxResourceBuilder@{FxResourceBuilder}!upload@{upload}}
+\index{upload@{upload}!FxResourceBuilder@{FxResourceBuilder}}
+\doxysubsubsection{\texorpdfstring{upload()}{upload()}}
+{\footnotesize\ttfamily void Fx\+Resource\+Builder\+::upload (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_cache_resource_p}{TCache\+ResourceP}} \&}]{resource }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_resource_builder}{Resource\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00461                                                         \{}
+\DoxyCodeLine{00462   resource-\/>\mbox{\hyperlink{class_t_cache_resource_a7fca73a70165610ef7d0ed9d67d32150}{upload}}(*m\_currTile);}
+\DoxyCodeLine{00463   \textcolor{keywordflow}{if} (m\_currTile == \&m\_newTile) m\_newTile.setRaster(0);}
+\DoxyCodeLine{00464 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnzbase/trasterfx.\+cpp\end{DoxyCompactItemize}

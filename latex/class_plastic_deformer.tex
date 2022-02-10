@@ -1,0 +1,161 @@
+\hypertarget{class_plastic_deformer}{}\doxysection{Plastic\+Deformer Class Reference}
+\label{class_plastic_deformer}\index{PlasticDeformer@{PlasticDeformer}}
+
+
+{\ttfamily \#include $<$plasticdeformer.\+h$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_plastic_deformer_1_1_imp}{Imp}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_plastic_deformer_ac5ad19e5ff5c86bce58c359ae34cee04}{compiled}} () const
+\item 
+void \mbox{\hyperlink{class_plastic_deformer_abe1558850cd48e10d38f0190b097b2c9}{initialize}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TTexture\+MeshP}} \&mesh)
+\item 
+bool \mbox{\hyperlink{class_plastic_deformer_ac5664f9a9d78fececbb185cb7789c137}{compile}} (const std\+::vector$<$ \mbox{\hyperlink{struct_plastic_handle}{Plastic\+Handle}} $>$ \&handles, int $\ast$face\+Hints=0)
+\begin{DoxyCompactList}\small\item\em Compiles the deformer against a group of deformation handles, and returns whether the procedure was successful. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_plastic_deformer_ac729bc75dd44daf84a5c6c2218433b57}{deform}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} $\ast$dst\+Handle\+Pos, double $\ast$dst\+Vertices\+Coords) const
+\item 
+void \mbox{\hyperlink{class_plastic_deformer_a8ad824f7c9b12bcb098b1dec3ed7ce2c}{release\+Initialized\+Data}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_plastic_deformer}{Plastic\+Deformer}} class implements an interactive mesh deformer.
+
+\begin{DoxyWarning}{Warning}
+Objects of this class expect that the mesh and rigidities supplied on construction remain {\bfseries{constant}} throughout the deformer\textquotesingle{}s lifetime. Deforming a changed mesh is not supported and will typically result in a crash. Deforming a mesh whose vertex rigidities have been {\itshape deleted} will result in a crash. Altering the rigidities results in undefined deformations until the deformer is recompiled against them. 
+\end{DoxyWarning}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_plastic_deformer_afa2e87c28efe64546641ecf426189bf9}\label{class_plastic_deformer_afa2e87c28efe64546641ecf426189bf9}} 
+\index{PlasticDeformer@{PlasticDeformer}!PlasticDeformer@{PlasticDeformer}}
+\index{PlasticDeformer@{PlasticDeformer}!PlasticDeformer@{PlasticDeformer}}
+\doxysubsubsection{\texorpdfstring{PlasticDeformer()}{PlasticDeformer()}}
+{\footnotesize\ttfamily Plastic\+Deformer\+::\+Plastic\+Deformer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00848 : m\_imp(\textcolor{keyword}{new} Imp) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plastic_deformer_a1308ce3f03a7f6b00b33a94692a129ca}\label{class_plastic_deformer_a1308ce3f03a7f6b00b33a94692a129ca}} 
+\index{PlasticDeformer@{PlasticDeformer}!````~PlasticDeformer@{$\sim$PlasticDeformer}}
+\index{````~PlasticDeformer@{$\sim$PlasticDeformer}!PlasticDeformer@{PlasticDeformer}}
+\doxysubsubsection{\texorpdfstring{$\sim$PlasticDeformer()}{~PlasticDeformer()}}
+{\footnotesize\ttfamily Plastic\+Deformer\+::$\sim$\+Plastic\+Deformer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00852 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_plastic_deformer_ac5664f9a9d78fececbb185cb7789c137}\label{class_plastic_deformer_ac5664f9a9d78fececbb185cb7789c137}} 
+\index{PlasticDeformer@{PlasticDeformer}!compile@{compile}}
+\index{compile@{compile}!PlasticDeformer@{PlasticDeformer}}
+\doxysubsubsection{\texorpdfstring{compile()}{compile()}}
+{\footnotesize\ttfamily bool Plastic\+Deformer\+::compile (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_plastic_handle}{Plastic\+Handle}} $>$ \&}]{handles,  }\item[{int $\ast$}]{face\+Hints = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Compiles the deformer against a group of deformation handles, and returns whether the procedure was successful. 
+
+\begin{DoxyNote}{Note}
+Accepts hints about the mesh face containing each handle; the hinted face is checked before scanning the whole mesh. In case hints are supplied, they will be returned with the correct face indices containing each handle.
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Requires a previous \mbox{\hyperlink{class_plastic_deformer_abe1558850cd48e10d38f0190b097b2c9}{initialize()}} call. The compilation may legitimately fail to process handle configurations that {\itshape cannot} result in suitable deformations (eg, if more than 3 handles lie in the same mesh face). 
+\end{DoxyWarning}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00867                                               \{}
+\DoxyCodeLine{00868   m\_imp-\/>compile(handles, faceHints);}
+\DoxyCodeLine{00869   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_plastic_deformer_ac5ad19e5ff5c86bce58c359ae34cee04}{compiled}}();}
+\DoxyCodeLine{00870 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00856}{compiled()}}.
+
+\mbox{\Hypertarget{class_plastic_deformer_ac5ad19e5ff5c86bce58c359ae34cee04}\label{class_plastic_deformer_ac5ad19e5ff5c86bce58c359ae34cee04}} 
+\index{PlasticDeformer@{PlasticDeformer}!compiled@{compiled}}
+\index{compiled@{compiled}!PlasticDeformer@{PlasticDeformer}}
+\doxysubsubsection{\texorpdfstring{compiled()}{compiled()}}
+{\footnotesize\ttfamily bool Plastic\+Deformer\+::compiled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Returns whether the last compilation procedure succeeded, or it either failed or was never invoked after the last \mbox{\hyperlink{class_plastic_deformer_abe1558850cd48e10d38f0190b097b2c9}{initialize()}} call. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00856 \{ \textcolor{keywordflow}{return} m\_imp-\/>m\_compiled; \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l00866}{compile()}}.
+
+\mbox{\Hypertarget{class_plastic_deformer_ac729bc75dd44daf84a5c6c2218433b57}\label{class_plastic_deformer_ac729bc75dd44daf84a5c6c2218433b57}} 
+\index{PlasticDeformer@{PlasticDeformer}!deform@{deform}}
+\index{deform@{deform}!PlasticDeformer@{PlasticDeformer}}
+\doxysubsubsection{\texorpdfstring{deform()}{deform()}}
+{\footnotesize\ttfamily void Plastic\+Deformer\+::deform (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} $\ast$}]{dst\+Handle\+Pos,  }\item[{double $\ast$}]{dst\+Vertices\+Coords }\end{DoxyParamCaption}) const}
+
+Applies the deformation specified with input handles deformed positions, returning the deformed mesh vertices positions.
+
+\begin{DoxyNote}{Note}
+In case the compilation step failed or was never invoked, this function will silently return the original, undeformed mesh vertices.
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Requires previous \mbox{\hyperlink{class_plastic_deformer_ac5664f9a9d78fececbb185cb7789c137}{compile()}} invocation. 
+\end{DoxyWarning}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00875                                                               \{}
+\DoxyCodeLine{00876   m\_imp-\/>deform(dstHandles, dstVerticesCoords);}
+\DoxyCodeLine{00877 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plastic_deformer_abe1558850cd48e10d38f0190b097b2c9}\label{class_plastic_deformer_abe1558850cd48e10d38f0190b097b2c9}} 
+\index{PlasticDeformer@{PlasticDeformer}!initialize@{initialize}}
+\index{initialize@{initialize}!PlasticDeformer@{PlasticDeformer}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily void Plastic\+Deformer\+::initialize (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TTexture\+MeshP}} \&}]{mesh }\end{DoxyParamCaption})}
+
+Initializes a deformation on the specified mesh object. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00860                                                           \{}
+\DoxyCodeLine{00861   m\_imp-\/>initialize(mesh);}
+\DoxyCodeLine{00862 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plastic_deformer_a8ad824f7c9b12bcb098b1dec3ed7ce2c}\label{class_plastic_deformer_a8ad824f7c9b12bcb098b1dec3ed7ce2c}} 
+\index{PlasticDeformer@{PlasticDeformer}!releaseInitializedData@{releaseInitializedData}}
+\index{releaseInitializedData@{releaseInitializedData}!PlasticDeformer@{PlasticDeformer}}
+\doxysubsubsection{\texorpdfstring{releaseInitializedData()}{releaseInitializedData()}}
+{\footnotesize\ttfamily void Plastic\+Deformer\+::release\+Initialized\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Releases data from the \mbox{\hyperlink{class_plastic_deformer_abe1558850cd48e10d38f0190b097b2c9}{initialize()}} step that is unnecessary during \mbox{\hyperlink{class_plastic_deformer_ac729bc75dd44daf84a5c6c2218433b57}{deform()}}.
+
+\begin{DoxyWarning}{Warning}
+Initialization data is still necessary to invoke \mbox{\hyperlink{class_plastic_deformer_ac5664f9a9d78fececbb185cb7789c137}{compile()}}, which will therefore need to be preceded by a new call to \mbox{\hyperlink{class_plastic_deformer_abe1558850cd48e10d38f0190b097b2c9}{initialize()}}. 
+\end{DoxyWarning}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00881                                              \{}
+\DoxyCodeLine{00882   m\_imp-\/>releaseInitializedData();}
+\DoxyCodeLine{00883 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/ext/plasticdeformer.\+h\item 
+E\+:/opentoonz/toonz/sources/tnzext/\mbox{\hyperlink{plasticdeformer_8cpp}{plasticdeformer.\+cpp}}\end{DoxyCompactItemize}

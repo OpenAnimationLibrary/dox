@@ -1,0 +1,90 @@
+\hypertarget{class__3gp__io_1_1_l_r_image_read_parser}{}\doxysection{\+\_\+3gp\+\_\+io\+::LRImage\+Read\+Parser Class Reference}
+\label{class__3gp__io_1_1_l_r_image_read_parser}\index{\_3gp\_io::LRImageReadParser@{\_3gp\_io::LRImageReadParser}}
+Inheritance diagram for \+\_\+3gp\+\_\+io\+::LRImage\+Read\+Parser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class__3gp__io_1_1_l_r_image_read_parser}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{class__3gp__io_1_1_l_r_image_read_parser_a92f88ef7467b5ee7ac464091e4b4981b}{header}} () const override
+\item 
+void \mbox{\hyperlink{class__3gp__io_1_1_l_r_image_read_parser_a1d7c6aff3cc66871e7900d2d561cc64d}{operator()}} (\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&stream) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class__3gp__io_1_1_l_r_image_read_parser_a92f88ef7467b5ee7ac464091e4b4981b}\label{class__3gp__io_1_1_l_r_image_read_parser_a92f88ef7467b5ee7ac464091e4b4981b}} 
+\index{\_3gp\_io::LRImageReadParser@{\_3gp\_io::LRImageReadParser}!header@{header}}
+\index{header@{header}!\_3gp\_io::LRImageReadParser@{\_3gp\_io::LRImageReadParser}}
+\doxysubsubsection{\texorpdfstring{header()}{header()}}
+{\footnotesize\ttfamily QString \+\_\+3gp\+\_\+io\+::\+LRImage\+Read\+Parser\+::header (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00127 \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$LR3gpImageRead"{}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class__3gp__io_1_1_l_r_image_read_parser_a1d7c6aff3cc66871e7900d2d561cc64d}\label{class__3gp__io_1_1_l_r_image_read_parser_a1d7c6aff3cc66871e7900d2d561cc64d}} 
+\index{\_3gp\_io::LRImageReadParser@{\_3gp\_io::LRImageReadParser}!operator()@{operator()}}
+\index{operator()@{operator()}!\_3gp\_io::LRImageReadParser@{\_3gp\_io::LRImageReadParser}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily void \+\_\+3gp\+\_\+io\+::\+LRImage\+Read\+Parser\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00300                                                \{}
+\DoxyCodeLine{00301   \{}
+\DoxyCodeLine{00302     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} id;}
+\DoxyCodeLine{00303     \textcolor{keywordtype}{int} lx, ly, pixSize, frameIdx, x, y, shrinkX, shrinkY;}
+\DoxyCodeLine{00304 }
+\DoxyCodeLine{00305     msg >> \textcolor{keywordtype}{id} >> lx >> ly >> pixSize >> frameIdx >> x >> y >> shrinkX >>}
+\DoxyCodeLine{00306         shrinkY >> clr;}
+\DoxyCodeLine{00307 }
+\DoxyCodeLine{00308     \textcolor{keywordflow}{if} (pixSize != 4) \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00309 }
+\DoxyCodeLine{00310     QHash<unsigned int, TLevelReaderP>::iterator it = readers.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00311     \textcolor{keywordflow}{if} (it == readers.end()) \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00312 }
+\DoxyCodeLine{00313     \textcolor{comment}{// Load the raster}}
+\DoxyCodeLine{00314     \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras(lx, ly);}
+\DoxyCodeLine{00315     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00316       \mbox{\hyperlink{class_t_image_reader_p}{TImageReaderP}} ir(it.value()-\/>getFrameReader(frameIdx + 1));}
+\DoxyCodeLine{00317       ir-\/>load(ras, \mbox{\hyperlink{class_t_point_t}{TPoint}}(x, y), shrinkX, shrinkY);}
+\DoxyCodeLine{00318     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00319       \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00320     \}}
+\DoxyCodeLine{00321 }
+\DoxyCodeLine{00322     \mbox{\hyperlink{classt32bitsrv_1_1_raster_exchanger}{t32bitsrv::RasterExchanger<TPixel32>}} exch(ras);}
+\DoxyCodeLine{00323     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{namespacetipc_a20c43aa530b558c7dcb3149d8901bdc4}{tipc::writeShMemBuffer}}(*stream(), msg << clr,}
+\DoxyCodeLine{00324                                 lx * ly * \textcolor{keyword}{sizeof}(TPixel32), \&exch))}
+\DoxyCodeLine{00325       \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00326   \}}
+\DoxyCodeLine{00327 }
+\DoxyCodeLine{00328   \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00329 }
+\DoxyCodeLine{00330 err:}
+\DoxyCodeLine{00331 }
+\DoxyCodeLine{00332   msg << QString(\textcolor{stringliteral}{"{}err"{}});}
+\DoxyCodeLine{00333 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t323gpmsg.\+h\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t323gpmsg.\+cpp\end{DoxyCompactItemize}

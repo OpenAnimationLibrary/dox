@@ -1,0 +1,163 @@
+\hypertarget{class_brush_preset_manager}{}\doxysection{Brush\+Preset\+Manager Class Reference}
+\label{class_brush_preset_manager}\index{BrushPresetManager@{BrushPresetManager}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_brush_preset_manager_a45af5ee4464a93b58b6e660ae01ad0c4}{load}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&fp)
+\item 
+void \mbox{\hyperlink{class_brush_preset_manager_a38e5b3e1cf40d5ca2343d5a20c779f9c}{save}} ()
+\item 
+const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \& \mbox{\hyperlink{class_brush_preset_manager_a71222be73667b001f2a8d1e22d5daf67}{path}} ()
+\item 
+const std\+::set$<$ \mbox{\hyperlink{struct_brush_data}{Brush\+Data}} $>$ \& \mbox{\hyperlink{class_brush_preset_manager_ab3ec35411d9b5cafcf0a08a70507ca7f}{presets}} () const
+\item 
+void \mbox{\hyperlink{class_brush_preset_manager_aaad33265442fab770444de89b61cee86}{add\+Preset}} (const \mbox{\hyperlink{struct_brush_data}{Brush\+Data}} \&data)
+\item 
+void \mbox{\hyperlink{class_brush_preset_manager_a9cc002508f153ced70090162a4acba1c}{remove\+Preset}} (const std\+::wstring \&name)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_brush_preset_manager_a2f9b17e2686d7c4000e9e7c15d30f044}\label{class_brush_preset_manager_a2f9b17e2686d7c4000e9e7c15d30f044}} 
+\index{BrushPresetManager@{BrushPresetManager}!BrushPresetManager@{BrushPresetManager}}
+\index{BrushPresetManager@{BrushPresetManager}!BrushPresetManager@{BrushPresetManager}}
+\doxysubsubsection{\texorpdfstring{BrushPresetManager()}{BrushPresetManager()}}
+{\footnotesize\ttfamily Brush\+Preset\+Manager\+::\+Brush\+Preset\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_brush_preset_manager_aaad33265442fab770444de89b61cee86}\label{class_brush_preset_manager_aaad33265442fab770444de89b61cee86}} 
+\index{BrushPresetManager@{BrushPresetManager}!addPreset@{addPreset}}
+\index{addPreset@{addPreset}!BrushPresetManager@{BrushPresetManager}}
+\doxysubsubsection{\texorpdfstring{addPreset()}{addPreset()}}
+{\footnotesize\ttfamily void Brush\+Preset\+Manager\+::add\+Preset (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_brush_data}{Brush\+Data}} \&}]{data }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02425                                                         \{}
+\DoxyCodeLine{02426   m\_presets.erase(data);  \textcolor{comment}{// Overwriting insertion}}
+\DoxyCodeLine{02427   m\_presets.insert(data);}
+\DoxyCodeLine{02428   save();}
+\DoxyCodeLine{02429 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_brush_preset_manager_a45af5ee4464a93b58b6e660ae01ad0c4}\label{class_brush_preset_manager_a45af5ee4464a93b58b6e660ae01ad0c4}} 
+\index{BrushPresetManager@{BrushPresetManager}!load@{load}}
+\index{load@{load}!BrushPresetManager@{BrushPresetManager}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily void Brush\+Preset\+Manager\+::load (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{fp }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02370                                                  \{}
+\DoxyCodeLine{02371   m\_fp = fp;}
+\DoxyCodeLine{02372 }
+\DoxyCodeLine{02373   std::string tagName;}
+\DoxyCodeLine{02374   \mbox{\hyperlink{struct_brush_data}{BrushData}} data;}
+\DoxyCodeLine{02375 }
+\DoxyCodeLine{02376   \mbox{\hyperlink{class_t_i_stream}{TIStream}} is(m\_fp);}
+\DoxyCodeLine{02377   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{02378     \textcolor{keywordflow}{while} (is.matchTag(tagName)) \{}
+\DoxyCodeLine{02379       \textcolor{keywordflow}{if} (tagName == \textcolor{stringliteral}{"{}version"{}}) \{}
+\DoxyCodeLine{02380         VersionNumber version;}
+\DoxyCodeLine{02381         is >> version.first >> version.second;}
+\DoxyCodeLine{02382 }
+\DoxyCodeLine{02383         is.setVersion(version);}
+\DoxyCodeLine{02384         is.matchEndTag();}
+\DoxyCodeLine{02385       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tagName == \textcolor{stringliteral}{"{}brushes"{}}) \{}
+\DoxyCodeLine{02386         \textcolor{keywordflow}{while} (is.matchTag(tagName)) \{}
+\DoxyCodeLine{02387           \textcolor{keywordflow}{if} (tagName == \textcolor{stringliteral}{"{}brush"{}}) \{}
+\DoxyCodeLine{02388             is >> data, m\_presets.insert(data);}
+\DoxyCodeLine{02389             is.matchEndTag();}
+\DoxyCodeLine{02390           \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{02391             is.skipCurrentTag();}
+\DoxyCodeLine{02392         \}}
+\DoxyCodeLine{02393 }
+\DoxyCodeLine{02394         is.matchEndTag();}
+\DoxyCodeLine{02395       \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{02396         is.skipCurrentTag();}
+\DoxyCodeLine{02397     \}}
+\DoxyCodeLine{02398   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{02399   \}}
+\DoxyCodeLine{02400 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_brush_preset_manager_a71222be73667b001f2a8d1e22d5daf67}\label{class_brush_preset_manager_a71222be73667b001f2a8d1e22d5daf67}} 
+\index{BrushPresetManager@{BrushPresetManager}!path@{path}}
+\index{path@{path}!BrushPresetManager@{BrushPresetManager}}
+\doxysubsubsection{\texorpdfstring{path()}{path()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \& Brush\+Preset\+Manager\+::path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073 \{ \textcolor{keywordflow}{return} m\_fp; \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_brush_preset_manager_ab3ec35411d9b5cafcf0a08a70507ca7f}\label{class_brush_preset_manager_ab3ec35411d9b5cafcf0a08a70507ca7f}} 
+\index{BrushPresetManager@{BrushPresetManager}!presets@{presets}}
+\index{presets@{presets}!BrushPresetManager@{BrushPresetManager}}
+\doxysubsubsection{\texorpdfstring{presets()}{presets()}}
+{\footnotesize\ttfamily const std\+::set$<$ \mbox{\hyperlink{struct_brush_data}{Brush\+Data}} $>$ \& Brush\+Preset\+Manager\+::presets (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00074 \{ \textcolor{keywordflow}{return} m\_presets; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_brush_preset_manager_a9cc002508f153ced70090162a4acba1c}\label{class_brush_preset_manager_a9cc002508f153ced70090162a4acba1c}} 
+\index{BrushPresetManager@{BrushPresetManager}!removePreset@{removePreset}}
+\index{removePreset@{removePreset}!BrushPresetManager@{BrushPresetManager}}
+\doxysubsubsection{\texorpdfstring{removePreset()}{removePreset()}}
+{\footnotesize\ttfamily void Brush\+Preset\+Manager\+::remove\+Preset (\begin{DoxyParamCaption}\item[{const std\+::wstring \&}]{name }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02433                                                             \{}
+\DoxyCodeLine{02434   m\_presets.erase(\mbox{\hyperlink{struct_brush_data}{BrushData}}(name));}
+\DoxyCodeLine{02435   save();}
+\DoxyCodeLine{02436 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_brush_preset_manager_a38e5b3e1cf40d5ca2343d5a20c779f9c}\label{class_brush_preset_manager_a38e5b3e1cf40d5ca2343d5a20c779f9c}} 
+\index{BrushPresetManager@{BrushPresetManager}!save@{save}}
+\index{save@{save}!BrushPresetManager@{BrushPresetManager}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily void Brush\+Preset\+Manager\+::save (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{02404                               \{}
+\DoxyCodeLine{02405   \mbox{\hyperlink{class_t_o_stream}{TOStream}} os(m\_fp);}
+\DoxyCodeLine{02406 }
+\DoxyCodeLine{02407   os.openChild(\textcolor{stringliteral}{"{}version"{}});}
+\DoxyCodeLine{02408   os << 1 << 19;}
+\DoxyCodeLine{02409   os.closeChild();}
+\DoxyCodeLine{02410 }
+\DoxyCodeLine{02411   os.openChild(\textcolor{stringliteral}{"{}brushes"{}});}
+\DoxyCodeLine{02412 }
+\DoxyCodeLine{02413   std::set<BrushData>::iterator it, end = m\_presets.end();}
+\DoxyCodeLine{02414   \textcolor{keywordflow}{for} (it = m\_presets.begin(); it != end; ++it) \{}
+\DoxyCodeLine{02415     os.openChild(\textcolor{stringliteral}{"{}brush"{}});}
+\DoxyCodeLine{02416     os << (\mbox{\hyperlink{class_t_persist}{TPersist}} \&)*it;}
+\DoxyCodeLine{02417     os.closeChild();}
+\DoxyCodeLine{02418   \}}
+\DoxyCodeLine{02419 }
+\DoxyCodeLine{02420   os.closeChild();}
+\DoxyCodeLine{02421 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/toonzrasterbrushtool.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/toonzrasterbrushtool.\+cpp\end{DoxyCompactItemize}

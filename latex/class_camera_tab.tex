@@ -1,0 +1,103 @@
+\hypertarget{class_camera_tab}{}\doxysection{Camera\+Tab Class Reference}
+\label{class_camera_tab}\index{CameraTab@{CameraTab}}
+Inheritance diagram for Camera\+Tab\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_camera_tab}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_camera_tab_a7f24be3646fdc01f1325294b96ce504f}{update\+Gui}} (\mbox{\hyperlink{class_cleanup_parameters}{Cleanup\+Parameters}} $\ast$params, \mbox{\hyperlink{class_cleanup_parameters}{Cleanup\+Parameters}} $\ast$old\+Params)
+\item 
+void \mbox{\hyperlink{class_camera_tab_a53053bafa4381f3e37045e8b0bb1d94d}{update\+Image\+Info}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_camera_tab_a6110d36de7df9435044f5fd244608fb5}\label{class_camera_tab_a6110d36de7df9435044f5fd244608fb5}} 
+\index{CameraTab@{CameraTab}!CameraTab@{CameraTab}}
+\index{CameraTab@{CameraTab}!CameraTab@{CameraTab}}
+\doxysubsubsection{\texorpdfstring{CameraTab()}{CameraTab()}}
+{\footnotesize\ttfamily Camera\+Tab\+::\+Camera\+Tab (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00442                      \{}
+\DoxyCodeLine{00443   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00444   ret      = ret \&\&}
+\DoxyCodeLine{00445         connect(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentLevel(),}
+\DoxyCodeLine{00446                 SIGNAL(xshLevelSwitched(\mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *)), SLOT(onLevelSwitched()));}
+\DoxyCodeLine{00447   ret = ret \&\& connect(\textcolor{keyword}{this}, SIGNAL(cleanupSettingsChanged()),}
+\DoxyCodeLine{00448                        SLOT(onGenericSettingsChange()));}
+\DoxyCodeLine{00449   assert(ret);}
+\DoxyCodeLine{00450 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_camera_tab_a7f24be3646fdc01f1325294b96ce504f}\label{class_camera_tab_a7f24be3646fdc01f1325294b96ce504f}} 
+\index{CameraTab@{CameraTab}!updateGui@{updateGui}}
+\index{updateGui@{updateGui}!CameraTab@{CameraTab}}
+\doxysubsubsection{\texorpdfstring{updateGui()}{updateGui()}}
+{\footnotesize\ttfamily void Camera\+Tab\+::update\+Gui (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_cleanup_parameters}{Cleanup\+Parameters}} $\ast$}]{params,  }\item[{\mbox{\hyperlink{class_cleanup_parameters}{Cleanup\+Parameters}} $\ast$}]{old\+Params }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00455                                                         \{}
+\DoxyCodeLine{00456   blockSignals(\textcolor{keyword}{true});}
+\DoxyCodeLine{00457   setFields(params);}
+\DoxyCodeLine{00458   blockSignals(\textcolor{keyword}{false});}
+\DoxyCodeLine{00459 }
+\DoxyCodeLine{00460   \textcolor{keywordflow}{if} (params-\/>m\_lineProcessingMode != oldParams-\/>m\_lineProcessingMode ||}
+\DoxyCodeLine{00461       params-\/>m\_camera.\mbox{\hyperlink{class_t_camera_a9a7c573e7a2c397ffae4b747809ea2a5}{getRes}}() != oldParams-\/>m\_camera.\mbox{\hyperlink{class_t_camera_a9a7c573e7a2c397ffae4b747809ea2a5}{getRes}}() ||}
+\DoxyCodeLine{00462       params-\/>m\_camera.\mbox{\hyperlink{class_t_camera_a6f561eca912177c2150b3e57816f02f6}{getSize}}() != oldParams-\/>m\_camera.\mbox{\hyperlink{class_t_camera_a6f561eca912177c2150b3e57816f02f6}{getSize}}() ||}
+\DoxyCodeLine{00463       params-\/>m\_closestField != oldParams-\/>m\_closestField) \{}
+\DoxyCodeLine{00464     updateImageInfo();}
+\DoxyCodeLine{00465   \}}
+\DoxyCodeLine{00466 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_camera_tab_a53053bafa4381f3e37045e8b0bb1d94d}\label{class_camera_tab_a53053bafa4381f3e37045e8b0bb1d94d}} 
+\index{CameraTab@{CameraTab}!updateImageInfo@{updateImageInfo}}
+\index{updateImageInfo@{updateImageInfo}!CameraTab@{CameraTab}}
+\doxysubsubsection{\texorpdfstring{updateImageInfo()}{updateImageInfo()}}
+{\footnotesize\ttfamily void Camera\+Tab\+::update\+Image\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00470                                 \{}
+\DoxyCodeLine{00471   \mbox{\hyperlink{class_cleanup_settings_model}{CleanupSettingsModel}} *model = CleanupSettingsModel::instance();}
+\DoxyCodeLine{00472   \mbox{\hyperlink{class_cleanup_parameters}{CleanupParameters}} *params   = model-\/>getCurrentParameters();}
+\DoxyCodeLine{00473 }
+\DoxyCodeLine{00474   \mbox{\hyperlink{class_t_dimension_t}{TDimension}} outRes(0, 0);}
+\DoxyCodeLine{00475   \mbox{\hyperlink{class_t_point_t}{TPointD}} outDpi;}
+\DoxyCodeLine{00476 }
+\DoxyCodeLine{00477   params-\/>getOutputImageInfo(outRes, outDpi.x, outDpi.y);}
+\DoxyCodeLine{00478   setImageInfo(outRes.lx, outRes.ly, outDpi.x, outDpi.y);}
+\DoxyCodeLine{00479 }
+\DoxyCodeLine{00480   \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl;}
+\DoxyCodeLine{00481   \mbox{\hyperlink{class_t_frame_id}{TFrameId}} fid;}
+\DoxyCodeLine{00482   model-\/>getCleanupFrame(sl, fid);}
+\DoxyCodeLine{00483 }
+\DoxyCodeLine{00484   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{00485   \mbox{\hyperlink{class_t_file_path}{TFilePath}} outputPath(}
+\DoxyCodeLine{00486       sl ? scene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(model-\/>\mbox{\hyperlink{class_cleanup_settings_model_ac824b1d0e864f6218d53b362a0d0f3f5}{getOutputPath}}(sl, params))}
+\DoxyCodeLine{00487          : \mbox{\hyperlink{class_t_file_path}{TFilePath}}());}
+\DoxyCodeLine{00488 }
+\DoxyCodeLine{00489   setImageInfo(outputPath);}
+\DoxyCodeLine{00490 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanupsettingspopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanupsettingspopup.\+cpp\end{DoxyCompactItemize}

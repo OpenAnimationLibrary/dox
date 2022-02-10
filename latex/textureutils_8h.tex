@@ -1,0 +1,215 @@
+\hypertarget{textureutils_8h}{}\doxysection{E\+:/opentoonz/toonz/sources/include/toonz/textureutils.h File Reference}
+\label{textureutils_8h}\index{E:/opentoonz/toonz/sources/include/toonz/textureutils.h@{E:/opentoonz/toonz/sources/include/toonz/textureutils.h}}
+{\ttfamily \#include \char`\"{}ext/ttexturesstorage.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Drawable\+Texture\+DataP \mbox{\hyperlink{textureutils_8h_af3b73261cff76b0fb58008e85741fc28}{texture\+\_\+utils\+::get\+Texture\+Data}} (const \mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$sl, const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&fid, int subsampling)
+\item 
+void \mbox{\hyperlink{textureutils_8h_a7eb8d0c536418e650eecde9e9230a602}{texture\+\_\+utils\+::invalidate\+Texture}} (const \mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$sl, const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&fid)
+\item 
+void \mbox{\hyperlink{textureutils_8h_a3d1dd32354c3751c4e34e7aede3d046f}{texture\+\_\+utils\+::invalidate\+Textures}} (const \mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$sl)
+\begin{DoxyCompactList}\small\item\em Invalidates any currently stored texture associated with sl. \end{DoxyCompactList}\item 
+Drawable\+Texture\+DataP \mbox{\hyperlink{textureutils_8h_ab7bcd07fc0fedb7a4c828bd467fde658}{texture\+\_\+utils\+::get\+Texture\+Data}} (const \mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$xsh, int frame)
+\item 
+void \mbox{\hyperlink{textureutils_8h_a08bf3502d29fb4cb40f14f85c7241879}{texture\+\_\+utils\+::invalidate\+Texture}} (const \mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$xsh, int frame)
+\item 
+void \mbox{\hyperlink{textureutils_8h_aec6b73f063777f782c4aca81c77ec4fb}{texture\+\_\+utils\+::invalidate\+Textures}} (const \mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$xsh)
+\begin{DoxyCompactList}\small\item\em Invalidates any currently stored texture associated with sl. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{textureutils_8h_a1c2339807db1096b2eb2fbf4750d6cda}\label{textureutils_8h_a1c2339807db1096b2eb2fbf4750d6cda}} 
+\index{textureutils.h@{textureutils.h}!TEXTUREUTILS\_H@{TEXTUREUTILS\_H}}
+\index{TEXTUREUTILS\_H@{TEXTUREUTILS\_H}!textureutils.h@{textureutils.h}}
+\doxysubsubsection{\texorpdfstring{TEXTUREUTILS\_H}{TEXTUREUTILS\_H}}
+{\footnotesize\ttfamily \#define TEXTUREUTILS\+\_\+H}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{textureutils_8h_ab7bcd07fc0fedb7a4c828bd467fde658}\label{textureutils_8h_ab7bcd07fc0fedb7a4c828bd467fde658}} 
+\index{textureutils.h@{textureutils.h}!getTextureData@{getTextureData}}
+\index{getTextureData@{getTextureData}!textureutils.h@{textureutils.h}}
+\doxysubsubsection{\texorpdfstring{getTextureData()}{getTextureData()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Drawable\+Texture\+DataP texture\+\_\+utils\+::get\+Texture\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$}]{xsh,  }\item[{int}]{frame }\end{DoxyParamCaption})}
+
+Returns the Open\+GL data of a loaded texture corresponding to xsh\textquotesingle{}s content at the specified frame. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00171                                                               \{}
+\DoxyCodeLine{00172   \textcolor{comment}{// Check if an xsheet texture already exists}}
+\DoxyCodeLine{00173   \textcolor{keyword}{const} std::string \&texId = ::getImageId(xsh, frame);}
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00175   DrawableTextureDataP data(}
+\DoxyCodeLine{00176       TTexturesStorage::instance()-\/>\mbox{\hyperlink{textureutils_8h_af3b73261cff76b0fb58008e85741fc28}{getTextureData}}(texId));}
+\DoxyCodeLine{00177   \textcolor{keywordflow}{if} (data) \textcolor{keywordflow}{return} data;}
+\DoxyCodeLine{00178 }
+\DoxyCodeLine{00179   \textcolor{comment}{// No available texture -\/ we must build and load it}}
+\DoxyCodeLine{00180   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} tex(}
+\DoxyCodeLine{00181       1024,}
+\DoxyCodeLine{00182       1024);  \textcolor{comment}{// Fixed texture size. It's the same that currently happens with}}
+\DoxyCodeLine{00183               \textcolor{comment}{// vector images' textures -\/ and justified since this is camstand}}
+\DoxyCodeLine{00184   \textcolor{comment}{// mode, and besides we want to make sure that textures are limited.}}
+\DoxyCodeLine{00185 }
+\DoxyCodeLine{00186   \textcolor{comment}{// Retrieve the sub-\/xsheet bbox (world coordinates of the sub-\/xsheet)}}
+\DoxyCodeLine{00187   \mbox{\hyperlink{class_t_rect_t}{TRectD}} bbox(xsh-\/>\mbox{\hyperlink{class_t_xsheet_a44549894be18821ec4da539203e68819}{getBBox}}(frame));}
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189   \textcolor{comment}{// Since xsh represents a sub-\/xsheet, its camera affine must be applied}}
+\DoxyCodeLine{00190   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_affine}{TAffine}} \&cameraAff =}
+\DoxyCodeLine{00191       xsh-\/>\mbox{\hyperlink{class_t_xsheet_abd766f516cac9898a2a952463618a9fe}{getPlacement}}(xsh-\/>\mbox{\hyperlink{class_t_xsheet_a5dc925584e35e1678f5678b79c470959}{getStageObjectTree}}()-\/>\mbox{\hyperlink{class_t_stage_object_tree_a7d63ae5d60c3a3aacf5da58c108ac167}{getCurrentCameraId}}(), frame);}
+\DoxyCodeLine{00192   bbox = (cameraAff.\mbox{\hyperlink{class_t_affine_a570529b96b1ec5abc711aaa9aac09ff9}{inv}}() * bbox).enlarge(1.0);}
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00194 \textcolor{comment}{// Render the xsheet on the specified bbox}}
+\DoxyCodeLine{00195 \textcolor{preprocessor}{\#ifdef MACOSX}}
+\DoxyCodeLine{00196   xsh-\/>\mbox{\hyperlink{class_t_xsheet_a35d49d436513243d059eee3a25ffa2ef}{getScene}}()-\/>\mbox{\hyperlink{class_toonz_scene_a5839f9331bbd43c14fcf51d700e731f1}{renderFrame}}(tex, frame, xsh, bbox, \mbox{\hyperlink{class_t_affine}{TAffine}}());}
+\DoxyCodeLine{00197 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00198   \textcolor{comment}{// The call below will change context (I know, it's a shame :( )}}
+\DoxyCodeLine{00199   TGlContext currentContext = tglGetCurrentContext();}
+\DoxyCodeLine{00200   \{}
+\DoxyCodeLine{00201     tglDoneCurrent(currentContext);}
+\DoxyCodeLine{00202     xsh-\/>\mbox{\hyperlink{class_t_xsheet_a35d49d436513243d059eee3a25ffa2ef}{getScene}}()-\/>\mbox{\hyperlink{class_toonz_scene_a5839f9331bbd43c14fcf51d700e731f1}{renderFrame}}(tex, frame, xsh, bbox, \mbox{\hyperlink{class_t_affine}{TAffine}}());}
+\DoxyCodeLine{00203     tglMakeCurrent(currentContext);}
+\DoxyCodeLine{00204   \}}
+\DoxyCodeLine{00205 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00206 }
+\DoxyCodeLine{00207   \mbox{\hyperlink{namespace_t_rop_add7d14f883c53c3d68ca0f256c42689f}{TRop::depremultiply}}(tex);  \textcolor{comment}{// Stored textures are rendered nonpremultiplied}}
+\DoxyCodeLine{00208 }
+\DoxyCodeLine{00209   \textcolor{comment}{// Store the texture for future retrieval}}
+\DoxyCodeLine{00210   \textcolor{keywordflow}{return} TTexturesStorage::instance()-\/>\mbox{\hyperlink{class_t_textures_storage_a952895ddc988b8010e584b2cc4d394cb}{loadTexture}}(texId, tex, bbox);}
+\DoxyCodeLine{00211 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01546}{TRop\+::depremultiply()}}, \mbox{\hyperlink{l01627}{TXsheet\+::get\+BBox()}}, \mbox{\hyperlink{l00508}{TStage\+Object\+Tree\+::get\+Current\+Camera\+Id()}}, \mbox{\hyperlink{l00555}{TXsheet\+::get\+Placement()}}, \mbox{\hyperlink{l01575}{TXsheet\+::get\+Scene()}}, \mbox{\hyperlink{l00549}{TXsheet\+::get\+Stage\+Object\+Tree()}}, \mbox{\hyperlink{l00112}{texture\+\_\+utils\+::get\+Texture\+Data()}}, \mbox{\hyperlink{l00055}{TAffine\+::inv()}}, \mbox{\hyperlink{l00136}{TTextures\+Storage\+::load\+Texture()}}, and \mbox{\hyperlink{l00711}{Toonz\+Scene\+::render\+Frame()}}.
+
+\mbox{\Hypertarget{textureutils_8h_af3b73261cff76b0fb58008e85741fc28}\label{textureutils_8h_af3b73261cff76b0fb58008e85741fc28}} 
+\index{textureutils.h@{textureutils.h}!getTextureData@{getTextureData}}
+\index{getTextureData@{getTextureData}!textureutils.h@{textureutils.h}}
+\doxysubsubsection{\texorpdfstring{getTextureData()}{getTextureData()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Drawable\+Texture\+DataP texture\+\_\+utils\+::get\+Texture\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{sl,  }\item[{const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&}]{fid,  }\item[{int}]{subsampling }\end{DoxyParamCaption})}
+
+Returns the Open\+GL data of a loaded texture corresponding to sl\textquotesingle{}s content at fid with specified subsampling. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00114                                                                     \{}
+\DoxyCodeLine{00115   \textcolor{keyword}{const} std::string \&texId = sl-\/>getImageId(fid);}
+\DoxyCodeLine{00116 }
+\DoxyCodeLine{00117   \textcolor{comment}{// Now, we must associate a texture}}
+\DoxyCodeLine{00118   DrawableTextureDataP data(}
+\DoxyCodeLine{00119       TTexturesStorage::instance()-\/>\mbox{\hyperlink{textureutils_8h_af3b73261cff76b0fb58008e85741fc28}{getTextureData}}(texId));}
+\DoxyCodeLine{00120   \textcolor{keywordflow}{if} (data) \textcolor{keywordflow}{return} data;}
+\DoxyCodeLine{00121 }
+\DoxyCodeLine{00122   \textcolor{comment}{// There was no associated texture. We must bind the texture and repeat}}
+\DoxyCodeLine{00123 }
+\DoxyCodeLine{00124   \textcolor{comment}{// First, retrieve the image to be used as texture}}
+\DoxyCodeLine{00125   \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} ri(::getTexture(sl, fid, subsampling));}
+\DoxyCodeLine{00126   \textcolor{keywordflow}{if} (!ri) \textcolor{keywordflow}{return} DrawableTextureDataP();}
+\DoxyCodeLine{00127 }
+\DoxyCodeLine{00128   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras(ri-\/>getRaster());}
+\DoxyCodeLine{00129   assert(ras);}
+\DoxyCodeLine{00130 }
+\DoxyCodeLine{00131   \mbox{\hyperlink{class_t_rect_t}{TRectD}} geom(0, 0, ras-\/>getLx(), ras-\/>getLy());}
+\DoxyCodeLine{00132   geom = \mbox{\hyperlink{class_t_scale}{TScale}}(ri-\/>getSubsampling()) *}
+\DoxyCodeLine{00133          \mbox{\hyperlink{class_t_translation}{TTranslation}}(\mbox{\hyperlink{class_t_point_t_adbdd512f2e40a9c9f908ced6f4ec5cbd}{convert}}(ri-\/>getOffset()) -\/ ras-\/>getCenterD()) * geom;}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135   \textcolor{keywordflow}{return} TTexturesStorage::instance()-\/>\mbox{\hyperlink{class_t_textures_storage_a952895ddc988b8010e584b2cc4d394cb}{loadTexture}}(texId, ras, geom);}
+\DoxyCodeLine{00136 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00172}{TPoint\+T$<$ T $>$\+::convert()}}, \mbox{\hyperlink{l00112}{texture\+\_\+utils\+::get\+Texture\+Data()}}, and \mbox{\hyperlink{l00136}{TTextures\+Storage\+::load\+Texture()}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00112}{texture\+\_\+utils\+::get\+Texture\+Data()}}.
+
+\mbox{\Hypertarget{textureutils_8h_a08bf3502d29fb4cb40f14f85c7241879}\label{textureutils_8h_a08bf3502d29fb4cb40f14f85c7241879}} 
+\index{textureutils.h@{textureutils.h}!invalidateTexture@{invalidateTexture}}
+\index{invalidateTexture@{invalidateTexture}!textureutils.h@{textureutils.h}}
+\doxysubsubsection{\texorpdfstring{invalidateTexture()}{invalidateTexture()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void texture\+\_\+utils\+::invalidate\+Texture (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$}]{xsh,  }\item[{int}]{frame }\end{DoxyParamCaption})}
+
+Invalidates any currently stored texture associated with xsh at the specified frame. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00215                                                                    \{}
+\DoxyCodeLine{00216   \textcolor{keyword}{const} std::string \&texId = ::getImageId(xsh, frame);}
+\DoxyCodeLine{00217   TTexturesStorage::instance()-\/>\mbox{\hyperlink{class_t_textures_storage_afb739bcd42029c97d580ea3fa5010954}{unloadTexture}}(texId);}
+\DoxyCodeLine{00218 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00140}{texture\+\_\+utils\+::invalidate\+Texture()}}, and \mbox{\hyperlink{l00182}{TTextures\+Storage\+::unload\+Texture()}}.
+
+\mbox{\Hypertarget{textureutils_8h_a7eb8d0c536418e650eecde9e9230a602}\label{textureutils_8h_a7eb8d0c536418e650eecde9e9230a602}} 
+\index{textureutils.h@{textureutils.h}!invalidateTexture@{invalidateTexture}}
+\index{invalidateTexture@{invalidateTexture}!textureutils.h@{textureutils.h}}
+\doxysubsubsection{\texorpdfstring{invalidateTexture()}{invalidateTexture()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void texture\+\_\+utils\+::invalidate\+Texture (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{sl,  }\item[{const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&}]{fid }\end{DoxyParamCaption})}
+
+Invalidates any currently stored texture associated with sl at the specified fid. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00141                                                            \{}
+\DoxyCodeLine{00142   \textcolor{keyword}{const} std::string \&texId = sl-\/>getImageId(fid);}
+\DoxyCodeLine{00143   TTexturesStorage::instance()-\/>\mbox{\hyperlink{class_t_textures_storage_afb739bcd42029c97d580ea3fa5010954}{unloadTexture}}(texId);}
+\DoxyCodeLine{00144 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00140}{texture\+\_\+utils\+::invalidate\+Texture()}}, and \mbox{\hyperlink{l00182}{TTextures\+Storage\+::unload\+Texture()}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00140}{texture\+\_\+utils\+::invalidate\+Texture()}}, and \mbox{\hyperlink{l00148}{texture\+\_\+utils\+::invalidate\+Textures()}}.
+
+\mbox{\Hypertarget{textureutils_8h_aec6b73f063777f782c4aca81c77ec4fb}\label{textureutils_8h_aec6b73f063777f782c4aca81c77ec4fb}} 
+\index{textureutils.h@{textureutils.h}!invalidateTextures@{invalidateTextures}}
+\index{invalidateTextures@{invalidateTextures}!textureutils.h@{textureutils.h}}
+\doxysubsubsection{\texorpdfstring{invalidateTextures()}{invalidateTextures()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void texture\+\_\+utils\+::invalidate\+Textures (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$}]{xsh }\end{DoxyParamCaption})}
+
+
+
+Invalidates any currently stored texture associated with sl. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00222                                                          \{}
+\DoxyCodeLine{00223   \textcolor{keywordtype}{int} f, fCount = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a12a62da7dc04395088112e492d73374f}{getFrameCount}}();}
+\DoxyCodeLine{00224   \textcolor{keywordflow}{for} (f = 0; f != fCount; ++f) \mbox{\hyperlink{textureutils_8h_a7eb8d0c536418e650eecde9e9230a602}{invalidateTexture}}(xsh, f);}
+\DoxyCodeLine{00225 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00229}{TXsheet\+::get\+Frame\+Count()}}, \mbox{\hyperlink{l00140}{texture\+\_\+utils\+::invalidate\+Texture()}}, and \mbox{\hyperlink{l00148}{texture\+\_\+utils\+::invalidate\+Textures()}}.
+
+\mbox{\Hypertarget{textureutils_8h_a3d1dd32354c3751c4e34e7aede3d046f}\label{textureutils_8h_a3d1dd32354c3751c4e34e7aede3d046f}} 
+\index{textureutils.h@{textureutils.h}!invalidateTextures@{invalidateTextures}}
+\index{invalidateTextures@{invalidateTextures}!textureutils.h@{textureutils.h}}
+\doxysubsubsection{\texorpdfstring{invalidateTextures()}{invalidateTextures()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void texture\+\_\+utils\+::invalidate\+Textures (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{sl }\end{DoxyParamCaption})}
+
+
+
+Invalidates any currently stored texture associated with sl. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00148                                                                 \{}
+\DoxyCodeLine{00149   \textcolor{keywordtype}{int} f, fCount = sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a3fe127306d6669a3eb9e9d8802660d7b}{getFrameCount}}();}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   \textcolor{keywordflow}{for} (f = 0; f != fCount; ++f) \mbox{\hyperlink{textureutils_8h_a7eb8d0c536418e650eecde9e9230a602}{invalidateTexture}}(sl, sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_abb72e2ab0c1baeda0a8af3146003181d}{getFrameId}}(f));}
+\DoxyCodeLine{00152 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00158}{TXsh\+Simple\+Level\+::get\+Frame\+Count()}}, \mbox{\hyperlink{l00460}{TXsh\+Simple\+Level\+::get\+Frame\+Id()}}, \mbox{\hyperlink{l00140}{texture\+\_\+utils\+::invalidate\+Texture()}}, and \mbox{\hyperlink{l00148}{texture\+\_\+utils\+::invalidate\+Textures()}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00148}{texture\+\_\+utils\+::invalidate\+Textures()}}.
+

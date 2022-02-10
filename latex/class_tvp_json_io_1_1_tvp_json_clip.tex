@@ -1,0 +1,153 @@
+\hypertarget{class_tvp_json_io_1_1_tvp_json_clip}{}\doxysection{Tvp\+Json\+Io\+::Tvp\+Json\+Clip Class Reference}
+\label{class_tvp_json_io_1_1_tvp_json_clip}\index{TvpJsonIo::TvpJsonClip@{TvpJsonIo::TvpJsonClip}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_tvp_json_io_1_1_tvp_json_clip_a5ce7f309479c93baca0fefc0870b3b40}{read}} (const QJson\+Object \&json)
+\item 
+void \mbox{\hyperlink{class_tvp_json_io_1_1_tvp_json_clip_aa70da2cdf59774375832a0c335a27677}{write}} (QJson\+Object \&json) const
+\item 
+bool \mbox{\hyperlink{class_tvp_json_io_1_1_tvp_json_clip_a4a51e594ee6497614fccd2973969b437}{is\+Empty}} ()
+\item 
+void \mbox{\hyperlink{class_tvp_json_io_1_1_tvp_json_clip_a81daeeb5b2ca29d19b29f44652805459}{build}} (\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$, \mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tvp_json_io_1_1_tvp_json_clip_a81daeeb5b2ca29d19b29f44652805459}\label{class_tvp_json_io_1_1_tvp_json_clip_a81daeeb5b2ca29d19b29f44652805459}} 
+\index{TvpJsonIo::TvpJsonClip@{TvpJsonIo::TvpJsonClip}!build@{build}}
+\index{build@{build}!TvpJsonIo::TvpJsonClip@{TvpJsonIo::TvpJsonClip}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily void Tvp\+Json\+Clip\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$}]{scene,  }\item[{\mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$}]{xsheet }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00330                                                           \{}
+\DoxyCodeLine{00331   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp = scene-\/>\mbox{\hyperlink{class_toonz_scene_ad42b52b671b094f66e003c4b7ebefd45}{getScenePath}}();}
+\DoxyCodeLine{00332   m\_name       = QString::fromStdString(fp.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}());}
+\DoxyCodeLine{00333 }
+\DoxyCodeLine{00334   \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} cameraId = xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a5dc925584e35e1678f5678b79c470959}{getStageObjectTree}}()-\/>\mbox{\hyperlink{class_t_stage_object_tree_a7d63ae5d60c3a3aacf5da58c108ac167}{getCurrentCameraId}}();}
+\DoxyCodeLine{00335   \mbox{\hyperlink{class_t_camera}{TCamera}}* currentCamera  = xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(cameraId)-\/>\mbox{\hyperlink{class_t_stage_object_aaef1416a25568ada1d79906884225d0c}{getCamera}}();}
+\DoxyCodeLine{00336   \mbox{\hyperlink{class_t_dimension_t}{TDimension}} cameraRes    = currentCamera-\/>\mbox{\hyperlink{class_t_camera_a9a7c573e7a2c397ffae4b747809ea2a5}{getRes}}();}
+\DoxyCodeLine{00337   m\_cameraSize            = QSize(cameraRes.lx, cameraRes.ly);}
+\DoxyCodeLine{00338 }
+\DoxyCodeLine{00339   \mbox{\hyperlink{class_t_output_properties}{TOutputProperties}}* outputProperties =}
+\DoxyCodeLine{00340       scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_abea7b4b8e4f0cedbf753b26ec30b5331}{getOutputProperties}}();}
+\DoxyCodeLine{00341   m\_framerate = outputProperties-\/>\mbox{\hyperlink{class_t_output_properties_a0d9662971bc33097aa1b55111965b967}{getFrameRate}}();}
+\DoxyCodeLine{00342 }
+\DoxyCodeLine{00343   \mbox{\hyperlink{class_t_point_t}{TPointD}} cameraDpi  = currentCamera-\/>\mbox{\hyperlink{class_t_camera_adf45510b5dc53f6481308ef489fbd5a9}{getDpi}}();}
+\DoxyCodeLine{00344   m\_pixelaspectratio = cameraDpi.y / cameraDpi.x;}
+\DoxyCodeLine{00345 }
+\DoxyCodeLine{00346   \textcolor{comment}{// if the current xsheet is top xsheet in the scene and the output}}
+\DoxyCodeLine{00347   \textcolor{comment}{// frame range is specified, set the "{}to"{} frame value as duration}}
+\DoxyCodeLine{00348   \textcolor{comment}{// TOutputProperties* oprop = scene-\/>getProperties()-\/>getOutputProperties();}}
+\DoxyCodeLine{00349   \textcolor{keywordtype}{int} from, to, step;}
+\DoxyCodeLine{00350   \textcolor{keywordflow}{if} (scene-\/>\mbox{\hyperlink{class_toonz_scene_aaffd562eebbd8faba4caeaed69bfcc18}{getTopXsheet}}() == xsheet \&\&}
+\DoxyCodeLine{00351       outputProperties-\/>\mbox{\hyperlink{class_t_output_properties_aae127cbd8b19eaed0b0fbaf589349176}{getRange}}(from, to, step))}
+\DoxyCodeLine{00352     m\_image\_count = to + 1;}
+\DoxyCodeLine{00353   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00354     m\_image\_count = xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a12a62da7dc04395088112e492d73374f}{getFrameCount}}();}
+\DoxyCodeLine{00355 }
+\DoxyCodeLine{00356   TPixel bgColor = scene-\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()-\/>\mbox{\hyperlink{class_t_scene_properties_a64ab8a16be2294c8fc135286c45cc2cf}{getBgColor}}();}
+\DoxyCodeLine{00357   m\_bg           = QColor((\textcolor{keywordtype}{int})bgColor.r, (\textcolor{keywordtype}{int})bgColor.g, (\textcolor{keywordtype}{int})bgColor.b);}
+\DoxyCodeLine{00358 }
+\DoxyCodeLine{00359   \textcolor{keywordflow}{if} (xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a17464dc5617cf87a46f03e1a52d36cc1}{getColumnCount}}() == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00360   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} col = xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a17464dc5617cf87a46f03e1a52d36cc1}{getColumnCount}}() -\/ 1; col >= 0; col-\/-\/) \{}
+\DoxyCodeLine{00361     \textcolor{keywordflow}{if} (xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a83aecebd1b7714017a64e2b786e91a4e}{isColumnEmpty}}(col)) \{}
+\DoxyCodeLine{00362       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00363     \}}
+\DoxyCodeLine{00364     \mbox{\hyperlink{class_t_xsh_cell_column}{TXshCellColumn}}* column = xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a3e1a216c019a0ebdf73d95acac95d8d0}{getColumn}}(col)-\/>getCellColumn();}
+\DoxyCodeLine{00365     \textcolor{keywordflow}{if} (!column) \{}
+\DoxyCodeLine{00366       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00367     \}}
+\DoxyCodeLine{00368     \mbox{\hyperlink{class_tvp_json_io_1_1_tvp_json_layer}{TvpJsonLayer}} layer;}
+\DoxyCodeLine{00369     layer.build(m\_layers.size(), scene, column);}
+\DoxyCodeLine{00370     \textcolor{keywordflow}{if} (!layer.isEmpty()) m\_layers.append(layer);}
+\DoxyCodeLine{00371   \}}
+\DoxyCodeLine{00372 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tvp_json_io_1_1_tvp_json_clip_a4a51e594ee6497614fccd2973969b437}\label{class_tvp_json_io_1_1_tvp_json_clip_a4a51e594ee6497614fccd2973969b437}} 
+\index{TvpJsonIo::TvpJsonClip@{TvpJsonIo::TvpJsonClip}!isEmpty@{isEmpty}}
+\index{isEmpty@{isEmpty}!TvpJsonIo::TvpJsonClip@{TvpJsonIo::TvpJsonClip}}
+\doxysubsubsection{\texorpdfstring{isEmpty()}{isEmpty()}}
+{\footnotesize\ttfamily bool Tvp\+Json\+Io\+::\+Tvp\+Json\+Clip\+::is\+Empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00138 \{ \textcolor{keywordflow}{return} m\_layers.isEmpty(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tvp_json_io_1_1_tvp_json_clip_a5ce7f309479c93baca0fefc0870b3b40}\label{class_tvp_json_io_1_1_tvp_json_clip_a5ce7f309479c93baca0fefc0870b3b40}} 
+\index{TvpJsonIo::TvpJsonClip@{TvpJsonIo::TvpJsonClip}!read@{read}}
+\index{read@{read}!TvpJsonIo::TvpJsonClip@{TvpJsonIo::TvpJsonClip}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily void Tvp\+Json\+Clip\+::read (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{json }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00284                                               \{}
+\DoxyCodeLine{00285   m\_name = json[\textcolor{stringliteral}{"{}name"{}}].toString(\textcolor{stringliteral}{"{}Untitled"{}});}
+\DoxyCodeLine{00286   m\_cameraSize.setWidth(json[\textcolor{stringliteral}{"{}width"{}}].toInt(1920));}
+\DoxyCodeLine{00287   m\_cameraSize.setHeight(json[\textcolor{stringliteral}{"{}height"{}}].toInt(1080));}
+\DoxyCodeLine{00288   m\_framerate        = json[\textcolor{stringliteral}{"{}framerate"{}}].toDouble(24.0);}
+\DoxyCodeLine{00289   m\_pixelaspectratio = json[\textcolor{stringliteral}{"{}pixelaspectratio"{}}].toDouble(1.0);}
+\DoxyCodeLine{00290   m\_image\_count      = json[\textcolor{stringliteral}{"{}image-\/count"{}}].toInt();}
+\DoxyCodeLine{00291 }
+\DoxyCodeLine{00292   QJsonObject bgObject = json[\textcolor{stringliteral}{"{}bg"{}}].toObject();}
+\DoxyCodeLine{00293   m\_bg.setRed(bgObject[\textcolor{stringliteral}{"{}red"{}}].toInt(255));}
+\DoxyCodeLine{00294   m\_bg.setGreen(bgObject[\textcolor{stringliteral}{"{}green"{}}].toInt(255));}
+\DoxyCodeLine{00295   m\_bg.setBlue(bgObject[\textcolor{stringliteral}{"{}blue"{}}].toInt(255));}
+\DoxyCodeLine{00296   m\_bg.setAlpha(255);}
+\DoxyCodeLine{00297 }
+\DoxyCodeLine{00298   QJsonArray layersArray = json[\textcolor{stringliteral}{"{}layers"{}}].toArray();}
+\DoxyCodeLine{00299   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} layerIndex = 0; layerIndex < layersArray.size(); layerIndex++) \{}
+\DoxyCodeLine{00300     QJsonObject layerObject = layersArray[layerIndex].toObject();}
+\DoxyCodeLine{00301     \mbox{\hyperlink{class_tvp_json_io_1_1_tvp_json_layer}{TvpJsonLayer}} layer;}
+\DoxyCodeLine{00302     layer.read(layerObject);}
+\DoxyCodeLine{00303     m\_layers.append(layer);}
+\DoxyCodeLine{00304   \}}
+\DoxyCodeLine{00305 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tvp_json_io_1_1_tvp_json_clip_aa70da2cdf59774375832a0c335a27677}\label{class_tvp_json_io_1_1_tvp_json_clip_aa70da2cdf59774375832a0c335a27677}} 
+\index{TvpJsonIo::TvpJsonClip@{TvpJsonIo::TvpJsonClip}!write@{write}}
+\index{write@{write}!TvpJsonIo::TvpJsonClip@{TvpJsonIo::TvpJsonClip}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void Tvp\+Json\+Clip\+::write (\begin{DoxyParamCaption}\item[{QJson\+Object \&}]{json }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00307                                                \{}
+\DoxyCodeLine{00308   json[\textcolor{stringliteral}{"{}name"{}}]             = m\_name;}
+\DoxyCodeLine{00309   json[\textcolor{stringliteral}{"{}width"{}}]            = m\_cameraSize.width();}
+\DoxyCodeLine{00310   json[\textcolor{stringliteral}{"{}height"{}}]           = m\_cameraSize.height();}
+\DoxyCodeLine{00311   json[\textcolor{stringliteral}{"{}framerate"{}}]        = m\_framerate;}
+\DoxyCodeLine{00312   json[\textcolor{stringliteral}{"{}pixelaspectratio"{}}] = m\_pixelaspectratio;}
+\DoxyCodeLine{00313   json[\textcolor{stringliteral}{"{}image-\/count"{}}]      = m\_image\_count;}
+\DoxyCodeLine{00314 }
+\DoxyCodeLine{00315   QJsonObject bgObject;}
+\DoxyCodeLine{00316   bgObject[\textcolor{stringliteral}{"{}red"{}}]   = m\_bg.red();}
+\DoxyCodeLine{00317   bgObject[\textcolor{stringliteral}{"{}green"{}}] = m\_bg.green();}
+\DoxyCodeLine{00318   bgObject[\textcolor{stringliteral}{"{}blue"{}}]  = m\_bg.blue();}
+\DoxyCodeLine{00319   json[\textcolor{stringliteral}{"{}bg"{}}]        = bgObject;}
+\DoxyCodeLine{00320 }
+\DoxyCodeLine{00321   QJsonArray layersArray;}
+\DoxyCodeLine{00322   \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto} layer : m\_layers) \{}
+\DoxyCodeLine{00323     QJsonObject layerObject;}
+\DoxyCodeLine{00324     layer.write(layerObject);}
+\DoxyCodeLine{00325     layersArray.append(layerObject);}
+\DoxyCodeLine{00326   \}}
+\DoxyCodeLine{00327   json[\textcolor{stringliteral}{"{}layers"{}}] = layersArray;}
+\DoxyCodeLine{00328 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/tvpjson\+\_\+io.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/tvpjson\+\_\+io.\+cpp\end{DoxyCompactItemize}

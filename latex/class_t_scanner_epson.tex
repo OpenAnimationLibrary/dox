@@ -1,0 +1,447 @@
+\hypertarget{class_t_scanner_epson}{}\doxysection{TScanner\+Epson Class Reference}
+\label{class_t_scanner_epson}\index{TScannerEpson@{TScannerEpson}}
+Inheritance diagram for TScanner\+Epson\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_t_scanner_epson}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_scanner_epson_a97e10477f56a9ac2eee4cd4ae33027dd}{select\+Device}} () override
+\item 
+bool \mbox{\hyperlink{class_t_scanner_epson_af3b0f42876639dfff011f7f386f56bf3}{is\+Device\+Available}} () override
+\item 
+bool \mbox{\hyperlink{class_t_scanner_epson_a1373a17c9824e714820c71882adc5864}{is\+Device\+Selected}} () override
+\item 
+void \mbox{\hyperlink{class_t_scanner_epson_ae3ed7991e2ef242257582800b61407ef}{update\+Parameters}} (\mbox{\hyperlink{class_t_scanner_parameters}{TScanner\+Parameters}} \&param) override
+\item 
+void \mbox{\hyperlink{class_t_scanner_epson_a79944e2a52be90301aadd8d3a8650490}{acquire}} (const \mbox{\hyperlink{class_t_scanner_parameters}{TScanner\+Parameters}} \&params, int paper\+Count) override
+\item 
+bool \mbox{\hyperlink{class_t_scanner_epson_ac6083e2909c70d83f455b1df0ae183c9}{is\+Area\+Supported}} ()
+\item 
+void \mbox{\hyperlink{class_t_scanner_epson_abbf8c687ef378191d35769de1235d837}{close\+IO}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_scanner_epson_a3b95f98d29f8b28aee135b5db040794f}\label{class_t_scanner_epson_a3b95f98d29f8b28aee135b5db040794f}} 
+\index{TScannerEpson@{TScannerEpson}!TScannerEpson@{TScannerEpson}}
+\index{TScannerEpson@{TScannerEpson}!TScannerEpson@{TScannerEpson}}
+\doxysubsubsection{\texorpdfstring{TScannerEpson()}{TScannerEpson()}}
+{\footnotesize\ttfamily TScanner\+Epson\+::\+TScanner\+Epson (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00109     : m\_scannerIO(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_u_s_b_scanner_i_o}{TUSBScannerIO}}()), m\_hasADF(\textcolor{keyword}{false}), m\_isOpened(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00110   log(\textcolor{stringliteral}{"{}Created"{}});}
+\DoxyCodeLine{00111 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_scanner_epson_ae999389d107603e2bd86bc103da40354}\label{class_t_scanner_epson_ae999389d107603e2bd86bc103da40354}} 
+\index{TScannerEpson@{TScannerEpson}!````~TScannerEpson@{$\sim$TScannerEpson}}
+\index{````~TScannerEpson@{$\sim$TScannerEpson}!TScannerEpson@{TScannerEpson}}
+\doxysubsubsection{\texorpdfstring{$\sim$TScannerEpson()}{~TScannerEpson()}}
+{\footnotesize\ttfamily TScanner\+Epson\+::$\sim$\+TScanner\+Epson (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00123                               \{}
+\DoxyCodeLine{00124   closeIO();}
+\DoxyCodeLine{00125   log(\textcolor{stringliteral}{"{}Destroyed"{}});}
+\DoxyCodeLine{00126 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_scanner_epson_a79944e2a52be90301aadd8d3a8650490}\label{class_t_scanner_epson_a79944e2a52be90301aadd8d3a8650490}} 
+\index{TScannerEpson@{TScannerEpson}!acquire@{acquire}}
+\index{acquire@{acquire}!TScannerEpson@{TScannerEpson}}
+\doxysubsubsection{\texorpdfstring{acquire()}{acquire()}}
+{\footnotesize\ttfamily void TScanner\+Epson\+::acquire (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_scanner_parameters}{TScanner\+Parameters}} \&}]{params,  }\item[{int}]{paper\+Count }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_scanner}{TScanner}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00205                                                                             \{}
+\DoxyCodeLine{00206   log(\textcolor{stringliteral}{"{}acquire"{}});}
+\DoxyCodeLine{00207   \mbox{\hyperlink{class_t_rect_t}{TRectD}} scanArea = params.getScanArea();}
+\DoxyCodeLine{00208   \textcolor{keywordflow}{if} (scanArea.\mbox{\hyperlink{class_t_rect_t_a53ce09c6112f8a019b43ad82d721a93b}{isEmpty}}())}
+\DoxyCodeLine{00209     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Scan area is empty, select a paper size"{}});}
+\DoxyCodeLine{00210 }
+\DoxyCodeLine{00211   \textcolor{comment}{/*}}
+\DoxyCodeLine{00212 \textcolor{comment}{if ((scanArea.getSize().lx > params.m\_maxPaperSize.lx) ||}}
+\DoxyCodeLine{00213 \textcolor{comment}{(scanArea.getSize().ly > params.m\_maxPaperSize.ly))}}
+\DoxyCodeLine{00214 \textcolor{comment}{throw TException("{}Scan area too large, select a correct paper size"{});}}
+\DoxyCodeLine{00215 \textcolor{comment}{*/}}
+\DoxyCodeLine{00216 }
+\DoxyCodeLine{00217   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < paperCount; ++i) \{}
+\DoxyCodeLine{00218     log(\textcolor{stringliteral}{"{}paper "{}} + std::to\_string(i));}
+\DoxyCodeLine{00219 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00220     m\_scannerIO-\/>trace(\textcolor{keyword}{true});}
+\DoxyCodeLine{00221 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00222     doSettings(params, i == 0);}
+\DoxyCodeLine{00223     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} nTimes = 0;}
+\DoxyCodeLine{00224     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} bytes\_to\_read;}
+\DoxyCodeLine{00225     \textcolor{keywordtype}{bool} rc;}
+\DoxyCodeLine{00226     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} stx;}
+\DoxyCodeLine{00227 }
+\DoxyCodeLine{00228 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{00229     m\_scannerIO-\/>trace(\textcolor{keyword}{false});}
+\DoxyCodeLine{00230 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00231 }
+\DoxyCodeLine{00232     \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras, rasBuffer;}
+\DoxyCodeLine{00233     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *buffer = 0;}
+\DoxyCodeLine{00234     log(\textcolor{stringliteral}{"{}Scan command"{}});}
+\DoxyCodeLine{00235     rc = ESCI\_command(\textcolor{charliteral}{'G'}, \textcolor{keyword}{false}); \textcolor{comment}{/* 'SCAN' command */}}
+\DoxyCodeLine{00236     \textcolor{keywordflow}{if} (!rc) \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Start Scan failed"{}});}
+\DoxyCodeLine{00237     log(\textcolor{stringliteral}{"{}Scan command OK"{}});}
+\DoxyCodeLine{00238 }
+\DoxyCodeLine{00239     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} offsetx = 0, offsety = 0;}
+\DoxyCodeLine{00240     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} dimlx = 0, dimly = 0;}
+\DoxyCodeLine{00241 }
+\DoxyCodeLine{00242     \mbox{\hyperlink{class_t_rect_t}{TRectD}} scanArea =}
+\DoxyCodeLine{00243         params.isPreview() ? params.getScanArea() : params.getCropBox();}
+\DoxyCodeLine{00244     scanArea2pix(params, offsetx, offsety, dimlx, dimly, scanArea);}
+\DoxyCodeLine{00245     std::swap(dimlx, dimly);}
+\DoxyCodeLine{00246 }
+\DoxyCodeLine{00247     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} bytes;}
+\DoxyCodeLine{00248 }
+\DoxyCodeLine{00249     \textcolor{keywordflow}{switch} (params.getScanType()) \{}
+\DoxyCodeLine{00250     \textcolor{keywordflow}{case} TScannerParameters::BW:}
+\DoxyCodeLine{00251 \textcolor{preprocessor}{\#ifdef BW\_USES\_GRAYTONES}}
+\DoxyCodeLine{00252       ras       = \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}}(dimlx, dimly);}
+\DoxyCodeLine{00253       bytes     = dimlx * dimly;}
+\DoxyCodeLine{00254       rasBuffer = \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}}(dimlx, dimly);}
+\DoxyCodeLine{00255       buffer    = rasBuffer-\/>\mbox{\hyperlink{class_t_raster_a5ce02b7e8a5b8b594863aa272d8dcdbc}{getRawData}}();}
+\DoxyCodeLine{00256       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00257       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00258 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00259       ras       = \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}}(dimlx, dimly);}
+\DoxyCodeLine{00260       bytes     = tceil(dimlx / 8) * dimly;}
+\DoxyCodeLine{00261       rasBuffer = \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}}(tceil(dimlx / 8), dimly);}
+\DoxyCodeLine{00262       \textcolor{comment}{// bytes = (dimlx + 7) \% 8 * dimly;}}
+\DoxyCodeLine{00263       \textcolor{comment}{// rasBuffer = TRasterGR8P((dimlx + 7) \% 8,dimly);}}
+\DoxyCodeLine{00264       buffer = rasBuffer-\/>\mbox{\hyperlink{class_t_raster_a5ce02b7e8a5b8b594863aa272d8dcdbc}{getRawData}}();}
+\DoxyCodeLine{00265       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00266 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00267     \textcolor{keywordflow}{case} TScannerParameters::GR8:}
+\DoxyCodeLine{00268 }
+\DoxyCodeLine{00269 \textcolor{preprocessor}{\#ifdef GRAYTONES\_USES\_RGB}}
+\DoxyCodeLine{00270       ras       = \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}}(dimlx, dimly);}
+\DoxyCodeLine{00271       bytes     = dimlx * dimly * 3;}
+\DoxyCodeLine{00272       rasBuffer = \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}}(dimlx * 3, dimly);}
+\DoxyCodeLine{00273       buffer    = rasBuffer-\/>\mbox{\hyperlink{class_t_raster_a5ce02b7e8a5b8b594863aa272d8dcdbc}{getRawData}}();}
+\DoxyCodeLine{00274       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00275 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00276       ras       = \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}}(dimlx, dimly);}
+\DoxyCodeLine{00277       bytes     = dimlx * dimly;}
+\DoxyCodeLine{00278       rasBuffer = \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}}(dimlx, dimly);}
+\DoxyCodeLine{00279       buffer    = rasBuffer-\/>\mbox{\hyperlink{class_t_raster_a5ce02b7e8a5b8b594863aa272d8dcdbc}{getRawData}}();}
+\DoxyCodeLine{00280       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00281 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00282 }
+\DoxyCodeLine{00283     \textcolor{keywordflow}{case} TScannerParameters::RGB24:}
+\DoxyCodeLine{00284       ras       = \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}(dimlx, dimly);}
+\DoxyCodeLine{00285       bytes     = dimlx * dimly * 3;}
+\DoxyCodeLine{00286       rasBuffer = \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}}(dimlx * 3, dimly);}
+\DoxyCodeLine{00287       buffer    = rasBuffer-\/>\mbox{\hyperlink{class_t_raster_a5ce02b7e8a5b8b594863aa272d8dcdbc}{getRawData}}();}
+\DoxyCodeLine{00288       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00289 }
+\DoxyCodeLine{00290     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00291       \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Unknown scanner mode"{}});}
+\DoxyCodeLine{00292       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00293     \}}
+\DoxyCodeLine{00294 }
+\DoxyCodeLine{00295     log(\textcolor{stringliteral}{"{}sleep"{}});}
+\DoxyCodeLine{00296     TSystem::sleep(2000);}
+\DoxyCodeLine{00297     log(\textcolor{stringliteral}{"{}reading data"{}});}
+\DoxyCodeLine{00298     \textcolor{keywordtype}{bool} areaEnd            = \textcolor{keyword}{false};}
+\DoxyCodeLine{00299     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} bytes\_read = 0;}
+\DoxyCodeLine{00300     \textcolor{keywordflow}{while} (!areaEnd) \{}
+\DoxyCodeLine{00301       \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} lines, counter;}
+\DoxyCodeLine{00302       \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} status    = 0;}
+\DoxyCodeLine{00303       \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} retryCount = 0;}
+\DoxyCodeLine{00304       \textcolor{keywordflow}{do} \{}
+\DoxyCodeLine{00305         ESCI\_readLineData(stx, status, counter, lines, areaEnd);}
+\DoxyCodeLine{00306         \textcolor{keywordflow}{if} (status \& FatalError) \{}
+\DoxyCodeLine{00307           retryCount++;}
+\DoxyCodeLine{00308           \textcolor{keywordflow}{if} (retryCount == 1) \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Error scanning"{}});}
+\DoxyCodeLine{00309         \}}
+\DoxyCodeLine{00310       \} \textcolor{keywordflow}{while} (status \& FatalError);}
+\DoxyCodeLine{00311 }
+\DoxyCodeLine{00312       bytes\_to\_read = lines * counter;}
+\DoxyCodeLine{00313       \textcolor{keywordflow}{if} (stx != 0x02) \{}
+\DoxyCodeLine{00314         std::stringstream os;}
+\DoxyCodeLine{00315         os << \textcolor{stringliteral}{"{}header corrupted ("{}} << std::hex << stx << \textcolor{stringliteral}{"{})"{}} << \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00316         \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(os.str());}
+\DoxyCodeLine{00317       \}}
+\DoxyCodeLine{00318       \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} reqBytes                      = bytes\_to\_read;}
+\DoxyCodeLine{00319       std::unique\_ptr<unsigned char[]> readBuffer = ESCI\_read\_data2(reqBytes);}
+\DoxyCodeLine{00320       \textcolor{keywordflow}{if} (!readBuffer) \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Error reading image data"{}});}
+\DoxyCodeLine{00321 }
+\DoxyCodeLine{00322       log(\textcolor{stringliteral}{"{}readline: OK"{}});}
+\DoxyCodeLine{00323       \textcolor{comment}{/*}}
+\DoxyCodeLine{00324 \textcolor{comment}{if (params.getScanType() == TScannerParameters::BW )}}
+\DoxyCodeLine{00325 \textcolor{comment}{\{}}
+\DoxyCodeLine{00326 \textcolor{comment}{for (unsigned int i = 0; i< reqBytes;i++)}}
+\DoxyCodeLine{00327 \textcolor{comment}{readBuffer[i] = \string~readBuffer[i];}}
+\DoxyCodeLine{00328 \textcolor{comment}{\}}}
+\DoxyCodeLine{00329 \textcolor{comment}{*/}}
+\DoxyCodeLine{00330       memcpy(buffer + bytes\_read, readBuffer.get(), reqBytes);}
+\DoxyCodeLine{00331       bytes\_read += reqBytes;}
+\DoxyCodeLine{00332       nTimes++;}
+\DoxyCodeLine{00333       \textcolor{keywordflow}{if} (bytes\_read == bytes) \textcolor{keywordflow}{break}; \textcolor{comment}{/* I've read enough bytes */}}
+\DoxyCodeLine{00334       \textcolor{keywordflow}{if} (!(stx \& 0x20)) sendACK();}
+\DoxyCodeLine{00335     \}}
+\DoxyCodeLine{00336     log(\textcolor{stringliteral}{"{}read: OK"{}});}
+\DoxyCodeLine{00337     \{ \textcolor{comment}{/*}}
+\DoxyCodeLine{00338 \textcolor{comment}{FILE *myFile = fopen("{}C:\(\backslash\)\(\backslash\)temp\(\backslash\)\(\backslash\)prova.dmp"{}, "{}w+"{});}}
+\DoxyCodeLine{00339 \textcolor{comment}{fwrite(buffer, 1, bytes\_to\_read, myFile);}}
+\DoxyCodeLine{00340 \textcolor{comment}{fclose(myFile);*/}}
+\DoxyCodeLine{00341     \}}
+\DoxyCodeLine{00342     \textcolor{keywordflow}{if} (params.m\_paperFeeder.m\_supported \&\&}
+\DoxyCodeLine{00343         (params.m\_paperFeeder.m\_value == 1.)) \{}
+\DoxyCodeLine{00344       log(\textcolor{stringliteral}{"{}Advance paper"{}});}
+\DoxyCodeLine{00345       \textcolor{keywordflow}{if} (m\_settingsMode == OLD\_STYLE) ESCI\_doADF(0);}
+\DoxyCodeLine{00346       log(\textcolor{stringliteral}{"{}Advance paper: OK"{}});}
+\DoxyCodeLine{00347     \}}
+\DoxyCodeLine{00348     \textcolor{keywordflow}{switch} (params.getScanType()) \{}
+\DoxyCodeLine{00349     \textcolor{keywordflow}{case} TScannerParameters::BW:}
+\DoxyCodeLine{00350 \textcolor{preprocessor}{\#ifdef BW\_USES\_GRAYTONES}}
+\DoxyCodeLine{00351       copyGR8BufferToTRasterBW(buffer, dimlx, dimly, ras, \textcolor{keyword}{true},}
+\DoxyCodeLine{00352                                params.m\_threshold.m\_value);}
+\DoxyCodeLine{00353       \textcolor{comment}{// copyGR8BufferToTRasterGR8(buffer, dimlx, dimly, ras, true);}}
+\DoxyCodeLine{00354       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00355 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00356       copyBWBufferToTRasterGR8(buffer, dimlx, dimly, ras, \textcolor{keyword}{true}, \textcolor{keyword}{true});}
+\DoxyCodeLine{00357       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00358 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00359     \textcolor{keywordflow}{case} TScannerParameters::GR8:}
+\DoxyCodeLine{00360 \textcolor{preprocessor}{\#ifdef GRAYTONES\_USES\_RGB}}
+\DoxyCodeLine{00361       copyRGBBufferToTRasterGR8(buffer, dimlx, dimly, dimlx, ras);}
+\DoxyCodeLine{00362       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00363 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00364       copyGR8BufferToTRasterGR8(buffer, dimlx, dimly, ras, \textcolor{keyword}{true});}
+\DoxyCodeLine{00365       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00366 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00367 }
+\DoxyCodeLine{00368     \textcolor{keywordflow}{case} TScannerParameters::RGB24:}
+\DoxyCodeLine{00369       copyRGBBufferToTRaster32(buffer, dimlx, dimly, ras, \textcolor{keyword}{true});}
+\DoxyCodeLine{00370       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00371 }
+\DoxyCodeLine{00372     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00373       \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Unknown scanner mode"{}});}
+\DoxyCodeLine{00374       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00375     \}}
+\DoxyCodeLine{00376 }
+\DoxyCodeLine{00377     \textcolor{keywordflow}{if} (params.getCropBox() != params.getScanArea() \&\& !params.isPreview()) \{}
+\DoxyCodeLine{00378       \mbox{\hyperlink{class_t_rect_t}{TRect}} scanRect(}
+\DoxyCodeLine{00379           \mbox{\hyperlink{class_t_point_t}{TPoint}}(offsetx, offsety),}
+\DoxyCodeLine{00380           \mbox{\hyperlink{class_t_dimension_t}{TDimension}}(dimly, dimlx));  \textcolor{comment}{// dimLx and ly was has been swapped}}
+\DoxyCodeLine{00381       scanArea2pix(params, offsetx, offsety, dimlx, dimly,}
+\DoxyCodeLine{00382                    params.getScanArea());}
+\DoxyCodeLine{00383       \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} app = ras-\/>create(dimly, dimlx);}
+\DoxyCodeLine{00384       \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} app32(app);}
+\DoxyCodeLine{00385       \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}} appGR8(app);}
+\DoxyCodeLine{00386       \textcolor{keywordflow}{if} (app32)}
+\DoxyCodeLine{00387         app32-\/>fill(TPixel32::White);}
+\DoxyCodeLine{00388       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (appGR8)}
+\DoxyCodeLine{00389         appGR8-\/>fill(TPixelGR8::White);}
+\DoxyCodeLine{00390       app-\/>\mbox{\hyperlink{class_t_raster_a3c590c4ebe4cb8c1f352437692ffd20e}{copy}}(ras, \mbox{\hyperlink{class_t_point_t}{TPoint}}(dimly -\/ scanRect.y1 -\/ 1, dimlx -\/ scanRect.x1 -\/ 1));}
+\DoxyCodeLine{00391       ras = app;}
+\DoxyCodeLine{00392     \}}
+\DoxyCodeLine{00393     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} rasImg(ras);}
+\DoxyCodeLine{00394     \textcolor{keywordflow}{if} (ras) \{}
+\DoxyCodeLine{00395       rasImg-\/>setDpi(params.m\_dpi.m\_value, params.m\_dpi.m\_value);}
+\DoxyCodeLine{00396       rasImg-\/>setSavebox(ras-\/>getBounds());}
+\DoxyCodeLine{00397     \}}
+\DoxyCodeLine{00398     log(\textcolor{stringliteral}{"{}notifying"{}});}
+\DoxyCodeLine{00399     notifyImageDone(rasImg);}
+\DoxyCodeLine{00400     \textcolor{keywordflow}{if} (!(params.m\_paperFeeder.m\_value == 1.) ||}
+\DoxyCodeLine{00401         params.isPreview())  \textcolor{comment}{// feeder here!}}
+\DoxyCodeLine{00402     \{}
+\DoxyCodeLine{00403       \textcolor{keywordflow}{if} ((paperCount -\/ i) > 1) notifyNextPaper();}
+\DoxyCodeLine{00404     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00405       notifyAutomaticallyNextPaper();}
+\DoxyCodeLine{00406     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_scanner_a5795e7fb7f3283bfc1b16f4295b8575e}{isScanningCanceled}}()) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00407   \}}
+\DoxyCodeLine{00408 }
+\DoxyCodeLine{00409   \textcolor{comment}{/*Unload Paper if need*/}}
+\DoxyCodeLine{00410 }
+\DoxyCodeLine{00411   \textcolor{keywordflow}{if} ((m\_settingsMode == NEW\_STYLE) \&\& params.m\_paperFeeder.m\_supported \&\&}
+\DoxyCodeLine{00412       (params.m\_paperFeeder.m\_value == 1.)) \{}
+\DoxyCodeLine{00413     \textcolor{keywordflow}{if} (!ESCI\_command\_1b(\textcolor{charliteral}{'e'}, 1, \textcolor{keyword}{true})) \{}
+\DoxyCodeLine{00414       std::vector<std::string> notFatal;}
+\DoxyCodeLine{00415       \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_scanner_exception}{TScannerException}}(notFatal, \textcolor{stringliteral}{"{}Scanner error (un)loading paper"{}});}
+\DoxyCodeLine{00416     \}}
+\DoxyCodeLine{00417     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} p = 0x0C;}
+\DoxyCodeLine{00418     \textcolor{keywordtype}{bool} status     = \textcolor{keyword}{true};}
+\DoxyCodeLine{00419     send(\&p, 1);}
+\DoxyCodeLine{00420     status = expectACK();}
+\DoxyCodeLine{00421   \}}
+\DoxyCodeLine{00422 }
+\DoxyCodeLine{00423   log(\textcolor{stringliteral}{"{}acquire OK"{}});}
+\DoxyCodeLine{00424 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_scanner_epson_abbf8c687ef378191d35769de1235d837}\label{class_t_scanner_epson_abbf8c687ef378191d35769de1235d837}} 
+\index{TScannerEpson@{TScannerEpson}!closeIO@{closeIO}}
+\index{closeIO@{closeIO}!TScannerEpson@{TScannerEpson}}
+\doxysubsubsection{\texorpdfstring{closeIO()}{closeIO()}}
+{\footnotesize\ttfamily void TScanner\+Epson\+::close\+IO (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00115                             \{}
+\DoxyCodeLine{00116   log(\textcolor{stringliteral}{"{}CloseIO."{}});}
+\DoxyCodeLine{00117   \textcolor{keywordflow}{if} (m\_scannerIO \&\& m\_isOpened) m\_scannerIO-\/>close();}
+\DoxyCodeLine{00118   m\_isOpened = \textcolor{keyword}{false};}
+\DoxyCodeLine{00119 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_scanner_epson_ac6083e2909c70d83f455b1df0ae183c9}\label{class_t_scanner_epson_ac6083e2909c70d83f455b1df0ae183c9}} 
+\index{TScannerEpson@{TScannerEpson}!isAreaSupported@{isAreaSupported}}
+\index{isAreaSupported@{isAreaSupported}!TScannerEpson@{TScannerEpson}}
+\doxysubsubsection{\texorpdfstring{isAreaSupported()}{isAreaSupported()}}
+{\footnotesize\ttfamily bool TScanner\+Epson\+::is\+Area\+Supported (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00428 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{true}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_scanner_epson_af3b0f42876639dfff011f7f386f56bf3}\label{class_t_scanner_epson_af3b0f42876639dfff011f7f386f56bf3}} 
+\index{TScannerEpson@{TScannerEpson}!isDeviceAvailable@{isDeviceAvailable}}
+\index{isDeviceAvailable@{isDeviceAvailable}!TScannerEpson@{TScannerEpson}}
+\doxysubsubsection{\texorpdfstring{isDeviceAvailable()}{isDeviceAvailable()}}
+{\footnotesize\ttfamily bool TScanner\+Epson\+::is\+Device\+Available (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_scanner}{TScanner}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00149 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{true}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_scanner_epson_a1373a17c9824e714820c71882adc5864}\label{class_t_scanner_epson_a1373a17c9824e714820c71882adc5864}} 
+\index{TScannerEpson@{TScannerEpson}!isDeviceSelected@{isDeviceSelected}}
+\index{isDeviceSelected@{isDeviceSelected}!TScannerEpson@{TScannerEpson}}
+\doxysubsubsection{\texorpdfstring{isDeviceSelected()}{isDeviceSelected()}}
+{\footnotesize\ttfamily bool TScanner\+Epson\+::is\+Device\+Selected (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_scanner}{TScanner}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00153 \{ \textcolor{keywordflow}{return} m\_isOpened; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_scanner_epson_a97e10477f56a9ac2eee4cd4ae33027dd}\label{class_t_scanner_epson_a97e10477f56a9ac2eee4cd4ae33027dd}} 
+\index{TScannerEpson@{TScannerEpson}!selectDevice@{selectDevice}}
+\index{selectDevice@{selectDevice}!TScannerEpson@{TScannerEpson}}
+\doxysubsubsection{\texorpdfstring{selectDevice()}{selectDevice()}}
+{\footnotesize\ttfamily void TScanner\+Epson\+::select\+Device (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_scanner}{TScanner}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00130                                  \{}
+\DoxyCodeLine{00131   log(std::string(\textcolor{stringliteral}{"{}selectDevice; isOpened="{}}) + (m\_isOpened ? \textcolor{stringliteral}{"{}true"{}} : \textcolor{stringliteral}{"{}false"{}}));}
+\DoxyCodeLine{00132   \textcolor{keywordflow}{if} (!m\_scannerIO-\/>open()) \{}
+\DoxyCodeLine{00133     log(\textcolor{stringliteral}{"{}open() failed"{}});}
+\DoxyCodeLine{00134     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}unable to get handle to scanner"{}});}
+\DoxyCodeLine{00135   \}}
+\DoxyCodeLine{00136   m\_isOpened = \textcolor{keyword}{true};}
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00138   \textcolor{comment}{/*}}
+\DoxyCodeLine{00139 \textcolor{comment}{char lev0, lev1;}}
+\DoxyCodeLine{00140 \textcolor{comment}{unsigned short lowRes, hiRes, hMax,vMax;}}
+\DoxyCodeLine{00141 \textcolor{comment}{collectInformation(\&lev0, \&lev1, \&lowRes, \&hiRes, \&hMax, \&vMax);}}
+\DoxyCodeLine{00142 \textcolor{comment}{string version = toString(lev0) + "{}."{} + toString(lev1);}}
+\DoxyCodeLine{00143 \textcolor{comment}{*/}}
+\DoxyCodeLine{00144   setName(\textcolor{stringliteral}{"{}Scanner EPSON (Internal driver)"{}});}
+\DoxyCodeLine{00145 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_scanner_epson_ae3ed7991e2ef242257582800b61407ef}\label{class_t_scanner_epson_ae3ed7991e2ef242257582800b61407ef}} 
+\index{TScannerEpson@{TScannerEpson}!updateParameters@{updateParameters}}
+\index{updateParameters@{updateParameters}!TScannerEpson@{TScannerEpson}}
+\doxysubsubsection{\texorpdfstring{updateParameters()}{updateParameters()}}
+{\footnotesize\ttfamily void TScanner\+Epson\+::update\+Parameters (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_scanner_parameters}{TScanner\+Parameters}} \&}]{param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_scanner}{TScanner}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00157                                                                    \{}
+\DoxyCodeLine{00158   log(\textcolor{stringliteral}{"{}updateParameters()"{}});}
+\DoxyCodeLine{00159   \textcolor{keywordtype}{char} lev0, lev1;}
+\DoxyCodeLine{00160   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} lowRes, hiRes, hMax, vMax;}
+\DoxyCodeLine{00161   collectInformation(\&lev0, \&lev1, \&lowRes, \&hiRes, \&hMax, \&vMax);}
+\DoxyCodeLine{00162   log(\textcolor{stringliteral}{"{}collected info. res = "{}} + std::to\_string(lowRes) + \textcolor{stringliteral}{"{}/"{}} +}
+\DoxyCodeLine{00163       std::to\_string(hiRes));}
+\DoxyCodeLine{00164 }
+\DoxyCodeLine{00165   \textcolor{comment}{// non supportiamo black \& white}}
+\DoxyCodeLine{00166   parameters.setSupportedTypes(\textcolor{keyword}{true}, \textcolor{keyword}{true}, \textcolor{keyword}{true});}
+\DoxyCodeLine{00167 }
+\DoxyCodeLine{00168   \textcolor{comment}{// param.m\_scanArea = TRectD(0, 0, 0, 0);}}
+\DoxyCodeLine{00169   parameters.setMaxPaperSize((25.4 * hMax) / (\textcolor{keywordtype}{float})hiRes,}
+\DoxyCodeLine{00170                              (25.4 * vMax) / (\textcolor{keywordtype}{float})hiRes);}
+\DoxyCodeLine{00171   parameters.updatePaperFormat();}
+\DoxyCodeLine{00172 }
+\DoxyCodeLine{00173   \textcolor{comment}{// cambio range, default, step, e supported. aggiorno, se necessario, il value}}
+\DoxyCodeLine{00174   \textcolor{comment}{// (n.b. non dovrebbe succedere}}
+\DoxyCodeLine{00175   \textcolor{comment}{// mai, perche' i range sono sempre gli stessi su tutti gli scanner}}
+\DoxyCodeLine{00176   \mbox{\hyperlink{struct_t_scan_param}{TScanParam}} defaultEpsonParam(0., 255., 128., 1.);}
+\DoxyCodeLine{00177   parameters.m\_brightness.update(defaultEpsonParam);}
+\DoxyCodeLine{00178   parameters.m\_contrast.update(defaultEpsonParam);}
+\DoxyCodeLine{00179   parameters.m\_threshold.update(defaultEpsonParam);}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181   \textcolor{keywordflow}{if} (m\_hasADF) \{}
+\DoxyCodeLine{00182     \mbox{\hyperlink{struct_t_scan_param}{TScanParam}} defaultPaperFeederParam(0., 1., 0., 1.);}
+\DoxyCodeLine{00183     parameters.m\_paperFeeder.update(defaultPaperFeederParam);}
+\DoxyCodeLine{00184   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00185     parameters.m\_paperFeeder.m\_supported = \textcolor{keyword}{false};}
+\DoxyCodeLine{00186 }
+\DoxyCodeLine{00187   \textcolor{comment}{// cerco un default per il dpi. il piu' piccolo possibile nella forma 100+k50}}
+\DoxyCodeLine{00188   \textcolor{keywordtype}{float} defaultDpi = 100;}
+\DoxyCodeLine{00189   \textcolor{keywordflow}{while} (defaultDpi < lowRes) defaultDpi += 50;}
+\DoxyCodeLine{00190 }
+\DoxyCodeLine{00191   \mbox{\hyperlink{struct_t_scan_param}{TScanParam}} defaultDpiParam(lowRes, hiRes, defaultDpi,}
+\DoxyCodeLine{00192                              hiRes > lowRes ? 1.F : 0.F);}
+\DoxyCodeLine{00193   parameters.m\_dpi.update(defaultDpiParam);}
+\DoxyCodeLine{00194 }
+\DoxyCodeLine{00195   \textcolor{comment}{//  parameters.m\_twainVersion = "{}NATIVE"{};}}
+\DoxyCodeLine{00196   \textcolor{comment}{//  parameters.m\_manufacturer = "{}EPSON"{};}}
+\DoxyCodeLine{00197 }
+\DoxyCodeLine{00198   \textcolor{comment}{//  parameters.m\_version = toString(lev0) + "{}."{} + toString(lev1);}}
+\DoxyCodeLine{00199 }
+\DoxyCodeLine{00200   log(\textcolor{stringliteral}{"{}end updateParameters()"{}});}
+\DoxyCodeLine{00201 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnzbase/tscanner/tscannerepson.\+h\item 
+E\+:/opentoonz/toonz/sources/tnzbase/tscanner/tscannerepson.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,130 @@
+\hypertarget{class_diamond_fx_gadget}{}\doxysection{Diamond\+Fx\+Gadget Class Reference}
+\label{class_diamond_fx_gadget}\index{DiamondFxGadget@{DiamondFxGadget}}
+Inheritance diagram for Diamond\+Fx\+Gadget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_diamond_fx_gadget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_diamond_fx_gadget_adfebef852bcba314a96ebfbd8f76b9d4}{Diamond\+Fx\+Gadget}} (\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$controller, const TDouble\+ParamP \&param)
+\item 
+void \mbox{\hyperlink{class_diamond_fx_gadget_a3234e19b158e92ac353a7dd64ba9e11c}{draw}} (bool picking) override
+\item 
+void \mbox{\hyperlink{class_diamond_fx_gadget_ab56b8129c0ba31312246184601d88be7}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+void \mbox{\hyperlink{class_diamond_fx_gadget_aa21857bb626ca4cb255d172ad5d557c6}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_diamond_fx_gadget_adfebef852bcba314a96ebfbd8f76b9d4}\label{class_diamond_fx_gadget_adfebef852bcba314a96ebfbd8f76b9d4}} 
+\index{DiamondFxGadget@{DiamondFxGadget}!DiamondFxGadget@{DiamondFxGadget}}
+\index{DiamondFxGadget@{DiamondFxGadget}!DiamondFxGadget@{DiamondFxGadget}}
+\doxysubsubsection{\texorpdfstring{DiamondFxGadget()}{DiamondFxGadget()}}
+{\footnotesize\ttfamily Diamond\+Fx\+Gadget\+::\+Diamond\+Fx\+Gadget (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$}]{controller,  }\item[{const TDouble\+ParamP \&}]{param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00703       : \mbox{\hyperlink{class_fx_gadget}{FxGadget}}(controller), m\_param(param) \{}
+\DoxyCodeLine{00704     addParam(param);}
+\DoxyCodeLine{00705   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_diamond_fx_gadget_a3234e19b158e92ac353a7dd64ba9e11c}\label{class_diamond_fx_gadget_a3234e19b158e92ac353a7dd64ba9e11c}} 
+\index{DiamondFxGadget@{DiamondFxGadget}!draw@{draw}}
+\index{draw@{draw}!DiamondFxGadget@{DiamondFxGadget}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Diamond\+Fx\+Gadget\+::draw (\begin{DoxyParamCaption}\item[{bool}]{picking }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00715                                        \{}
+\DoxyCodeLine{00716   setPixelSize();}
+\DoxyCodeLine{00717 }
+\DoxyCodeLine{00718   \textcolor{keywordflow}{if} (isSelected())}
+\DoxyCodeLine{00719     glColor3dv(m\_selectedColor);}
+\DoxyCodeLine{00720   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00721     glColor3d(0, 0, 1);}
+\DoxyCodeLine{00722   glPushName(getId());}
+\DoxyCodeLine{00723   \textcolor{keywordtype}{double} size = getValue(m\_param);}
+\DoxyCodeLine{00724   \textcolor{keywordtype}{double} r    = 3 * getPixelSize();}
+\DoxyCodeLine{00725 }
+\DoxyCodeLine{00726   glLineStipple(1, 0xAAAA);}
+\DoxyCodeLine{00727   glEnable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{00728   glBegin(GL\_LINES);}
+\DoxyCodeLine{00729   glVertex2d(-\/size + r, r);}
+\DoxyCodeLine{00730   glVertex2d(-\/r, size -\/ r);}
+\DoxyCodeLine{00731   glVertex2d(r, size -\/ r);}
+\DoxyCodeLine{00732   glVertex2d(size -\/ r, r);}
+\DoxyCodeLine{00733   glVertex2d(size -\/ r, -\/r);}
+\DoxyCodeLine{00734   glVertex2d(r, -\/size + r);}
+\DoxyCodeLine{00735   glVertex2d(-\/r, -\/size + r);}
+\DoxyCodeLine{00736   glVertex2d(-\/size + r, -\/r);}
+\DoxyCodeLine{00737   glEnd();}
+\DoxyCodeLine{00738   glDisable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{00739   drawDot(-\/size, 0);}
+\DoxyCodeLine{00740   drawDot(size, 0);}
+\DoxyCodeLine{00741   drawDot(0, -\/size);}
+\DoxyCodeLine{00742   drawDot(0, size);}
+\DoxyCodeLine{00743 }
+\DoxyCodeLine{00744   \textcolor{keywordtype}{double} d = getPixelSize() * 3;}
+\DoxyCodeLine{00745   glPopName();}
+\DoxyCodeLine{00746   \textcolor{keywordflow}{if} (isSelected()) \{}
+\DoxyCodeLine{00747     drawTooltip(\mbox{\hyperlink{class_t_point_t}{TPointD}}(d, size -\/ d), getLabel());}
+\DoxyCodeLine{00748   \}}
+\DoxyCodeLine{00749 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_diamond_fx_gadget_ab56b8129c0ba31312246184601d88be7}\label{class_diamond_fx_gadget_ab56b8129c0ba31312246184601d88be7}} 
+\index{DiamondFxGadget@{DiamondFxGadget}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!DiamondFxGadget@{DiamondFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Diamond\+Fx\+Gadget\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00709 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_diamond_fx_gadget_aa21857bb626ca4cb255d172ad5d557c6}\label{class_diamond_fx_gadget_aa21857bb626ca4cb255d172ad5d557c6}} 
+\index{DiamondFxGadget@{DiamondFxGadget}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!DiamondFxGadget@{DiamondFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Diamond\+Fx\+Gadget\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00753                                                                             \{}
+\DoxyCodeLine{00754   \textcolor{keywordtype}{double} sz = fabs(pos.x) + fabs(pos.y);}
+\DoxyCodeLine{00755   \textcolor{keywordflow}{if} (sz < 0.1) sz = 0.1;}
+\DoxyCodeLine{00756   setValue(m\_param, sz);}
+\DoxyCodeLine{00757 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/edittoolgadgets.\+cpp\end{DoxyCompactItemize}

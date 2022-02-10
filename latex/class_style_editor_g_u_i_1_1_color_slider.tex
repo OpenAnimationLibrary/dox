@@ -1,0 +1,278 @@
+\hypertarget{class_style_editor_g_u_i_1_1_color_slider}{}\doxysection{Style\+Editor\+GUI\+::Color\+Slider Class Reference}
+\label{class_style_editor_g_u_i_1_1_color_slider}\index{StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}}
+
+
+The \mbox{\hyperlink{class_style_editor_g_u_i_1_1_color_slider}{Color\+Slider}} is used to set a color channel.  
+
+
+
+
+{\ttfamily \#include $<$styleeditor.\+h$>$}
+
+Inheritance diagram for Style\+Editor\+GUI\+::Color\+Slider\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_style_editor_g_u_i_1_1_color_slider}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_style_editor_g_u_i_1_1_color_slider_aa92894ba813bc6f596034c0963781c45}{Color\+Slider}} (Qt\+::\+Orientation orientation, QWidget $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_style_editor_g_u_i_1_1_color_slider_a8660e1e786c03e73137da76c681b39b8}{set\+Channel}} (Color\+Channel channel)
+\item 
+void \mbox{\hyperlink{class_style_editor_g_u_i_1_1_color_slider_ac70b6250fe14444764ae06b66da35f11}{set\+Color}} (const \mbox{\hyperlink{class_style_editor_g_u_i_1_1_color_model}{Color\+Model}} \&color)
+\item 
+Color\+Channel \mbox{\hyperlink{class_style_editor_g_u_i_1_1_color_slider_ae3eaeada88919bcf4da1587b6a3028d8}{get\+Channel}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static int \mbox{\hyperlink{class_style_editor_g_u_i_1_1_color_slider_a5d410265d043563d7ebada80ca034bd5}{s\+\_\+slider\+\_\+appearance}} = -\/1
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_style_editor_g_u_i_1_1_color_slider_ae76fbac9ae243f172a20cc35bdad039e}{paint\+Event}} (QPaint\+Event $\ast$event) override
+\item 
+void \mbox{\hyperlink{class_style_editor_g_u_i_1_1_color_slider_a7b9cc17598dd81bb1bca21b817a4845e}{mouse\+Press\+Event}} (QMouse\+Event $\ast$event) override
+\item 
+void \mbox{\hyperlink{class_style_editor_g_u_i_1_1_color_slider_a2f56c161f36e70b7173ba68618e1a978}{mouse\+Release\+Event}} (QMouse\+Event $\ast$event) override
+\item 
+void \mbox{\hyperlink{class_style_editor_g_u_i_1_1_color_slider_a1be237ac2ed0275e9d8a3fe1a146b0bd}{mouse\+Move\+Event}} (QMouse\+Event $\ast$event) override
+\item 
+void \mbox{\hyperlink{class_style_editor_g_u_i_1_1_color_slider_a9d1275fdd666a9a4a2cb811653472f4d}{chandle\+Mouse}} (int x, int y)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_style_editor_g_u_i_1_1_color_slider}{Color\+Slider}} is used to set a color channel. 
+
+\begin{DoxyVerb}        Inherits \b QAbstractSlider.
+
+        This object show a bar which colors differ from minimum to
+\end{DoxyVerb}
+ maximum channel color value. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_color_slider_aa92894ba813bc6f596034c0963781c45}\label{class_style_editor_g_u_i_1_1_color_slider_aa92894ba813bc6f596034c0963781c45}} 
+\index{StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}!ColorSlider@{ColorSlider}}
+\index{ColorSlider@{ColorSlider}!StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}}
+\doxysubsubsection{\texorpdfstring{ColorSlider()}{ColorSlider()}}
+{\footnotesize\ttfamily Color\+Slider\+::\+Color\+Slider (\begin{DoxyParamCaption}\item[{Qt\+::\+Orientation}]{orientation,  }\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01215     : QAbstractSlider(parent), m\_channel(eRed), m\_color() \{}
+\DoxyCodeLine{01216   setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{01217 }
+\DoxyCodeLine{01218   setOrientation(orientation);}
+\DoxyCodeLine{01219   setMinimum(0);}
+\DoxyCodeLine{01220   setMaximum(ChannelMaxValues[m\_channel]);}
+\DoxyCodeLine{01221 }
+\DoxyCodeLine{01222   setMinimumHeight(7);}
+\DoxyCodeLine{01223   setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);}
+\DoxyCodeLine{01224 }
+\DoxyCodeLine{01225   \textcolor{comment}{// Get color handle size once}}
+\DoxyCodeLine{01226   \textcolor{keywordflow}{if} (s\_chandle\_size == -\/1) \{}
+\DoxyCodeLine{01227     QImage chandle      = QImage(\textcolor{stringliteral}{"{}:Resources/h\_chandle\_arrow.svg"{}});}
+\DoxyCodeLine{01228     s\_chandle\_size      = chandle.width();}
+\DoxyCodeLine{01229     s\_chandle\_tall      = chandle.height();}
+\DoxyCodeLine{01230     s\_slider\_appearance = StyleEditorColorSliderAppearance;}
+\DoxyCodeLine{01231   \}}
+\DoxyCodeLine{01232 }
+\DoxyCodeLine{01233   \textcolor{comment}{// Attenzione: necessario per poter individuare l'oggetto nel file di}}
+\DoxyCodeLine{01234   \textcolor{comment}{// definizione dello stile}}
+\DoxyCodeLine{01235   setObjectName(\textcolor{stringliteral}{"{}colorSlider"{}});}
+\DoxyCodeLine{01236 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_color_slider_a9d1275fdd666a9a4a2cb811653472f4d}\label{class_style_editor_g_u_i_1_1_color_slider_a9d1275fdd666a9a4a2cb811653472f4d}} 
+\index{StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}!chandleMouse@{chandleMouse}}
+\index{chandleMouse@{chandleMouse}!StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}}
+\doxysubsubsection{\texorpdfstring{chandleMouse()}{chandleMouse()}}
+{\footnotesize\ttfamily void Color\+Slider\+::chandle\+Mouse (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01340                                                        \{}
+\DoxyCodeLine{01341   \textcolor{keywordflow}{if} (orientation() == Qt::Vertical) \{}
+\DoxyCodeLine{01342     \textcolor{keywordtype}{int} pos  = mouse\_y -\/ s\_chandle\_size / 2;}
+\DoxyCodeLine{01343     \textcolor{keywordtype}{int} span = height() -\/ s\_chandle\_size;}
+\DoxyCodeLine{01344     setValue(QStyle::sliderValueFromPosition(0, maximum(), pos, span, \textcolor{keyword}{true}));}
+\DoxyCodeLine{01345   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01346     \textcolor{keywordtype}{int} pos  = mouse\_x -\/ s\_chandle\_size / 2;}
+\DoxyCodeLine{01347     \textcolor{keywordtype}{int} span = width() -\/ s\_chandle\_size;}
+\DoxyCodeLine{01348     setValue(QStyle::sliderValueFromPosition(0, maximum(), pos, span, \textcolor{keyword}{false}));}
+\DoxyCodeLine{01349   \}}
+\DoxyCodeLine{01350 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_color_slider_ae3eaeada88919bcf4da1587b6a3028d8}\label{class_style_editor_g_u_i_1_1_color_slider_ae3eaeada88919bcf4da1587b6a3028d8}} 
+\index{StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}!getChannel@{getChannel}}
+\index{getChannel@{getChannel}!StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}}
+\doxysubsubsection{\texorpdfstring{getChannel()}{getChannel()}}
+{\footnotesize\ttfamily Color\+Channel Style\+Editor\+GUI\+::\+Color\+Slider\+::get\+Channel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00286 \{ \textcolor{keywordflow}{return} m\_channel; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_color_slider_a1be237ac2ed0275e9d8a3fe1a146b0bd}\label{class_style_editor_g_u_i_1_1_color_slider_a1be237ac2ed0275e9d8a3fe1a146b0bd}} 
+\index{StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}!mouseMoveEvent@{mouseMoveEvent}}
+\index{mouseMoveEvent@{mouseMoveEvent}!StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}}
+\doxysubsubsection{\texorpdfstring{mouseMoveEvent()}{mouseMoveEvent()}}
+{\footnotesize\ttfamily void Color\+Slider\+::mouse\+Move\+Event (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01334                                                    \{}
+\DoxyCodeLine{01335   chandleMouse(event-\/>pos().x(), event-\/>pos().y());}
+\DoxyCodeLine{01336 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_color_slider_a7b9cc17598dd81bb1bca21b817a4845e}\label{class_style_editor_g_u_i_1_1_color_slider_a7b9cc17598dd81bb1bca21b817a4845e}} 
+\index{StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}!mousePressEvent@{mousePressEvent}}
+\index{mousePressEvent@{mousePressEvent}!StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}}
+\doxysubsubsection{\texorpdfstring{mousePressEvent()}{mousePressEvent()}}
+{\footnotesize\ttfamily void Color\+Slider\+::mouse\+Press\+Event (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01322                                                     \{}
+\DoxyCodeLine{01323   chandleMouse(event-\/>pos().x(), event-\/>pos().y());}
+\DoxyCodeLine{01324 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_color_slider_a2f56c161f36e70b7173ba68618e1a978}\label{class_style_editor_g_u_i_1_1_color_slider_a2f56c161f36e70b7173ba68618e1a978}} 
+\index{StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}!mouseReleaseEvent@{mouseReleaseEvent}}
+\index{mouseReleaseEvent@{mouseReleaseEvent}!StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}}
+\doxysubsubsection{\texorpdfstring{mouseReleaseEvent()}{mouseReleaseEvent()}}
+{\footnotesize\ttfamily void Color\+Slider\+::mouse\+Release\+Event (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01328                                                       \{}
+\DoxyCodeLine{01329   emit sliderReleased();}
+\DoxyCodeLine{01330 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_color_slider_ae76fbac9ae243f172a20cc35bdad039e}\label{class_style_editor_g_u_i_1_1_color_slider_ae76fbac9ae243f172a20cc35bdad039e}} 
+\index{StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}!paintEvent@{paintEvent}}
+\index{paintEvent@{paintEvent}!StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}}
+\doxysubsubsection{\texorpdfstring{paintEvent()}{paintEvent()}}
+{\footnotesize\ttfamily void Color\+Slider\+::paint\+Event (\begin{DoxyParamCaption}\item[{QPaint\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+Bug in Qt 4.\+3\+: The vertical Slider cannot be styled due to a bug. In this case we draw \char`\"{}manually\char`\"{} the slider handle at correct position
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01252                                                \{}
+\DoxyCodeLine{01253   QPainter p(\textcolor{keyword}{this});}
+\DoxyCodeLine{01254 }
+\DoxyCodeLine{01255   \textcolor{keywordtype}{int} x = rect().x();}
+\DoxyCodeLine{01256   \textcolor{keywordtype}{int} y = rect().y();}
+\DoxyCodeLine{01257   \textcolor{keywordtype}{int} w = width();}
+\DoxyCodeLine{01258   \textcolor{keywordtype}{int} h = height();}
+\DoxyCodeLine{01259 }
+\DoxyCodeLine{01260   \textcolor{keywordtype}{bool} isVertical = orientation() == Qt::Vertical;}
+\DoxyCodeLine{01261   \textcolor{keywordtype}{bool} isLineHandle =}
+\DoxyCodeLine{01262       ColorSlider::s\_slider\_appearance == AbsoluteColoredLineHandle;}
+\DoxyCodeLine{01263 }
+\DoxyCodeLine{01264   \textcolor{keywordflow}{if} (isVertical) \{}
+\DoxyCodeLine{01265     y += s\_chandle\_size / 2;}
+\DoxyCodeLine{01266     h -\/= s\_chandle\_size;}
+\DoxyCodeLine{01267     w -\/= 3;}
+\DoxyCodeLine{01268   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01269     x += s\_chandle\_size / 2;}
+\DoxyCodeLine{01270     w -\/= s\_chandle\_size;}
+\DoxyCodeLine{01271     h -\/= 3;}
+\DoxyCodeLine{01272     \textcolor{keywordflow}{if} (isLineHandle) \{}
+\DoxyCodeLine{01273       y += 1;}
+\DoxyCodeLine{01274       h -\/= 2;}
+\DoxyCodeLine{01275     \}}
+\DoxyCodeLine{01276   \}}
+\DoxyCodeLine{01277   \textcolor{keywordflow}{if} (w < 2 || h < 2) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01278 }
+\DoxyCodeLine{01279   QPixmap bgPixmap =}
+\DoxyCodeLine{01280       makeLinearShading(m\_color, m\_channel, isVertical ? h : w, isVertical);}
+\DoxyCodeLine{01281 }
+\DoxyCodeLine{01282   \textcolor{keywordflow}{if} (m\_channel == eAlpha) \{}
+\DoxyCodeLine{01283     p.drawTiledPixmap(x, y, w, h,}
+\DoxyCodeLine{01284                       DVGui::CommonChessboard::instance()-\/>getPixmap());}
+\DoxyCodeLine{01285   \}}
+\DoxyCodeLine{01286 }
+\DoxyCodeLine{01287   \textcolor{keywordflow}{if} (!bgPixmap.isNull()) \{}
+\DoxyCodeLine{01288     p.drawTiledPixmap(x, y, w, h, bgPixmap);}
+\DoxyCodeLine{01289   \}}
+\DoxyCodeLine{01290 }
+\DoxyCodeLine{01295   \textcolor{keywordflow}{if} (isVertical) \{}
+\DoxyCodeLine{01296     \textcolor{keyword}{static} QPixmap vHandlePixmap =}
+\DoxyCodeLine{01297         svgToPixmap(\textcolor{stringliteral}{"{}:Resources/v\_chandle\_arrow.svg"{}});}
+\DoxyCodeLine{01298     \textcolor{keywordtype}{int} pos = QStyle::sliderPositionFromValue(0, maximum(), value(), h, \textcolor{keyword}{true});}
+\DoxyCodeLine{01299     p.drawPixmap(width() -\/ s\_chandle\_tall, pos, vHandlePixmap);}
+\DoxyCodeLine{01300   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01301     \textcolor{keywordtype}{int} pos = QStyle::sliderPositionFromValue(0, maximum(), value(), w, \textcolor{keyword}{false});}
+\DoxyCodeLine{01302     \textcolor{keywordflow}{if} (isLineHandle) \{}
+\DoxyCodeLine{01303       \textcolor{keyword}{static} QPixmap hHandleUpPm(\textcolor{stringliteral}{"{}:Resources/h\_chandleUp.png"{}});}
+\DoxyCodeLine{01304       \textcolor{keyword}{static} QPixmap hHandleDownPm(\textcolor{stringliteral}{"{}:Resources/h\_chandleDown.png"{}});}
+\DoxyCodeLine{01305       \textcolor{keyword}{static} QPixmap hHandleCenterPm(\textcolor{stringliteral}{"{}:Resources/h\_chandleCenter.png"{}});}
+\DoxyCodeLine{01306       \textcolor{keywordtype}{int} linePos = pos + (s\_chandle\_size -\/ hHandleCenterPm.width()) / 2;}
+\DoxyCodeLine{01307       p.drawPixmap(linePos, 0, hHandleUpPm);}
+\DoxyCodeLine{01308       p.drawPixmap(linePos, height() -\/ hHandleDownPm.height(), hHandleDownPm);}
+\DoxyCodeLine{01309       p.drawPixmap(linePos, hHandleUpPm.height(), hHandleCenterPm.width(),}
+\DoxyCodeLine{01310                    height() -\/ hHandleUpPm.height() -\/ hHandleDownPm.height(),}
+\DoxyCodeLine{01311                    hHandleCenterPm);}
+\DoxyCodeLine{01312     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01313       \textcolor{keyword}{static} QPixmap hHandlePixmap =}
+\DoxyCodeLine{01314           svgToPixmap(\textcolor{stringliteral}{"{}:Resources/h\_chandle\_arrow.svg"{}});}
+\DoxyCodeLine{01315       p.drawPixmap(pos, height() -\/ s\_chandle\_tall, hHandlePixmap);}
+\DoxyCodeLine{01316     \}}
+\DoxyCodeLine{01317   \}}
+\DoxyCodeLine{01318 \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_color_slider_a8660e1e786c03e73137da76c681b39b8}\label{class_style_editor_g_u_i_1_1_color_slider_a8660e1e786c03e73137da76c681b39b8}} 
+\index{StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}!setChannel@{setChannel}}
+\index{setChannel@{setChannel}!StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}}
+\doxysubsubsection{\texorpdfstring{setChannel()}{setChannel()}}
+{\footnotesize\ttfamily void Color\+Slider\+::set\+Channel (\begin{DoxyParamCaption}\item[{Color\+Channel}]{channel }\end{DoxyParamCaption})}
+
+set channel and color. doesn\textquotesingle{}t call update(). 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01240                                                  \{}
+\DoxyCodeLine{01241   \textcolor{keywordflow}{if} (m\_channel == channel) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01242   m\_channel = channel;}
+\DoxyCodeLine{01243   setMaximum(ChannelMaxValues[m\_channel]);}
+\DoxyCodeLine{01244 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_color_slider_ac70b6250fe14444764ae06b66da35f11}\label{class_style_editor_g_u_i_1_1_color_slider_ac70b6250fe14444764ae06b66da35f11}} 
+\index{StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}!setColor@{setColor}}
+\index{setColor@{setColor}!StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}}
+\doxysubsubsection{\texorpdfstring{setColor()}{setColor()}}
+{\footnotesize\ttfamily void Color\+Slider\+::set\+Color (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_style_editor_g_u_i_1_1_color_model}{Color\+Model}} \&}]{color }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01248 \{ m\_color = color; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_style_editor_g_u_i_1_1_color_slider_a5d410265d043563d7ebada80ca034bd5}\label{class_style_editor_g_u_i_1_1_color_slider_a5d410265d043563d7ebada80ca034bd5}} 
+\index{StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}!s\_slider\_appearance@{s\_slider\_appearance}}
+\index{s\_slider\_appearance@{s\_slider\_appearance}!StyleEditorGUI::ColorSlider@{StyleEditorGUI::ColorSlider}}
+\doxysubsubsection{\texorpdfstring{s\_slider\_appearance}{s\_slider\_appearance}}
+{\footnotesize\ttfamily int Color\+Slider\+::s\+\_\+slider\+\_\+appearance = -\/1\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/styleeditor.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/styleeditor.\+cpp\end{DoxyCompactItemize}

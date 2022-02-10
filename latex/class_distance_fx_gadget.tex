@@ -1,0 +1,151 @@
+\hypertarget{class_distance_fx_gadget}{}\doxysection{Distance\+Fx\+Gadget Class Reference}
+\label{class_distance_fx_gadget}\index{DistanceFxGadget@{DistanceFxGadget}}
+Inheritance diagram for Distance\+Fx\+Gadget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_distance_fx_gadget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_distance_fx_gadget_aa5a9db1d80af26e73c6ce1f38d51fa7a}{Distance\+Fx\+Gadget}} (\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$controller, const TDouble\+ParamP \&distance, const TDouble\+ParamP \&angle)
+\item 
+\mbox{\hyperlink{class_t_point_t}{TPointD}} \mbox{\hyperlink{class_distance_fx_gadget_a39bbdd12abc64da9e07b3f3f3d9c775d}{get\+Direction}} () const
+\item 
+void \mbox{\hyperlink{class_distance_fx_gadget_a2acf09da02ae85c4fa09df126cbf6891}{draw}} (bool picking) override
+\item 
+void \mbox{\hyperlink{class_distance_fx_gadget_af63c500e16fab3d542fe7f14f3adec61}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+void \mbox{\hyperlink{class_distance_fx_gadget_aa02709d7b3d415056a4967a9f6cc7011}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_distance_fx_gadget_aa5a9db1d80af26e73c6ce1f38d51fa7a}\label{class_distance_fx_gadget_aa5a9db1d80af26e73c6ce1f38d51fa7a}} 
+\index{DistanceFxGadget@{DistanceFxGadget}!DistanceFxGadget@{DistanceFxGadget}}
+\index{DistanceFxGadget@{DistanceFxGadget}!DistanceFxGadget@{DistanceFxGadget}}
+\doxysubsubsection{\texorpdfstring{DistanceFxGadget()}{DistanceFxGadget()}}
+{\footnotesize\ttfamily Distance\+Fx\+Gadget\+::\+Distance\+Fx\+Gadget (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$}]{controller,  }\item[{const TDouble\+ParamP \&}]{distance,  }\item[{const TDouble\+ParamP \&}]{angle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00395       : \mbox{\hyperlink{class_fx_gadget}{FxGadget}}(controller)}
+\DoxyCodeLine{00396       , m\_distance(distance)}
+\DoxyCodeLine{00397       , m\_angle(angle)}
+\DoxyCodeLine{00398       , m\_grabPos(1) \{}
+\DoxyCodeLine{00399     addParam(distance);}
+\DoxyCodeLine{00400     \textcolor{keywordflow}{if} (angle) addParam(angle);}
+\DoxyCodeLine{00401   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_distance_fx_gadget_a2acf09da02ae85c4fa09df126cbf6891}\label{class_distance_fx_gadget_a2acf09da02ae85c4fa09df126cbf6891}} 
+\index{DistanceFxGadget@{DistanceFxGadget}!draw@{draw}}
+\index{draw@{draw}!DistanceFxGadget@{DistanceFxGadget}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Distance\+Fx\+Gadget\+::draw (\begin{DoxyParamCaption}\item[{bool}]{picking }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00418                                         \{}
+\DoxyCodeLine{00419   \textcolor{keywordflow}{if} (!m\_distance) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00420   setPixelSize();}
+\DoxyCodeLine{00421   glColor3d(0, 0, 1);}
+\DoxyCodeLine{00422   \textcolor{keywordtype}{double} d = getValue(m\_distance) * getScaleFactor();}
+\DoxyCodeLine{00423   \mbox{\hyperlink{class_t_point_t}{TPointD}} dir(getDirection());}
+\DoxyCodeLine{00424   \mbox{\hyperlink{class_t_point_t}{TPointD}} u = rotate90(dir) * (getPixelSize() * 10);}
+\DoxyCodeLine{00425 }
+\DoxyCodeLine{00426   tglDrawSegment(-\/u, u);}
+\DoxyCodeLine{00427 }
+\DoxyCodeLine{00428   glPushName(getId());}
+\DoxyCodeLine{00429 }
+\DoxyCodeLine{00430   \mbox{\hyperlink{class_t_point_t}{TPointD}} b, c;}
+\DoxyCodeLine{00431   b = dir * (d * 0.5);}
+\DoxyCodeLine{00432   c = b -\/ dir * d;}
+\DoxyCodeLine{00433 }
+\DoxyCodeLine{00434   tglDrawSegment(b -\/ u, b + u);}
+\DoxyCodeLine{00435   tglDrawCircle(b, getPixelSize() * 5);}
+\DoxyCodeLine{00436 }
+\DoxyCodeLine{00437   tglDrawSegment(c -\/ u, c + u);}
+\DoxyCodeLine{00438   tglDrawCircle(c, getPixelSize() * 5);}
+\DoxyCodeLine{00439 }
+\DoxyCodeLine{00440   glPopName();}
+\DoxyCodeLine{00441 }
+\DoxyCodeLine{00442   glLineStipple(1, 0xAAAA);}
+\DoxyCodeLine{00443   glEnable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{00444   tglDrawSegment(b, c);}
+\DoxyCodeLine{00445   glDisable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{00446   \textcolor{keywordflow}{if} (isSelected()) \{}
+\DoxyCodeLine{00447     drawTooltip(b + \mbox{\hyperlink{class_t_point_t}{TPointD}}(5, 5) * getPixelSize(), getLabel());}
+\DoxyCodeLine{00448   \}}
+\DoxyCodeLine{00449 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_distance_fx_gadget_a39bbdd12abc64da9e07b3f3f3d9c775d}\label{class_distance_fx_gadget_a39bbdd12abc64da9e07b3f3f3d9c775d}} 
+\index{DistanceFxGadget@{DistanceFxGadget}!getDirection@{getDirection}}
+\index{getDirection@{getDirection}!DistanceFxGadget@{DistanceFxGadget}}
+\doxysubsubsection{\texorpdfstring{getDirection()}{getDirection()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_point_t}{TPointD}} Distance\+Fx\+Gadget\+::get\+Direction (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00403                                \{}
+\DoxyCodeLine{00404     \textcolor{keywordflow}{if} (!m\_angle) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_point_t}{TPointD}}(1.0, 0.0);}
+\DoxyCodeLine{00405 }
+\DoxyCodeLine{00406     \textcolor{keywordtype}{double} angle = getValue(m\_angle);}
+\DoxyCodeLine{00407     \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_point_t}{TPointD}}(cos(angle), sin(angle));}
+\DoxyCodeLine{00408   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_distance_fx_gadget_af63c500e16fab3d542fe7f14f3adec61}\label{class_distance_fx_gadget_af63c500e16fab3d542fe7f14f3adec61}} 
+\index{DistanceFxGadget@{DistanceFxGadget}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!DistanceFxGadget@{DistanceFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Distance\+Fx\+Gadget\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00453                                                                              \{}
+\DoxyCodeLine{00454   m\_grabPos = (pos.x > 0.0) ? 1 : -\/1;}
+\DoxyCodeLine{00455 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_distance_fx_gadget_aa02709d7b3d415056a4967a9f6cc7011}\label{class_distance_fx_gadget_aa02709d7b3d415056a4967a9f6cc7011}} 
+\index{DistanceFxGadget@{DistanceFxGadget}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!DistanceFxGadget@{DistanceFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Distance\+Fx\+Gadget\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00459                                                                              \{}
+\DoxyCodeLine{00460   \textcolor{keywordtype}{double} v = (pos * getDirection()) / getScaleFactor();}
+\DoxyCodeLine{00461   v        = v * 2 * m\_grabPos;}
+\DoxyCodeLine{00462   setValue(m\_distance, v);}
+\DoxyCodeLine{00463 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/edittoolgadgets.\+cpp\end{DoxyCompactItemize}

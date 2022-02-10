@@ -1,0 +1,79 @@
+\hypertarget{classmov__io_1_1_init_l_w_mov_parser}{}\doxysection{mov\+\_\+io\+::Init\+LWMov\+Parser Class Reference}
+\label{classmov__io_1_1_init_l_w_mov_parser}\index{mov\_io::InitLWMovParser@{mov\_io::InitLWMovParser}}
+Inheritance diagram for mov\+\_\+io\+::Init\+LWMov\+Parser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmov__io_1_1_init_l_w_mov_parser}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{classmov__io_1_1_init_l_w_mov_parser_a9b5a241755e72fcb632cf300750185ce}{header}} () const override
+\item 
+void \mbox{\hyperlink{classmov__io_1_1_init_l_w_mov_parser_a4e0352f27cdfa4cab465425790946af0}{operator()}} (\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&stream) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmov__io_1_1_init_l_w_mov_parser_a9b5a241755e72fcb632cf300750185ce}\label{classmov__io_1_1_init_l_w_mov_parser_a9b5a241755e72fcb632cf300750185ce}} 
+\index{mov\_io::InitLWMovParser@{mov\_io::InitLWMovParser}!header@{header}}
+\index{header@{header}!mov\_io::InitLWMovParser@{mov\_io::InitLWMovParser}}
+\doxysubsubsection{\texorpdfstring{header()}{header()}}
+{\footnotesize\ttfamily QString mov\+\_\+io\+::\+Init\+LWMov\+Parser\+::header (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067 \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$initLWMov"{}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmov__io_1_1_init_l_w_mov_parser_a4e0352f27cdfa4cab465425790946af0}\label{classmov__io_1_1_init_l_w_mov_parser_a4e0352f27cdfa4cab465425790946af0}} 
+\index{mov\_io::InitLWMovParser@{mov\_io::InitLWMovParser}!operator()@{operator()}}
+\index{operator()@{operator()}!mov\_io::InitLWMovParser@{mov\_io::InitLWMovParser}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily void mov\+\_\+io\+::\+Init\+LWMov\+Parser\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00189                                              \{}
+\DoxyCodeLine{00190   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} id;}
+\DoxyCodeLine{00191   QString fp, propsFp;}
+\DoxyCodeLine{00192   msg >> \textcolor{keywordtype}{id} >> fp >> propsFp >> clr;}
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00194   \mbox{\hyperlink{class_t_file_path}{TFilePath}} tfp(fp.toStdWString()), propsTFp(propsFp.toStdWString());}
+\DoxyCodeLine{00195 }
+\DoxyCodeLine{00196   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00197     \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}} *props = 0;}
+\DoxyCodeLine{00198     \textcolor{keywordflow}{if} (!propsTFp.isEmpty()) \{}
+\DoxyCodeLine{00199       props = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}};}
+\DoxyCodeLine{00200 }
+\DoxyCodeLine{00201       \mbox{\hyperlink{class_t_i_stream}{TIStream}} is(propsTFp);}
+\DoxyCodeLine{00202       props-\/>loadData(is);}
+\DoxyCodeLine{00203     \}}
+\DoxyCodeLine{00204 }
+\DoxyCodeLine{00205     writers.insert(\textcolor{keywordtype}{id}, \mbox{\hyperlink{class_t_level_writer_p}{TLevelWriterP}}(tfp, props));}
+\DoxyCodeLine{00206 }
+\DoxyCodeLine{00207     msg << QString(\textcolor{stringliteral}{"{}ok"{}});}
+\DoxyCodeLine{00208   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00209     msg << QString(\textcolor{stringliteral}{"{}err"{}});}
+\DoxyCodeLine{00210   \}}
+\DoxyCodeLine{00211 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+h\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+cpp\end{DoxyCompactItemize}

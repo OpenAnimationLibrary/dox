@@ -1,0 +1,186 @@
+\hypertarget{class_cell_marks_popup}{}\doxysection{Cell\+Marks\+Popup Class Reference}
+\label{class_cell_marks_popup}\index{CellMarksPopup@{CellMarksPopup}}
+Inheritance diagram for Cell\+Marks\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_cell_marks_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_cell_marks_popup_a7d6dff12e7c9397bd540b19141ffb27d}{Cell\+Marks\+Popup}} (QWidget $\ast$parent)
+\item 
+void \mbox{\hyperlink{class_cell_marks_popup_ab06aacff1a32c996885c5d1ba9bff1d9}{update}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_cell_marks_popup_a48cd8b37382563eeeca3f5f707d92ac4}{on\+Color\+Changed}} (const TPixel32 \&, bool)
+\item 
+void \mbox{\hyperlink{class_cell_marks_popup_a2c0626ac6c900bee39c314c1a2a3f36e}{on\+Name\+Changed}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_cell_marks_popup_a7d6dff12e7c9397bd540b19141ffb27d}\label{class_cell_marks_popup_a7d6dff12e7c9397bd540b19141ffb27d}} 
+\index{CellMarksPopup@{CellMarksPopup}!CellMarksPopup@{CellMarksPopup}}
+\index{CellMarksPopup@{CellMarksPopup}!CellMarksPopup@{CellMarksPopup}}
+\doxysubsubsection{\texorpdfstring{CellMarksPopup()}{CellMarksPopup()}}
+{\footnotesize\ttfamily Cell\+Marks\+Popup\+::\+Cell\+Marks\+Popup (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00125                                               : QDialog(parent) \{}
+\DoxyCodeLine{00126   setWindowTitle(tr(\textcolor{stringliteral}{"{}Cell Marks Settings"{}}));}
+\DoxyCodeLine{00127 }
+\DoxyCodeLine{00128   QList<TSceneProperties::CellMark> marks = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00129                                                 -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00130                                                 -\/>getScene()}
+\DoxyCodeLine{00131                                                 -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00132                                                 -\/>getCellMarks();}
+\DoxyCodeLine{00133 }
+\DoxyCodeLine{00134   QGridLayout *layout = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00135   layout-\/>setMargin(10);}
+\DoxyCodeLine{00136   layout-\/>setHorizontalSpacing(5);}
+\DoxyCodeLine{00137   layout-\/>setVerticalSpacing(10);}
+\DoxyCodeLine{00138   \{}
+\DoxyCodeLine{00139     \textcolor{keywordtype}{int} \textcolor{keywordtype}{id} = 0;}
+\DoxyCodeLine{00140     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} mark : marks) \{}
+\DoxyCodeLine{00141       \mbox{\hyperlink{class_d_v_gui_1_1_color_field}{ColorField}} *colorF = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_color_field}{ColorField}}(\textcolor{keyword}{this}, \textcolor{keyword}{false}, mark.color, 20);}
+\DoxyCodeLine{00142       colorF-\/>\mbox{\hyperlink{class_d_v_gui_1_1_color_field_a7452cd2805f9aac808bece229d9bc6e1}{hideChannelsFields}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00143       QLineEdit *nameF = \textcolor{keyword}{new} QLineEdit(mark.name, \textcolor{keyword}{this});}
+\DoxyCodeLine{00144       m\_fields.append(\{id, colorF, nameF\});}
+\DoxyCodeLine{00145 }
+\DoxyCodeLine{00146       \textcolor{keywordtype}{int} row = layout-\/>rowCount();}
+\DoxyCodeLine{00147 }
+\DoxyCodeLine{00148       layout-\/>addWidget(\textcolor{keyword}{new} QLabel(QString(\textcolor{stringliteral}{"{}\%1:"{}}).arg(\textcolor{keywordtype}{id}), \textcolor{keyword}{this}), row, 0,}
+\DoxyCodeLine{00149                         Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151       layout-\/>addWidget(colorF, row, 1);}
+\DoxyCodeLine{00152       layout-\/>addWidget(nameF, row, 2);}
+\DoxyCodeLine{00153 }
+\DoxyCodeLine{00154       connect(colorF, SIGNAL(colorChanged(\textcolor{keyword}{const} TPixel32 \&, \textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00155               SLOT(onColorChanged(\textcolor{keyword}{const} TPixel32 \&, \textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00156       connect(nameF, SIGNAL(editingFinished()), \textcolor{keyword}{this}, SLOT(onNameChanged()));}
+\DoxyCodeLine{00157       \textcolor{keywordtype}{id}++;}
+\DoxyCodeLine{00158     \}}
+\DoxyCodeLine{00159   \}}
+\DoxyCodeLine{00160   layout-\/>setColumnStretch(2, 1);}
+\DoxyCodeLine{00161   setLayout(layout);}
+\DoxyCodeLine{00162 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_cell_marks_popup_a48cd8b37382563eeeca3f5f707d92ac4}\label{class_cell_marks_popup_a48cd8b37382563eeeca3f5f707d92ac4}} 
+\index{CellMarksPopup@{CellMarksPopup}!onColorChanged@{onColorChanged}}
+\index{onColorChanged@{onColorChanged}!CellMarksPopup@{CellMarksPopup}}
+\doxysubsubsection{\texorpdfstring{onColorChanged}{onColorChanged}}
+{\footnotesize\ttfamily void Cell\+Marks\+Popup\+::on\+Color\+Changed (\begin{DoxyParamCaption}\item[{const TPixel32 \&}]{color,  }\item[{bool}]{is\+Dragging }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00180                                                                           \{}
+\DoxyCodeLine{00181   \textcolor{keywordflow}{if} (isDragging) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00182   \textcolor{comment}{// obtain id}}
+\DoxyCodeLine{00183   \textcolor{keywordtype}{int} \textcolor{keywordtype}{id}             = -\/1;}
+\DoxyCodeLine{00184   \mbox{\hyperlink{class_d_v_gui_1_1_color_field}{ColorField}} *colorF = qobject\_cast<ColorField *>(sender());}
+\DoxyCodeLine{00185   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} field : m\_fields) \{}
+\DoxyCodeLine{00186     \textcolor{keywordflow}{if} (field.colorField == colorF) \{}
+\DoxyCodeLine{00187       \textcolor{keywordtype}{id} = field.id;}
+\DoxyCodeLine{00188       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00189     \}}
+\DoxyCodeLine{00190   \}}
+\DoxyCodeLine{00191   \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id} < 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00192 }
+\DoxyCodeLine{00193   \textcolor{comment}{// return if the value is unchanged}}
+\DoxyCodeLine{00194   TPixel32 oldColor = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00195                           -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00196                           -\/>getScene()}
+\DoxyCodeLine{00197                           -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00198                           -\/>getCellMark(\textcolor{keywordtype}{id})}
+\DoxyCodeLine{00199                           .color;}
+\DoxyCodeLine{00200   \textcolor{keywordflow}{if} (color == oldColor) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202   EditCellMarkUndo *undo = \textcolor{keyword}{new} EditCellMarkUndo(\textcolor{keywordtype}{id}, color);}
+\DoxyCodeLine{00203   undo-\/>redo();}
+\DoxyCodeLine{00204   TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{00205 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cell_marks_popup_a2c0626ac6c900bee39c314c1a2a3f36e}\label{class_cell_marks_popup_a2c0626ac6c900bee39c314c1a2a3f36e}} 
+\index{CellMarksPopup@{CellMarksPopup}!onNameChanged@{onNameChanged}}
+\index{onNameChanged@{onNameChanged}!CellMarksPopup@{CellMarksPopup}}
+\doxysubsubsection{\texorpdfstring{onNameChanged}{onNameChanged}}
+{\footnotesize\ttfamily void Cell\+Marks\+Popup\+::on\+Name\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00207                                    \{}
+\DoxyCodeLine{00208   \textcolor{comment}{// obtain id}}
+\DoxyCodeLine{00209   \textcolor{keywordtype}{int} \textcolor{keywordtype}{id}           = -\/1;}
+\DoxyCodeLine{00210   QLineEdit *nameF = qobject\_cast<QLineEdit *>(sender());}
+\DoxyCodeLine{00211   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} field : m\_fields) \{}
+\DoxyCodeLine{00212     \textcolor{keywordflow}{if} (field.nameField == nameF) \{}
+\DoxyCodeLine{00213       \textcolor{keywordtype}{id} = field.id;}
+\DoxyCodeLine{00214       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00215     \}}
+\DoxyCodeLine{00216   \}}
+\DoxyCodeLine{00217   \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id} < 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219   \textcolor{comment}{// return if the value is unchanged}}
+\DoxyCodeLine{00220   QString oldName = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00221                         -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00222                         -\/>getScene()}
+\DoxyCodeLine{00223                         -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00224                         -\/>getCellMark(\textcolor{keywordtype}{id})}
+\DoxyCodeLine{00225                         .name;}
+\DoxyCodeLine{00226   \textcolor{keywordflow}{if} (nameF-\/>text() == oldName) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00227   \textcolor{comment}{// reject empty string}}
+\DoxyCodeLine{00228   \textcolor{keywordflow}{if} (nameF-\/>text().isEmpty()) \{}
+\DoxyCodeLine{00229     nameF-\/>setText(oldName);}
+\DoxyCodeLine{00230     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00231   \}}
+\DoxyCodeLine{00232 }
+\DoxyCodeLine{00233   EditCellMarkUndo *undo = \textcolor{keyword}{new} EditCellMarkUndo(\textcolor{keywordtype}{id}, nameF-\/>text());}
+\DoxyCodeLine{00234   undo-\/>redo();}
+\DoxyCodeLine{00235   TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{00236 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cell_marks_popup_ab06aacff1a32c996885c5d1ba9bff1d9}\label{class_cell_marks_popup_ab06aacff1a32c996885c5d1ba9bff1d9}} 
+\index{CellMarksPopup@{CellMarksPopup}!update@{update}}
+\index{update@{update}!CellMarksPopup@{CellMarksPopup}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Cell\+Marks\+Popup\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00164                             \{}
+\DoxyCodeLine{00165   QList<TSceneProperties::CellMark> marks = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{00166                                                 -\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()}
+\DoxyCodeLine{00167                                                 -\/>getScene()}
+\DoxyCodeLine{00168                                                 -\/>\mbox{\hyperlink{class_toonz_scene_a8ef96fedc17d7def810ac419b0939254}{getProperties}}()}
+\DoxyCodeLine{00169                                                 -\/>getCellMarks();}
+\DoxyCodeLine{00170   assert(marks.count() == m\_fields.count());}
+\DoxyCodeLine{00171   \textcolor{keywordtype}{int} \textcolor{keywordtype}{id} = 0;}
+\DoxyCodeLine{00172   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} mark : marks) \{}
+\DoxyCodeLine{00173     assert(m\_fields[\textcolor{keywordtype}{id}].\textcolor{keywordtype}{id} == \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00174     m\_fields[id].colorField-\/>setColor(mark.color);}
+\DoxyCodeLine{00175     m\_fields[id].nameField-\/>setText(mark.name);}
+\DoxyCodeLine{00176     \textcolor{keywordtype}{id}++;}
+\DoxyCodeLine{00177   \}}
+\DoxyCodeLine{00178 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/scenesettingspopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/scenesettingspopup.\+cpp\end{DoxyCompactItemize}

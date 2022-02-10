@@ -1,0 +1,64 @@
+\hypertarget{classmosaic_1_1_square_builder}{}\doxysection{mosaic\+::Square\+Builder\texorpdfstring{$<$}{<} PIXEL, GRAY \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classmosaic_1_1_square_builder}\index{mosaic::SquareBuilder$<$ PIXEL, GRAY $>$@{mosaic::SquareBuilder$<$ PIXEL, GRAY $>$}}
+Inheritance diagram for mosaic\+::Square\+Builder\texorpdfstring{$<$}{<} PIXEL, GRAY \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classmosaic_1_1_square_builder}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmosaic_1_1_square_builder_a0c5accd67a89bd5af4a59d25a84048e8}{Square\+Builder}} (int cell\+Lx, int cell\+Ly, double radius, int wrap)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename PIXEL, typename GRAY$>$\newline
+class mosaic\+::\+Square\+Builder$<$ PIXEL, GRAY $>$}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmosaic_1_1_square_builder_a0c5accd67a89bd5af4a59d25a84048e8}\label{classmosaic_1_1_square_builder_a0c5accd67a89bd5af4a59d25a84048e8}} 
+\index{mosaic::SquareBuilder$<$ PIXEL, GRAY $>$@{mosaic::SquareBuilder$<$ PIXEL, GRAY $>$}!SquareBuilder@{SquareBuilder}}
+\index{SquareBuilder@{SquareBuilder}!mosaic::SquareBuilder$<$ PIXEL, GRAY $>$@{mosaic::SquareBuilder$<$ PIXEL, GRAY $>$}}
+\doxysubsubsection{\texorpdfstring{SquareBuilder()}{SquareBuilder()}}
+{\footnotesize\ttfamily template$<$typename PIXEL , typename GRAY $>$ \\
+\mbox{\hyperlink{classmosaic_1_1_square_builder}{mosaic\+::\+Square\+Builder}}$<$ PIXEL, GRAY $>$\+::\+Square\+Builder (\begin{DoxyParamCaption}\item[{int}]{cell\+Lx,  }\item[{int}]{cell\+Ly,  }\item[{double}]{radius,  }\item[{int}]{wrap }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00109       : MaskCellBuilder<PIXEL, GRAY>(cellLx, cellLy, radius, wrap) \{}
+\DoxyCodeLine{00110     \textcolor{comment}{// Build the mask corresponding to a square of passed radius}}
+\DoxyCodeLine{00111     GRAY *pix, *pixRev, *line, *lineEnd, *lineRev;}
+\DoxyCodeLine{00112     this-\/>m\_mask = \mbox{\hyperlink{class_t_raster_p_t}{TRasterPT<GRAY>}}(cellLx, cellLy);}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114     \textcolor{comment}{// For each pixel in the lower-\/left quadrant, fill in the corresponding mask}}
+\DoxyCodeLine{00115     \textcolor{comment}{// value.}}
+\DoxyCodeLine{00116     \textcolor{comment}{// The other ones are filled by mirroring.}}
+\DoxyCodeLine{00117     \textcolor{keywordtype}{int} i, j;}
+\DoxyCodeLine{00118     \textcolor{keywordtype}{double} lxHalf = 0.5 * cellLx, lyHalf = 0.5 * cellLy;}
+\DoxyCodeLine{00119     \textcolor{keywordtype}{int} lxHalfI = tceil(lxHalf), lyHalfI = tceil(lyHalf);}
+\DoxyCodeLine{00120     \textcolor{keywordtype}{double} val, addValX = radius -\/ lxHalf + 1, addValY = radius -\/ lyHalf + 1;}
+\DoxyCodeLine{00121 }
+\DoxyCodeLine{00122     \textcolor{keywordflow}{for} (i = 0; i < lyHalfI; ++i) \{}
+\DoxyCodeLine{00123       line    = this-\/>m\_mask-\/>pixels(i),}
+\DoxyCodeLine{00124       lineRev = this-\/>m\_mask-\/>pixels(cellLy -\/ i -\/ 1);}
+\DoxyCodeLine{00125       lineEnd = line + cellLx;}
+\DoxyCodeLine{00126       \textcolor{keywordflow}{for} (j = 0, pix = line, pixRev = lineEnd -\/ 1; j < lxHalfI;}
+\DoxyCodeLine{00127            ++j, ++pix, -\/-\/pixRev) \{}
+\DoxyCodeLine{00128         val  = tcrop(addValX + i, 0.0, 1.0) * tcrop(addValY + j, 0.0, 1.0);}
+\DoxyCodeLine{00129         *pix = *pixRev = val * GRAY::maxChannelValue;}
+\DoxyCodeLine{00130       \}}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132       memcpy(lineRev, line, cellLx * \textcolor{keyword}{sizeof}(GRAY));}
+\DoxyCodeLine{00133     \}}
+\DoxyCodeLine{00134   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/mosaicfx.\+cpp\end{DoxyCompactItemize}

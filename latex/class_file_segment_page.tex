@@ -1,0 +1,210 @@
+\hypertarget{class_file_segment_page}{}\doxysection{File\+Segment\+Page Class Reference}
+\label{class_file_segment_page}\index{FileSegmentPage@{FileSegmentPage}}
+Inheritance diagram for File\+Segment\+Page\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_file_segment_page}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_file_segment_page_a809d23fd378229c0d59b13b46860f83f}{File\+Segment\+Page}} (\mbox{\hyperlink{class_function_segment_viewer}{Function\+Segment\+Viewer}} $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_file_segment_page_a1abdfd78030781de486160ae78bde686}{refresh}} () override
+\item 
+void \mbox{\hyperlink{class_file_segment_page_a5fbaecfcd9d219e66827ca9d0bdf4303}{init}} (int segment\+Length) override
+\item 
+void \mbox{\hyperlink{class_file_segment_page_a32315ad4e40727f364fc134c146c8279}{apply}} () override
+\item 
+void \mbox{\hyperlink{class_file_segment_page_a34bed5ae7f61484d99f4e8b6c5da24f5}{get\+Gui\+Values}} (\mbox{\hyperlink{class_t_double_keyframe_1_1_file_params}{TDouble\+Keyframe\+::\+File\+Params}} \&file\+Param, std\+::string \&unit\+Name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_file_segment_page_a809d23fd378229c0d59b13b46860f83f}\label{class_file_segment_page_a809d23fd378229c0d59b13b46860f83f}} 
+\index{FileSegmentPage@{FileSegmentPage}!FileSegmentPage@{FileSegmentPage}}
+\index{FileSegmentPage@{FileSegmentPage}!FileSegmentPage@{FileSegmentPage}}
+\doxysubsubsection{\texorpdfstring{FileSegmentPage()}{FileSegmentPage()}}
+{\footnotesize\ttfamily File\+Segment\+Page\+::\+File\+Segment\+Page (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_function_segment_viewer}{Function\+Segment\+Viewer}} $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00661     : \mbox{\hyperlink{class_function_segment_page}{FunctionSegmentPage}}(parent) \{}
+\DoxyCodeLine{00662   \textcolor{comment}{// Force decoding the path since the file interporation}}
+\DoxyCodeLine{00663   \textcolor{comment}{// currently accepts only absolute paths.}}
+\DoxyCodeLine{00664   m\_fileFld = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_file_field}{DVGui::FileField}}(\textcolor{keyword}{this}, QString(), \textcolor{keyword}{false}, \textcolor{keyword}{false}, \textcolor{keyword}{false});}
+\DoxyCodeLine{00665   m\_fileFld-\/>\mbox{\hyperlink{class_d_v_gui_1_1_file_field_aa7a756fa242d0b6dbcf80994ee59c79e}{setFileMode}}(QFileDialog::ExistingFile);}
+\DoxyCodeLine{00666   QStringList filters;}
+\DoxyCodeLine{00667   filters.append(\textcolor{stringliteral}{"{}dat"{}});}
+\DoxyCodeLine{00668   filters.append(\textcolor{stringliteral}{"{}txt"{}});}
+\DoxyCodeLine{00669   m\_fileFld-\/>\mbox{\hyperlink{class_d_v_gui_1_1_file_field_aad79aa2cfdb79a5e1a1753f3fefb7957}{setFilters}}(filters);}
+\DoxyCodeLine{00670 }
+\DoxyCodeLine{00671   m\_fieldIndexFld             = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_line_edit}{LineEdit}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00672   QIntValidator *intValidator = \textcolor{keyword}{new} QIntValidator(1, 100, \textcolor{keyword}{this});}
+\DoxyCodeLine{00673   m\_fieldIndexFld-\/>setValidator(intValidator);}
+\DoxyCodeLine{00674 }
+\DoxyCodeLine{00675   m\_measureFld = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_line_edit}{LineEdit}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00676   m\_measureFld-\/>setText(\textcolor{stringliteral}{"{}inch"{}});}
+\DoxyCodeLine{00677 }
+\DoxyCodeLine{00678   \textcolor{comment}{//-\/-\/-\/-\/layout}}
+\DoxyCodeLine{00679   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00680   mainLayout-\/>setSpacing(5);}
+\DoxyCodeLine{00681   mainLayout-\/>setMargin(2);}
+\DoxyCodeLine{00682   \{}
+\DoxyCodeLine{00683     mainLayout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}File Path:"{}})), 0);}
+\DoxyCodeLine{00684     mainLayout-\/>addWidget(m\_fileFld);}
+\DoxyCodeLine{00685 }
+\DoxyCodeLine{00686     QGridLayout *bottomLay = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00687     bottomLay-\/>setSpacing(5);}
+\DoxyCodeLine{00688     bottomLay-\/>setMargin(0);}
+\DoxyCodeLine{00689     \{}
+\DoxyCodeLine{00690       bottomLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Column:"{}})), 0, 0,}
+\DoxyCodeLine{00691                            Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00692       bottomLay-\/>addWidget(m\_fieldIndexFld, 0, 1);}
+\DoxyCodeLine{00693       bottomLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Unit:"{}})), 1, 0,}
+\DoxyCodeLine{00694                            Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00695       bottomLay-\/>addWidget(m\_measureFld, 1, 1);}
+\DoxyCodeLine{00696     \}}
+\DoxyCodeLine{00697     bottomLay-\/>setColumnStretch(0, 0);}
+\DoxyCodeLine{00698     bottomLay-\/>setColumnStretch(1, 1);}
+\DoxyCodeLine{00699     mainLayout-\/>addLayout(bottomLay);}
+\DoxyCodeLine{00700   \}}
+\DoxyCodeLine{00701   setLayout(mainLayout);}
+\DoxyCodeLine{00702 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_file_segment_page_a32315ad4e40727f364fc134c146c8279}\label{class_file_segment_page_a32315ad4e40727f364fc134c146c8279}} 
+\index{FileSegmentPage@{FileSegmentPage}!apply@{apply}}
+\index{apply@{apply}!FileSegmentPage@{FileSegmentPage}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void File\+Segment\+Page\+::apply (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_function_segment_page}{Function\+Segment\+Page}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00747                             \{}
+\DoxyCodeLine{00748   \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve = getCurve();}
+\DoxyCodeLine{00749   \textcolor{keywordflow}{if} (!curve) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00750   \textcolor{keywordtype}{int} kIndex = getViewer()-\/>getSegmentIndex();}
+\DoxyCodeLine{00751   \textcolor{keywordflow}{if} (kIndex < 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00752 }
+\DoxyCodeLine{00753   QString stringPath = m\_fileFld-\/>getPath();}
+\DoxyCodeLine{00754   \textcolor{keywordflow}{if} (stringPath == \textcolor{stringliteral}{"{}"{}}) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00755   stringPath.replace(\textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}}, \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)\(\backslash\)\(\backslash\)"{}});}
+\DoxyCodeLine{00756 }
+\DoxyCodeLine{00757   \mbox{\hyperlink{class_t_double_keyframe_1_1_file_params}{TDoubleKeyframe::FileParams}} fileParams;}
+\DoxyCodeLine{00758 }
+\DoxyCodeLine{00759   fileParams.m\_path       = \mbox{\hyperlink{class_t_file_path}{TFilePath}}(stringPath.toStdWString());}
+\DoxyCodeLine{00760   fileParams.m\_fieldIndex = std::max(0, m\_fieldIndexFld-\/>text().toInt() -\/ 1);}
+\DoxyCodeLine{00761   std::string unitName    = m\_measureFld-\/>text().toStdString();}
+\DoxyCodeLine{00762 }
+\DoxyCodeLine{00763   \mbox{\hyperlink{class_keyframe_setter}{KeyframeSetter}} setter(curve, kIndex);}
+\DoxyCodeLine{00764   setter.setFile(fileParams);}
+\DoxyCodeLine{00765   setter.setUnitName(unitName);}
+\DoxyCodeLine{00766 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_file_segment_page_a34bed5ae7f61484d99f4e8b6c5da24f5}\label{class_file_segment_page_a34bed5ae7f61484d99f4e8b6c5da24f5}} 
+\index{FileSegmentPage@{FileSegmentPage}!getGuiValues@{getGuiValues}}
+\index{getGuiValues@{getGuiValues}!FileSegmentPage@{FileSegmentPage}}
+\doxysubsubsection{\texorpdfstring{getGuiValues()}{getGuiValues()}}
+{\footnotesize\ttfamily void File\+Segment\+Page\+::get\+Gui\+Values (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_double_keyframe_1_1_file_params}{TDouble\+Keyframe\+::\+File\+Params}} \&}]{file\+Param,  }\item[{std\+::string \&}]{unit\+Name }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00769                                                         \{}
+\DoxyCodeLine{00770   QString stringPath = m\_fileFld-\/>getPath();}
+\DoxyCodeLine{00771   stringPath.replace(\textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}}, \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)\(\backslash\)\(\backslash\)"{}});}
+\DoxyCodeLine{00772   fileParam.m\_path       = \mbox{\hyperlink{class_t_file_path}{TFilePath}}(stringPath.toStdWString());}
+\DoxyCodeLine{00773   fileParam.m\_fieldIndex = std::max(0, m\_fieldIndexFld-\/>text().toInt() -\/ 1);}
+\DoxyCodeLine{00774 }
+\DoxyCodeLine{00775   unitName = m\_measureFld-\/>text().toStdString();}
+\DoxyCodeLine{00776 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_file_segment_page_a5fbaecfcd9d219e66827ca9d0bdf4303}\label{class_file_segment_page_a5fbaecfcd9d219e66827ca9d0bdf4303}} 
+\index{FileSegmentPage@{FileSegmentPage}!init@{init}}
+\index{init@{init}!FileSegmentPage@{FileSegmentPage}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void File\+Segment\+Page\+::init (\begin{DoxyParamCaption}\item[{int}]{segment\+Length }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_function_segment_page}{Function\+Segment\+Page}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00731                                             \{}
+\DoxyCodeLine{00732   \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve = getCurve();}
+\DoxyCodeLine{00733   \textcolor{keywordflow}{if} (!curve) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00734 }
+\DoxyCodeLine{00735   \mbox{\hyperlink{class_t_measure}{TMeasure}} *measure    = curve-\/>getMeasure();}
+\DoxyCodeLine{00736   std::string unitName = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00737   \textcolor{keywordflow}{if} (measure) \{}
+\DoxyCodeLine{00738     \textcolor{keyword}{const} \mbox{\hyperlink{class_t_unit}{TUnit}} *unit = measure-\/>getCurrentUnit();}
+\DoxyCodeLine{00739     \textcolor{keywordflow}{if} (unit) unitName = ::to\_string(unit-\/>getDefaultExtension());}
+\DoxyCodeLine{00740   \}}
+\DoxyCodeLine{00741   m\_measureFld-\/>setText(QString::fromStdString(unitName));}
+\DoxyCodeLine{00742 }
+\DoxyCodeLine{00743   m\_fileFld-\/>setPath(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00744   m\_fieldIndexFld-\/>setText(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00745 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_file_segment_page_a1abdfd78030781de486160ae78bde686}\label{class_file_segment_page_a1abdfd78030781de486160ae78bde686}} 
+\index{FileSegmentPage@{FileSegmentPage}!refresh@{refresh}}
+\index{refresh@{refresh}!FileSegmentPage@{FileSegmentPage}}
+\doxysubsubsection{\texorpdfstring{refresh()}{refresh()}}
+{\footnotesize\ttfamily void File\+Segment\+Page\+::refresh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_function_segment_page}{Function\+Segment\+Page}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00704                               \{}
+\DoxyCodeLine{00705   \mbox{\hyperlink{class_t_double_keyframe}{TDoubleKeyframe}} kf;}
+\DoxyCodeLine{00706   \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve = getCurve();}
+\DoxyCodeLine{00707   \textcolor{keywordflow}{if} (curve) kf = curve-\/>getKeyframeAt(getR0());}
+\DoxyCodeLine{00708   \textcolor{keywordflow}{if} (curve \&\& kf.m\_isKeyframe) \{}
+\DoxyCodeLine{00709     \mbox{\hyperlink{class_t_file_path}{TFilePath}} path;}
+\DoxyCodeLine{00710     \textcolor{keywordtype}{int} fieldIndex       = 0;}
+\DoxyCodeLine{00711     std::string unitName = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00712     \textcolor{keywordflow}{if} (kf.m\_type == TDoubleKeyframe::File) \{}
+\DoxyCodeLine{00713       path       = kf.m\_fileParams.m\_path;}
+\DoxyCodeLine{00714       fieldIndex = kf.m\_fileParams.m\_fieldIndex;}
+\DoxyCodeLine{00715       \textcolor{keywordflow}{if} (fieldIndex < 0) fieldIndex = 0;}
+\DoxyCodeLine{00716       unitName = kf.m\_unitName;}
+\DoxyCodeLine{00717       \textcolor{keywordflow}{if} (unitName == \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{00718         \mbox{\hyperlink{class_t_measure}{TMeasure}} *measure = curve-\/>getMeasure();}
+\DoxyCodeLine{00719         \textcolor{keywordflow}{if} (measure) \{}
+\DoxyCodeLine{00720           \textcolor{keyword}{const} \mbox{\hyperlink{class_t_unit}{TUnit}} *unit = measure-\/>getCurrentUnit();}
+\DoxyCodeLine{00721           \textcolor{keywordflow}{if} (unit) unitName = ::to\_string(unit-\/>getDefaultExtension());}
+\DoxyCodeLine{00722         \}}
+\DoxyCodeLine{00723       \}}
+\DoxyCodeLine{00724     \}}
+\DoxyCodeLine{00725     m\_fileFld-\/>setPath(QString::fromStdWString(path.getWideString()));}
+\DoxyCodeLine{00726     m\_fieldIndexFld-\/>setText(QString::number(fieldIndex + 1));}
+\DoxyCodeLine{00727     m\_measureFld-\/>setText(QString::fromStdString(unitName));}
+\DoxyCodeLine{00728   \}}
+\DoxyCodeLine{00729 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/functionsegmentviewer.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/functionsegmentviewer.\+cpp\end{DoxyCompactItemize}

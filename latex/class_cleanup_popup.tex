@@ -1,0 +1,236 @@
+\hypertarget{class_cleanup_popup}{}\doxysection{Cleanup\+Popup Class Reference}
+\label{class_cleanup_popup}\index{CleanupPopup@{CleanupPopup}}
+Inheritance diagram for Cleanup\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_cleanup_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_cleanup_popup_1_1_cleanup_level}{Cleanup\+Level}}
+\item 
+class \mbox{\hyperlink{class_cleanup_popup_1_1_overwrite_dialog}{Overwrite\+Dialog}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_cleanup_popup_aa572a612f88603423c20f0a3eb2c0396}{execute}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_cleanup_popup_a03afb1d8670917cae104eb36dc34295a}{close\+Event}} (QClose\+Event $\ast$) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_cleanup_popup_a3eb404d80ceb0a43e465545f56cd9965}\label{class_cleanup_popup_a3eb404d80ceb0a43e465545f56cd9965}} 
+\index{CleanupPopup@{CleanupPopup}!CleanupPopup@{CleanupPopup}}
+\index{CleanupPopup@{CleanupPopup}!CleanupPopup@{CleanupPopup}}
+\doxysubsubsection{\texorpdfstring{CleanupPopup()}{CleanupPopup()}}
+{\footnotesize\ttfamily Cleanup\+Popup\+::\+Cleanup\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00287     : QDialog(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow())}
+\DoxyCodeLine{00288     , m\_params(\textcolor{keyword}{new} \mbox{\hyperlink{class_cleanup_parameters}{CleanupParameters}})}
+\DoxyCodeLine{00289     , m\_updater(\textcolor{keyword}{new} \mbox{\hyperlink{class_level_updater}{LevelUpdater}})}
+\DoxyCodeLine{00290     , m\_originalLevelPath()}
+\DoxyCodeLine{00291     , m\_originalPalette(0)}
+\DoxyCodeLine{00292     , m\_firstLevelFrame(\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{00293   setWindowTitle(tr(\textcolor{stringliteral}{"{}Cleanup"{}}));}
+\DoxyCodeLine{00294   \textcolor{comment}{// Progress Bar}}
+\DoxyCodeLine{00295   m\_progressLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Cleanup in progress"{}}));}
+\DoxyCodeLine{00296   m\_progressBar   = \textcolor{keyword}{new} QProgressBar;}
+\DoxyCodeLine{00297   \textcolor{comment}{// Text}}
+\DoxyCodeLine{00298   m\_cleanupQuestionLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Do you want to cleanup this frame?"{}}));}
+\DoxyCodeLine{00299 }
+\DoxyCodeLine{00300   m\_imageViewer = \textcolor{keyword}{new} \mbox{\hyperlink{class_image_viewer}{ImageViewer}}(0, 0, \textcolor{keyword}{false});}
+\DoxyCodeLine{00301 }
+\DoxyCodeLine{00302   \textcolor{comment}{// Buttons}}
+\DoxyCodeLine{00303   m\_cleanupButton           = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cleanup"{}}));}
+\DoxyCodeLine{00304   m\_skipButton              = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Skip"{}}));}
+\DoxyCodeLine{00305   m\_cleanupAllButton        = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cleanup All"{}}));}
+\DoxyCodeLine{00306   QPushButton *cancelButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cancel"{}}));}
+\DoxyCodeLine{00307   m\_imgViewBox              = \textcolor{keyword}{new} QGroupBox(tr(\textcolor{stringliteral}{"{}View"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00308 }
+\DoxyCodeLine{00309   m\_imgViewBox-\/>setCheckable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00310   m\_imgViewBox-\/>setChecked(\textcolor{keyword}{false});}
+\DoxyCodeLine{00311   m\_imageViewer-\/>setVisible(\textcolor{keyword}{false});}
+\DoxyCodeLine{00312   m\_imageViewer-\/>resize(406, 306);}
+\DoxyCodeLine{00313   \mbox{\hyperlink{class_image_painter_1_1_visual_settings}{ImagePainter::VisualSettings}} settings;}
+\DoxyCodeLine{00314   settings.\mbox{\hyperlink{class_image_painter_1_1_visual_settings_ac1ef1ddd2acf21e88d94de2bcfd0921f}{m\_bg}} = 0x80000;  \textcolor{comment}{// set to white regardless of the flipbook bg}}
+\DoxyCodeLine{00315   m\_imageViewer-\/>setVisual(settings);}
+\DoxyCodeLine{00316 }
+\DoxyCodeLine{00317   \textcolor{comment}{//-\/-\/-\/layout}}
+\DoxyCodeLine{00318   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00319   mainLayout-\/>setMargin(5);}
+\DoxyCodeLine{00320   mainLayout-\/>setSpacing(5);}
+\DoxyCodeLine{00321   \{}
+\DoxyCodeLine{00322     mainLayout-\/>addWidget(m\_progressLabel, 0);}
+\DoxyCodeLine{00323     mainLayout-\/>addWidget(m\_progressBar, 0);}
+\DoxyCodeLine{00324 }
+\DoxyCodeLine{00325     mainLayout-\/>addWidget(m\_cleanupQuestionLabel);}
+\DoxyCodeLine{00326 }
+\DoxyCodeLine{00327     QVBoxLayout *imgBoxLay = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00328     imgBoxLay-\/>setMargin(5);}
+\DoxyCodeLine{00329     \{ imgBoxLay-\/>addWidget(m\_imageViewer); \}}
+\DoxyCodeLine{00330     m\_imgViewBox-\/>setLayout(imgBoxLay);}
+\DoxyCodeLine{00331     mainLayout-\/>addWidget(m\_imgViewBox, 1);}
+\DoxyCodeLine{00332 }
+\DoxyCodeLine{00333     QHBoxLayout *buttonLay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00334     buttonLay-\/>setMargin(0);}
+\DoxyCodeLine{00335     buttonLay-\/>setSpacing(5);}
+\DoxyCodeLine{00336     \{}
+\DoxyCodeLine{00337       buttonLay-\/>addWidget(m\_cleanupButton);}
+\DoxyCodeLine{00338       buttonLay-\/>addWidget(m\_skipButton);}
+\DoxyCodeLine{00339       buttonLay-\/>addWidget(m\_cleanupAllButton);}
+\DoxyCodeLine{00340 }
+\DoxyCodeLine{00341       buttonLay-\/>addWidget(cancelButton);}
+\DoxyCodeLine{00342     \}}
+\DoxyCodeLine{00343     mainLayout-\/>addLayout(buttonLay);}
+\DoxyCodeLine{00344     mainLayout-\/>addStretch();}
+\DoxyCodeLine{00345   \}}
+\DoxyCodeLine{00346   setLayout(mainLayout);}
+\DoxyCodeLine{00347 }
+\DoxyCodeLine{00348   \textcolor{comment}{//-\/-\/-\/ signal-\/slot connections}}
+\DoxyCodeLine{00349 }
+\DoxyCodeLine{00350   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00351   ret      = ret \&\& connect(m\_progressBar, SIGNAL(valueChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00352                        SLOT(onValueChanged(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00353 }
+\DoxyCodeLine{00354   \textcolor{comment}{// NOTE: On MAC it seems that QAbstractButton's pressed() signal is reemitted}}
+\DoxyCodeLine{00355   \textcolor{comment}{// at}}
+\DoxyCodeLine{00356   \textcolor{comment}{// every mouseMoveEvent when the button is pressed...}}
+\DoxyCodeLine{00357   \textcolor{comment}{// This is why clicked() substitutes pressed() below.}}
+\DoxyCodeLine{00358 }
+\DoxyCodeLine{00359   ret = ret \&\& connect(m\_cleanupButton, SIGNAL(clicked()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00360                        SLOT(onCleanupFrame()));}
+\DoxyCodeLine{00361   ret = ret \&\&}
+\DoxyCodeLine{00362         connect(m\_skipButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onSkipFrame()));}
+\DoxyCodeLine{00363   ret = ret \&\& connect(m\_cleanupAllButton, SIGNAL(clicked()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00364                        SLOT(onCleanupAllFrame()));}
+\DoxyCodeLine{00365   ret = ret \&\&}
+\DoxyCodeLine{00366         connect(cancelButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onCancelCleanup()));}
+\DoxyCodeLine{00367   ret = ret \&\& connect(m\_imgViewBox, SIGNAL(toggled(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00368                        SLOT(onImgViewBoxToggled(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00369 }
+\DoxyCodeLine{00370   assert(ret);}
+\DoxyCodeLine{00371 }
+\DoxyCodeLine{00372   reset();  \textcolor{comment}{// Initialize remaining variables}}
+\DoxyCodeLine{00373 }
+\DoxyCodeLine{00374   resize(450, 400);}
+\DoxyCodeLine{00375 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_popup_ac54d98cb257c4b145a2e20251618a765}\label{class_cleanup_popup_ac54d98cb257c4b145a2e20251618a765}} 
+\index{CleanupPopup@{CleanupPopup}!````~CleanupPopup@{$\sim$CleanupPopup}}
+\index{````~CleanupPopup@{$\sim$CleanupPopup}!CleanupPopup@{CleanupPopup}}
+\doxysubsubsection{\texorpdfstring{$\sim$CleanupPopup()}{~CleanupPopup()}}
+{\footnotesize\ttfamily Cleanup\+Popup\+::$\sim$\+Cleanup\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00379 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_cleanup_popup_a03afb1d8670917cae104eb36dc34295a}\label{class_cleanup_popup_a03afb1d8670917cae104eb36dc34295a}} 
+\index{CleanupPopup@{CleanupPopup}!closeEvent@{closeEvent}}
+\index{closeEvent@{closeEvent}!CleanupPopup@{CleanupPopup}}
+\doxysubsubsection{\texorpdfstring{closeEvent()}{closeEvent()}}
+{\footnotesize\ttfamily void Cleanup\+Popup\+::close\+Event (\begin{DoxyParamCaption}\item[{QClose\+Event $\ast$}]{ce }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00383 \{ reset(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_cleanup_popup_aa572a612f88603423c20f0a3eb2c0396}\label{class_cleanup_popup_aa572a612f88603423c20f0a3eb2c0396}} 
+\index{CleanupPopup@{CleanupPopup}!execute@{execute}}
+\index{execute@{execute}!CleanupPopup@{CleanupPopup}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Cleanup\+Popup\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00805                            \{}
+\DoxyCodeLine{00806   \textcolor{keyword}{struct }locals \{}
+\DoxyCodeLine{00807     \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{int} addFrames(\textcolor{keywordtype}{int} a, \textcolor{keyword}{const} CleanupLevel \&cl) \{}
+\DoxyCodeLine{00808       \textcolor{keywordflow}{return} a + int(cl.m\_frames.size());}
+\DoxyCodeLine{00809     \}}
+\DoxyCodeLine{00810   \};  \textcolor{comment}{// locals}}
+\DoxyCodeLine{00811 }
+\DoxyCodeLine{00812   \textcolor{comment}{// Re-\/initialize the list of frames to be cleanupped}}
+\DoxyCodeLine{00813   \textcolor{comment}{/*-\/-\/-\/ Cleanup対象のリストを作る -\/-\/-\/*/}}
+\DoxyCodeLine{00814   buildCleanupList();}
+\DoxyCodeLine{00815 }
+\DoxyCodeLine{00816   \textcolor{comment}{// In case some cleaned up level already exists, let the user decide what to}}
+\DoxyCodeLine{00817   \textcolor{comment}{// do}}
+\DoxyCodeLine{00818   \textcolor{keywordflow}{if} (!analyzeCleanupList()) \{}
+\DoxyCodeLine{00819     reset();}
+\DoxyCodeLine{00820     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00821   \}}
+\DoxyCodeLine{00822 }
+\DoxyCodeLine{00823   \textcolor{comment}{// Initialize completion variable}}
+\DoxyCodeLine{00824   m\_completion = std::pair<int, int>(}
+\DoxyCodeLine{00825       0, std::accumulate(m\_cleanupLevels.begin(), m\_cleanupLevels.end(), 0,}
+\DoxyCodeLine{00826                          locals::addFrames));}
+\DoxyCodeLine{00827 }
+\DoxyCodeLine{00828   \textcolor{comment}{// If there are no (more) frames to cleanup, warn and quit}}
+\DoxyCodeLine{00829   \textcolor{keywordtype}{int} framesCount = m\_completion.second;}
+\DoxyCodeLine{00830   \textcolor{keywordflow}{if} (!framesCount) \{}
+\DoxyCodeLine{00831     DVGui::info(}
+\DoxyCodeLine{00832         tr(\textcolor{stringliteral}{"{}It is not possible to cleanup: the cleanup list is empty."{}}));}
+\DoxyCodeLine{00833 }
+\DoxyCodeLine{00834     reset();}
+\DoxyCodeLine{00835     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00836   \}}
+\DoxyCodeLine{00837 }
+\DoxyCodeLine{00838   \textcolor{comment}{// Initialize the cleanup process and show the popup}}
+\DoxyCodeLine{00839 }
+\DoxyCodeLine{00840   m\_idx = std::pair<int, int>(0, 0);}
+\DoxyCodeLine{00841 }
+\DoxyCodeLine{00842   \textcolor{comment}{// Reset progress bar}}
+\DoxyCodeLine{00843   m\_progressLabel-\/>setText(currentString());}
+\DoxyCodeLine{00844 }
+\DoxyCodeLine{00845   m\_progressBar-\/>setRange(0, framesCount);}
+\DoxyCodeLine{00846   m\_progressBar-\/>setValue(0);}
+\DoxyCodeLine{00847 }
+\DoxyCodeLine{00848   \textcolor{comment}{// show the progress to the main window's title bar}}
+\DoxyCodeLine{00849   updateTitleString();}
+\DoxyCodeLine{00850 }
+\DoxyCodeLine{00851   \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} image = currentImage();}
+\DoxyCodeLine{00852   \textcolor{keywordflow}{if} (image) \{}
+\DoxyCodeLine{00853     m\_imageViewer-\/>\mbox{\hyperlink{class_image_viewer_af514a3d90ce0f99a9217874bb3ef95dc}{setImage}}(image);}
+\DoxyCodeLine{00854 }
+\DoxyCodeLine{00855     \textcolor{comment}{// Set the zoom factor depending on image and viewer sizes, so that the}}
+\DoxyCodeLine{00856     \textcolor{comment}{// image fits}}
+\DoxyCodeLine{00857     \textcolor{comment}{// the preview area.}}
+\DoxyCodeLine{00858 }
+\DoxyCodeLine{00859     QSize viewSize  = m\_imageViewer-\/>size();}
+\DoxyCodeLine{00860     QSize imageSize = QSize(image-\/>\mbox{\hyperlink{class_t_image_ac6a21b84486dec0c86b5b0b3f34be0ef}{getBBox}}().getLx(), image-\/>\mbox{\hyperlink{class_t_image_ac6a21b84486dec0c86b5b0b3f34be0ef}{getBBox}}().getLy());}
+\DoxyCodeLine{00861     \textcolor{keywordtype}{double} factor   = getBestFactor(viewSize, imageSize);}
+\DoxyCodeLine{00862     \mbox{\hyperlink{class_t_point_t}{TPointD}} delta(0, 0);}
+\DoxyCodeLine{00863     \mbox{\hyperlink{class_t_affine}{TAffine}} viewAff =}
+\DoxyCodeLine{00864         \mbox{\hyperlink{class_t_translation}{TTranslation}}(delta) * \mbox{\hyperlink{class_t_scale}{TScale}}(factor) * \mbox{\hyperlink{class_t_translation}{TTranslation}}(-\/delta);}
+\DoxyCodeLine{00865     m\_imageViewer-\/>setViewAff(viewAff);}
+\DoxyCodeLine{00866   \}}
+\DoxyCodeLine{00867 }
+\DoxyCodeLine{00868   show();}
+\DoxyCodeLine{00869 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanuppopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanuppopup.\+cpp\end{DoxyCompactItemize}

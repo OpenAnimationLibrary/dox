@@ -1,0 +1,200 @@
+\hypertarget{class_t_textures_storage}{}\doxysection{TTextures\+Storage Class Reference}
+\label{class_t_textures_storage}\index{TTexturesStorage@{TTexturesStorage}}
+
+
+\mbox{\hyperlink{class_t_textures_storage}{TTextures\+Storage}} is the class responsible for the storage of textures associated with mesh rendering.  
+
+
+
+
+{\ttfamily \#include $<$ttexturesstorage.\+h$>$}
+
+Inheritance diagram for TTextures\+Storage\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_t_textures_storage}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Drawable\+Texture\+DataP \mbox{\hyperlink{class_t_textures_storage_a952895ddc988b8010e584b2cc4d394cb}{load\+Texture}} (const std\+::string \&texture\+Id, const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&ras, const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&geometry)
+\begin{DoxyCompactList}\small\item\em Stores the specified raster to a group of Open\+GL textures, returning a reference pointer ensuring the texture survival during its lifetime. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_t_textures_storage_afb739bcd42029c97d580ea3fa5010954}{unload\+Texture}} (const std\+::string \&texture\+Id)
+\begin{DoxyCompactList}\small\item\em Releases the texture associated with the specified texture id. \end{DoxyCompactList}\item 
+Drawable\+Texture\+DataP \mbox{\hyperlink{class_t_textures_storage_a3089e4028017abb9ad4caad52cd60578}{get\+Texture\+Data}} (const std\+::string \&texture\+Id)
+\begin{DoxyCompactList}\small\item\em Returns the texture data associated to the specified string identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_textures_storage}{TTextures\+Storage}} $\ast$ \mbox{\hyperlink{class_t_textures_storage_a4a3b977b7f17e3773f655cf146b4d106}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_t_textures_storage}{TTextures\+Storage}} is the class responsible for the storage of textures associated with mesh rendering. 
+
+This class deals with textures storage and meshes compilation for drawing purposes. An Open\+GL texture is typically split into several tiles before being rendered. A texturized mesh is then compiled against a texture in order to decide which mesh faces must be rendered with a given texture tile.
+
+The TTexture\+Storage class uses a QCache to store texture objects up to a maximum memory size, plus all the already compiled mesh objects against the stored textures. Whenever a texture loading procedure would exceed the maximum textures size, the least accessed stored textures are automatically removed from the storage to make space for the newly assigned one.
+
+Textures can be {\itshape stored} only if the Open\+GL context they are loaded on has a valid known {\itshape display lists proxy} submitted in the \mbox{\hyperlink{class_t_g_l_display_lists_manager}{TGLDisplay\+Lists\+Manager}}. In case the Open\+GL context does not have a proxy, the loaded texture is a temporary, and will be deleted as soon as the returned Textur\+Object is destroyed (so, make sure the associated context is still current at that point).
+
+\begin{DoxyNote}{Note}
+\mbox{\hyperlink{class_t_textures_storage}{TTextures\+Storage}} is thread-\/safe.
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+The \mbox{\hyperlink{class_t_g_l_display_lists_manager}{TGLDisplay\+Lists\+Manager}} class. 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_textures_storage_a3089e4028017abb9ad4caad52cd60578}\label{class_t_textures_storage_a3089e4028017abb9ad4caad52cd60578}} 
+\index{TTexturesStorage@{TTexturesStorage}!getTextureData@{getTextureData}}
+\index{getTextureData@{getTextureData}!TTexturesStorage@{TTexturesStorage}}
+\doxysubsubsection{\texorpdfstring{getTextureData()}{getTextureData()}}
+{\footnotesize\ttfamily Drawable\+Texture\+DataP TTextures\+Storage\+::get\+Texture\+Data (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{texture\+Id }\end{DoxyParamCaption})}
+
+
+
+Returns the texture data associated to the specified string identifier. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00217                                 \{}
+\DoxyCodeLine{00218   \textcolor{comment}{// Get current display lists space}}
+\DoxyCodeLine{00219   TGlContext currentContext = tglGetCurrentContext();}
+\DoxyCodeLine{00220   \textcolor{keywordtype}{int} dlSpaceId =}
+\DoxyCodeLine{00221       TGLDisplayListsManager::instance()-\/>\mbox{\hyperlink{class_t_g_l_display_lists_manager_a09e08b9e1a1e7faacb2c9fbd256cb7ca}{displayListsSpaceId}}(currentContext);}
+\DoxyCodeLine{00222 }
+\DoxyCodeLine{00223   \textcolor{comment}{// If there is no known associated display lists space, the texture cannot be}}
+\DoxyCodeLine{00224   \textcolor{comment}{// stored.}}
+\DoxyCodeLine{00225   \textcolor{keywordflow}{if} (dlSpaceId < 0) \textcolor{keywordflow}{return} DrawableTextureDataP();}
+\DoxyCodeLine{00226 }
+\DoxyCodeLine{00227   QMutexLocker locker(\&l\_mutex);}
+\DoxyCodeLine{00228 }
+\DoxyCodeLine{00229   \textcolor{comment}{// Search the texture object}}
+\DoxyCodeLine{00230   QString texString(::textureString(dlSpaceId, textureId));}
+\DoxyCodeLine{00231   \textcolor{keywordflow}{if} (!l\_objects.contains(texString)) \textcolor{keywordflow}{return} DrawableTextureDataP();}
+\DoxyCodeLine{00232 }
+\DoxyCodeLine{00233   \textcolor{keywordflow}{return} *l\_objects.object(texString);}
+\DoxyCodeLine{00234 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00084}{TGLDisplay\+Lists\+Manager\+::display\+Lists\+Space\+Id()}}.
+
+\mbox{\Hypertarget{class_t_textures_storage_a4a3b977b7f17e3773f655cf146b4d106}\label{class_t_textures_storage_a4a3b977b7f17e3773f655cf146b4d106}} 
+\index{TTexturesStorage@{TTexturesStorage}!instance@{instance}}
+\index{instance@{instance}!TTexturesStorage@{TTexturesStorage}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_textures_storage}{TTextures\+Storage}} $\ast$ TTextures\+Storage\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00129                                              \{}
+\DoxyCodeLine{00130   \textcolor{keyword}{static} \mbox{\hyperlink{class_t_textures_storage}{TTexturesStorage}} theInstance;}
+\DoxyCodeLine{00131   \textcolor{keywordflow}{return} \&theInstance;}
+\DoxyCodeLine{00132 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_textures_storage_a952895ddc988b8010e584b2cc4d394cb}\label{class_t_textures_storage_a952895ddc988b8010e584b2cc4d394cb}} 
+\index{TTexturesStorage@{TTexturesStorage}!loadTexture@{loadTexture}}
+\index{loadTexture@{loadTexture}!TTexturesStorage@{TTexturesStorage}}
+\doxysubsubsection{\texorpdfstring{loadTexture()}{loadTexture()}}
+{\footnotesize\ttfamily Drawable\+Texture\+DataP TTextures\+Storage\+::load\+Texture (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{texture\+Id,  }\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&}]{ras,  }\item[{const \mbox{\hyperlink{class_t_rect_t}{TRectD}} \&}]{geometry }\end{DoxyParamCaption})}
+
+
+
+Stores the specified raster to a group of Open\+GL textures, returning a reference pointer ensuring the texture survival during its lifetime. 
+
+\begin{DoxyWarning}{Warning}
+This class may keep a copy of the specified texture only for a {\bfseries{limited}} amount of time, {\itshape if} the current context has an associated display lists space proxy. Users must always be ready to {\itshape reload} the texture in case it was not found. 
+\end{DoxyWarning}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00138                                                                            \{}
+\DoxyCodeLine{00139   \textcolor{comment}{// Try to retrieve the proxy associated to current OpenGL context}}
+\DoxyCodeLine{00140   TGlContext currentContext = tglGetCurrentContext();}
+\DoxyCodeLine{00141   \textcolor{keywordtype}{int} dlSpaceId =}
+\DoxyCodeLine{00142       TGLDisplayListsManager::instance()-\/>\mbox{\hyperlink{class_t_g_l_display_lists_manager_a09e08b9e1a1e7faacb2c9fbd256cb7ca}{displayListsSpaceId}}(currentContext);}
+\DoxyCodeLine{00143 }
+\DoxyCodeLine{00144   QString texString(::textureString(dlSpaceId, textureId));}
+\DoxyCodeLine{00145 }
+\DoxyCodeLine{00146   \textcolor{comment}{// Deal with containers}}
+\DoxyCodeLine{00147   QMutexLocker locker(\&l\_mutex);}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149   \textcolor{comment}{// If necessary, allocate a textures container}}
+\DoxyCodeLine{00150   std::map<int, TexturesContainer *>::iterator it =}
+\DoxyCodeLine{00151       l\_texturesContainers.find(dlSpaceId);}
+\DoxyCodeLine{00152   \textcolor{keywordflow}{if} (it == l\_texturesContainers.end())}
+\DoxyCodeLine{00153     it = l\_texturesContainers}
+\DoxyCodeLine{00154              .insert(std::make\_pair(dlSpaceId, \textcolor{keyword}{new} \mbox{\hyperlink{struct_textures_container}{TexturesContainer}}))}
+\DoxyCodeLine{00155              .first;}
+\DoxyCodeLine{00156 }
+\DoxyCodeLine{00157   \mbox{\hyperlink{class_mesh_texturizer}{MeshTexturizer}} \&texturizer = it-\/>second-\/>m\_texturizer;}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159   DrawableTextureDataP dataPtr = std::make\_shared<DrawableTextureData>();}
+\DoxyCodeLine{00160   \mbox{\hyperlink{struct_drawable_texture_data}{DrawableTextureData}} *data    = dataPtr.get();}
+\DoxyCodeLine{00161 }
+\DoxyCodeLine{00162   data-\/>m\_dlSpaceId   = dlSpaceId;}
+\DoxyCodeLine{00163   data-\/>m\_texId       = texturizer.\mbox{\hyperlink{class_mesh_texturizer_a3fa598cb63981464e2bf7846490ab1f8}{bindTexture}}(ras, geometry);}
+\DoxyCodeLine{00164   data-\/>m\_objIdx      = it-\/>second-\/>m\_keys.push\_back(texString);}
+\DoxyCodeLine{00165   data-\/>\mbox{\hyperlink{struct_drawable_texture_data_a9f92711d9640ed33135302846a08d191}{m\_textureData}} = texturizer.\mbox{\hyperlink{class_mesh_texturizer_a34014cab75532d14c48017d8e37d27a6}{getTextureData}}(data-\/>m\_texId);}
+\DoxyCodeLine{00166 }
+\DoxyCodeLine{00167   l\_objects.insert(texString, \textcolor{keyword}{new} DrawableTextureDataP(dataPtr),}
+\DoxyCodeLine{00168                    (ras-\/>getLx() * ras-\/>getLy() * ras-\/>getPixelSize()) >> 10);}
+\DoxyCodeLine{00169 }
+\DoxyCodeLine{00170   \textcolor{keywordflow}{if} (dlSpaceId < 0) \{}
+\DoxyCodeLine{00171     \textcolor{comment}{// obj is a temporary. It was pushed in the cache to make space for it -\/}}
+\DoxyCodeLine{00172     \textcolor{comment}{// however, it must not be}}
+\DoxyCodeLine{00173     \textcolor{comment}{// stored. Remove it now.}}
+\DoxyCodeLine{00174     l\_objects.remove(texString);}
+\DoxyCodeLine{00175   \}}
+\DoxyCodeLine{00176 }
+\DoxyCodeLine{00177   \textcolor{keywordflow}{return} dataPtr;}
+\DoxyCodeLine{00178 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00256}{Mesh\+Texturizer\+::bind\+Texture()}}, \mbox{\hyperlink{l00084}{TGLDisplay\+Lists\+Manager\+::display\+Lists\+Space\+Id()}}, \mbox{\hyperlink{l00358}{Mesh\+Texturizer\+::get\+Texture\+Data()}}, and \mbox{\hyperlink{l00030}{Drawable\+Texture\+Data\+::m\+\_\+texture\+Data}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00112}{texture\+\_\+utils\+::get\+Texture\+Data()}}.
+
+\mbox{\Hypertarget{class_t_textures_storage_afb739bcd42029c97d580ea3fa5010954}\label{class_t_textures_storage_afb739bcd42029c97d580ea3fa5010954}} 
+\index{TTexturesStorage@{TTexturesStorage}!unloadTexture@{unloadTexture}}
+\index{unloadTexture@{unloadTexture}!TTexturesStorage@{TTexturesStorage}}
+\doxysubsubsection{\texorpdfstring{unloadTexture()}{unloadTexture()}}
+{\footnotesize\ttfamily void TTextures\+Storage\+::unload\+Texture (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{texture\+Id }\end{DoxyParamCaption})}
+
+
+
+Releases the texture associated with the specified texture id. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00182                                                                \{}
+\DoxyCodeLine{00183   QMutexLocker locker(\&l\_mutex);}
+\DoxyCodeLine{00184 }
+\DoxyCodeLine{00185   \textcolor{comment}{// Remove the specified texture from ALL the display lists spaces}}
+\DoxyCodeLine{00186   std::map<int, TexturesContainer *>::iterator it,}
+\DoxyCodeLine{00187       iEnd(l\_texturesContainers.end());}
+\DoxyCodeLine{00188   \textcolor{keywordflow}{for} (it = l\_texturesContainers.begin(); it != iEnd; ++it)}
+\DoxyCodeLine{00189     l\_objects.remove(::textureString(it-\/>first, textureId));}
+\DoxyCodeLine{00190 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l00140}{texture\+\_\+utils\+::invalidate\+Texture()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/ext/ttexturesstorage.\+h\item 
+E\+:/opentoonz/toonz/sources/tnzext/ttexturesstorage.\+cpp\end{DoxyCompactItemize}

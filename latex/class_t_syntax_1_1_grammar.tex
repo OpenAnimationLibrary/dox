@@ -1,0 +1,278 @@
+\hypertarget{class_t_syntax_1_1_grammar}{}\doxysection{TSyntax\+::Grammar Class Reference}
+\label{class_t_syntax_1_1_grammar}\index{TSyntax::Grammar@{TSyntax::Grammar}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_t_syntax_1_1_grammar_1_1_imp}{Imp}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries Position} \{ {\bfseries Expression\+Start}
+, {\bfseries Expression\+End}
+ \}
+\item 
+typedef std\+::vector$<$ std\+::pair$<$ std\+::string, std\+::string $>$ $>$ \mbox{\hyperlink{class_t_syntax_1_1_grammar_ac607634647c5a5e741396ef83cb03def}{Suggestions}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_syntax_1_1_grammar_a649ddd276f3316874d79bfc8a119e569}{add\+Pattern}} (\mbox{\hyperlink{class_t_syntax_1_1_pattern}{Pattern}} $\ast$pattern)
+\item 
+const \mbox{\hyperlink{class_t_syntax_1_1_pattern}{Pattern}} $\ast$ \mbox{\hyperlink{class_t_syntax_1_1_grammar_a6f3a99a26d5c402377c2d85fd6d02556}{get\+Pattern}} (Position position, const \mbox{\hyperlink{class_t_syntax_1_1_token}{Token}} \&token) const
+\item 
+void \mbox{\hyperlink{class_t_syntax_1_1_grammar_aec9511f30c9b800ad3ff2ccf24a5adba}{get\+Suggestions}} (Suggestions \&suggetsions, Position position) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{class_t_syntax_1_1_grammar_ac607634647c5a5e741396ef83cb03def}\label{class_t_syntax_1_1_grammar_ac607634647c5a5e741396ef83cb03def}} 
+\index{TSyntax::Grammar@{TSyntax::Grammar}!Suggestions@{Suggestions}}
+\index{Suggestions@{Suggestions}!TSyntax::Grammar@{TSyntax::Grammar}}
+\doxysubsubsection{\texorpdfstring{Suggestions}{Suggestions}}
+{\footnotesize\ttfamily typedef std\+::vector$<$std\+::pair$<$std\+::string, std\+::string$>$ $>$ TSyntax\+::\+Grammar\+::\+Suggestions}
+
+
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_t_syntax_1_1_grammar_aacbaf7d4bf2cc26b380000c0aa1f7d46}\label{class_t_syntax_1_1_grammar_aacbaf7d4bf2cc26b380000c0aa1f7d46}} 
+\index{TSyntax::Grammar@{TSyntax::Grammar}!Position@{Position}}
+\index{Position@{Position}!TSyntax::Grammar@{TSyntax::Grammar}}
+\doxysubsubsection{\texorpdfstring{Position}{Position}}
+{\footnotesize\ttfamily enum TSyntax\+::\+Grammar\+::\+Position}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00212 \{ ExpressionStart, ExpressionEnd \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_syntax_1_1_grammar_a5e7a8b2ac0615ee98ec26945b3f263e4}\label{class_t_syntax_1_1_grammar_a5e7a8b2ac0615ee98ec26945b3f263e4}} 
+\index{TSyntax::Grammar@{TSyntax::Grammar}!Grammar@{Grammar}}
+\index{Grammar@{Grammar}!TSyntax::Grammar@{TSyntax::Grammar}}
+\doxysubsubsection{\texorpdfstring{Grammar()}{Grammar()}}
+{\footnotesize\ttfamily TSyntax\+::\+Grammar\+::\+Grammar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01186                  : m\_imp(\textcolor{keyword}{new} Imp()) \{}
+\DoxyCodeLine{01187   addPattern(\textcolor{keyword}{new} NumberPattern());}
+\DoxyCodeLine{01188   addPattern(\textcolor{keyword}{new} ConstantPattern(\textcolor{stringliteral}{"{}pi"{}}, PI, \textcolor{stringliteral}{"{}3.14159265..."{}}));}
+\DoxyCodeLine{01189   addPattern(\textcolor{keyword}{new} VariablePattern(}
+\DoxyCodeLine{01190       \textcolor{stringliteral}{"{}t"{}}, CalculatorNode::T, \textcolor{stringliteral}{"{}ranges from 0.0 to 1.0 along the transition"{}}));}
+\DoxyCodeLine{01191   \textcolor{keyword}{const} std::string f\_desc = \textcolor{stringliteral}{"{}the current frame number"{}};}
+\DoxyCodeLine{01192   addPattern(\textcolor{keyword}{new} VariablePattern(\textcolor{stringliteral}{"{}f"{}}, CalculatorNode::FRAME, f\_desc));}
+\DoxyCodeLine{01193   addPattern(\textcolor{keyword}{new} VariablePattern(\textcolor{stringliteral}{"{}frame"{}}, CalculatorNode::FRAME, f\_desc));}
+\DoxyCodeLine{01194   \textcolor{keyword}{const} std::string r\_desc =}
+\DoxyCodeLine{01195       \textcolor{stringliteral}{"{}the current frame number, relative to the transition"{}};}
+\DoxyCodeLine{01196   addPattern(\textcolor{keyword}{new} VariablePattern(\textcolor{stringliteral}{"{}r"{}}, CalculatorNode::RFRAME, r\_desc));}
+\DoxyCodeLine{01197   addPattern(\textcolor{keyword}{new} VariablePattern(\textcolor{stringliteral}{"{}rframe"{}}, CalculatorNode::RFRAME, r\_desc));}
+\DoxyCodeLine{01198   addPattern(\textcolor{keyword}{new} Op2Pattern<std::plus<double>>(\textcolor{stringliteral}{"{}+"{}}, 10));}
+\DoxyCodeLine{01199   addPattern(\textcolor{keyword}{new} Op2Pattern<std::multiplies<double>>(\textcolor{stringliteral}{"{}*"{}}, 20));}
+\DoxyCodeLine{01200   addPattern(\textcolor{keyword}{new} Op2Pattern<Pow>(\textcolor{stringliteral}{"{}\string^"{}}, 30));}
+\DoxyCodeLine{01201   addPattern(\textcolor{keyword}{new} Op2Pattern<std::minus<double>>(\textcolor{stringliteral}{"{}-\/"{}}, 10));}
+\DoxyCodeLine{01202   addPattern(\textcolor{keyword}{new} Op2Pattern<std::divides<double>>(\textcolor{stringliteral}{"{}/"{}}, 20));}
+\DoxyCodeLine{01203   addPattern(\textcolor{keyword}{new} Op2Pattern<Mod>(\textcolor{stringliteral}{"{}\%"{}}, 8));}
+\DoxyCodeLine{01204   addPattern(\textcolor{keyword}{new} Op2Pattern<Gt>(\textcolor{stringliteral}{"{}>"{}}, 6));}
+\DoxyCodeLine{01205   addPattern(\textcolor{keyword}{new} Op2Pattern<Ge>(\textcolor{stringliteral}{"{}>="{}}, 6));}
+\DoxyCodeLine{01206   addPattern(\textcolor{keyword}{new} Op2Pattern<Lt>(\textcolor{stringliteral}{"{}<"{}}, 6));}
+\DoxyCodeLine{01207   addPattern(\textcolor{keyword}{new} Op2Pattern<Le>(\textcolor{stringliteral}{"{}<="{}}, 6));}
+\DoxyCodeLine{01208   addPattern(\textcolor{keyword}{new} Op2Pattern<Eq>(\textcolor{stringliteral}{"{}=="{}}, 6));}
+\DoxyCodeLine{01209   addPattern(\textcolor{keyword}{new} Op2Pattern<Ne>(\textcolor{stringliteral}{"{}!="{}}, 6));}
+\DoxyCodeLine{01210   addPattern(\textcolor{keyword}{new} Op2Pattern<And>(\textcolor{stringliteral}{"{}\&\&"{}}, 3));}
+\DoxyCodeLine{01211   addPattern(\textcolor{keyword}{new} Op2Pattern<Or>(\textcolor{stringliteral}{"{}||"{}}, 2));}
+\DoxyCodeLine{01212   addPattern(\textcolor{keyword}{new} Op2Pattern<And>(\textcolor{stringliteral}{"{}and"{}}, 3));}
+\DoxyCodeLine{01213   addPattern(\textcolor{keyword}{new} Op2Pattern<Or>(\textcolor{stringliteral}{"{}or"{}}, 2));}
+\DoxyCodeLine{01214   addPattern(\textcolor{keyword}{new} NotPattern(\textcolor{stringliteral}{"{}!"{}}, \textcolor{stringliteral}{"{}not"{}}));}
+\DoxyCodeLine{01215   addPattern(\textcolor{keyword}{new} NotPattern(\textcolor{stringliteral}{"{}not"{}}, \textcolor{stringliteral}{"{}"{}}));}
+\DoxyCodeLine{01216   addPattern(\textcolor{keyword}{new} UnaryMinusPattern());}
+\DoxyCodeLine{01217   addPattern(\textcolor{keyword}{new} BraketPattern());}
+\DoxyCodeLine{01218   addPattern(\textcolor{keyword}{new} QuestionTernaryPattern());}
+\DoxyCodeLine{01219   addPattern(\textcolor{keyword}{new} F1Pattern<Sin>(\textcolor{stringliteral}{"{}sin"{}}, \textcolor{stringliteral}{"{}sin(degree)"{}}));}
+\DoxyCodeLine{01220   addPattern(\textcolor{keyword}{new} F1Pattern<Cos>(\textcolor{stringliteral}{"{}cos"{}}, \textcolor{stringliteral}{"{}cos(degree)"{}}));}
+\DoxyCodeLine{01221   addPattern(\textcolor{keyword}{new} F1Pattern<Tan>(\textcolor{stringliteral}{"{}tan"{}}, \textcolor{stringliteral}{"{}tan(degree)"{}}));}
+\DoxyCodeLine{01222   addPattern(\textcolor{keyword}{new} F1Pattern<Sinh>(\textcolor{stringliteral}{"{}sinh"{}}, \textcolor{stringliteral}{"{}sinh(degree)\(\backslash\)nHyperbolic sine"{}}));}
+\DoxyCodeLine{01223   addPattern(\textcolor{keyword}{new} F1Pattern<Cosh>(\textcolor{stringliteral}{"{}cosh"{}}, \textcolor{stringliteral}{"{}cosh(degree)\(\backslash\)nHyperbolic cosine"{}}));}
+\DoxyCodeLine{01224   addPattern(\textcolor{keyword}{new} F1Pattern<Tanh>(\textcolor{stringliteral}{"{}tanh"{}}, \textcolor{stringliteral}{"{}tanh(degree)\(\backslash\)nHyperbolic tangent"{}}));}
+\DoxyCodeLine{01225   addPattern(\textcolor{keyword}{new} F1Pattern<Atan>(\textcolor{stringliteral}{"{}atan"{}},}
+\DoxyCodeLine{01226                                  \textcolor{stringliteral}{"{}atan(x)\(\backslash\)nArctangent : the inverse of tan()"{}}));}
+\DoxyCodeLine{01227   addPattern(\textcolor{keyword}{new} F2Pattern<Atan2>(\textcolor{stringliteral}{"{}atan2"{}},}
+\DoxyCodeLine{01228                                   \textcolor{stringliteral}{"{}atan2(y,x)\(\backslash\)nThe counter-\/clockwise angle in "{}}}
+\DoxyCodeLine{01229                                   \textcolor{stringliteral}{"{}degree between the x-\/axis and the "{}}}
+\DoxyCodeLine{01230                                   \textcolor{stringliteral}{"{}point(x,y)"{}}));}
+\DoxyCodeLine{01231   addPattern(}
+\DoxyCodeLine{01232       \textcolor{keyword}{new} F1Pattern<Log>(\textcolor{stringliteral}{"{}log"{}}, \textcolor{stringliteral}{"{}log(x)\(\backslash\)nThe natural logarithm of x (base e)"{}}));}
+\DoxyCodeLine{01233   addPattern(\textcolor{keyword}{new} F1Pattern<Exp>(\textcolor{stringliteral}{"{}exp"{}}, \textcolor{stringliteral}{"{}exp(x)\(\backslash\)nThe base-\/e exponential of x"{}}));}
+\DoxyCodeLine{01234   addPattern(}
+\DoxyCodeLine{01235       \textcolor{keyword}{new} F1Pattern<Floor>(\textcolor{stringliteral}{"{}floor"{}}, \textcolor{stringliteral}{"{}floor(x)\(\backslash\)nThe greatest integer <= x"{}}));}
+\DoxyCodeLine{01236   \textcolor{keyword}{const} std::string ceil\_desc = \textcolor{stringliteral}{"{}The smallest integer >= x"{}};}
+\DoxyCodeLine{01237   addPattern(\textcolor{keyword}{new} F1Pattern<Ceil>(\textcolor{stringliteral}{"{}ceil"{}}, \textcolor{stringliteral}{"{}ceil(x)\(\backslash\)n"{}} + ceil\_desc));}
+\DoxyCodeLine{01238   addPattern(\textcolor{keyword}{new} F1Pattern<Ceil>(\textcolor{stringliteral}{"{}ceiling"{}}, \textcolor{stringliteral}{"{}ceiling(x)\(\backslash\)n"{}} + ceil\_desc));}
+\DoxyCodeLine{01239   addPattern(}
+\DoxyCodeLine{01240       \textcolor{keyword}{new} F1Pattern<Round>(\textcolor{stringliteral}{"{}round"{}}, \textcolor{stringliteral}{"{}round(x)\(\backslash\)nThe integer nearest to x"{}}));}
+\DoxyCodeLine{01241   addPattern(\textcolor{keyword}{new} F1Pattern<Abs>(\textcolor{stringliteral}{"{}abs"{}}, \textcolor{stringliteral}{"{}abs(x)\(\backslash\)nThe absolute value of x"{}}));}
+\DoxyCodeLine{01242   addPattern(}
+\DoxyCodeLine{01243       \textcolor{keyword}{new} F1Pattern<Sign>(\textcolor{stringliteral}{"{}sign"{}}, \textcolor{stringliteral}{"{}sign(x)\(\backslash\)n-\/1 if x<0, 1 if x>0 and 0 if x=0"{}}));}
+\DoxyCodeLine{01244   \textcolor{keyword}{const} std::string sqrt\_desc = \textcolor{stringliteral}{"{}Square root of x"{}};}
+\DoxyCodeLine{01245   addPattern(\textcolor{keyword}{new} F1Pattern<Sqrt>(\textcolor{stringliteral}{"{}sqrt"{}}, \textcolor{stringliteral}{"{}sqrt(x)\(\backslash\)n"{}} + sqrt\_desc));}
+\DoxyCodeLine{01246   addPattern(\textcolor{keyword}{new} F1Pattern<Sqr>(\textcolor{stringliteral}{"{}sqr"{}}, \textcolor{stringliteral}{"{}sqr(x)\(\backslash\)n"{}} + sqrt\_desc));}
+\DoxyCodeLine{01247   addPattern(\textcolor{keyword}{new} F3Pattern<Crop>(}
+\DoxyCodeLine{01248       \textcolor{stringliteral}{"{}crop"{}}, \textcolor{stringliteral}{"{}crop(x,a,b)\(\backslash\)na if x<a, b if x>b, x if x in [a,b]"{}}));}
+\DoxyCodeLine{01249   addPattern(\textcolor{keyword}{new} F3Pattern<Crop>(}
+\DoxyCodeLine{01250       \textcolor{stringliteral}{"{}clamp"{}}, \textcolor{stringliteral}{"{}clamp(x,a,b)\(\backslash\)na if x<a, b if x>b, x if x in [a,b]"{}}));}
+\DoxyCodeLine{01251   addPattern(\textcolor{keyword}{new} F2Pattern<Min>(\textcolor{stringliteral}{"{}min"{}}, \textcolor{stringliteral}{"{}min(a,b)"{}}));}
+\DoxyCodeLine{01252   addPattern(\textcolor{keyword}{new} F2Pattern<Max>(\textcolor{stringliteral}{"{}max"{}}, \textcolor{stringliteral}{"{}max(a,b)"{}}));}
+\DoxyCodeLine{01253   addPattern(\textcolor{keyword}{new} F2Pattern<Step>(\textcolor{stringliteral}{"{}step"{}}, \textcolor{stringliteral}{"{}min(x,x0)\(\backslash\)n0 if x<x0, 1 if x>=x0"{}}));}
+\DoxyCodeLine{01254   addPattern(\textcolor{keyword}{new} F3Pattern<Smoothstep>(\textcolor{stringliteral}{"{}smoothstep"{}},}
+\DoxyCodeLine{01255                                        \textcolor{stringliteral}{"{}smoothstep(x,x0)\(\backslash\)n0 if x<x0, 1 if "{}}}
+\DoxyCodeLine{01256                                        \textcolor{stringliteral}{"{}x>=x0\(\backslash\)nas step, but with smooth "{}}}
+\DoxyCodeLine{01257                                        \textcolor{stringliteral}{"{}transition"{}}));}
+\DoxyCodeLine{01258   \textcolor{keyword}{const} std::string pulse\_desc =}
+\DoxyCodeLine{01259       \textcolor{stringliteral}{"{}Generates a bump ranging from 0.0 to 1.0 set at position pos"{}};}
+\DoxyCodeLine{01260   addPattern(\textcolor{keyword}{new} Fs3Pattern<Pulse>(\textcolor{stringliteral}{"{}pulse"{}}, 0.5,}
+\DoxyCodeLine{01261                                    \textcolor{stringliteral}{"{}pulse(pos)\(\backslash\)npulse(pos,length)\(\backslash\)npulse(arg; "{}}}
+\DoxyCodeLine{01262                                    \textcolor{stringliteral}{"{}pos)\(\backslash\)npulse(arg;pos,length)\(\backslash\)n"{}} +}
+\DoxyCodeLine{01263                                        pulse\_desc));}
+\DoxyCodeLine{01264   addPattern(\textcolor{keyword}{new} Fs3Pattern<Pulse>(}
+\DoxyCodeLine{01265       \textcolor{stringliteral}{"{}bump"{}}, 0.5,}
+\DoxyCodeLine{01266       \textcolor{stringliteral}{"{}bump(pos)\(\backslash\)nbump(pos,length)\(\backslash\)nbump(arg; pos)\(\backslash\)nbump(arg;pos,length)\(\backslash\)n"{}} +}
+\DoxyCodeLine{01267           pulse\_desc));}
+\DoxyCodeLine{01268   \textcolor{keyword}{const} std::string saw\_desc = \textcolor{stringliteral}{"{}Generates a periodic sawtooth shaped curve"{}};}
+\DoxyCodeLine{01269   addPattern(\textcolor{keyword}{new} Fs3Pattern<Saw>(\textcolor{stringliteral}{"{}sawtooth"{}}, 0.0,}
+\DoxyCodeLine{01270                                  \textcolor{stringliteral}{"{}sawtooth(length)\(\backslash\)nsawtooth(length, "{}}}
+\DoxyCodeLine{01271                                  \textcolor{stringliteral}{"{}height)\(\backslash\)nsawtooth(arg; "{}}}
+\DoxyCodeLine{01272                                  \textcolor{stringliteral}{"{}length)\(\backslash\)nsawtooth(arg; length, height)\(\backslash\)n"{}} +}
+\DoxyCodeLine{01273                                      saw\_desc));}
+\DoxyCodeLine{01274   addPattern(\textcolor{keyword}{new} Fs3Pattern<Saw>(\textcolor{stringliteral}{"{}saw"{}}, 0.0,}
+\DoxyCodeLine{01275                                  \textcolor{stringliteral}{"{}saw(length)\(\backslash\)nsaw(length, height)\(\backslash\)nsaw(arg; "{}}}
+\DoxyCodeLine{01276                                  \textcolor{stringliteral}{"{}length)\(\backslash\)nsaw(arg; length, height)\(\backslash\)n"{}} +}
+\DoxyCodeLine{01277                                      saw\_desc));}
+\DoxyCodeLine{01278   addPattern(\textcolor{keyword}{new} Fs2Pattern<Wave>(}
+\DoxyCodeLine{01279       \textcolor{stringliteral}{"{}wave"{}}, \textcolor{stringliteral}{"{}wave(\_length)\(\backslash\)nwave(\_arg;\_length)\(\backslash\)nsame as sin(f*180/length)"{}}));}
+\DoxyCodeLine{01280   \textcolor{keyword}{const} std::string rnd\_desc = \textcolor{stringliteral}{"{}Generates random number between min and max"{}};}
+\DoxyCodeLine{01281   addPattern(\textcolor{keyword}{new} RandomPattern(}
+\DoxyCodeLine{01282       \textcolor{stringliteral}{"{}random"{}}, \textcolor{keyword}{false},}
+\DoxyCodeLine{01283       \textcolor{stringliteral}{"{}random = random(0,1)\(\backslash\)nrandom(max) = random(0,max)\(\backslash\)nrandom(min,max)\(\backslash\)n"{}} +}
+\DoxyCodeLine{01284           rnd\_desc));}
+\DoxyCodeLine{01285   addPattern(\textcolor{keyword}{new} RandomPattern(}
+\DoxyCodeLine{01286       \textcolor{stringliteral}{"{}rnd"{}}, \textcolor{keyword}{false},}
+\DoxyCodeLine{01287       \textcolor{stringliteral}{"{}rnd = rnd(0,1)\(\backslash\)nrnd(max) = rnd(0,max)\(\backslash\)nrnd(min,max)\(\backslash\)n"{}} + rnd\_desc));}
+\DoxyCodeLine{01288   \textcolor{keyword}{const} std::string rnd\_s\_desc =}
+\DoxyCodeLine{01289       rnd\_desc + \textcolor{stringliteral}{"{}; seed select different random sequences"{}};}
+\DoxyCodeLine{01290   addPattern(\textcolor{keyword}{new} RandomPattern(\textcolor{stringliteral}{"{}random\_s"{}}, \textcolor{keyword}{true},}
+\DoxyCodeLine{01291                                \textcolor{stringliteral}{"{}random\_s(seed) = random\_s(seed, "{}}}
+\DoxyCodeLine{01292                                \textcolor{stringliteral}{"{}0,1)\(\backslash\)nrandom\_s(seed,max) = random\_s(seed, "{}}}
+\DoxyCodeLine{01293                                \textcolor{stringliteral}{"{}0,max)\(\backslash\)nrandom\_s(seed,min,max)\(\backslash\)n"{}} +}
+\DoxyCodeLine{01294                                    rnd\_s\_desc));}
+\DoxyCodeLine{01295   addPattern(\textcolor{keyword}{new} RandomPattern(\textcolor{stringliteral}{"{}rnd\_s"{}}, \textcolor{keyword}{true},}
+\DoxyCodeLine{01296                                \textcolor{stringliteral}{"{}rnd\_s(seed) = rnd\_s(seed, "{}}}
+\DoxyCodeLine{01297                                \textcolor{stringliteral}{"{}0,1)\(\backslash\)nrnd\_s(seed,max) = rnd\_s(seed, "{}}}
+\DoxyCodeLine{01298                                \textcolor{stringliteral}{"{}0,max)\(\backslash\)nrnd\_s(seed,min,max)\(\backslash\)n"{}} +}
+\DoxyCodeLine{01299                                    rnd\_s\_desc));}
+\DoxyCodeLine{01300 }
+\DoxyCodeLine{01301   \textcolor{keyword}{const} std::string rnd\_p\_desc =}
+\DoxyCodeLine{01302       rnd\_desc + \textcolor{stringliteral}{"{}; values are interpolated in periodic intervals"{}};}
+\DoxyCodeLine{01303   addPattern(\textcolor{keyword}{new} PeriodicRandomPattern(}
+\DoxyCodeLine{01304       \textcolor{stringliteral}{"{}random\_p"{}}, \textcolor{keyword}{false},}
+\DoxyCodeLine{01305       \textcolor{stringliteral}{"{}random\_p(period) = random\_p(period,0,1)\(\backslash\)nrandom\_p(period,max) = "{}}}
+\DoxyCodeLine{01306       \textcolor{stringliteral}{"{}random\_p(period,0,max)\(\backslash\)nrandom\_p(period,min,max)\(\backslash\)n"{}} +}
+\DoxyCodeLine{01307           rnd\_p\_desc));}
+\DoxyCodeLine{01308   addPattern(\textcolor{keyword}{new} PeriodicRandomPattern(}
+\DoxyCodeLine{01309       \textcolor{stringliteral}{"{}rnd\_p"{}}, \textcolor{keyword}{false},}
+\DoxyCodeLine{01310       \textcolor{stringliteral}{"{}rnd\_p(period) = rnd\_p(period,0,1)\(\backslash\)nrnd\_p(period,max) = "{}}}
+\DoxyCodeLine{01311       \textcolor{stringliteral}{"{}rnd\_p(period,0,max)\(\backslash\)nrnd\_p(period,min,max)\(\backslash\)n"{}} +}
+\DoxyCodeLine{01312           rnd\_p\_desc));}
+\DoxyCodeLine{01313   \textcolor{keyword}{const} std::string rnd\_ps\_desc =}
+\DoxyCodeLine{01314       rnd\_s\_desc + \textcolor{stringliteral}{"{}; values are interpolated in periodic intervals"{}};}
+\DoxyCodeLine{01315   addPattern(\textcolor{keyword}{new} PeriodicRandomPattern(}
+\DoxyCodeLine{01316       \textcolor{stringliteral}{"{}random\_ps"{}}, \textcolor{keyword}{true},}
+\DoxyCodeLine{01317       \textcolor{stringliteral}{"{}random\_ps(period,seed) = random\_ps(period,seed, "{}}}
+\DoxyCodeLine{01318       \textcolor{stringliteral}{"{}0,1)\(\backslash\)nrandom\_ps(period,seed,max) = random\_ps(period,seed, "{}}}
+\DoxyCodeLine{01319       \textcolor{stringliteral}{"{}0,max)\(\backslash\)nrandom\_ps(period,seed,min,max)\(\backslash\)n"{}} +}
+\DoxyCodeLine{01320           rnd\_ps\_desc));}
+\DoxyCodeLine{01321   addPattern(\textcolor{keyword}{new} PeriodicRandomPattern(}
+\DoxyCodeLine{01322       \textcolor{stringliteral}{"{}rnd\_ps"{}}, \textcolor{keyword}{true},}
+\DoxyCodeLine{01323       \textcolor{stringliteral}{"{}rnd\_ps(period,seed) = rnd\_ps(period,seed, "{}}}
+\DoxyCodeLine{01324       \textcolor{stringliteral}{"{}0,1)\(\backslash\)nrnd\_ps(period,seed,max) = rnd\_ps(period,seed, "{}}}
+\DoxyCodeLine{01325       \textcolor{stringliteral}{"{}0,max)\(\backslash\)nrnd\_ps(period,seed,min,max)\(\backslash\)n"{}} +}
+\DoxyCodeLine{01326           rnd\_ps\_desc));}
+\DoxyCodeLine{01327 }
+\DoxyCodeLine{01328   addPattern(\textcolor{keyword}{new} CyclePattern(\textcolor{stringliteral}{"{}cycle"{}}));}
+\DoxyCodeLine{01329 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_syntax_1_1_grammar_a97d756059f78c88183ca85efe8bf4c59}\label{class_t_syntax_1_1_grammar_a97d756059f78c88183ca85efe8bf4c59}} 
+\index{TSyntax::Grammar@{TSyntax::Grammar}!````~Grammar@{$\sim$Grammar}}
+\index{````~Grammar@{$\sim$Grammar}!TSyntax::Grammar@{TSyntax::Grammar}}
+\doxysubsubsection{\texorpdfstring{$\sim$Grammar()}{~Grammar()}}
+{\footnotesize\ttfamily TSyntax\+::\+Grammar\+::$\sim$\+Grammar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01331 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_syntax_1_1_grammar_a649ddd276f3316874d79bfc8a119e569}\label{class_t_syntax_1_1_grammar_a649ddd276f3316874d79bfc8a119e569}} 
+\index{TSyntax::Grammar@{TSyntax::Grammar}!addPattern@{addPattern}}
+\index{addPattern@{addPattern}!TSyntax::Grammar@{TSyntax::Grammar}}
+\doxysubsubsection{\texorpdfstring{addPattern()}{addPattern()}}
+{\footnotesize\ttfamily void TSyntax\+::\+Grammar\+::add\+Pattern (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_syntax_1_1_pattern}{Pattern}} $\ast$}]{pattern }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01333                                          \{}
+\DoxyCodeLine{01334   std::vector<Token> noTokens;}
+\DoxyCodeLine{01335   \textcolor{keywordflow}{if} (pattern-\/>expressionExpected(noTokens))}
+\DoxyCodeLine{01336     m\_imp-\/>m\_postPatterns.addPattern(pattern);}
+\DoxyCodeLine{01337   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01338     m\_imp-\/>m\_prePatterns.addPattern(pattern);}
+\DoxyCodeLine{01339 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_syntax_1_1_grammar_a6f3a99a26d5c402377c2d85fd6d02556}\label{class_t_syntax_1_1_grammar_a6f3a99a26d5c402377c2d85fd6d02556}} 
+\index{TSyntax::Grammar@{TSyntax::Grammar}!getPattern@{getPattern}}
+\index{getPattern@{getPattern}!TSyntax::Grammar@{TSyntax::Grammar}}
+\doxysubsubsection{\texorpdfstring{getPattern()}{getPattern()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_t_syntax_1_1_pattern}{Pattern}} $\ast$ TSyntax\+::\+Grammar\+::get\+Pattern (\begin{DoxyParamCaption}\item[{Position}]{position,  }\item[{const \mbox{\hyperlink{class_t_syntax_1_1_token}{Token}} \&}]{token }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01342                                                              \{}
+\DoxyCodeLine{01343   Pattern *pattern = 0;}
+\DoxyCodeLine{01344   \textcolor{keywordflow}{if} (position == ExpressionStart)}
+\DoxyCodeLine{01345     \textcolor{keywordflow}{return} m\_imp-\/>m\_prePatterns.getPattern(token);}
+\DoxyCodeLine{01346   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01347     \textcolor{keywordflow}{return} m\_imp-\/>m\_postPatterns.getPattern(token);}
+\DoxyCodeLine{01348 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_syntax_1_1_grammar_aec9511f30c9b800ad3ff2ccf24a5adba}\label{class_t_syntax_1_1_grammar_aec9511f30c9b800ad3ff2ccf24a5adba}} 
+\index{TSyntax::Grammar@{TSyntax::Grammar}!getSuggestions@{getSuggestions}}
+\index{getSuggestions@{getSuggestions}!TSyntax::Grammar@{TSyntax::Grammar}}
+\doxysubsubsection{\texorpdfstring{getSuggestions()}{getSuggestions()}}
+{\footnotesize\ttfamily void TSyntax\+::\+Grammar\+::get\+Suggestions (\begin{DoxyParamCaption}\item[{Grammar\+::\+Suggestions \&}]{suggestions,  }\item[{Position}]{position }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01351                                                       \{}
+\DoxyCodeLine{01352   \textcolor{keywordflow}{if} (position == ExpressionStart)}
+\DoxyCodeLine{01353     \textcolor{keywordflow}{return} m\_imp-\/>m\_prePatterns.getSuggestions(suggestions);}
+\DoxyCodeLine{01354   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01355     \textcolor{keywordflow}{return} m\_imp-\/>m\_postPatterns.getSuggestions(suggestions);}
+\DoxyCodeLine{01356 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tgrammar.\+h\item 
+E\+:/opentoonz/toonz/sources/common/expressions/tgrammar.\+cpp\end{DoxyCompactItemize}

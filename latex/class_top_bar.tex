@@ -1,0 +1,146 @@
+\hypertarget{class_top_bar}{}\doxysection{Top\+Bar Class Reference}
+\label{class_top_bar}\index{TopBar@{TopBar}}
+Inheritance diagram for Top\+Bar\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_top_bar}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_top_bar_ab272ffe02507e98b44d184a2ecddba2f}{Top\+Bar}} (QWidget $\ast$parent)
+\item 
+QTab\+Bar $\ast$ \mbox{\hyperlink{class_top_bar_a1a6dda0841b11baf217498f384960458}{get\+Room\+Tab\+Widget}} () const
+\item 
+\mbox{\hyperlink{class_stacked_menu_bar}{Stacked\+Menu\+Bar}} $\ast$ \mbox{\hyperlink{class_top_bar_aa2e9c796c5e93437650f3dc7149f1462}{get\+Stacked\+Menu\+Bar}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_top_bar_a2820e73a1424e88e87280f013a986362}{context\+Menu\+Event}} (QContext\+Menu\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_top_bar_ab272ffe02507e98b44d184a2ecddba2f}\label{class_top_bar_ab272ffe02507e98b44d184a2ecddba2f}} 
+\index{TopBar@{TopBar}!TopBar@{TopBar}}
+\index{TopBar@{TopBar}!TopBar@{TopBar}}
+\doxysubsubsection{\texorpdfstring{TopBar()}{TopBar()}}
+{\footnotesize\ttfamily Top\+Bar\+::\+Top\+Bar (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01536                               : QToolBar(parent) \{}
+\DoxyCodeLine{01537   setAllowedAreas(Qt::TopToolBarArea);}
+\DoxyCodeLine{01538   setMovable(\textcolor{keyword}{false});}
+\DoxyCodeLine{01539   setFloatable(\textcolor{keyword}{false});}
+\DoxyCodeLine{01540   setObjectName(\textcolor{stringliteral}{"{}TopBar"{}});}
+\DoxyCodeLine{01541 }
+\DoxyCodeLine{01542   m\_containerFrame = \textcolor{keyword}{new} QFrame(\textcolor{keyword}{this});}
+\DoxyCodeLine{01543   m\_roomTabBar     = \textcolor{keyword}{new} \mbox{\hyperlink{class_room_tab_widget}{RoomTabWidget}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{01544   m\_stackedMenuBar = \textcolor{keyword}{new} \mbox{\hyperlink{class_stacked_menu_bar}{StackedMenuBar}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{01545   m\_lockRoomCB     = \textcolor{keyword}{new} QCheckBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{01546 }
+\DoxyCodeLine{01547   m\_containerFrame-\/>setObjectName(\textcolor{stringliteral}{"{}TopBarTabContainer"{}});}
+\DoxyCodeLine{01548   m\_roomTabBar-\/>setObjectName(\textcolor{stringliteral}{"{}TopBarTab"{}});}
+\DoxyCodeLine{01549   m\_roomTabBar-\/>setDrawBase(\textcolor{keyword}{false});}
+\DoxyCodeLine{01550   m\_lockRoomCB-\/>setObjectName(\textcolor{stringliteral}{"{}EditToolLockButton"{}});}
+\DoxyCodeLine{01551   m\_lockRoomCB-\/>setToolTip(tr(\textcolor{stringliteral}{"{}Lock Rooms Tab"{}}));}
+\DoxyCodeLine{01552   m\_lockRoomCB-\/>setChecked(m\_roomTabBar-\/>isLocked());}
+\DoxyCodeLine{01553 }
+\DoxyCodeLine{01554   QHBoxLayout *mainLayout = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{01555   mainLayout-\/>setSpacing(0);}
+\DoxyCodeLine{01556   mainLayout-\/>setMargin(0);}
+\DoxyCodeLine{01557   \{}
+\DoxyCodeLine{01558     QVBoxLayout *menuLayout = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{01559     menuLayout-\/>setSpacing(0);}
+\DoxyCodeLine{01560     menuLayout-\/>setMargin(0);}
+\DoxyCodeLine{01561     \{}
+\DoxyCodeLine{01562       menuLayout-\/>addStretch(1);}
+\DoxyCodeLine{01563       menuLayout-\/>addWidget(m\_stackedMenuBar, 0);}
+\DoxyCodeLine{01564       menuLayout-\/>addStretch(1);}
+\DoxyCodeLine{01565     \}}
+\DoxyCodeLine{01566     mainLayout-\/>addLayout(menuLayout);}
+\DoxyCodeLine{01567     mainLayout-\/>addStretch(1);}
+\DoxyCodeLine{01568     mainLayout-\/>addWidget(m\_roomTabBar, 0);}
+\DoxyCodeLine{01569     mainLayout-\/>addSpacing(2);}
+\DoxyCodeLine{01570     mainLayout-\/>addWidget(m\_lockRoomCB, 0);}
+\DoxyCodeLine{01571   \}}
+\DoxyCodeLine{01572   m\_containerFrame-\/>setLayout(mainLayout);}
+\DoxyCodeLine{01573   addWidget(m\_containerFrame);}
+\DoxyCodeLine{01574 }
+\DoxyCodeLine{01575   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{01576   ret      = ret \&\& connect(m\_roomTabBar, SIGNAL(currentChanged(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{01577                        m\_stackedMenuBar, SLOT(setCurrentIndex(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{01578 }
+\DoxyCodeLine{01579   ret = ret \&\& connect(m\_roomTabBar, SIGNAL(indexSwapped(\textcolor{keywordtype}{int}, \textcolor{keywordtype}{int})),}
+\DoxyCodeLine{01580                        m\_stackedMenuBar, SLOT(onIndexSwapped(\textcolor{keywordtype}{int}, \textcolor{keywordtype}{int})));}
+\DoxyCodeLine{01581   ret = ret \&\& connect(m\_roomTabBar, SIGNAL(insertNewTabRoom()),}
+\DoxyCodeLine{01582                        m\_stackedMenuBar, SLOT(insertNewMenuBar()));}
+\DoxyCodeLine{01583   ret = ret \&\& connect(m\_roomTabBar, SIGNAL(deleteTabRoom(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{01584                        m\_stackedMenuBar, SLOT(deleteMenuBar(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{01585   ret = ret \&\& connect(m\_roomTabBar, SIGNAL(customizeMenuBar(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{01586                        m\_stackedMenuBar, SLOT(doCustomizeMenuBar(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{01587   ret = ret \&\& connect(m\_lockRoomCB, SIGNAL(toggled(\textcolor{keywordtype}{bool})), m\_roomTabBar,}
+\DoxyCodeLine{01588                        SLOT(setIsLocked(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{01589   assert(ret);}
+\DoxyCodeLine{01590 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_top_bar_a30c34a49908157d1e2879706cca10648}\label{class_top_bar_a30c34a49908157d1e2879706cca10648}} 
+\index{TopBar@{TopBar}!````~TopBar@{$\sim$TopBar}}
+\index{````~TopBar@{$\sim$TopBar}!TopBar@{TopBar}}
+\doxysubsubsection{\texorpdfstring{$\sim$TopBar()}{~TopBar()}}
+{\footnotesize\ttfamily Top\+Bar\+::$\sim$\+Top\+Bar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00183 \{\};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_top_bar_a2820e73a1424e88e87280f013a986362}\label{class_top_bar_a2820e73a1424e88e87280f013a986362}} 
+\index{TopBar@{TopBar}!contextMenuEvent@{contextMenuEvent}}
+\index{contextMenuEvent@{contextMenuEvent}!TopBar@{TopBar}}
+\doxysubsubsection{\texorpdfstring{contextMenuEvent()}{contextMenuEvent()}}
+{\footnotesize\ttfamily void Top\+Bar\+::context\+Menu\+Event (\begin{DoxyParamCaption}\item[{QContext\+Menu\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00191 \{ \textcolor{keyword}{event}-\/>accept(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_top_bar_a1a6dda0841b11baf217498f384960458}\label{class_top_bar_a1a6dda0841b11baf217498f384960458}} 
+\index{TopBar@{TopBar}!getRoomTabWidget@{getRoomTabWidget}}
+\index{getRoomTabWidget@{getRoomTabWidget}!TopBar@{TopBar}}
+\doxysubsubsection{\texorpdfstring{getRoomTabWidget()}{getRoomTabWidget()}}
+{\footnotesize\ttfamily QTab\+Bar $\ast$ Top\+Bar\+::get\+Room\+Tab\+Widget (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00185 \{ \textcolor{keywordflow}{return} m\_roomTabBar; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_top_bar_aa2e9c796c5e93437650f3dc7149f1462}\label{class_top_bar_aa2e9c796c5e93437650f3dc7149f1462}} 
+\index{TopBar@{TopBar}!getStackedMenuBar@{getStackedMenuBar}}
+\index{getStackedMenuBar@{getStackedMenuBar}!TopBar@{TopBar}}
+\doxysubsubsection{\texorpdfstring{getStackedMenuBar()}{getStackedMenuBar()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_stacked_menu_bar}{Stacked\+Menu\+Bar}} $\ast$ Top\+Bar\+::get\+Stacked\+Menu\+Bar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00187 \{ \textcolor{keywordflow}{return} m\_stackedMenuBar; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/menubar.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/menubar.\+cpp\end{DoxyCompactItemize}

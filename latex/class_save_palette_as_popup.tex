@@ -1,0 +1,126 @@
+\hypertarget{class_save_palette_as_popup}{}\doxysection{Save\+Palette\+As\+Popup Class Reference}
+\label{class_save_palette_as_popup}\index{SavePaletteAsPopup@{SavePaletteAsPopup}}
+Inheritance diagram for Save\+Palette\+As\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_save_palette_as_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_save_palette_as_popup_a156f2555325a8874493e7208a177ba83}{execute}} () override
+\item 
+void \mbox{\hyperlink{class_save_palette_as_popup_ae4817f2e5db9b3a368578b46b6ea038d}{init\+Folder}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_save_palette_as_popup_a6e4d4b0ec1f0007379dc9b1bc621e939}\label{class_save_palette_as_popup_a6e4d4b0ec1f0007379dc9b1bc621e939}} 
+\index{SavePaletteAsPopup@{SavePaletteAsPopup}!SavePaletteAsPopup@{SavePaletteAsPopup}}
+\index{SavePaletteAsPopup@{SavePaletteAsPopup}!SavePaletteAsPopup@{SavePaletteAsPopup}}
+\doxysubsubsection{\texorpdfstring{SavePaletteAsPopup()}{SavePaletteAsPopup()}}
+{\footnotesize\ttfamily Save\+Palette\+As\+Popup\+::\+Save\+Palette\+As\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01864     : \mbox{\hyperlink{class_file_browser_popup}{FileBrowserPopup}}(tr(\textcolor{stringliteral}{"{}Save Palette"{}}), \mbox{\hyperlink{class_file_browser_popup_a873aa6f7f7a00e34a4f60058db3a3fee}{Options}}(\mbox{\hyperlink{class_file_browser_popup_a873aa6f7f7a00e34a4f60058db3a3feeaba33ea45d284253da84fcae43116e9f3}{FOR\_SAVING}})) \{}
+\DoxyCodeLine{01865   setOkText(tr(\textcolor{stringliteral}{"{}Save"{}}));}
+\DoxyCodeLine{01866   addFilterType(\textcolor{stringliteral}{"{}tpl"{}});}
+\DoxyCodeLine{01867   connect(m\_nameField, SIGNAL(returnPressedNow()), m\_okButton,}
+\DoxyCodeLine{01868           SLOT(animateClick()));}
+\DoxyCodeLine{01869 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_save_palette_as_popup_a156f2555325a8874493e7208a177ba83}\label{class_save_palette_as_popup_a156f2555325a8874493e7208a177ba83}} 
+\index{SavePaletteAsPopup@{SavePaletteAsPopup}!execute@{execute}}
+\index{execute@{execute}!SavePaletteAsPopup@{SavePaletteAsPopup}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily bool Save\+Palette\+As\+Popup\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Performs some action on m\+\_\+paths and returns whether the action was successful (accepted) -\/ in which case the popup closes. 
+
+Implements \mbox{\hyperlink{class_file_browser_popup_a8158b9b8756ac5dfa893b78cdc2fd9af}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01871                                  \{}
+\DoxyCodeLine{01872   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.empty()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01873 }
+\DoxyCodeLine{01874   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp(*\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.begin());}
+\DoxyCodeLine{01875 }
+\DoxyCodeLine{01876   \mbox{\hyperlink{class_t_palette_handle}{TPaletteHandle}} *paletteHandle =}
+\DoxyCodeLine{01877       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getPaletteController()-\/>getCurrentLevelPalette();}
+\DoxyCodeLine{01878   \mbox{\hyperlink{class_t_palette}{TPalette}} *palette = paletteHandle-\/>getPalette();}
+\DoxyCodeLine{01879 }
+\DoxyCodeLine{01880   \textcolor{keywordflow}{if} (!palette) \{}
+\DoxyCodeLine{01881     DVGui::warning(\textcolor{stringliteral}{"{}No current palette exists"{}});}
+\DoxyCodeLine{01882     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{01883   \}}
+\DoxyCodeLine{01884 }
+\DoxyCodeLine{01885   \textcolor{keyword}{const} std::string \&type = fp.getType();}
+\DoxyCodeLine{01886 }
+\DoxyCodeLine{01887   \textcolor{keywordflow}{if} (!type.empty() \&\& type != \textcolor{stringliteral}{"{}tpl"{}})}
+\DoxyCodeLine{01888     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01889   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type.empty())}
+\DoxyCodeLine{01890     fp = fp.getParentDir() + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(fp.getName() + \textcolor{stringliteral}{"{}.tpl"{}});}
+\DoxyCodeLine{01891 }
+\DoxyCodeLine{01892   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(fp).doesExist()) \{}
+\DoxyCodeLine{01893     \textcolor{keyword}{const} QString \&question =}
+\DoxyCodeLine{01894         QObject::tr(}
+\DoxyCodeLine{01895             \textcolor{stringliteral}{"{}The palette \%1 already exists.\(\backslash\)nDo you want to overwrite it?"{}})}
+\DoxyCodeLine{01896             .arg(toQString(fp));}
+\DoxyCodeLine{01897     \textcolor{keywordtype}{int} ret = DVGui::MsgBox(question, QObject::tr(\textcolor{stringliteral}{"{}Overwrite"{}}),}
+\DoxyCodeLine{01898                             QObject::tr(\textcolor{stringliteral}{"{}Cancel"{}}), 0);}
+\DoxyCodeLine{01899     \textcolor{keywordflow}{if} (ret == 2 || ret == 0) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01900   \}}
+\DoxyCodeLine{01901 }
+\DoxyCodeLine{01902   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_file_path}{TFilePath}} \&refImagePath = palette-\/>getRefImgPath();}
+\DoxyCodeLine{01903   \textcolor{keywordflow}{if} (!refImagePath.isEmpty()) palette-\/>setRefImgPath(\mbox{\hyperlink{class_t_file_path}{TFilePath}}());}
+\DoxyCodeLine{01904 }
+\DoxyCodeLine{01905   \textcolor{comment}{// In questo caso non voglio salvare la reference image.}}
+\DoxyCodeLine{01906   StudioPalette::instance()-\/>save(fp, palette);}
+\DoxyCodeLine{01907   \textcolor{keywordflow}{if} (!refImagePath.isEmpty()) palette-\/>setRefImgPath(refImagePath);}
+\DoxyCodeLine{01908 }
+\DoxyCodeLine{01909   palette-\/>setDirtyFlag(\textcolor{keyword}{false});}
+\DoxyCodeLine{01910   paletteHandle-\/>notifyPaletteChanged();}
+\DoxyCodeLine{01911 }
+\DoxyCodeLine{01912   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{01913 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00636}{TFile\+Path\+::get\+Name()}}, \mbox{\hyperlink{l00683}{TFile\+Path\+::get\+Parent\+Dir()}}, \mbox{\hyperlink{l00225}{TFile\+Path\+::get\+Type()}}, \mbox{\hyperlink{l00215}{TApp\+::instance()}}, and \mbox{\hyperlink{l00090}{File\+Browser\+Popup\+::m\+\_\+selected\+Paths}}.
+
+\mbox{\Hypertarget{class_save_palette_as_popup_ae4817f2e5db9b3a368578b46b6ea038d}\label{class_save_palette_as_popup_ae4817f2e5db9b3a368578b46b6ea038d}} 
+\index{SavePaletteAsPopup@{SavePaletteAsPopup}!initFolder@{initFolder}}
+\index{initFolder@{initFolder}!SavePaletteAsPopup@{SavePaletteAsPopup}}
+\doxysubsubsection{\texorpdfstring{initFolder()}{initFolder()}}
+{\footnotesize\ttfamily void Save\+Palette\+As\+Popup\+::init\+Folder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_file_browser_popup}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01915                                     \{}
+\DoxyCodeLine{01916   setFolder(}
+\DoxyCodeLine{01917       \mbox{\hyperlink{class_t_project_manager_a150ca0d6e2eb171b8117b0c5f03dbfad}{TProjectManager::instance}}()-\/>getCurrentProjectPath().getParentDir());}
+\DoxyCodeLine{01918 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowserpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowserpopup.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,84 @@
+\hypertarget{class_ffmpeg_audio}{}\doxysection{Ffmpeg\+Audio Class Reference}
+\label{class_ffmpeg_audio}\index{FfmpegAudio@{FfmpegAudio}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \mbox{\hyperlink{class_ffmpeg_audio_ac64adbb9ccb5f6261d1331d9ed7ac40d}{get\+Raw\+Audio}} (\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} path)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{class_ffmpeg_audio_af6cbbe4e0ae703c9432e2796c9c4d854}{check\+Ffmpeg}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_ffmpeg_audio_af6cbbe4e0ae703c9432e2796c9c4d854}\label{class_ffmpeg_audio_af6cbbe4e0ae703c9432e2796c9c4d854}} 
+\index{FfmpegAudio@{FfmpegAudio}!checkFfmpeg@{checkFfmpeg}}
+\index{checkFfmpeg@{checkFfmpeg}!FfmpegAudio@{FfmpegAudio}}
+\doxysubsubsection{\texorpdfstring{checkFfmpeg()}{checkFfmpeg()}}
+{\footnotesize\ttfamily bool Ffmpeg\+Audio\+::check\+Ffmpeg (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039                               \{}
+\DoxyCodeLine{00040   \textcolor{comment}{// check the user defined path in preferences first}}
+\DoxyCodeLine{00041   QString path = Preferences::instance()-\/>getFfmpegPath() + \textcolor{stringliteral}{"{}/ffmpeg"{}};}
+\DoxyCodeLine{00042 \textcolor{preprocessor}{\#if defined(\_WIN32)}}
+\DoxyCodeLine{00043   path = path + \textcolor{stringliteral}{"{}.exe"{}};}
+\DoxyCodeLine{00044 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00045   \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(\mbox{\hyperlink{class_t_file_path}{TFilePath}}(path))) \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047   \textcolor{comment}{// check the OpenToonz root directory next}}
+\DoxyCodeLine{00048   path = QDir::currentPath() + \textcolor{stringliteral}{"{}/ffmpeg"{}};}
+\DoxyCodeLine{00049 \textcolor{preprocessor}{\#if defined(\_WIN32)}}
+\DoxyCodeLine{00050   path = path + \textcolor{stringliteral}{"{}.exe"{}};}
+\DoxyCodeLine{00051 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00052   \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(\mbox{\hyperlink{class_t_file_path}{TFilePath}}(path))) \{}
+\DoxyCodeLine{00053     Preferences::instance()-\/>setValue(ffmpegPath, QDir::currentPath());}
+\DoxyCodeLine{00054     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00055   \}}
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00057   \textcolor{comment}{// give up}}
+\DoxyCodeLine{00058   \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00059 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_ffmpeg_audio_ac64adbb9ccb5f6261d1331d9ed7ac40d}\label{class_ffmpeg_audio_ac64adbb9ccb5f6261d1331d9ed7ac40d}} 
+\index{FfmpegAudio@{FfmpegAudio}!getRawAudio@{getRawAudio}}
+\index{getRawAudio@{getRawAudio}!FfmpegAudio@{FfmpegAudio}}
+\doxysubsubsection{\texorpdfstring{getRawAudio()}{getRawAudio()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} Ffmpeg\+Audio\+::get\+Raw\+Audio (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_file_path}{TFile\+Path}}}]{path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00085                                                  \{}
+\DoxyCodeLine{00086   std::string name       = path.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}();}
+\DoxyCodeLine{00087   \mbox{\hyperlink{class_t_file_path}{TFilePath}} outPath      = getFfmpegCache() + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(name + \textcolor{stringliteral}{"{}.raw"{}});}
+\DoxyCodeLine{00088   std::string strPath    = path.getQString().toStdString();}
+\DoxyCodeLine{00089   std::string strOutPath = outPath.getQString().toStdString();}
+\DoxyCodeLine{00090   QStringList args;}
+\DoxyCodeLine{00091   args << \textcolor{stringliteral}{"{}-\/i"{}};}
+\DoxyCodeLine{00092   args << path.getQString();}
+\DoxyCodeLine{00093   args << \textcolor{stringliteral}{"{}-\/f"{}};}
+\DoxyCodeLine{00094   args << \textcolor{stringliteral}{"{}s16le"{}};}
+\DoxyCodeLine{00095   args << \textcolor{stringliteral}{"{}-\/ac"{}};}
+\DoxyCodeLine{00096   args << \textcolor{stringliteral}{"{}2"{}};}
+\DoxyCodeLine{00097   args << \textcolor{stringliteral}{"{}-\/ar"{}};}
+\DoxyCodeLine{00098   args << \textcolor{stringliteral}{"{}44100"{}};}
+\DoxyCodeLine{00099   args << \textcolor{stringliteral}{"{}-\/y"{}};}
+\DoxyCodeLine{00100   args << outPath.getQString();}
+\DoxyCodeLine{00101   runFfmpeg(args);}
+\DoxyCodeLine{00102   \textcolor{keywordflow}{return} outPath;}
+\DoxyCodeLine{00103 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/sound/mp3/tsio\+\_\+mp3.\+h\item 
+E\+:/opentoonz/toonz/sources/sound/mp3/tsio\+\_\+mp3.\+cpp\end{DoxyCompactItemize}

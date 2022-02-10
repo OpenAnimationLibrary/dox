@@ -1,0 +1,287 @@
+\hypertarget{class_selection_raster}{}\doxysection{Selection\+Raster Class Reference}
+\label{class_selection_raster}\index{SelectionRaster@{SelectionRaster}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_selection_raster_a64a56bc7308912f2c492565b8179041a}{Selection\+Raster}} (\mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}} cm)
+\item 
+void \mbox{\hyperlink{class_selection_raster_a78149074bbf92881b1ba595d44c0a96b}{update\+Selection}} (\mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}} cm, const \mbox{\hyperlink{struct_blend_param}{Blend\+Param}} \&param)
+\item 
+\mbox{\hyperlink{struct_selection_data}{Selection\+Data}} $\ast$ \mbox{\hyperlink{class_selection_raster_a8e897d7e1916221e5635d16f8b3339c3}{data}} () const
+\item 
+\mbox{\hyperlink{struct_selection_data}{Selection\+Data}} $\ast$ \mbox{\hyperlink{class_selection_raster_ac65bcabd470160d82470c8bbd18f43c9}{data}} ()
+\item 
+void \mbox{\hyperlink{class_selection_raster_aa6d4b1583a1f025c2f766b6e5aa6be4a}{destroy}} ()
+\item 
+bool \mbox{\hyperlink{class_selection_raster_ac0b318cc96ab0dff47e796d4ad5c4f08}{is\+Selected\+Ink}} (int xy) const
+\item 
+bool \mbox{\hyperlink{class_selection_raster_afe983a470af413deca05d058c14ab5b7}{is\+Selected\+Ink}} (int x, int y) const
+\item 
+bool \mbox{\hyperlink{class_selection_raster_a941bd00b4a2b2c92102751f4ee651607}{is\+Selected\+Paint}} (int xy) const
+\item 
+bool \mbox{\hyperlink{class_selection_raster_a3644f6680ced7dae5808bd90139a85c2}{is\+Selected\+Paint}} (int x, int y) const
+\item 
+bool \mbox{\hyperlink{class_selection_raster_ab436b3095c2f870ce7830ab4d311df14}{is\+Pure\+Ink}} (int xy) const
+\item 
+bool \mbox{\hyperlink{class_selection_raster_a824b94484cf205d2c9f633538c1d99b3}{is\+Pure\+Ink}} (int x, int y) const
+\item 
+bool \mbox{\hyperlink{class_selection_raster_a46756a2f070e43efbc1cfd2832f4eb68}{is\+Pure\+Paint}} (int xy) const
+\item 
+bool \mbox{\hyperlink{class_selection_raster_ad6cff648a7e4795dd9bbef600b178906}{is\+Pure\+Paint}} (int x, int y) const
+\item 
+bool \mbox{\hyperlink{class_selection_raster_a0141f8a154d2a2631ce4ca2e26c2538b}{is\+Tone\+Color}} (int xy) const
+\item 
+bool \mbox{\hyperlink{class_selection_raster_ae4da23da914345fe728ee177a140bda1}{is\+Tone\+Color}} (int x, int y) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_selection_raster_a64a56bc7308912f2c492565b8179041a}\label{class_selection_raster_a64a56bc7308912f2c492565b8179041a}} 
+\index{SelectionRaster@{SelectionRaster}!SelectionRaster@{SelectionRaster}}
+\index{SelectionRaster@{SelectionRaster}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{SelectionRaster()}{SelectionRaster()}}
+{\footnotesize\ttfamily Selection\+Raster\+::\+Selection\+Raster (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}}}]{cm }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00206                                                 \{}
+\DoxyCodeLine{00207   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} lx = cm-\/>getLx(), ly = cm-\/>getLy(), wrap = cm-\/>getWrap();}
+\DoxyCodeLine{00208   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} size = lx * ly;}
+\DoxyCodeLine{00209 }
+\DoxyCodeLine{00210   m\_wrap = lx;}
+\DoxyCodeLine{00211 }
+\DoxyCodeLine{00212   m\_selection.allocate(size);}
+\DoxyCodeLine{00213 }
+\DoxyCodeLine{00214   cm-\/>lock();}
+\DoxyCodeLine{00215   \mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}} *pix, *pixBegin = (\mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}} *)cm-\/>getRawData();}
+\DoxyCodeLine{00216 }
+\DoxyCodeLine{00217   \mbox{\hyperlink{struct_selection_data}{SelectionData}} *selData = data();}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i, j;}
+\DoxyCodeLine{00220   \textcolor{keywordflow}{for} (i = 0; i < ly; ++i) \{}
+\DoxyCodeLine{00221     pix = pixBegin + i * wrap;}
+\DoxyCodeLine{00222     \textcolor{keywordflow}{for} (j = 0; j < lx; ++j, ++pix, ++selData) \{}
+\DoxyCodeLine{00223       selData-\/>m\_pureInk   = pix-\/>getTone() == 0;}
+\DoxyCodeLine{00224       selData-\/>m\_purePaint = pix-\/>getTone() == 255;}
+\DoxyCodeLine{00225     \}}
+\DoxyCodeLine{00226   \}}
+\DoxyCodeLine{00227 }
+\DoxyCodeLine{00228   cm-\/>unlock();}
+\DoxyCodeLine{00229 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_selection_raster_ac65bcabd470160d82470c8bbd18f43c9}\label{class_selection_raster_ac65bcabd470160d82470c8bbd18f43c9}} 
+\index{SelectionRaster@{SelectionRaster}!data@{data}}
+\index{data@{data}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_selection_data}{Selection\+Data}} $\ast$ Selection\+Raster\+::data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00137 \{ \textcolor{keywordflow}{return} m\_selection.data(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_raster_a8e897d7e1916221e5635d16f8b3339c3}\label{class_selection_raster_a8e897d7e1916221e5635d16f8b3339c3}} 
+\index{SelectionRaster@{SelectionRaster}!data@{data}}
+\index{data@{data}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_selection_data}{Selection\+Data}} $\ast$ Selection\+Raster\+::data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00135 \{ \textcolor{keywordflow}{return} m\_selection.data(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_raster_aa6d4b1583a1f025c2f766b6e5aa6be4a}\label{class_selection_raster_aa6d4b1583a1f025c2f766b6e5aa6be4a}} 
+\index{SelectionRaster@{SelectionRaster}!destroy@{destroy}}
+\index{destroy@{destroy}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{destroy()}{destroy()}}
+{\footnotesize\ttfamily void Selection\+Raster\+::destroy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00139 \{ m\_selection.destroy(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_raster_a824b94484cf205d2c9f633538c1d99b3}\label{class_selection_raster_a824b94484cf205d2c9f633538c1d99b3}} 
+\index{SelectionRaster@{SelectionRaster}!isPureInk@{isPureInk}}
+\index{isPureInk@{isPureInk}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{isPureInk()}{isPureInk()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Selection\+Raster\+::is\+Pure\+Ink (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00159 \{ \textcolor{keywordflow}{return} isPureInk(x + y * m\_wrap); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_raster_ab436b3095c2f870ce7830ab4d311df14}\label{class_selection_raster_ab436b3095c2f870ce7830ab4d311df14}} 
+\index{SelectionRaster@{SelectionRaster}!isPureInk@{isPureInk}}
+\index{isPureInk@{isPureInk}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{isPureInk()}{isPureInk()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Selection\+Raster\+::is\+Pure\+Ink (\begin{DoxyParamCaption}\item[{int}]{xy }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00157 \{ \textcolor{keywordflow}{return} (m\_selection.data() + xy)-\/>m\_pureInk; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_raster_ad6cff648a7e4795dd9bbef600b178906}\label{class_selection_raster_ad6cff648a7e4795dd9bbef600b178906}} 
+\index{SelectionRaster@{SelectionRaster}!isPurePaint@{isPurePaint}}
+\index{isPurePaint@{isPurePaint}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{isPurePaint()}{isPurePaint()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Selection\+Raster\+::is\+Pure\+Paint (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00165 \{ \textcolor{keywordflow}{return} isPurePaint(x + y * m\_wrap); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_raster_a46756a2f070e43efbc1cfd2832f4eb68}\label{class_selection_raster_a46756a2f070e43efbc1cfd2832f4eb68}} 
+\index{SelectionRaster@{SelectionRaster}!isPurePaint@{isPurePaint}}
+\index{isPurePaint@{isPurePaint}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{isPurePaint()}{isPurePaint()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Selection\+Raster\+::is\+Pure\+Paint (\begin{DoxyParamCaption}\item[{int}]{xy }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00161                                  \{}
+\DoxyCodeLine{00162     \textcolor{keywordflow}{return} (m\_selection.data() + xy)-\/>m\_purePaint;}
+\DoxyCodeLine{00163   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_raster_afe983a470af413deca05d058c14ab5b7}\label{class_selection_raster_afe983a470af413deca05d058c14ab5b7}} 
+\index{SelectionRaster@{SelectionRaster}!isSelectedInk@{isSelectedInk}}
+\index{isSelectedInk@{isSelectedInk}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{isSelectedInk()}{isSelectedInk()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Selection\+Raster\+::is\+Selected\+Ink (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00145                                          \{}
+\DoxyCodeLine{00146     \textcolor{keywordflow}{return} isSelectedInk(x + y * m\_wrap);}
+\DoxyCodeLine{00147   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_raster_ac0b318cc96ab0dff47e796d4ad5c4f08}\label{class_selection_raster_ac0b318cc96ab0dff47e796d4ad5c4f08}} 
+\index{SelectionRaster@{SelectionRaster}!isSelectedInk@{isSelectedInk}}
+\index{isSelectedInk@{isSelectedInk}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{isSelectedInk()}{isSelectedInk()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Selection\+Raster\+::is\+Selected\+Ink (\begin{DoxyParamCaption}\item[{int}]{xy }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00141                                    \{}
+\DoxyCodeLine{00142     \textcolor{keywordflow}{return} (m\_selection.data() + xy)-\/>m\_selectedInk;}
+\DoxyCodeLine{00143   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_raster_a3644f6680ced7dae5808bd90139a85c2}\label{class_selection_raster_a3644f6680ced7dae5808bd90139a85c2}} 
+\index{SelectionRaster@{SelectionRaster}!isSelectedPaint@{isSelectedPaint}}
+\index{isSelectedPaint@{isSelectedPaint}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{isSelectedPaint()}{isSelectedPaint()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Selection\+Raster\+::is\+Selected\+Paint (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00153                                            \{}
+\DoxyCodeLine{00154     \textcolor{keywordflow}{return} isSelectedPaint(x + y * m\_wrap);}
+\DoxyCodeLine{00155   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_raster_a941bd00b4a2b2c92102751f4ee651607}\label{class_selection_raster_a941bd00b4a2b2c92102751f4ee651607}} 
+\index{SelectionRaster@{SelectionRaster}!isSelectedPaint@{isSelectedPaint}}
+\index{isSelectedPaint@{isSelectedPaint}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{isSelectedPaint()}{isSelectedPaint()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Selection\+Raster\+::is\+Selected\+Paint (\begin{DoxyParamCaption}\item[{int}]{xy }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00149                                      \{}
+\DoxyCodeLine{00150     \textcolor{keywordflow}{return} (m\_selection.data() + xy)-\/>m\_selectedPaint;}
+\DoxyCodeLine{00151   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_raster_ae4da23da914345fe728ee177a140bda1}\label{class_selection_raster_ae4da23da914345fe728ee177a140bda1}} 
+\index{SelectionRaster@{SelectionRaster}!isToneColor@{isToneColor}}
+\index{isToneColor@{isToneColor}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{isToneColor()}{isToneColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Selection\+Raster\+::is\+Tone\+Color (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00169 \{ \textcolor{keywordflow}{return} isToneColor(x + y * m\_wrap); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_raster_a0141f8a154d2a2631ce4ca2e26c2538b}\label{class_selection_raster_a0141f8a154d2a2631ce4ca2e26c2538b}} 
+\index{SelectionRaster@{SelectionRaster}!isToneColor@{isToneColor}}
+\index{isToneColor@{isToneColor}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{isToneColor()}{isToneColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Selection\+Raster\+::is\+Tone\+Color (\begin{DoxyParamCaption}\item[{int}]{xy }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00167 \{ \textcolor{keywordflow}{return} !(isPureInk(xy) || isPurePaint(xy)); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_selection_raster_a78149074bbf92881b1ba595d44c0a96b}\label{class_selection_raster_a78149074bbf92881b1ba595d44c0a96b}} 
+\index{SelectionRaster@{SelectionRaster}!updateSelection@{updateSelection}}
+\index{updateSelection@{updateSelection}!SelectionRaster@{SelectionRaster}}
+\doxysubsubsection{\texorpdfstring{updateSelection()}{updateSelection()}}
+{\footnotesize\ttfamily void Selection\+Raster\+::update\+Selection (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_raster_p_t}{TRaster\+CM32P}}}]{cm,  }\item[{const \mbox{\hyperlink{struct_blend_param}{Blend\+Param}} \&}]{param }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00234                                                                \{}
+\DoxyCodeLine{00235   \textcolor{comment}{// Make a hard copy of color indexes. We do so since we absolutely prefer}}
+\DoxyCodeLine{00236   \textcolor{comment}{// having them SORTED!}}
+\DoxyCodeLine{00237   std::vector<int> cIndexes = param.colorsIndexes;}
+\DoxyCodeLine{00238   std::sort(cIndexes.begin(), cIndexes.end());}
+\DoxyCodeLine{00239 }
+\DoxyCodeLine{00240   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} lx = cm-\/>getLx(), ly = cm-\/>getLy(), wrap = cm-\/>getWrap();}
+\DoxyCodeLine{00241 }
+\DoxyCodeLine{00242   \textcolor{comment}{// Scan each cm pixel, looking if its ink or paint is in param's colorIndexes.}}
+\DoxyCodeLine{00243   cm-\/>lock();}
+\DoxyCodeLine{00244   \mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}} *pix, *pixBegin = (\mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}} *)cm-\/>getRawData();}
+\DoxyCodeLine{00245 }
+\DoxyCodeLine{00246   \mbox{\hyperlink{struct_selection_data}{SelectionData}} *selData = data();}
+\DoxyCodeLine{00247 }
+\DoxyCodeLine{00248   \textcolor{keyword}{const} \textcolor{keywordtype}{int} *v =}
+\DoxyCodeLine{00249       \&cIndexes[0];  \textcolor{comment}{// NOTE: cIndexes.size() > 0 due to external check.}}
+\DoxyCodeLine{00250   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vSize = cIndexes.size();}
+\DoxyCodeLine{00251   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i, j;}
+\DoxyCodeLine{00252 }
+\DoxyCodeLine{00253   \textcolor{comment}{// NOTE: It seems that linear searches are definitely best for small color}}
+\DoxyCodeLine{00254   \textcolor{comment}{// indexes.}}
+\DoxyCodeLine{00255   \textcolor{keywordflow}{if} (vSize > 50) \{}
+\DoxyCodeLine{00256     \textcolor{keywordflow}{for} (i = 0; i < ly; ++i) \{}
+\DoxyCodeLine{00257       pix = pixBegin + i * wrap;}
+\DoxyCodeLine{00258       \textcolor{keywordflow}{for} (j = 0; j < lx; ++j, ++pix, ++selData) \{}
+\DoxyCodeLine{00259         selData-\/>m\_selectedInk   = binarySearch(v, vSize, pix-\/>getInk());}
+\DoxyCodeLine{00260         selData-\/>m\_selectedPaint = binarySearch(v, vSize, pix-\/>getPaint());}
+\DoxyCodeLine{00261       \}}
+\DoxyCodeLine{00262     \}}
+\DoxyCodeLine{00263   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00264     \textcolor{keywordflow}{for} (i = 0; i < ly; ++i) \{}
+\DoxyCodeLine{00265       pix = pixBegin + i * wrap;}
+\DoxyCodeLine{00266       \textcolor{keywordflow}{for} (j = 0; j < lx; ++j, ++pix, ++selData) \{}
+\DoxyCodeLine{00267         selData-\/>m\_selectedInk   = linearSearch(v, vSize, pix-\/>getInk());}
+\DoxyCodeLine{00268         selData-\/>m\_selectedPaint = linearSearch(v, vSize, pix-\/>getPaint());}
+\DoxyCodeLine{00269       \}}
+\DoxyCodeLine{00270     \}}
+\DoxyCodeLine{00271   \}}
+\DoxyCodeLine{00272 }
+\DoxyCodeLine{00273   cm-\/>unlock();}
+\DoxyCodeLine{00274 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/sandor\+\_\+fxs/blend.\+cpp\end{DoxyCompactItemize}

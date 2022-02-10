@@ -1,0 +1,123 @@
+\hypertarget{class_texture_manager}{}\doxysection{Texture\+Manager Class Reference}
+\label{class_texture_manager}\index{TextureManager@{TextureManager}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_dimension_t}{TDimension}} \mbox{\hyperlink{class_texture_manager_aaeda2c87f013042580c3286b4f9ee266}{get\+Max\+Size}} (bool is\+RGBM)
+\item 
+void \mbox{\hyperlink{class_texture_manager_ac7cadaa165b74d24e1a3a050606c0aad}{get\+Fmt\+And\+Type}} (bool is\+RGBM, GLenum \&fmt, GLenum \&type)
+\item 
+\mbox{\hyperlink{class_t_dimension_t}{TDimension}} \mbox{\hyperlink{class_texture_manager_adaa7c2be69ed9c9d4ae55a0e7c80f24b}{select\+Texture}} (\mbox{\hyperlink{class_t_dimension_t}{TDimension}} req\+Size, bool is\+RGBM)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_texture_manager}{Texture\+Manager}} $\ast$ \mbox{\hyperlink{class_texture_manager_ab0854103319b1fa522f9b2d07d826c92}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_texture_manager_ac7cadaa165b74d24e1a3a050606c0aad}\label{class_texture_manager_ac7cadaa165b74d24e1a3a050606c0aad}} 
+\index{TextureManager@{TextureManager}!getFmtAndType@{getFmtAndType}}
+\index{getFmtAndType@{getFmtAndType}!TextureManager@{TextureManager}}
+\doxysubsubsection{\texorpdfstring{getFmtAndType()}{getFmtAndType()}}
+{\footnotesize\ttfamily void Texture\+Manager\+::get\+Fmt\+And\+Type (\begin{DoxyParamCaption}\item[{bool}]{is\+RGBM,  }\item[{GLenum \&}]{fmt,  }\item[{GLenum \&}]{type }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00092                                                                          \{}
+\DoxyCodeLine{00093   \textcolor{keywordflow}{if} (isRGBM) \{}
+\DoxyCodeLine{00094     fmt =}
+\DoxyCodeLine{00095 \textcolor{preprocessor}{\#if defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_BGRM)}}
+\DoxyCodeLine{00096         GL\_BGRA\_EXT}
+\DoxyCodeLine{00097 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MBGR)}}
+\DoxyCodeLine{00098         GL\_ABGR\_EXT}
+\DoxyCodeLine{00099 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_RGBM)}}
+\DoxyCodeLine{00100         GL\_RGBA}
+\DoxyCodeLine{00101 \textcolor{preprocessor}{\#elif defined(TNZ\_MACHINE\_CHANNEL\_ORDER\_MRGB)}}
+\DoxyCodeLine{00102         GL\_BGRA}
+\DoxyCodeLine{00103 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00104         @undefined chan order}
+\DoxyCodeLine{00105 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00106         ;}
+\DoxyCodeLine{00107     type =}
+\DoxyCodeLine{00108 \textcolor{preprocessor}{\#ifdef TNZ\_MACHINE\_CHANNEL\_ORDER\_MRGB}}
+\DoxyCodeLine{00109         GL\_UNSIGNED\_INT\_8\_8\_8\_8\_REV}
+\DoxyCodeLine{00110 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00111         GL\_UNSIGNED\_BYTE}
+\DoxyCodeLine{00112 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00113         ;}
+\DoxyCodeLine{00114   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00115     fmt  = GL\_LUMINANCE;}
+\DoxyCodeLine{00116     type = GL\_UNSIGNED\_BYTE;}
+\DoxyCodeLine{00117   \}}
+\DoxyCodeLine{00118 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_texture_manager_aaeda2c87f013042580c3286b4f9ee266}\label{class_texture_manager_aaeda2c87f013042580c3286b4f9ee266}} 
+\index{TextureManager@{TextureManager}!getMaxSize@{getMaxSize}}
+\index{getMaxSize@{getMaxSize}!TextureManager@{TextureManager}}
+\doxysubsubsection{\texorpdfstring{getMaxSize()}{getMaxSize()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_dimension_t}{TDimension}} Texture\+Manager\+::get\+Max\+Size (\begin{DoxyParamCaption}\item[{bool}]{is\+RGBM }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086                                                  \{}
+\DoxyCodeLine{00087   m\_textureSize = \mbox{\hyperlink{class_t_dimension_t}{TDimension}}(512, 512);}
+\DoxyCodeLine{00088   \textcolor{keywordflow}{return} m\_textureSize;}
+\DoxyCodeLine{00089 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_texture_manager_ab0854103319b1fa522f9b2d07d826c92}\label{class_texture_manager_ab0854103319b1fa522f9b2d07d826c92}} 
+\index{TextureManager@{TextureManager}!instance@{instance}}
+\index{instance@{instance}!TextureManager@{TextureManager}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_texture_manager}{Texture\+Manager}} $\ast$ Texture\+Manager\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00015                                          \{}
+\DoxyCodeLine{00016   \textcolor{keywordflow}{if} (!m\_instance) m\_instance = \textcolor{keyword}{new} \mbox{\hyperlink{class_texture_manager}{TextureManager}}();}
+\DoxyCodeLine{00017   \textcolor{keywordflow}{return} m\_instance;}
+\DoxyCodeLine{00018 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_texture_manager_adaa7c2be69ed9c9d4ae55a0e7c80f24b}\label{class_texture_manager_adaa7c2be69ed9c9d4ae55a0e7c80f24b}} 
+\index{TextureManager@{TextureManager}!selectTexture@{selectTexture}}
+\index{selectTexture@{selectTexture}!TextureManager@{TextureManager}}
+\doxysubsubsection{\texorpdfstring{selectTexture()}{selectTexture()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_dimension_t}{TDimension}} Texture\+Manager\+::select\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_dimension_t}{TDimension}}}]{req\+Size,  }\item[{bool}]{is\+RGBM }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00120                                                                         \{}
+\DoxyCodeLine{00121   \textcolor{keywordtype}{int} lx                     = 1;}
+\DoxyCodeLine{00122   \textcolor{keywordtype}{int} ly                     = 1;}
+\DoxyCodeLine{00123   \textcolor{keywordflow}{while} (lx < reqSize.lx) lx = lx << 1;}
+\DoxyCodeLine{00124   \textcolor{keywordflow}{while} (ly < reqSize.ly) ly = ly << 1;}
+\DoxyCodeLine{00125   \mbox{\hyperlink{class_t_dimension_t}{TDimension}} textureSize     = instance()-\/>getMaxSize(isRGBM);}
+\DoxyCodeLine{00126   assert(lx <= textureSize.lx);}
+\DoxyCodeLine{00127   assert(ly <= textureSize.ly);}
+\DoxyCodeLine{00128   GLenum fmt, type;}
+\DoxyCodeLine{00129   getFmtAndType(isRGBM, fmt, type);}
+\DoxyCodeLine{00130 }
+\DoxyCodeLine{00131   glTexImage2D(GL\_TEXTURE\_2D,  \textcolor{comment}{// target (is a 2D texture)}}
+\DoxyCodeLine{00132                0,              \textcolor{comment}{// is one level only}}
+\DoxyCodeLine{00133                4,              \textcolor{comment}{//  number of component of a pixel}}
+\DoxyCodeLine{00134                lx,             \textcolor{comment}{// size width}}
+\DoxyCodeLine{00135                ly,             \textcolor{comment}{//      height}}
+\DoxyCodeLine{00136                0,              \textcolor{comment}{// size of a border}}
+\DoxyCodeLine{00137                fmt, type, 0);}
+\DoxyCodeLine{00138   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_dimension_t}{TDimension}}(lx, ly);}
+\DoxyCodeLine{00139 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/texturemanager.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/texturemanager.\+cpp\end{DoxyCompactItemize}

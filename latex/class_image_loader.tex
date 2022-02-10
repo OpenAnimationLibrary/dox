@@ -1,0 +1,342 @@
+\hypertarget{class_image_loader}{}\doxysection{Image\+Loader Class Reference}
+\label{class_image_loader}\index{ImageLoader@{ImageLoader}}
+
+
+{\ttfamily \#include $<$imagebuilders.\+h$>$}
+
+Inheritance diagram for Image\+Loader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_image_loader}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_image_loader_1_1_build_ext_data}{Build\+Ext\+Data}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_image_loader_a0d3ea5ee7af0c07f1a7d3898f1e0b5ff}{Image\+Loader}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&fid)
+\item 
+bool \mbox{\hyperlink{class_image_loader_ae4ba75f7d42fb521520199391acfa922}{is\+Image\+Compatible}} (int im\+Flags, void $\ast$ext\+Data) override
+\item 
+void \mbox{\hyperlink{class_image_loader_a0b1ff1085c89bc2e9b3cab5f1a9c55e4}{build\+All\+Icons\+And\+Put\+In\+Cache}} (\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$level, std\+::vector$<$ \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} $>$ fids, std\+::vector$<$ std\+::string $>$ icon\+Ids, bool cache\+Images\+As\+Well) override
+\item 
+void \mbox{\hyperlink{class_image_loader_aa57d131e017bb2ee8dc2f7be41a9b5cf}{set\+Fid}} (const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&fid) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_image_loader_ab66e5217787d0264d2b0a137b3f5fa3e}{get\+Info}} (\mbox{\hyperlink{class_t_image_info}{TImage\+Info}} \&info, int im\+Flags, void $\ast$ext\+Data) override
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \mbox{\hyperlink{class_image_loader_a462d135e199f59117147f0dbe9b35468}{build}} (int im\+Flags, void $\ast$ext\+Data) override
+\item 
+void \mbox{\hyperlink{class_image_loader_a1ed496304394ada3d4d7f2abd1c90955}{invalidate}} () override
+\begin{DoxyCompactList}\small\item\em Clears the builder\textquotesingle{}s cached data. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_image_loader_a99ea094496719dc738c85d04cfbe3faf}{build\+Subsampling}} (int im\+Flags, \mbox{\hyperlink{struct_image_loader_1_1_build_ext_data}{Build\+Ext\+Data}} $\ast$data)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_image_loader}{Image\+Loader}} is the specialized \mbox{\hyperlink{class_image_builder}{Image\+Builder}} class used to automatically load images from a level file on hard disk.
+
+Refer to \mbox{\hyperlink{struct_image_loader_1_1_build_ext_data}{Image\+Loader\+::\+Build\+Ext\+Data}} for a description of the allowed options for image loading. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_image_loader_a0d3ea5ee7af0c07f1a7d3898f1e0b5ff}\label{class_image_loader_a0d3ea5ee7af0c07f1a7d3898f1e0b5ff}} 
+\index{ImageLoader@{ImageLoader}!ImageLoader@{ImageLoader}}
+\index{ImageLoader@{ImageLoader}!ImageLoader@{ImageLoader}}
+\doxysubsubsection{\texorpdfstring{ImageLoader()}{ImageLoader()}}
+{\footnotesize\ttfamily Image\+Loader\+::\+Image\+Loader (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&}]{fid }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00048     : m\_path(path), m\_fid(fid), m\_subsampling(0), m\_64bitCompatible(\textcolor{keyword}{false}) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_image_loader_a462d135e199f59117147f0dbe9b35468}\label{class_image_loader_a462d135e199f59117147f0dbe9b35468}} 
+\index{ImageLoader@{ImageLoader}!build@{build}}
+\index{build@{build}!ImageLoader@{ImageLoader}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} Image\+Loader\+::build (\begin{DoxyParamCaption}\item[{int}]{im\+Flags,  }\item[{void $\ast$}]{ext\+Data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+Builds the image as specified by the supplied control flags and external data. 
+
+Implements \mbox{\hyperlink{class_image_builder_ac009ac3e258ce6f020d729987c40ec4c}{Image\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00083                                                      \{}
+\DoxyCodeLine{00084   assert(extData);}
+\DoxyCodeLine{00085 }
+\DoxyCodeLine{00086   \textcolor{comment}{// Extract external data}}
+\DoxyCodeLine{00087   BuildExtData *data = \textcolor{keyword}{static\_cast<}BuildExtData *\textcolor{keyword}{>}(extData);}
+\DoxyCodeLine{00088 }
+\DoxyCodeLine{00089   \textcolor{keywordtype}{int} subsampling = buildSubsampling(imFlags, data);}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00092     \textcolor{comment}{// Initialize level reader}}
+\DoxyCodeLine{00093     \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}} lr(m\_path);}
+\DoxyCodeLine{00094     \textcolor{keywordflow}{if} (!lr) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}}();}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096     \textcolor{comment}{// Load info in cases where it's required first}}
+\DoxyCodeLine{00097     lr-\/>doReadPalette(\textcolor{keyword}{false});}
+\DoxyCodeLine{00098 }
+\DoxyCodeLine{00099     \textcolor{keywordflow}{if} ((m\_path.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}pli"{}}) || (m\_path.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}svg"{}}) ||}
+\DoxyCodeLine{00100         (m\_path.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}psd"{}}))}
+\DoxyCodeLine{00101       lr-\/>loadInfo();}
+\DoxyCodeLine{00102 }
+\DoxyCodeLine{00103     \textcolor{keywordtype}{bool} isTlvIcon = data-\/>m\_icon \&\& m\_path.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}tlv"{}};}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105     \textcolor{comment}{// for TLV icons, palettes will be applied in IconGenerator later}}
+\DoxyCodeLine{00106     \textcolor{keywordflow}{if} (!isTlvIcon) lr-\/>doReadPalette(\textcolor{keyword}{true});  \textcolor{comment}{// Allow palette loading}}
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108     \mbox{\hyperlink{class_t_image_reader_p}{TImageReaderP}} ir = lr-\/>getFrameReader(m\_fid);}
+\DoxyCodeLine{00109 }
+\DoxyCodeLine{00110     \textcolor{keywordtype}{bool} enable64bit = (imFlags \& ImageManager::is64bitEnabled);}
+\DoxyCodeLine{00111     ir-\/>enable16BitRead(enable64bit);  \textcolor{comment}{// Set 64-\/bit loading if required}}
+\DoxyCodeLine{00112 }
+\DoxyCodeLine{00113     \textcolor{comment}{// Load the image}}
+\DoxyCodeLine{00114     \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} img;}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116     \textcolor{keywordflow}{if} (isTlvIcon)}
+\DoxyCodeLine{00117       img = ir-\/>loadIcon();  \textcolor{comment}{// TODO: Why just in the tlv case??}}
+\DoxyCodeLine{00118     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00119       ir-\/>setShrink(subsampling);}
+\DoxyCodeLine{00120       img = ir-\/>load();}
+\DoxyCodeLine{00121     \}}
+\DoxyCodeLine{00122 }
+\DoxyCodeLine{00123     ir-\/>enable16BitRead(\textcolor{keyword}{false});}
+\DoxyCodeLine{00124 }
+\DoxyCodeLine{00125     \textcolor{keywordflow}{if} (!img) \textcolor{keywordflow}{return} img;  \textcolor{comment}{// There was an error loading the image.}}
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127     \mbox{\hyperlink{class_t_palette}{TPalette}} *palette = data-\/>m\_sl-\/>getPalette();}
+\DoxyCodeLine{00128     \textcolor{keywordflow}{if} (palette) img-\/>\mbox{\hyperlink{class_t_image_a3377c18a849addff5c2cb238176ad04f}{setPalette}}(palette);}
+\DoxyCodeLine{00129 }
+\DoxyCodeLine{00130     \textcolor{keywordflow}{if} (subsampling > 1) \{}
+\DoxyCodeLine{00131       \textcolor{comment}{// Store the subsampling info in the image}}
+\DoxyCodeLine{00132       \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} ri = img)}
+\DoxyCodeLine{00133         ri-\/>setSubsampling(subsampling);}
+\DoxyCodeLine{00134       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}} ti = img)}
+\DoxyCodeLine{00135         ti-\/>setSubsampling(subsampling);}
+\DoxyCodeLine{00136     \}}
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00138     \textcolor{comment}{// In case the image will be cached, store its subsampling and 64 bit}}
+\DoxyCodeLine{00139     \textcolor{comment}{// compatibility}}
+\DoxyCodeLine{00140     \textcolor{keywordflow}{if} (!(imFlags \& ImageManager::dontPutInCache)) \{}
+\DoxyCodeLine{00141       m\_subsampling = subsampling;}
+\DoxyCodeLine{00142       m\_64bitCompatible =}
+\DoxyCodeLine{00143           data-\/>m\_sl-\/>is16BitChannelLevel() ? enable64bit : \textcolor{keyword}{true};}
+\DoxyCodeLine{00144     \}}
+\DoxyCodeLine{00145 }
+\DoxyCodeLine{00146     \textcolor{keywordflow}{return} img;}
+\DoxyCodeLine{00147   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00148     \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}}();}
+\DoxyCodeLine{00149   \}}
+\DoxyCodeLine{00150 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00424}{TXsh\+Simple\+Level\+::get\+Palette()}}, \mbox{\hyperlink{l00225}{TFile\+Path\+::get\+Type()}}, \mbox{\hyperlink{l00041}{Image\+Loader\+::\+Build\+Ext\+Data\+::m\+\_\+icon}}, \mbox{\hyperlink{l00034}{Image\+Loader\+::\+Build\+Ext\+Data\+::m\+\_\+sl}}, and \mbox{\hyperlink{l00009}{TImage\+::set\+Palette()}}.
+
+\mbox{\Hypertarget{class_image_loader_a0b1ff1085c89bc2e9b3cab5f1a9c55e4}\label{class_image_loader_a0b1ff1085c89bc2e9b3cab5f1a9c55e4}} 
+\index{ImageLoader@{ImageLoader}!buildAllIconsAndPutInCache@{buildAllIconsAndPutInCache}}
+\index{buildAllIconsAndPutInCache@{buildAllIconsAndPutInCache}!ImageLoader@{ImageLoader}}
+\doxysubsubsection{\texorpdfstring{buildAllIconsAndPutInCache()}{buildAllIconsAndPutInCache()}}
+{\footnotesize\ttfamily void Image\+Loader\+::build\+All\+Icons\+And\+Put\+In\+Cache (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{level,  }\item[{std\+::vector$<$ \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} $>$}]{fids,  }\item[{std\+::vector$<$ std\+::string $>$}]{icon\+Ids,  }\item[{bool}]{cache\+Images\+As\+Well }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_builder}{Image\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00193                                                                      \{}
+\DoxyCodeLine{00194   \textcolor{keywordflow}{if} (m\_path.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() != \textcolor{stringliteral}{"{}tlv"{}}) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00195   \textcolor{keywordflow}{if} (fids.empty() || iconIds.empty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00196   \textcolor{comment}{/*-\/ fidとアイコンidの数は同じはず -\/*/}}
+\DoxyCodeLine{00197   \textcolor{keywordflow}{if} ((\textcolor{keywordtype}{int})fids.size() != (\textcolor{keywordtype}{int})iconIds.size()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00198 }
+\DoxyCodeLine{00199   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00200     \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}} lr(m\_path);}
+\DoxyCodeLine{00201     \textcolor{keywordflow}{if} (!lr) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00202 }
+\DoxyCodeLine{00203     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)fids.size(); i++) \{}
+\DoxyCodeLine{00204       lr-\/>doReadPalette(\textcolor{keyword}{false});}
+\DoxyCodeLine{00205       \mbox{\hyperlink{class_t_image_reader_p}{TImageReaderP}} ir = lr-\/>getFrameReader(fids[i]);}
+\DoxyCodeLine{00206       lr-\/>doReadPalette(\textcolor{keyword}{true});}
+\DoxyCodeLine{00207 }
+\DoxyCodeLine{00208       \mbox{\hyperlink{class_t_image_info}{TImageInfo}} info;}
+\DoxyCodeLine{00209       \mbox{\hyperlink{class_t_palette}{TPalette}} *palette     = level-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}();}
+\DoxyCodeLine{00210       std::string fullImgId = level-\/>getImageId(fids[i]);}
+\DoxyCodeLine{00211 }
+\DoxyCodeLine{00212       \textcolor{comment}{/*-\/ 画像データも一緒にキャッシュする場合 -\/*/}}
+\DoxyCodeLine{00213       \textcolor{keywordflow}{if} (cacheImagesAsWell) \{}
+\DoxyCodeLine{00214         ir-\/>enable16BitRead(m\_64bitCompatible);}
+\DoxyCodeLine{00215         ir-\/>setShrink(1);}
+\DoxyCodeLine{00216         \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} fullImg = ir-\/>load();}
+\DoxyCodeLine{00217         \textcolor{keywordflow}{if} (fullImg) \{}
+\DoxyCodeLine{00218           \textcolor{keywordflow}{if} (palette) fullImg-\/>\mbox{\hyperlink{class_t_image_a3377c18a849addff5c2cb238176ad04f}{setPalette}}(palette);}
+\DoxyCodeLine{00219           TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a124eae4cf370288f42c22b3477cb5163}{add}}(fullImgId, fullImg, \textcolor{keyword}{true});}
+\DoxyCodeLine{00220           setImageInfo(info, fullImg.getPointer());}
+\DoxyCodeLine{00221         \}}
+\DoxyCodeLine{00222       \}}
+\DoxyCodeLine{00223 }
+\DoxyCodeLine{00224       \textcolor{comment}{/*-\/ アイコンのロード -\/*/}}
+\DoxyCodeLine{00225       \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} img = ir-\/>loadIcon();}
+\DoxyCodeLine{00226       ir-\/>enable16BitRead(\textcolor{keyword}{false});}
+\DoxyCodeLine{00227       \textcolor{keywordflow}{if} (img) \{}
+\DoxyCodeLine{00228         \textcolor{keywordflow}{if} (palette) img-\/>\mbox{\hyperlink{class_t_image_a3377c18a849addff5c2cb238176ad04f}{setPalette}}(palette);}
+\DoxyCodeLine{00229         TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a124eae4cf370288f42c22b3477cb5163}{add}}(iconIds[i], img, \textcolor{keyword}{true});}
+\DoxyCodeLine{00230       \}}
+\DoxyCodeLine{00231     \}}
+\DoxyCodeLine{00232   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00233     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00234   \}}
+\DoxyCodeLine{00235 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_image_loader_a99ea094496719dc738c85d04cfbe3faf}\label{class_image_loader_a99ea094496719dc738c85d04cfbe3faf}} 
+\index{ImageLoader@{ImageLoader}!buildSubsampling@{buildSubsampling}}
+\index{buildSubsampling@{buildSubsampling}!ImageLoader@{ImageLoader}}
+\doxysubsubsection{\texorpdfstring{buildSubsampling()}{buildSubsampling()}}
+{\footnotesize\ttfamily int Image\+Loader\+::build\+Subsampling (\begin{DoxyParamCaption}\item[{int}]{im\+Flags,  }\item[{\mbox{\hyperlink{struct_image_loader_1_1_build_ext_data}{Build\+Ext\+Data}} $\ast$}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00071                                                                         \{}
+\DoxyCodeLine{00072   \textcolor{keywordflow}{return} (imFlags \& ImageManager::toBeModified)}
+\DoxyCodeLine{00073              ? 1}
+\DoxyCodeLine{00074              : (data-\/>m\_subs > 0)}
+\DoxyCodeLine{00075                    ? data-\/>m\_subs}
+\DoxyCodeLine{00076                    : (m\_subsampling > 0)}
+\DoxyCodeLine{00077                          ? m\_subsampling}
+\DoxyCodeLine{00078                          : data-\/>m\_sl-\/>getProperties()-\/>getSubsampling();}
+\DoxyCodeLine{00079 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_image_loader_ab66e5217787d0264d2b0a137b3f5fa3e}\label{class_image_loader_ab66e5217787d0264d2b0a137b3f5fa3e}} 
+\index{ImageLoader@{ImageLoader}!getInfo@{getInfo}}
+\index{getInfo@{getInfo}!ImageLoader@{ImageLoader}}
+\doxysubsubsection{\texorpdfstring{getInfo()}{getInfo()}}
+{\footnotesize\ttfamily bool Image\+Loader\+::get\+Info (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_image_info}{TImage\+Info}} \&}]{info,  }\item[{int}]{im\+Flags,  }\item[{void $\ast$}]{ext\+Data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+Returns the image infos as specified by the supplied control flags and external data. 
+
+Implements \mbox{\hyperlink{class_image_builder_a16613d50918a7b59ba67ba8bc6dab8ff}{Image\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052                                                                       \{}
+\DoxyCodeLine{00053   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00054     \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}} lr(m\_path);}
+\DoxyCodeLine{00055     \mbox{\hyperlink{class_t_image_reader_p}{TImageReaderP}} fr = lr-\/>getFrameReader(m\_fid);}
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00057     \textcolor{comment}{// NOTE: Currently not changing imageInfo's bpp stuff...}}
+\DoxyCodeLine{00058     \textcolor{comment}{//       Ignoring subsampling too...}}
+\DoxyCodeLine{00059 }
+\DoxyCodeLine{00060     \textcolor{keywordflow}{return} ImageBuilder::setImageInfo(info, fr.getPointer());}
+\DoxyCodeLine{00061   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{00062     QString msg = QString::fromStdWString(e.getMessage());}
+\DoxyCodeLine{00063     \textcolor{keywordflow}{if} (msg == QString(\textcolor{stringliteral}{"{}Old 4.1 Palette"{}})) \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00065     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00066   \}}
+\DoxyCodeLine{00067 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_image_loader_a1ed496304394ada3d4d7f2abd1c90955}\label{class_image_loader_a1ed496304394ada3d4d7f2abd1c90955}} 
+\index{ImageLoader@{ImageLoader}!invalidate@{invalidate}}
+\index{invalidate@{invalidate}!ImageLoader@{ImageLoader}}
+\doxysubsubsection{\texorpdfstring{invalidate()}{invalidate()}}
+{\footnotesize\ttfamily void Image\+Loader\+::invalidate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Clears the builder\textquotesingle{}s cached data. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_builder_a3632b6efb0ba17b925a986e2684f3eb2}{Image\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00179                              \{}
+\DoxyCodeLine{00180   \mbox{\hyperlink{class_image_builder_a3632b6efb0ba17b925a986e2684f3eb2}{ImageBuilder::invalidate}}();}
+\DoxyCodeLine{00181   m\_subsampling     = 0;}
+\DoxyCodeLine{00182   m\_64bitCompatible = \textcolor{keyword}{false};}
+\DoxyCodeLine{00183 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00294}{Image\+Builder\+::invalidate()}}.
+
+\mbox{\Hypertarget{class_image_loader_ae4ba75f7d42fb521520199391acfa922}\label{class_image_loader_ae4ba75f7d42fb521520199391acfa922}} 
+\index{ImageLoader@{ImageLoader}!isImageCompatible@{isImageCompatible}}
+\index{isImageCompatible@{isImageCompatible}!ImageLoader@{ImageLoader}}
+\doxysubsubsection{\texorpdfstring{isImageCompatible()}{isImageCompatible()}}
+{\footnotesize\ttfamily bool Image\+Loader\+::is\+Image\+Compatible (\begin{DoxyParamCaption}\item[{int}]{im\+Flags,  }\item[{void $\ast$}]{ext\+Data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Returns whether any currently cached image is compatible with requested specifications, Returning true prevents Image\+Builder\+::build() invocations, fetching the cached data instead. The default implementation returns true if m\+\_\+info has positive m\+\_\+lx and m\+\_\+ly. 
+
+Reimplemented from \mbox{\hyperlink{class_image_builder_a23048fae4829baddc1869516df7f58ce}{Image\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00154                                                               \{}
+\DoxyCodeLine{00155   assert(extData);}
+\DoxyCodeLine{00156 }
+\DoxyCodeLine{00157   BuildExtData *data        = \textcolor{keyword}{static\_cast<}BuildExtData *\textcolor{keyword}{>}(extData);}
+\DoxyCodeLine{00158   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl = data-\/>m\_sl;}
+\DoxyCodeLine{00159 }
+\DoxyCodeLine{00160   \textcolor{comment}{// NOTE: Vector and Mesh dont care about sub sampling rate and bit depth}}
+\DoxyCodeLine{00161   \textcolor{comment}{// compatibility.}}
+\DoxyCodeLine{00162   \textcolor{comment}{//       They are property of Raster.}}
+\DoxyCodeLine{00163   \textcolor{keywordflow}{if} (sl-\/>\mbox{\hyperlink{class_t_xsh_level_a1a147f1e970a62120c0bbaf0020a8932}{getType}}() == PLI\_XSHLEVEL || sl-\/>\mbox{\hyperlink{class_t_xsh_level_a1a147f1e970a62120c0bbaf0020a8932}{getType}}() == MESH\_XSHLEVEL)}
+\DoxyCodeLine{00164     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00165 }
+\DoxyCodeLine{00166   \textcolor{keywordtype}{int} subsampling = buildSubsampling(imFlags, data);}
+\DoxyCodeLine{00167 }
+\DoxyCodeLine{00168   \textcolor{keywordflow}{if} (m\_subsampling <= 0 || subsampling != m\_subsampling) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00169 }
+\DoxyCodeLine{00170   \textcolor{keywordflow}{if} (m\_64bitCompatible || !(imFlags \& ImageManager::is64bitEnabled)) \{}
+\DoxyCodeLine{00171     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00172   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00173     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00174   \}}
+\DoxyCodeLine{00175 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00081}{TXsh\+Level\+::get\+Type()}}, and \mbox{\hyperlink{l00034}{Image\+Loader\+::\+Build\+Ext\+Data\+::m\+\_\+sl}}.
+
+\mbox{\Hypertarget{class_image_loader_aa57d131e017bb2ee8dc2f7be41a9b5cf}\label{class_image_loader_aa57d131e017bb2ee8dc2f7be41a9b5cf}} 
+\index{ImageLoader@{ImageLoader}!setFid@{setFid}}
+\index{setFid@{setFid}!ImageLoader@{ImageLoader}}
+\doxysubsubsection{\texorpdfstring{setFid()}{setFid()}}
+{\footnotesize\ttfamily void Image\+Loader\+::set\+Fid (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&}]{fid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_image_builder}{Image\+Builder}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00237 \{ m\_fid = fid; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/imagebuilders.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/imagebuilders.\+cpp\end{DoxyCompactItemize}

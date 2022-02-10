@@ -1,0 +1,320 @@
+\hypertarget{class_scene_level}{}\doxysection{Scene\+Level Class Reference}
+\label{class_scene_level}\index{SceneLevel@{SceneLevel}}
+
+
+{\ttfamily \#include $<$sceneresources.\+h$>$}
+
+Inheritance diagram for Scene\+Level\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_scene_level}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_scene_level_a462fd7228e5a9fdc4d5a532f0d4903a6}{Scene\+Level}} (\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$scene, \mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$sl)
+\item 
+void \mbox{\hyperlink{class_scene_level_af8e3da1d7a0ad5c2b9da17e76705ac1c}{save}} () override
+\item 
+void \mbox{\hyperlink{class_scene_level_a470bd2f139ba3da044b0800b62ac0a61}{update\+Path}} () override
+\item 
+void \mbox{\hyperlink{class_scene_level_a9e59db795bff1eef3d5a2ba06fba9861}{rollback\+Path}} () override
+\item 
+void \mbox{\hyperlink{class_scene_level_a7b6bbaa868da9f79ac0d1c8d670355d1}{accept}} (\mbox{\hyperlink{class_resource_processor}{Resource\+Processor}} $\ast$processor) override
+\begin{DoxyCompactList}\small\item\em visitor pattern \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_scene_level_afdb8bd2ebe2b30470c3c5205dbe55fa7}{is\+Dirty}} () override
+\item 
+QString\+List \mbox{\hyperlink{class_scene_level_afe0a9c987f6c22747a311f118bf56cad}{get\+Resource\+Name}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_scene_level}{Scene\+Level}} class provides a container for scene level resource and allows its management.
+
+Inherits {\bfseries{\mbox{\hyperlink{class_scene_resource}{Scene\+Resource}}}}. ~\newline
+ The class, more than {\bfseries{\mbox{\hyperlink{class_scene_resources}{Scene\+Resources}}}}, contains a pointer to a simple level {\bfseries{\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}}}}, two path for old save path, one decoded and one no, two path for old scanned path, one decoded and one no. The class allows to save simple level \mbox{\hyperlink{class_scene_level_af8e3da1d7a0ad5c2b9da17e76705ac1c}{save()}} and to update or to restore old path (save and scan) \mbox{\hyperlink{class_scene_level_a470bd2f139ba3da044b0800b62ac0a61}{update\+Path()}} \mbox{\hyperlink{class_scene_level_a9e59db795bff1eef3d5a2ba06fba9861}{rollback\+Path()}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_scene_level_a462fd7228e5a9fdc4d5a532f0d4903a6}\label{class_scene_level_a462fd7228e5a9fdc4d5a532f0d4903a6}} 
+\index{SceneLevel@{SceneLevel}!SceneLevel@{SceneLevel}}
+\index{SceneLevel@{SceneLevel}!SceneLevel@{SceneLevel}}
+\doxysubsubsection{\texorpdfstring{SceneLevel()}{SceneLevel()}}
+{\footnotesize\ttfamily Scene\+Level\+::\+Scene\+Level (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$}]{scene,  }\item[{\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{sl }\end{DoxyParamCaption})}
+
+Constructs \mbox{\hyperlink{class_scene_level}{Scene\+Level}} with {\bfseries{\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}}}} {\bfseries{scene}} and {\bfseries{\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}}}} {\bfseries{sl}}. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00191     : \mbox{\hyperlink{class_scene_resource_a5fad6166777678e8dad0be523c7503ad}{SceneResource}}(scene)}
+\DoxyCodeLine{00192     , m\_sl(sl)}
+\DoxyCodeLine{00193     , m\_oldPath(sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a668293d53a70cca8811db28d87011c55}{getPath}}())}
+\DoxyCodeLine{00194     , m\_oldActualPath(scene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a668293d53a70cca8811db28d87011c55}{getPath}}()))}
+\DoxyCodeLine{00195     , m\_oldScannedPath(sl-\/>getScannedPath())}
+\DoxyCodeLine{00196     , m\_oldRefImgPath()}
+\DoxyCodeLine{00197     , m\_oldActualRefImgPath() \{}
+\DoxyCodeLine{00198   \textcolor{keywordflow}{if} (m\_oldScannedPath != \mbox{\hyperlink{class_t_file_path}{TFilePath}}())}
+\DoxyCodeLine{00199     m\_oldActualScannedPath = m\_scene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(m\_oldScannedPath);}
+\DoxyCodeLine{00200   \textcolor{keywordflow}{if} ((sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a668293d53a70cca8811db28d87011c55}{getPath}}().\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}tlv"{}} || sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a668293d53a70cca8811db28d87011c55}{getPath}}().\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}pli"{}}) \&\&}
+\DoxyCodeLine{00201       sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}()) \{}
+\DoxyCodeLine{00202     m\_oldRefImgPath       = sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}()-\/>\mbox{\hyperlink{class_t_palette_a7eda1d7f3a27e8e90d0c12faaedaf5a6}{getRefImgPath}}();}
+\DoxyCodeLine{00203     m\_oldActualRefImgPath = m\_scene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(m\_oldRefImgPath);}
+\DoxyCodeLine{00204   \}}
+\DoxyCodeLine{00205 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01231}{Toonz\+Scene\+::decode\+File\+Path()}}, \mbox{\hyperlink{l00424}{TXsh\+Simple\+Level\+::get\+Palette()}}, \mbox{\hyperlink{l00120}{TXsh\+Simple\+Level\+::get\+Path()}}, \mbox{\hyperlink{l00367}{TPalette\+::get\+Ref\+Img\+Path()}}, and \mbox{\hyperlink{l00225}{TFile\+Path\+::get\+Type()}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_scene_level_a7b6bbaa868da9f79ac0d1c8d670355d1}\label{class_scene_level_a7b6bbaa868da9f79ac0d1c8d670355d1}} 
+\index{SceneLevel@{SceneLevel}!accept@{accept}}
+\index{accept@{accept}!SceneLevel@{SceneLevel}}
+\doxysubsubsection{\texorpdfstring{accept()}{accept()}}
+{\footnotesize\ttfamily void Scene\+Level\+::accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_resource_processor}{Resource\+Processor}} $\ast$}]{processor }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+visitor pattern 
+
+
+
+Implements \mbox{\hyperlink{class_scene_resource_aaa54723b0eca72e52f75dec6865173ac}{Scene\+Resource}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00202                                                      \{}
+\DoxyCodeLine{00203     processor-\/>process(m\_sl);}
+\DoxyCodeLine{00204   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_level_afe0a9c987f6c22747a311f118bf56cad}\label{class_scene_level_afe0a9c987f6c22747a311f118bf56cad}} 
+\index{SceneLevel@{SceneLevel}!getResourceName@{getResourceName}}
+\index{getResourceName@{getResourceName}!SceneLevel@{SceneLevel}}
+\doxysubsubsection{\texorpdfstring{getResourceName()}{getResourceName()}}
+{\footnotesize\ttfamily QString\+List Scene\+Level\+::get\+Resource\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_scene_resource}{Scene\+Resource}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00337                                         \{}
+\DoxyCodeLine{00338   QStringList ret;}
+\DoxyCodeLine{00339   QString string;}
+\DoxyCodeLine{00340   \textcolor{keywordtype}{bool} levelIsDirty = \textcolor{keyword}{false};}
+\DoxyCodeLine{00341   \textcolor{keywordflow}{if} (m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_ad412dd5c3a6ae3ff20a480dc728b26d2}{getProperties}}()-\/>\mbox{\hyperlink{class_level_properties_a19cc395b0312bc880b1d765c93720967}{getDirtyFlag}}()) \{}
+\DoxyCodeLine{00342     \textcolor{keywordtype}{string} += QString::fromStdString(m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a668293d53a70cca8811db28d87011c55}{getPath}}().\mbox{\hyperlink{class_t_file_path_a9b256108e6e5ff99f3ba828d4cdbd7ee}{getLevelName}}());}
+\DoxyCodeLine{00343     levelIsDirty = \textcolor{keyword}{true};}
+\DoxyCodeLine{00344   \}}
+\DoxyCodeLine{00345   \textcolor{keywordflow}{if} (m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}() \&\& m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}()-\/>\mbox{\hyperlink{class_t_palette_a4e573ec80c4779bcdb543e4b743a8c34}{getDirtyFlag}}()) \{}
+\DoxyCodeLine{00346     QString paletteName =}
+\DoxyCodeLine{00347         QString::fromStdWString(m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}()-\/>\mbox{\hyperlink{class_t_palette_af0bb56df19af40d1a729482efc85f492}{getPaletteName}}());}
+\DoxyCodeLine{00348     \textcolor{keywordflow}{if} (m\_sl-\/>\mbox{\hyperlink{class_t_xsh_level_a1a147f1e970a62120c0bbaf0020a8932}{getType}}() \& FULLCOLOR\_TYPE) \{}
+\DoxyCodeLine{00349       \textcolor{keywordflow}{if} (levelIsDirty) ret << string;}
+\DoxyCodeLine{00350       ret << paletteName + \textcolor{stringliteral}{"{}.tpl"{}};}
+\DoxyCodeLine{00351     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00352       \textcolor{keywordflow}{if} (levelIsDirty) \textcolor{keywordtype}{string} += \textcolor{stringliteral}{"{} and "{}};}
+\DoxyCodeLine{00353       \textcolor{keywordflow}{if} (m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a668293d53a70cca8811db28d87011c55}{getPath}}().\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}pli"{}})}
+\DoxyCodeLine{00354         \textcolor{keywordtype}{string} += paletteName + \textcolor{stringliteral}{"{}.pli (palette)"{}};}
+\DoxyCodeLine{00355       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00356         \textcolor{keywordtype}{string} += paletteName + \textcolor{stringliteral}{"{}.tpl"{}};}
+\DoxyCodeLine{00357       ret << string;}
+\DoxyCodeLine{00358     \}}
+\DoxyCodeLine{00359   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (levelIsDirty)}
+\DoxyCodeLine{00360     ret << string;}
+\DoxyCodeLine{00361 }
+\DoxyCodeLine{00362   \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{00363 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_level_afdb8bd2ebe2b30470c3c5205dbe55fa7}\label{class_scene_level_afdb8bd2ebe2b30470c3c5205dbe55fa7}} 
+\index{SceneLevel@{SceneLevel}!isDirty@{isDirty}}
+\index{isDirty@{isDirty}!SceneLevel@{SceneLevel}}
+\doxysubsubsection{\texorpdfstring{isDirty()}{isDirty()}}
+{\footnotesize\ttfamily bool Scene\+Level\+::is\+Dirty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_scene_resource}{Scene\+Resource}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00328                          \{}
+\DoxyCodeLine{00329   \textcolor{keywordflow}{if} (m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_ad412dd5c3a6ae3ff20a480dc728b26d2}{getProperties}}()-\/>\mbox{\hyperlink{class_level_properties_a19cc395b0312bc880b1d765c93720967}{getDirtyFlag}}() ||}
+\DoxyCodeLine{00330       (m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}() \&\& m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}()-\/>\mbox{\hyperlink{class_t_palette_a4e573ec80c4779bcdb543e4b743a8c34}{getDirtyFlag}}()))}
+\DoxyCodeLine{00331     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00332   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00333     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00334 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_level_a9e59db795bff1eef3d5a2ba06fba9861}\label{class_scene_level_a9e59db795bff1eef3d5a2ba06fba9861}} 
+\index{SceneLevel@{SceneLevel}!rollbackPath@{rollbackPath}}
+\index{rollbackPath@{rollbackPath}!SceneLevel@{SceneLevel}}
+\doxysubsubsection{\texorpdfstring{rollbackPath()}{rollbackPath()}}
+{\footnotesize\ttfamily void Scene\+Level\+::rollback\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Set simple level path to old path. 
+
+Implements \mbox{\hyperlink{class_scene_resource_a5dffdd4b64e9146207260136f3b9b4b9}{Scene\+Resource}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00320                               \{}
+\DoxyCodeLine{00321   \textcolor{keywordflow}{if} (!m\_untitledScene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00322   m\_sl-\/>setPath(m\_oldPath, \textcolor{keyword}{true});}
+\DoxyCodeLine{00323   m\_sl-\/>setScannedPath(m\_oldScannedPath);}
+\DoxyCodeLine{00324 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_level_af8e3da1d7a0ad5c2b9da17e76705ac1c}\label{class_scene_level_af8e3da1d7a0ad5c2b9da17e76705ac1c}} 
+\index{SceneLevel@{SceneLevel}!save@{save}}
+\index{save@{save}!SceneLevel@{SceneLevel}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily void Scene\+Level\+::save (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Save simple level in right path. 
+
+Implements \mbox{\hyperlink{class_scene_resource_afa8a3313c6ac21337194901a7272eaba}{Scene\+Resource}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00209                       \{}
+\DoxyCodeLine{00210   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp = m\_oldPath;}
+\DoxyCodeLine{00211   \mbox{\hyperlink{class_scene_resource_ae3d4cd5a80eb708bbed4f619cb7b1731}{SceneResource::updatePath}}(fp);}
+\DoxyCodeLine{00212   \mbox{\hyperlink{class_t_file_path}{TFilePath}} actualFp      = m\_scene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(fp);}
+\DoxyCodeLine{00213   actualFp                = restorePsdPath(actualFp);}
+\DoxyCodeLine{00214   \mbox{\hyperlink{class_t_file_path}{TFilePath}} oldActualPath = restorePsdPath(m\_oldActualPath);}
+\DoxyCodeLine{00215   assert(actualFp.getWideString() == L\textcolor{stringliteral}{"{}"{}} ||}
+\DoxyCodeLine{00216          actualFp.getWideString()[0] != L\textcolor{charliteral}{'+'});}
+\DoxyCodeLine{00217   \textcolor{keywordflow}{if} (actualFp != oldActualPath ||}
+\DoxyCodeLine{00218       !TSystem::doesExistFileOrLevel(oldActualPath) ||}
+\DoxyCodeLine{00219       m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_ad412dd5c3a6ae3ff20a480dc728b26d2}{getProperties}}()-\/>\mbox{\hyperlink{class_level_properties_a19cc395b0312bc880b1d765c93720967}{getDirtyFlag}}() ||}
+\DoxyCodeLine{00220       (m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}() \&\& m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}()-\/>\mbox{\hyperlink{class_t_palette_a4e573ec80c4779bcdb543e4b743a8c34}{getDirtyFlag}}())) \{}
+\DoxyCodeLine{00221     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00222       TSystem::touchParentDir(actualFp);}
+\DoxyCodeLine{00223       \textcolor{keywordflow}{if} (actualFp != oldActualPath \&\&}
+\DoxyCodeLine{00224           TSystem::doesExistFileOrLevel(oldActualPath) \&\&}
+\DoxyCodeLine{00225           m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_ad412dd5c3a6ae3ff20a480dc728b26d2}{getProperties}}()-\/>\mbox{\hyperlink{class_level_properties_a19cc395b0312bc880b1d765c93720967}{getDirtyFlag}}() == \textcolor{keyword}{false} \&\&}
+\DoxyCodeLine{00226           (!m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}() ||}
+\DoxyCodeLine{00227            (m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}() \&\&}
+\DoxyCodeLine{00228             m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a9aea4f8e34caef293d5e5c7694047564}{getPalette}}()-\/>\mbox{\hyperlink{class_t_palette_a4e573ec80c4779bcdb543e4b743a8c34}{getDirtyFlag}}() == \textcolor{keyword}{false}))) \{}
+\DoxyCodeLine{00229         \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00230           \mbox{\hyperlink{class_t_xsh_simple_level_a821df490f42bb53d419ed4d3c4b97972}{TXshSimpleLevel::copyFiles}}(actualFp, oldActualPath);}
+\DoxyCodeLine{00231         \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00232         \}}
+\DoxyCodeLine{00233         \textcolor{comment}{// Must NOT KEEP FRAMES, it generate a level frames bind necessary to}}
+\DoxyCodeLine{00234         \textcolor{comment}{// imageBuilder path refresh.}}
+\DoxyCodeLine{00235         m\_sl-\/>setPath(fp, \textcolor{keyword}{false});}
+\DoxyCodeLine{00236       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00237         \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00238           m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a5ceff3b4f997fbe62be18948fc893404}{save}}(actualFp, oldActualPath);}
+\DoxyCodeLine{00239         \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00240           \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00241         \}}
+\DoxyCodeLine{00242         \textcolor{keywordflow}{if} ((actualFp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}tlv"{}} || actualFp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}pli"{}}) \&\&}
+\DoxyCodeLine{00243             actualFp != oldActualPath \&\& m\_oldRefImgPath != \mbox{\hyperlink{class_t_file_path}{TFilePath}}()) \{}
+\DoxyCodeLine{00244           \textcolor{comment}{// Devo preoccuparmi dell'eventuale livello colormodel}}
+\DoxyCodeLine{00245           \mbox{\hyperlink{class_t_file_path}{TFilePath}} actualRefImagPath =}
+\DoxyCodeLine{00246               m\_scene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(m\_oldRefImgPath);}
+\DoxyCodeLine{00247           \mbox{\hyperlink{class_t_file_path}{TFilePath}} actualRefImagPathTpl = actualRefImagPath.\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(\textcolor{stringliteral}{"{}tpl"{}});}
+\DoxyCodeLine{00248           \mbox{\hyperlink{class_t_file_path}{TFilePath}} oldRefImagPathTpl = m\_oldActualRefImgPath.\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(\textcolor{stringliteral}{"{}tpl"{}});}
+\DoxyCodeLine{00249           TSystem::copyFile(actualRefImagPath, m\_oldActualRefImgPath);}
+\DoxyCodeLine{00250           \textcolor{keywordflow}{if} (actualRefImagPath.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}tlv"{}})}
+\DoxyCodeLine{00251             TSystem::copyFile(actualRefImagPathTpl, oldRefImagPathTpl);}
+\DoxyCodeLine{00252         \}}
+\DoxyCodeLine{00253 }
+\DoxyCodeLine{00254         \textcolor{keywordflow}{if} (actualFp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}tif"{}} || actualFp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}tiff"{}} ||}
+\DoxyCodeLine{00255             actualFp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}tga"{}} || actualFp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}tzi"{}}) \{}
+\DoxyCodeLine{00256           \mbox{\hyperlink{class_t_file_path}{TFilePath}} clnin = oldActualPath.withNoFrame().\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(\textcolor{stringliteral}{"{}cln"{}});}
+\DoxyCodeLine{00257           \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(clnin))}
+\DoxyCodeLine{00258             TSystem::copyFile(actualFp.withNoFrame().\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(\textcolor{stringliteral}{"{}cln"{}}), clnin);}
+\DoxyCodeLine{00259         \}}
+\DoxyCodeLine{00260       \}}
+\DoxyCodeLine{00261       \textcolor{comment}{// Se il livello e' tlv verifico se esiste il corrispondente unpainted ed}}
+\DoxyCodeLine{00262       \textcolor{comment}{// in caso affermativo lo copio.}}
+\DoxyCodeLine{00263       \textcolor{comment}{// Questo controllo viene fatto qui e non nella copia o nel salvataggio}}
+\DoxyCodeLine{00264       \textcolor{comment}{// del livello perche' in generale}}
+\DoxyCodeLine{00265       \textcolor{comment}{// non si vuole che il livello unpainted venga copiato con il livello.}}
+\DoxyCodeLine{00266       \textcolor{keywordflow}{if} (actualFp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}tlv"{}}) \{}
+\DoxyCodeLine{00267         \mbox{\hyperlink{class_t_file_path}{TFilePath}} oldUnpaintedLevelPath =}
+\DoxyCodeLine{00268             oldActualPath.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() + \textcolor{stringliteral}{"{}nopaint\(\backslash\)\(\backslash\)"{}} +}
+\DoxyCodeLine{00269             \mbox{\hyperlink{class_t_file_path}{TFilePath}}(oldActualPath.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}() + \textcolor{stringliteral}{"{}\_np."{}} +}
+\DoxyCodeLine{00270                       oldActualPath.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}());}
+\DoxyCodeLine{00271         \mbox{\hyperlink{class_t_file_path}{TFilePath}} unpaintedLevelPath =}
+\DoxyCodeLine{00272             actualFp.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}() + \textcolor{stringliteral}{"{}nopaint\(\backslash\)\(\backslash\)"{}} +}
+\DoxyCodeLine{00273             \mbox{\hyperlink{class_t_file_path}{TFilePath}}(actualFp.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}() + \textcolor{stringliteral}{"{}\_np."{}} + actualFp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}());}
+\DoxyCodeLine{00274         \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(oldUnpaintedLevelPath) \&\&}
+\DoxyCodeLine{00275             !TSystem::doesExistFileOrLevel(unpaintedLevelPath) \&\&}
+\DoxyCodeLine{00276             TSystem::touchParentDir(unpaintedLevelPath))}
+\DoxyCodeLine{00277           TSystem::copyFile(unpaintedLevelPath, oldUnpaintedLevelPath);}
+\DoxyCodeLine{00278         \mbox{\hyperlink{class_t_file_path}{TFilePath}} oldUnpaintedPalettePath =}
+\DoxyCodeLine{00279             oldUnpaintedLevelPath.\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(\textcolor{stringliteral}{"{}tpl"{}});}
+\DoxyCodeLine{00280         \mbox{\hyperlink{class_t_file_path}{TFilePath}} unpaintedPalettePath = unpaintedLevelPath.\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(\textcolor{stringliteral}{"{}tpl"{}});}
+\DoxyCodeLine{00281         \textcolor{keywordflow}{if} (TSystem::doesExistFileOrLevel(oldUnpaintedPalettePath) \&\&}
+\DoxyCodeLine{00282             !TSystem::doesExistFileOrLevel(unpaintedPalettePath) \&\&}
+\DoxyCodeLine{00283             TSystem::touchParentDir(unpaintedPalettePath))}
+\DoxyCodeLine{00284           TSystem::copyFile(unpaintedPalettePath, oldUnpaintedPalettePath);}
+\DoxyCodeLine{00285       \}}
+\DoxyCodeLine{00286     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00287     \}}
+\DoxyCodeLine{00288   \}}
+\DoxyCodeLine{00289   fp = m\_oldScannedPath;}
+\DoxyCodeLine{00290   \textcolor{keywordflow}{if} (fp != \mbox{\hyperlink{class_t_file_path}{TFilePath}}()) \{}
+\DoxyCodeLine{00291     \mbox{\hyperlink{class_scene_resource_ae3d4cd5a80eb708bbed4f619cb7b1731}{SceneResource::updatePath}}(fp);}
+\DoxyCodeLine{00292     actualFp = m\_scene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(fp);}
+\DoxyCodeLine{00293     \textcolor{keywordflow}{if} (actualFp != m\_oldActualScannedPath \&\&}
+\DoxyCodeLine{00294         TSystem::doesExistFileOrLevel(m\_oldActualScannedPath)) \{}
+\DoxyCodeLine{00295       \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00296         TSystem::touchParentDir(actualFp);}
+\DoxyCodeLine{00297         TSystem::copyFileOrLevel\_throw(actualFp, m\_oldActualScannedPath);}
+\DoxyCodeLine{00298         m\_sl-\/>clearFrames();}
+\DoxyCodeLine{00299         m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a0020922626c177cd3134a05e274aecee}{load}}();}
+\DoxyCodeLine{00300       \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00301       \}}
+\DoxyCodeLine{00302     \}}
+\DoxyCodeLine{00303   \}}
+\DoxyCodeLine{00304 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l02175}{TXsh\+Simple\+Level\+::copy\+Files()}}, \mbox{\hyperlink{l01231}{Toonz\+Scene\+::decode\+File\+Path()}}, \mbox{\hyperlink{l00247}{TPalette\+::get\+Dirty\+Flag()}}, \mbox{\hyperlink{l00086}{Level\+Properties\+::get\+Dirty\+Flag()}}, \mbox{\hyperlink{l00636}{TFile\+Path\+::get\+Name()}}, \mbox{\hyperlink{l00424}{TXsh\+Simple\+Level\+::get\+Palette()}}, \mbox{\hyperlink{l00683}{TFile\+Path\+::get\+Parent\+Dir()}}, \mbox{\hyperlink{l00109}{TXsh\+Simple\+Level\+::get\+Properties()}}, \mbox{\hyperlink{l00225}{TFile\+Path\+::get\+Type()}}, \mbox{\hyperlink{l01083}{TXsh\+Simple\+Level\+::load()}}, \mbox{\hyperlink{l01404}{TXsh\+Simple\+Level\+::save()}}, \mbox{\hyperlink{class_scene_resource_ae3d4cd5a80eb708bbed4f619cb7b1731}{Scene\+Resource\+::update\+Path()}}, and \mbox{\hyperlink{l00774}{TFile\+Path\+::with\+Type()}}.
+
+\mbox{\Hypertarget{class_scene_level_a470bd2f139ba3da044b0800b62ac0a61}\label{class_scene_level_a470bd2f139ba3da044b0800b62ac0a61}} 
+\index{SceneLevel@{SceneLevel}!updatePath@{updatePath}}
+\index{updatePath@{updatePath}!SceneLevel@{SceneLevel}}
+\doxysubsubsection{\texorpdfstring{updatePath()}{updatePath()}}
+{\footnotesize\ttfamily void Scene\+Level\+::update\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Update simple level path. 
+
+Implements \mbox{\hyperlink{class_scene_resource_ae3d4cd5a80eb708bbed4f619cb7b1731}{Scene\+Resource}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00308                             \{}
+\DoxyCodeLine{00309   \textcolor{keywordflow}{if} (!m\_untitledScene) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00310   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp = m\_oldPath;}
+\DoxyCodeLine{00311   \mbox{\hyperlink{class_scene_resource_ae3d4cd5a80eb708bbed4f619cb7b1731}{SceneResource::updatePath}}(fp);}
+\DoxyCodeLine{00312   m\_sl-\/>setPath(fp, \textcolor{keyword}{true});}
+\DoxyCodeLine{00313   fp = m\_oldScannedPath;}
+\DoxyCodeLine{00314   \mbox{\hyperlink{class_scene_resource_ae3d4cd5a80eb708bbed4f619cb7b1731}{SceneResource::updatePath}}(fp);}
+\DoxyCodeLine{00315   m\_sl-\/>setScannedPath(fp);}
+\DoxyCodeLine{00316 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{class_scene_resource_ae3d4cd5a80eb708bbed4f619cb7b1731}{Scene\+Resource\+::update\+Path()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/sceneresources.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/sceneresources.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,173 @@
+\hypertarget{class_jpg_converter}{}\doxysection{Jpg\+Converter Class Reference}
+\label{class_jpg_converter}\index{JpgConverter@{JpgConverter}}
+Inheritance diagram for Jpg\+Converter\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_jpg_converter}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_jpg_converter_a86f73b6c0b0a94f46bb694a3c15528c9}\label{class_jpg_converter_a86f73b6c0b0a94f46bb694a3c15528c9}} 
+void {\bfseries image\+Ready} (bool)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_jpg_converter_ab2875f5a141ce1fbb04e57860b2003c9}{save\+Jpg}} (\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}, \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} path)
+\item 
+static bool \mbox{\hyperlink{class_jpg_converter_ae99f3a56f97d212405e9b1e114aebcd0}{load\+Jpg}} (\mbox{\hyperlink{class_t_file_path}{TFile\+Path}} path, \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&image)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_jpg_converter_a6c143ad46f7eadd77a33586eb3433900}\label{class_jpg_converter_a6c143ad46f7eadd77a33586eb3433900}} 
+\index{JpgConverter@{JpgConverter}!JpgConverter@{JpgConverter}}
+\index{JpgConverter@{JpgConverter}!JpgConverter@{JpgConverter}}
+\doxysubsubsection{\texorpdfstring{JpgConverter()}{JpgConverter()}}
+{\footnotesize\ttfamily Jpg\+Converter\+::\+Jpg\+Converter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00008 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_jpg_converter_aa9482cdb1a199e8c86d0a2d27d79363f}\label{class_jpg_converter_aa9482cdb1a199e8c86d0a2d27d79363f}} 
+\index{JpgConverter@{JpgConverter}!````~JpgConverter@{$\sim$JpgConverter}}
+\index{````~JpgConverter@{$\sim$JpgConverter}!JpgConverter@{JpgConverter}}
+\doxysubsubsection{\texorpdfstring{$\sim$JpgConverter()}{~JpgConverter()}}
+{\footnotesize\ttfamily Jpg\+Converter\+::$\sim$\+Jpg\+Converter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00009 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_jpg_converter_ae99f3a56f97d212405e9b1e114aebcd0}\label{class_jpg_converter_ae99f3a56f97d212405e9b1e114aebcd0}} 
+\index{JpgConverter@{JpgConverter}!loadJpg@{loadJpg}}
+\index{loadJpg@{loadJpg}!JpgConverter@{JpgConverter}}
+\doxysubsubsection{\texorpdfstring{loadJpg()}{loadJpg()}}
+{\footnotesize\ttfamily bool Jpg\+Converter\+::load\+Jpg (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_file_path}{TFile\+Path}}}]{path,  }\item[{\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&}]{image }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00122                                                             \{}
+\DoxyCodeLine{00123   \textcolor{keywordtype}{long} size;}
+\DoxyCodeLine{00124   \textcolor{keywordtype}{int} inSubsamp, inColorspace, width, height;}
+\DoxyCodeLine{00125   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} jpegSize;}
+\DoxyCodeLine{00126   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}* jpegBuf;}
+\DoxyCodeLine{00127   FILE* jpegFile;}
+\DoxyCodeLine{00128   QString qPath      = path.getQString();}
+\DoxyCodeLine{00129   QByteArray ba      = qPath.toLocal8Bit();}
+\DoxyCodeLine{00130   \textcolor{keyword}{const} \textcolor{keywordtype}{char}* c\_path = ba.data();}
+\DoxyCodeLine{00131   \textcolor{keywordtype}{bool} success       = \textcolor{keyword}{true};}
+\DoxyCodeLine{00132   tjhandle tjInstance;}
+\DoxyCodeLine{00133 }
+\DoxyCodeLine{00134   \textcolor{comment}{/* Read the JPEG file into memory. */}}
+\DoxyCodeLine{00135   \textcolor{keywordflow}{if} ((jpegFile = fopen(c\_path, \textcolor{stringliteral}{"{}rb"{}})) == NULL) success = \textcolor{keyword}{false};}
+\DoxyCodeLine{00136   \textcolor{keywordflow}{if} (success \&\& fseek(jpegFile, 0, SEEK\_END) < 0 ||}
+\DoxyCodeLine{00137       ((size = ftell(jpegFile)) < 0) || fseek(jpegFile, 0, SEEK\_SET) < 0)}
+\DoxyCodeLine{00138     success = \textcolor{keyword}{false};}
+\DoxyCodeLine{00139   \textcolor{keywordflow}{if} (success \&\& size == 0) success = \textcolor{keyword}{false};}
+\DoxyCodeLine{00140   jpegSize = (\textcolor{keywordtype}{unsigned} long)size;}
+\DoxyCodeLine{00141   \textcolor{keywordflow}{if} (success \&\& (jpegBuf = (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}*)tjAlloc(jpegSize)) == NULL)}
+\DoxyCodeLine{00142     success = \textcolor{keyword}{false};}
+\DoxyCodeLine{00143   \textcolor{keywordflow}{if} (success \&\& fread(jpegBuf, jpegSize, 1, jpegFile) < 1) success = \textcolor{keyword}{false};}
+\DoxyCodeLine{00144   fclose(jpegFile);}
+\DoxyCodeLine{00145   jpegFile = NULL;}
+\DoxyCodeLine{00146 }
+\DoxyCodeLine{00147   \textcolor{keywordflow}{if} (success \&\& (tjInstance = tjInitDecompress()) == NULL) success = \textcolor{keyword}{false};}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149   \textcolor{keywordflow}{if} (success \&\& tjDecompressHeader3(tjInstance, jpegBuf, jpegSize, \&width,}
+\DoxyCodeLine{00150                                      \&height, \&inSubsamp, \&inColorspace) < 0)}
+\DoxyCodeLine{00151     success = \textcolor{keyword}{false};}
+\DoxyCodeLine{00152 }
+\DoxyCodeLine{00153   \textcolor{keywordtype}{int} pixelFormat       = TJPF\_BGRX;}
+\DoxyCodeLine{00154   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}* imgBuf = NULL;}
+\DoxyCodeLine{00155   \textcolor{keywordflow}{if} (success \&\&}
+\DoxyCodeLine{00156       (imgBuf = tjAlloc(width * height * tjPixelSize[pixelFormat])) == NULL)}
+\DoxyCodeLine{00157     success = \textcolor{keyword}{false};}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159   \textcolor{keywordtype}{int} flags = 0;}
+\DoxyCodeLine{00160   flags |= TJFLAG\_BOTTOMUP;}
+\DoxyCodeLine{00161   \textcolor{keywordflow}{if} (success \&\& tjDecompress2(tjInstance, jpegBuf, jpegSize, imgBuf, width, 0,}
+\DoxyCodeLine{00162                                height, pixelFormat, flags) < 0)}
+\DoxyCodeLine{00163     success = \textcolor{keyword}{false};}
+\DoxyCodeLine{00164   tjFree(jpegBuf);}
+\DoxyCodeLine{00165   jpegBuf = NULL;}
+\DoxyCodeLine{00166   tjDestroy(tjInstance);}
+\DoxyCodeLine{00167   tjInstance = NULL;}
+\DoxyCodeLine{00168 }
+\DoxyCodeLine{00169   image = \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}(width, height);}
+\DoxyCodeLine{00170   image-\/>lock();}
+\DoxyCodeLine{00171   uchar* rawData = image-\/>getRawData();}
+\DoxyCodeLine{00172   memcpy(rawData, imgBuf, width * height * tjPixelSize[pixelFormat]);}
+\DoxyCodeLine{00173   image-\/>unlock();}
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00175   tjFree(imgBuf);}
+\DoxyCodeLine{00176   imgBuf = NULL;}
+\DoxyCodeLine{00177 }
+\DoxyCodeLine{00178   \textcolor{keywordflow}{return} success;}
+\DoxyCodeLine{00179 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_jpg_converter_ab2875f5a141ce1fbb04e57860b2003c9}\label{class_jpg_converter_ab2875f5a141ce1fbb04e57860b2003c9}} 
+\index{JpgConverter@{JpgConverter}!saveJpg@{saveJpg}}
+\index{saveJpg@{saveJpg}!JpgConverter@{JpgConverter}}
+\doxysubsubsection{\texorpdfstring{saveJpg()}{saveJpg()}}
+{\footnotesize\ttfamily void Jpg\+Converter\+::save\+Jpg (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}}}]{image,  }\item[{\mbox{\hyperlink{class_t_file_path}{TFile\+Path}}}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00082                                                            \{}
+\DoxyCodeLine{00083   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}* jpegBuf = NULL; \textcolor{comment}{/* Dynamically allocate the JPEG buffer */}}
+\DoxyCodeLine{00084   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} jpegSize = 0;}
+\DoxyCodeLine{00085   \textcolor{keywordtype}{int} pixelFormat        = TJPF\_BGRX;}
+\DoxyCodeLine{00086   \textcolor{keywordtype}{int} outQual            = 95;}
+\DoxyCodeLine{00087   \textcolor{keywordtype}{int} subSamp            = TJSAMP\_411;}
+\DoxyCodeLine{00088   \textcolor{keywordtype}{bool} success           = \textcolor{keyword}{false};}
+\DoxyCodeLine{00089   tjhandle tjInstance;}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091   \textcolor{keywordtype}{int} width  = image-\/>getLx();}
+\DoxyCodeLine{00092   \textcolor{keywordtype}{int} height = image-\/>getLy();}
+\DoxyCodeLine{00093   \textcolor{keywordtype}{int} flags  = 0;}
+\DoxyCodeLine{00094   flags |= TJFLAG\_BOTTOMUP;}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096   image-\/>lock();}
+\DoxyCodeLine{00097   uchar* rawData = image-\/>getRawData();}
+\DoxyCodeLine{00098   \textcolor{keywordflow}{if} ((tjInstance = tjInitCompress()) != NULL) \{}
+\DoxyCodeLine{00099     \textcolor{keywordflow}{if} (tjCompress2(tjInstance, rawData, width, 0, height, pixelFormat,}
+\DoxyCodeLine{00100                     \&jpegBuf, \&jpegSize, subSamp, outQual, flags) >= 0) \{}
+\DoxyCodeLine{00101       success = \textcolor{keyword}{true};}
+\DoxyCodeLine{00102     \}}
+\DoxyCodeLine{00103   \}}
+\DoxyCodeLine{00104   image-\/>unlock();}
+\DoxyCodeLine{00105   tjDestroy(tjInstance);}
+\DoxyCodeLine{00106   tjInstance = NULL;}
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108   \textcolor{keywordflow}{if} (success) \{}
+\DoxyCodeLine{00109     \textcolor{comment}{/* Write the JPEG image to disk. */}}
+\DoxyCodeLine{00110     QFile fullImage(path.getQString());}
+\DoxyCodeLine{00111     fullImage.open(QIODevice::WriteOnly);}
+\DoxyCodeLine{00112     QDataStream dataStream(\&fullImage);}
+\DoxyCodeLine{00113     dataStream.writeRawData((\textcolor{keyword}{const} \textcolor{keywordtype}{char}*)jpegBuf, jpegSize);}
+\DoxyCodeLine{00114     fullImage.close();}
+\DoxyCodeLine{00115   \}}
+\DoxyCodeLine{00116   tjFree(jpegBuf);}
+\DoxyCodeLine{00117   jpegBuf = NULL;}
+\DoxyCodeLine{00118 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stopmotion/jpgconverter.\+h\item 
+E\+:/opentoonz/toonz/sources/stopmotion/jpgconverter.\+cpp\end{DoxyCompactItemize}

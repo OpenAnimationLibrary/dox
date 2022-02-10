@@ -1,0 +1,83 @@
+\hypertarget{class_s_v_n_lock_info_dialog}{}\doxysection{SVNLock\+Info\+Dialog Class Reference}
+\label{class_s_v_n_lock_info_dialog}\index{SVNLockInfoDialog@{SVNLockInfoDialog}}
+Inheritance diagram for SVNLock\+Info\+Dialog\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_s_v_n_lock_info_dialog}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_v_n_lock_info_dialog_ae7de2b545ec7390bbfb5465abe94fe5f}{SVNLock\+Info\+Dialog}} (QWidget $\ast$parent, const \mbox{\hyperlink{struct_s_v_n_status}{SVNStatus}} \&status)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_v_n_lock_info_dialog_ae7de2b545ec7390bbfb5465abe94fe5f}\label{class_s_v_n_lock_info_dialog_ae7de2b545ec7390bbfb5465abe94fe5f}} 
+\index{SVNLockInfoDialog@{SVNLockInfoDialog}!SVNLockInfoDialog@{SVNLockInfoDialog}}
+\index{SVNLockInfoDialog@{SVNLockInfoDialog}!SVNLockInfoDialog@{SVNLockInfoDialog}}
+\doxysubsubsection{\texorpdfstring{SVNLockInfoDialog()}{SVNLockInfoDialog()}}
+{\footnotesize\ttfamily SVNLock\+Info\+Dialog\+::\+SVNLock\+Info\+Dialog (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{const \mbox{\hyperlink{struct_s_v_n_status}{SVNStatus}} \&}]{status }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00448     : Dialog(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false}), m\_status(status) \{}
+\DoxyCodeLine{00449   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00450   setAttribute(Qt::WA\_DeleteOnClose, \textcolor{keyword}{true});}
+\DoxyCodeLine{00451 }
+\DoxyCodeLine{00452   setWindowTitle(tr(\textcolor{stringliteral}{"{}Version Control: Edit Info"{}}));}
+\DoxyCodeLine{00453 }
+\DoxyCodeLine{00454   setMinimumSize(300, 150);}
+\DoxyCodeLine{00455 }
+\DoxyCodeLine{00456   QFormLayout *mainLayout = \textcolor{keyword}{new} QFormLayout;}
+\DoxyCodeLine{00457   mainLayout-\/>setMargin(0);}
+\DoxyCodeLine{00458   mainLayout-\/>setLabelAlignment(Qt::AlignLeft);}
+\DoxyCodeLine{00459 }
+\DoxyCodeLine{00460   mainLayout-\/>addRow(tr(\textcolor{stringliteral}{"{}<b>Edited By:</b>"{}}), \textcolor{keyword}{new} QLabel(m\_status.m\_lockOwner));}
+\DoxyCodeLine{00461   mainLayout-\/>addRow(tr(\textcolor{stringliteral}{"{}<b>Host:</b>"{}}), \textcolor{keyword}{new} QLabel(m\_status.m\_lockHostName));}
+\DoxyCodeLine{00462   mainLayout-\/>addRow(tr(\textcolor{stringliteral}{"{}<b>Comment:</b>"{}}), \textcolor{keyword}{new} QLabel(m\_status.m\_lockComment));}
+\DoxyCodeLine{00463 }
+\DoxyCodeLine{00464   QDate d      = QDate::fromString(m\_status.m\_lockDate.left(10), \textcolor{stringliteral}{"{}yyyy-\/MM-\/dd"{}});}
+\DoxyCodeLine{00465   \textcolor{keywordtype}{int} dayCount = d.daysTo(QDate::currentDate());}
+\DoxyCodeLine{00466   QString dateString;}
+\DoxyCodeLine{00467 }
+\DoxyCodeLine{00468   \textcolor{keywordflow}{if} (dayCount == 0) \{}
+\DoxyCodeLine{00469     QString timeString = m\_status.m\_lockDate.split(\textcolor{stringliteral}{"{}T"{}}).at(1);}
+\DoxyCodeLine{00470     timeString         = timeString.left(5);}
+\DoxyCodeLine{00471 }
+\DoxyCodeLine{00472     \textcolor{comment}{// Convert the current time, to UTC}}
+\DoxyCodeLine{00473     QDateTime currentTime = QDateTime::currentDateTime().toUTC();}
+\DoxyCodeLine{00474 }
+\DoxyCodeLine{00475     QTime t     = QTime::fromString(timeString, \textcolor{stringliteral}{"{}hh:mm"{}});}
+\DoxyCodeLine{00476     QTime now   = QTime::fromString(currentTime.toString(\textcolor{stringliteral}{"{}hh:mm"{}}), \textcolor{stringliteral}{"{}hh:mm"{}});}
+\DoxyCodeLine{00477     \textcolor{keywordtype}{int} seconds = t.secsTo(now);}
+\DoxyCodeLine{00478     \textcolor{keywordtype}{int} minute  = seconds / 60;}
+\DoxyCodeLine{00479     dateString += QString::number(minute) + \textcolor{stringliteral}{"{} minutes ago."{}};}
+\DoxyCodeLine{00480   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00481     dateString += QString::number(dayCount) + \textcolor{stringliteral}{"{} days ago."{}};}
+\DoxyCodeLine{00482 }
+\DoxyCodeLine{00483   mainLayout-\/>addRow(tr(\textcolor{stringliteral}{"{}<b>Date:</b>"{}}), \textcolor{keyword}{new} QLabel(dateString)),}
+\DoxyCodeLine{00484       \textcolor{comment}{// container-\/>setLayout(mainLayout);}}
+\DoxyCodeLine{00485 }
+\DoxyCodeLine{00486       \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a21628a44d453352094b61b62b4407c6b}{beginHLayout}}();}
+\DoxyCodeLine{00487   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_adecc035c55394875b6354480911feab2}{addLayout}}(mainLayout, \textcolor{keyword}{false});}
+\DoxyCodeLine{00488   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_abe29ee90829fe5e0351fbdee41089252}{endHLayout}}();}
+\DoxyCodeLine{00489 }
+\DoxyCodeLine{00490   QPushButton *closeButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Close"{}}));}
+\DoxyCodeLine{00491   connect(closeButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(close()));}
+\DoxyCodeLine{00492 }
+\DoxyCodeLine{00493   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(closeButton);}
+\DoxyCodeLine{00494 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/svnlockdialog.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/svnlockdialog.\+cpp\end{DoxyCompactItemize}

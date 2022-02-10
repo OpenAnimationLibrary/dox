@@ -1,0 +1,636 @@
+\hypertarget{class_fx_schematic_port}{}\doxysection{Fx\+Schematic\+Port Class Reference}
+\label{class_fx_schematic_port}\index{FxSchematicPort@{FxSchematicPort}}
+Inheritance diagram for Fx\+Schematic\+Port\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_fx_schematic_port}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_fx_schematic_port_af34efd2d449faee53bd39a66e3c7b970}{Fx\+Schematic\+Port}} (\mbox{\hyperlink{class_fx_schematic_dock}{Fx\+Schematic\+Dock}} $\ast$parent, int type)
+\item 
+QRectF \mbox{\hyperlink{class_fx_schematic_port_ae74c90dd275d38465b27925ec51a0775}{bounding\+Rect}} () const override
+\item 
+void \mbox{\hyperlink{class_fx_schematic_port_a9e59d9f19bdad47b4271844eaf5e9e94}{paint}} (QPainter $\ast$painter, const QStyle\+Option\+Graphics\+Item $\ast$option, QWidget $\ast$widget=0) override
+\item 
+bool \mbox{\hyperlink{class_fx_schematic_port_a74c32b39102465881afe32154cb357e9}{link\+To}} (\mbox{\hyperlink{class_schematic_port}{Schematic\+Port}} $\ast$port, bool check\+Only=false) override
+\item 
+\mbox{\hyperlink{class_fx_schematic_dock}{Fx\+Schematic\+Dock}} $\ast$ \mbox{\hyperlink{class_fx_schematic_port_af11f232d20756e8ae830a113a150399a}{get\+Dock}} () const
+\item 
+\mbox{\hyperlink{class_schematic_link}{Schematic\+Link}} $\ast$ \mbox{\hyperlink{class_fx_schematic_port_a16536c7fafa90842a83b18328a0028fd}{make\+Link}} (\mbox{\hyperlink{class_schematic_port}{Schematic\+Port}} $\ast$port) override
+\begin{DoxyCompactList}\small\item\em Make a link from this port to the given port. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_fx_schematic_port_af7cd99541c44e277ed46b06983ab05cb}{set\+Is\+Pass\+Through}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_fx_schematic_port_a266a026e075088dcc541249abe183711}{context\+Menu\+Event}} (QGraphics\+Scene\+Context\+Menu\+Event $\ast$cme) override
+\item 
+void \mbox{\hyperlink{class_fx_schematic_port_ae9845e2dbfa66b4ad9b6ba067168153d}{mouse\+Move\+Event}} (QGraphics\+Scene\+Mouse\+Event $\ast$me) override
+\item 
+void \mbox{\hyperlink{class_fx_schematic_port_ab237e2f1f4de9381bebccd38654350df}{mouse\+Release\+Event}} (QGraphics\+Scene\+Mouse\+Event $\ast$me) override
+\item 
+\mbox{\hyperlink{class_t_fx}{TFx}} $\ast$ \mbox{\hyperlink{class_fx_schematic_port_aec21c015232f3d22c279d356f54be40e}{get\+Owner\+Fx}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_fx_schematic_port_af34efd2d449faee53bd39a66e3c7b970}\label{class_fx_schematic_port_af34efd2d449faee53bd39a66e3c7b970}} 
+\index{FxSchematicPort@{FxSchematicPort}!FxSchematicPort@{FxSchematicPort}}
+\index{FxSchematicPort@{FxSchematicPort}!FxSchematicPort@{FxSchematicPort}}
+\doxysubsubsection{\texorpdfstring{FxSchematicPort()}{FxSchematicPort()}}
+{\footnotesize\ttfamily Fx\+Schematic\+Port\+::\+Fx\+Schematic\+Port (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_schematic_dock}{Fx\+Schematic\+Dock}} $\ast$}]{parent,  }\item[{int}]{type }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01142     : \mbox{\hyperlink{class_schematic_port}{SchematicPort}}(parent, parent-\/>getNode(), type)}
+\DoxyCodeLine{01143     , m\_currentTargetPort(0)}
+\DoxyCodeLine{01144     , m\_isPassThrough(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{01145   QRectF rect = boundingRect();}
+\DoxyCodeLine{01146   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxInputPort || \mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxGroupedInPort)}
+\DoxyCodeLine{01147     m\_hook = QPointF(rect.left(), (rect.top() + rect.bottom()) * 0.5);}
+\DoxyCodeLine{01148   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxOutputPort || \mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxGroupedOutPort)}
+\DoxyCodeLine{01149     m\_hook = QPointF(rect.right(), (rect.top() + rect.bottom()) * 0.5);}
+\DoxyCodeLine{01150   \textcolor{keywordflow}{else}  \textcolor{comment}{// link port}}
+\DoxyCodeLine{01151     m\_hook = QPointF(rect.right(), (rect.top() + rect.bottom()) * 0.5);}
+\DoxyCodeLine{01152   m\_ownerFx              = getOwnerFx();}
+\DoxyCodeLine{01153   \mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *colFx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *\textcolor{keyword}{>}(m\_ownerFx);}
+\DoxyCodeLine{01154   \textcolor{keywordflow}{if} (colFx) m\_ownerFx = colFx-\/>getZeraryFx();}
+\DoxyCodeLine{01155 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_port_a8b2c953360f26542a8379d47464488f4}\label{class_fx_schematic_port_a8b2c953360f26542a8379d47464488f4}} 
+\index{FxSchematicPort@{FxSchematicPort}!````~FxSchematicPort@{$\sim$FxSchematicPort}}
+\index{````~FxSchematicPort@{$\sim$FxSchematicPort}!FxSchematicPort@{FxSchematicPort}}
+\doxysubsubsection{\texorpdfstring{$\sim$FxSchematicPort()}{~FxSchematicPort()}}
+{\footnotesize\ttfamily Fx\+Schematic\+Port\+::$\sim$\+Fx\+Schematic\+Port (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01159 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_fx_schematic_port_ae74c90dd275d38465b27925ec51a0775}\label{class_fx_schematic_port_ae74c90dd275d38465b27925ec51a0775}} 
+\index{FxSchematicPort@{FxSchematicPort}!boundingRect@{boundingRect}}
+\index{boundingRect@{boundingRect}!FxSchematicPort@{FxSchematicPort}}
+\doxysubsubsection{\texorpdfstring{boundingRect()}{boundingRect()}}
+{\footnotesize\ttfamily QRectF Fx\+Schematic\+Port\+::bounding\+Rect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01163                                            \{}
+\DoxyCodeLine{01164   \textcolor{keywordflow}{if} (m\_isPassThrough) \textcolor{keywordflow}{return} QRectF(0, 0, 15, 15);}
+\DoxyCodeLine{01165 }
+\DoxyCodeLine{01166   \textcolor{comment}{// large scaled}}
+\DoxyCodeLine{01167   \textcolor{keywordflow}{if} (getDock()-\/>getNode()-\/>isNormalIconView()) \{}
+\DoxyCodeLine{01168     \textcolor{keywordflow}{switch} (\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}()) \{}
+\DoxyCodeLine{01169     \textcolor{keywordflow}{case} eFxInputPort:}
+\DoxyCodeLine{01170     \textcolor{keywordflow}{case} eFxGroupedInPort:}
+\DoxyCodeLine{01171       \textcolor{keywordflow}{return} QRectF(0, 0, 14, 14);}
+\DoxyCodeLine{01172       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01173 }
+\DoxyCodeLine{01174     \textcolor{keywordflow}{case} eFxOutputPort:}
+\DoxyCodeLine{01175     \textcolor{keywordflow}{case} eFxGroupedOutPort:}
+\DoxyCodeLine{01176       \textcolor{keywordflow}{return} QRectF(0, 0, 18, 18);}
+\DoxyCodeLine{01177       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01178 }
+\DoxyCodeLine{01179     \textcolor{keywordflow}{case} eFxLinkPort:  \textcolor{comment}{// LinkPort}}
+\DoxyCodeLine{01180     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{01181       \textcolor{keywordflow}{return} QRectF(0, 0, 18, 7);}
+\DoxyCodeLine{01182     \}}
+\DoxyCodeLine{01183   \}}
+\DoxyCodeLine{01184   \textcolor{comment}{// small scaled}}
+\DoxyCodeLine{01185   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01186     \textcolor{keywordflow}{switch} (\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}()) \{}
+\DoxyCodeLine{01187     \textcolor{keywordflow}{case} eFxInputPort: \{}
+\DoxyCodeLine{01188       \mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *node = getDock()-\/>getNode();}
+\DoxyCodeLine{01189       \textcolor{keywordtype}{float} nodeHeight =}
+\DoxyCodeLine{01190           node-\/>\mbox{\hyperlink{class_schematic_node_ac6f29eb08191fec452e2f3e616ec95be}{boundingRect}}().height() -\/ 10.0f;  \textcolor{comment}{// 10.0 is margin}}
+\DoxyCodeLine{01191 }
+\DoxyCodeLine{01192       \mbox{\hyperlink{class_t_fx}{TFx}} *fx = 0;}
+\DoxyCodeLine{01193       \mbox{\hyperlink{class_fx_schematic_zerary_node}{FxSchematicZeraryNode}} *zeraryNode =}
+\DoxyCodeLine{01194           \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_zerary_node}{FxSchematicZeraryNode}} *\textcolor{keyword}{>}(node);}
+\DoxyCodeLine{01195       \textcolor{keywordflow}{if} (zeraryNode) \{}
+\DoxyCodeLine{01196         \mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *zcfx =}
+\DoxyCodeLine{01197             \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *\textcolor{keyword}{>}(zeraryNode-\/>getFx());}
+\DoxyCodeLine{01198         fx = zcfx-\/>getZeraryFx();}
+\DoxyCodeLine{01199       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01200         fx = node-\/>getFx();}
+\DoxyCodeLine{01201       \}}
+\DoxyCodeLine{01202 }
+\DoxyCodeLine{01203       \textcolor{keywordflow}{if} (fx \&\& fx-\/>getInputPortCount()) \{}
+\DoxyCodeLine{01204         \textcolor{comment}{// ex. particles fx etc. For fxs of which amount of ports may change}}
+\DoxyCodeLine{01205         \textcolor{keywordflow}{if} (fx-\/>hasDynamicPortGroups())}
+\DoxyCodeLine{01206           nodeHeight =}
+\DoxyCodeLine{01207               (nodeHeight -\/ (\textcolor{keywordtype}{float})(2 * (fx-\/>getInputPortCount() -\/ 1))) /}
+\DoxyCodeLine{01208               (\textcolor{keywordtype}{float})fx-\/>getInputPortCount();}
+\DoxyCodeLine{01209         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01210           nodeHeight =}
+\DoxyCodeLine{01211               (nodeHeight -\/ (float)(4 * (fx-\/>getInputPortCount() -\/ 1))) /}
+\DoxyCodeLine{01212               (\textcolor{keywordtype}{float})fx-\/>getInputPortCount();}
+\DoxyCodeLine{01213       \}}
+\DoxyCodeLine{01214 }
+\DoxyCodeLine{01215       \textcolor{keywordflow}{return} QRectF(0, 0, 10, nodeHeight);}
+\DoxyCodeLine{01216     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01217 }
+\DoxyCodeLine{01218     \textcolor{keywordflow}{case} eFxGroupedInPort:}
+\DoxyCodeLine{01219     \textcolor{keywordflow}{case} eFxOutputPort:}
+\DoxyCodeLine{01220     \textcolor{keywordflow}{case} eFxGroupedOutPort: \{}
+\DoxyCodeLine{01221       \mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *node = getDock()-\/>getNode();}
+\DoxyCodeLine{01222       \textcolor{keywordtype}{float} nodeHeight =}
+\DoxyCodeLine{01223           node-\/>\mbox{\hyperlink{class_schematic_node_ac6f29eb08191fec452e2f3e616ec95be}{boundingRect}}().height() -\/ 10.0f;  \textcolor{comment}{// 10.0 is margin}}
+\DoxyCodeLine{01224       \textcolor{keywordflow}{return} QRectF(0, 0, 10, nodeHeight);}
+\DoxyCodeLine{01225     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01226 }
+\DoxyCodeLine{01227     \textcolor{keywordflow}{case} eFxLinkPort:  \textcolor{comment}{// LinkPort}}
+\DoxyCodeLine{01228     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{01229       \textcolor{keywordflow}{return} QRectF(0, 0, 10, 5);}
+\DoxyCodeLine{01230       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01231     \}}
+\DoxyCodeLine{01232   \}}
+\DoxyCodeLine{01233   \textcolor{keywordflow}{return} QRectF();}
+\DoxyCodeLine{01234 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_port_a266a026e075088dcc541249abe183711}\label{class_fx_schematic_port_a266a026e075088dcc541249abe183711}} 
+\index{FxSchematicPort@{FxSchematicPort}!contextMenuEvent@{contextMenuEvent}}
+\index{contextMenuEvent@{contextMenuEvent}!FxSchematicPort@{FxSchematicPort}}
+\doxysubsubsection{\texorpdfstring{contextMenuEvent()}{contextMenuEvent()}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Port\+::context\+Menu\+Event (\begin{DoxyParamCaption}\item[{QGraphics\+Scene\+Context\+Menu\+Event $\ast$}]{cme }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01576                                                                           \{}
+\DoxyCodeLine{01577   \mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *fxScene = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{01578   QMenu menu(fxScene-\/>views()[0]);}
+\DoxyCodeLine{01579 }
+\DoxyCodeLine{01580   \mbox{\hyperlink{class_t_fx}{TFx}} *fx = getDock()-\/>getNode()-\/>getFx();}
+\DoxyCodeLine{01581   \textcolor{keywordtype}{bool} enableInsertAction =}
+\DoxyCodeLine{01582       fxScene-\/>getXsheet()-\/>\mbox{\hyperlink{class_t_xsheet_adc7c74cce346abf3699bb250eb17a9c2}{getFxDag}}()-\/>getInternalFxs()-\/>containsFx(fx) \&\&}
+\DoxyCodeLine{01583       (!fx-\/>getAttributes()-\/>isGrouped() ||}
+\DoxyCodeLine{01584        fx-\/>getAttributes()-\/>isGroupEditing());}
+\DoxyCodeLine{01585 }
+\DoxyCodeLine{01586   \textcolor{keywordflow}{if} ((\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxOutputPort || \mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxGroupedOutPort) \&\&}
+\DoxyCodeLine{01587       enableInsertAction) \{}
+\DoxyCodeLine{01588     fxScene-\/>initCursorScenePos();}
+\DoxyCodeLine{01589     \textcolor{keywordflow}{if} (cme-\/>modifiers() \& Qt::ControlModifier) \{}
+\DoxyCodeLine{01590       menu.addAction(fxScene-\/>getAgainAction(AddFxContextMenu::Add));}
+\DoxyCodeLine{01591       \textcolor{keywordflow}{if} (!menu.actions().isEmpty()) \{}
+\DoxyCodeLine{01592         menu.exec(cme-\/>screenPos());}
+\DoxyCodeLine{01593         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01594       \}}
+\DoxyCodeLine{01595     \}}
+\DoxyCodeLine{01596 }
+\DoxyCodeLine{01597     QAction *disconnectFromXSheet =}
+\DoxyCodeLine{01598         \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Disconnect from Xsheet"{}}), \&menu);}
+\DoxyCodeLine{01599     connect(disconnectFromXSheet, SIGNAL(triggered()), fxScene,}
+\DoxyCodeLine{01600             SLOT(onDisconnectFromXSheet()));}
+\DoxyCodeLine{01601 }
+\DoxyCodeLine{01602     QAction *connectToXSheet = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}\&Connect to Xsheet"{}}), \&menu);}
+\DoxyCodeLine{01603     connect(connectToXSheet, SIGNAL(triggered()), fxScene,}
+\DoxyCodeLine{01604             SLOT(onConnectToXSheet()));}
+\DoxyCodeLine{01605 }
+\DoxyCodeLine{01606     QAction *fxEditorPopup =}
+\DoxyCodeLine{01607         CommandManager::instance()-\/>getAction(MI\_FxParamEditor);}
+\DoxyCodeLine{01608 }
+\DoxyCodeLine{01609     menu.addMenu(fxScene-\/>getAddFxMenu());}
+\DoxyCodeLine{01610     menu.addAction(fxEditorPopup);}
+\DoxyCodeLine{01611     \textcolor{keywordflow}{if} (fxScene-\/>getXsheet()-\/>\mbox{\hyperlink{class_t_xsheet_adc7c74cce346abf3699bb250eb17a9c2}{getFxDag}}()-\/>getTerminalFxs()-\/>containsFx(}
+\DoxyCodeLine{01612             getDock()-\/>getNode()-\/>getFx()))}
+\DoxyCodeLine{01613       menu.addAction(disconnectFromXSheet);}
+\DoxyCodeLine{01614     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01615       menu.addAction(connectToXSheet);}
+\DoxyCodeLine{01616   \}}
+\DoxyCodeLine{01617   menu.exec(cme-\/>screenPos());}
+\DoxyCodeLine{01618 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_port_af11f232d20756e8ae830a113a150399a}\label{class_fx_schematic_port_af11f232d20756e8ae830a113a150399a}} 
+\index{FxSchematicPort@{FxSchematicPort}!getDock@{getDock}}
+\index{getDock@{getDock}!FxSchematicPort@{FxSchematicPort}}
+\doxysubsubsection{\texorpdfstring{getDock()}{getDock()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_fx_schematic_dock}{Fx\+Schematic\+Dock}} $\ast$ Fx\+Schematic\+Port\+::get\+Dock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01328                                                 \{}
+\DoxyCodeLine{01329   \textcolor{keywordflow}{return} \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_dock}{FxSchematicDock}} *\textcolor{keyword}{>}(parentItem());}
+\DoxyCodeLine{01330 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_port_aec21c015232f3d22c279d356f54be40e}\label{class_fx_schematic_port_aec21c015232f3d22c279d356f54be40e}} 
+\index{FxSchematicPort@{FxSchematicPort}!getOwnerFx@{getOwnerFx}}
+\index{getOwnerFx@{getOwnerFx}!FxSchematicPort@{FxSchematicPort}}
+\doxysubsubsection{\texorpdfstring{getOwnerFx()}{getOwnerFx()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_fx}{TFx}} $\ast$ Fx\+Schematic\+Port\+::get\+Owner\+Fx (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01791                                        \{}
+\DoxyCodeLine{01792   \mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *node = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *\textcolor{keyword}{>}(this-\/>getNode());}
+\DoxyCodeLine{01793   \textcolor{keywordflow}{if} (!node) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{01794   \textcolor{keywordflow}{return} node-\/>getFx();}
+\DoxyCodeLine{01795 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_port_a74c32b39102465881afe32154cb357e9}\label{class_fx_schematic_port_a74c32b39102465881afe32154cb357e9}} 
+\index{FxSchematicPort@{FxSchematicPort}!linkTo@{linkTo}}
+\index{linkTo@{linkTo}!FxSchematicPort@{FxSchematicPort}}
+\doxysubsubsection{\texorpdfstring{linkTo()}{linkTo()}}
+{\footnotesize\ttfamily bool Fx\+Schematic\+Port\+::link\+To (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_schematic_port}{Schematic\+Port}} $\ast$}]{port,  }\item[{bool}]{check\+Only = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Check and make a connection between the data Objects. Returns true if it is possible to have a connection between the data Object represented by this \mbox{\hyperlink{class_schematic_port}{Schematic\+Port}} and that represented by {\bfseries{port}}. If check only is false no connections is created! \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_t_fx_port}{TFx\+Port}}, \mbox{\hyperlink{class_t_stage_object}{TStage\+Object}}. 
+\end{DoxySeeAlso}
+
+
+Implements \mbox{\hyperlink{class_schematic_port_a2ad48288778f948d68c70c8bb127a0e5}{Schematic\+Port}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01362                                                                 \{}
+\DoxyCodeLine{01363   \textcolor{keywordflow}{if} (port == \textcolor{keyword}{this}) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01364 }
+\DoxyCodeLine{01365   \mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *dstNode = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *\textcolor{keyword}{>}(port-\/>getNode());}
+\DoxyCodeLine{01366   \mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *srcNode = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *\textcolor{keyword}{>}(getNode());}
+\DoxyCodeLine{01367   \textcolor{keywordflow}{if} (dstNode == srcNode) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01368 }
+\DoxyCodeLine{01369   \mbox{\hyperlink{class_t_fx}{TFx}} *inputFx = 0, *fx = 0;}
+\DoxyCodeLine{01370   \textcolor{keywordtype}{int} portIndex = 0;}
+\DoxyCodeLine{01371   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxInputPort \&\& port-\/>\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxOutputPort) \{}
+\DoxyCodeLine{01372     inputFx   = dstNode-\/>getFx();}
+\DoxyCodeLine{01373     fx        = srcNode-\/>getFx();}
+\DoxyCodeLine{01374     portIndex = srcNode-\/>getInputDockId(this-\/>getDock());}
+\DoxyCodeLine{01375   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxOutputPort \&\& port-\/>\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxInputPort) \{}
+\DoxyCodeLine{01376     inputFx   = srcNode-\/>getFx();}
+\DoxyCodeLine{01377     fx        = dstNode-\/>getFx();}
+\DoxyCodeLine{01378     portIndex = dstNode-\/>getInputDockId(}
+\DoxyCodeLine{01379         (\textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_port}{FxSchematicPort}} *\textcolor{keyword}{>}(port))-\/>getDock());}
+\DoxyCodeLine{01380   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01381     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01382   \textcolor{keywordflow}{if} (inputFx-\/>getAttributes()-\/>isGrouped() \&\&}
+\DoxyCodeLine{01383       fx-\/>getAttributes()-\/>isGrouped() \&\&}
+\DoxyCodeLine{01384       inputFx-\/>getAttributes()-\/>getEditingGroupId() !=}
+\DoxyCodeLine{01385           fx-\/>getAttributes()-\/>getEditingGroupId())}
+\DoxyCodeLine{01386     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01387 }
+\DoxyCodeLine{01388   \mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *fxScene = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_scene}{FxSchematicScene}} *\textcolor{keyword}{>}(scene());}
+\DoxyCodeLine{01389   \textcolor{keywordflow}{if} (!fxScene) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01390   \mbox{\hyperlink{class_fx_dag}{FxDag}} *fxDag = fxScene-\/>getXsheet()-\/>\mbox{\hyperlink{class_t_xsheet_adc7c74cce346abf3699bb250eb17a9c2}{getFxDag}}();}
+\DoxyCodeLine{01391   \textcolor{keywordflow}{if} (fxDag-\/>\mbox{\hyperlink{class_fx_dag_a14a860e94e47d5f7b950dc047e4649ef}{checkLoop}}(inputFx, fx)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01392   \textcolor{keywordflow}{if} (!checkOnly) linkEffects(inputFx, fx, portIndex);}
+\DoxyCodeLine{01393   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{01394 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00091}{Fx\+Dag\+::check\+Loop()}}, \mbox{\hyperlink{l01564}{TXsheet\+::get\+Fx\+Dag()}}, and \mbox{\hyperlink{l00384}{Schematic\+Port\+::get\+Type()}}.
+
+\mbox{\Hypertarget{class_fx_schematic_port_a16536c7fafa90842a83b18328a0028fd}\label{class_fx_schematic_port_a16536c7fafa90842a83b18328a0028fd}} 
+\index{FxSchematicPort@{FxSchematicPort}!makeLink@{makeLink}}
+\index{makeLink@{makeLink}!FxSchematicPort@{FxSchematicPort}}
+\doxysubsubsection{\texorpdfstring{makeLink()}{makeLink()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_schematic_link}{Schematic\+Link}} $\ast$ Fx\+Schematic\+Port\+::make\+Link (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_schematic_port}{Schematic\+Port}} $\ast$}]{port }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Make a link from this port to the given port. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_schematic_port_ac6dd135a204a0f18ab8d3632a725adba}{Schematic\+Port}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01334                                                             \{}
+\DoxyCodeLine{01335   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_schematic_port_a152b6b87384f9efe1c027bfda17a5337}{isLinkedTo}}(port) || !port) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{01336   \mbox{\hyperlink{class_fx_schematic_link}{FxSchematicLink}} *link = \textcolor{keyword}{new} \mbox{\hyperlink{class_fx_schematic_link}{FxSchematicLink}}(0, scene());}
+\DoxyCodeLine{01337   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxLinkPort \&\& port-\/>\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxLinkPort)}
+\DoxyCodeLine{01338     link-\/>setLineShaped(\textcolor{keyword}{true});}
+\DoxyCodeLine{01339 }
+\DoxyCodeLine{01340   link-\/>\mbox{\hyperlink{class_schematic_link_a2a8b9f790ce3d2d61c3101ee3eda680b}{setStartPort}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{01341   link-\/>\mbox{\hyperlink{class_schematic_link_aa85efeba1810851f4c5882732aaf1ce4}{setEndPort}}(port);}
+\DoxyCodeLine{01342   \mbox{\hyperlink{class_schematic_port_aeabf4b3cd6483acfe0fa45a429474cf3}{addLink}}(link);}
+\DoxyCodeLine{01343   port-\/>\mbox{\hyperlink{class_schematic_port_aeabf4b3cd6483acfe0fa45a429474cf3}{addLink}}(link);}
+\DoxyCodeLine{01344   link-\/>\mbox{\hyperlink{class_schematic_link_a9bfcb06c072362836941fb49eb5b36d3}{updatePath}}();}
+\DoxyCodeLine{01345   \textcolor{keywordflow}{return} link;}
+\DoxyCodeLine{01346 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00331}{Schematic\+Port\+::add\+Link()}}, \mbox{\hyperlink{l00384}{Schematic\+Port\+::get\+Type()}}, \mbox{\hyperlink{l00837}{Schematic\+Port\+::is\+Linked\+To()}}, \mbox{\hyperlink{l00253}{Schematic\+Link\+::set\+End\+Port()}}, \mbox{\hyperlink{l00251}{Schematic\+Link\+::set\+Start\+Port()}}, and \mbox{\hyperlink{l00506}{Schematic\+Link\+::update\+Path()}}.
+
+\mbox{\Hypertarget{class_fx_schematic_port_ae9845e2dbfa66b4ad9b6ba067168153d}\label{class_fx_schematic_port_ae9845e2dbfa66b4ad9b6ba067168153d}} 
+\index{FxSchematicPort@{FxSchematicPort}!mouseMoveEvent@{mouseMoveEvent}}
+\index{mouseMoveEvent@{mouseMoveEvent}!FxSchematicPort@{FxSchematicPort}}
+\doxysubsubsection{\texorpdfstring{mouseMoveEvent()}{mouseMoveEvent()}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Port\+::mouse\+Move\+Event (\begin{DoxyParamCaption}\item[{QGraphics\+Scene\+Mouse\+Event $\ast$}]{me }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01622                                                                  \{}
+\DoxyCodeLine{01623   SchematicPort::mouseMoveEvent(me);}
+\DoxyCodeLine{01624   \textcolor{keywordflow}{if} (!m\_ghostLinks.isEmpty() \&\& !m\_ghostLinks[0]-\/>isVisible())}
+\DoxyCodeLine{01625     m\_ghostLinks[0]-\/>show();}
+\DoxyCodeLine{01626   \textcolor{keywordtype}{bool} cntr = me-\/>modifiers() == Qt::ControlModifier;}
+\DoxyCodeLine{01627   \textcolor{keywordflow}{if} (m\_currentTargetPort) \{}
+\DoxyCodeLine{01628     m\_currentTargetPort-\/>resetSnappedLinksOnDynamicPortFx();}
+\DoxyCodeLine{01629     m\_currentTargetPort = 0;}
+\DoxyCodeLine{01630   \}}
+\DoxyCodeLine{01631   \textcolor{keywordflow}{if} (!m\_linkingTo) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01632   \mbox{\hyperlink{class_fx_schematic_port}{FxSchematicPort}} *targetPort = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_port}{FxSchematicPort}} *\textcolor{keyword}{>}(m\_linkingTo);}
+\DoxyCodeLine{01633   assert(targetPort);}
+\DoxyCodeLine{01634   m\_currentTargetPort    = targetPort;}
+\DoxyCodeLine{01635   \mbox{\hyperlink{class_t_fx}{TFx}} *targetFx          = targetPort-\/>getOwnerFx();}
+\DoxyCodeLine{01636   \mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *colFx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *\textcolor{keyword}{>}(targetFx);}
+\DoxyCodeLine{01637   \textcolor{keywordflow}{if} (colFx) targetFx = colFx-\/>getZeraryFx();}
+\DoxyCodeLine{01638   \textcolor{keywordflow}{if} (targetPort-\/>\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() != eFxInputPort ||}
+\DoxyCodeLine{01639       !targetFx-\/>hasDynamicPortGroups() || targetPort == \textcolor{keyword}{this})}
+\DoxyCodeLine{01640     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01641 }
+\DoxyCodeLine{01642   \mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *node =}
+\DoxyCodeLine{01643       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *\textcolor{keyword}{>}(targetPort-\/>getNode());}
+\DoxyCodeLine{01644   \textcolor{keywordtype}{int} \textcolor{keywordtype}{id}                = node-\/>getInputDockId(targetPort-\/>getDock());}
+\DoxyCodeLine{01645   \mbox{\hyperlink{class_t_fx_port}{TFxPort}} *targetFxPort = targetFx-\/>getInputPort(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{01646   \textcolor{keywordtype}{int} groupId           = targetFxPort-\/>getGroupIndex();}
+\DoxyCodeLine{01647 }
+\DoxyCodeLine{01648   \textcolor{keywordflow}{if} (groupId < 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01649 }
+\DoxyCodeLine{01650   std::vector<TFxPort *> groupedPorts =}
+\DoxyCodeLine{01651       targetFx-\/>dynamicPortGroup(groupId)-\/>\mbox{\hyperlink{class_t_fx_port_dynamic_group_a143c27fedfeeb41a5fa15d70bced74e6}{ports}}();}
+\DoxyCodeLine{01652   \textcolor{keywordtype}{int} portId = getIndex(targetFxPort, groupedPorts);}
+\DoxyCodeLine{01653   \textcolor{keywordflow}{if} (portId == -\/1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01654   \textcolor{keywordflow}{if} (targetFx != m\_ownerFx \&\& cntr \&\& \mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxOutputPort)}
+\DoxyCodeLine{01655     targetPort-\/>handleSnappedLinksOnDynamicPortFx(groupedPorts, portId);}
+\DoxyCodeLine{01656   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (targetFx == m\_ownerFx \&\& \mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxInputPort) \{}
+\DoxyCodeLine{01657     \textcolor{keywordflow}{if} (!m\_ghostLinks.isEmpty()) \{}
+\DoxyCodeLine{01658       \textcolor{keywordflow}{for} (\mbox{\hyperlink{class_schematic_link}{SchematicLink}} *ghostLink : m\_ghostLinks)}
+\DoxyCodeLine{01659         scene()-\/>removeItem(ghostLink);}
+\DoxyCodeLine{01660       qDeleteAll(m\_ghostLinks.begin(), m\_ghostLinks.end());}
+\DoxyCodeLine{01661       m\_ghostLinks.clear();}
+\DoxyCodeLine{01662     \}}
+\DoxyCodeLine{01663     \mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *thisNode = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *\textcolor{keyword}{>}(getNode());}
+\DoxyCodeLine{01664     \textcolor{keywordtype}{int} thisId                = thisNode-\/>getInputDockId(getDock());}
+\DoxyCodeLine{01665     \mbox{\hyperlink{class_t_fx_port}{TFxPort}} *thisFxPort       = targetFx-\/>getInputPort(thisId);}
+\DoxyCodeLine{01666     \textcolor{keywordtype}{int} thisGroupId           = thisFxPort-\/>getGroupIndex();}
+\DoxyCodeLine{01667     \textcolor{keywordflow}{if} (thisGroupId != groupId) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01668     \textcolor{keywordtype}{int} thisPortId = getIndex(thisFxPort, groupedPorts);}
+\DoxyCodeLine{01669     \textcolor{keywordflow}{if} (thisPortId == -\/1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01670     targetPort-\/>handleSnappedLinksOnDynamicPortFx(groupedPorts, portId,}
+\DoxyCodeLine{01671                                                   thisPortId);}
+\DoxyCodeLine{01672     \mbox{\hyperlink{class_schematic_link}{SchematicLink}} *link = \mbox{\hyperlink{class_schematic_port_a48b9692e98159adbd9adf772246d8363}{getLink}}(0);}
+\DoxyCodeLine{01673     assert(link);}
+\DoxyCodeLine{01674     \mbox{\hyperlink{class_schematic_link}{SchematicLink}} *ghostLink = targetPort-\/>\mbox{\hyperlink{class_fx_schematic_port_a16536c7fafa90842a83b18328a0028fd}{makeLink}}(link-\/>\mbox{\hyperlink{class_schematic_link_ad634461aec8ce9f70d8f97f9d91ff582}{getOtherPort}}(\textcolor{keyword}{this}));}
+\DoxyCodeLine{01675     \textcolor{keywordflow}{if} (ghostLink) \{}
+\DoxyCodeLine{01676       targetPort-\/>m\_ghostLinks.append(ghostLink);}
+\DoxyCodeLine{01677     \}}
+\DoxyCodeLine{01678   \}}
+\DoxyCodeLine{01679 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_port_ab237e2f1f4de9381bebccd38654350df}\label{class_fx_schematic_port_ab237e2f1f4de9381bebccd38654350df}} 
+\index{FxSchematicPort@{FxSchematicPort}!mouseReleaseEvent@{mouseReleaseEvent}}
+\index{mouseReleaseEvent@{mouseReleaseEvent}!FxSchematicPort@{FxSchematicPort}}
+\doxysubsubsection{\texorpdfstring{mouseReleaseEvent()}{mouseReleaseEvent()}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Port\+::mouse\+Release\+Event (\begin{DoxyParamCaption}\item[{QGraphics\+Scene\+Mouse\+Event $\ast$}]{me }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01683                                                                     \{}
+\DoxyCodeLine{01684   \textcolor{keywordflow}{if} (m\_currentTargetPort)}
+\DoxyCodeLine{01685     m\_currentTargetPort-\/>resetSnappedLinksOnDynamicPortFx();}
+\DoxyCodeLine{01686   m\_currentTargetPort = 0;}
+\DoxyCodeLine{01687   \mbox{\hyperlink{class_fx_schematic_port}{FxSchematicPort}} *targetPort =}
+\DoxyCodeLine{01688       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_port}{FxSchematicPort}} *\textcolor{keyword}{>}(searchPort(me-\/>scenePos()));}
+\DoxyCodeLine{01689   \textcolor{keywordflow}{if} (!targetPort)  \textcolor{comment}{// not over a port: do nothing}}
+\DoxyCodeLine{01690   \{}
+\DoxyCodeLine{01691     SchematicPort::mouseReleaseEvent(me);}
+\DoxyCodeLine{01692     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01693   \}}
+\DoxyCodeLine{01694   \mbox{\hyperlink{class_t_fx}{TFx}} *targetOwnerFx     = targetPort-\/>getOwnerFx();}
+\DoxyCodeLine{01695   \mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *colFx = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_zerary_column_fx}{TZeraryColumnFx}} *\textcolor{keyword}{>}(targetOwnerFx);}
+\DoxyCodeLine{01696   \textcolor{keywordflow}{if} (colFx) targetOwnerFx = colFx-\/>getZeraryFx();}
+\DoxyCodeLine{01697 }
+\DoxyCodeLine{01698   \textcolor{comment}{// if the target fx has no dynamic port or has dynamic ports but the target}}
+\DoxyCodeLine{01699   \textcolor{comment}{// port is not an input port: do nothing!}}
+\DoxyCodeLine{01700   \textcolor{keywordflow}{if} (!targetOwnerFx || !targetOwnerFx-\/>hasDynamicPortGroups() ||}
+\DoxyCodeLine{01701       targetPort-\/>\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() != eFxInputPort) \{}
+\DoxyCodeLine{01702     SchematicPort::mouseReleaseEvent(me);}
+\DoxyCodeLine{01703     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01704   \}}
+\DoxyCodeLine{01705   \mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *targetNode =}
+\DoxyCodeLine{01706       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *\textcolor{keyword}{>}(targetPort-\/>getNode());}
+\DoxyCodeLine{01707   \textcolor{keywordtype}{int} targetFxId        = targetNode-\/>getInputDockId(targetPort-\/>getDock());}
+\DoxyCodeLine{01708   \mbox{\hyperlink{class_t_fx_port}{TFxPort}} *targetFxPort = targetOwnerFx-\/>getInputPort(targetFxId);}
+\DoxyCodeLine{01709   \textcolor{keywordtype}{int} targetGroupId     = targetFxPort-\/>getGroupIndex();}
+\DoxyCodeLine{01710 }
+\DoxyCodeLine{01711   \textcolor{keywordflow}{if} (targetGroupId < 0) \{}
+\DoxyCodeLine{01712     SchematicPort::mouseReleaseEvent(me);}
+\DoxyCodeLine{01713     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01714   \}}
+\DoxyCodeLine{01715 }
+\DoxyCodeLine{01716   std::vector<TFxPort *> groupedPorts =}
+\DoxyCodeLine{01717       targetOwnerFx-\/>dynamicPortGroup(targetGroupId)-\/>\mbox{\hyperlink{class_t_fx_port_dynamic_group_a143c27fedfeeb41a5fa15d70bced74e6}{ports}}();}
+\DoxyCodeLine{01718   \textcolor{keywordtype}{int} groupedPortCount = groupedPorts.size();}
+\DoxyCodeLine{01719   \textcolor{keywordflow}{if} (targetOwnerFx != m\_ownerFx \&\& me-\/>modifiers() == Qt::ControlModifier \&\&}
+\DoxyCodeLine{01720       \mbox{\hyperlink{class_fx_schematic_port_a74c32b39102465881afe32154cb357e9}{linkTo}}(targetPort, \textcolor{keyword}{true})) \{}
+\DoxyCodeLine{01721     \textcolor{comment}{// trying to link different fxs inserting the new link and shifting the}}
+\DoxyCodeLine{01722     \textcolor{comment}{// others}}
+\DoxyCodeLine{01723     \textcolor{keywordtype}{int} targetIndex = getIndex(targetFxPort, groupedPorts);}
+\DoxyCodeLine{01724     \textcolor{keywordflow}{if} (targetIndex == -\/1) \{}
+\DoxyCodeLine{01725       SchematicPort::mouseReleaseEvent(me);}
+\DoxyCodeLine{01726       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01727     \}}
+\DoxyCodeLine{01728 }
+\DoxyCodeLine{01729     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{01730     TUndoManager::manager()-\/>beginBlock();}
+\DoxyCodeLine{01731     \textcolor{keywordflow}{for} (i = groupedPortCount -\/ 1; i > targetIndex; i-\/-\/) \{}
+\DoxyCodeLine{01732       \mbox{\hyperlink{class_t_fx_port}{TFxPort}} *currentPort   = groupedPorts[i];}
+\DoxyCodeLine{01733       \mbox{\hyperlink{class_t_fx_port}{TFxPort}} *precedentPort = groupedPorts[i -\/ 1];}
+\DoxyCodeLine{01734       \textcolor{keywordtype}{int} currentPortIndex   = getInputPortIndex(currentPort, targetOwnerFx);}
+\DoxyCodeLine{01735       linkEffects(precedentPort-\/>getFx(), colFx ? colFx : targetOwnerFx,}
+\DoxyCodeLine{01736                   currentPortIndex);}
+\DoxyCodeLine{01737     \}}
+\DoxyCodeLine{01738     \mbox{\hyperlink{class_fx_schematic_port_a74c32b39102465881afe32154cb357e9}{linkTo}}(targetPort);}
+\DoxyCodeLine{01739     TUndoManager::manager()-\/>endBlock();}
+\DoxyCodeLine{01740     emit sceneChanged();}
+\DoxyCodeLine{01741     emit xsheetChanged();}
+\DoxyCodeLine{01742   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (targetOwnerFx == m\_ownerFx \&\& m\_type == eFxInputPort \&\&}
+\DoxyCodeLine{01743              \mbox{\hyperlink{class_schematic_port_a48b9692e98159adbd9adf772246d8363}{getLink}}(0) \&\& targetPort != \textcolor{keyword}{this}) \{}
+\DoxyCodeLine{01744     \textcolor{comment}{// reordering of links in input of the same fxs}}
+\DoxyCodeLine{01745     \textcolor{comment}{/*FxSchematicNode* linkedNode =}}
+\DoxyCodeLine{01746 \textcolor{comment}{dynamic\_cast<FxSchematicNode*>(getLinkedNode(0));}}
+\DoxyCodeLine{01747 \textcolor{comment}{assert(linkedNode);}}
+\DoxyCodeLine{01748 \textcolor{comment}{TFx* linkedFx = linkedNode-\/>getFx();}}
+\DoxyCodeLine{01749 \textcolor{comment}{assert(linkedFx);*/}}
+\DoxyCodeLine{01750 }
+\DoxyCodeLine{01751     \textcolor{keywordtype}{int} thisFxId        = targetNode-\/>getInputDockId(getDock());}
+\DoxyCodeLine{01752     \mbox{\hyperlink{class_t_fx_port}{TFxPort}} *thisFxPort = m\_ownerFx-\/>getInputPort(thisFxId);}
+\DoxyCodeLine{01753     \mbox{\hyperlink{class_t_fx}{TFx}} *linkedFx       = thisFxPort-\/>getFx();}
+\DoxyCodeLine{01754 }
+\DoxyCodeLine{01755     \textcolor{keywordtype}{int} targetIndex = getIndex(targetFxPort, groupedPorts);}
+\DoxyCodeLine{01756     \textcolor{keywordtype}{int} thisIndex   = getIndex(thisFxPort, groupedPorts);}
+\DoxyCodeLine{01757     \textcolor{keywordflow}{if} (targetIndex != -\/1 \&\& thisIndex != -\/1 \&\& thisIndex != targetIndex) \{}
+\DoxyCodeLine{01758       TUndoManager::manager()-\/>beginBlock();}
+\DoxyCodeLine{01759 }
+\DoxyCodeLine{01760       \textcolor{comment}{// linkEffects(0,colFx ? colFx : m\_ownerFx,thisFxId);}}
+\DoxyCodeLine{01761       \textcolor{keywordflow}{if} (thisIndex > targetIndex) \{}
+\DoxyCodeLine{01762         \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{01763         \textcolor{keywordflow}{for} (i = thisIndex; i > targetIndex; i-\/-\/) \{}
+\DoxyCodeLine{01764           \mbox{\hyperlink{class_t_fx_port}{TFxPort}} *currentPort   = groupedPorts[i];}
+\DoxyCodeLine{01765           \mbox{\hyperlink{class_t_fx_port}{TFxPort}} *precedentPort = groupedPorts[i -\/ 1];}
+\DoxyCodeLine{01766           \textcolor{keywordtype}{int} currentId          = getInputPortIndex(currentPort, m\_ownerFx);}
+\DoxyCodeLine{01767           linkEffects(precedentPort-\/>getFx(), colFx ? colFx : m\_ownerFx,}
+\DoxyCodeLine{01768                       currentId);}
+\DoxyCodeLine{01769         \}}
+\DoxyCodeLine{01770       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01771         \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{01772         \textcolor{keywordflow}{for} (i = thisIndex; i < targetIndex; i++) \{}
+\DoxyCodeLine{01773           \mbox{\hyperlink{class_t_fx_port}{TFxPort}} *currentPort = groupedPorts[i];}
+\DoxyCodeLine{01774           \mbox{\hyperlink{class_t_fx_port}{TFxPort}} *nextPort    = groupedPorts[i + 1];}
+\DoxyCodeLine{01775           \textcolor{keywordtype}{int} currentId        = getInputPortIndex(currentPort, m\_ownerFx);}
+\DoxyCodeLine{01776           linkEffects(nextPort-\/>getFx(), colFx ? colFx : m\_ownerFx, currentId);}
+\DoxyCodeLine{01777         \}}
+\DoxyCodeLine{01778       \}}
+\DoxyCodeLine{01779       linkEffects(linkedFx, colFx ? colFx : m\_ownerFx, targetFxId);}
+\DoxyCodeLine{01780       TUndoManager::manager()-\/>endBlock();}
+\DoxyCodeLine{01781       emit sceneChanged();}
+\DoxyCodeLine{01782       emit xsheetChanged();}
+\DoxyCodeLine{01783     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01784       SchematicPort::mouseReleaseEvent(me);}
+\DoxyCodeLine{01785   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01786     SchematicPort::mouseReleaseEvent(me);}
+\DoxyCodeLine{01787 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_port_a9e59d9f19bdad47b4271844eaf5e9e94}\label{class_fx_schematic_port_a9e59d9f19bdad47b4271844eaf5e9e94}} 
+\index{FxSchematicPort@{FxSchematicPort}!paint@{paint}}
+\index{paint@{paint}!FxSchematicPort@{FxSchematicPort}}
+\doxysubsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Port\+::paint (\begin{DoxyParamCaption}\item[{QPainter $\ast$}]{painter,  }\item[{const QStyle\+Option\+Graphics\+Item $\ast$}]{option,  }\item[{QWidget $\ast$}]{widget = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01240                                              \{}
+\DoxyCodeLine{01241   \textcolor{keywordflow}{if} (m\_isPassThrough \&\& \mbox{\hyperlink{class_schematic_port_a3be2ddc4c657a92cb4b5a9f15123c515}{getLinkCount}}() > 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01242 }
+\DoxyCodeLine{01243   \textcolor{comment}{// large scaled}}
+\DoxyCodeLine{01244   \textcolor{keywordflow}{if} (getDock()-\/>getNode()-\/>isNormalIconView()) \{}
+\DoxyCodeLine{01245     \textcolor{keywordflow}{switch} (\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}()) \{}
+\DoxyCodeLine{01246     \textcolor{keywordflow}{case} eFxInputPort:}
+\DoxyCodeLine{01247     \textcolor{keywordflow}{case} eFxGroupedInPort: \{}
+\DoxyCodeLine{01248       QRect sourceRect =}
+\DoxyCodeLine{01249           scene()-\/>views()[0]-\/>matrix().mapRect(boundingRect()).toRect();}
+\DoxyCodeLine{01250       \textcolor{keyword}{static} QIcon fxPortRedIcon(\textcolor{stringliteral}{"{}:Resources/fxport\_red.svg"{}});}
+\DoxyCodeLine{01251       \textcolor{keyword}{static} QIcon fxPortPassThroughRedIcon(\textcolor{stringliteral}{"{}:Resources/fxport\_pt\_red.svg"{}});}
+\DoxyCodeLine{01252       QPixmap redPm = (m\_isPassThrough)}
+\DoxyCodeLine{01253                           ? fxPortPassThroughRedIcon.pixmap(sourceRect.size())}
+\DoxyCodeLine{01254                           : fxPortRedIcon.pixmap(sourceRect.size());}
+\DoxyCodeLine{01255       sourceRect = QRect(0, 0, sourceRect.width() * getDevPixRatio(),}
+\DoxyCodeLine{01256                          sourceRect.height() * getDevPixRatio());}
+\DoxyCodeLine{01257       painter-\/>drawPixmap(boundingRect(), redPm, sourceRect);}
+\DoxyCodeLine{01258     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01259 }
+\DoxyCodeLine{01260     \textcolor{keywordflow}{case} eFxOutputPort:}
+\DoxyCodeLine{01261     \textcolor{keywordflow}{case} eFxGroupedOutPort: \{}
+\DoxyCodeLine{01262       QRect sourceRect =}
+\DoxyCodeLine{01263           scene()-\/>views()[0]-\/>matrix().mapRect(boundingRect()).toRect();}
+\DoxyCodeLine{01264       \textcolor{keyword}{static} QIcon fxPortBlueIcon(\textcolor{stringliteral}{"{}:Resources/fxport\_blue.svg"{}});}
+\DoxyCodeLine{01265       QPixmap bluePm = fxPortBlueIcon.pixmap(sourceRect.size());}
+\DoxyCodeLine{01266       sourceRect     = QRect(0, 0, sourceRect.width() * getDevPixRatio(),}
+\DoxyCodeLine{01267                          sourceRect.height() * getDevPixRatio());}
+\DoxyCodeLine{01268       painter-\/>drawPixmap(boundingRect(), bluePm, sourceRect);}
+\DoxyCodeLine{01269       \mbox{\hyperlink{class_fx_schematic_dock}{FxSchematicDock}} *parentDock =}
+\DoxyCodeLine{01270           \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_dock}{FxSchematicDock}} *\textcolor{keyword}{>}(parentItem());}
+\DoxyCodeLine{01271       \textcolor{keywordflow}{if} (parentDock) \{}
+\DoxyCodeLine{01272         \mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *parentFxNode =}
+\DoxyCodeLine{01273             \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_schematic_node}{FxSchematicNode}} *\textcolor{keyword}{>}(parentDock-\/>parentItem());}
+\DoxyCodeLine{01274         \textcolor{keywordflow}{if} (parentFxNode) \{}
+\DoxyCodeLine{01275           \textcolor{keywordtype}{bool} isCached = parentFxNode-\/>isCached();}
+\DoxyCodeLine{01276           \textcolor{keywordflow}{if} (isCached) \{}
+\DoxyCodeLine{01277             QPixmap cachePm = QPixmap(\textcolor{stringliteral}{"{}:Resources/cachefx.png"{}});}
+\DoxyCodeLine{01278             painter-\/>drawPixmap(QRectF(0, 0, 18, 36), cachePm,}
+\DoxyCodeLine{01279                                 QRectF(0, 0, 50, 100));}
+\DoxyCodeLine{01280           \}}
+\DoxyCodeLine{01281         \}}
+\DoxyCodeLine{01282       \}}
+\DoxyCodeLine{01283     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01284 }
+\DoxyCodeLine{01285     \textcolor{keywordflow}{case} eFxLinkPort:  \textcolor{comment}{// LinkPort}}
+\DoxyCodeLine{01286     \textcolor{keywordflow}{default}: \{         \textcolor{comment}{//ここから！！！}}
+\DoxyCodeLine{01287       QRect sourceRect =}
+\DoxyCodeLine{01288           scene()-\/>views()[0]-\/>matrix().mapRect(boundingRect()).toRect();}
+\DoxyCodeLine{01289       QPixmap linkPm =}
+\DoxyCodeLine{01290           QIcon(\textcolor{stringliteral}{"{}:Resources/schematic\_link.svg"{}}).pixmap(sourceRect.size());}
+\DoxyCodeLine{01291       sourceRect = QRect(0, 0, sourceRect.width() * getDevPixRatio(),}
+\DoxyCodeLine{01292                          sourceRect.height() * getDevPixRatio());}
+\DoxyCodeLine{01293       painter-\/>drawPixmap(boundingRect(), linkPm, sourceRect);}
+\DoxyCodeLine{01294     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01295     \}}
+\DoxyCodeLine{01296   \}}
+\DoxyCodeLine{01297   \textcolor{comment}{// small scaled}}
+\DoxyCodeLine{01298   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01299     painter-\/>setPen(Qt::NoPen);}
+\DoxyCodeLine{01300     \textcolor{keywordflow}{switch} (\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}()) \{}
+\DoxyCodeLine{01301     \textcolor{keywordflow}{case} eFxInputPort:}
+\DoxyCodeLine{01302     \textcolor{keywordflow}{case} eFxGroupedInPort: \{}
+\DoxyCodeLine{01303       painter-\/>setBrush(QColor(223, 100, 100, 255));}
+\DoxyCodeLine{01304     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01305 }
+\DoxyCodeLine{01306     \textcolor{keywordflow}{case} eFxOutputPort:}
+\DoxyCodeLine{01307     \textcolor{keywordflow}{case} eFxGroupedOutPort: \{}
+\DoxyCodeLine{01308       painter-\/>setBrush(QColor(100, 100, 223, 255));}
+\DoxyCodeLine{01309     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01310 }
+\DoxyCodeLine{01311     \textcolor{keywordflow}{case} eFxLinkPort:  \textcolor{comment}{// LinkPort}}
+\DoxyCodeLine{01312     \{}
+\DoxyCodeLine{01313       QRect sourceRect =}
+\DoxyCodeLine{01314           scene()-\/>views()[0]-\/>matrix().mapRect(boundingRect()).toRect();}
+\DoxyCodeLine{01315       QPixmap linkPm = QIcon(\textcolor{stringliteral}{"{}:Resources/schematic\_link\_small.svg"{}})}
+\DoxyCodeLine{01316                            .pixmap(sourceRect.size());}
+\DoxyCodeLine{01317       sourceRect = QRect(0, 0, sourceRect.width() * getDevPixRatio(),}
+\DoxyCodeLine{01318                          sourceRect.height() * getDevPixRatio());}
+\DoxyCodeLine{01319       painter-\/>drawPixmap(boundingRect(), linkPm, sourceRect);}
+\DoxyCodeLine{01320     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01321     \}}
+\DoxyCodeLine{01322     painter-\/>drawRect(boundingRect());}
+\DoxyCodeLine{01323   \}}
+\DoxyCodeLine{01324 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_fx_schematic_port_af7cd99541c44e277ed46b06983ab05cb}\label{class_fx_schematic_port_af7cd99541c44e277ed46b06983ab05cb}} 
+\index{FxSchematicPort@{FxSchematicPort}!setIsPassThrough@{setIsPassThrough}}
+\index{setIsPassThrough@{setIsPassThrough}!FxSchematicPort@{FxSchematicPort}}
+\doxysubsubsection{\texorpdfstring{setIsPassThrough()}{setIsPassThrough()}}
+{\footnotesize\ttfamily void Fx\+Schematic\+Port\+::set\+Is\+Pass\+Through (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01350                                        \{}
+\DoxyCodeLine{01351   m\_isPassThrough = \textcolor{keyword}{true};}
+\DoxyCodeLine{01352   \textcolor{comment}{// recompute the hook position}}
+\DoxyCodeLine{01353   QRectF rect = boundingRect();}
+\DoxyCodeLine{01354   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxInputPort)}
+\DoxyCodeLine{01355     m\_hook = QPointF(rect.right(), (rect.top() + rect.bottom()) * 0.5);}
+\DoxyCodeLine{01356   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_schematic_port_a119b9e3d6a308273c141c08fc18c5bfc}{getType}}() == eFxOutputPort)}
+\DoxyCodeLine{01357     m\_hook = QPointF(rect.left(), (rect.top() + rect.bottom()) * 0.5);}
+\DoxyCodeLine{01358 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/fxschematicnode.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/fxschematicnode.\+cpp\end{DoxyCompactItemize}

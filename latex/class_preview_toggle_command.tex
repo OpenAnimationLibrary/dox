@@ -1,0 +1,306 @@
+\hypertarget{class_preview_toggle_command}{}\doxysection{Preview\+Toggle\+Command Class Reference}
+\label{class_preview_toggle_command}\index{PreviewToggleCommand@{PreviewToggleCommand}}
+Inheritance diagram for Preview\+Toggle\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_preview_toggle_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_preview_toggle_command_a439d07a2e3dbecf38105de32ffdd8097}{execute}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_preview_toggle_command_a9fe1955eb2786e4360ba4ac955832882}{on\+Preview\+Data\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_preview_toggle_command_a75014f01b2f5b190fda206b2720b0d18}{on\+Model\+Changed}} (bool needs\+Post\+Process)
+\item 
+void \mbox{\hyperlink{class_preview_toggle_command_a70ddb2dc768ef377dacdcfeeb9849b5b}{post\+Process}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_preview_toggle_command_a2d22477f25e839aba314505bcf0eb596}{enable}} ()
+\item 
+void \mbox{\hyperlink{class_preview_toggle_command_ad1ba45f56d350ab9c107b6176582c89b}{disable}} ()
+\item 
+void \mbox{\hyperlink{class_preview_toggle_command_a4ae40a5ab13686fe7eab317bed0eeb9b}{clean}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_preview_toggle_command_abab0744b181b000162e6294709978116}{Camera\+Test\+Toggle\+Command}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_preview_toggle_command_a9a46b563fc1823c9bfb0e6bab5f09004}\label{class_preview_toggle_command_a9a46b563fc1823c9bfb0e6bab5f09004}} 
+\index{PreviewToggleCommand@{PreviewToggleCommand}!PreviewToggleCommand@{PreviewToggleCommand}}
+\index{PreviewToggleCommand@{PreviewToggleCommand}!PreviewToggleCommand@{PreviewToggleCommand}}
+\doxysubsubsection{\texorpdfstring{PreviewToggleCommand()}{PreviewToggleCommand()}}
+{\footnotesize\ttfamily Preview\+Toggle\+Command\+::\+Preview\+Toggle\+Command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00058     : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(\textcolor{stringliteral}{"{}MI\_CleanupPreview"{}}) \{}
+\DoxyCodeLine{00059   \textcolor{comment}{// Setup the processing timer. The timer is needed to prevent (or rather,}}
+\DoxyCodeLine{00060   \textcolor{comment}{// cumulate)}}
+\DoxyCodeLine{00061   \textcolor{comment}{// short-\/lived parameter changes to trigger any preview processing.}}
+\DoxyCodeLine{00062   m\_timer.setSingleShot(\textcolor{keyword}{true});}
+\DoxyCodeLine{00063   m\_timer.setInterval(500);}
+\DoxyCodeLine{00064 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_preview_toggle_command_a4ae40a5ab13686fe7eab317bed0eeb9b}\label{class_preview_toggle_command_a4ae40a5ab13686fe7eab317bed0eeb9b}} 
+\index{PreviewToggleCommand@{PreviewToggleCommand}!clean@{clean}}
+\index{clean@{clean}!PreviewToggleCommand@{PreviewToggleCommand}}
+\doxysubsubsection{\texorpdfstring{clean()}{clean()}}
+{\footnotesize\ttfamily void Preview\+Toggle\+Command\+::clean (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00216                                  \{}
+\DoxyCodeLine{00217   \textcolor{comment}{// Release all previewed images}}
+\DoxyCodeLine{00218   \textcolor{keywordflow}{if} (m\_sl) \{}
+\DoxyCodeLine{00219     \textcolor{keywordtype}{int} i, fidsCount = m\_fids.size();}
+\DoxyCodeLine{00220     \textcolor{keywordflow}{for} (i = 0; i < fidsCount; ++i) \{}
+\DoxyCodeLine{00221       \textcolor{keyword}{const} \mbox{\hyperlink{class_t_frame_id}{TFrameId}} \&fid = m\_fids[i];}
+\DoxyCodeLine{00222 }
+\DoxyCodeLine{00223       \textcolor{keywordtype}{int} status = m\_sl-\/>getFrameStatus(fid);}
+\DoxyCodeLine{00224       \textcolor{keywordflow}{if} (status \& \mbox{\hyperlink{class_t_xsh_simple_level_a8ee78a10f5ced42f16e01b6adf3f8c49a9e5aa8f328730d501a912a0e11fe39f0}{TXshSimpleLevel::CleanupPreview}}) \{}
+\DoxyCodeLine{00225         \textcolor{comment}{// Preview images are not just invalidated, but *unbound* from the IM.}}
+\DoxyCodeLine{00226         \textcolor{comment}{// This is currently done hard here -\/ should be skipped to m\_sl,}}
+\DoxyCodeLine{00227         \textcolor{comment}{// though...}}
+\DoxyCodeLine{00228         \mbox{\hyperlink{class_image_manager}{ImageManager}} *im = ImageManager::instance();}
+\DoxyCodeLine{00229         im-\/>\mbox{\hyperlink{class_image_manager_ab74305fdae38a7704081f7f777d0d80d}{unbind}}(m\_sl-\/>getImageId(fid, \mbox{\hyperlink{class_t_xsh_simple_level_a8ee78a10f5ced42f16e01b6adf3f8c49a9e5aa8f328730d501a912a0e11fe39f0}{TXshSimpleLevel::CleanupPreview}}));}
+\DoxyCodeLine{00230 }
+\DoxyCodeLine{00231         IconGenerator::instance()-\/>remove(m\_sl.getPointer(), fid);}
+\DoxyCodeLine{00232 }
+\DoxyCodeLine{00233         m\_sl-\/>setFrameStatus(fid, status \& \string~\mbox{\hyperlink{class_t_xsh_simple_level_a8ee78a10f5ced42f16e01b6adf3f8c49a9e5aa8f328730d501a912a0e11fe39f0}{TXshSimpleLevel::CleanupPreview}});}
+\DoxyCodeLine{00234       \}}
+\DoxyCodeLine{00235     \}}
+\DoxyCodeLine{00236   \}}
+\DoxyCodeLine{00237 }
+\DoxyCodeLine{00238   m\_sl = \mbox{\hyperlink{class_t_smart_pointer_t}{TXshSimpleLevelP}}();}
+\DoxyCodeLine{00239   m\_fids.clear();}
+\DoxyCodeLine{00240 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_preview_toggle_command_ad1ba45f56d350ab9c107b6176582c89b}\label{class_preview_toggle_command_ad1ba45f56d350ab9c107b6176582c89b}} 
+\index{PreviewToggleCommand@{PreviewToggleCommand}!disable@{disable}}
+\index{disable@{disable}!PreviewToggleCommand@{PreviewToggleCommand}}
+\doxysubsubsection{\texorpdfstring{disable()}{disable()}}
+{\footnotesize\ttfamily void Preview\+Toggle\+Command\+::disable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00114                                    \{}
+\DoxyCodeLine{00115   \mbox{\hyperlink{class_cleanup_settings_model}{CleanupSettingsModel}} *model = CleanupSettingsModel::instance();}
+\DoxyCodeLine{00116 }
+\DoxyCodeLine{00117   model-\/>\mbox{\hyperlink{class_cleanup_settings_model_a26a2edbdf4fe3ed77fe4f40020189579}{detach}}(CleanupSettingsModel::LISTENER |}
+\DoxyCodeLine{00118                 CleanupSettingsModel::PREVIEWER);}
+\DoxyCodeLine{00119 }
+\DoxyCodeLine{00120   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00121   ret      = ret \&\& disconnect(model, SIGNAL(previewDataChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00122                           SLOT(onPreviewDataChanged()));}
+\DoxyCodeLine{00123   ret = ret \&\& disconnect(model, SIGNAL(modelChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00124                           SLOT(onModelChanged(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00125   ret =}
+\DoxyCodeLine{00126       ret \&\& disconnect(\&m\_timer, SIGNAL(timeout()), \textcolor{keyword}{this}, SLOT(postProcess()));}
+\DoxyCodeLine{00127 }
+\DoxyCodeLine{00128   \textcolor{comment}{// Cleanup palette changes all falls under post-\/processing stuff. And do not}}
+\DoxyCodeLine{00129   \textcolor{comment}{// involve the model.}}
+\DoxyCodeLine{00130   \mbox{\hyperlink{class_t_palette_handle}{TPaletteHandle}} *ph =}
+\DoxyCodeLine{00131       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getPaletteController()-\/>getCurrentCleanupPalette();}
+\DoxyCodeLine{00132   ret = ret \&\& disconnect(ph, SIGNAL(colorStyleChanged(\textcolor{keywordtype}{bool})), \&m\_timer,}
+\DoxyCodeLine{00133                           SLOT(start()));}
+\DoxyCodeLine{00134   ret =}
+\DoxyCodeLine{00135       ret \&\& disconnect(ph, SIGNAL(paletteChanged()), \&m\_timer, SLOT(start()));}
+\DoxyCodeLine{00136   assert(ret);}
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00138   clean();}
+\DoxyCodeLine{00139 }
+\DoxyCodeLine{00140   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>notifyLevelChange();}
+\DoxyCodeLine{00141 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_preview_toggle_command_a2d22477f25e839aba314505bcf0eb596}\label{class_preview_toggle_command_a2d22477f25e839aba314505bcf0eb596}} 
+\index{PreviewToggleCommand@{PreviewToggleCommand}!enable@{enable}}
+\index{enable@{enable}!PreviewToggleCommand@{PreviewToggleCommand}}
+\doxysubsubsection{\texorpdfstring{enable()}{enable()}}
+{\footnotesize\ttfamily void Preview\+Toggle\+Command\+::enable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00078                                   \{}
+\DoxyCodeLine{00079   \textcolor{comment}{// Cleanup Preview and Camera Test are exclusive. In case, disable the latter.}}
+\DoxyCodeLine{00080   \textcolor{comment}{// NOTE: This is done *before* attaching, since attach may invoke a preview}}
+\DoxyCodeLine{00081   \textcolor{comment}{// rebuild.}}
+\DoxyCodeLine{00082   \mbox{\hyperlink{class_camera_test_check}{CameraTestCheck}} *tc = \mbox{\hyperlink{class_camera_test_check_adc1033b93dea95f49db36d8fb668e16d}{CameraTestCheck::instance}}();}
+\DoxyCodeLine{00083   tc-\/>setIsEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00084 }
+\DoxyCodeLine{00085   \textcolor{comment}{// Attach to the model}}
+\DoxyCodeLine{00086   \mbox{\hyperlink{class_cleanup_settings_model}{CleanupSettingsModel}} *model = CleanupSettingsModel::instance();}
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088   model-\/>\mbox{\hyperlink{class_cleanup_settings_model_a244bd70aa1bc4af824a6c8e299cd5d79}{attach}}(CleanupSettingsModel::LISTENER |}
+\DoxyCodeLine{00089                 CleanupSettingsModel::PREVIEWER);}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091   \textcolor{comment}{// Connect signals}}
+\DoxyCodeLine{00092   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00093   ret      = ret \&\& connect(model, SIGNAL(previewDataChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00094                        SLOT(onPreviewDataChanged()));}
+\DoxyCodeLine{00095   ret = ret \&\& connect(model, SIGNAL(modelChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00096                        SLOT(onModelChanged(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00097   ret = ret \&\& connect(\&m\_timer, SIGNAL(timeout()), \textcolor{keyword}{this}, SLOT(postProcess()));}
+\DoxyCodeLine{00098 }
+\DoxyCodeLine{00099   \mbox{\hyperlink{class_t_palette_handle}{TPaletteHandle}} *ph =}
+\DoxyCodeLine{00100       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getPaletteController()-\/>getCurrentCleanupPalette();}
+\DoxyCodeLine{00101   ret = ret \&\&}
+\DoxyCodeLine{00102         connect(ph, SIGNAL(colorStyleChanged(\textcolor{keywordtype}{bool})), \&m\_timer, SLOT(start()));}
+\DoxyCodeLine{00103   ret = ret \&\& connect(ph, SIGNAL(paletteChanged()), \&m\_timer, SLOT(start()));}
+\DoxyCodeLine{00104   assert(ret);}
+\DoxyCodeLine{00105 }
+\DoxyCodeLine{00106   onPreviewDataChanged();}
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108   \textcolor{comment}{// in preview cleanup mode, tools are forbidden! Reverting to hand...}}
+\DoxyCodeLine{00109   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad70b447aff489792cfc3dbac7150a540}{getCurrentTool}}()-\/>setTool(T\_Hand);}
+\DoxyCodeLine{00110 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_preview_toggle_command_a439d07a2e3dbecf38105de32ffdd8097}\label{class_preview_toggle_command_a439d07a2e3dbecf38105de32ffdd8097}} 
+\index{PreviewToggleCommand@{PreviewToggleCommand}!execute@{execute}}
+\index{execute@{execute}!PreviewToggleCommand@{PreviewToggleCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Preview\+Toggle\+Command\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068                                    \{}
+\DoxyCodeLine{00069   \mbox{\hyperlink{class_cleanup_preview_check}{CleanupPreviewCheck}} *pc = \mbox{\hyperlink{class_cleanup_preview_check_a231efbbe4e3356757b725452d5efb62d}{CleanupPreviewCheck::instance}}();}
+\DoxyCodeLine{00070   \textcolor{keywordflow}{if} (pc-\/>isEnabled())}
+\DoxyCodeLine{00071     enable();}
+\DoxyCodeLine{00072   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00073     disable();}
+\DoxyCodeLine{00074 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_preview_toggle_command_a75014f01b2f5b190fda206b2720b0d18}\label{class_preview_toggle_command_a75014f01b2f5b190fda206b2720b0d18}} 
+\index{PreviewToggleCommand@{PreviewToggleCommand}!onModelChanged@{onModelChanged}}
+\index{onModelChanged@{onModelChanged}!PreviewToggleCommand@{PreviewToggleCommand}}
+\doxysubsubsection{\texorpdfstring{onModelChanged}{onModelChanged}}
+{\footnotesize\ttfamily void Preview\+Toggle\+Command\+::on\+Model\+Changed (\begin{DoxyParamCaption}\item[{bool}]{needs\+Post\+Process }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00171                                                                \{}
+\DoxyCodeLine{00172   \textcolor{keywordflow}{if} (needsPostProcess) m\_timer.start();}
+\DoxyCodeLine{00173 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_preview_toggle_command_a9fe1955eb2786e4360ba4ac955832882}\label{class_preview_toggle_command_a9fe1955eb2786e4360ba4ac955832882}} 
+\index{PreviewToggleCommand@{PreviewToggleCommand}!onPreviewDataChanged@{onPreviewDataChanged}}
+\index{onPreviewDataChanged@{onPreviewDataChanged}!PreviewToggleCommand@{PreviewToggleCommand}}
+\doxysubsubsection{\texorpdfstring{onPreviewDataChanged}{onPreviewDataChanged}}
+{\footnotesize\ttfamily void Preview\+Toggle\+Command\+::on\+Preview\+Data\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00145                                                 \{}
+\DoxyCodeLine{00146   \mbox{\hyperlink{class_cleanup_settings_model}{CleanupSettingsModel}} *model = CleanupSettingsModel::instance();}
+\DoxyCodeLine{00147 }
+\DoxyCodeLine{00148   \textcolor{comment}{// Retrieve level under cleanup}}
+\DoxyCodeLine{00149   \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl;}
+\DoxyCodeLine{00150   \mbox{\hyperlink{class_t_frame_id}{TFrameId}} fid;}
+\DoxyCodeLine{00151   model-\/>getCleanupFrame(sl, fid);}
+\DoxyCodeLine{00152 }
+\DoxyCodeLine{00153   \textcolor{comment}{// In case the level changes, release all previously previewed images}}
+\DoxyCodeLine{00154   \textcolor{keywordflow}{if} (m\_sl.getPointer() != sl) clean();}
+\DoxyCodeLine{00155 }
+\DoxyCodeLine{00156   m\_sl = sl;}
+\DoxyCodeLine{00157   \textcolor{keywordflow}{if} (sl) \{}
+\DoxyCodeLine{00158     \textcolor{keywordflow}{if} (!(sl-\/>getFrameStatus(fid) \& \mbox{\hyperlink{class_t_xsh_simple_level_a8ee78a10f5ced42f16e01b6adf3f8c49a9e5aa8f328730d501a912a0e11fe39f0}{TXshSimpleLevel::CleanupPreview}})) \{}
+\DoxyCodeLine{00159       \textcolor{comment}{// The frame was not yet cleanup-\/previewed. Update its status then.}}
+\DoxyCodeLine{00160       m\_fids.push\_back(fid);}
+\DoxyCodeLine{00161       sl-\/>setFrameStatus(}
+\DoxyCodeLine{00162           fid, sl-\/>getFrameStatus(fid) | \mbox{\hyperlink{class_t_xsh_simple_level_a8ee78a10f5ced42f16e01b6adf3f8c49a9e5aa8f328730d501a912a0e11fe39f0}{TXshSimpleLevel::CleanupPreview}});}
+\DoxyCodeLine{00163     \}}
+\DoxyCodeLine{00164 }
+\DoxyCodeLine{00165     postProcess();}
+\DoxyCodeLine{00166   \}}
+\DoxyCodeLine{00167 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_preview_toggle_command_a70ddb2dc768ef377dacdcfeeb9849b5b}\label{class_preview_toggle_command_a70ddb2dc768ef377dacdcfeeb9849b5b}} 
+\index{PreviewToggleCommand@{PreviewToggleCommand}!postProcess@{postProcess}}
+\index{postProcess@{postProcess}!PreviewToggleCommand@{PreviewToggleCommand}}
+\doxysubsubsection{\texorpdfstring{postProcess}{postProcess}}
+{\footnotesize\ttfamily void Preview\+Toggle\+Command\+::post\+Process (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00177                                        \{}
+\DoxyCodeLine{00178   \mbox{\hyperlink{class_t_app}{TApp}} *app                   = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00179   \mbox{\hyperlink{class_cleanup_settings_model}{CleanupSettingsModel}} *model = CleanupSettingsModel::instance();}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181   \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl;}
+\DoxyCodeLine{00182   \mbox{\hyperlink{class_t_frame_id}{TFrameId}} fid;}
+\DoxyCodeLine{00183   model-\/>getCleanupFrame(sl, fid);}
+\DoxyCodeLine{00184 }
+\DoxyCodeLine{00185   assert(sl);}
+\DoxyCodeLine{00186   \textcolor{keywordflow}{if} (!sl) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00187 }
+\DoxyCodeLine{00188   \textcolor{comment}{// Retrieve transformed image}}
+\DoxyCodeLine{00189   \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} transformed;}
+\DoxyCodeLine{00190   \{}
+\DoxyCodeLine{00191     \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} original;}
+\DoxyCodeLine{00192     \mbox{\hyperlink{class_t_affine}{TAffine}} transform;}
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00194     model-\/>\mbox{\hyperlink{class_cleanup_settings_model_a6d8825724b5f3153f2b9318250a5ba38}{getPreviewData}}(original, transformed, transform);}
+\DoxyCodeLine{00195     \textcolor{keywordflow}{if} (!transformed) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00196   \}}
+\DoxyCodeLine{00197 }
+\DoxyCodeLine{00198   \textcolor{comment}{// Perform post-\/processing}}
+\DoxyCodeLine{00199   \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}} preview(}
+\DoxyCodeLine{00200       TCleanupper::instance()-\/>processColors(transformed-\/>getRaster()));}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202   \mbox{\hyperlink{class_t_point_t}{TPointD}} dpi;}
+\DoxyCodeLine{00203   transformed-\/>getDpi(dpi.x, dpi.y);}
+\DoxyCodeLine{00204   preview-\/>setDpi(dpi.x, dpi.y);}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206   transformed = \mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}}();}
+\DoxyCodeLine{00207 }
+\DoxyCodeLine{00208   \textcolor{comment}{// Substitute current frame image with previewed one}}
+\DoxyCodeLine{00209   sl-\/>setFrame(fid, preview);}
+\DoxyCodeLine{00210 }
+\DoxyCodeLine{00211   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>notifyLevelChange();}
+\DoxyCodeLine{00212 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_preview_toggle_command_abab0744b181b000162e6294709978116}\label{class_preview_toggle_command_abab0744b181b000162e6294709978116}} 
+\index{PreviewToggleCommand@{PreviewToggleCommand}!CameraTestToggleCommand@{CameraTestToggleCommand}}
+\index{CameraTestToggleCommand@{CameraTestToggleCommand}!PreviewToggleCommand@{PreviewToggleCommand}}
+\doxysubsubsection{\texorpdfstring{CameraTestToggleCommand}{CameraTestToggleCommand}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{class_camera_test_toggle_command}{Camera\+Test\+Toggle\+Command}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanuppreview.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanuppreview.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,125 @@
+\hypertarget{class_full_color_area_filler}{}\doxysection{Full\+Color\+Area\+Filler Class Reference}
+\label{class_full_color_area_filler}\index{FullColorAreaFiller@{FullColorAreaFiller}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_full_color_area_filler_ae3047a6def4194cd3eb4de28a283d899}{Full\+Color\+Area\+Filler}} (const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&ras)
+\item 
+void \mbox{\hyperlink{class_full_color_area_filler_a4e7535e362fff1b248f9b825e0228c55}{rect\+Fill}} (const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&rect, const \mbox{\hyperlink{class_fill_parameters}{Fill\+Parameters}} \&params, bool only\+Unfilled)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_full_color_area_filler_ae3047a6def4194cd3eb4de28a283d899}\label{class_full_color_area_filler_ae3047a6def4194cd3eb4de28a283d899}} 
+\index{FullColorAreaFiller@{FullColorAreaFiller}!FullColorAreaFiller@{FullColorAreaFiller}}
+\index{FullColorAreaFiller@{FullColorAreaFiller}!FullColorAreaFiller@{FullColorAreaFiller}}
+\doxysubsubsection{\texorpdfstring{FullColorAreaFiller()}{FullColorAreaFiller()}}
+{\footnotesize\ttfamily Full\+Color\+Area\+Filler\+::\+Full\+Color\+Area\+Filler (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \&}]{ras }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00302     : m\_ras(ras)}
+\DoxyCodeLine{00303     , m\_bounds(ras-\/>getBounds())}
+\DoxyCodeLine{00304     , m\_pixels(ras-\/>pixels())}
+\DoxyCodeLine{00305     , m\_wrap(ras-\/>getWrap())}
+\DoxyCodeLine{00306     , m\_color(0) \{}
+\DoxyCodeLine{00307   m\_ras-\/>lock();}
+\DoxyCodeLine{00308 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_full_color_area_filler_a177b77bc940352bff66b7817cc80f4d0}\label{class_full_color_area_filler_a177b77bc940352bff66b7817cc80f4d0}} 
+\index{FullColorAreaFiller@{FullColorAreaFiller}!````~FullColorAreaFiller@{$\sim$FullColorAreaFiller}}
+\index{````~FullColorAreaFiller@{$\sim$FullColorAreaFiller}!FullColorAreaFiller@{FullColorAreaFiller}}
+\doxysubsubsection{\texorpdfstring{$\sim$FullColorAreaFiller()}{~FullColorAreaFiller()}}
+{\footnotesize\ttfamily Full\+Color\+Area\+Filler\+::$\sim$\+Full\+Color\+Area\+Filler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00312 \{ m\_ras-\/>unlock(); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_full_color_area_filler_a4e7535e362fff1b248f9b825e0228c55}\label{class_full_color_area_filler_a4e7535e362fff1b248f9b825e0228c55}} 
+\index{FullColorAreaFiller@{FullColorAreaFiller}!rectFill@{rectFill}}
+\index{rectFill@{rectFill}!FullColorAreaFiller@{FullColorAreaFiller}}
+\doxysubsubsection{\texorpdfstring{rectFill()}{rectFill()}}
+{\footnotesize\ttfamily void Full\+Color\+Area\+Filler\+::rect\+Fill (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_rect_t}{TRect}} \&}]{rect,  }\item[{const \mbox{\hyperlink{class_fill_parameters}{Fill\+Parameters}} \&}]{params,  }\item[{bool}]{only\+Unfilled }\end{DoxyParamCaption})}
+
+Fill {\bfseries{rect}} in raster with {\bfseries{color}}. ~\newline
+ If {\bfseries{fill\+Paints}} is false fill only ink in rect; else if {\bfseries{fill\+Inks}} is false fill only paint delimited by ink; else fill ink and paint in rect. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00318                                                       \{}
+\DoxyCodeLine{00319   \mbox{\hyperlink{class_t_rect_t}{TRect}} bbox = m\_ras-\/>getBounds();}
+\DoxyCodeLine{00320   \mbox{\hyperlink{class_t_rect_t}{TRect}} r    = rect * bbox;}
+\DoxyCodeLine{00321   \textcolor{keywordflow}{if} (r.\mbox{\hyperlink{class_t_rect_t_a53ce09c6112f8a019b43ad82d721a93b}{isEmpty}}()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00322 }
+\DoxyCodeLine{00323   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} workRas = m\_ras-\/>extract(r);}
+\DoxyCodeLine{00324   \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} \mbox{\hyperlink{namespace_t_rop_a229eb7fd85c23c325ea4ba55478d5712}{copy}}    = workRas-\/>clone();}
+\DoxyCodeLine{00325 }
+\DoxyCodeLine{00326   TPixel32 color = params.m\_palette-\/>\mbox{\hyperlink{class_t_palette_a0f6a4eda7dafb0a9f2b43160cfec81e4}{getStyle}}(params.m\_styleId)-\/>\mbox{\hyperlink{class_t_color_style_abd78dd4e3ff3e2e78b647195f7622aa7}{getMainColor}}();}
+\DoxyCodeLine{00327 }
+\DoxyCodeLine{00328   \textcolor{comment}{// Fillo tutto il quadaratino con color}}
+\DoxyCodeLine{00329   \textcolor{keywordtype}{int} x, y;}
+\DoxyCodeLine{00330   \textcolor{keywordflow}{for} (y = 0; y < workRas-\/>getLy(); y++) \{}
+\DoxyCodeLine{00331     TPixel32 *line = workRas-\/>pixels(y);}
+\DoxyCodeLine{00332     \textcolor{keywordflow}{for} (x = 0; x < workRas-\/>getLx(); x++)}
+\DoxyCodeLine{00333       *(line + x) = overPix(color, workRas-\/>pixels(y)[x]);}
+\DoxyCodeLine{00334   \}}
+\DoxyCodeLine{00335 }
+\DoxyCodeLine{00336   \mbox{\hyperlink{class_fill_parameters}{FillParameters}} paramsApp = params;}
+\DoxyCodeLine{00337   TPixel32 refColor;}
+\DoxyCodeLine{00338   \textcolor{keywordflow}{for} (y = 0; y < workRas-\/>getLy(); y++) \{}
+\DoxyCodeLine{00339     paramsApp.m\_p = \mbox{\hyperlink{class_t_point_t}{TPoint}}(0, y);}
+\DoxyCodeLine{00340     \textcolor{keywordflow}{if} (y == 0 ||}
+\DoxyCodeLine{00341         refColor != workRas-\/>pixels(paramsApp.m\_p.y)[paramsApp.m\_p.x]) \{}
+\DoxyCodeLine{00342       fill(workRas, copy, paramsApp);}
+\DoxyCodeLine{00343       refColor = workRas-\/>pixels(paramsApp.m\_p.y)[paramsApp.m\_p.x];}
+\DoxyCodeLine{00344     \}}
+\DoxyCodeLine{00345   \}}
+\DoxyCodeLine{00346   \textcolor{keywordflow}{for} (y = 0; y < workRas-\/>getLy(); y++) \{}
+\DoxyCodeLine{00347     paramsApp.m\_p = \mbox{\hyperlink{class_t_point_t}{TPoint}}(workRas-\/>getLx() -\/ 1, y);}
+\DoxyCodeLine{00348     \textcolor{keywordflow}{if} (y == 0 ||}
+\DoxyCodeLine{00349         refColor != workRas-\/>pixels(paramsApp.m\_p.y)[paramsApp.m\_p.x]) \{}
+\DoxyCodeLine{00350       fill(workRas, copy, paramsApp);}
+\DoxyCodeLine{00351       refColor = workRas-\/>pixels(paramsApp.m\_p.y)[paramsApp.m\_p.x];}
+\DoxyCodeLine{00352     \}}
+\DoxyCodeLine{00353   \}}
+\DoxyCodeLine{00354 }
+\DoxyCodeLine{00355   \textcolor{keywordflow}{for} (x = 0; x < workRas-\/>getLx(); x++) \{}
+\DoxyCodeLine{00356     paramsApp.m\_p = \mbox{\hyperlink{class_t_point_t}{TPoint}}(x, 0);}
+\DoxyCodeLine{00357     \textcolor{keywordflow}{if} (x == 0 ||}
+\DoxyCodeLine{00358         refColor != workRas-\/>pixels(paramsApp.m\_p.y)[paramsApp.m\_p.x]) \{}
+\DoxyCodeLine{00359       fill(workRas, copy, paramsApp);}
+\DoxyCodeLine{00360       refColor = workRas-\/>pixels(paramsApp.m\_p.y)[paramsApp.m\_p.x];}
+\DoxyCodeLine{00361     \}}
+\DoxyCodeLine{00362   \}}
+\DoxyCodeLine{00363   \textcolor{keywordflow}{for} (x = 0; x < workRas-\/>getLx(); x++) \{}
+\DoxyCodeLine{00364     paramsApp.m\_p = \mbox{\hyperlink{class_t_point_t}{TPoint}}(x, workRas-\/>getLy() -\/ 1);}
+\DoxyCodeLine{00365     \textcolor{keywordflow}{if} (x == 0 ||}
+\DoxyCodeLine{00366         refColor != workRas-\/>pixels(paramsApp.m\_p.y)[paramsApp.m\_p.x]) \{}
+\DoxyCodeLine{00367       fill(workRas, copy, paramsApp);}
+\DoxyCodeLine{00368       refColor = workRas-\/>pixels(paramsApp.m\_p.y)[paramsApp.m\_p.x];}
+\DoxyCodeLine{00369     \}}
+\DoxyCodeLine{00370   \}}
+\DoxyCodeLine{00371 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00245}{TColor\+Style\+::get\+Main\+Color()}}, \mbox{\hyperlink{l00283}{TPalette\+::get\+Style()}}, and \mbox{\hyperlink{class_t_rect_t_a53ce09c6112f8a019b43ad82d721a93b}{TRect\+T$<$ T $>$\+::is\+Empty()}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00360}{Image\+Filler\+::build()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/fill.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/fillutil.\+cpp\end{DoxyCompactItemize}

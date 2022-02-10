@@ -1,0 +1,171 @@
+\hypertarget{class_t_level_reader_gif}{}\doxysection{TLevel\+Reader\+Gif Class Reference}
+\label{class_t_level_reader_gif}\index{TLevelReaderGif@{TLevelReaderGif}}
+Inheritance diagram for TLevel\+Reader\+Gif\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_t_level_reader_gif}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_level_reader_gif_a403de1fa3e67cb5e65a25739ad7675ab}{TLevel\+Reader\+Gif}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path)
+\item 
+\mbox{\hyperlink{class_t_image_reader_p}{TImage\+ReaderP}} \mbox{\hyperlink{class_t_level_reader_gif_ae26f0a2e61d0c18c2cc65548fefc80c7}{get\+Frame\+Reader}} (\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} fid) override
+\item 
+\mbox{\hyperlink{class_t_level_p}{TLevelP}} \mbox{\hyperlink{class_t_level_reader_gif_ad7666680452cf401c49759202c44a335}{load\+Info}} () override
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \mbox{\hyperlink{class_t_level_reader_gif_a88498627a89e9798a219cf200aa86ac6}{load}} (int frame\+Index)
+\item 
+\mbox{\hyperlink{class_t_dimension_t}{TDimension}} \mbox{\hyperlink{class_t_level_reader_gif_a0f603bfdfd5ecd037790c38c8fef7ac7}{get\+Size}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}} $\ast$ \mbox{\hyperlink{class_t_level_reader_gif_aa7573e24103514aa3b95e93080046ec2}{create}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&f)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_level_reader_gif_a403de1fa3e67cb5e65a25739ad7675ab}\label{class_t_level_reader_gif_a403de1fa3e67cb5e65a25739ad7675ab}} 
+\index{TLevelReaderGif@{TLevelReaderGif}!TLevelReaderGif@{TLevelReaderGif}}
+\index{TLevelReaderGif@{TLevelReaderGif}!TLevelReaderGif@{TLevelReaderGif}}
+\doxysubsubsection{\texorpdfstring{TLevelReaderGif()}{TLevelReaderGif()}}
+{\footnotesize\ttfamily TLevel\+Reader\+Gif\+::\+TLevel\+Reader\+Gif (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00222     : \mbox{\hyperlink{class_t_level_reader}{TLevelReader}}(path)}
+\DoxyCodeLine{00223 }
+\DoxyCodeLine{00224 \{}
+\DoxyCodeLine{00225   ffmpegReader = \textcolor{keyword}{new} \mbox{\hyperlink{class_ffmpeg}{Ffmpeg}}();}
+\DoxyCodeLine{00226   ffmpegReader-\/>setPath(m\_path);}
+\DoxyCodeLine{00227   ffmpegReader-\/>disablePrecompute();}
+\DoxyCodeLine{00228   \mbox{\hyperlink{structffmpeg_file_info}{ffmpegFileInfo}} tempInfo = ffmpegReader-\/>getInfo();}
+\DoxyCodeLine{00229   \textcolor{keywordtype}{double} fps              = tempInfo.m\_frameRate;}
+\DoxyCodeLine{00230   m\_frameCount            = tempInfo.m\_frameCount;}
+\DoxyCodeLine{00231   m\_size                  = \mbox{\hyperlink{class_t_dimension_t}{TDimension}}(tempInfo.m\_lx, tempInfo.m\_ly);}
+\DoxyCodeLine{00232   m\_lx                    = m\_size.lx;}
+\DoxyCodeLine{00233   m\_ly                    = m\_size.ly;}
+\DoxyCodeLine{00234 }
+\DoxyCodeLine{00235   \textcolor{comment}{// set values}}
+\DoxyCodeLine{00236   m\_info                   = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_image_info}{TImageInfo}}();}
+\DoxyCodeLine{00237   m\_info-\/>\mbox{\hyperlink{class_t_image_info_a644330b52ec1ef76a1b0ca6cfdb166fe}{m\_frameRate}}      = fps;}
+\DoxyCodeLine{00238   m\_info-\/>\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}             = m\_lx;}
+\DoxyCodeLine{00239   m\_info-\/>\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}}             = m\_ly;}
+\DoxyCodeLine{00240   m\_info-\/>\mbox{\hyperlink{class_t_image_info_aa69221d579b49a27bcd54ffaabb2e8be}{m\_bitsPerSample}}  = 8;}
+\DoxyCodeLine{00241   m\_info-\/>\mbox{\hyperlink{class_t_image_info_a6b58380f718e21dde1b37577090f5c77}{m\_samplePerPixel}} = 4;}
+\DoxyCodeLine{00242   m\_info-\/>\mbox{\hyperlink{class_t_image_info_ad66e78a66158fddceaa192d0063f68e8}{m\_dpix}}           = Stage::standardDpi;}
+\DoxyCodeLine{00243   m\_info-\/>\mbox{\hyperlink{class_t_image_info_ad8d3ccb14666297e487e04aa10ab7831}{m\_dpiy}}           = Stage::standardDpi;}
+\DoxyCodeLine{00244 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_gif_af3c0aa9c1ce4ff5dda34268c08882d0a}\label{class_t_level_reader_gif_af3c0aa9c1ce4ff5dda34268c08882d0a}} 
+\index{TLevelReaderGif@{TLevelReaderGif}!````~TLevelReaderGif@{$\sim$TLevelReaderGif}}
+\index{````~TLevelReaderGif@{$\sim$TLevelReaderGif}!TLevelReaderGif@{TLevelReaderGif}}
+\doxysubsubsection{\texorpdfstring{$\sim$TLevelReaderGif()}{~TLevelReaderGif()}}
+{\footnotesize\ttfamily TLevel\+Reader\+Gif\+::$\sim$\+TLevel\+Reader\+Gif (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00247                                   \{}
+\DoxyCodeLine{00248   \textcolor{comment}{// ffmpegReader-\/>cleanUpFiles();}}
+\DoxyCodeLine{00249 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_level_reader_gif_aa7573e24103514aa3b95e93080046ec2}\label{class_t_level_reader_gif_aa7573e24103514aa3b95e93080046ec2}} 
+\index{TLevelReaderGif@{TLevelReaderGif}!create@{create}}
+\index{create@{create}!TLevelReaderGif@{TLevelReaderGif}}
+\doxysubsubsection{\texorpdfstring{create()}{create()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}} $\ast$ TLevel\+Reader\+Gif\+::create (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057                                                   \{}
+\DoxyCodeLine{00058     \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_t_level_reader_gif}{TLevelReaderGif}}(f);}
+\DoxyCodeLine{00059   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_gif_ae26f0a2e61d0c18c2cc65548fefc80c7}\label{class_t_level_reader_gif_ae26f0a2e61d0c18c2cc65548fefc80c7}} 
+\index{TLevelReaderGif@{TLevelReaderGif}!getFrameReader@{getFrameReader}}
+\index{getFrameReader@{getFrameReader}!TLevelReaderGif@{TLevelReaderGif}}
+\doxysubsubsection{\texorpdfstring{getFrameReader()}{getFrameReader()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_image_reader_p}{TImage\+ReaderP}} TLevel\+Reader\+Gif\+::get\+Frame\+Reader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}}}]{fid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00262                                                           \{}
+\DoxyCodeLine{00263   \textcolor{comment}{// if (IOError != 0)}}
+\DoxyCodeLine{00264   \textcolor{comment}{//    throw TImageException(m\_path, buildAVIExceptionString(IOError));}}
+\DoxyCodeLine{00265   \textcolor{keywordflow}{if} (!fid.getLetter().isEmpty()) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_image_reader_p}{TImageReaderP}}(0);}
+\DoxyCodeLine{00266   \textcolor{keywordtype}{int} index            = fid.getNumber();}
+\DoxyCodeLine{00267   \mbox{\hyperlink{class_t_image_reader_gif}{TImageReaderGif}} *irm = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_image_reader_gif}{TImageReaderGif}}(m\_path, index, \textcolor{keyword}{this}, m\_info);}
+\DoxyCodeLine{00268   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_image_reader_p}{TImageReaderP}}(irm);}
+\DoxyCodeLine{00269 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_gif_a0f603bfdfd5ecd037790c38c8fef7ac7}\label{class_t_level_reader_gif_a0f603bfdfd5ecd037790c38c8fef7ac7}} 
+\index{TLevelReaderGif@{TLevelReaderGif}!getSize@{getSize}}
+\index{getSize@{getSize}!TLevelReaderGif@{TLevelReaderGif}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_dimension_t}{TDimension}} TLevel\+Reader\+Gif\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00273 \{ \textcolor{keywordflow}{return} m\_size; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_gif_a88498627a89e9798a219cf200aa86ac6}\label{class_t_level_reader_gif_a88498627a89e9798a219cf200aa86ac6}} 
+\index{TLevelReaderGif@{TLevelReaderGif}!load@{load}}
+\index{load@{load}!TLevelReaderGif@{TLevelReaderGif}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} TLevel\+Reader\+Gif\+::load (\begin{DoxyParamCaption}\item[{int}]{frame\+Index }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00277                                             \{}
+\DoxyCodeLine{00278   \textcolor{keywordflow}{if} (!ffmpegFramesCreated) \{}
+\DoxyCodeLine{00279     ffmpegReader-\/>getFramesFromMovie();}
+\DoxyCodeLine{00280     ffmpegFramesCreated = \textcolor{keyword}{true};}
+\DoxyCodeLine{00281   \}}
+\DoxyCodeLine{00282   \textcolor{keywordflow}{return} ffmpegReader-\/>getImage(frameIndex);}
+\DoxyCodeLine{00283 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_gif_ad7666680452cf401c49759202c44a335}\label{class_t_level_reader_gif_ad7666680452cf401c49759202c44a335}} 
+\index{TLevelReaderGif@{TLevelReaderGif}!loadInfo@{loadInfo}}
+\index{loadInfo@{loadInfo}!TLevelReaderGif@{TLevelReaderGif}}
+\doxysubsubsection{\texorpdfstring{loadInfo()}{loadInfo()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_level_p}{TLevelP}} TLevel\+Reader\+Gif\+::load\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00253                                   \{}
+\DoxyCodeLine{00254   \textcolor{keywordflow}{if} (m\_frameCount == -\/1) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_level_p}{TLevelP}}();}
+\DoxyCodeLine{00255   \mbox{\hyperlink{class_t_level_p}{TLevelP}} level;}
+\DoxyCodeLine{00256   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i <= m\_frameCount; i++) level-\/>setFrame(i, \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}}());}
+\DoxyCodeLine{00257   \textcolor{keywordflow}{return} level;}
+\DoxyCodeLine{00258 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/ffmpeg/tiio\+\_\+gif.\+h\item 
+E\+:/opentoonz/toonz/sources/image/ffmpeg/tiio\+\_\+gif.\+cpp\end{DoxyCompactItemize}

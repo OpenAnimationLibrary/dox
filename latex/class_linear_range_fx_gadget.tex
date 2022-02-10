@@ -1,0 +1,245 @@
+\hypertarget{class_linear_range_fx_gadget}{}\doxysection{Linear\+Range\+Fx\+Gadget Class Reference}
+\label{class_linear_range_fx_gadget}\index{LinearRangeFxGadget@{LinearRangeFxGadget}}
+Inheritance diagram for Linear\+Range\+Fx\+Gadget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_linear_range_fx_gadget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_linear_range_fx_gadget_a9d4a7c2063468ec5a6a2bec0a032f37d}{Linear\+Range\+Fx\+Gadget}} (\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$controller, const TPoint\+ParamP \&start\+Point, const TPoint\+ParamP \&end\+Point)
+\item 
+void \mbox{\hyperlink{class_linear_range_fx_gadget_ad232d468989fab18687639dbeb341b98}{draw}} (bool picking) override
+\item 
+void \mbox{\hyperlink{class_linear_range_fx_gadget_a9f06651968a70850694b8b0257ae47fe}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+void \mbox{\hyperlink{class_linear_range_fx_gadget_ab5c0a50217dfefc4fe9d52aa94d7cfe5}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+void \mbox{\hyperlink{class_linear_range_fx_gadget_a95814d0be8d205eef5726326d392290a}{left\+Button\+Up}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_linear_range_fx_gadget_a9d4a7c2063468ec5a6a2bec0a032f37d}\label{class_linear_range_fx_gadget_a9d4a7c2063468ec5a6a2bec0a032f37d}} 
+\index{LinearRangeFxGadget@{LinearRangeFxGadget}!LinearRangeFxGadget@{LinearRangeFxGadget}}
+\index{LinearRangeFxGadget@{LinearRangeFxGadget}!LinearRangeFxGadget@{LinearRangeFxGadget}}
+\doxysubsubsection{\texorpdfstring{LinearRangeFxGadget()}{LinearRangeFxGadget()}}
+{\footnotesize\ttfamily Linear\+Range\+Fx\+Gadget\+::\+Linear\+Range\+Fx\+Gadget (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$}]{controller,  }\item[{const TPoint\+ParamP \&}]{start\+Point,  }\item[{const TPoint\+ParamP \&}]{end\+Point }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01342     : \mbox{\hyperlink{class_fx_gadget}{FxGadget}}(controller, 3), m\_start(startPoint), m\_end(endPoint) \{}
+\DoxyCodeLine{01343   addParam(startPoint-\/>getX());}
+\DoxyCodeLine{01344   addParam(startPoint-\/>getY());}
+\DoxyCodeLine{01345   addParam(endPoint-\/>getX());}
+\DoxyCodeLine{01346   addParam(endPoint-\/>getY());}
+\DoxyCodeLine{01347 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_linear_range_fx_gadget_ad232d468989fab18687639dbeb341b98}\label{class_linear_range_fx_gadget_ad232d468989fab18687639dbeb341b98}} 
+\index{LinearRangeFxGadget@{LinearRangeFxGadget}!draw@{draw}}
+\index{draw@{draw}!LinearRangeFxGadget@{LinearRangeFxGadget}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Linear\+Range\+Fx\+Gadget\+::draw (\begin{DoxyParamCaption}\item[{bool}]{picking }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01351                                            \{}
+\DoxyCodeLine{01352   \textcolor{keyword}{auto} setColorById = [\&](\textcolor{keywordtype}{int} id) \{}
+\DoxyCodeLine{01353     \textcolor{keywordflow}{if} (isSelected(\textcolor{keywordtype}{id}))}
+\DoxyCodeLine{01354       glColor3dv(m\_selectedColor);}
+\DoxyCodeLine{01355     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01356       glColor3d(0, 0, 1);}
+\DoxyCodeLine{01357   \};}
+\DoxyCodeLine{01358 }
+\DoxyCodeLine{01359   \textcolor{keyword}{auto} drawPoint = [\&]() \{}
+\DoxyCodeLine{01360     \textcolor{keywordtype}{double} r = getPixelSize() * 3;}
+\DoxyCodeLine{01361     \textcolor{keywordtype}{double} d = getPixelSize() * 6;}
+\DoxyCodeLine{01362     glBegin(GL\_LINES);}
+\DoxyCodeLine{01363     glVertex2d(-\/d, 0);}
+\DoxyCodeLine{01364     glVertex2d(-\/r, 0);}
+\DoxyCodeLine{01365     glVertex2d(d, 0);}
+\DoxyCodeLine{01366     glVertex2d(r, 0);}
+\DoxyCodeLine{01367     glVertex2d(0, -\/d);}
+\DoxyCodeLine{01368     glVertex2d(0, -\/r);}
+\DoxyCodeLine{01369     glVertex2d(0, d);}
+\DoxyCodeLine{01370     glVertex2d(0, r);}
+\DoxyCodeLine{01371     glEnd();}
+\DoxyCodeLine{01372     tglDrawRect(-\/r, -\/r, r, r);}
+\DoxyCodeLine{01373   \};}
+\DoxyCodeLine{01374 }
+\DoxyCodeLine{01375   setPixelSize();}
+\DoxyCodeLine{01376   \textcolor{keywordtype}{double} r = getPixelSize() * 200;}
+\DoxyCodeLine{01377   \textcolor{keywordtype}{double} a = getPixelSize() * 5;}
+\DoxyCodeLine{01378 }
+\DoxyCodeLine{01379   \mbox{\hyperlink{class_t_point_t}{TPointD}} start = getValue(m\_start);}
+\DoxyCodeLine{01380   \mbox{\hyperlink{class_t_point_t}{TPointD}} end   = getValue(m\_end);}
+\DoxyCodeLine{01381 }
+\DoxyCodeLine{01382   glPushMatrix();}
+\DoxyCodeLine{01383 }
+\DoxyCodeLine{01384   \textcolor{keywordflow}{if} (start != end) \{}
+\DoxyCodeLine{01385     \textcolor{comment}{// draw lines perpendicular to the line between ends}}
+\DoxyCodeLine{01386     \textcolor{keywordtype}{double} angle = std::atan2(start.x -\/ end.x, end.y -\/ start.y) * M\_180\_PI;}
+\DoxyCodeLine{01387     \textcolor{comment}{// start}}
+\DoxyCodeLine{01388     setColorById(Start);}
+\DoxyCodeLine{01389     glPushMatrix();}
+\DoxyCodeLine{01390     glTranslated(start.x, start.y, 0);}
+\DoxyCodeLine{01391     glRotated(angle, 0, 0, 1);}
+\DoxyCodeLine{01392     \textcolor{keywordflow}{if} (m\_handle == Start) glScaled(5.0, 1.0, 1.0);}
+\DoxyCodeLine{01393     glBegin(GL\_LINES);}
+\DoxyCodeLine{01394     glVertex2d(-\/r, 0);}
+\DoxyCodeLine{01395     glVertex2d(r, 0);}
+\DoxyCodeLine{01396     glEnd();}
+\DoxyCodeLine{01397     glPopMatrix();}
+\DoxyCodeLine{01398     \textcolor{comment}{// end}}
+\DoxyCodeLine{01399     setColorById(End);}
+\DoxyCodeLine{01400     glPushMatrix();}
+\DoxyCodeLine{01401     glTranslated(end.x, end.y, 0);}
+\DoxyCodeLine{01402     glRotated(angle, 0, 0, 1);}
+\DoxyCodeLine{01403     \textcolor{keywordflow}{if} (m\_handle == End) glScaled(5.0, 1.0, 1.0);}
+\DoxyCodeLine{01404     glBegin(GL\_LINE\_STRIP);}
+\DoxyCodeLine{01405     glVertex2d(-\/r, 0);}
+\DoxyCodeLine{01406     glVertex2d(r, 0);}
+\DoxyCodeLine{01407     glEnd();}
+\DoxyCodeLine{01408     glPopMatrix();}
+\DoxyCodeLine{01409 }
+\DoxyCodeLine{01410     \textcolor{comment}{// line body}}
+\DoxyCodeLine{01411     setColorById(Body);}
+\DoxyCodeLine{01412     glPushName(getId() + Body);}
+\DoxyCodeLine{01413     glBegin(GL\_LINES);}
+\DoxyCodeLine{01414     glVertex2d(start.x, start.y);}
+\DoxyCodeLine{01415     glVertex2d(end.x, end.y);}
+\DoxyCodeLine{01416     glEnd();}
+\DoxyCodeLine{01417     \textcolor{comment}{// small dash at the center}}
+\DoxyCodeLine{01418     glPushMatrix();}
+\DoxyCodeLine{01419     glTranslated((start.x + end.x) / 2.0, (start.y + end.y) / 2.0, 0);}
+\DoxyCodeLine{01420     glRotated(angle, 0, 0, 1);}
+\DoxyCodeLine{01421     glBegin(GL\_LINES);}
+\DoxyCodeLine{01422     glVertex2d(-\/a, 0);}
+\DoxyCodeLine{01423     glVertex2d(a, 0);}
+\DoxyCodeLine{01424     glEnd();}
+\DoxyCodeLine{01425     glPopMatrix();}
+\DoxyCodeLine{01426     glPopName();}
+\DoxyCodeLine{01427   \}}
+\DoxyCodeLine{01428 }
+\DoxyCodeLine{01429   \textcolor{comment}{// start point}}
+\DoxyCodeLine{01430   setColorById(Start);}
+\DoxyCodeLine{01431   glPushName(getId() + Start);}
+\DoxyCodeLine{01432   glPushMatrix();}
+\DoxyCodeLine{01433   glTranslated(start.x, start.y, 0);}
+\DoxyCodeLine{01434   drawPoint();}
+\DoxyCodeLine{01435   glPopMatrix();}
+\DoxyCodeLine{01436   glPopName();}
+\DoxyCodeLine{01437   drawTooltip(start + \mbox{\hyperlink{class_t_point_t}{TPointD}}(7, 3) * getPixelSize(), \textcolor{stringliteral}{"{}Start"{}});}
+\DoxyCodeLine{01438 }
+\DoxyCodeLine{01439   \textcolor{comment}{// end point}}
+\DoxyCodeLine{01440   setColorById(End);}
+\DoxyCodeLine{01441   glPushName(getId() + End);}
+\DoxyCodeLine{01442   glPushMatrix();}
+\DoxyCodeLine{01443   glTranslated(end.x, end.y, 0);}
+\DoxyCodeLine{01444   drawPoint();}
+\DoxyCodeLine{01445   glPopMatrix();}
+\DoxyCodeLine{01446   glPopName();}
+\DoxyCodeLine{01447   drawTooltip(end + \mbox{\hyperlink{class_t_point_t}{TPointD}}(7, 3) * getPixelSize(), \textcolor{stringliteral}{"{}End"{}});}
+\DoxyCodeLine{01448 }
+\DoxyCodeLine{01449   glPopMatrix();}
+\DoxyCodeLine{01450 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_linear_range_fx_gadget_a9f06651968a70850694b8b0257ae47fe}\label{class_linear_range_fx_gadget_a9f06651968a70850694b8b0257ae47fe}} 
+\index{LinearRangeFxGadget@{LinearRangeFxGadget}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!LinearRangeFxGadget@{LinearRangeFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Linear\+Range\+Fx\+Gadget\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01455                                                               \{}
+\DoxyCodeLine{01456   m\_handle = (HANDLE)m\_selected;}
+\DoxyCodeLine{01457   \textcolor{keywordflow}{if} (m\_handle == None) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01458   m\_clickedPos = pos;}
+\DoxyCodeLine{01459   m\_targetPos  = (m\_handle == Start || m\_handle == Body) ? getValue(m\_start)}
+\DoxyCodeLine{01460                                                         : getValue(m\_end);}
+\DoxyCodeLine{01461   m\_anotherPos = (m\_handle == Start || m\_handle == Body) ? getValue(m\_end)}
+\DoxyCodeLine{01462                                                          : getValue(m\_start);}
+\DoxyCodeLine{01463 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_linear_range_fx_gadget_ab5c0a50217dfefc4fe9d52aa94d7cfe5}\label{class_linear_range_fx_gadget_ab5c0a50217dfefc4fe9d52aa94d7cfe5}} 
+\index{LinearRangeFxGadget@{LinearRangeFxGadget}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!LinearRangeFxGadget@{LinearRangeFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Linear\+Range\+Fx\+Gadget\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01468                                                                \{}
+\DoxyCodeLine{01469   \textcolor{keywordflow}{if} (m\_handle == None) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01470   \mbox{\hyperlink{class_t_point_t}{TPointD}} d = pos -\/ m\_clickedPos;}
+\DoxyCodeLine{01471 }
+\DoxyCodeLine{01472   \textcolor{keywordflow}{if} (m\_handle == Body) \{}
+\DoxyCodeLine{01473     setValue(m\_start, m\_targetPos + d);}
+\DoxyCodeLine{01474     setValue(m\_end, m\_anotherPos + d);}
+\DoxyCodeLine{01475     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01476   \}}
+\DoxyCodeLine{01477 }
+\DoxyCodeLine{01478   TPointParamP target = (m\_handle == Start) ? m\_start : m\_end;}
+\DoxyCodeLine{01479 }
+\DoxyCodeLine{01480   \textcolor{keywordflow}{if} (m\_targetPos != m\_anotherPos \&\& e.isShiftPressed()) \{}
+\DoxyCodeLine{01481     \mbox{\hyperlink{class_t_point_t}{TPointD}} vecA = m\_targetPos -\/ m\_anotherPos;}
+\DoxyCodeLine{01482     \mbox{\hyperlink{class_t_point_t}{TPointD}} vecB = m\_targetPos + d -\/ m\_anotherPos;}
+\DoxyCodeLine{01483     d            = vecA * ((vecA.x * vecB.x + vecA.y * vecB.y) /}
+\DoxyCodeLine{01484                     (vecA.x * vecA.x + vecA.y * vecA.y) -\/}
+\DoxyCodeLine{01485                 1.0);}
+\DoxyCodeLine{01486   \}}
+\DoxyCodeLine{01487 }
+\DoxyCodeLine{01488   setValue(target, m\_targetPos + d);}
+\DoxyCodeLine{01489 }
+\DoxyCodeLine{01490   \textcolor{keywordflow}{if} (e.isCtrlPressed()) \{}
+\DoxyCodeLine{01491     TPointParamP another = (m\_handle == Start) ? m\_end : m\_start;}
+\DoxyCodeLine{01492     setValue(another, m\_anotherPos -\/ d);}
+\DoxyCodeLine{01493   \}}
+\DoxyCodeLine{01494 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_linear_range_fx_gadget_a95814d0be8d205eef5726326d392290a}\label{class_linear_range_fx_gadget_a95814d0be8d205eef5726326d392290a}} 
+\index{LinearRangeFxGadget@{LinearRangeFxGadget}!leftButtonUp@{leftButtonUp}}
+\index{leftButtonUp@{leftButtonUp}!LinearRangeFxGadget@{LinearRangeFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonUp()}{leftButtonUp()}}
+{\footnotesize\ttfamily void Linear\+Range\+Fx\+Gadget\+::left\+Button\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01498 \{ m\_handle = None; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/edittoolgadgets.\+cpp\end{DoxyCompactItemize}

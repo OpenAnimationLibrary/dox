@@ -1,0 +1,96 @@
+\hypertarget{classmov__io_1_1_default_mov_props_parser}{}\doxysection{mov\+\_\+io\+::Default\+Mov\+Props\+Parser Class Reference}
+\label{classmov__io_1_1_default_mov_props_parser}\index{mov\_io::DefaultMovPropsParser@{mov\_io::DefaultMovPropsParser}}
+Inheritance diagram for mov\+\_\+io\+::Default\+Mov\+Props\+Parser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmov__io_1_1_default_mov_props_parser}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{classmov__io_1_1_default_mov_props_parser_a6c548b7d6cc403ffd06a05426cb2b2d1}{header}} () const override
+\item 
+void \mbox{\hyperlink{classmov__io_1_1_default_mov_props_parser_a4c6e8f6b2c1c7e1995ef1ee295cb3ea8}{operator()}} (\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&stream) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmov__io_1_1_default_mov_props_parser_a6c548b7d6cc403ffd06a05426cb2b2d1}\label{classmov__io_1_1_default_mov_props_parser_a6c548b7d6cc403ffd06a05426cb2b2d1}} 
+\index{mov\_io::DefaultMovPropsParser@{mov\_io::DefaultMovPropsParser}!header@{header}}
+\index{header@{header}!mov\_io::DefaultMovPropsParser@{mov\_io::DefaultMovPropsParser}}
+\doxysubsubsection{\texorpdfstring{header()}{header()}}
+{\footnotesize\ttfamily QString mov\+\_\+io\+::\+Default\+Mov\+Props\+Parser\+::header (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00043 \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$defaultMovProps"{}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmov__io_1_1_default_mov_props_parser_a4c6e8f6b2c1c7e1995ef1ee295cb3ea8}\label{classmov__io_1_1_default_mov_props_parser_a4c6e8f6b2c1c7e1995ef1ee295cb3ea8}} 
+\index{mov\_io::DefaultMovPropsParser@{mov\_io::DefaultMovPropsParser}!operator()@{operator()}}
+\index{operator()@{operator()}!mov\_io::DefaultMovPropsParser@{mov\_io::DefaultMovPropsParser}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily void mov\+\_\+io\+::\+Default\+Mov\+Props\+Parser\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107                                                    \{}
+\DoxyCodeLine{00108   \textcolor{comment}{// Ensure the file path was passed -\/ and retrieve it}}
+\DoxyCodeLine{00109   QString reply;}
+\DoxyCodeLine{00110   msg >> reply >> clr;}
+\DoxyCodeLine{00111   \textcolor{keywordflow}{if} (reply.isEmpty()) \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00112 }
+\DoxyCodeLine{00113 \textcolor{preprocessor}{\#ifdef WIN32}}
+\DoxyCodeLine{00114   \textcolor{comment}{// Ensure that QuickTime is correctly running}}
+\DoxyCodeLine{00115   \textcolor{keywordflow}{if} (InitializeQTML(0) != noErr) \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00116 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00117 }
+\DoxyCodeLine{00118   \textcolor{comment}{// Success -\/ retrieve the props}}
+\DoxyCodeLine{00119   \{}
+\DoxyCodeLine{00120     \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}} movProps;}
+\DoxyCodeLine{00121     \{}
+\DoxyCodeLine{00122       \textcolor{comment}{// Low-\/level QuickTime stuff}}
+\DoxyCodeLine{00123       ComponentInstance ci = OpenDefaultComponent(StandardCompressionType,}
+\DoxyCodeLine{00124                                                   StandardCompressionSubType);}
+\DoxyCodeLine{00125       QTAtomContainer settings;}
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127       \textcolor{keywordflow}{if} (SCGetSettingsAsAtomContainer(ci, \&settings) != noErr) assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{00128 }
+\DoxyCodeLine{00129       fromAtomsToProperties(settings, movProps);}
+\DoxyCodeLine{00130     \}}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132     \textcolor{comment}{// Write the retrieved properties}}
+\DoxyCodeLine{00133     \mbox{\hyperlink{class_t_file_path}{TFilePath}} tfp(reply.toStdWString());}
+\DoxyCodeLine{00134     \mbox{\hyperlink{class_t_o_stream}{TOStream}} os(tfp);}
+\DoxyCodeLine{00135 }
+\DoxyCodeLine{00136     movProps.saveData(os);}
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00138     msg << QString(\textcolor{stringliteral}{"{}ok"{}});}
+\DoxyCodeLine{00139   \}}
+\DoxyCodeLine{00140 }
+\DoxyCodeLine{00141   \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143 err:}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145   msg << QString(\textcolor{stringliteral}{"{}err"{}});}
+\DoxyCodeLine{00146 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+h\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t32movmsg.\+cpp\end{DoxyCompactItemize}

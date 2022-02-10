@@ -1,0 +1,251 @@
+\hypertarget{class_c_call_circle}{}\doxysection{CCall\+Circle Class Reference}
+\label{class_c_call_circle}\index{CCallCircle@{CCallCircle}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_c_call_circle_affd062e5e00e875da69e6f5ed6470c75}{CCall\+Circle}} (const double r)
+\item 
+void \mbox{\hyperlink{class_c_call_circle_ab33b024335b5aa13b148639c944c19eb}{print}} ()
+\item 
+{\footnotesize template$<$class P $>$ }\\void \mbox{\hyperlink{class_c_call_circle_aee62a0d202e621cb23c4abea91c8f27f}{get\+CC}} (\mbox{\hyperlink{class_c_s_t_col_sel_pic}{CSTCol\+Sel\+Pic}}$<$ P $>$ \&pic, P \&col)
+\item 
+{\footnotesize template$<$class P $>$ }\\void \mbox{\hyperlink{class_c_call_circle_ae6f56c78b391cf9425c1b6ed1d92d5c3}{get\+CC}} (\mbox{\hyperlink{class_c_s_t_col_sel_pic}{CSTCol\+Sel\+Pic}}$<$ P $>$ \&pic, const int xx, const int yy, P \&col)
+\item 
+{\footnotesize template$<$class P $>$ }\\void \mbox{\hyperlink{class_c_call_circle_ada1ab99fb4251fcd2ae6c9f5b10b0b34}{set\+New\+Contour}} (\mbox{\hyperlink{class_c_s_t_col_sel_pic}{CSTCol\+Sel\+Pic}}$<$ P $>$ \&pic\+Ori, \mbox{\hyperlink{class_c_s_t_col_sel_pic}{CSTCol\+Sel\+Pic}}$<$ P $>$ \&pic, UCHAR $\ast$drawB, const bool is\+One\+CC)
+\item 
+{\footnotesize template$<$class P $>$ }\\void \mbox{\hyperlink{class_c_call_circle_aa42f6c4c99e164236c20920ba4f57450}{draw}} (\mbox{\hyperlink{class_c_s_t_col_sel_pic}{CSTCol\+Sel\+Pic}}$<$ P $>$ \&pic, const bool is\+One\+CC, const double random)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_c_call_circle_a9d0a55232c2cece54be97c069eb8931e}\label{class_c_call_circle_a9d0a55232c2cece54be97c069eb8931e}} 
+\index{CCallCircle@{CCallCircle}!CCallCircle@{CCallCircle}}
+\index{CCallCircle@{CCallCircle}!CCallCircle@{CCallCircle}}
+\doxysubsubsection{\texorpdfstring{CCallCircle()}{CCallCircle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily CCall\+Circle\+::\+CCall\+Circle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027 : m\_r(0.0), m\_nb(0) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_c_call_circle_affd062e5e00e875da69e6f5ed6470c75}\label{class_c_call_circle_affd062e5e00e875da69e6f5ed6470c75}} 
+\index{CCallCircle@{CCallCircle}!CCallCircle@{CCallCircle}}
+\index{CCallCircle@{CCallCircle}!CCallCircle@{CCallCircle}}
+\doxysubsubsection{\texorpdfstring{CCallCircle()}{CCallCircle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily CCall\+Circle\+::\+CCall\+Circle (\begin{DoxyParamCaption}\item[{const double}]{r }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027                                        : m\_r(r), m\_nb(0) \{}
+\DoxyCodeLine{00028   \textcolor{keywordtype}{int} rr = (int)r + 1;}
+\DoxyCodeLine{00029   rr *= 2;}
+\DoxyCodeLine{00030   \textcolor{keywordtype}{int} dd  = rr * 2 + 1;}
+\DoxyCodeLine{00031   \textcolor{keywordtype}{int} dd2 = dd * dd;}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033   \textcolor{keywordflow}{if} (dd2 == 0) \{}
+\DoxyCodeLine{00034     null();}
+\DoxyCodeLine{00035     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00036   \}}
+\DoxyCodeLine{00037 }
+\DoxyCodeLine{00038   m\_c.reset(\textcolor{keyword}{new} \mbox{\hyperlink{struct_s_x_y_d_w}{SXYDW}}[dd2]);}
+\DoxyCodeLine{00039   \textcolor{keywordflow}{if} (!m\_c) \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_s_mem_alloc_error}{SMemAllocError}}(\textcolor{stringliteral}{"{}in callCircle"{}});}
+\DoxyCodeLine{00040   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = -\/rr; y <= rr; y++)}
+\DoxyCodeLine{00041     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = -\/rr; x <= rr; x++) \{}
+\DoxyCodeLine{00042       \textcolor{keywordtype}{double} d = sqrt((\textcolor{keywordtype}{double})(x * x + y * y));}
+\DoxyCodeLine{00043       \textcolor{keywordflow}{if} (d <= r \&\& m\_nb < dd2) \{}
+\DoxyCodeLine{00044         m\_c[m\_nb].x = x;}
+\DoxyCodeLine{00045         m\_c[m\_nb].y = y;}
+\DoxyCodeLine{00046         m\_c[m\_nb].w = d;}
+\DoxyCodeLine{00047         m\_nb++;}
+\DoxyCodeLine{00048       \}}
+\DoxyCodeLine{00049     \}}
+\DoxyCodeLine{00050   qsort(m\_c.get(), m\_nb, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_s_x_y_d_w}{SXYDW}}), callcircle\_xydwCompare);}
+\DoxyCodeLine{00051 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_c_call_circle_a501453a9c5a81f2fd86b5ee26352411f}\label{class_c_call_circle_a501453a9c5a81f2fd86b5ee26352411f}} 
+\index{CCallCircle@{CCallCircle}!````~CCallCircle@{$\sim$CCallCircle}}
+\index{````~CCallCircle@{$\sim$CCallCircle}!CCallCircle@{CCallCircle}}
+\doxysubsubsection{\texorpdfstring{$\sim$CCallCircle()}{~CCallCircle()}}
+{\footnotesize\ttfamily CCall\+Circle\+::$\sim$\+CCall\+Circle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059 \{ null(); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_c_call_circle_aa42f6c4c99e164236c20920ba4f57450}\label{class_c_call_circle_aa42f6c4c99e164236c20920ba4f57450}} 
+\index{CCallCircle@{CCallCircle}!draw@{draw}}
+\index{draw@{draw}!CCallCircle@{CCallCircle}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily template$<$class P $>$ \\
+void CCall\+Circle\+::draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_c_s_t_col_sel_pic}{CSTCol\+Sel\+Pic}}$<$ P $>$ \&}]{pic,  }\item[{const bool}]{is\+One\+CC,  }\item[{const double}]{random }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00115   \{}
+\DoxyCodeLine{00116     \textcolor{keywordflow}{if} (m\_nb <= 0 || m\_c == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00117 }
+\DoxyCodeLine{00118     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00119       \mbox{\hyperlink{class_c_s_t_col_sel_pic}{CSTColSelPic<P>}} picOri;}
+\DoxyCodeLine{00120       picOri = pic;}
+\DoxyCodeLine{00121       \textcolor{keywordflow}{if} (pic.m\_lX > 0 \&\& pic.m\_lY > 0) \{}
+\DoxyCodeLine{00122         std::unique\_ptr<UCHAR[]> drawB(\textcolor{keyword}{new} UCHAR[pic.m\_lX * pic.m\_lY]);}
+\DoxyCodeLine{00123         \textcolor{keywordflow}{if} (!drawB) \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_s_mem_alloc_error}{SMemAllocError}}(\textcolor{stringliteral}{"{}in callCircle"{}});}
+\DoxyCodeLine{00124         memset(drawB.get(), 0, pic.m\_lX * pic.m\_lY);}
+\DoxyCodeLine{00125         UCHAR *pSel = pic.m\_sel.get();}
+\DoxyCodeLine{00126         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = 0; y < pic.m\_lY; y++)}
+\DoxyCodeLine{00127           \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < pic.m\_lX; x++, pSel++)}
+\DoxyCodeLine{00128             \textcolor{keywordflow}{if} (*pSel > (UCHAR)0) \{}
+\DoxyCodeLine{00129               \textcolor{keywordtype}{double} q  = m\_r * (double)((*pSel) -\/ 1) / 254.0;}
+\DoxyCodeLine{00130               \textcolor{keywordtype}{int} rani  = I\_ROUND(random);}
+\DoxyCodeLine{00131               \textcolor{keywordtype}{int} ranii = rani > 0 ? rand() \% (2 * rani) -\/ 15 * rani / 8 : 0;}
+\DoxyCodeLine{00132               q         = q * (1.0 + (double)ranii / 100.0);}
+\DoxyCodeLine{00133               draw(drawB.get(), pic.m\_lX, pic.m\_lY, x, y, q);}
+\DoxyCodeLine{00134             \}}
+\DoxyCodeLine{00135         setNewContour(picOri, pic, drawB.get(), isOneCC);}
+\DoxyCodeLine{00136       \}}
+\DoxyCodeLine{00137     \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_s_mem_alloc_error}{SMemAllocError}}) \{}
+\DoxyCodeLine{00138       \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00139     \}}
+\DoxyCodeLine{00140   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_c_call_circle_ae6f56c78b391cf9425c1b6ed1d92d5c3}\label{class_c_call_circle_ae6f56c78b391cf9425c1b6ed1d92d5c3}} 
+\index{CCallCircle@{CCallCircle}!getCC@{getCC}}
+\index{getCC@{getCC}!CCallCircle@{CCallCircle}}
+\doxysubsubsection{\texorpdfstring{getCC()}{getCC()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class P $>$ \\
+void CCall\+Circle\+::get\+CC (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_c_s_t_col_sel_pic}{CSTCol\+Sel\+Pic}}$<$ P $>$ \&}]{pic,  }\item[{const int}]{xx,  }\item[{const int}]{yy,  }\item[{P \&}]{col }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00048                                                                        \{}
+\DoxyCodeLine{00049     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_nb; i++) \{}
+\DoxyCodeLine{00050       \textcolor{keywordtype}{int} x = xx + m\_c[i].x;}
+\DoxyCodeLine{00051       \textcolor{keywordtype}{int} y = yy + m\_c[i].y;}
+\DoxyCodeLine{00052       \textcolor{keywordflow}{if} (x >= 0 \&\& y >= 0 \&\& x < pic.m\_lX \&\& y < pic.m\_lY) \{}
+\DoxyCodeLine{00053         UCHAR *pSel = pic.m\_sel.get() + y * pic.m\_lX + x;}
+\DoxyCodeLine{00054         \textcolor{keywordflow}{if} (*pSel > (UCHAR)0) \{}
+\DoxyCodeLine{00055           P *pPic = pic.m\_pic + y * pic.m\_lX + x;}
+\DoxyCodeLine{00056           col.r   = pPic-\/>r;}
+\DoxyCodeLine{00057           col.g   = pPic-\/>g;}
+\DoxyCodeLine{00058           col.b   = pPic-\/>b;}
+\DoxyCodeLine{00059           col.m   = pPic-\/>m;}
+\DoxyCodeLine{00060           \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00061         \}}
+\DoxyCodeLine{00062       \}}
+\DoxyCodeLine{00063     \}}
+\DoxyCodeLine{00064   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_c_call_circle_aee62a0d202e621cb23c4abea91c8f27f}\label{class_c_call_circle_aee62a0d202e621cb23c4abea91c8f27f}} 
+\index{CCallCircle@{CCallCircle}!getCC@{getCC}}
+\index{getCC@{getCC}!CCallCircle@{CCallCircle}}
+\doxysubsubsection{\texorpdfstring{getCC()}{getCC()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class P $>$ \\
+void CCall\+Circle\+::get\+CC (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_c_s_t_col_sel_pic}{CSTCol\+Sel\+Pic}}$<$ P $>$ \&}]{pic,  }\item[{P \&}]{col }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033                                            \{}
+\DoxyCodeLine{00034     \textcolor{keywordtype}{int} xy      = pic.m\_lX * pic.m\_lY;}
+\DoxyCodeLine{00035     UCHAR *pSel = pic.m\_sel.get();}
+\DoxyCodeLine{00036     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < xy; i++, pSel++)}
+\DoxyCodeLine{00037       \textcolor{keywordflow}{if} (*pSel > (UCHAR)0) \{}
+\DoxyCodeLine{00038         P *pPic = pic.m\_pic + i;}
+\DoxyCodeLine{00039         col.r   = pPic-\/>r;}
+\DoxyCodeLine{00040         col.g   = pPic-\/>g;}
+\DoxyCodeLine{00041         col.b   = pPic-\/>b;}
+\DoxyCodeLine{00042         col.m   = pPic-\/>m;}
+\DoxyCodeLine{00043         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00044       \}}
+\DoxyCodeLine{00045   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_c_call_circle_ab33b024335b5aa13b148639c944c19eb}\label{class_c_call_circle_ab33b024335b5aa13b148639c944c19eb}} 
+\index{CCallCircle@{CCallCircle}!print@{print}}
+\index{print@{print}!CCallCircle@{CCallCircle}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily void CCall\+Circle\+::print (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00061                         \{}
+\DoxyCodeLine{00062   \textcolor{comment}{/*smsg\_info("{} -\/-\/-\/ CCallCircle -\/-\/-\/"{});}}
+\DoxyCodeLine{00063 \textcolor{comment}{  smsg\_info("{} m\_nb=\%d"{}, m\_nb);}}
+\DoxyCodeLine{00064 \textcolor{comment}{  smsg\_info("{} m\_r=\%f"{}, m\_r);}}
+\DoxyCodeLine{00065 \textcolor{comment}{  for( int i=0; i<m\_nb; i++ )}}
+\DoxyCodeLine{00066 \textcolor{comment}{          smsg\_info("{} \%d. = (\%d,\%d,\%f)"{}, i, m\_c[i].x,m\_c[i].y,m\_c[i].w);}}
+\DoxyCodeLine{00067 \textcolor{comment}{  smsg\_info("{} -\/-\/-\/ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ -\/-\/-\/\(\backslash\)n"{});}}
+\DoxyCodeLine{00068 \textcolor{comment}{*/}}
+\DoxyCodeLine{00069 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_c_call_circle_ada1ab99fb4251fcd2ae6c9f5b10b0b34}\label{class_c_call_circle_ada1ab99fb4251fcd2ae6c9f5b10b0b34}} 
+\index{CCallCircle@{CCallCircle}!setNewContour@{setNewContour}}
+\index{setNewContour@{setNewContour}!CCallCircle@{CCallCircle}}
+\doxysubsubsection{\texorpdfstring{setNewContour()}{setNewContour()}}
+{\footnotesize\ttfamily template$<$class P $>$ \\
+void CCall\+Circle\+::set\+New\+Contour (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_c_s_t_col_sel_pic}{CSTCol\+Sel\+Pic}}$<$ P $>$ \&}]{pic\+Ori,  }\item[{\mbox{\hyperlink{class_c_s_t_col_sel_pic}{CSTCol\+Sel\+Pic}}$<$ P $>$ \&}]{pic,  }\item[{UCHAR $\ast$}]{drawB,  }\item[{const bool}]{is\+One\+CC }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068                                                        \{}
+\DoxyCodeLine{00069     UCHAR *pDB      = drawB;}
+\DoxyCodeLine{00070     P *p            = pic.m\_pic;}
+\DoxyCodeLine{00071     P *pOri         = picOri.m\_pic;}
+\DoxyCodeLine{00072     \textcolor{keywordtype}{int} xy          = pic.m\_lX * pic.m\_lY;}
+\DoxyCodeLine{00073     P col           = \{0, 255, 0, 255\};}
+\DoxyCodeLine{00074     \textcolor{keywordtype}{int} rgbmMax     = pic.getType() == ST\_RGBM64 ? US\_MAX : UC\_MAX;}
+\DoxyCodeLine{00075     \textcolor{keywordtype}{double} rgbmMaxD = (double)rgbmMax;}
+\DoxyCodeLine{00076 }
+\DoxyCodeLine{00077     \textcolor{keywordflow}{if} (isOneCC) getCC(picOri, col);}
+\DoxyCodeLine{00078     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < xy; i++, pDB++, p++, pOri++) \{}
+\DoxyCodeLine{00079       \textcolor{keywordflow}{if} (*pDB == 255) \{}
+\DoxyCodeLine{00080         \textcolor{keywordflow}{if} (!isOneCC) getCC(picOri, i \% pic.m\_lX, i / pic.m\_lX, col);}
+\DoxyCodeLine{00081         p-\/>r = col.r;}
+\DoxyCodeLine{00082         p-\/>g = col.g;}
+\DoxyCodeLine{00083         p-\/>b = col.b;}
+\DoxyCodeLine{00084         p-\/>m = col.m;}
+\DoxyCodeLine{00085       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (*pDB > 0) \{}
+\DoxyCodeLine{00086         \textcolor{keywordflow}{if} (!isOneCC) getCC(picOri, i \% pic.m\_lX, i / pic.m\_lX, col);}
+\DoxyCodeLine{00087         \textcolor{keywordtype}{double} q  = ((double)(*pDB) / 255.0) * (\textcolor{keywordtype}{double})col.m / (double)rgbmMax;}
+\DoxyCodeLine{00088         \textcolor{keywordtype}{double} qq = 1.0 -\/ q;}
+\DoxyCodeLine{00089         \textcolor{keywordtype}{double} r  = q * (double)col.r + qq * (\textcolor{keywordtype}{double})(pOri-\/>r);}
+\DoxyCodeLine{00090         \textcolor{keywordtype}{double} g  = q * (double)col.g + qq * (\textcolor{keywordtype}{double})(pOri-\/>g);}
+\DoxyCodeLine{00091         \textcolor{keywordtype}{double} b  = q * (double)col.b + qq * (\textcolor{keywordtype}{double})(pOri-\/>b);}
+\DoxyCodeLine{00092         \textcolor{keywordtype}{double} m  = q * (double)col.m + qq * (\textcolor{keywordtype}{double})(pOri-\/>m);}
+\DoxyCodeLine{00093         r         = D\_CUT(r, 0.0, rgbmMaxD);}
+\DoxyCodeLine{00094         g         = D\_CUT(g, 0.0, rgbmMaxD);}
+\DoxyCodeLine{00095         b         = D\_CUT(b, 0.0, rgbmMaxD);}
+\DoxyCodeLine{00096         m         = D\_CUT(m, 0.0, rgbmMaxD);}
+\DoxyCodeLine{00097         \textcolor{keywordflow}{if} (rgbmMax == 255) \{}
+\DoxyCodeLine{00098           p-\/>r = UC\_ROUND(r);}
+\DoxyCodeLine{00099           p-\/>g = UC\_ROUND(g);}
+\DoxyCodeLine{00100           p-\/>b = UC\_ROUND(b);}
+\DoxyCodeLine{00101           p-\/>m = UC\_ROUND(m);}
+\DoxyCodeLine{00102         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00103           p-\/>r = (UCHAR)US\_ROUND(r);}
+\DoxyCodeLine{00104           p-\/>g = (UCHAR)US\_ROUND(g);}
+\DoxyCodeLine{00105           p-\/>b = (UCHAR)US\_ROUND(b);}
+\DoxyCodeLine{00106           p-\/>m = (UCHAR)US\_ROUND(m);}
+\DoxyCodeLine{00107         \}}
+\DoxyCodeLine{00108       \}}
+\DoxyCodeLine{00109     \}}
+\DoxyCodeLine{00110   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/sandor\+\_\+fxs/Call\+Circle.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/sandor\+\_\+fxs/Call\+Circle.\+cpp\end{DoxyCompactItemize}

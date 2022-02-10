@@ -1,0 +1,417 @@
+\hypertarget{class_render_task}{}\doxysection{Render\+Task Class Reference}
+\label{class_render_task}\index{RenderTask@{RenderTask}}
+Inheritance diagram for Render\+Task\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_render_task}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_render_task_a34a4ec42b5ce97c352d853bcb159677b}{Render\+Task}} (unsigned long render\+Id, unsigned long task\+Id, double frame, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&ri, const \mbox{\hyperlink{class_t_fx_pair}{TFx\+Pair}} \&fx, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&frame\+Pos, const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&frame\+Size, const \mbox{\hyperlink{class_t_smart_pointer_t}{TRenderer\+ImpP}} \&renderer\+Imp)
+\item 
+void \mbox{\hyperlink{class_render_task_a4a473aebc935ee97b149f8a5bee86ad3}{add\+Frame}} (double frame)
+\item 
+void \mbox{\hyperlink{class_render_task_af7a2779a05cac8ec03a3ae4d0b129316}{build\+Tile}} (\mbox{\hyperlink{class_t_tile}{TTile}} \&tile)
+\item 
+void \mbox{\hyperlink{class_render_task_a1a49e4c5a4e6615dd201115da39e0cd2}{release\+Tiles}} ()
+\item 
+void \mbox{\hyperlink{class_render_task_a90e42d11dd6db8391bb7da5a8d12f0a5}{on\+Frame\+Started}} ()
+\item 
+void \mbox{\hyperlink{class_render_task_a3f71c9b9da0a971c1a73abaa85ccf6b1}{on\+Frame\+Completed}} ()
+\item 
+void \mbox{\hyperlink{class_render_task_a7aab533fcf2cf162d5ed08d1f168dc3c}{on\+Frame\+Failed}} (\mbox{\hyperlink{class_t_exception}{TException}} \&e)
+\item 
+void \mbox{\hyperlink{class_render_task_a4233cbcd0a85006692e16d0e72fb295e}{pre\+Run}} ()
+\item 
+void \mbox{\hyperlink{class_render_task_aa29790caf493428270230adef46f46bc}{run}} () override
+\begin{DoxyCompactList}\small\item\em The central code of the task that is executed by a worker thread. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_render_task_a1e59b3deba3c988b62e78e81bda1172f}{task\+Load}} () override
+\item 
+void \mbox{\hyperlink{class_render_task_a58ffdff3acd6939971633419f990de20}{on\+Finished}} (\mbox{\hyperlink{class_t_smart_pointer_t}{TThread\+::\+RunnableP}}) override
+\begin{DoxyCompactList}\small\item\em The analogous of \mbox{\hyperlink{class_t_thread_1_1_runnable_a0857d4a039557f2853a12203ea854f01}{on\+Started()}} for the \mbox{\hyperlink{class_t_thread_1_1_runnable_a77da4aa600bdb892b55312efcd6e3a21}{finished()}} signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_render_task_a34a4ec42b5ce97c352d853bcb159677b}\label{class_render_task_a34a4ec42b5ce97c352d853bcb159677b}} 
+\index{RenderTask@{RenderTask}!RenderTask@{RenderTask}}
+\index{RenderTask@{RenderTask}!RenderTask@{RenderTask}}
+\doxysubsubsection{\texorpdfstring{RenderTask()}{RenderTask()}}
+{\footnotesize\ttfamily Render\+Task\+::\+Render\+Task (\begin{DoxyParamCaption}\item[{unsigned long}]{render\+Id,  }\item[{unsigned long}]{task\+Id,  }\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{ri,  }\item[{const \mbox{\hyperlink{class_t_fx_pair}{TFx\+Pair}} \&}]{fx,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{frame\+Pos,  }\item[{const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&}]{frame\+Size,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRenderer\+ImpP}} \&}]{renderer\+Imp }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00921     : m\_renderId(renderId)}
+\DoxyCodeLine{00922     , m\_taskId(taskId)}
+\DoxyCodeLine{00923     , m\_info(ri)}
+\DoxyCodeLine{00924     , m\_fx(fx)}
+\DoxyCodeLine{00925     , m\_frameSize(frameSize)}
+\DoxyCodeLine{00926     , m\_framePos(framePos)}
+\DoxyCodeLine{00927     , m\_rendererImp(rendererImp)}
+\DoxyCodeLine{00928     , m\_fieldRender(ri.\mbox{\hyperlink{class_t_render_settings_a48bbcbb6ca2cad3de97f4cabea09cd2f}{m\_fieldPrevalence}} != \mbox{\hyperlink{class_t_render_settings_aff548d2c58f7c6adea513ab32526eae8acc9a06de2f74e1ae1404282226d6a2d9}{TRenderSettings::NoField}})}
+\DoxyCodeLine{00929     , m\_stereoscopic(ri.\mbox{\hyperlink{class_t_render_settings_aadbd5a3a50b242b366a93023d5f7da07}{m\_stereoscopic}}) \{}
+\DoxyCodeLine{00930   m\_frames.push\_back(frame);}
+\DoxyCodeLine{00931 }
+\DoxyCodeLine{00932   \textcolor{comment}{// Connect the onFinished slot}}
+\DoxyCodeLine{00933   connect(\textcolor{keyword}{this}, SIGNAL(\mbox{\hyperlink{class_t_thread_1_1_runnable_a77da4aa600bdb892b55312efcd6e3a21}{finished}}(\mbox{\hyperlink{class_t_smart_pointer_t}{TThread::RunnableP}})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00934           SLOT(\mbox{\hyperlink{class_render_task_a58ffdff3acd6939971633419f990de20}{onFinished}}(\mbox{\hyperlink{class_t_smart_pointer_t}{TThread::RunnableP}})));}
+\DoxyCodeLine{00935   connect(\textcolor{keyword}{this}, SIGNAL(\mbox{\hyperlink{class_t_thread_1_1_runnable_a9dd092bdcdc53e1ed45851562417e135}{exception}}(\mbox{\hyperlink{class_t_smart_pointer_t}{TThread::RunnableP}})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00936           SLOT(\mbox{\hyperlink{class_render_task_a58ffdff3acd6939971633419f990de20}{onFinished}}(\mbox{\hyperlink{class_t_smart_pointer_t}{TThread::RunnableP}})));}
+\DoxyCodeLine{00937 }
+\DoxyCodeLine{00938   \textcolor{comment}{// The shrink info is currently reversed to the settings'affine. Shrink info}}
+\DoxyCodeLine{00939   \textcolor{comment}{// in the TRenderSettings}}
+\DoxyCodeLine{00940   \textcolor{comment}{// is no longer supported.}}
+\DoxyCodeLine{00941   m\_info.\mbox{\hyperlink{class_t_render_settings_a52dd41881bbf6aaf953fe300be2e233e}{m\_shrinkX}} = m\_info.\mbox{\hyperlink{class_t_render_settings_ae1882f584ce9ffad12ce6bf9ff23814c}{m\_shrinkY}} = 1;}
+\DoxyCodeLine{00942 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_task_a57cd2d0c1924c4023806aedac8893dc9}\label{class_render_task_a57cd2d0c1924c4023806aedac8893dc9}} 
+\index{RenderTask@{RenderTask}!````~RenderTask@{$\sim$RenderTask}}
+\index{````~RenderTask@{$\sim$RenderTask}!RenderTask@{RenderTask}}
+\doxysubsubsection{\texorpdfstring{$\sim$RenderTask()}{~RenderTask()}}
+{\footnotesize\ttfamily Render\+Task\+::$\sim$\+Render\+Task (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00407 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_render_task_a4a473aebc935ee97b149f8a5bee86ad3}\label{class_render_task_a4a473aebc935ee97b149f8a5bee86ad3}} 
+\index{RenderTask@{RenderTask}!addFrame@{addFrame}}
+\index{addFrame@{addFrame}!RenderTask@{RenderTask}}
+\doxysubsubsection{\texorpdfstring{addFrame()}{addFrame()}}
+{\footnotesize\ttfamily void Render\+Task\+::add\+Frame (\begin{DoxyParamCaption}\item[{double}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00409 \{ m\_frames.push\_back(frame); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_task_af7a2779a05cac8ec03a3ae4d0b129316}\label{class_render_task_af7a2779a05cac8ec03a3ae4d0b129316}} 
+\index{RenderTask@{RenderTask}!buildTile@{buildTile}}
+\index{buildTile@{buildTile}!RenderTask@{RenderTask}}
+\doxysubsubsection{\texorpdfstring{buildTile()}{buildTile()}}
+{\footnotesize\ttfamily void Render\+Task\+::build\+Tile (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_tile}{TTile}} \&}]{tile }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01043                                       \{}
+\DoxyCodeLine{01044   tile.m\_pos = m\_framePos;}
+\DoxyCodeLine{01045   tile.setRaster(}
+\DoxyCodeLine{01046       m\_rendererImp-\/>m\_rasterPool.\mbox{\hyperlink{class_raster_pool_a5ced6c81a08eebfb4c4dea5bd5a72ddc}{getRaster}}(m\_frameSize, m\_info.\mbox{\hyperlink{class_t_render_settings_a9489ed9d21a047b29cc5dd285f1f6f19}{m\_bpp}}));}
+\DoxyCodeLine{01047 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_task_a58ffdff3acd6939971633419f990de20}\label{class_render_task_a58ffdff3acd6939971633419f990de20}} 
+\index{RenderTask@{RenderTask}!onFinished@{onFinished}}
+\index{onFinished@{onFinished}!RenderTask@{RenderTask}}
+\doxysubsubsection{\texorpdfstring{onFinished()}{onFinished()}}
+{\footnotesize\ttfamily void Render\+Task\+::on\+Finished (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{TThread\+::\+RunnableP}}}]{sender }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The analogous of \mbox{\hyperlink{class_t_thread_1_1_runnable_a0857d4a039557f2853a12203ea854f01}{on\+Started()}} for the \mbox{\hyperlink{class_t_thread_1_1_runnable_a77da4aa600bdb892b55312efcd6e3a21}{finished()}} signal. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_thread_1_1_runnable_ae08796496a74b40c4e1940e386f7926f}{TThread\+::\+Runnable}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01100                                             \{}
+\DoxyCodeLine{01101   \mbox{\hyperlink{class_t_renderer_imp}{TRendererImp}} *rendererImp = m\_rendererImp.getPointer();}
+\DoxyCodeLine{01102   -\/-\/rendererImp-\/>m\_undoneTasks;}
+\DoxyCodeLine{01103 }
+\DoxyCodeLine{01104   \textcolor{comment}{// Tiles release back to the Raster Pool happens in the main thread, after all}}
+\DoxyCodeLine{01105   \textcolor{comment}{// possible}}
+\DoxyCodeLine{01106   \textcolor{comment}{// signals emitted in the onFrameCompleted/Failed notifications have been}}
+\DoxyCodeLine{01107   \textcolor{comment}{// resolved, thus}}
+\DoxyCodeLine{01108   \textcolor{comment}{// ensuring that no other rendering thread owns the rasters before them.}}
+\DoxyCodeLine{01109   releaseTiles();}
+\DoxyCodeLine{01110 }
+\DoxyCodeLine{01111   \textcolor{comment}{// Update the render instance status}}
+\DoxyCodeLine{01112   \textcolor{keywordtype}{bool} instanceExpires = \textcolor{keyword}{false};}
+\DoxyCodeLine{01113   \textcolor{keywordtype}{bool} isCanceled      = \textcolor{keyword}{false};}
+\DoxyCodeLine{01114   \{}
+\DoxyCodeLine{01115     QMutexLocker sl(\&rendererImp-\/>m\_renderInstancesMutex);}
+\DoxyCodeLine{01116     std::map<unsigned long, TRendererImp::RenderInstanceInfos>::iterator it =}
+\DoxyCodeLine{01117         rendererImp-\/>m\_activeInstances.find(m\_renderId);}
+\DoxyCodeLine{01118 }
+\DoxyCodeLine{01119     \textcolor{keywordflow}{if} (it != rendererImp-\/>m\_activeInstances.end() \&\&}
+\DoxyCodeLine{01120         (-\/-\/it-\/>second.m\_activeTasks) <= 0) \{}
+\DoxyCodeLine{01121       instanceExpires = \textcolor{keyword}{true};}
+\DoxyCodeLine{01122       isCanceled      = (m\_info.m\_isCanceled \&\& *m\_info.m\_isCanceled);}
+\DoxyCodeLine{01123       rendererImp-\/>m\_activeInstances.erase(m\_renderId);}
+\DoxyCodeLine{01124       \textcolor{comment}{// m\_info is freed, don't access further!}}
+\DoxyCodeLine{01125     \}}
+\DoxyCodeLine{01126   \}}
+\DoxyCodeLine{01127 }
+\DoxyCodeLine{01128   \textcolor{comment}{// If the render instance has just expired}}
+\DoxyCodeLine{01129   \textcolor{keywordflow}{if} (instanceExpires) \{}
+\DoxyCodeLine{01130     \textcolor{comment}{/*-\/-\/ キャンセルされた場合はm\_overallRenderedRegionの更新をしない -\/-\/*/}}
+\DoxyCodeLine{01131 }
+\DoxyCodeLine{01132     \textcolor{comment}{// Inform the render ports}}
+\DoxyCodeLine{01133     rendererImp-\/>notifyRenderFinished(isCanceled);}
+\DoxyCodeLine{01134 }
+\DoxyCodeLine{01135     \textcolor{comment}{// NOTE: This slot is currently invoked on the main thread. It could}}
+\DoxyCodeLine{01136     \textcolor{comment}{// eventually be}}
+\DoxyCodeLine{01137     \textcolor{comment}{// invoked directly on rendering threads, specifying the}}
+\DoxyCodeLine{01138     \textcolor{comment}{// Qt::DirectConnection option -\/}}
+\DoxyCodeLine{01139     \textcolor{comment}{// but probably there would be no real advantage in doing so...}}
+\DoxyCodeLine{01140 }
+\DoxyCodeLine{01141     \textcolor{comment}{// Temporarily install the renderer in current thread}}
+\DoxyCodeLine{01142     rendererStorage.setLocalData(\textcolor{keyword}{new} (\mbox{\hyperlink{class_t_renderer_imp}{TRendererImp}} *)(rendererImp));}
+\DoxyCodeLine{01143     renderIdsStorage.setLocalData(\textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}(m\_renderId));}
+\DoxyCodeLine{01144 }
+\DoxyCodeLine{01145     \textcolor{comment}{// Inform the resource managers}}
+\DoxyCodeLine{01146     rendererImp-\/>declareRenderEnd(m\_renderId);}
+\DoxyCodeLine{01147 }
+\DoxyCodeLine{01148     \textcolor{comment}{// Uninstall the temporary}}
+\DoxyCodeLine{01149     rendererStorage.setLocalData(0);}
+\DoxyCodeLine{01150     renderIdsStorage.setLocalData(0);}
+\DoxyCodeLine{01151 }
+\DoxyCodeLine{01152     rendererImp-\/>m\_rasterPool}
+\DoxyCodeLine{01153         .clear();  \textcolor{comment}{// Isn't this misplaced? Should be in the block}}
+\DoxyCodeLine{01154   \}                \textcolor{comment}{// below...}}
+\DoxyCodeLine{01155 }
+\DoxyCodeLine{01156   \textcolor{comment}{// If no rendering task (of this or other render instances) is found...}}
+\DoxyCodeLine{01157   \textcolor{keywordflow}{if} (rendererImp-\/>m\_undoneTasks == 0) \{}
+\DoxyCodeLine{01158     QMutexLocker sl(\&rendererImp-\/>m\_renderInstancesMutex);}
+\DoxyCodeLine{01159     rendererImp-\/>quitWaitingLoops();}
+\DoxyCodeLine{01160   \}}
+\DoxyCodeLine{01161 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_task_a3f71c9b9da0a971c1a73abaa85ccf6b1}\label{class_render_task_a3f71c9b9da0a971c1a73abaa85ccf6b1}} 
+\index{RenderTask@{RenderTask}!onFrameCompleted@{onFrameCompleted}}
+\index{onFrameCompleted@{onFrameCompleted}!RenderTask@{RenderTask}}
+\doxysubsubsection{\texorpdfstring{onFrameCompleted()}{onFrameCompleted()}}
+{\footnotesize\ttfamily void Render\+Task\+::on\+Frame\+Completed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01069                                   \{}
+\DoxyCodeLine{01070   \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} rasA(m\_tileA.getRaster());}
+\DoxyCodeLine{01071   \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} rasB(m\_tileB.getRaster());}
+\DoxyCodeLine{01072 }
+\DoxyCodeLine{01073   \textcolor{keywordflow}{if} (m\_fieldRender) \{}
+\DoxyCodeLine{01074     assert(rasB);}
+\DoxyCodeLine{01075 }
+\DoxyCodeLine{01076     \textcolor{keywordtype}{double} t = m\_frames[0];}
+\DoxyCodeLine{01077 }
+\DoxyCodeLine{01078     \textcolor{keywordtype}{int} f = (m\_info.\mbox{\hyperlink{class_t_render_settings_a48bbcbb6ca2cad3de97f4cabea09cd2f}{m\_fieldPrevalence}} == \mbox{\hyperlink{class_t_render_settings_aff548d2c58f7c6adea513ab32526eae8ae38d22371c97793cd13eede40d9557db}{TRenderSettings::EvenField}}) ? 0 : 1;}
+\DoxyCodeLine{01079     interlace(rasA, rasB, f);}
+\DoxyCodeLine{01080     rasB = \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}();}
+\DoxyCodeLine{01081   \}}
+\DoxyCodeLine{01082 }
+\DoxyCodeLine{01083   \mbox{\hyperlink{struct_t_render_port_1_1_render_data}{TRenderPort::RenderData}} rd(m\_frames, m\_info, rasA, rasB, m\_renderId,}
+\DoxyCodeLine{01084                              m\_taskId);}
+\DoxyCodeLine{01085   m\_rendererImp-\/>notifyRasterCompleted(rd);}
+\DoxyCodeLine{01086 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_task_a7aab533fcf2cf162d5ed08d1f168dc3c}\label{class_render_task_a7aab533fcf2cf162d5ed08d1f168dc3c}} 
+\index{RenderTask@{RenderTask}!onFrameFailed@{onFrameFailed}}
+\index{onFrameFailed@{onFrameFailed}!RenderTask@{RenderTask}}
+\doxysubsubsection{\texorpdfstring{onFrameFailed()}{onFrameFailed()}}
+{\footnotesize\ttfamily void Render\+Task\+::on\+Frame\+Failed (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_exception}{TException}} \&}]{e }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01090                                             \{}
+\DoxyCodeLine{01091   \textcolor{comment}{// TRasterP evenRas(m\_evenTile.getRaster());}}
+\DoxyCodeLine{01092 }
+\DoxyCodeLine{01093   \mbox{\hyperlink{struct_t_render_port_1_1_render_data}{TRenderPort::RenderData}} rd(m\_frames, m\_info, m\_tileA.getRaster(),}
+\DoxyCodeLine{01094                              m\_tileB.getRaster(), m\_renderId, m\_taskId);}
+\DoxyCodeLine{01095   m\_rendererImp-\/>notifyRasterFailure(rd, e);}
+\DoxyCodeLine{01096 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_task_a90e42d11dd6db8391bb7da5a8d12f0a5}\label{class_render_task_a90e42d11dd6db8391bb7da5a8d12f0a5}} 
+\index{RenderTask@{RenderTask}!onFrameStarted@{onFrameStarted}}
+\index{onFrameStarted@{onFrameStarted}!RenderTask@{RenderTask}}
+\doxysubsubsection{\texorpdfstring{onFrameStarted()}{onFrameStarted()}}
+{\footnotesize\ttfamily void Render\+Task\+::on\+Frame\+Started (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01062                                 \{}
+\DoxyCodeLine{01063   \mbox{\hyperlink{struct_t_render_port_1_1_render_data}{TRenderPort::RenderData}} rd(m\_frames, m\_info, 0, 0, m\_renderId, m\_taskId);}
+\DoxyCodeLine{01064   m\_rendererImp-\/>notifyRasterStarted(rd);}
+\DoxyCodeLine{01065 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_task_a4233cbcd0a85006692e16d0e72fb295e}\label{class_render_task_a4233cbcd0a85006692e16d0e72fb295e}} 
+\index{RenderTask@{RenderTask}!preRun@{preRun}}
+\index{preRun@{preRun}!RenderTask@{RenderTask}}
+\doxysubsubsection{\texorpdfstring{preRun()}{preRun()}}
+{\footnotesize\ttfamily void Render\+Task\+::pre\+Run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00946                         \{}
+\DoxyCodeLine{00947   \mbox{\hyperlink{class_t_rect_t}{TRectD}} geom(m\_framePos, \mbox{\hyperlink{class_t_dimension_t}{TDimensionD}}(m\_frameSize.lx, m\_frameSize.ly));}
+\DoxyCodeLine{00948 }
+\DoxyCodeLine{00949   \textcolor{keywordflow}{if} (m\_fx.m\_frameA) m\_fx.m\_frameA-\/>dryCompute(geom, m\_frames[0], m\_info);}
+\DoxyCodeLine{00950 }
+\DoxyCodeLine{00951   \textcolor{keywordflow}{if} (m\_fx.m\_frameB)}
+\DoxyCodeLine{00952     m\_fx.m\_frameB-\/>dryCompute(}
+\DoxyCodeLine{00953         geom, m\_fieldRender ? m\_frames[0] + 0.5 : m\_frames[0], m\_info);}
+\DoxyCodeLine{00954 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_task_a1a49e4c5a4e6615dd201115da39e0cd2}\label{class_render_task_a1a49e4c5a4e6615dd201115da39e0cd2}} 
+\index{RenderTask@{RenderTask}!releaseTiles@{releaseTiles}}
+\index{releaseTiles@{releaseTiles}!RenderTask@{RenderTask}}
+\doxysubsubsection{\texorpdfstring{releaseTiles()}{releaseTiles()}}
+{\footnotesize\ttfamily void Render\+Task\+::release\+Tiles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01051                               \{}
+\DoxyCodeLine{01052   m\_rendererImp-\/>m\_rasterPool.\mbox{\hyperlink{class_raster_pool_aba17ef1e87c928422bc337f06249f19e}{releaseRaster}}(m\_tileA.getRaster());}
+\DoxyCodeLine{01053   m\_tileA.setRaster(\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}());}
+\DoxyCodeLine{01054   \textcolor{keywordflow}{if} (m\_fieldRender || m\_stereoscopic) \{}
+\DoxyCodeLine{01055     m\_rendererImp-\/>m\_rasterPool.\mbox{\hyperlink{class_raster_pool_aba17ef1e87c928422bc337f06249f19e}{releaseRaster}}(m\_tileB.getRaster());}
+\DoxyCodeLine{01056     m\_tileB.setRaster(\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}());}
+\DoxyCodeLine{01057   \}}
+\DoxyCodeLine{01058 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_render_task_aa29790caf493428270230adef46f46bc}\label{class_render_task_aa29790caf493428270230adef46f46bc}} 
+\index{RenderTask@{RenderTask}!run@{run}}
+\index{run@{run}!RenderTask@{RenderTask}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Render\+Task\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The central code of the task that is executed by a worker thread. 
+
+
+
+Implements \mbox{\hyperlink{class_t_thread_1_1_runnable_ad3b8ee5e7b375bd169f7382fa26b00ef}{TThread\+::\+Runnable}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00958                      \{}
+\DoxyCodeLine{00959   \textcolor{comment}{// Retrieve the task's frame}}
+\DoxyCodeLine{00960   assert(!m\_frames.empty());}
+\DoxyCodeLine{00961   \textcolor{keywordtype}{double} t = m\_frames[0];}
+\DoxyCodeLine{00962 }
+\DoxyCodeLine{00963   \textcolor{keywordflow}{if} (m\_rendererImp-\/>hasToDie(m\_renderId)) \{}
+\DoxyCodeLine{00964     \mbox{\hyperlink{class_t_exception}{TException}} e(\textcolor{stringliteral}{"{}Render task aborted"{}});}
+\DoxyCodeLine{00965     onFrameFailed(e);}
+\DoxyCodeLine{00966     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00967   \}}
+\DoxyCodeLine{00968 }
+\DoxyCodeLine{00969   \textcolor{comment}{// Install the renderer in current thread}}
+\DoxyCodeLine{00970   rendererStorage.setLocalData(}
+\DoxyCodeLine{00971       \textcolor{keyword}{new} (\mbox{\hyperlink{class_t_renderer_imp}{TRendererImp}} *)(m\_rendererImp.getPointer()));}
+\DoxyCodeLine{00972   renderIdsStorage.setLocalData(\textcolor{keyword}{new} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}(m\_renderId));}
+\DoxyCodeLine{00973 }
+\DoxyCodeLine{00974   \textcolor{comment}{// Inform the managers of frame start}}
+\DoxyCodeLine{00975   m\_rendererImp-\/>declareFrameStart(t);}
+\DoxyCodeLine{00976 }
+\DoxyCodeLine{00977   \textcolor{keyword}{auto} sortedFxs = calculateSortedFxs(m\_fx.m\_frameA);}
+\DoxyCodeLine{00978   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} fx : sortedFxs) \{}
+\DoxyCodeLine{00979     \textcolor{keywordflow}{if} (fx) \textcolor{keyword}{const\_cast<}\mbox{\hyperlink{class_t_fx}{TFx}} *\textcolor{keyword}{>}(fx)-\/>callStartRenderFrameHandler(\&m\_info, t);}
+\DoxyCodeLine{00980   \}}
+\DoxyCodeLine{00981 }
+\DoxyCodeLine{00982   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00983     onFrameStarted();}
+\DoxyCodeLine{00984 }
+\DoxyCodeLine{00985     \mbox{\hyperlink{class_t_stop_watch_aaee6e300a0123a333d7cb80ad253125e}{TStopWatch::global}}(8).\mbox{\hyperlink{class_t_stop_watch_a81eefb8cd2dc776cc31799973be063a8}{start}}();}
+\DoxyCodeLine{00986 }
+\DoxyCodeLine{00987     \textcolor{keywordflow}{if} (!m\_fieldRender \&\& !m\_stereoscopic) \{}
+\DoxyCodeLine{00988       \textcolor{comment}{// Common case -\/ just build the first tile}}
+\DoxyCodeLine{00989       buildTile(m\_tileA);}
+\DoxyCodeLine{00990       \textcolor{comment}{/*-\/-\/ 通常はここがFxのレンダリング処理 -\/-\/*/}}
+\DoxyCodeLine{00991       m\_fx.m\_frameA-\/>compute(m\_tileA, t, m\_info);}
+\DoxyCodeLine{00992     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00993       assert(!(m\_stereoscopic \&\& m\_fieldRender));}
+\DoxyCodeLine{00994       \textcolor{comment}{// Field rendering  or stereoscopic case}}
+\DoxyCodeLine{00995       \textcolor{keywordflow}{if} (m\_stereoscopic) \{}
+\DoxyCodeLine{00996         buildTile(m\_tileA);}
+\DoxyCodeLine{00997         m\_fx.m\_frameA-\/>compute(m\_tileA, t, m\_info);}
+\DoxyCodeLine{00998 }
+\DoxyCodeLine{00999         buildTile(m\_tileB);}
+\DoxyCodeLine{01000         m\_fx.m\_frameB-\/>compute(m\_tileB, t, m\_info);}
+\DoxyCodeLine{01001       \}}
+\DoxyCodeLine{01002       \textcolor{comment}{// if fieldPrevalence, Decide the rendering frames depending on field}}
+\DoxyCodeLine{01003       \textcolor{comment}{// prevalence}}
+\DoxyCodeLine{01004       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_info.\mbox{\hyperlink{class_t_render_settings_a48bbcbb6ca2cad3de97f4cabea09cd2f}{m\_fieldPrevalence}} == \mbox{\hyperlink{class_t_render_settings_aff548d2c58f7c6adea513ab32526eae8ae38d22371c97793cd13eede40d9557db}{TRenderSettings::EvenField}}) \{}
+\DoxyCodeLine{01005         buildTile(m\_tileA);}
+\DoxyCodeLine{01006         m\_fx.m\_frameA-\/>compute(m\_tileA, t, m\_info);}
+\DoxyCodeLine{01007 }
+\DoxyCodeLine{01008         buildTile(m\_tileB);}
+\DoxyCodeLine{01009         m\_fx.m\_frameB-\/>compute(m\_tileB, t + 0.5, m\_info);}
+\DoxyCodeLine{01010       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01011         buildTile(m\_tileB);}
+\DoxyCodeLine{01012         m\_fx.m\_frameA-\/>compute(m\_tileB, t, m\_info);}
+\DoxyCodeLine{01013 }
+\DoxyCodeLine{01014         buildTile(m\_tileA);}
+\DoxyCodeLine{01015         m\_fx.m\_frameB-\/>compute(m\_tileA, t + 0.5, m\_info);}
+\DoxyCodeLine{01016       \}}
+\DoxyCodeLine{01017     \}}
+\DoxyCodeLine{01018 }
+\DoxyCodeLine{01019     \mbox{\hyperlink{class_t_stop_watch_aaee6e300a0123a333d7cb80ad253125e}{TStopWatch::global}}(8).stop();}
+\DoxyCodeLine{01020 }
+\DoxyCodeLine{01021     onFrameCompleted();}
+\DoxyCodeLine{01022   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{01023     onFrameFailed(e);}
+\DoxyCodeLine{01024   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{01025     \mbox{\hyperlink{class_t_exception}{TException}} ex(\textcolor{stringliteral}{"{}Unknown render exception"{}});}
+\DoxyCodeLine{01026     onFrameFailed(ex);}
+\DoxyCodeLine{01027   \}}
+\DoxyCodeLine{01028 }
+\DoxyCodeLine{01029   \textcolor{comment}{// Inform the managers of frame end}}
+\DoxyCodeLine{01030   m\_rendererImp-\/>declareFrameEnd(t);}
+\DoxyCodeLine{01031 }
+\DoxyCodeLine{01032   \textcolor{comment}{// Uninstall the renderer from current thread}}
+\DoxyCodeLine{01033   rendererStorage.setLocalData(0);}
+\DoxyCodeLine{01034   renderIdsStorage.setLocalData(0);}
+\DoxyCodeLine{01035 }
+\DoxyCodeLine{01036   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} fx : sortedFxs) \{}
+\DoxyCodeLine{01037     \textcolor{keywordflow}{if} (fx) \textcolor{keyword}{const\_cast<}\mbox{\hyperlink{class_t_fx}{TFx}} *\textcolor{keyword}{>}(fx)-\/>callEndRenderFrameHandler(\&m\_info, t);}
+\DoxyCodeLine{01038   \}}
+\DoxyCodeLine{01039 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00090}{TRender\+Settings\+::\+Even\+Field}}, \mbox{\hyperlink{l00119}{TStop\+Watch\+::global()}}, \mbox{\hyperlink{l00131}{TRender\+Settings\+::m\+\_\+field\+Prevalence}}, and \mbox{\hyperlink{l00105}{TStop\+Watch\+::start()}}.
+
+\mbox{\Hypertarget{class_render_task_a1e59b3deba3c988b62e78e81bda1172f}\label{class_render_task_a1e59b3deba3c988b62e78e81bda1172f}} 
+\index{RenderTask@{RenderTask}!taskLoad@{taskLoad}}
+\index{taskLoad@{taskLoad}!RenderTask@{RenderTask}}
+\doxysubsubsection{\texorpdfstring{taskLoad()}{taskLoad()}}
+{\footnotesize\ttfamily int Render\+Task\+::task\+Load (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Returns the predicted CPU load generated by the task, expressed in percentage of core usage (that is, 100 is intended to fully occupy one processing core). Appropriate task load calibration is an important step to take when implementing a new task; for this purpose, remember some rules to follow\+: 
+\begin{DoxyItemize}
+\item In every moment, the task manager ensures that the overall sum of the active task\textquotesingle{}s load does not exceed the number of machine\textquotesingle{}s processing cores multiplied by 100. This condition is {\itshape blocking} with respect to the execution of any other task -\/ meaning that when a task is about to be executed the task manager {\itshape waits} until enough CPU resources are available to make it run. In particular, observe that a task\textquotesingle{}s load {\bfseries{never}} has to exceed the total CPU resources -\/ doing so would surely result in a block of your application. The number of available cores can be accessed via the {\bfseries{TSystem\+::get\+Processor\+Count()}} or {\bfseries{QThread\+::ideal\+Thread\+Count()}}. 
+\item The task load is considered constant for the duration of the task. Changing its value does not affect the task manager in any way once the task has been started. 
+\item The default task load is 0, representing a very light task. If the task load is 0 the condition at point 1 always succeeds -\/ so the task is always executed when encountered. Observe that a long succession of 0 task loads leads to the creation of a proportional number of threads simultaneously running to dispatch it; if this is a problem, consider the use of {\bfseries{Executor\+::set\+Max\+Active\+Tasks()}} to make only a certain number of tasks being executed at the same time. 
+\end{DoxyItemize}
+
+Reimplemented from \mbox{\hyperlink{class_t_thread_1_1_runnable_a9c08dc36ed7b4c9e35809ea696c91e95}{TThread\+::\+Runnable}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00421 \{ \textcolor{keywordflow}{return} 100; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tfx/trenderer.\+cpp\end{DoxyCompactItemize}

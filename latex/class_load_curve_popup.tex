@@ -1,0 +1,87 @@
+\hypertarget{class_load_curve_popup}{}\doxysection{Load\+Curve\+Popup Class Reference}
+\label{class_load_curve_popup}\index{LoadCurvePopup@{LoadCurvePopup}}
+Inheritance diagram for Load\+Curve\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_load_curve_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_load_curve_popup_a90f8c5b219808acca5d1e2c6712e0eda}{Load\+Curve\+Popup}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} folder\+Path, \mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$curve)
+\item 
+bool \mbox{\hyperlink{class_load_curve_popup_a80010c437fbea499999e00bc18ea8c06}{execute}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_load_curve_popup_a90f8c5b219808acca5d1e2c6712e0eda}\label{class_load_curve_popup_a90f8c5b219808acca5d1e2c6712e0eda}} 
+\index{LoadCurvePopup@{LoadCurvePopup}!LoadCurvePopup@{LoadCurvePopup}}
+\index{LoadCurvePopup@{LoadCurvePopup}!LoadCurvePopup@{LoadCurvePopup}}
+\doxysubsubsection{\texorpdfstring{LoadCurvePopup()}{LoadCurvePopup()}}
+{\footnotesize\ttfamily Load\+Curve\+Popup\+::\+Load\+Curve\+Popup (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}}}]{folder\+Path,  }\item[{\mbox{\hyperlink{class_t_double_param}{TDouble\+Param}} $\ast$}]{curve }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00113       : \mbox{\hyperlink{class_curve_popup}{CurvePopup}}(QObject::tr(\textcolor{stringliteral}{"{}Load Curve"{}}), folderPath, curve) \{}
+\DoxyCodeLine{00114     setOkText(QObject::tr(\textcolor{stringliteral}{"{}Load"{}}));}
+\DoxyCodeLine{00115     setFilterType(\textcolor{stringliteral}{"{}curve"{}});}
+\DoxyCodeLine{00116   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_load_curve_popup_a80010c437fbea499999e00bc18ea8c06}\label{class_load_curve_popup_a80010c437fbea499999e00bc18ea8c06}} 
+\index{LoadCurvePopup@{LoadCurvePopup}!execute@{execute}}
+\index{execute@{execute}!LoadCurvePopup@{LoadCurvePopup}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily bool Load\+Curve\+Popup\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Performs some action on m\+\_\+paths and returns whether the action was successful (accepted) -\/ in which case the popup closes. 
+
+Implements \mbox{\hyperlink{class_file_browser_popup_a8158b9b8756ac5dfa893b78cdc2fd9af}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00123                              \{}
+\DoxyCodeLine{00124   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.empty()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp(*\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.begin());}
+\DoxyCodeLine{00127 }
+\DoxyCodeLine{00128   \textcolor{keywordflow}{if} (fp.getType() == \textcolor{stringliteral}{"{}"{}}) fp = fp.withType(\textcolor{stringliteral}{"{}curve"{}});}
+\DoxyCodeLine{00129 }
+\DoxyCodeLine{00130   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(fp).doesExist()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00133     \mbox{\hyperlink{class_t_i_stream}{TIStream}} is(fp);}
+\DoxyCodeLine{00134     \textcolor{comment}{// default value must be kept the same!!!}}
+\DoxyCodeLine{00135     \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve = getCurve();}
+\DoxyCodeLine{00136     \textcolor{keywordtype}{double} defaultValue = curve-\/>getDefaultValue();}
+\DoxyCodeLine{00137     \mbox{\hyperlink{class_load_curve_undo}{LoadCurveUndo}} *undo = \textcolor{keyword}{new} \mbox{\hyperlink{class_load_curve_undo}{LoadCurveUndo}}(curve);}
+\DoxyCodeLine{00138     curve-\/>\mbox{\hyperlink{class_t_double_param_a40c5b83687697636404c5b6c780a41f6}{loadData}}(is);}
+\DoxyCodeLine{00139     curve-\/>setDefaultValue(defaultValue);}
+\DoxyCodeLine{00140     TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{00141   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00142     DVGui::warning(QObject::tr(\textcolor{stringliteral}{"{}It is not possible to load the curve."{}}));}
+\DoxyCodeLine{00143     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00144   \}}
+\DoxyCodeLine{00145 }
+\DoxyCodeLine{00146   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00147 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00225}{TFile\+Path\+::get\+Type()}}, \mbox{\hyperlink{l01025}{TDouble\+Param\+::load\+Data()}}, \mbox{\hyperlink{l00090}{File\+Browser\+Popup\+::m\+\_\+selected\+Paths}}, and \mbox{\hyperlink{l00774}{TFile\+Path\+::with\+Type()}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/curveio.\+cpp\end{DoxyCompactItemize}

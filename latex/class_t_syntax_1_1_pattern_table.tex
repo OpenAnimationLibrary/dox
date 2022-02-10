@@ -1,0 +1,131 @@
+\hypertarget{class_t_syntax_1_1_pattern_table}{}\doxysection{TSyntax\+::Pattern\+Table Class Reference}
+\label{class_t_syntax_1_1_pattern_table}\index{TSyntax::PatternTable@{TSyntax::PatternTable}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_syntax_1_1_pattern_table_aaf4e5f2833f24257e3e9cac45a42da6a}{Pattern\+Table}} (Grammar\+::\+Position position)
+\item 
+void \mbox{\hyperlink{class_t_syntax_1_1_pattern_table_aa75398b96fd91b6584c88894191f39ad}{add\+Pattern}} (\mbox{\hyperlink{class_t_syntax_1_1_pattern}{Pattern}} $\ast$pattern)
+\item 
+const \mbox{\hyperlink{class_t_syntax_1_1_pattern}{Pattern}} $\ast$ \mbox{\hyperlink{class_t_syntax_1_1_pattern_table_a5fa47d13b93232093dcb66029390e9f4}{get\+Pattern}} (const \mbox{\hyperlink{class_t_syntax_1_1_token}{Token}} \&token) const
+\item 
+void \mbox{\hyperlink{class_t_syntax_1_1_pattern_table_a3d4be122ebccef5b810253d40aa8c46b}{get\+Suggestions}} (Grammar\+::\+Suggestions \&suggestions) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_syntax_1_1_pattern_table_aaf4e5f2833f24257e3e9cac45a42da6a}\label{class_t_syntax_1_1_pattern_table_aaf4e5f2833f24257e3e9cac45a42da6a}} 
+\index{TSyntax::PatternTable@{TSyntax::PatternTable}!PatternTable@{PatternTable}}
+\index{PatternTable@{PatternTable}!TSyntax::PatternTable@{TSyntax::PatternTable}}
+\doxysubsubsection{\texorpdfstring{PatternTable()}{PatternTable()}}
+{\footnotesize\ttfamily TSyntax\+::\+Pattern\+Table\+::\+Pattern\+Table (\begin{DoxyParamCaption}\item[{Grammar\+::\+Position}]{position }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00928 : m\_position(position) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_syntax_1_1_pattern_table_ab11182b0596370d0ab6271afff3a12bf}\label{class_t_syntax_1_1_pattern_table_ab11182b0596370d0ab6271afff3a12bf}} 
+\index{TSyntax::PatternTable@{TSyntax::PatternTable}!````~PatternTable@{$\sim$PatternTable}}
+\index{````~PatternTable@{$\sim$PatternTable}!TSyntax::PatternTable@{TSyntax::PatternTable}}
+\doxysubsubsection{\texorpdfstring{$\sim$PatternTable()}{~PatternTable()}}
+{\footnotesize\ttfamily TSyntax\+::\+Pattern\+Table\+::$\sim$\+Pattern\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00930                   \{}
+\DoxyCodeLine{00931     \textcolor{keywordflow}{for} (std::map<std::string, Pattern *>::iterator it = m\_kTable.begin();}
+\DoxyCodeLine{00932          it != m\_kTable.end(); ++it)}
+\DoxyCodeLine{00933       \textcolor{keyword}{delete} it-\/>second;}
+\DoxyCodeLine{00934     \textcolor{keywordflow}{for} (std::vector<Pattern *>::iterator it = m\_uTable.begin();}
+\DoxyCodeLine{00935          it != m\_uTable.end(); ++it)}
+\DoxyCodeLine{00936       \textcolor{keyword}{delete} *it;}
+\DoxyCodeLine{00937   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_syntax_1_1_pattern_table_aa75398b96fd91b6584c88894191f39ad}\label{class_t_syntax_1_1_pattern_table_aa75398b96fd91b6584c88894191f39ad}} 
+\index{TSyntax::PatternTable@{TSyntax::PatternTable}!addPattern@{addPattern}}
+\index{addPattern@{addPattern}!TSyntax::PatternTable@{TSyntax::PatternTable}}
+\doxysubsubsection{\texorpdfstring{addPattern()}{addPattern()}}
+{\footnotesize\ttfamily void TSyntax\+::\+Pattern\+Table\+::add\+Pattern (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_syntax_1_1_pattern}{Pattern}} $\ast$}]{pattern }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00939                                     \{}
+\DoxyCodeLine{00940     std::string keyword = pattern-\/>getFirstKeyword();}
+\DoxyCodeLine{00941     \textcolor{keywordflow}{if} (keyword != \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{00942       \textcolor{comment}{// first keyword should be unique}}
+\DoxyCodeLine{00943       assert(m\_kTable.count(keyword) == 0);}
+\DoxyCodeLine{00944       m\_kTable[keyword] = pattern;}
+\DoxyCodeLine{00945     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00946       m\_uTable.push\_back(pattern);}
+\DoxyCodeLine{00947   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_syntax_1_1_pattern_table_a5fa47d13b93232093dcb66029390e9f4}\label{class_t_syntax_1_1_pattern_table_a5fa47d13b93232093dcb66029390e9f4}} 
+\index{TSyntax::PatternTable@{TSyntax::PatternTable}!getPattern@{getPattern}}
+\index{getPattern@{getPattern}!TSyntax::PatternTable@{TSyntax::PatternTable}}
+\doxysubsubsection{\texorpdfstring{getPattern()}{getPattern()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_t_syntax_1_1_pattern}{Pattern}} $\ast$ TSyntax\+::\+Pattern\+Table\+::get\+Pattern (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_syntax_1_1_token}{Token}} \&}]{token }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00949                                                       \{}
+\DoxyCodeLine{00950     std::vector<Token> tokens;}
+\DoxyCodeLine{00951     \textcolor{keywordflow}{if} (m\_position == Grammar::ExpressionEnd) tokens.push\_back(Token());}
+\DoxyCodeLine{00952     \textcolor{keywordflow}{if} (token.getType() == Token::Punct || token.getType() == Token::Ident) \{}
+\DoxyCodeLine{00953       std::string keyword = token.getText();}
+\DoxyCodeLine{00954       std::map<std::string, Pattern *>::const\_iterator it =}
+\DoxyCodeLine{00955           m\_kTable.find(keyword);}
+\DoxyCodeLine{00956       \textcolor{keywordflow}{if} (it != m\_kTable.end()) \{}
+\DoxyCodeLine{00957         Pattern *pattern = it-\/>second;}
+\DoxyCodeLine{00958         \textcolor{keywordflow}{if} (pattern-\/>matchToken(tokens, token)) \{}
+\DoxyCodeLine{00959           \textcolor{keywordflow}{return} pattern;}
+\DoxyCodeLine{00960         \}}
+\DoxyCodeLine{00961       \}}
+\DoxyCodeLine{00962     \}}
+\DoxyCodeLine{00963     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_uTable.size(); i++) \{}
+\DoxyCodeLine{00964       Pattern *pattern = m\_uTable[i];}
+\DoxyCodeLine{00965       \textcolor{keywordflow}{if} (pattern-\/>matchToken(tokens, token)) \{}
+\DoxyCodeLine{00966         \textcolor{keywordflow}{return} pattern;}
+\DoxyCodeLine{00967       \}}
+\DoxyCodeLine{00968     \}}
+\DoxyCodeLine{00969     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00970   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_syntax_1_1_pattern_table_a3d4be122ebccef5b810253d40aa8c46b}\label{class_t_syntax_1_1_pattern_table_a3d4be122ebccef5b810253d40aa8c46b}} 
+\index{TSyntax::PatternTable@{TSyntax::PatternTable}!getSuggestions@{getSuggestions}}
+\index{getSuggestions@{getSuggestions}!TSyntax::PatternTable@{TSyntax::PatternTable}}
+\doxysubsubsection{\texorpdfstring{getSuggestions()}{getSuggestions()}}
+{\footnotesize\ttfamily void TSyntax\+::\+Pattern\+Table\+::get\+Suggestions (\begin{DoxyParamCaption}\item[{Grammar\+::\+Suggestions \&}]{suggestions }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00972                                                              \{}
+\DoxyCodeLine{00973     std::map<std::string, Pattern *>::const\_iterator it;}
+\DoxyCodeLine{00974     \textcolor{keywordflow}{for} (it = m\_kTable.begin(); it != m\_kTable.end(); ++it) \{}
+\DoxyCodeLine{00975       suggestions.push\_back(}
+\DoxyCodeLine{00976           std::make\_pair(it-\/>first, it-\/>second-\/>getDescription()));}
+\DoxyCodeLine{00977     \}}
+\DoxyCodeLine{00978     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_uTable.size(); i++) \{}
+\DoxyCodeLine{00979       std::vector<std::string> keywords;}
+\DoxyCodeLine{00980       m\_uTable[i]-\/>getAcceptableKeywords(keywords);}
+\DoxyCodeLine{00981       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < (int)keywords.size(); j++)}
+\DoxyCodeLine{00982         suggestions.push\_back(}
+\DoxyCodeLine{00983             std::make\_pair(keywords[j], m\_uTable[i]-\/>getDescription()));}
+\DoxyCodeLine{00984     \}}
+\DoxyCodeLine{00985   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/expressions/tgrammar.\+cpp\end{DoxyCompactItemize}

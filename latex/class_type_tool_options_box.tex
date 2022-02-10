@@ -1,0 +1,127 @@
+\hypertarget{class_type_tool_options_box}{}\doxysection{Type\+Tool\+Options\+Box Class Reference}
+\label{class_type_tool_options_box}\index{TypeToolOptionsBox@{TypeToolOptionsBox}}
+Inheritance diagram for Type\+Tool\+Options\+Box\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_type_tool_options_box}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_type_tool_options_box_a6b6a44b001d4ab107d016ac5418b9e79}{Type\+Tool\+Options\+Box}} (QWidget $\ast$parent, \mbox{\hyperlink{class_t_tool}{TTool}} $\ast$tool, \mbox{\hyperlink{class_t_palette_handle}{TPalette\+Handle}} $\ast$plt\+Handle, \mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$tool\+Handle)
+\item 
+void \mbox{\hyperlink{class_type_tool_options_box_a719fd88c34d2c267dc929055029cbbd7}{update\+Status}} ()
+\begin{DoxyCompactList}\small\item\em Invokes \mbox{\hyperlink{class_type_tool_options_box_a719fd88c34d2c267dc929055029cbbd7}{update\+Status()}} on all registered controls. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_type_tool_options_box_a0cc86ca2378b3562c85ce5d3905ee3e0}{on\+Field\+Changed}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_type_tool_options_box_a6b6a44b001d4ab107d016ac5418b9e79}\label{class_type_tool_options_box_a6b6a44b001d4ab107d016ac5418b9e79}} 
+\index{TypeToolOptionsBox@{TypeToolOptionsBox}!TypeToolOptionsBox@{TypeToolOptionsBox}}
+\index{TypeToolOptionsBox@{TypeToolOptionsBox}!TypeToolOptionsBox@{TypeToolOptionsBox}}
+\doxysubsubsection{\texorpdfstring{TypeToolOptionsBox()}{TypeToolOptionsBox()}}
+{\footnotesize\ttfamily Type\+Tool\+Options\+Box\+::\+Type\+Tool\+Options\+Box (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{\mbox{\hyperlink{class_t_tool}{TTool}} $\ast$}]{tool,  }\item[{\mbox{\hyperlink{class_t_palette_handle}{TPalette\+Handle}} $\ast$}]{plt\+Handle,  }\item[{\mbox{\hyperlink{class_tool_handle}{Tool\+Handle}} $\ast$}]{tool\+Handle }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01413     : \mbox{\hyperlink{class_tool_options_box}{ToolOptionsBox}}(parent), m\_tool(tool) \{}
+\DoxyCodeLine{01414   \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}} *props = tool-\/>getProperties(0);}
+\DoxyCodeLine{01415   assert(props-\/>getPropertyCount() > 0);}
+\DoxyCodeLine{01416 }
+\DoxyCodeLine{01417   \mbox{\hyperlink{class_tool_option_control_builder}{ToolOptionControlBuilder}} builder(\textcolor{keyword}{this}, tool, pltHandle, toolHandle);}
+\DoxyCodeLine{01418   builder.setEnumWidgetType(ToolOptionControlBuilder::FONTCOMBOBOX);}
+\DoxyCodeLine{01419   \textcolor{keywordflow}{if} (tool \&\& tool-\/>getProperties(0)) tool-\/>getProperties(0)-\/>accept(builder);}
+\DoxyCodeLine{01420   builder.setEnumWidgetType(ToolOptionControlBuilder::COMBOBOX);}
+\DoxyCodeLine{01421   \textcolor{keywordflow}{if} (tool \&\& tool-\/>getProperties(1)) tool-\/>getProperties(1)-\/>accept(builder);}
+\DoxyCodeLine{01422 }
+\DoxyCodeLine{01423   m\_layout-\/>addStretch(0);}
+\DoxyCodeLine{01424 }
+\DoxyCodeLine{01425   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{01426 }
+\DoxyCodeLine{01427   \mbox{\hyperlink{class_tool_option_font_combo}{ToolOptionFontCombo}} *fontField =}
+\DoxyCodeLine{01428       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_tool_option_font_combo}{ToolOptionFontCombo}} *\textcolor{keyword}{>}(\mbox{\hyperlink{class_tool_options_box_a111acd54b0b8c1ba3b1b847267b0dd7b}{m\_controls}}.value(\textcolor{stringliteral}{"{}Font:"{}}));}
+\DoxyCodeLine{01429   ret \&\&connect(fontField, SIGNAL(currentIndexChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01430                 SLOT(onFieldChanged()));}
+\DoxyCodeLine{01431 }
+\DoxyCodeLine{01432   \textcolor{comment}{//\#ifndef MACOSX}}
+\DoxyCodeLine{01433   \mbox{\hyperlink{class_tool_option_combo}{ToolOptionCombo}} *styleField =}
+\DoxyCodeLine{01434       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_tool_option_combo}{ToolOptionCombo}} *\textcolor{keyword}{>}(\mbox{\hyperlink{class_tool_options_box_a111acd54b0b8c1ba3b1b847267b0dd7b}{m\_controls}}.value(\textcolor{stringliteral}{"{}Style:"{}}));}
+\DoxyCodeLine{01435   ret \&\&connect(styleField, SIGNAL(currentIndexChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01436                 SLOT(onFieldChanged()));}
+\DoxyCodeLine{01437   ret \&\&connect(toolHandle, SIGNAL(toolComboBoxListChanged(std::string)),}
+\DoxyCodeLine{01438                 styleField, SLOT(reloadComboBoxList(std::string)));}
+\DoxyCodeLine{01439   \textcolor{comment}{//\#endif}}
+\DoxyCodeLine{01440 }
+\DoxyCodeLine{01441   \mbox{\hyperlink{class_tool_option_combo}{ToolOptionCombo}} *sizeField =}
+\DoxyCodeLine{01442       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_tool_option_combo}{ToolOptionCombo}} *\textcolor{keyword}{>}(\mbox{\hyperlink{class_tool_options_box_a111acd54b0b8c1ba3b1b847267b0dd7b}{m\_controls}}.value(\textcolor{stringliteral}{"{}Size:"{}}));}
+\DoxyCodeLine{01443   ret \&\&connect(sizeField, SIGNAL(currentIndexChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01444                 SLOT(onFieldChanged()));}
+\DoxyCodeLine{01445 }
+\DoxyCodeLine{01446   \mbox{\hyperlink{class_tool_option_checkbox}{ToolOptionCheckbox}} *orientationField = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_tool_option_checkbox}{ToolOptionCheckbox}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{01447       \mbox{\hyperlink{class_tool_options_box_a111acd54b0b8c1ba3b1b847267b0dd7b}{m\_controls}}.value(\textcolor{stringliteral}{"{}Vertical Orientation"{}}));}
+\DoxyCodeLine{01448   ret = ret \&\& connect(orientationField, SIGNAL(stateChanged(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{01449                        SLOT(onFieldChanged()));}
+\DoxyCodeLine{01450 }
+\DoxyCodeLine{01451   assert(ret);}
+\DoxyCodeLine{01452 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_type_tool_options_box_a0cc86ca2378b3562c85ce5d3905ee3e0}\label{class_type_tool_options_box_a0cc86ca2378b3562c85ce5d3905ee3e0}} 
+\index{TypeToolOptionsBox@{TypeToolOptionsBox}!onFieldChanged@{onFieldChanged}}
+\index{onFieldChanged@{onFieldChanged}!TypeToolOptionsBox@{TypeToolOptionsBox}}
+\doxysubsubsection{\texorpdfstring{onFieldChanged}{onFieldChanged}}
+{\footnotesize\ttfamily void Type\+Tool\+Options\+Box\+::on\+Field\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01464                                         \{}
+\DoxyCodeLine{01465   assert(m\_tool);}
+\DoxyCodeLine{01466   m\_tool-\/>getViewer()-\/>setFocus();}
+\DoxyCodeLine{01467 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_type_tool_options_box_a719fd88c34d2c267dc929055029cbbd7}\label{class_type_tool_options_box_a719fd88c34d2c267dc929055029cbbd7}} 
+\index{TypeToolOptionsBox@{TypeToolOptionsBox}!updateStatus@{updateStatus}}
+\index{updateStatus@{updateStatus}!TypeToolOptionsBox@{TypeToolOptionsBox}}
+\doxysubsubsection{\texorpdfstring{updateStatus()}{updateStatus()}}
+{\footnotesize\ttfamily void Type\+Tool\+Options\+Box\+::update\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Invokes \mbox{\hyperlink{class_type_tool_options_box_a719fd88c34d2c267dc929055029cbbd7}{update\+Status()}} on all registered controls. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tool_options_box_a475daf4252f0d89d4968d25bb57783ab}{Tool\+Options\+Box}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01456                                       \{}
+\DoxyCodeLine{01457   QMap<std::string, ToolOptionControl *>::iterator it;}
+\DoxyCodeLine{01458   \textcolor{keywordflow}{for} (it = \mbox{\hyperlink{class_tool_options_box_a111acd54b0b8c1ba3b1b847267b0dd7b}{m\_controls}}.begin(); it != \mbox{\hyperlink{class_tool_options_box_a111acd54b0b8c1ba3b1b847267b0dd7b}{m\_controls}}.end(); it++)}
+\DoxyCodeLine{01459     it.value()-\/>updateStatus();}
+\DoxyCodeLine{01460 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00106}{Tool\+Options\+Box\+::m\+\_\+controls}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tools/tooloptions.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/tooloptions.\+cpp\end{DoxyCompactItemize}

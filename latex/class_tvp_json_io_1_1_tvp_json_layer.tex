@@ -1,0 +1,224 @@
+\hypertarget{class_tvp_json_io_1_1_tvp_json_layer}{}\doxysection{Tvp\+Json\+Io\+::Tvp\+Json\+Layer Class Reference}
+\label{class_tvp_json_io_1_1_tvp_json_layer}\index{TvpJsonIo::TvpJsonLayer@{TvpJsonIo::TvpJsonLayer}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_tvp_json_io_1_1_tvp_json_layer_a3ba8a71b0b2f962af4d6bda95eada24c}{read}} (const QJson\+Object \&json)
+\item 
+void \mbox{\hyperlink{class_tvp_json_io_1_1_tvp_json_layer_a6fb6b8eab7af110eeea6ac7fdeb5c3e8}{write}} (QJson\+Object \&json) const
+\item 
+void \mbox{\hyperlink{class_tvp_json_io_1_1_tvp_json_layer_a3ec0d136acf1e3cc37d451a016f68a94}{build}} (int index, \mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$, \mbox{\hyperlink{class_t_xsh_cell_column}{TXsh\+Cell\+Column}} $\ast$column)
+\item 
+bool \mbox{\hyperlink{class_tvp_json_io_1_1_tvp_json_layer_a8e6482c34b74d8fd6ba2cb047c7d17ba}{is\+Empty}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tvp_json_io_1_1_tvp_json_layer_a3ec0d136acf1e3cc37d451a016f68a94}\label{class_tvp_json_io_1_1_tvp_json_layer_a3ec0d136acf1e3cc37d451a016f68a94}} 
+\index{TvpJsonIo::TvpJsonLayer@{TvpJsonIo::TvpJsonLayer}!build@{build}}
+\index{build@{build}!TvpJsonIo::TvpJsonLayer@{TvpJsonIo::TvpJsonLayer}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily void Tvp\+Json\+Layer\+::build (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$}]{scene,  }\item[{\mbox{\hyperlink{class_t_xsh_cell_column}{TXsh\+Cell\+Column}} $\ast$}]{column }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00162                                                                              \{}
+\DoxyCodeLine{00163   m\_position = index;}
+\DoxyCodeLine{00164   column-\/>getRange(m\_start, m\_end);}
+\DoxyCodeLine{00165 }
+\DoxyCodeLine{00166   \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} prevCell;}
+\DoxyCodeLine{00167 }
+\DoxyCodeLine{00168   \mbox{\hyperlink{class_t_file_path}{TFilePath}} sceneFolder =}
+\DoxyCodeLine{00169       scene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(scene-\/>\mbox{\hyperlink{class_toonz_scene_ad42b52b671b094f66e003c4b7ebefd45}{getScenePath}}().\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}());}
+\DoxyCodeLine{00170 }
+\DoxyCodeLine{00171   \textcolor{comment}{// JSONに記入可能(\backslash\)かどうかチェック済みのレベル}}
+\DoxyCodeLine{00172   QMap<TXshLevel*, TFilePath> checkedLevels;}
+\DoxyCodeLine{00173   \textcolor{comment}{// register the firstly-\/found level}}
+\DoxyCodeLine{00174   \mbox{\hyperlink{class_t_xsh_level}{TXshLevel}}* firstFoundLevel = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00175 }
+\DoxyCodeLine{00176   QList<TXshCell> cellList;}
+\DoxyCodeLine{00177   QList<QList<int>> imgsList;}
+\DoxyCodeLine{00178   QMap<TXshLevel*, QPair<int, char>> frameFormats;}
+\DoxyCodeLine{00179 }
+\DoxyCodeLine{00180   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} row = m\_start; row <= m\_end; row++) \{}
+\DoxyCodeLine{00181     \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = column-\/>getCell(row);}
+\DoxyCodeLine{00182     \textcolor{comment}{// continue if the cell is continuous}}
+\DoxyCodeLine{00183     \textcolor{keywordflow}{if} (prevCell == cell) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00184 }
+\DoxyCodeLine{00185     \textcolor{comment}{// try to register the level.}}
+\DoxyCodeLine{00186     \mbox{\hyperlink{class_t_xsh_level}{TXshLevel}}* level = cell.\mbox{\hyperlink{class_t_xsh_cell_a8898cc47eba24e59477bfba8e2511f1d}{getSimpleLevel}}();}
+\DoxyCodeLine{00187     \textcolor{keywordflow}{if} (!level)}
+\DoxyCodeLine{00188       cell = \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}}();}
+\DoxyCodeLine{00189     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (checkedLevels.contains(level)) \{}
+\DoxyCodeLine{00190       \textcolor{keywordflow}{if} (checkedLevels[level].isEmpty())}
+\DoxyCodeLine{00191         cell = \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}}();}
+\DoxyCodeLine{00192       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00193       \}     \textcolor{comment}{// do nothing}}
+\DoxyCodeLine{00194     \} \textcolor{keywordflow}{else}  \textcolor{comment}{// newly found level}}
+\DoxyCodeLine{00195     \{}
+\DoxyCodeLine{00196       \textcolor{comment}{// Only raster levels are exported}}
+\DoxyCodeLine{00197       \textcolor{comment}{// currently, only the files located under the scene folder will be}}
+\DoxyCodeLine{00198       \textcolor{comment}{// exported}}
+\DoxyCodeLine{00199       \textcolor{keywordflow}{if} (level-\/>\mbox{\hyperlink{class_t_xsh_level_a1a147f1e970a62120c0bbaf0020a8932}{getType}}() != OVL\_XSHLEVEL)}
+\DoxyCodeLine{00200         cell = \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}}();}
+\DoxyCodeLine{00201       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00202         \mbox{\hyperlink{class_t_file_path}{TFilePath}} levelFullPath = scene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(level-\/>\mbox{\hyperlink{class_t_xsh_level_ab8ffcf067cadf0e1c4081b54ffde249d}{getPath}}());}
+\DoxyCodeLine{00203         \textcolor{keywordflow}{if} (sceneFolder.isAncestorOf(levelFullPath)) \{}
+\DoxyCodeLine{00204           checkedLevels[level] = levelFullPath -\/ sceneFolder;}
+\DoxyCodeLine{00205           \textcolor{keywordflow}{if} (!firstFoundLevel) firstFoundLevel = level;}
+\DoxyCodeLine{00206           std::vector<TFrameId> fids;}
+\DoxyCodeLine{00207           level-\/>getFids(fids);}
+\DoxyCodeLine{00208           frameFormats[level] = QPair<int, char>(fids[0].getZeroPadding(),}
+\DoxyCodeLine{00209                                                  fids[0].getStartSeqInd());}
+\DoxyCodeLine{00210         \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00211           cell = \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}}();}
+\DoxyCodeLine{00212       \}}
+\DoxyCodeLine{00213       \textcolor{keywordflow}{if} (cell.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}()) checkedLevels[level] = \mbox{\hyperlink{class_t_file_path}{TFilePath}}();}
+\DoxyCodeLine{00214     \}}
+\DoxyCodeLine{00215 }
+\DoxyCodeLine{00216     \textcolor{comment}{// continue if the cell is continuous}}
+\DoxyCodeLine{00217     \textcolor{keywordflow}{if} (prevCell == cell) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219     \textcolor{keywordflow}{if} (!cellList.contains(cell)) \{}
+\DoxyCodeLine{00220       cellList.append(cell);}
+\DoxyCodeLine{00221       imgsList.append(QList<int>());}
+\DoxyCodeLine{00222     \}}
+\DoxyCodeLine{00223     imgsList[cellList.indexOf(cell)].append(row);}
+\DoxyCodeLine{00224 }
+\DoxyCodeLine{00225     prevCell = cell;}
+\DoxyCodeLine{00226   \}}
+\DoxyCodeLine{00227 }
+\DoxyCodeLine{00228   \textcolor{keywordflow}{if} (imgsList.isEmpty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00229 }
+\DoxyCodeLine{00230   \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00231 }
+\DoxyCodeLine{00232   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < imgsList.size(); ++i) \{}
+\DoxyCodeLine{00233     \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = cellList[i];}
+\DoxyCodeLine{00234 }
+\DoxyCodeLine{00235     \textcolor{keywordtype}{int} instance\_index = imgsList[i].at(0);}
+\DoxyCodeLine{00236 }
+\DoxyCodeLine{00237     QString instance\_name;}
+\DoxyCodeLine{00238     QString file;}
+\DoxyCodeLine{00239     \textcolor{keywordflow}{if} (cell.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}()) \{  \textcolor{comment}{// 空コソ}の場合}}
+\DoxyCodeLine{00240       instance\_name = QString::number(0);}
+\DoxyCodeLine{00241       \mbox{\hyperlink{class_t_frame_id}{TFrameId}} zeroFid(0, 0, frameFormats[firstFoundLevel].first,}
+\DoxyCodeLine{00242                        frameFormats[firstFoundLevel].second);}
+\DoxyCodeLine{00243       \mbox{\hyperlink{class_t_file_path}{TFilePath}} imgPath = checkedLevels[firstFoundLevel].\mbox{\hyperlink{class_t_file_path_a12f35b225e1882372ad7e02ad7fce543}{withFrame}}(zeroFid);}
+\DoxyCodeLine{00244       file              = imgPath.getQString();}
+\DoxyCodeLine{00245     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00246       \mbox{\hyperlink{class_t_frame_id}{TFrameId}} fid = cell.\mbox{\hyperlink{class_t_xsh_cell_a5a1965b96c2c698d6f0fb42a80c03406}{getFrameId}}();}
+\DoxyCodeLine{00247 }
+\DoxyCodeLine{00248       \textcolor{comment}{// convert the last one digit of the frame number to alphabet}}
+\DoxyCodeLine{00249       \textcolor{comment}{// Ex.  12 -\/> 1B    21 -\/> 2A   30 -\/> 3}}
+\DoxyCodeLine{00250       \textcolor{keywordflow}{if} (Preferences::instance()-\/>isShowFrameNumberWithLettersEnabled())}
+\DoxyCodeLine{00251         instance\_name = getFrameNumberWithLetters(fid.getNumber());}
+\DoxyCodeLine{00252       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00253         QString frameNumber(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00254         \textcolor{comment}{// set number}}
+\DoxyCodeLine{00255         \textcolor{keywordflow}{if} (fid.getNumber() >= 0)}
+\DoxyCodeLine{00256           frameNumber = QString::number(fid.getNumber());}
+\DoxyCodeLine{00257         \textcolor{comment}{// add letter}}
+\DoxyCodeLine{00258         \textcolor{keywordflow}{if} (!fid.getLetter().isEmpty()) frameNumber += fid.getLetter();}
+\DoxyCodeLine{00259         instance\_name = frameNumber;}
+\DoxyCodeLine{00260       \}}
+\DoxyCodeLine{00261 }
+\DoxyCodeLine{00262       fid.setZeroPadding(frameFormats[cell.m\_level.getPointer()].first);}
+\DoxyCodeLine{00263       fid.setStartSeqInd(frameFormats[cell.m\_level.getPointer()].second);}
+\DoxyCodeLine{00264       \mbox{\hyperlink{class_t_file_path}{TFilePath}} imgPath =}
+\DoxyCodeLine{00265           checkedLevels[cell.m\_level.getPointer()].\mbox{\hyperlink{class_t_file_path_a12f35b225e1882372ad7e02ad7fce543}{withFrame}}(fid);}
+\DoxyCodeLine{00266       file = imgPath.getQString();}
+\DoxyCodeLine{00267     \}}
+\DoxyCodeLine{00268 }
+\DoxyCodeLine{00269     \mbox{\hyperlink{class_tvp_json_io_1_1_tvp_json_layer_link_item}{TvpJsonLayerLinkItem}} linkItem;}
+\DoxyCodeLine{00270     linkItem.build(instance\_index, instance\_name, file, imgsList[i]);}
+\DoxyCodeLine{00271     m\_link.append(linkItem);}
+\DoxyCodeLine{00272   \}}
+\DoxyCodeLine{00273 }
+\DoxyCodeLine{00274   \textcolor{keywordflow}{if} (firstFoundLevel)}
+\DoxyCodeLine{00275     m\_name = QString::fromStdWString(firstFoundLevel-\/>\mbox{\hyperlink{class_t_xsh_level_a3a59fb1bd3261baee4e889a9edbf0ae8}{getName}}());}
+\DoxyCodeLine{00276   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00277     m\_name = QString();}
+\DoxyCodeLine{00278 }
+\DoxyCodeLine{00279   m\_visible = column-\/>isPreviewVisible();}
+\DoxyCodeLine{00280   m\_opacity = (int)column-\/>getOpacity();}
+\DoxyCodeLine{00281 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tvp_json_io_1_1_tvp_json_layer_a8e6482c34b74d8fd6ba2cb047c7d17ba}\label{class_tvp_json_io_1_1_tvp_json_layer_a8e6482c34b74d8fd6ba2cb047c7d17ba}} 
+\index{TvpJsonIo::TvpJsonLayer@{TvpJsonIo::TvpJsonLayer}!isEmpty@{isEmpty}}
+\index{isEmpty@{isEmpty}!TvpJsonIo::TvpJsonLayer@{TvpJsonIo::TvpJsonLayer}}
+\doxysubsubsection{\texorpdfstring{isEmpty()}{isEmpty()}}
+{\footnotesize\ttfamily bool Tvp\+Json\+Io\+::\+Tvp\+Json\+Layer\+::is\+Empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107 \{ \textcolor{keywordflow}{return} m\_link.isEmpty(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tvp_json_io_1_1_tvp_json_layer_a3ba8a71b0b2f962af4d6bda95eada24c}\label{class_tvp_json_io_1_1_tvp_json_layer_a3ba8a71b0b2f962af4d6bda95eada24c}} 
+\index{TvpJsonIo::TvpJsonLayer@{TvpJsonIo::TvpJsonLayer}!read@{read}}
+\index{read@{read}!TvpJsonIo::TvpJsonLayer@{TvpJsonIo::TvpJsonLayer}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily void Tvp\+Json\+Layer\+::read (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{json }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00122                                                \{}
+\DoxyCodeLine{00123   m\_name     = json[\textcolor{stringliteral}{"{}name"{}}].toString();}
+\DoxyCodeLine{00124   m\_visible  = json[\textcolor{stringliteral}{"{}visible"{}}].toBool();}
+\DoxyCodeLine{00125   m\_position = json[\textcolor{stringliteral}{"{}position"{}}].toInt();}
+\DoxyCodeLine{00126   m\_opacity  = json[\textcolor{stringliteral}{"{}opacity"{}}].toInt();}
+\DoxyCodeLine{00127   m\_start    = json[\textcolor{stringliteral}{"{}start"{}}].toInt();}
+\DoxyCodeLine{00128   m\_end      = json[\textcolor{stringliteral}{"{}end"{}}].toInt();}
+\DoxyCodeLine{00129 }
+\DoxyCodeLine{00130   QString blendModeName = json[\textcolor{stringliteral}{"{}blending-\/mode"{}}].toString(\textcolor{stringliteral}{"{}Color"{}});}
+\DoxyCodeLine{00131   m\_blending\_mode       = BlendingMatch.value(blendModeName, BlendMode\_Color);}
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00133   QJsonArray linkArray = json[\textcolor{stringliteral}{"{}link"{}}].toArray();}
+\DoxyCodeLine{00134   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} linkIndex = 0; linkIndex < linkArray.size(); linkIndex++) \{}
+\DoxyCodeLine{00135     QJsonObject linkItemObject = linkArray[linkIndex].toObject();}
+\DoxyCodeLine{00136     \mbox{\hyperlink{class_tvp_json_io_1_1_tvp_json_layer_link_item}{TvpJsonLayerLinkItem}} linkItem;}
+\DoxyCodeLine{00137     linkItem.read(linkItemObject);}
+\DoxyCodeLine{00138     m\_link.append(linkItem);}
+\DoxyCodeLine{00139   \}}
+\DoxyCodeLine{00140 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tvp_json_io_1_1_tvp_json_layer_a6fb6b8eab7af110eeea6ac7fdeb5c3e8}\label{class_tvp_json_io_1_1_tvp_json_layer_a6fb6b8eab7af110eeea6ac7fdeb5c3e8}} 
+\index{TvpJsonIo::TvpJsonLayer@{TvpJsonIo::TvpJsonLayer}!write@{write}}
+\index{write@{write}!TvpJsonIo::TvpJsonLayer@{TvpJsonIo::TvpJsonLayer}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void Tvp\+Json\+Layer\+::write (\begin{DoxyParamCaption}\item[{QJson\+Object \&}]{json }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00142                                                 \{}
+\DoxyCodeLine{00143   json[\textcolor{stringliteral}{"{}name"{}}]     = m\_name;}
+\DoxyCodeLine{00144   json[\textcolor{stringliteral}{"{}visible"{}}]  = m\_visible;}
+\DoxyCodeLine{00145   json[\textcolor{stringliteral}{"{}position"{}}] = m\_position;}
+\DoxyCodeLine{00146   json[\textcolor{stringliteral}{"{}opacity"{}}]  = m\_opacity;}
+\DoxyCodeLine{00147   json[\textcolor{stringliteral}{"{}start"{}}]    = m\_start;}
+\DoxyCodeLine{00148   json[\textcolor{stringliteral}{"{}end"{}}]      = m\_end;}
+\DoxyCodeLine{00149 }
+\DoxyCodeLine{00150   QString blendModeName = BlendingMatch.key(m\_blending\_mode, \textcolor{stringliteral}{"{}Color"{}});}
+\DoxyCodeLine{00151   json[\textcolor{stringliteral}{"{}blending-\/mode"{}}] = blendModeName;}
+\DoxyCodeLine{00152 }
+\DoxyCodeLine{00153   QJsonArray linkArray;}
+\DoxyCodeLine{00154   \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto} linkItem : m\_link) \{}
+\DoxyCodeLine{00155     QJsonObject linkItemObject;}
+\DoxyCodeLine{00156     linkItem.write(linkItemObject);}
+\DoxyCodeLine{00157     linkArray.append(linkItemObject);}
+\DoxyCodeLine{00158   \}}
+\DoxyCodeLine{00159   json[\textcolor{stringliteral}{"{}link"{}}] = linkArray;}
+\DoxyCodeLine{00160 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/tvpjson\+\_\+io.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/tvpjson\+\_\+io.\+cpp\end{DoxyCompactItemize}

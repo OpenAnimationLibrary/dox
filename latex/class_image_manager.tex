@@ -1,0 +1,612 @@
+\hypertarget{class_image_manager}{}\doxysection{Image\+Manager Class Reference}
+\label{class_image_manager}\index{ImageManager@{ImageManager}}
+
+
+{\ttfamily \#include $<$imagemanager.\+h$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_image_manager_1_1_imp}{Imp}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \newline
+{\bfseries none} = 0x0
+, {\bfseries dont\+Put\+In\+Cache} = 0x1
+, {\bfseries force\+Rebuild} = 0x2
+, {\bfseries to\+Be\+Modified}
+, \newline
+{\bfseries to\+Be\+Saved} = 0x8
+, {\bfseries is64bit\+Enabled} = 0x10
+, {\bfseries control\+Flags} = 0xF
+, {\bfseries image\+Flags}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_image_manager_a77929fa41680f13417fe748f31a72493}{bind}} (const std\+::string \&id, \mbox{\hyperlink{class_image_builder}{Image\+Builder}} $\ast$builder)
+\item 
+bool \mbox{\hyperlink{class_image_manager_ab74305fdae38a7704081f7f777d0d80d}{unbind}} (const std\+::string \&id)
+\item 
+bool \mbox{\hyperlink{class_image_manager_a53cd4c44dd7cbfdf435cb36d42d140fd}{is\+Bound}} (const std\+::string \&id) const
+\begin{DoxyCompactList}\small\item\em Returns true if the specified id is bound to an image builder. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_image_manager_a26ff2a78f046da1e442a5c37ab8a075b}{rebind}} (const std\+::string \&src\+Id, const std\+::string \&dst\+Id)
+\item 
+bool \mbox{\hyperlink{class_image_manager_a5d530b36fa5ec00d694728a2fd54044a}{renumber}} (const std\+::string \&src\+Id, const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&fid)
+\item 
+void \mbox{\hyperlink{class_image_manager_af1cdc120ba64146849566808dfdb8f9c}{clear}} ()
+\item 
+void \mbox{\hyperlink{class_image_manager_a117acd4bfe1dd03550fb8faa87071898}{load\+All\+Tlv\+Icons\+And\+Put\+In\+Cache}} (\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$, std\+::vector$<$ \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} $>$, std\+::vector$<$ std\+::string $>$, bool)
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \mbox{\hyperlink{class_image_manager_a534298d4e7278e9e42764965e2389576}{get\+Image}} (const std\+::string \&id, int im\+Flags, void $\ast$ext\+Data)
+\item 
+\mbox{\hyperlink{class_t_image_info}{TImage\+Info}} $\ast$ \mbox{\hyperlink{class_image_manager_a44231d6948d69f54e9a4315049131086}{get\+Info}} (const std\+::string \&id, int im\+Flags, void $\ast$ext\+Data)
+\item 
+bool \mbox{\hyperlink{class_image_manager_a34bdaa25c84cd79a7518dbd233a947f4}{invalidate}} (const std\+::string \&id)
+\item 
+bool \mbox{\hyperlink{class_image_manager_aaf5a12cc6326ed3d4af2f5ae280ed355}{set\+Image}} (const std\+::string \&id, const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&img)
+\item 
+\mbox{\hyperlink{class_image_builder}{Image\+Builder}} $\ast$ \mbox{\hyperlink{class_image_manager_ad5e52feb5a9cc1465727944c5b54a8ec}{get\+Builder}} (const std\+::string \&id)
+\item 
+bool \mbox{\hyperlink{class_image_manager_a55ba571c9d452e718b91b2c35330c00c}{is\+Cached}} (const std\+::string \&id)
+\begin{DoxyCompactList}\small\item\em Returns whether the identifier has an associated image in cache. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_image_manager_ad1262cfa935f461f5641f83d696aca45}{is\+Modified}} (const std\+::string \&id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_image_manager}{Image\+Manager}} $\ast$ \mbox{\hyperlink{class_image_manager_a035a25f20657745639962afa7675a559}{instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_image_manager}{Image\+Manager}} is a singleton management class that associates string identifiers to image-\/building objects, able to fetch images on request.
+
+The \mbox{\hyperlink{class_image_manager}{Image\+Manager}}\textquotesingle{}s purpose is similar to that of \mbox{\hyperlink{class_t_image_cache}{TImage\+Cache}} -\/ which is Toonz\textquotesingle{}s other images storage class -\/ with the difference that users do not supply it directly with the image to be stored, but rather with an object {\itshape capable} of fetching that image. ~\newline
+~\newline
+ Said objects must be reimplemented from the base \mbox{\hyperlink{class_image_builder}{Image\+Builder}} class, and return an image, and its specifications, upon request.
+
+The role of these image-\/building objects is that of providing the {\itshape default} image for an identifier on-\/demand, without prior allocation of resources. ~\newline
+~\newline
+ The \mbox{\hyperlink{class_image_manager}{Image\+Manager}} automatically stores built images in the global \mbox{\hyperlink{class_t_image_cache}{TImage\+Cache}} instance (unless the user explicitly requires not to) in order to minimize the images building process. ~\newline
+~\newline
+ As long as an image bound in the \mbox{\hyperlink{class_image_manager}{Image\+Manager}} remains unmodified, users can rebuild default images according to different control modifiers (for example, requiring 64-\/bit preference, or image subsampling). ~\newline
+~\newline
+ Images stored in the \mbox{\hyperlink{class_image_manager}{Image\+Manager}} can be modified by the user (using the to\+Be\+Modified control flag) or even externally supplied using the \mbox{\hyperlink{class_image_manager_aaf5a12cc6326ed3d4af2f5ae280ed355}{set\+Image()}} method.
+
+When an image is modified, it is assumed to override any default-\/buildable images -\/ thus it is stored in the cache for retrieval, and any control flag modifier is ignored as long as the image is not invalidated(). ~\newline
+~\newline
+ Invalidation of an image can be requested to revert any changes to the image and clear the cache. ~\newline
+~\newline
+ Please, observe that \mbox{\hyperlink{class_image_manager}{Image\+Manager}}\textquotesingle{}s image caching function is thread-\/safe -\/ and ensures that image building happens only once in case multiple threads simultaneously require an image that was not cached before. Furthermore, there is no serialization overhead for already cached images or image specifications in read-\/only access.
+
+\begin{DoxySeeAlso}{See also}
+The \mbox{\hyperlink{class_t_image_cache}{TImage\+Cache}} and \mbox{\hyperlink{class_image_builder}{Image\+Builder}} classes. 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_image_manager_af0a52a2580b51b6f4906688db28b3f9c}\label{class_image_manager_af0a52a2580b51b6f4906688db28b3f9c}} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00106        \{}
+\DoxyCodeLine{00107     none           = 0x0,}
+\DoxyCodeLine{00108     dontPutInCache = 0x1,  \textcolor{comment}{// Prevents IM from storing built images in the cache}}
+\DoxyCodeLine{00109     forceRebuild   = 0x2,  \textcolor{comment}{// Forces rebuild of images (like an invalidate())}}
+\DoxyCodeLine{00110     toBeModified =}
+\DoxyCodeLine{00111         0x4,          \textcolor{comment}{// Whether the retrieved image will be signed as modified}}
+\DoxyCodeLine{00112     toBeSaved = 0x8,  \textcolor{comment}{// User will save the image, reverts toBeModified}}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114     is64bitEnabled = 0x10,  \textcolor{comment}{// Whether 64-\/bit rasters are allowed to return}}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116     controlFlags = 0xF,  \textcolor{comment}{// Flags dealing with management control}}
+\DoxyCodeLine{00117     imageFlags =}
+\DoxyCodeLine{00118         \string~controlFlags  \textcolor{comment}{// ImageManager flags supportable by custom ImageBuilders}}
+\DoxyCodeLine{00119   \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_image_manager_a77929fa41680f13417fe748f31a72493}\label{class_image_manager_a77929fa41680f13417fe748f31a72493}} 
+\index{ImageManager@{ImageManager}!bind@{bind}}
+\index{bind@{bind}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{bind()}{bind()}}
+{\footnotesize\ttfamily void Image\+Manager\+::bind (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id,  }\item[{\mbox{\hyperlink{class_image_builder}{Image\+Builder}} $\ast$}]{builder }\end{DoxyParamCaption})}
+
+Binds a string identifier to an \mbox{\hyperlink{class_image_builder}{Image\+Builder}} instance, which is necessary before any image or image data can be retrieved. If the specified id was already bound, it is first unbound. Binding an id to 0 is equivalent to unbinding it. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00198                                                                      \{}
+\DoxyCodeLine{00199   \textcolor{keywordflow}{if} (!builderPtr) \{}
+\DoxyCodeLine{00200     \mbox{\hyperlink{class_image_manager_ab74305fdae38a7704081f7f777d0d80d}{unbind}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00201     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00202   \}}
+\DoxyCodeLine{00203 }
+\DoxyCodeLine{00204   QWriteLocker locker(\&m\_imp-\/>m\_tableLock);}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206   \mbox{\hyperlink{class_t_smart_pointer_t}{ImageBuilderP}} \&builderP = m\_imp-\/>m\_builders[id];}
+\DoxyCodeLine{00207   \textcolor{keywordflow}{if} (builderP \&\& builderP-\/>m\_cached) TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a57d63227dfe2532b0aed22c47113be66}{remove}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00208 }
+\DoxyCodeLine{00209   builderP = builderPtr;}
+\DoxyCodeLine{00210 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01260}{TImage\+Cache\+::remove()}}, and \mbox{\hyperlink{l00214}{unbind()}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00031}{TXsh\+Child\+Level\+::$\sim$\+TXsh\+Child\+Level()}}.
+
+\mbox{\Hypertarget{class_image_manager_af1cdc120ba64146849566808dfdb8f9c}\label{class_image_manager_af1cdc120ba64146849566808dfdb8f9c}} 
+\index{ImageManager@{ImageManager}!clear@{clear}}
+\index{clear@{clear}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void Image\+Manager\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Unbinds all known identifiers, resetting the image manager to its empty state. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00269                          \{}
+\DoxyCodeLine{00270   QWriteLocker locker(\&m\_imp-\/>m\_tableLock);}
+\DoxyCodeLine{00271 }
+\DoxyCodeLine{00272   TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a6d19207677efac341b81cb84a71924e4}{clearSceneImages}}();}
+\DoxyCodeLine{00273   m\_imp-\/>clear();}
+\DoxyCodeLine{00274 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01388}{TImage\+Cache\+::clear\+Scene\+Images()}}.
+
+\mbox{\Hypertarget{class_image_manager_ad5e52feb5a9cc1465727944c5b54a8ec}\label{class_image_manager_ad5e52feb5a9cc1465727944c5b54a8ec}} 
+\index{ImageManager@{ImageManager}!getBuilder@{getBuilder}}
+\index{getBuilder@{getBuilder}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{getBuilder()}{getBuilder()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_image_builder}{Image\+Builder}} $\ast$ Image\+Manager\+::get\+Builder (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id }\end{DoxyParamCaption})}
+
+Returns the \mbox{\hyperlink{class_image_builder}{Image\+Builder}} instance associate to specified id, or 0 if none was found. \begin{DoxyWarning}{Warning}
+The Image\+Manger retains ownership of the returned object, which must {\bfseries{not}} be deleted. 
+\end{DoxyWarning}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00469                                                           \{}
+\DoxyCodeLine{00470   QWriteLocker locker(\&m\_imp-\/>m\_tableLock);}
+\DoxyCodeLine{00471 }
+\DoxyCodeLine{00472   std::map<std::string, ImageBuilderP>::iterator it =}
+\DoxyCodeLine{00473       m\_imp-\/>m\_builders.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00474   \textcolor{keywordflow}{return} (it == m\_imp-\/>m\_builders.end()) ? (\mbox{\hyperlink{class_image_builder}{ImageBuilder}} *)0}
+\DoxyCodeLine{00475                                          : it-\/>second.getPointer();}
+\DoxyCodeLine{00476 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_image_manager_a534298d4e7278e9e42764965e2389576}\label{class_image_manager_a534298d4e7278e9e42764965e2389576}} 
+\index{ImageManager@{ImageManager}!getImage@{getImage}}
+\index{getImage@{getImage}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{getImage()}{getImage()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} Image\+Manager\+::get\+Image (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id,  }\item[{int}]{im\+Flags,  }\item[{void $\ast$}]{ext\+Data }\end{DoxyParamCaption})}
+
+Returns the image built by the object associated with the specified identifier, using the supplied control flags for additional options. Provided the builder type associated to the identifier is known, a further external reference can be supplied to the request. In this case, users should enforce manual \mbox{\hyperlink{class_image_manager_a34bdaa25c84cd79a7518dbd233a947f4}{invalidate()}} invocations whenever the supplied data changes.
+
+\begin{DoxyWarning}{Warning}
+Users take responsibility in modifying the returned image\textquotesingle{}s data {\bfseries{only}} when im\+Flags contains the {\ttfamily to\+Be\+Modified} bit. 
+\end{DoxyWarning}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00311                                               \{}
+\DoxyCodeLine{00312   assert(!((imFlags \& ImageManager::toBeModified) \&\&}
+\DoxyCodeLine{00313            (imFlags \& ImageManager::dontPutInCache)));}
+\DoxyCodeLine{00314   assert(!((imFlags \& ImageManager::toBeModified) \&\&}
+\DoxyCodeLine{00315            (imFlags \& ImageManager::toBeSaved)));}
+\DoxyCodeLine{00316 }
+\DoxyCodeLine{00317   \textcolor{comment}{// Lock for table read and try to find data in the cache}}
+\DoxyCodeLine{00318   QReadLocker tableLocker(\&m\_imp-\/>m\_tableLock);}
+\DoxyCodeLine{00319 }
+\DoxyCodeLine{00320   std::map<std::string, ImageBuilderP>::iterator it =}
+\DoxyCodeLine{00321       m\_imp-\/>m\_builders.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00322   \textcolor{keywordflow}{if} (it == m\_imp-\/>m\_builders.end()) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}}();}
+\DoxyCodeLine{00323 }
+\DoxyCodeLine{00324   \mbox{\hyperlink{class_t_smart_pointer_t}{ImageBuilderP}} \&builder = it-\/>second;}
+\DoxyCodeLine{00325   \textcolor{keywordtype}{bool} modified          = builder-\/>m\_modified;}
+\DoxyCodeLine{00326 }
+\DoxyCodeLine{00327   \textcolor{comment}{// Analyze imFlags}}
+\DoxyCodeLine{00328   \textcolor{keywordtype}{bool} \_putInCache =}
+\DoxyCodeLine{00329       TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a0da071a1466b04f8dc49052102d5e933}{isEnabled}}() \&\& !(bool)(imFlags \& dontPutInCache);}
+\DoxyCodeLine{00330   \textcolor{keywordtype}{bool} \_toBeModified = (imFlags \& toBeModified);}
+\DoxyCodeLine{00331   \textcolor{keywordtype}{bool} \_toBeSaved    = (imFlags \& toBeSaved);}
+\DoxyCodeLine{00332 }
+\DoxyCodeLine{00333   \textcolor{comment}{// Update the modified flag according to the specified flags}}
+\DoxyCodeLine{00334   \textcolor{keywordflow}{if} (\_toBeModified)}
+\DoxyCodeLine{00335     builder-\/>m\_modified = \textcolor{keyword}{true};}
+\DoxyCodeLine{00336   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\_toBeSaved)}
+\DoxyCodeLine{00337     builder-\/>m\_modified = \textcolor{keyword}{false};}
+\DoxyCodeLine{00338 }
+\DoxyCodeLine{00339   \textcolor{comment}{// Now, fetch the image.}}
+\DoxyCodeLine{00340   \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} img;}
+\DoxyCodeLine{00341 }
+\DoxyCodeLine{00342   \textcolor{keywordflow}{if} (builder-\/>m\_cached) \{}
+\DoxyCodeLine{00343     \textcolor{keywordflow}{if} (modified || builder-\/>isImageCompatible(imFlags, extData)) \{}
+\DoxyCodeLine{00344       img = TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_aea3ac2752efd6fa9689f5a7c1e895e41}{get}}(\textcolor{keywordtype}{id}, \_toBeModified);}
+\DoxyCodeLine{00345 }
+\DoxyCodeLine{00346       assert(img);}
+\DoxyCodeLine{00347       \textcolor{keywordflow}{if} (img) \textcolor{keywordflow}{return} img;}
+\DoxyCodeLine{00348     \}}
+\DoxyCodeLine{00349   \}}
+\DoxyCodeLine{00350 }
+\DoxyCodeLine{00351   \textcolor{comment}{// Lock for image building}}
+\DoxyCodeLine{00352   QWriteLocker imageBuildingLocker(\&builder-\/>m\_imageBuildingLock);}
+\DoxyCodeLine{00353 }
+\DoxyCodeLine{00354   \textcolor{comment}{// As multiple threads may block on filesLocker, re-\/check if the image is now}}
+\DoxyCodeLine{00355   \textcolor{comment}{// available}}
+\DoxyCodeLine{00356   \textcolor{keywordflow}{if} (builder-\/>m\_cached) \{}
+\DoxyCodeLine{00357     \textcolor{keywordflow}{if} (modified || builder-\/>isImageCompatible(imFlags, extData)) \{}
+\DoxyCodeLine{00358       img = TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_aea3ac2752efd6fa9689f5a7c1e895e41}{get}}(\textcolor{keywordtype}{id}, \_toBeModified);}
+\DoxyCodeLine{00359 }
+\DoxyCodeLine{00360       assert(img);}
+\DoxyCodeLine{00361       \textcolor{keywordflow}{if} (img) \textcolor{keywordflow}{return} img;}
+\DoxyCodeLine{00362     \}}
+\DoxyCodeLine{00363   \}}
+\DoxyCodeLine{00364 }
+\DoxyCodeLine{00365   \textcolor{comment}{// The image was either not available or not conforming to the required}}
+\DoxyCodeLine{00366   \textcolor{comment}{// specifications.}}
+\DoxyCodeLine{00367   \textcolor{comment}{// We have to build it now, then.}}
+\DoxyCodeLine{00368 }
+\DoxyCodeLine{00369   \textcolor{comment}{// Build the image}}
+\DoxyCodeLine{00370   img = builder-\/>build(imFlags, extData);}
+\DoxyCodeLine{00371 }
+\DoxyCodeLine{00372   \textcolor{keywordflow}{if} (img \&\& \_putInCache) \{}
+\DoxyCodeLine{00373     builder-\/>m\_cached   = \textcolor{keyword}{true};}
+\DoxyCodeLine{00374     builder-\/>m\_modified = \_toBeModified;}
+\DoxyCodeLine{00375 }
+\DoxyCodeLine{00376     TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a124eae4cf370288f42c22b3477cb5163}{add}}(\textcolor{keywordtype}{id}, img, \textcolor{keyword}{true});}
+\DoxyCodeLine{00377   \}}
+\DoxyCodeLine{00378 }
+\DoxyCodeLine{00379   \textcolor{keywordflow}{return} img;}
+\DoxyCodeLine{00380 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01153}{TImage\+Cache\+::add()}}, \mbox{\hyperlink{l01672}{TImage\+Cache\+::get()}}, and \mbox{\hyperlink{l01111}{TImage\+Cache\+::is\+Enabled()}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00250}{Image\+Rasterizer\+::build()}}, \mbox{\hyperlink{l00360}{Image\+Filler\+::build()}}, \mbox{\hyperlink{l00051}{Stage\+::\+Player\+::image()}}, and \mbox{\hyperlink{l02091}{TXsh\+Simple\+Level\+::renumber()}}.
+
+\mbox{\Hypertarget{class_image_manager_a44231d6948d69f54e9a4315049131086}\label{class_image_manager_a44231d6948d69f54e9a4315049131086}} 
+\index{ImageManager@{ImageManager}!getInfo@{getInfo}}
+\index{getInfo@{getInfo}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{getInfo()}{getInfo()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_image_info}{TImage\+Info}} $\ast$ Image\+Manager\+::get\+Info (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id,  }\item[{int}]{im\+Flags,  }\item[{void $\ast$}]{ext\+Data }\end{DoxyParamCaption})}
+
+Returns the image info associated to the specified identifier.
+
+\begin{DoxyWarning}{Warning}
+The return type is not explicitly {\ttfamily const} since some of \mbox{\hyperlink{class_t_image_info}{TImage\+Info}}\textquotesingle{}s data (namely, the image\textquotesingle{}s bounding box) may need to be modified by the user together with the associated image. Like in \mbox{\hyperlink{class_image_manager_a534298d4e7278e9e42764965e2389576}{get\+Image()}}, users take responsibility in modifying the returned data {\bfseries{only}} when im\+Flags contains the {\ttfamily to\+Be\+Modified} bit. 
+\end{DoxyWarning}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00279                                                  \{}
+\DoxyCodeLine{00280   \textcolor{comment}{// Lock for table read and try to find data in the cache}}
+\DoxyCodeLine{00281   QReadLocker tableLocker(\&m\_imp-\/>m\_tableLock);}
+\DoxyCodeLine{00282 }
+\DoxyCodeLine{00283   std::map<std::string, ImageBuilderP>::iterator it =}
+\DoxyCodeLine{00284       m\_imp-\/>m\_builders.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00285   \textcolor{keywordflow}{if} (it == m\_imp-\/>m\_builders.end()) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00286 }
+\DoxyCodeLine{00287   \mbox{\hyperlink{class_t_smart_pointer_t}{ImageBuilderP}} \&builder = it-\/>second;}
+\DoxyCodeLine{00288 }
+\DoxyCodeLine{00289   assert(!((imFlags \& ImageManager::toBeModified) \&\& !builder-\/>m\_modified));}
+\DoxyCodeLine{00290 }
+\DoxyCodeLine{00291   \textcolor{comment}{// Check cached data}}
+\DoxyCodeLine{00292   \textcolor{keywordflow}{if} (builder-\/>areInfosCompatible(imFlags, extData)) \textcolor{keywordflow}{return} \&builder-\/>m\_info;}
+\DoxyCodeLine{00293 }
+\DoxyCodeLine{00294   QWriteLocker imageBuildingLocker(\&builder-\/>m\_imageBuildingLock);}
+\DoxyCodeLine{00295 }
+\DoxyCodeLine{00296   \textcolor{comment}{// Re-\/check as waiting may have changed the situation}}
+\DoxyCodeLine{00297   \textcolor{keywordflow}{if} (builder-\/>areInfosCompatible(imFlags, extData)) \textcolor{keywordflow}{return} \&builder-\/>m\_info;}
+\DoxyCodeLine{00298 }
+\DoxyCodeLine{00299   \mbox{\hyperlink{class_t_image_info}{TImageInfo}} info;}
+\DoxyCodeLine{00300   \textcolor{keywordflow}{if} (builder-\/>getInfo(info, imFlags, extData)) \{}
+\DoxyCodeLine{00301     builder-\/>m\_info = info;}
+\DoxyCodeLine{00302     \textcolor{keywordflow}{return} \&builder-\/>m\_info;}
+\DoxyCodeLine{00303   \}}
+\DoxyCodeLine{00304 }
+\DoxyCodeLine{00305   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00306 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l02360}{TXsh\+Simple\+Level\+::get\+BBox()}}, and \mbox{\hyperlink{l01083}{TXsh\+Simple\+Level\+::load()}}.
+
+\mbox{\Hypertarget{class_image_manager_a035a25f20657745639962afa7675a559}\label{class_image_manager_a035a25f20657745639962afa7675a559}} 
+\index{ImageManager@{ImageManager}!instance@{instance}}
+\index{instance@{instance}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_image_manager}{Image\+Manager}} $\ast$ Image\+Manager\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00190                                      \{}
+\DoxyCodeLine{00191   \textcolor{comment}{// Re-\/introdotto possibile baco: voglio controllare se esiste ancora}}
+\DoxyCodeLine{00192   \textcolor{keyword}{static} \mbox{\hyperlink{class_image_manager}{ImageManager}} theInstance;}
+\DoxyCodeLine{00193   \textcolor{keywordflow}{return} \&theInstance;}
+\DoxyCodeLine{00194 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_image_manager_a34bdaa25c84cd79a7518dbd233a947f4}\label{class_image_manager_a34bdaa25c84cd79a7518dbd233a947f4}} 
+\index{ImageManager@{ImageManager}!invalidate@{invalidate}}
+\index{invalidate@{invalidate}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{invalidate()}{invalidate()}}
+{\footnotesize\ttfamily bool Image\+Manager\+::invalidate (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id }\end{DoxyParamCaption})}
+
+Invalidates cached data associated to the specified id, forcing the next \mbox{\hyperlink{class_image_manager_a44231d6948d69f54e9a4315049131086}{get\+Info()}} or \mbox{\hyperlink{class_image_manager_a534298d4e7278e9e42764965e2389576}{get\+Image()}} to rebuild it. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00426                                                  \{}
+\DoxyCodeLine{00427   QWriteLocker locker(\&m\_imp-\/>m\_tableLock);}
+\DoxyCodeLine{00428 }
+\DoxyCodeLine{00429   std::map<std::string, ImageBuilderP>::iterator it =}
+\DoxyCodeLine{00430       m\_imp-\/>m\_builders.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00431   \textcolor{keywordflow}{if} (it == m\_imp-\/>m\_builders.end()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00432 }
+\DoxyCodeLine{00433   \mbox{\hyperlink{class_t_smart_pointer_t}{ImageBuilderP}} \&builder = it-\/>second;}
+\DoxyCodeLine{00434 }
+\DoxyCodeLine{00435   builder-\/>invalidate();}
+\DoxyCodeLine{00436   builder-\/>m\_cached = builder-\/>m\_modified = \textcolor{keyword}{false};}
+\DoxyCodeLine{00437 }
+\DoxyCodeLine{00438   TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a57d63227dfe2532b0aed22c47113be66}{remove}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00439 }
+\DoxyCodeLine{00440   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00441 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01260}{TImage\+Cache\+::remove()}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00351}{TXsh\+Simple\+Level\+::on\+Palette\+Changed()}}, \mbox{\hyperlink{l00445}{set\+Image()}}, and \mbox{\hyperlink{l00330}{TXsh\+Simple\+Level\+::touch\+Frame()}}.
+
+\mbox{\Hypertarget{class_image_manager_a53cd4c44dd7cbfdf435cb36d42d140fd}\label{class_image_manager_a53cd4c44dd7cbfdf435cb36d42d140fd}} 
+\index{ImageManager@{ImageManager}!isBound@{isBound}}
+\index{isBound@{isBound}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{isBound()}{isBound()}}
+{\footnotesize\ttfamily bool Image\+Manager\+::is\+Bound (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id }\end{DoxyParamCaption}) const}
+
+
+
+Returns true if the specified id is bound to an image builder. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00230                                                     \{}
+\DoxyCodeLine{00231   QReadLocker locker(\&m\_imp-\/>m\_tableLock);}
+\DoxyCodeLine{00232   \textcolor{keywordflow}{return} m\_imp-\/>m\_builders.find(\textcolor{keywordtype}{id}) != m\_imp-\/>m\_builders.end();}
+\DoxyCodeLine{00233 \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l02091}{TXsh\+Simple\+Level\+::renumber()}}.
+
+\mbox{\Hypertarget{class_image_manager_a55ba571c9d452e718b91b2c35330c00c}\label{class_image_manager_a55ba571c9d452e718b91b2c35330c00c}} 
+\index{ImageManager@{ImageManager}!isCached@{isCached}}
+\index{isCached@{isCached}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{isCached()}{isCached()}}
+{\footnotesize\ttfamily bool Image\+Manager\+::is\+Cached (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id }\end{DoxyParamCaption})}
+
+
+
+Returns whether the identifier has an associated image in cache. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00480                                                \{}
+\DoxyCodeLine{00481   QWriteLocker locker(\&m\_imp-\/>m\_tableLock);}
+\DoxyCodeLine{00482 }
+\DoxyCodeLine{00483   std::map<std::string, ImageBuilderP>::iterator it =}
+\DoxyCodeLine{00484       m\_imp-\/>m\_builders.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00485   \textcolor{keywordflow}{return} (it == m\_imp-\/>m\_builders.end()) ? false : it-\/>second-\/>m\_cached;}
+\DoxyCodeLine{00486 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_image_manager_ad1262cfa935f461f5641f83d696aca45}\label{class_image_manager_ad1262cfa935f461f5641f83d696aca45}} 
+\index{ImageManager@{ImageManager}!isModified@{isModified}}
+\index{isModified@{isModified}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{isModified()}{isModified()}}
+{\footnotesize\ttfamily bool Image\+Manager\+::is\+Modified (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id }\end{DoxyParamCaption})}
+
+Returns whether the image associated to the specified id has been modified. Observe that modifying an image overrides the build-\/up of the associated default image -\/ ie any subsequent call to \mbox{\hyperlink{class_image_manager_a534298d4e7278e9e42764965e2389576}{get\+Image()}} will ignore control flags and return the stored modified image. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00490                                                  \{}
+\DoxyCodeLine{00491   QWriteLocker locker(\&m\_imp-\/>m\_tableLock);}
+\DoxyCodeLine{00492 }
+\DoxyCodeLine{00493   std::map<std::string, ImageBuilderP>::iterator it =}
+\DoxyCodeLine{00494       m\_imp-\/>m\_builders.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00495   \textcolor{keywordflow}{return} (it == m\_imp-\/>m\_builders.end()) ? false : it-\/>second-\/>m\_modified;}
+\DoxyCodeLine{00496 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_image_manager_a117acd4bfe1dd03550fb8faa87071898}\label{class_image_manager_a117acd4bfe1dd03550fb8faa87071898}} 
+\index{ImageManager@{ImageManager}!loadAllTlvIconsAndPutInCache@{loadAllTlvIconsAndPutInCache}}
+\index{loadAllTlvIconsAndPutInCache@{loadAllTlvIconsAndPutInCache}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{loadAllTlvIconsAndPutInCache()}{loadAllTlvIconsAndPutInCache()}}
+{\footnotesize\ttfamily void Image\+Manager\+::load\+All\+Tlv\+Icons\+And\+Put\+In\+Cache (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{level,  }\item[{std\+::vector$<$ \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} $>$}]{fids,  }\item[{std\+::vector$<$ std\+::string $>$}]{icon\+Ids,  }\item[{bool}]{cache\+Images\+As\+Well }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00386                                                           \{}
+\DoxyCodeLine{00387   \textcolor{keywordflow}{if} (fids.empty() || iconIds.empty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00388   \textcolor{comment}{// number of fid and iconId should be the same}}
+\DoxyCodeLine{00389   \textcolor{keywordflow}{if} ((\textcolor{keywordtype}{int})fids.size() != (\textcolor{keywordtype}{int})iconIds.size()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00390 }
+\DoxyCodeLine{00391   \textcolor{comment}{// obtain ImageLoader with the first fId}}
+\DoxyCodeLine{00392   \mbox{\hyperlink{class_t_image_info}{TImageInfo}} info;}
+\DoxyCodeLine{00393   std::map<std::string, ImageBuilderP>::iterator it =}
+\DoxyCodeLine{00394       m\_imp-\/>m\_builders.find(level-\/>getImageId(fids[0]));}
+\DoxyCodeLine{00395   \textcolor{keywordflow}{if} (it != m\_imp-\/>m\_builders.end()) \{}
+\DoxyCodeLine{00396     \textcolor{keyword}{const} \mbox{\hyperlink{class_t_smart_pointer_t}{ImageBuilderP}} \&builder = it-\/>second;}
+\DoxyCodeLine{00397     assert(builder);}
+\DoxyCodeLine{00398     assert(builder-\/>getRefCount() > 0);}
+\DoxyCodeLine{00399 }
+\DoxyCodeLine{00400     \textcolor{comment}{// this function in reimplemented only in ImageLoader}}
+\DoxyCodeLine{00401     builder-\/>buildAllIconsAndPutInCache(level, fids, iconIds,}
+\DoxyCodeLine{00402                                         cacheImagesAsWell);}
+\DoxyCodeLine{00403     builder-\/>getInfo(info, ImageManager::none, 0);}
+\DoxyCodeLine{00404   \}}
+\DoxyCodeLine{00405   \textcolor{keywordflow}{if} (cacheImagesAsWell) \{}
+\DoxyCodeLine{00406     \textcolor{comment}{// reset the savebox}}
+\DoxyCodeLine{00407     info.m\_x0 = info.m\_y0 = 0;}
+\DoxyCodeLine{00408     info.m\_x1             = info.m\_lx -\/ 1;}
+\DoxyCodeLine{00409     info.m\_y1             = info.m\_ly -\/ 1;}
+\DoxyCodeLine{00410 }
+\DoxyCodeLine{00411     \textcolor{comment}{// put flags to all builders}}
+\DoxyCodeLine{00412     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} f = 0; f < fids.size(); f++) \{}
+\DoxyCodeLine{00413       std::map<std::string, ImageBuilderP>::iterator it =}
+\DoxyCodeLine{00414           m\_imp-\/>m\_builders.find(level-\/>getImageId(fids[f]));}
+\DoxyCodeLine{00415       \textcolor{keywordflow}{if} (it != m\_imp-\/>m\_builders.end()) \{}
+\DoxyCodeLine{00416         \textcolor{keyword}{const} \mbox{\hyperlink{class_t_smart_pointer_t}{ImageBuilderP}} \&builder = it-\/>second;}
+\DoxyCodeLine{00417         builder-\/>setImageCachedAndModified();}
+\DoxyCodeLine{00418         builder-\/>m\_info = info;}
+\DoxyCodeLine{00419       \}}
+\DoxyCodeLine{00420     \}}
+\DoxyCodeLine{00421   \}}
+\DoxyCodeLine{00422 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_image_manager_a26ff2a78f046da1e442a5c37ab8a075b}\label{class_image_manager_a26ff2a78f046da1e442a5c37ab8a075b}} 
+\index{ImageManager@{ImageManager}!rebind@{rebind}}
+\index{rebind@{rebind}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{rebind()}{rebind()}}
+{\footnotesize\ttfamily bool Image\+Manager\+::rebind (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{src\+Id,  }\item[{const std\+::string \&}]{dst\+Id }\end{DoxyParamCaption})}
+
+Rebinds to a different builder identifier, returning true if the operation succeeded. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00237                                                                         \{}
+\DoxyCodeLine{00238   QWriteLocker locker(\&m\_imp-\/>m\_tableLock);}
+\DoxyCodeLine{00239 }
+\DoxyCodeLine{00240   std::map<std::string, ImageBuilderP>::iterator st =}
+\DoxyCodeLine{00241       m\_imp-\/>m\_builders.find(srcId);}
+\DoxyCodeLine{00242   \textcolor{keywordflow}{if} (st == m\_imp-\/>m\_builders.end()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00243 }
+\DoxyCodeLine{00244   \mbox{\hyperlink{class_t_smart_pointer_t}{ImageBuilderP}} builder = st-\/>second;}
+\DoxyCodeLine{00245 }
+\DoxyCodeLine{00246   m\_imp-\/>m\_builders.erase(st);}
+\DoxyCodeLine{00247   m\_imp-\/>m\_builders[dstId] = builder;}
+\DoxyCodeLine{00248 }
+\DoxyCodeLine{00249   m\_imp-\/>m\_builders[dstId]-\/>m\_cached   = \textcolor{keyword}{true};}
+\DoxyCodeLine{00250   m\_imp-\/>m\_builders[dstId]-\/>m\_modified = \textcolor{keyword}{true};}
+\DoxyCodeLine{00251 }
+\DoxyCodeLine{00252   TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a4a55f603009d6f1d884f9d1afee94178}{remap}}(dstId, srcId);}
+\DoxyCodeLine{00253 }
+\DoxyCodeLine{00254   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00255 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01317}{TImage\+Cache\+::remap()}}.
+
+
+
+Referenced by \mbox{\hyperlink{l01883}{TXsh\+Simple\+Level\+::make\+Tlv()}}, and \mbox{\hyperlink{l02091}{TXsh\+Simple\+Level\+::renumber()}}.
+
+\mbox{\Hypertarget{class_image_manager_a5d530b36fa5ec00d694728a2fd54044a}\label{class_image_manager_a5d530b36fa5ec00d694728a2fd54044a}} 
+\index{ImageManager@{ImageManager}!renumber@{renumber}}
+\index{renumber@{renumber}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{renumber()}{renumber()}}
+{\footnotesize\ttfamily bool Image\+Manager\+::renumber (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{src\+Id,  }\item[{const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&}]{fid }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00257                                                                        \{}
+\DoxyCodeLine{00258   std::map<std::string, ImageBuilderP>::iterator st =}
+\DoxyCodeLine{00259       m\_imp-\/>m\_builders.find(srcId);}
+\DoxyCodeLine{00260   \textcolor{keywordflow}{if} (st == m\_imp-\/>m\_builders.end()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00261 }
+\DoxyCodeLine{00262   m\_imp-\/>m\_builders[srcId]-\/>setFid(fid);}
+\DoxyCodeLine{00263 }
+\DoxyCodeLine{00264   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00265 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_image_manager_aaf5a12cc6326ed3d4af2f5ae280ed355}\label{class_image_manager_aaf5a12cc6326ed3d4af2f5ae280ed355}} 
+\index{ImageManager@{ImageManager}!setImage@{setImage}}
+\index{setImage@{setImage}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{setImage()}{setImage()}}
+{\footnotesize\ttfamily bool Image\+Manager\+::set\+Image (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&}]{img }\end{DoxyParamCaption})}
+
+Overrides the image builder, and manually associates an image to the specified identifier, putting the image in cache and updating the stored image info. If the image reference is empty, the result is equivalent to \mbox{\hyperlink{class_image_manager_a34bdaa25c84cd79a7518dbd233a947f4}{invalidate()}}. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00445                                                                    \{}
+\DoxyCodeLine{00446   \textcolor{keywordflow}{if} (!img) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_image_manager_a34bdaa25c84cd79a7518dbd233a947f4}{invalidate}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00447 }
+\DoxyCodeLine{00448   QWriteLocker locker(\&m\_imp-\/>m\_tableLock);}
+\DoxyCodeLine{00449 }
+\DoxyCodeLine{00450   std::map<std::string, ImageBuilderP>::iterator it =}
+\DoxyCodeLine{00451       m\_imp-\/>m\_builders.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00452   \textcolor{keywordflow}{if} (it == m\_imp-\/>m\_builders.end()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00453 }
+\DoxyCodeLine{00454   \mbox{\hyperlink{class_t_smart_pointer_t}{ImageBuilderP}} \&builder = it-\/>second;}
+\DoxyCodeLine{00455 }
+\DoxyCodeLine{00456   builder-\/>invalidate();  \textcolor{comment}{// WARNING: Not all infos are correctly restored}}
+\DoxyCodeLine{00457   ImageBuilder::setImageInfo(}
+\DoxyCodeLine{00458       builder-\/>m\_info,}
+\DoxyCodeLine{00459       img.getPointer());  \textcolor{comment}{// from supplied image -\/ must investigate further...}}
+\DoxyCodeLine{00460 }
+\DoxyCodeLine{00461   TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a124eae4cf370288f42c22b3477cb5163}{add}}(\textcolor{keywordtype}{id}, img, \textcolor{keyword}{true});}
+\DoxyCodeLine{00462   builder-\/>m\_cached = builder-\/>m\_modified = \textcolor{keyword}{true};}
+\DoxyCodeLine{00463 }
+\DoxyCodeLine{00464   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00465 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01153}{TImage\+Cache\+::add()}}, and \mbox{\hyperlink{l00426}{invalidate()}}.
+
+\mbox{\Hypertarget{class_image_manager_ab74305fdae38a7704081f7f777d0d80d}\label{class_image_manager_ab74305fdae38a7704081f7f777d0d80d}} 
+\index{ImageManager@{ImageManager}!unbind@{unbind}}
+\index{unbind@{unbind}!ImageManager@{ImageManager}}
+\doxysubsubsection{\texorpdfstring{unbind()}{unbind()}}
+{\footnotesize\ttfamily bool Image\+Manager\+::unbind (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{id }\end{DoxyParamCaption})}
+
+Unbinds the specified identifier, returning true if the operation succeeded. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00214                                              \{}
+\DoxyCodeLine{00215   QWriteLocker locker(\&m\_imp-\/>m\_tableLock);}
+\DoxyCodeLine{00216 }
+\DoxyCodeLine{00217   std::map<std::string, ImageBuilderP>::iterator it =}
+\DoxyCodeLine{00218       m\_imp-\/>m\_builders.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00219   \textcolor{keywordflow}{if} (it == m\_imp-\/>m\_builders.end()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00220 }
+\DoxyCodeLine{00221   \mbox{\hyperlink{class_t_smart_pointer_t}{ImageBuilderP}} \&builderP = it-\/>second;}
+\DoxyCodeLine{00222   \textcolor{keywordflow}{if} (builderP \&\& builderP-\/>m\_cached) TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a57d63227dfe2532b0aed22c47113be66}{remove}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00223 }
+\DoxyCodeLine{00224   m\_imp-\/>m\_builders.erase(it);}
+\DoxyCodeLine{00225   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00226 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01260}{TImage\+Cache\+::remove()}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00198}{bind()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/imagemanager.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/imagemanager.\+cpp\end{DoxyCompactItemize}

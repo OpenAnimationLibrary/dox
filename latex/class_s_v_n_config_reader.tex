@@ -1,0 +1,167 @@
+\hypertarget{class_s_v_n_config_reader}{}\doxysection{SVNConfig\+Reader Class Reference}
+\label{class_s_v_n_config_reader}\index{SVNConfigReader@{SVNConfigReader}}
+Inheritance diagram for SVNConfig\+Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_v_n_config_reader}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_v_n_config_reader_a9f3056ac375f95555a0f71cba40fafe8}{SVNConfig\+Reader}} (const QString \&xml)
+\item 
+QList$<$ \mbox{\hyperlink{struct_s_v_n_repository}{SVNRepository}} $>$ \mbox{\hyperlink{class_s_v_n_config_reader_a8db2f842fd6c1425617773d067cafe90}{get\+Repositories}} ()
+\item 
+QString \mbox{\hyperlink{class_s_v_n_config_reader_a88bbbb52c03806ee87ca0ca641217318}{get\+SVNPath}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_v_n_config_reader_a40f51dac3ab6298f84f31ac779733fb9}{read\+Repository}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_config_reader_a4775afe0eedd86ab7e1e05922d0a9388}{read\+SVNPath}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_config_reader_a6fd88488126de6284e48b23052d25fee}{read\+Unknown\+Element}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_v_n_config_reader_a9f3056ac375f95555a0f71cba40fafe8}\label{class_s_v_n_config_reader_a9f3056ac375f95555a0f71cba40fafe8}} 
+\index{SVNConfigReader@{SVNConfigReader}!SVNConfigReader@{SVNConfigReader}}
+\index{SVNConfigReader@{SVNConfigReader}!SVNConfigReader@{SVNConfigReader}}
+\doxysubsubsection{\texorpdfstring{SVNConfigReader()}{SVNConfigReader()}}
+{\footnotesize\ttfamily SVNConfig\+Reader\+::\+SVNConfig\+Reader (\begin{DoxyParamCaption}\item[{const QString \&}]{xml }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00110                                                    : m\_data(xml), m\_path() \{}
+\DoxyCodeLine{00111   addData(m\_data);}
+\DoxyCodeLine{00112 }
+\DoxyCodeLine{00113   \textcolor{keywordflow}{while} (!atEnd()) \{}
+\DoxyCodeLine{00114     readNext();}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116     \textcolor{keywordflow}{if} (isStartElement()) \{}
+\DoxyCodeLine{00117       \textcolor{keywordflow}{if} (name() == \textcolor{stringliteral}{"{}repository"{}})}
+\DoxyCodeLine{00118         readRepository();}
+\DoxyCodeLine{00119       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (name() == \textcolor{stringliteral}{"{}svnPath"{}})}
+\DoxyCodeLine{00120         readSVNPath();}
+\DoxyCodeLine{00121     \}}
+\DoxyCodeLine{00122   \}}
+\DoxyCodeLine{00123 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_v_n_config_reader_a8db2f842fd6c1425617773d067cafe90}\label{class_s_v_n_config_reader_a8db2f842fd6c1425617773d067cafe90}} 
+\index{SVNConfigReader@{SVNConfigReader}!getRepositories@{getRepositories}}
+\index{getRepositories@{getRepositories}!SVNConfigReader@{SVNConfigReader}}
+\doxysubsubsection{\texorpdfstring{getRepositories()}{getRepositories()}}
+{\footnotesize\ttfamily QList$<$ \mbox{\hyperlink{struct_s_v_n_repository}{SVNRepository}} $>$ SVNConfig\+Reader\+::get\+Repositories (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067 \{ \textcolor{keywordflow}{return} m\_repositories; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_config_reader_a88bbbb52c03806ee87ca0ca641217318}\label{class_s_v_n_config_reader_a88bbbb52c03806ee87ca0ca641217318}} 
+\index{SVNConfigReader@{SVNConfigReader}!getSVNPath@{getSVNPath}}
+\index{getSVNPath@{getSVNPath}!SVNConfigReader@{SVNConfigReader}}
+\doxysubsubsection{\texorpdfstring{getSVNPath()}{getSVNPath()}}
+{\footnotesize\ttfamily QString SVNConfig\+Reader\+::get\+SVNPath (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068 \{ \textcolor{keywordflow}{return} m\_path; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_config_reader_a40f51dac3ab6298f84f31ac779733fb9}\label{class_s_v_n_config_reader_a40f51dac3ab6298f84f31ac779733fb9}} 
+\index{SVNConfigReader@{SVNConfigReader}!readRepository@{readRepository}}
+\index{readRepository@{readRepository}!SVNConfigReader@{SVNConfigReader}}
+\doxysubsubsection{\texorpdfstring{readRepository()}{readRepository()}}
+{\footnotesize\ttfamily void SVNConfig\+Reader\+::read\+Repository (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00127                                      \{}
+\DoxyCodeLine{00128   Q\_ASSERT(isStartElement() \&\& name() == \textcolor{stringliteral}{"{}repository"{}});}
+\DoxyCodeLine{00129 }
+\DoxyCodeLine{00130   QString repoName, repoPath, localPath, username, password;}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132   \textcolor{keywordflow}{while} (!atEnd()) \{}
+\DoxyCodeLine{00133     readNext();}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135     \textcolor{keywordflow}{if} (isEndElement()) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00136     \textcolor{keywordflow}{if} (isStartElement()) \{}
+\DoxyCodeLine{00137       \textcolor{keywordflow}{if} (name() == \textcolor{stringliteral}{"{}name"{}}) \{}
+\DoxyCodeLine{00138         repoName = readElementText();}
+\DoxyCodeLine{00139         readNext();}
+\DoxyCodeLine{00140       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (name() == \textcolor{stringliteral}{"{}localPath"{}}) \{}
+\DoxyCodeLine{00141         localPath = readElementText();}
+\DoxyCodeLine{00142         readNext();}
+\DoxyCodeLine{00143       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (name() == \textcolor{stringliteral}{"{}repoPath"{}}) \{}
+\DoxyCodeLine{00144         repoPath = readElementText();}
+\DoxyCodeLine{00145         readNext();}
+\DoxyCodeLine{00146       \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00147         readUnknownElement();}
+\DoxyCodeLine{00148     \}}
+\DoxyCodeLine{00149   \}}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   \mbox{\hyperlink{struct_s_v_n_repository}{SVNRepository}} repo;}
+\DoxyCodeLine{00152   repo.m\_name      = repoName;}
+\DoxyCodeLine{00153   repo.m\_localPath = localPath;}
+\DoxyCodeLine{00154   repo.m\_repoPath  = repoPath;}
+\DoxyCodeLine{00155   repo.m\_username  = QString::fromStdString(}
+\DoxyCodeLine{00156       PermissionsManager::instance()-\/>getSVNUserName(m\_repositories.size()));}
+\DoxyCodeLine{00157   repo.m\_password = QString::fromStdString(}
+\DoxyCodeLine{00158       PermissionsManager::instance()-\/>getSVNPassword(m\_repositories.size()));}
+\DoxyCodeLine{00159   m\_repositories.append(repo);}
+\DoxyCodeLine{00160 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_config_reader_a4775afe0eedd86ab7e1e05922d0a9388}\label{class_s_v_n_config_reader_a4775afe0eedd86ab7e1e05922d0a9388}} 
+\index{SVNConfigReader@{SVNConfigReader}!readSVNPath@{readSVNPath}}
+\index{readSVNPath@{readSVNPath}!SVNConfigReader@{SVNConfigReader}}
+\doxysubsubsection{\texorpdfstring{readSVNPath()}{readSVNPath()}}
+{\footnotesize\ttfamily void SVNConfig\+Reader\+::read\+SVNPath (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00164                                   \{}
+\DoxyCodeLine{00165   Q\_ASSERT(isStartElement() \&\& name() == \textcolor{stringliteral}{"{}svnPath"{}});}
+\DoxyCodeLine{00166   m\_path = readElementText();}
+\DoxyCodeLine{00167   readNext();}
+\DoxyCodeLine{00168 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_config_reader_a6fd88488126de6284e48b23052d25fee}\label{class_s_v_n_config_reader_a6fd88488126de6284e48b23052d25fee}} 
+\index{SVNConfigReader@{SVNConfigReader}!readUnknownElement@{readUnknownElement}}
+\index{readUnknownElement@{readUnknownElement}!SVNConfigReader@{SVNConfigReader}}
+\doxysubsubsection{\texorpdfstring{readUnknownElement()}{readUnknownElement()}}
+{\footnotesize\ttfamily void SVNConfig\+Reader\+::read\+Unknown\+Element (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00172                                          \{}
+\DoxyCodeLine{00173   Q\_ASSERT(isStartElement());}
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00175   \textcolor{keywordflow}{while} (!atEnd()) \{}
+\DoxyCodeLine{00176     readNext();}
+\DoxyCodeLine{00177 }
+\DoxyCodeLine{00178     \textcolor{keywordflow}{if} (isEndElement()) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00179 }
+\DoxyCodeLine{00180     \textcolor{keywordflow}{if} (isStartElement()) readUnknownElement();}
+\DoxyCodeLine{00181   \}}
+\DoxyCodeLine{00182 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/versioncontrolxmlreader.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/versioncontrolxmlreader.\+cpp\end{DoxyCompactItemize}

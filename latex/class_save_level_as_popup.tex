@@ -1,0 +1,209 @@
+\hypertarget{class_save_level_as_popup}{}\doxysection{Save\+Level\+As\+Popup Class Reference}
+\label{class_save_level_as_popup}\index{SaveLevelAsPopup@{SaveLevelAsPopup}}
+Inheritance diagram for Save\+Level\+As\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_save_level_as_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_save_level_as_popup_a3f605e83854d57b7f178d4dbcb4b5cee}{execute}} () override
+\item 
+void \mbox{\hyperlink{class_save_level_as_popup_ae4d51b111c5802487182bb4a2d4465f8}{init\+Folder}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_save_level_as_popup_aee62158c1b8ae7945d08b8125fac5fde}\label{class_save_level_as_popup_aee62158c1b8ae7945d08b8125fac5fde}} 
+\index{SaveLevelAsPopup@{SaveLevelAsPopup}!SaveLevelAsPopup@{SaveLevelAsPopup}}
+\index{SaveLevelAsPopup@{SaveLevelAsPopup}!SaveLevelAsPopup@{SaveLevelAsPopup}}
+\doxysubsubsection{\texorpdfstring{SaveLevelAsPopup()}{SaveLevelAsPopup()}}
+{\footnotesize\ttfamily Save\+Level\+As\+Popup\+::\+Save\+Level\+As\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01544     : \mbox{\hyperlink{class_file_browser_popup}{FileBrowserPopup}}(tr(\textcolor{stringliteral}{"{}Save Level"{}}), \mbox{\hyperlink{class_file_browser_popup_a873aa6f7f7a00e34a4f60058db3a3fee}{Options}}(\mbox{\hyperlink{class_file_browser_popup_a873aa6f7f7a00e34a4f60058db3a3feeaba33ea45d284253da84fcae43116e9f3}{FOR\_SAVING}})) \{}
+\DoxyCodeLine{01545   setOkText(tr(\textcolor{stringliteral}{"{}Save"{}}));}
+\DoxyCodeLine{01546   connect(m\_nameField, SIGNAL(returnPressedNow()), m\_okButton,}
+\DoxyCodeLine{01547           SLOT(animateClick()));}
+\DoxyCodeLine{01548 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_save_level_as_popup_a3f605e83854d57b7f178d4dbcb4b5cee}\label{class_save_level_as_popup_a3f605e83854d57b7f178d4dbcb4b5cee}} 
+\index{SaveLevelAsPopup@{SaveLevelAsPopup}!execute@{execute}}
+\index{execute@{execute}!SaveLevelAsPopup@{SaveLevelAsPopup}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily bool Save\+Level\+As\+Popup\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Performs some action on m\+\_\+paths and returns whether the action was successful (accepted) -\/ in which case the popup closes. 
+
+Implements \mbox{\hyperlink{class_file_browser_popup_a8158b9b8756ac5dfa893b78cdc2fd9af}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01550                                \{}
+\DoxyCodeLine{01551   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.empty()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01552 }
+\DoxyCodeLine{01553   \mbox{\hyperlink{class_t_file_path}{TFilePath}} \&fp = (\mbox{\hyperlink{class_t_file_path}{TFilePath}} \&)*\mbox{\hyperlink{class_file_browser_popup_ae7beff1bedd513cf24b3de9fde617ec1}{m\_selectedPaths}}.begin();}
+\DoxyCodeLine{01554 }
+\DoxyCodeLine{01555   \textcolor{keywordflow}{if} (isSpaceString(QString::fromStdString(fp.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}()))) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01556 }
+\DoxyCodeLine{01557   \textcolor{comment}{// pointer to be replaced}}
+\DoxyCodeLine{01558   \mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *levelToBeReplaced =}
+\DoxyCodeLine{01559       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>getLevel();}
+\DoxyCodeLine{01560   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh       = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{01561   \textcolor{keywordtype}{int} curColumnIndex = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a1e294e7cff300851d12a8c3d196943f6}{getCurrentColumn}}()-\/>getColumnIndex();}
+\DoxyCodeLine{01562 }
+\DoxyCodeLine{01563   \textcolor{keywordtype}{bool} ret = IoCmd::saveLevel(fp);}
+\DoxyCodeLine{01564 }
+\DoxyCodeLine{01565   \textcolor{comment}{// ask whether to expose the saved level in xsheet}}
+\DoxyCodeLine{01566   \textcolor{keywordtype}{bool} doExpose = \textcolor{keyword}{true};}
+\DoxyCodeLine{01567   \textcolor{keywordflow}{if} (levelToBeReplaced-\/>\mbox{\hyperlink{class_t_xsh_level_a1a147f1e970a62120c0bbaf0020a8932}{getType}}() \& FULLCOLOR\_TYPE)}
+\DoxyCodeLine{01568     doExpose = \textcolor{keyword}{false};}
+\DoxyCodeLine{01569   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ret \&\&}
+\DoxyCodeLine{01570            !Preferences::instance()-\/>isReplaceAfterSaveLevelAsEnabled()) \{}
+\DoxyCodeLine{01571     QString question(QObject::tr(\textcolor{stringliteral}{"{}Do you want to expose the renamed level ?"{}}));}
+\DoxyCodeLine{01572     \textcolor{keywordtype}{int} val = DVGui::MsgBox(question,}
+\DoxyCodeLine{01573                             QObject::tr(\textcolor{stringliteral}{"{}Expose"{}}),            \textcolor{comment}{// val = 1}}
+\DoxyCodeLine{01574                             QObject::tr(\textcolor{stringliteral}{"{}Don't expose"{}}), 0);  \textcolor{comment}{// val = 2}}
+\DoxyCodeLine{01575     \textcolor{keywordflow}{if} (val == 0) \textcolor{keywordflow}{return} \textcolor{keyword}{false};                               \textcolor{comment}{// close button}}
+\DoxyCodeLine{01576     \textcolor{keywordflow}{if} (val == 2) doExpose = \textcolor{keyword}{false};}
+\DoxyCodeLine{01577   \}}
+\DoxyCodeLine{01578 }
+\DoxyCodeLine{01579   \textcolor{comment}{// exposing the level}}
+\DoxyCodeLine{01580   \textcolor{keywordflow}{if} (ret \&\& doExpose) \{}
+\DoxyCodeLine{01581     \textcolor{comment}{// if the extensions are missing, add them here}}
+\DoxyCodeLine{01582     \mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *sl = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_xsh_simple_level}{TXshSimpleLevel}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{01583         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>getLevel());}
+\DoxyCodeLine{01584     \textcolor{keywordflow}{if} (!sl) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01585     std::string ext = sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a668293d53a70cca8811db28d87011c55}{getPath}}().\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}();}
+\DoxyCodeLine{01586     \textcolor{keywordflow}{if} (fp.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}() == \textcolor{stringliteral}{"{}"{}}) fp = fp.\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(ext);}
+\DoxyCodeLine{01587 }
+\DoxyCodeLine{01588     \mbox{\hyperlink{struct_io_cmd_1_1_load_resource_arguments}{IoCmd::LoadResourceArguments}} args(fp);}
+\DoxyCodeLine{01589     args.expose = \textcolor{keyword}{false};}
+\DoxyCodeLine{01590     \textcolor{keywordtype}{int} count   = \mbox{\hyperlink{namespace_io_cmd_a107f6d3100b922e0c09e9b4aa1a8602a}{IoCmd::loadResources}}(args);}
+\DoxyCodeLine{01591     \textcolor{keywordflow}{if} (count == 0) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01592     \mbox{\hyperlink{class_t_smart_pointer_t}{TXshLevelP}} xl = args.loadedLevels[0];}
+\DoxyCodeLine{01593 }
+\DoxyCodeLine{01594     \textcolor{comment}{// in case of replacing with a saved file}}
+\DoxyCodeLine{01595     \textcolor{keywordflow}{if} (Preferences::instance()-\/>isReplaceAfterSaveLevelAsEnabled()) \{}
+\DoxyCodeLine{01596       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < xsh-\/>\mbox{\hyperlink{class_t_xsheet_a17464dc5617cf87a46f03e1a52d36cc1}{getColumnCount}}(); c++) \{}
+\DoxyCodeLine{01597         \textcolor{keywordflow}{if} (xsh-\/>\mbox{\hyperlink{class_t_xsheet_a83aecebd1b7714017a64e2b786e91a4e}{isColumnEmpty}}(c)) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01598         \textcolor{keywordtype}{int} r0, r1;}
+\DoxyCodeLine{01599         xsh-\/>\mbox{\hyperlink{class_t_xsheet_a26850469fb0f2886b717479050c32be2}{getCellRange}}(c, r0, r1);}
+\DoxyCodeLine{01600         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} r = r0; r <= r1; r++) \{}
+\DoxyCodeLine{01601           \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r, c);}
+\DoxyCodeLine{01602           \textcolor{keywordflow}{if} (cell.m\_level.getPointer() != levelToBeReplaced) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01603           cell.m\_level = xl;}
+\DoxyCodeLine{01604           xsh-\/>setCell(r, c, cell);}
+\DoxyCodeLine{01605         \}}
+\DoxyCodeLine{01606       \}}
+\DoxyCodeLine{01607       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{01608 }
+\DoxyCodeLine{01609       \textcolor{comment}{//-\/-\/-\/ update the scene cast}}
+\DoxyCodeLine{01610       \mbox{\hyperlink{class_t_level_set}{TLevelSet}} *levelSet =}
+\DoxyCodeLine{01611           \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene()-\/>\mbox{\hyperlink{class_toonz_scene_ac1a8bf0d2cec4f59c87b0001991264b5}{getLevelSet}}();}
+\DoxyCodeLine{01612       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < levelSet-\/>getLevelCount(); i++) \{}
+\DoxyCodeLine{01613         \mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *tmpLevel = levelSet-\/>getLevel(i);}
+\DoxyCodeLine{01614         \textcolor{keywordflow}{if} (tmpLevel != levelToBeReplaced) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{01615         \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()}
+\DoxyCodeLine{01616                  -\/>getCurrentScene()}
+\DoxyCodeLine{01617                  -\/>getScene()}
+\DoxyCodeLine{01618                  -\/>getTopXsheet()}
+\DoxyCodeLine{01619                  -\/>isLevelUsed(tmpLevel))}
+\DoxyCodeLine{01620           levelSet-\/>removeLevel(tmpLevel);}
+\DoxyCodeLine{01621       \}}
+\DoxyCodeLine{01622 }
+\DoxyCodeLine{01623     \}}
+\DoxyCodeLine{01624     \textcolor{comment}{// In case of loading the saved file into a vacant column}}
+\DoxyCodeLine{01625     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01626       \textcolor{comment}{// find the leftmost empty column}}
+\DoxyCodeLine{01627       \textcolor{keywordtype}{int} emptyColumnIndex = xsh-\/>\mbox{\hyperlink{class_t_xsheet_ac00c621f54bf2c4f4a51a8b7d6f27253}{getFirstFreeColumnIndex}}();}
+\DoxyCodeLine{01628 }
+\DoxyCodeLine{01629       \textcolor{comment}{// if the scene frame is selected and the old level is found in the}}
+\DoxyCodeLine{01630       \textcolor{comment}{// current column,}}
+\DoxyCodeLine{01631       \textcolor{comment}{// then place the new level at the same frame with the old one}}
+\DoxyCodeLine{01632       \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentFrame()-\/>isEditingScene()) \{}
+\DoxyCodeLine{01633         \textcolor{comment}{// check out the current column}}
+\DoxyCodeLine{01634         \textcolor{keywordtype}{int} r0, r1;}
+\DoxyCodeLine{01635         xsh-\/>\mbox{\hyperlink{class_t_xsheet_a26850469fb0f2886b717479050c32be2}{getCellRange}}(curColumnIndex, r0, r1);}
+\DoxyCodeLine{01636 }
+\DoxyCodeLine{01637         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} r = r0; r <= r1; r++) \{}
+\DoxyCodeLine{01638           \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r, curColumnIndex);}
+\DoxyCodeLine{01639           \textcolor{keywordflow}{if} (!cell.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}() \&\&}
+\DoxyCodeLine{01640               cell.m\_level.getPointer() == levelToBeReplaced) \{}
+\DoxyCodeLine{01641             \textcolor{comment}{// set the new level at the same frame with the old one}}
+\DoxyCodeLine{01642             cell.m\_level = xl;}
+\DoxyCodeLine{01643             xsh-\/>setCell(r, emptyColumnIndex, cell);}
+\DoxyCodeLine{01644           \}}
+\DoxyCodeLine{01645         \}}
+\DoxyCodeLine{01646       \}}
+\DoxyCodeLine{01647       \textcolor{comment}{// if the level editing mode, then just place the new level}}
+\DoxyCodeLine{01648       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01649         std::vector<TFrameId> dummy\_fIds;}
+\DoxyCodeLine{01650         xsh-\/>\mbox{\hyperlink{class_t_xsheet_ad2812514a3f36e1a61cbf71aa7f21cd5}{exposeLevel}}(0, emptyColumnIndex, xl.getPointer(), dummy\_fIds);}
+\DoxyCodeLine{01651       \}}
+\DoxyCodeLine{01652     \}}
+\DoxyCodeLine{01653 }
+\DoxyCodeLine{01654     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>setLevel(xl.getPointer());}
+\DoxyCodeLine{01655 }
+\DoxyCodeLine{01656     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>notifyCastChange();}
+\DoxyCodeLine{01657     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_ad2923c9feaaa44ecd9cdd0fa029aa8aa}{getCurrentLevel}}()-\/>notifyLevelChange();}
+\DoxyCodeLine{01658 }
+\DoxyCodeLine{01659     DvDirModel::instance()-\/>refreshFolder(fp.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}());}
+\DoxyCodeLine{01660 }
+\DoxyCodeLine{01661     \textcolor{comment}{// reset undo memory!!}}
+\DoxyCodeLine{01662     \textcolor{keywordflow}{if} (Preferences::instance()-\/>getBoolValue(resetUndoOnSavingLevel))}
+\DoxyCodeLine{01663       TUndoManager::manager()-\/>reset();}
+\DoxyCodeLine{01664   \}}
+\DoxyCodeLine{01665 }
+\DoxyCodeLine{01666   \textcolor{keywordflow}{if} (ret)}
+\DoxyCodeLine{01667     std::cout << \textcolor{stringliteral}{"{}SaveLevelAs complete."{}} << std::endl;}
+\DoxyCodeLine{01668   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01669     std::cout << \textcolor{stringliteral}{"{}SaveLevelAs failed for some reason."{}} << std::endl;}
+\DoxyCodeLine{01670 }
+\DoxyCodeLine{01671   \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{01672 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00124}{Io\+Cmd\+::\+Load\+Resource\+Arguments\+::expose}}, \mbox{\hyperlink{l01045}{TXsheet\+::expose\+Level()}}, \mbox{\hyperlink{l00233}{TXsheet\+::get\+Cell()}}, \mbox{\hyperlink{l00462}{TXsheet\+::get\+Cell\+Range()}}, \mbox{\hyperlink{l01425}{TXsheet\+::get\+Column\+Count()}}, \mbox{\hyperlink{l00118}{TApp\+::get\+Current\+Column()}}, \mbox{\hyperlink{l00122}{TApp\+::get\+Current\+Level()}}, \mbox{\hyperlink{l00106}{TApp\+::get\+Current\+Scene()}}, \mbox{\hyperlink{l00110}{TApp\+::get\+Current\+Xsheet()}}, \mbox{\hyperlink{l01431}{TXsheet\+::get\+First\+Free\+Column\+Index()}}, \mbox{\hyperlink{l00093}{Toonz\+Scene\+::get\+Level\+Set()}}, \mbox{\hyperlink{l00636}{TFile\+Path\+::get\+Name()}}, \mbox{\hyperlink{l00683}{TFile\+Path\+::get\+Parent\+Dir()}}, \mbox{\hyperlink{l00120}{TXsh\+Simple\+Level\+::get\+Path()}}, \mbox{\hyperlink{l00225}{TFile\+Path\+::get\+Type()}}, \mbox{\hyperlink{l00081}{TXsh\+Level\+::get\+Type()}}, \mbox{\hyperlink{l00215}{TApp\+::instance()}}, \mbox{\hyperlink{l00482}{TXsheet\+::is\+Column\+Empty()}}, \mbox{\hyperlink{l00078}{TXsh\+Cell\+::is\+Empty()}}, \mbox{\hyperlink{l00127}{Io\+Cmd\+::\+Load\+Resource\+Arguments\+::loaded\+Levels}}, \mbox{\hyperlink{l02357}{Io\+Cmd\+::load\+Resources()}}, \mbox{\hyperlink{l00090}{File\+Browser\+Popup\+::m\+\_\+selected\+Paths}}, and \mbox{\hyperlink{l00774}{TFile\+Path\+::with\+Type()}}.
+
+\mbox{\Hypertarget{class_save_level_as_popup_ae4d51b111c5802487182bb4a2d4465f8}\label{class_save_level_as_popup_ae4d51b111c5802487182bb4a2d4465f8}} 
+\index{SaveLevelAsPopup@{SaveLevelAsPopup}!initFolder@{initFolder}}
+\index{initFolder@{initFolder}!SaveLevelAsPopup@{SaveLevelAsPopup}}
+\doxysubsubsection{\texorpdfstring{initFolder()}{initFolder()}}
+{\footnotesize\ttfamily void Save\+Level\+As\+Popup\+::init\+Folder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_file_browser_popup}{File\+Browser\+Popup}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01674                                   \{}
+\DoxyCodeLine{01675   \mbox{\hyperlink{class_t_project}{TProject}} *project =}
+\DoxyCodeLine{01676       \mbox{\hyperlink{class_t_project_manager_a150ca0d6e2eb171b8117b0c5f03dbfad}{TProjectManager::instance}}()-\/>\mbox{\hyperlink{class_t_project_manager_a5267cfeae48d4e7585c3fc56d8d5b0b3}{getCurrentProject}}().getPointer();}
+\DoxyCodeLine{01677   \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{01678   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp;}
+\DoxyCodeLine{01679   \textcolor{keywordflow}{if} (scene) fp = scene-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(project-\/>\mbox{\hyperlink{class_t_project_ac0967db66b75e4cf0afe5b1df73a03c7}{getFolder}}(\mbox{\hyperlink{class_t_project_a192daa44228264ac90d27f6d6491ac38}{TProject::Drawings}}));}
+\DoxyCodeLine{01680   setFolder(fp);}
+\DoxyCodeLine{01681 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowserpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/filebrowserpopup.\+cpp\end{DoxyCompactItemize}

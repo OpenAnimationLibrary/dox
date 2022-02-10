@@ -1,0 +1,242 @@
+\hypertarget{class_time_stretch_popup}{}\doxysection{Time\+Stretch\+Popup Class Reference}
+\label{class_time_stretch_popup}\index{TimeStretchPopup@{TimeStretchPopup}}
+Inheritance diagram for Time\+Stretch\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_time_stretch_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries STRETCH\+\_\+\+TYPE} \{ {\bfseries e\+Region} = 0
+, {\bfseries e\+Frame\+Range} = 1
+, {\bfseries e\+Whole\+Xsheet} = 2
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_time_stretch_popup_a0c83f54d2e7456ed1e96a644305e26d1}{set\+Current\+Stretch\+Type}} (int index)
+\item 
+void \mbox{\hyperlink{class_time_stretch_popup_aa3eed82b8ffb4735aaddcf1970fdad93}{stretch}} ()
+\item 
+void \mbox{\hyperlink{class_time_stretch_popup_a70c6db15db03d94c0d8753340dc6c673}{update\+Values}} ()
+\item 
+void \mbox{\hyperlink{class_time_stretch_popup_a26b26e9c99e3d1b8606a59755721bf23}{update\+Values}} (\mbox{\hyperlink{class_t_selection}{TSelection}} $\ast$selection)
+\item 
+void \mbox{\hyperlink{class_time_stretch_popup_af358d9a8f6375ead79f83c5abbb90e24}{update\+Values}} (\mbox{\hyperlink{class_t_selection}{TSelection}} $\ast$selection, \mbox{\hyperlink{class_t_selection}{TSelection}} $\ast$new\+Selection)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_time_stretch_popup_ad076db70a5b9c237591cef400d646cf6}{show\+Event}} (QShow\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_time_stretch_popup_a6716bd9d953911358ce3e3729b7e9b3a}{hide\+Event}} (QHide\+Event $\ast$) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_time_stretch_popup_a5dd66febc5768042512e6de41d5cd5b7}\label{class_time_stretch_popup_a5dd66febc5768042512e6de41d5cd5b7}} 
+\index{TimeStretchPopup@{TimeStretchPopup}!STRETCH\_TYPE@{STRETCH\_TYPE}}
+\index{STRETCH\_TYPE@{STRETCH\_TYPE}!TimeStretchPopup@{TimeStretchPopup}}
+\doxysubsubsection{\texorpdfstring{STRETCH\_TYPE}{STRETCH\_TYPE}}
+{\footnotesize\ttfamily enum Time\+Stretch\+Popup\+::\+STRETCH\+\_\+\+TYPE}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00032 \{ eRegion = 0, eFrameRange = 1, eWholeXsheet = 2 \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_time_stretch_popup_ac361ad524634d50d07126dec3a707794}\label{class_time_stretch_popup_ac361ad524634d50d07126dec3a707794}} 
+\index{TimeStretchPopup@{TimeStretchPopup}!TimeStretchPopup@{TimeStretchPopup}}
+\index{TimeStretchPopup@{TimeStretchPopup}!TimeStretchPopup@{TimeStretchPopup}}
+\doxysubsubsection{\texorpdfstring{TimeStretchPopup()}{TimeStretchPopup()}}
+{\footnotesize\ttfamily Time\+Stretch\+Popup\+::\+Time\+Stretch\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00207     : Dialog(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{true}, \textcolor{stringliteral}{"{}TimeStretch"{}})}
+\DoxyCodeLine{00208     , m\_currentStretchType(eRegion) \{}
+\DoxyCodeLine{00209   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00210   setWindowTitle(tr(\textcolor{stringliteral}{"{}Time Stretch"{}}));}
+\DoxyCodeLine{00211 }
+\DoxyCodeLine{00212   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ae7de609b3b23233656bc68852a2d10cb}{beginVLayout}}();}
+\DoxyCodeLine{00213 }
+\DoxyCodeLine{00214   m\_stretchType = \textcolor{keyword}{new} QComboBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00215   m\_stretchType-\/>setFixedHeight(DVGui::WidgetHeight);}
+\DoxyCodeLine{00216   QStringList viewType;}
+\DoxyCodeLine{00217   viewType << tr(\textcolor{stringliteral}{"{}Selected Cells"{}}) << tr(\textcolor{stringliteral}{"{}Selected Frame Range"{}})}
+\DoxyCodeLine{00218            << tr(\textcolor{stringliteral}{"{}Whole Xsheet"{}});}
+\DoxyCodeLine{00219   m\_stretchType-\/>addItems(viewType);}
+\DoxyCodeLine{00220   connect(m\_stretchType, SIGNAL(currentIndexChanged(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00221           SLOT(setCurrentStretchType(\textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00222   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(tr(\textcolor{stringliteral}{"{}Stretch:"{}}), m\_stretchType);}
+\DoxyCodeLine{00223 }
+\DoxyCodeLine{00224   QHBoxLayout *rangeLayout = \textcolor{keyword}{new} QHBoxLayout(\textcolor{keyword}{this});}
+\DoxyCodeLine{00225   m\_oldRange               = \textcolor{keyword}{new} QLabel(\textcolor{stringliteral}{"{}0"{}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{00226   m\_oldRange-\/>setFixedSize(43, DVGui::WidgetHeight);}
+\DoxyCodeLine{00227   rangeLayout-\/>addWidget(m\_oldRange);}
+\DoxyCodeLine{00228   rangeLayout-\/>addSpacing(10);}
+\DoxyCodeLine{00229   m\_newRangeFld = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_line_edit}{DVGui::IntLineEdit}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00230   rangeLayout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}New Range:"{}})), 1, Qt::AlignRight);}
+\DoxyCodeLine{00231   rangeLayout-\/>addWidget(m\_newRangeFld, 0, Qt::AlignRight);}
+\DoxyCodeLine{00232   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_adecc035c55394875b6354480911feab2}{addLayout}}(tr(\textcolor{stringliteral}{"{}Old Range:"{}}), rangeLayout);}
+\DoxyCodeLine{00233 }
+\DoxyCodeLine{00234   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ab88d88334402845e544da6ca1f207c79}{endVLayout}}();}
+\DoxyCodeLine{00235 }
+\DoxyCodeLine{00236   m\_okBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Stretch"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00237   m\_okBtn-\/>setDefault(\textcolor{keyword}{true});}
+\DoxyCodeLine{00238   m\_cancelBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cancel"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00239   \textcolor{keywordtype}{bool} ret    = connect(m\_okBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(stretch()));}
+\DoxyCodeLine{00240   ret = ret \&\& connect(m\_cancelBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(reject()));}
+\DoxyCodeLine{00241   assert(ret);}
+\DoxyCodeLine{00242 }
+\DoxyCodeLine{00243   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(m\_okBtn, m\_cancelBtn);}
+\DoxyCodeLine{00244 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_time_stretch_popup_a6716bd9d953911358ce3e3729b7e9b3a}\label{class_time_stretch_popup_a6716bd9d953911358ce3e3729b7e9b3a}} 
+\index{TimeStretchPopup@{TimeStretchPopup}!hideEvent@{hideEvent}}
+\index{hideEvent@{hideEvent}!TimeStretchPopup@{TimeStretchPopup}}
+\doxysubsubsection{\texorpdfstring{hideEvent()}{hideEvent()}}
+{\footnotesize\ttfamily void Time\+Stretch\+Popup\+::hide\+Event (\begin{DoxyParamCaption}\item[{QHide\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00264                                               \{}
+\DoxyCodeLine{00265   \mbox{\hyperlink{class_t_selection_handle}{TSelectionHandle}} *selectionHandle = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}();}
+\DoxyCodeLine{00266   \textcolor{keywordtype}{bool} ret = disconnect(selectionHandle, SIGNAL(selectionChanged(\mbox{\hyperlink{class_t_selection}{TSelection}} *)),}
+\DoxyCodeLine{00267                         \textcolor{keyword}{this}, SLOT(updateValues(\mbox{\hyperlink{class_t_selection}{TSelection}} *)));}
+\DoxyCodeLine{00268   ret = ret \&\& connect(selectionHandle,}
+\DoxyCodeLine{00269                        SIGNAL(selectionSwitched(\mbox{\hyperlink{class_t_selection}{TSelection}} *, \mbox{\hyperlink{class_t_selection}{TSelection}} *)),}
+\DoxyCodeLine{00270                        \textcolor{keyword}{this}, SLOT(updateValues(\mbox{\hyperlink{class_t_selection}{TSelection}} *, \mbox{\hyperlink{class_t_selection}{TSelection}} *)));}
+\DoxyCodeLine{00271   \mbox{\hyperlink{class_t_xsheet_handle}{TXsheetHandle}} *xsheetHandle = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}();}
+\DoxyCodeLine{00272   ret = ret \&\& disconnect(xsheetHandle, SIGNAL(xsheetChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00273                           SLOT(updateValues()));}
+\DoxyCodeLine{00274   assert(ret);}
+\DoxyCodeLine{00275   Dialog::hideEvent(e);}
+\DoxyCodeLine{00276 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_time_stretch_popup_a0c83f54d2e7456ed1e96a644305e26d1}\label{class_time_stretch_popup_a0c83f54d2e7456ed1e96a644305e26d1}} 
+\index{TimeStretchPopup@{TimeStretchPopup}!setCurrentStretchType@{setCurrentStretchType}}
+\index{setCurrentStretchType@{setCurrentStretchType}!TimeStretchPopup@{TimeStretchPopup}}
+\doxysubsubsection{\texorpdfstring{setCurrentStretchType}{setCurrentStretchType}}
+{\footnotesize\ttfamily void Time\+Stretch\+Popup\+::set\+Current\+Stretch\+Type (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00305                                                       \{}
+\DoxyCodeLine{00306   \textcolor{keywordflow}{if} (m\_currentStretchType == STRETCH\_TYPE(index)) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00307   m\_currentStretchType = STRETCH\_TYPE(index);}
+\DoxyCodeLine{00308   updateValues();}
+\DoxyCodeLine{00309 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_time_stretch_popup_ad076db70a5b9c237591cef400d646cf6}\label{class_time_stretch_popup_ad076db70a5b9c237591cef400d646cf6}} 
+\index{TimeStretchPopup@{TimeStretchPopup}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!TimeStretchPopup@{TimeStretchPopup}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Time\+Stretch\+Popup\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00248                                              \{}
+\DoxyCodeLine{00249   \mbox{\hyperlink{class_t_selection_handle}{TSelectionHandle}} *selectionHandle = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}();}
+\DoxyCodeLine{00250   \textcolor{keywordtype}{bool} ret = connect(selectionHandle, SIGNAL(selectionChanged(\mbox{\hyperlink{class_t_selection}{TSelection}} *)),}
+\DoxyCodeLine{00251                      \textcolor{keyword}{this}, SLOT(updateValues(\mbox{\hyperlink{class_t_selection}{TSelection}} *)));}
+\DoxyCodeLine{00252   ret = ret \&\& connect(selectionHandle,}
+\DoxyCodeLine{00253                        SIGNAL(selectionSwitched(\mbox{\hyperlink{class_t_selection}{TSelection}} *, \mbox{\hyperlink{class_t_selection}{TSelection}} *)),}
+\DoxyCodeLine{00254                        \textcolor{keyword}{this}, SLOT(updateValues(\mbox{\hyperlink{class_t_selection}{TSelection}} *, \mbox{\hyperlink{class_t_selection}{TSelection}} *)));}
+\DoxyCodeLine{00255   \mbox{\hyperlink{class_t_xsheet_handle}{TXsheetHandle}} *xsheetHandle = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}();}
+\DoxyCodeLine{00256   ret = ret \&\& connect(xsheetHandle, SIGNAL(xsheetChanged()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00257                        SLOT(updateValues()));}
+\DoxyCodeLine{00258   assert(ret);}
+\DoxyCodeLine{00259   updateValues(selectionHandle-\/>getSelection());}
+\DoxyCodeLine{00260 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_time_stretch_popup_aa3eed82b8ffb4735aaddcf1970fdad93}\label{class_time_stretch_popup_aa3eed82b8ffb4735aaddcf1970fdad93}} 
+\index{TimeStretchPopup@{TimeStretchPopup}!stretch@{stretch}}
+\index{stretch@{stretch}!TimeStretchPopup@{TimeStretchPopup}}
+\doxysubsubsection{\texorpdfstring{stretch}{stretch}}
+{\footnotesize\ttfamily void Time\+Stretch\+Popup\+::stretch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00313                                \{}
+\DoxyCodeLine{00314   \mbox{\hyperlink{namespace_t_sop_aa6f80e4e5badf4458f9b0fa7901f41ce}{timeStretch}}(m\_newRangeFld-\/>text().toInt(), m\_currentStretchType);}
+\DoxyCodeLine{00315   accept();}
+\DoxyCodeLine{00316 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_time_stretch_popup_a70c6db15db03d94c0d8753340dc6c673}\label{class_time_stretch_popup_a70c6db15db03d94c0d8753340dc6c673}} 
+\index{TimeStretchPopup@{TimeStretchPopup}!updateValues@{updateValues}}
+\index{updateValues@{updateValues}!TimeStretchPopup@{TimeStretchPopup}}
+\doxysubsubsection{\texorpdfstring{updateValues}{updateValues}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void Time\+Stretch\+Popup\+::update\+Values (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00279                                     \{}
+\DoxyCodeLine{00280   updateValues(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentSelection()-\/>getSelection());}
+\DoxyCodeLine{00281 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_time_stretch_popup_a26b26e9c99e3d1b8606a59755721bf23}\label{class_time_stretch_popup_a26b26e9c99e3d1b8606a59755721bf23}} 
+\index{TimeStretchPopup@{TimeStretchPopup}!updateValues@{updateValues}}
+\index{updateValues@{updateValues}!TimeStretchPopup@{TimeStretchPopup}}
+\doxysubsubsection{\texorpdfstring{updateValues}{updateValues}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void Time\+Stretch\+Popup\+::update\+Values (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_selection}{TSelection}} $\ast$}]{selection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00285                                                          \{}
+\DoxyCodeLine{00286   \textcolor{keywordtype}{int} from = 0, to = 0, newRange = 0;}
+\DoxyCodeLine{00287   \textcolor{keywordflow}{if} (m\_currentStretchType == eWholeXsheet) \{}
+\DoxyCodeLine{00288     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsheet = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00289     newRange        = xsheet-\/>\mbox{\hyperlink{class_t_xsheet_a12a62da7dc04395088112e492d73374f}{getFrameCount}}();}
+\DoxyCodeLine{00290   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00291     \mbox{\hyperlink{class_t_cell_selection}{TCellSelection}} *cellCelection = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_cell_selection}{TCellSelection}} *\textcolor{keyword}{>}(selection);}
+\DoxyCodeLine{00292     \textcolor{keywordflow}{if} (cellCelection) \{}
+\DoxyCodeLine{00293       \textcolor{keywordtype}{int} c0, c1;}
+\DoxyCodeLine{00294       cellCelection-\/>getSelectedCells(from, c0, to, c1);}
+\DoxyCodeLine{00295       newRange = to -\/ from + 1;}
+\DoxyCodeLine{00296     \}}
+\DoxyCodeLine{00297   \}}
+\DoxyCodeLine{00298 }
+\DoxyCodeLine{00299   m\_newRangeFld-\/>setText(QString::number(newRange));}
+\DoxyCodeLine{00300   m\_oldRange-\/>setText(QString::number(newRange));}
+\DoxyCodeLine{00301 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_time_stretch_popup_af358d9a8f6375ead79f83c5abbb90e24}\label{class_time_stretch_popup_af358d9a8f6375ead79f83c5abbb90e24}} 
+\index{TimeStretchPopup@{TimeStretchPopup}!updateValues@{updateValues}}
+\index{updateValues@{updateValues}!TimeStretchPopup@{TimeStretchPopup}}
+\doxysubsubsection{\texorpdfstring{updateValues}{updateValues}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void Time\+Stretch\+Popup\+::update\+Values (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_selection}{TSelection}} $\ast$}]{selection,  }\item[{\mbox{\hyperlink{class_t_selection}{TSelection}} $\ast$}]{new\+Selection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00049                                                                      \{}
+\DoxyCodeLine{00050     updateValues(newSelection);}
+\DoxyCodeLine{00051   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/timestretchpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/timestretchpopup.\+cpp\end{DoxyCompactItemize}

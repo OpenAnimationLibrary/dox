@@ -1,0 +1,209 @@
+\hypertarget{class_editable_marks_bar}{}\doxysection{Editable\+Marks\+Bar Class Reference}
+\label{class_editable_marks_bar}\index{EditableMarksBar@{EditableMarksBar}}
+Inheritance diagram for Editable\+Marks\+Bar\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_editable_marks_bar}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_editable_marks_bar_a0dfba47435269338f610d5ece24f4e4c}{update\+Fields}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_editable_marks_bar_a20f029c430c29f4de620a48159148c68}\label{class_editable_marks_bar_a20f029c430c29f4de620a48159148c68}} 
+void {\bfseries params\+Changed} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_editable_marks_bar_a28ee5d0119262967ce5f3ddb7a5482e0}{Editable\+Marks\+Bar}} (QWidget $\ast$parent=0)
+\item 
+const QVector$<$ int $>$ \& \mbox{\hyperlink{class_editable_marks_bar_a67d34263e5ee9597564a326217d20c64}{marks}} () const
+\item 
+const \mbox{\hyperlink{class_marks_bar}{Marks\+Bar}} $\ast$ \mbox{\hyperlink{class_editable_marks_bar_a5c146a7054448d4f8df601a7acb8b1f4}{marks\+Bar}} () const
+\item 
+\mbox{\hyperlink{class_marks_bar}{Marks\+Bar}} $\ast$ \mbox{\hyperlink{class_editable_marks_bar_a8ab9aac4ce37379ddccdc52081e25c76}{marks\+Bar}} ()
+\item 
+void \mbox{\hyperlink{class_editable_marks_bar_a5f42ce0a31e466643382b01f168addd8}{get\+Values}} (int $\ast$values) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_editable_marks_bar_a9b55b0bcb44da50a2d91353ea9bde99b}{on\+Field\+Edited}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_editable_marks_bar_a28ee5d0119262967ce5f3ddb7a5482e0}\label{class_editable_marks_bar_a28ee5d0119262967ce5f3ddb7a5482e0}} 
+\index{EditableMarksBar@{EditableMarksBar}!EditableMarksBar@{EditableMarksBar}}
+\index{EditableMarksBar@{EditableMarksBar}!EditableMarksBar@{EditableMarksBar}}
+\doxysubsubsection{\texorpdfstring{EditableMarksBar()}{EditableMarksBar()}}
+{\footnotesize\ttfamily Editable\+Marks\+Bar\+::\+Editable\+Marks\+Bar (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00131                                                   : QFrame(parent) \{}
+\DoxyCodeLine{00132   QVBoxLayout *layout = \textcolor{keyword}{new} QVBoxLayout;}
+\DoxyCodeLine{00133   layout-\/>setMargin(0);}
+\DoxyCodeLine{00134   layout-\/>setSpacing(2);}
+\DoxyCodeLine{00135   setLayout(layout);}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137   \textcolor{comment}{// Add MarksBar}}
+\DoxyCodeLine{00138   m\_marksBar = \textcolor{keyword}{new} \mbox{\hyperlink{class_marks_bar}{MarksBar}};}
+\DoxyCodeLine{00139   m\_marksBar-\/>setContentsMargins(5, 0, 6, 0);}
+\DoxyCodeLine{00140   layout-\/>addWidget(m\_marksBar);}
+\DoxyCodeLine{00141 }
+\DoxyCodeLine{00142   \textcolor{comment}{// Customize it}}
+\DoxyCodeLine{00143   m\_marksBar-\/>setRange(0, 256, 2);}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145   QVector<int> \&values = m\_marksBar-\/>values();}
+\DoxyCodeLine{00146   values.push\_back(0);}
+\DoxyCodeLine{00147   values.push\_back(256);}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149   QVector<QColor> \&colors = m\_marksBar-\/>colors();}
+\DoxyCodeLine{00150   colors.fill(Qt::black, 2);}
+\DoxyCodeLine{00151 }
+\DoxyCodeLine{00152   \textcolor{comment}{// MarksBar dominates values change notifications}}
+\DoxyCodeLine{00153   \textcolor{keywordtype}{bool} ret =}
+\DoxyCodeLine{00154       connect(m\_marksBar, SIGNAL(marksUpdated()), \textcolor{keyword}{this}, SLOT(updateFields()));}
+\DoxyCodeLine{00155   ret = ret \&\& connect(m\_marksBar, SIGNAL(marksUpdated()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00156                        SIGNAL(paramsChanged()));}
+\DoxyCodeLine{00157 }
+\DoxyCodeLine{00158   \textcolor{comment}{// Add fields layout}}
+\DoxyCodeLine{00159   QHBoxLayout *hLayout = \textcolor{keyword}{new} QHBoxLayout;}
+\DoxyCodeLine{00160   hLayout-\/>setMargin(0);}
+\DoxyCodeLine{00161   hLayout-\/>setContentsMargins(4, 0, 5, 0);}
+\DoxyCodeLine{00162   layout-\/>addLayout(hLayout);}
+\DoxyCodeLine{00163 }
+\DoxyCodeLine{00164   m\_fields[0] = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_line_edit}{DVGui::IntLineEdit}};}
+\DoxyCodeLine{00165 }
+\DoxyCodeLine{00166   hLayout-\/>addWidget(m\_fields[0]);}
+\DoxyCodeLine{00167   ret = ret \&\& connect(m\_fields[0], SIGNAL(editingFinished()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00168                        SLOT(onFieldEdited()));}
+\DoxyCodeLine{00169 }
+\DoxyCodeLine{00170   hLayout-\/>addStretch(1);}
+\DoxyCodeLine{00171 }
+\DoxyCodeLine{00172   m\_fields[1] = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_int_line_edit}{DVGui::IntLineEdit}};}
+\DoxyCodeLine{00173   hLayout-\/>addWidget(m\_fields[1]);}
+\DoxyCodeLine{00174   ret = ret \&\& connect(m\_fields[1], SIGNAL(editingFinished()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00175                        SLOT(onFieldEdited()));}
+\DoxyCodeLine{00176 }
+\DoxyCodeLine{00177   updateFields();}
+\DoxyCodeLine{00178 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_editable_marks_bar_a0c6e8f3af2bb77b9aebea83bdfdcc7e4}\label{class_editable_marks_bar_a0c6e8f3af2bb77b9aebea83bdfdcc7e4}} 
+\index{EditableMarksBar@{EditableMarksBar}!````~EditableMarksBar@{$\sim$EditableMarksBar}}
+\index{````~EditableMarksBar@{$\sim$EditableMarksBar}!EditableMarksBar@{EditableMarksBar}}
+\doxysubsubsection{\texorpdfstring{$\sim$EditableMarksBar()}{~EditableMarksBar()}}
+{\footnotesize\ttfamily Editable\+Marks\+Bar\+::$\sim$\+Editable\+Marks\+Bar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00182 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_editable_marks_bar_a5f42ce0a31e466643382b01f168addd8}\label{class_editable_marks_bar_a5f42ce0a31e466643382b01f168addd8}} 
+\index{EditableMarksBar@{EditableMarksBar}!getValues@{getValues}}
+\index{getValues@{getValues}!EditableMarksBar@{EditableMarksBar}}
+\doxysubsubsection{\texorpdfstring{getValues()}{getValues()}}
+{\footnotesize\ttfamily void Editable\+Marks\+Bar\+::get\+Values (\begin{DoxyParamCaption}\item[{int $\ast$}]{values }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00186                                                   \{}
+\DoxyCodeLine{00187   \textcolor{keyword}{const} QVector<int> \&marks = m\_marksBar-\/>values();}
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189   values[0] = marks[0];}
+\DoxyCodeLine{00190   values[1] = marks[1] -\/ 1;}
+\DoxyCodeLine{00191 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_editable_marks_bar_a67d34263e5ee9597564a326217d20c64}\label{class_editable_marks_bar_a67d34263e5ee9597564a326217d20c64}} 
+\index{EditableMarksBar@{EditableMarksBar}!marks@{marks}}
+\index{marks@{marks}!EditableMarksBar@{EditableMarksBar}}
+\doxysubsubsection{\texorpdfstring{marks()}{marks()}}
+{\footnotesize\ttfamily const QVector$<$ int $>$ \& Editable\+Marks\+Bar\+::marks (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00038 \{ \textcolor{keywordflow}{return} m\_marksBar-\/>values(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_editable_marks_bar_a8ab9aac4ce37379ddccdc52081e25c76}\label{class_editable_marks_bar_a8ab9aac4ce37379ddccdc52081e25c76}} 
+\index{EditableMarksBar@{EditableMarksBar}!marksBar@{marksBar}}
+\index{marksBar@{marksBar}!EditableMarksBar@{EditableMarksBar}}
+\doxysubsubsection{\texorpdfstring{marksBar()}{marksBar()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_marks_bar}{Marks\+Bar}} $\ast$ Editable\+Marks\+Bar\+::marks\+Bar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041 \{ \textcolor{keywordflow}{return} m\_marksBar; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_editable_marks_bar_a5c146a7054448d4f8df601a7acb8b1f4}\label{class_editable_marks_bar_a5c146a7054448d4f8df601a7acb8b1f4}} 
+\index{EditableMarksBar@{EditableMarksBar}!marksBar@{marksBar}}
+\index{marksBar@{marksBar}!EditableMarksBar@{EditableMarksBar}}
+\doxysubsubsection{\texorpdfstring{marksBar()}{marksBar()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_marks_bar}{Marks\+Bar}} $\ast$ Editable\+Marks\+Bar\+::marks\+Bar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040 \{ \textcolor{keywordflow}{return} m\_marksBar; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_editable_marks_bar_a9b55b0bcb44da50a2d91353ea9bde99b}\label{class_editable_marks_bar_a9b55b0bcb44da50a2d91353ea9bde99b}} 
+\index{EditableMarksBar@{EditableMarksBar}!onFieldEdited@{onFieldEdited}}
+\index{onFieldEdited@{onFieldEdited}!EditableMarksBar@{EditableMarksBar}}
+\doxysubsubsection{\texorpdfstring{onFieldEdited}{onFieldEdited}}
+{\footnotesize\ttfamily void Editable\+Marks\+Bar\+::on\+Field\+Edited (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00206                                      \{}
+\DoxyCodeLine{00207   QVector<int> \&values = m\_marksBar-\/>values();}
+\DoxyCodeLine{00208 }
+\DoxyCodeLine{00209   \textcolor{comment}{// Copy the values to the marksBar}}
+\DoxyCodeLine{00210   values[0] = m\_fields[0]-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_line_edit_a77019c5d6bce534fdd1931136a6efe95}{getValue}}();}
+\DoxyCodeLine{00211   values[1] = m\_fields[1]-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_line_edit_a77019c5d6bce534fdd1931136a6efe95}{getValue}}() + 1;}
+\DoxyCodeLine{00212 }
+\DoxyCodeLine{00213   m\_marksBar-\/>conformValues();}
+\DoxyCodeLine{00214 }
+\DoxyCodeLine{00215   emit paramsChanged();}
+\DoxyCodeLine{00216 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_editable_marks_bar_a0dfba47435269338f610d5ece24f4e4c}\label{class_editable_marks_bar_a0dfba47435269338f610d5ece24f4e4c}} 
+\index{EditableMarksBar@{EditableMarksBar}!updateFields@{updateFields}}
+\index{updateFields@{updateFields}!EditableMarksBar@{EditableMarksBar}}
+\doxysubsubsection{\texorpdfstring{updateFields}{updateFields}}
+{\footnotesize\ttfamily void Editable\+Marks\+Bar\+::update\+Fields (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00195                                     \{}
+\DoxyCodeLine{00196   \textcolor{keyword}{const} QVector<int> \&values = m\_marksBar-\/>values();}
+\DoxyCodeLine{00197 }
+\DoxyCodeLine{00198   m\_fields[0]-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_line_edit_ac16f2b6d59faec8c3f73944f01e46f53}{setValue}}(values[0]);}
+\DoxyCodeLine{00199   m\_fields[1]-\/>\mbox{\hyperlink{class_d_v_gui_1_1_int_line_edit_ac16f2b6d59faec8c3f73944f01e46f53}{setValue}}(values[1] -\/ 1);}
+\DoxyCodeLine{00200 }
+\DoxyCodeLine{00201   \textcolor{comment}{// No emission -\/ as it's the marksbar that dominate signal emission}}
+\DoxyCodeLine{00202 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/adjustlevelspopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/adjustlevelspopup.\+cpp\end{DoxyCompactItemize}

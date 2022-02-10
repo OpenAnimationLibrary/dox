@@ -1,0 +1,170 @@
+\hypertarget{class_t_level_reader_mp4}{}\doxysection{TLevel\+Reader\+Mp4 Class Reference}
+\label{class_t_level_reader_mp4}\index{TLevelReaderMp4@{TLevelReaderMp4}}
+Inheritance diagram for TLevel\+Reader\+Mp4\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_t_level_reader_mp4}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_level_reader_mp4_a48a3b6363ca98b48633b1a2f96a2e099}{TLevel\+Reader\+Mp4}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path)
+\item 
+\mbox{\hyperlink{class_t_image_reader_p}{TImage\+ReaderP}} \mbox{\hyperlink{class_t_level_reader_mp4_a09ff82c1de2cb993751e241d6b0b2199}{get\+Frame\+Reader}} (\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} fid) override
+\item 
+\mbox{\hyperlink{class_t_level_p}{TLevelP}} \mbox{\hyperlink{class_t_level_reader_mp4_a8f35f9f6509a2310e628bbf34faaa478}{load\+Info}} () override
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \mbox{\hyperlink{class_t_level_reader_mp4_a2476552070fe35ca2bc475434eb4af1d}{load}} (int frame\+Index)
+\item 
+\mbox{\hyperlink{class_t_dimension_t}{TDimension}} \mbox{\hyperlink{class_t_level_reader_mp4_a623099b647c36c37712d70d5688047ba}{get\+Size}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}} $\ast$ \mbox{\hyperlink{class_t_level_reader_mp4_a1738c78e1daa1139800180cef72825c8}{create}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&f)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_level_reader_mp4_a48a3b6363ca98b48633b1a2f96a2e099}\label{class_t_level_reader_mp4_a48a3b6363ca98b48633b1a2f96a2e099}} 
+\index{TLevelReaderMp4@{TLevelReaderMp4}!TLevelReaderMp4@{TLevelReaderMp4}}
+\index{TLevelReaderMp4@{TLevelReaderMp4}!TLevelReaderMp4@{TLevelReaderMp4}}
+\doxysubsubsection{\texorpdfstring{TLevelReaderMp4()}{TLevelReaderMp4()}}
+{\footnotesize\ttfamily TLevel\+Reader\+Mp4\+::\+TLevel\+Reader\+Mp4 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00165                                                       : \mbox{\hyperlink{class_t_level_reader}{TLevelReader}}(path) \{}
+\DoxyCodeLine{00166   ffmpegReader = \textcolor{keyword}{new} \mbox{\hyperlink{class_ffmpeg}{Ffmpeg}}();}
+\DoxyCodeLine{00167   ffmpegReader-\/>setPath(m\_path);}
+\DoxyCodeLine{00168   ffmpegReader-\/>disablePrecompute();}
+\DoxyCodeLine{00169   \mbox{\hyperlink{structffmpeg_file_info}{ffmpegFileInfo}} tempInfo = ffmpegReader-\/>getInfo();}
+\DoxyCodeLine{00170   \textcolor{keywordtype}{double} fps              = tempInfo.m\_frameRate;}
+\DoxyCodeLine{00171   m\_frameCount            = tempInfo.m\_frameCount;}
+\DoxyCodeLine{00172   m\_size                  = \mbox{\hyperlink{class_t_dimension_t}{TDimension}}(tempInfo.m\_lx, tempInfo.m\_ly);}
+\DoxyCodeLine{00173   m\_lx                    = m\_size.lx;}
+\DoxyCodeLine{00174   m\_ly                    = m\_size.ly;}
+\DoxyCodeLine{00175 }
+\DoxyCodeLine{00176   \textcolor{comment}{// set values}}
+\DoxyCodeLine{00177   m\_info                   = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_image_info}{TImageInfo}}();}
+\DoxyCodeLine{00178   m\_info-\/>\mbox{\hyperlink{class_t_image_info_a644330b52ec1ef76a1b0ca6cfdb166fe}{m\_frameRate}}      = fps;}
+\DoxyCodeLine{00179   m\_info-\/>\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}             = m\_lx;}
+\DoxyCodeLine{00180   m\_info-\/>\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}}             = m\_ly;}
+\DoxyCodeLine{00181   m\_info-\/>\mbox{\hyperlink{class_t_image_info_aa69221d579b49a27bcd54ffaabb2e8be}{m\_bitsPerSample}}  = 8;}
+\DoxyCodeLine{00182   m\_info-\/>\mbox{\hyperlink{class_t_image_info_a6b58380f718e21dde1b37577090f5c77}{m\_samplePerPixel}} = 4;}
+\DoxyCodeLine{00183   m\_info-\/>\mbox{\hyperlink{class_t_image_info_ad66e78a66158fddceaa192d0063f68e8}{m\_dpix}}           = Stage::standardDpi;}
+\DoxyCodeLine{00184   m\_info-\/>\mbox{\hyperlink{class_t_image_info_ad8d3ccb14666297e487e04aa10ab7831}{m\_dpiy}}           = Stage::standardDpi;}
+\DoxyCodeLine{00185 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_mp4_ab23018383a60240229d4f5fdcb66dbcc}\label{class_t_level_reader_mp4_ab23018383a60240229d4f5fdcb66dbcc}} 
+\index{TLevelReaderMp4@{TLevelReaderMp4}!````~TLevelReaderMp4@{$\sim$TLevelReaderMp4}}
+\index{````~TLevelReaderMp4@{$\sim$TLevelReaderMp4}!TLevelReaderMp4@{TLevelReaderMp4}}
+\doxysubsubsection{\texorpdfstring{$\sim$TLevelReaderMp4()}{~TLevelReaderMp4()}}
+{\footnotesize\ttfamily TLevel\+Reader\+Mp4\+::$\sim$\+TLevel\+Reader\+Mp4 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00188                                   \{}
+\DoxyCodeLine{00189   \textcolor{comment}{// ffmpegReader-\/>cleanUpFiles();}}
+\DoxyCodeLine{00190 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_level_reader_mp4_a1738c78e1daa1139800180cef72825c8}\label{class_t_level_reader_mp4_a1738c78e1daa1139800180cef72825c8}} 
+\index{TLevelReaderMp4@{TLevelReaderMp4}!create@{create}}
+\index{create@{create}!TLevelReaderMp4@{TLevelReaderMp4}}
+\doxysubsubsection{\texorpdfstring{create()}{create()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}} $\ast$ TLevel\+Reader\+Mp4\+::create (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053                                                   \{}
+\DoxyCodeLine{00054     \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_t_level_reader_mp4}{TLevelReaderMp4}}(f);}
+\DoxyCodeLine{00055   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_mp4_a09ff82c1de2cb993751e241d6b0b2199}\label{class_t_level_reader_mp4_a09ff82c1de2cb993751e241d6b0b2199}} 
+\index{TLevelReaderMp4@{TLevelReaderMp4}!getFrameReader@{getFrameReader}}
+\index{getFrameReader@{getFrameReader}!TLevelReaderMp4@{TLevelReaderMp4}}
+\doxysubsubsection{\texorpdfstring{getFrameReader()}{getFrameReader()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_image_reader_p}{TImage\+ReaderP}} TLevel\+Reader\+Mp4\+::get\+Frame\+Reader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}}}]{fid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00203                                                           \{}
+\DoxyCodeLine{00204   \textcolor{comment}{// if (IOError != 0)}}
+\DoxyCodeLine{00205   \textcolor{comment}{//    throw TImageException(m\_path, buildAVIExceptionString(IOError));}}
+\DoxyCodeLine{00206   \textcolor{keywordflow}{if} (!fid.getLetter().isEmpty()) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_image_reader_p}{TImageReaderP}}(0);}
+\DoxyCodeLine{00207   \textcolor{keywordtype}{int} index = fid.getNumber();}
+\DoxyCodeLine{00208 }
+\DoxyCodeLine{00209   \mbox{\hyperlink{class_t_image_reader_mp4}{TImageReaderMp4}} *irm = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_image_reader_mp4}{TImageReaderMp4}}(m\_path, index, \textcolor{keyword}{this}, m\_info);}
+\DoxyCodeLine{00210   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_image_reader_p}{TImageReaderP}}(irm);}
+\DoxyCodeLine{00211 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_mp4_a623099b647c36c37712d70d5688047ba}\label{class_t_level_reader_mp4_a623099b647c36c37712d70d5688047ba}} 
+\index{TLevelReaderMp4@{TLevelReaderMp4}!getSize@{getSize}}
+\index{getSize@{getSize}!TLevelReaderMp4@{TLevelReaderMp4}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_dimension_t}{TDimension}} TLevel\+Reader\+Mp4\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00215 \{ \textcolor{keywordflow}{return} m\_size; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_mp4_a2476552070fe35ca2bc475434eb4af1d}\label{class_t_level_reader_mp4_a2476552070fe35ca2bc475434eb4af1d}} 
+\index{TLevelReaderMp4@{TLevelReaderMp4}!load@{load}}
+\index{load@{load}!TLevelReaderMp4@{TLevelReaderMp4}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} TLevel\+Reader\+Mp4\+::load (\begin{DoxyParamCaption}\item[{int}]{frame\+Index }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00219                                             \{}
+\DoxyCodeLine{00220   \textcolor{keywordflow}{if} (!ffmpegFramesCreated) \{}
+\DoxyCodeLine{00221     ffmpegReader-\/>getFramesFromMovie();}
+\DoxyCodeLine{00222     ffmpegFramesCreated = \textcolor{keyword}{true};}
+\DoxyCodeLine{00223   \}}
+\DoxyCodeLine{00224   \textcolor{keywordflow}{return} ffmpegReader-\/>getImage(frameIndex);}
+\DoxyCodeLine{00225 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_reader_mp4_a8f35f9f6509a2310e628bbf34faaa478}\label{class_t_level_reader_mp4_a8f35f9f6509a2310e628bbf34faaa478}} 
+\index{TLevelReaderMp4@{TLevelReaderMp4}!loadInfo@{loadInfo}}
+\index{loadInfo@{loadInfo}!TLevelReaderMp4@{TLevelReaderMp4}}
+\doxysubsubsection{\texorpdfstring{loadInfo()}{loadInfo()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_level_p}{TLevelP}} TLevel\+Reader\+Mp4\+::load\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00194                                   \{}
+\DoxyCodeLine{00195   \textcolor{keywordflow}{if} (m\_frameCount == -\/1) \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_level_p}{TLevelP}}();}
+\DoxyCodeLine{00196   \mbox{\hyperlink{class_t_level_p}{TLevelP}} level;}
+\DoxyCodeLine{00197   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i <= m\_frameCount; i++) level-\/>setFrame(i, \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}}());}
+\DoxyCodeLine{00198   \textcolor{keywordflow}{return} level;}
+\DoxyCodeLine{00199 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/ffmpeg/tiio\+\_\+mp4.\+h\item 
+E\+:/opentoonz/toonz/sources/image/ffmpeg/tiio\+\_\+mp4.\+cpp\end{DoxyCompactItemize}

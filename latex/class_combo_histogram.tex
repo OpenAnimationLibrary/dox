@@ -1,0 +1,453 @@
+\hypertarget{class_combo_histogram}{}\doxysection{Combo\+Histogram Class Reference}
+\label{class_combo_histogram}\index{ComboHistogram@{ComboHistogram}}
+Inheritance diagram for Combo\+Histogram\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_combo_histogram}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_combo_histogram_aefdc3b58ce6bfbe6b48ddbb5c1cdfaa1}{Combo\+Histogram}} (QWidget $\ast$parent=0)
+\item 
+\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \mbox{\hyperlink{class_combo_histogram_a3ccdeda9a588ab3b758a5d7dfb9616a1}{get\+Raster}} () const
+\item 
+void \mbox{\hyperlink{class_combo_histogram_a2a0fc9d315f248377c57e11b9408353a}{set\+Raster}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&raster, const \mbox{\hyperlink{class_t_smart_pointer_t}{TPaletteP}} \&palette=0)
+\item 
+void \mbox{\hyperlink{class_combo_histogram_a7ff2159940f59278d4acf5fb1850ffd5}{update\+Info}} (const TPixel32 \&pix, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&image\+Pos)
+\item 
+void \mbox{\hyperlink{class_combo_histogram_a6b7999f2acefc6054f93f773de8433e4}{update\+Info}} (const TPixel64 \&pix, const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&image\+Pos)
+\item 
+void \mbox{\hyperlink{class_combo_histogram_a3075cb53a9131198ff014ca2e67e11da}{update\+Average\+Color}} (const TPixel32 \&pix)
+\item 
+void \mbox{\hyperlink{class_combo_histogram_a4f1ee2ccc7be64ae2d483e0a92894bed}{update\+Average\+Color}} (const TPixel64 \&pix)
+\item 
+void \mbox{\hyperlink{class_combo_histogram_a95c0e6390b6c51c72a430efcfb898227}{update\+Comp\+Histogram}} ()
+\item 
+void \mbox{\hyperlink{class_combo_histogram_a8d070e9b14a12f0b3622da37187d15be}{set\+Show\+Compare}} (bool on)
+\item 
+void \mbox{\hyperlink{class_combo_histogram_a16815ae1172e6b6c902296f553fc212f}{invalidate\+Comp\+Histo}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_combo_histogram_ae34e9814a9e26f5e51b6d56d54e4f6f9}{on\+Display\+Mode\+Changed}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_combo_histogram_aaa9a0aebde74c4bdfc64cb13093746ec}{compute\+Channels\+Value}} (int $\ast$buf, size\+\_\+t size, \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} ras, \mbox{\hyperlink{class_t_palette}{TPalette}} $\ast$ext\+Plt=nullptr)
+\item 
+void \mbox{\hyperlink{class_combo_histogram_a8d05b84d0e17b3bb4f6dd0354b849d7b}{show\+Event}} (QShow\+Event $\ast$) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_combo_histogram_aefdc3b58ce6bfbe6b48ddbb5c1cdfaa1}\label{class_combo_histogram_aefdc3b58ce6bfbe6b48ddbb5c1cdfaa1}} 
+\index{ComboHistogram@{ComboHistogram}!ComboHistogram@{ComboHistogram}}
+\index{ComboHistogram@{ComboHistogram}!ComboHistogram@{ComboHistogram}}
+\doxysubsubsection{\texorpdfstring{ComboHistogram()}{ComboHistogram()}}
+{\footnotesize\ttfamily Combo\+Histogram\+::\+Combo\+Histogram (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00423     : QWidget(parent)}
+\DoxyCodeLine{00424     , m\_raster(0)}
+\DoxyCodeLine{00425     , m\_palette(0)}
+\DoxyCodeLine{00426     , m\_showCompare(\textcolor{keyword}{false})}
+\DoxyCodeLine{00427     , m\_compHistoIsValid(\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{00428   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} chan = 0; chan < 4; chan++)}
+\DoxyCodeLine{00429     m\_histograms[chan] = \textcolor{keyword}{new} \mbox{\hyperlink{class_channel_histo}{ChannelHisto}}(chan, \&m\_showCompare, \textcolor{keyword}{this});}
+\DoxyCodeLine{00430   m\_histograms[4] = \textcolor{keyword}{new} \mbox{\hyperlink{class_channel_histo}{ChannelHisto}}(4, \&m\_showCompare, \textcolor{keyword}{this});}
+\DoxyCodeLine{00431 }
+\DoxyCodeLine{00432   \textcolor{comment}{// RGB label}}
+\DoxyCodeLine{00433   m\_rgbLabel = \textcolor{keyword}{new} \mbox{\hyperlink{class_combo_histo_r_g_b_label}{ComboHistoRGBLabel}}(QColor(128, 128, 128), \textcolor{keyword}{this});}
+\DoxyCodeLine{00434   \textcolor{comment}{// m\_rgbLabel-\/>setStyleSheet("{}font-\/size: 18px;"{});}}
+\DoxyCodeLine{00435 }
+\DoxyCodeLine{00436   m\_rectAverageRgbLabel = \textcolor{keyword}{new} \mbox{\hyperlink{class_combo_histo_r_g_b_label}{ComboHistoRGBLabel}}(QColor(128, 128, 128), \textcolor{keyword}{this});}
+\DoxyCodeLine{00437   \textcolor{comment}{// m\_rectAverageRgbLabel-\/>setStyleSheet("{}font-\/size: 18px;"{});}}
+\DoxyCodeLine{00438 }
+\DoxyCodeLine{00439   m\_xPosLabel = \textcolor{keyword}{new} QLabel(\textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{00440   m\_yPosLabel = \textcolor{keyword}{new} QLabel(\textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{00441 }
+\DoxyCodeLine{00442   m\_displayModeCombo = \textcolor{keyword}{new} QComboBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00443 }
+\DoxyCodeLine{00444   m\_displayModeCombo-\/>addItem(}
+\DoxyCodeLine{00445       tr(\textcolor{stringliteral}{"{}8bit (0-\/255)"{}}), (\textcolor{keywordtype}{int})ComboHistoRGBLabel::DisplayMode::Display\_8bit);}
+\DoxyCodeLine{00446   m\_displayModeCombo-\/>addItem(}
+\DoxyCodeLine{00447       tr(\textcolor{stringliteral}{"{}16bit (0-\/65535)"{}}),}
+\DoxyCodeLine{00448       (\textcolor{keywordtype}{int})ComboHistoRGBLabel::DisplayMode::Display\_16bit);}
+\DoxyCodeLine{00449   m\_displayModeCombo-\/>addItem(}
+\DoxyCodeLine{00450       tr(\textcolor{stringliteral}{"{}0.0-\/1.0"{}}), (\textcolor{keywordtype}{int})ComboHistoRGBLabel::DisplayMode::Display\_0\_1);}
+\DoxyCodeLine{00451 }
+\DoxyCodeLine{00452   \textcolor{comment}{// layout}}
+\DoxyCodeLine{00453   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00454   mainLayout-\/>setMargin(5);}
+\DoxyCodeLine{00455   mainLayout-\/>setSpacing(5);}
+\DoxyCodeLine{00456   \{}
+\DoxyCodeLine{00457     mainLayout-\/>addWidget(m\_histograms[4]);  \textcolor{comment}{// RGB}}
+\DoxyCodeLine{00458 }
+\DoxyCodeLine{00459     QHBoxLayout *labelLay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00460     labelLay-\/>setMargin(0);}
+\DoxyCodeLine{00461     labelLay-\/>setSpacing(0);}
+\DoxyCodeLine{00462     \{}
+\DoxyCodeLine{00463       labelLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Picked Color"{}}), \textcolor{keyword}{this}), 0);}
+\DoxyCodeLine{00464       labelLay-\/>addStretch(1);}
+\DoxyCodeLine{00465       labelLay-\/>addWidget(m\_displayModeCombo, 0);}
+\DoxyCodeLine{00466     \}}
+\DoxyCodeLine{00467     mainLayout-\/>addLayout(labelLay, 0);}
+\DoxyCodeLine{00468 }
+\DoxyCodeLine{00469     mainLayout-\/>addWidget(m\_rgbLabel, 0, Qt::AlignCenter);}
+\DoxyCodeLine{00470 }
+\DoxyCodeLine{00471     mainLayout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Average Color (Ctrl + Drag)"{}}), \textcolor{keyword}{this}),}
+\DoxyCodeLine{00472                           0, Qt::AlignLeft | Qt::AlignVCenter);}
+\DoxyCodeLine{00473     mainLayout-\/>addWidget(m\_rectAverageRgbLabel, 0, Qt::AlignCenter);}
+\DoxyCodeLine{00474 }
+\DoxyCodeLine{00475     QGridLayout *infoParamLay = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00476     infoParamLay-\/>setHorizontalSpacing(3);}
+\DoxyCodeLine{00477     infoParamLay-\/>setVerticalSpacing(5);}
+\DoxyCodeLine{00478     \{}
+\DoxyCodeLine{00479       infoParamLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}X:"{}}), \textcolor{keyword}{this}), 0, 0,}
+\DoxyCodeLine{00480                               Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00481       infoParamLay-\/>addWidget(m\_xPosLabel, 0, 1,}
+\DoxyCodeLine{00482                               Qt::AlignLeft | Qt::AlignVCenter);}
+\DoxyCodeLine{00483       infoParamLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Y:"{}}), \textcolor{keyword}{this}), 1, 0,}
+\DoxyCodeLine{00484                               Qt::AlignRight | Qt::AlignVCenter);}
+\DoxyCodeLine{00485       infoParamLay-\/>addWidget(m\_yPosLabel, 1, 1,}
+\DoxyCodeLine{00486                               Qt::AlignLeft | Qt::AlignVCenter);}
+\DoxyCodeLine{00487     \}}
+\DoxyCodeLine{00488     mainLayout-\/>addLayout(infoParamLay, 0);}
+\DoxyCodeLine{00489 }
+\DoxyCodeLine{00490     mainLayout-\/>addWidget(m\_histograms[0]);  \textcolor{comment}{// R}}
+\DoxyCodeLine{00491     mainLayout-\/>addWidget(m\_histograms[1]);  \textcolor{comment}{// G}}
+\DoxyCodeLine{00492     mainLayout-\/>addWidget(m\_histograms[2]);  \textcolor{comment}{// B}}
+\DoxyCodeLine{00493     mainLayout-\/>addWidget(m\_histograms[3]);  \textcolor{comment}{// A}}
+\DoxyCodeLine{00494     mainLayout-\/>addStretch(1);}
+\DoxyCodeLine{00495   \}}
+\DoxyCodeLine{00496   setLayout(mainLayout);}
+\DoxyCodeLine{00497 }
+\DoxyCodeLine{00498   m\_rectAverageRgbLabel-\/>setColorAndUpdate(Qt::transparent);}
+\DoxyCodeLine{00499 }
+\DoxyCodeLine{00500   connect(m\_displayModeCombo, SIGNAL(activated(\textcolor{keywordtype}{int})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00501           SLOT(onDisplayModeChanged()));}
+\DoxyCodeLine{00502 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_combo_histogram_aa8978b289fbfeae546645a896f2762dc}\label{class_combo_histogram_aa8978b289fbfeae546645a896f2762dc}} 
+\index{ComboHistogram@{ComboHistogram}!````~ComboHistogram@{$\sim$ComboHistogram}}
+\index{````~ComboHistogram@{$\sim$ComboHistogram}!ComboHistogram@{ComboHistogram}}
+\doxysubsubsection{\texorpdfstring{$\sim$ComboHistogram()}{~ComboHistogram()}}
+{\footnotesize\ttfamily Combo\+Histogram\+::$\sim$\+Combo\+Histogram (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00505                                 \{}
+\DoxyCodeLine{00506   memset(m\_channelValue, 0, \textcolor{keyword}{sizeof} m\_channelValue);}
+\DoxyCodeLine{00507   memset(m\_channelValueComp, 0, \textcolor{keyword}{sizeof} m\_channelValueComp);}
+\DoxyCodeLine{00508 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_combo_histogram_aaa9a0aebde74c4bdfc64cb13093746ec}\label{class_combo_histogram_aaa9a0aebde74c4bdfc64cb13093746ec}} 
+\index{ComboHistogram@{ComboHistogram}!computeChannelsValue@{computeChannelsValue}}
+\index{computeChannelsValue@{computeChannelsValue}!ComboHistogram@{ComboHistogram}}
+\doxysubsubsection{\texorpdfstring{computeChannelsValue()}{computeChannelsValue()}}
+{\footnotesize\ttfamily void Combo\+Histogram\+::compute\+Channels\+Value (\begin{DoxyParamCaption}\item[{int $\ast$}]{buf,  }\item[{size\+\_\+t}]{size,  }\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}}}]{ras,  }\item[{\mbox{\hyperlink{class_t_palette}{TPalette}} $\ast$}]{ext\+Plt = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00528                                                             \{}
+\DoxyCodeLine{00529   memset(buf, 0, size);}
+\DoxyCodeLine{00530   \textcolor{keywordflow}{if} (!ras.getPointer()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00531   \mbox{\hyperlink{class_t_raster_p_t}{TRasterCM32P}} cmRaster = ras;}
+\DoxyCodeLine{00532   \textcolor{keywordtype}{bool} isCmRaster       = !!cmRaster;}
+\DoxyCodeLine{00533 }
+\DoxyCodeLine{00534   \mbox{\hyperlink{class_t_raster_p_t}{TRaster64P}} raster64 = ras;}
+\DoxyCodeLine{00535   \textcolor{keywordtype}{bool} is64bit        = !!raster64;}
+\DoxyCodeLine{00536 }
+\DoxyCodeLine{00537   \textcolor{keywordtype}{int} lx = ras-\/>getLx();}
+\DoxyCodeLine{00538   \textcolor{keywordtype}{int} ly = ras-\/>getLy();}
+\DoxyCodeLine{00539   \textcolor{keywordflow}{if} (lx > 1 \&\& ly > 1) \{}
+\DoxyCodeLine{00540     \textcolor{keywordtype}{int} i, j;}
+\DoxyCodeLine{00541     \textcolor{keywordflow}{if} (is64bit) \{}
+\DoxyCodeLine{00542       \textcolor{keywordflow}{for} (j = 0; j < ly; j++) \{}
+\DoxyCodeLine{00543         TPixel64 *pix\_64 = raster64-\/>pixels(j);}
+\DoxyCodeLine{00544         \textcolor{keywordflow}{for} (i = 0; i < lx; i++, pix\_64++) \{}
+\DoxyCodeLine{00545           \textcolor{keywordtype}{int} mValue = (int)byteFromUshort(pix\_64-\/>m);}
+\DoxyCodeLine{00546           \textcolor{keywordflow}{if} (mValue != 0) \{}
+\DoxyCodeLine{00547             ++buf[idx(0, (\textcolor{keywordtype}{int})byteFromUshort(pix\_64-\/>r))];}
+\DoxyCodeLine{00548             ++buf[idx(1, (\textcolor{keywordtype}{int})byteFromUshort(pix\_64-\/>g))];}
+\DoxyCodeLine{00549             ++buf[idx(2, (\textcolor{keywordtype}{int})byteFromUshort(pix\_64-\/>b))];}
+\DoxyCodeLine{00550           \}}
+\DoxyCodeLine{00551           ++buf[idx(3, mValue)];}
+\DoxyCodeLine{00552         \}}
+\DoxyCodeLine{00553       \}}
+\DoxyCodeLine{00554     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isCmRaster) \{}
+\DoxyCodeLine{00555       \mbox{\hyperlink{class_t_palette}{TPalette}} *plt = (extPlt) ? extPlt : m\_palette.getPointer();}
+\DoxyCodeLine{00556       assert(plt);}
+\DoxyCodeLine{00557       \textcolor{keywordflow}{for} (j = 0; j < ly; j++) \{}
+\DoxyCodeLine{00558         \mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}} *pix\_cm = cmRaster-\/>pixels(j);}
+\DoxyCodeLine{00559         \textcolor{keywordflow}{for} (i = 0; i < lx; i++, pix\_cm++) \{}
+\DoxyCodeLine{00560           \textcolor{keywordtype}{int} styleId =}
+\DoxyCodeLine{00561               pix\_cm-\/>getTone() < 127 ? pix\_cm-\/>getInk() : pix\_cm-\/>getPaint();}
+\DoxyCodeLine{00562           \mbox{\hyperlink{class_t_color_style}{TColorStyle}} *colorStyle = plt-\/>\mbox{\hyperlink{class_t_palette_a0f6a4eda7dafb0a9f2b43160cfec81e4}{getStyle}}(styleId);}
+\DoxyCodeLine{00563           \textcolor{keywordflow}{if} (!colorStyle) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00564           TPixel color = colorStyle-\/>\mbox{\hyperlink{class_t_color_style_af5907c6146db5067fcf000edeb8e403b}{getAverageColor}}();}
+\DoxyCodeLine{00565           \textcolor{keywordtype}{int} mValue   = color.m;}
+\DoxyCodeLine{00566           \textcolor{keywordflow}{if} (mValue != 0) \{}
+\DoxyCodeLine{00567             ++buf[idx(0, color.r)];}
+\DoxyCodeLine{00568             ++buf[idx(1, color.g)];}
+\DoxyCodeLine{00569             ++buf[idx(2, color.b)];}
+\DoxyCodeLine{00570           \}}
+\DoxyCodeLine{00571           ++buf[idx(3, color.m)];}
+\DoxyCodeLine{00572         \}}
+\DoxyCodeLine{00573       \}}
+\DoxyCodeLine{00574     \} \textcolor{keywordflow}{else}  \textcolor{comment}{// 8bpc raster}}
+\DoxyCodeLine{00575     \{}
+\DoxyCodeLine{00576       \textcolor{keywordflow}{for} (j = 0; j < ly; j++) \{}
+\DoxyCodeLine{00577         TPixel *pix = (TPixel *)ras-\/>getRawData(0, j);}
+\DoxyCodeLine{00578         \textcolor{keywordflow}{for} (i = 0; i < lx; i++, pix++) \{}
+\DoxyCodeLine{00579           \textcolor{keywordtype}{int} mValue = pix-\/>m;}
+\DoxyCodeLine{00580           \textcolor{keywordflow}{if} (mValue != 0) \{}
+\DoxyCodeLine{00581             ++buf[idx(0, pix-\/>r)];}
+\DoxyCodeLine{00582             ++buf[idx(1, pix-\/>g)];}
+\DoxyCodeLine{00583             ++buf[idx(2, pix-\/>b)];}
+\DoxyCodeLine{00584           \}}
+\DoxyCodeLine{00585           ++buf[idx(3, pix-\/>m)];}
+\DoxyCodeLine{00586         \}}
+\DoxyCodeLine{00587       \}}
+\DoxyCodeLine{00588     \}}
+\DoxyCodeLine{00589   \}}
+\DoxyCodeLine{00590 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_combo_histogram_a3ccdeda9a588ab3b758a5d7dfb9616a1}\label{class_combo_histogram_a3ccdeda9a588ab3b758a5d7dfb9616a1}} 
+\index{ComboHistogram@{ComboHistogram}!getRaster@{getRaster}}
+\index{getRaster@{getRaster}!ComboHistogram@{ComboHistogram}}
+\doxysubsubsection{\texorpdfstring{getRaster()}{getRaster()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} Combo\+Histogram\+::get\+Raster (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00178 \{ \textcolor{keywordflow}{return} m\_raster; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_combo_histogram_a16815ae1172e6b6c902296f553fc212f}\label{class_combo_histogram_a16815ae1172e6b6c902296f553fc212f}} 
+\index{ComboHistogram@{ComboHistogram}!invalidateCompHisto@{invalidateCompHisto}}
+\index{invalidateCompHisto@{invalidateCompHisto}!ComboHistogram@{ComboHistogram}}
+\doxysubsubsection{\texorpdfstring{invalidateCompHisto()}{invalidateCompHisto()}}
+{\footnotesize\ttfamily void Combo\+Histogram\+::invalidate\+Comp\+Histo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00190                              \{}
+\DoxyCodeLine{00191     m\_compHistoIsValid = \textcolor{keyword}{false};}
+\DoxyCodeLine{00192     \textcolor{keywordflow}{if} (isVisible() \&\& m\_showCompare) updateCompHistogram();}
+\DoxyCodeLine{00193   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_combo_histogram_ae34e9814a9e26f5e51b6d56d54e4f6f9}\label{class_combo_histogram_ae34e9814a9e26f5e51b6d56d54e4f6f9}} 
+\index{ComboHistogram@{ComboHistogram}!onDisplayModeChanged@{onDisplayModeChanged}}
+\index{onDisplayModeChanged@{onDisplayModeChanged}!ComboHistogram@{ComboHistogram}}
+\doxysubsubsection{\texorpdfstring{onDisplayModeChanged}{onDisplayModeChanged}}
+{\footnotesize\ttfamily void Combo\+Histogram\+::on\+Display\+Mode\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00659                                           \{}
+\DoxyCodeLine{00660   ComboHistoRGBLabel::DisplayMode mode =}
+\DoxyCodeLine{00661       \textcolor{keyword}{static\_cast<}ComboHistoRGBLabel::DisplayMode\textcolor{keyword}{>}(}
+\DoxyCodeLine{00662           m\_displayModeCombo-\/>currentData().toInt());}
+\DoxyCodeLine{00663   m\_rgbLabel-\/>setDisplayMode(mode);}
+\DoxyCodeLine{00664   m\_rectAverageRgbLabel-\/>setDisplayMode(mode);}
+\DoxyCodeLine{00665   HistogramChannelDisplayMode = (int)mode;}
+\DoxyCodeLine{00666   update();}
+\DoxyCodeLine{00667 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_combo_histogram_a2a0fc9d315f248377c57e11b9408353a}\label{class_combo_histogram_a2a0fc9d315f248377c57e11b9408353a}} 
+\index{ComboHistogram@{ComboHistogram}!setRaster@{setRaster}}
+\index{setRaster@{setRaster}!ComboHistogram@{ComboHistogram}}
+\doxysubsubsection{\texorpdfstring{setRaster()}{setRaster()}}
+{\footnotesize\ttfamily void Combo\+Histogram\+::set\+Raster (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TRasterP}} \&}]{raster,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TPaletteP}} \&}]{palette = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00513                                                          \{}
+\DoxyCodeLine{00514   \textcolor{keywordflow}{if} (palette.getPointer()) m\_palette = palette;}
+\DoxyCodeLine{00515   m\_raster = raster;}
+\DoxyCodeLine{00516   computeChannelsValue(\&m\_channelValue[0][0], \textcolor{keyword}{sizeof}(m\_channelValue), m\_raster);}
+\DoxyCodeLine{00517 }
+\DoxyCodeLine{00518   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} chan = 0; chan < 4; chan++)}
+\DoxyCodeLine{00519     m\_histograms[chan]-\/>refleshValue(\&m\_channelValue[chan][0]);}
+\DoxyCodeLine{00520   m\_histograms[4]-\/>refleshValue(\&m\_channelValue[0][0]);}
+\DoxyCodeLine{00521 }
+\DoxyCodeLine{00522   update();}
+\DoxyCodeLine{00523 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_combo_histogram_a8d070e9b14a12f0b3622da37187d15be}\label{class_combo_histogram_a8d070e9b14a12f0b3622da37187d15be}} 
+\index{ComboHistogram@{ComboHistogram}!setShowCompare@{setShowCompare}}
+\index{setShowCompare@{setShowCompare}!ComboHistogram@{ComboHistogram}}
+\doxysubsubsection{\texorpdfstring{setShowCompare()}{setShowCompare()}}
+{\footnotesize\ttfamily void Combo\+Histogram\+::set\+Show\+Compare (\begin{DoxyParamCaption}\item[{bool}]{on }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00186                                \{}
+\DoxyCodeLine{00187     m\_showCompare = on;}
+\DoxyCodeLine{00188     \textcolor{keywordflow}{if} (isVisible() \&\& !m\_compHistoIsValid) updateCompHistogram();}
+\DoxyCodeLine{00189   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_combo_histogram_a8d05b84d0e17b3bb4f6dd0354b849d7b}\label{class_combo_histogram_a8d05b84d0e17b3bb4f6dd0354b849d7b}} 
+\index{ComboHistogram@{ComboHistogram}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!ComboHistogram@{ComboHistogram}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Combo\+Histogram\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00689                                            \{}
+\DoxyCodeLine{00690   \textcolor{keywordflow}{if} (!m\_compHistoIsValid \&\& m\_showCompare) updateCompHistogram();}
+\DoxyCodeLine{00691 }
+\DoxyCodeLine{00692   \textcolor{keywordtype}{int} envMode = HistogramChannelDisplayMode;}
+\DoxyCodeLine{00693   m\_displayModeCombo-\/>setCurrentIndex(m\_displayModeCombo-\/>findData(envMode));}
+\DoxyCodeLine{00694   ComboHistoRGBLabel::DisplayMode mode =}
+\DoxyCodeLine{00695       \textcolor{keyword}{static\_cast<}ComboHistoRGBLabel::DisplayMode\textcolor{keyword}{>}(envMode);}
+\DoxyCodeLine{00696   m\_rgbLabel-\/>setDisplayMode(mode);}
+\DoxyCodeLine{00697   m\_rectAverageRgbLabel-\/>setDisplayMode(mode);}
+\DoxyCodeLine{00698 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_combo_histogram_a3075cb53a9131198ff014ca2e67e11da}\label{class_combo_histogram_a3075cb53a9131198ff014ca2e67e11da}} 
+\index{ComboHistogram@{ComboHistogram}!updateAverageColor@{updateAverageColor}}
+\index{updateAverageColor@{updateAverageColor}!ComboHistogram@{ComboHistogram}}
+\doxysubsubsection{\texorpdfstring{updateAverageColor()}{updateAverageColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Combo\+Histogram\+::update\+Average\+Color (\begin{DoxyParamCaption}\item[{const TPixel32 \&}]{pix }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00637                                                            \{}
+\DoxyCodeLine{00638   \textcolor{keywordflow}{if} (pix == TPixel32::Transparent) \{}
+\DoxyCodeLine{00639     m\_rectAverageRgbLabel-\/>setColorAndUpdate(Qt::transparent);}
+\DoxyCodeLine{00640   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00641     m\_rectAverageRgbLabel-\/>setColorAndUpdate(}
+\DoxyCodeLine{00642         QColor((\textcolor{keywordtype}{int})pix.r, (\textcolor{keywordtype}{int})pix.g, (\textcolor{keywordtype}{int})pix.b));}
+\DoxyCodeLine{00643   \}}
+\DoxyCodeLine{00644 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_combo_histogram_a4f1ee2ccc7be64ae2d483e0a92894bed}\label{class_combo_histogram_a4f1ee2ccc7be64ae2d483e0a92894bed}} 
+\index{ComboHistogram@{ComboHistogram}!updateAverageColor@{updateAverageColor}}
+\index{updateAverageColor@{updateAverageColor}!ComboHistogram@{ComboHistogram}}
+\doxysubsubsection{\texorpdfstring{updateAverageColor()}{updateAverageColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Combo\+Histogram\+::update\+Average\+Color (\begin{DoxyParamCaption}\item[{const TPixel64 \&}]{pix }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00648                                                            \{}
+\DoxyCodeLine{00649   \textcolor{keywordflow}{if} (pix == TPixel64::Transparent) \{}
+\DoxyCodeLine{00650     m\_rectAverageRgbLabel-\/>setColorAndUpdate(Qt::transparent);}
+\DoxyCodeLine{00651   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00652     m\_rectAverageRgbLabel-\/>setColorAndUpdate(}
+\DoxyCodeLine{00653         QColor::fromRgba64((ushort)pix.r, (ushort)pix.g, (ushort)pix.b));}
+\DoxyCodeLine{00654   \}}
+\DoxyCodeLine{00655 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_combo_histogram_a95c0e6390b6c51c72a430efcfb898227}\label{class_combo_histogram_a95c0e6390b6c51c72a430efcfb898227}} 
+\index{ComboHistogram@{ComboHistogram}!updateCompHistogram@{updateCompHistogram}}
+\index{updateCompHistogram@{updateCompHistogram}!ComboHistogram@{ComboHistogram}}
+\doxysubsubsection{\texorpdfstring{updateCompHistogram()}{updateCompHistogram()}}
+{\footnotesize\ttfamily void Combo\+Histogram\+::update\+Comp\+Histogram (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00671                                          \{}
+\DoxyCodeLine{00672   assert(!m\_compHistoIsValid);}
+\DoxyCodeLine{00673   m\_compHistoIsValid = \textcolor{keyword}{true};}
+\DoxyCodeLine{00674 }
+\DoxyCodeLine{00675   \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} refimg =}
+\DoxyCodeLine{00676       TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_aea3ac2752efd6fa9689f5a7c1e895e41}{get}}(QString(\textcolor{stringliteral}{"{}TnzCompareImg"{}}), \textcolor{keyword}{false});}
+\DoxyCodeLine{00677 }
+\DoxyCodeLine{00678   \textcolor{keywordflow}{if} (!(\mbox{\hyperlink{class_t_toonz_image_p}{TToonzImageP}})refimg \&\& !(\mbox{\hyperlink{class_t_raster_image_p}{TRasterImageP}})refimg) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00679 }
+\DoxyCodeLine{00680   computeChannelsValue(\&m\_channelValueComp[0][0], \textcolor{keyword}{sizeof} m\_channelValueComp,}
+\DoxyCodeLine{00681                        refimg-\/>raster(), refimg-\/>getPalette());}
+\DoxyCodeLine{00682 }
+\DoxyCodeLine{00683   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} chan = 0; chan < 4; chan++)}
+\DoxyCodeLine{00684     m\_histograms[chan]-\/>refleshValue(\&m\_channelValueComp[chan][0], \textcolor{keyword}{true});}
+\DoxyCodeLine{00685 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_combo_histogram_a7ff2159940f59278d4acf5fb1850ffd5}\label{class_combo_histogram_a7ff2159940f59278d4acf5fb1850ffd5}} 
+\index{ComboHistogram@{ComboHistogram}!updateInfo@{updateInfo}}
+\index{updateInfo@{updateInfo}!ComboHistogram@{ComboHistogram}}
+\doxysubsubsection{\texorpdfstring{updateInfo()}{updateInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Combo\+Histogram\+::update\+Info (\begin{DoxyParamCaption}\item[{const TPixel32 \&}]{pix,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{image\+Pos }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00593                                                                             \{}
+\DoxyCodeLine{00594   \textcolor{keywordflow}{if} (pix == TPixel32::Transparent) \{}
+\DoxyCodeLine{00595     m\_histograms[0]-\/>\mbox{\hyperlink{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}{showCurrentChannelValue}}(-\/1);}
+\DoxyCodeLine{00596     m\_histograms[1]-\/>\mbox{\hyperlink{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}{showCurrentChannelValue}}(-\/1);}
+\DoxyCodeLine{00597     m\_histograms[2]-\/>\mbox{\hyperlink{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}{showCurrentChannelValue}}(-\/1);}
+\DoxyCodeLine{00598     m\_rgbLabel-\/>setColorAndUpdate(Qt::transparent);}
+\DoxyCodeLine{00599     m\_xPosLabel-\/>setText(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00600     m\_yPosLabel-\/>setText(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00601   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00602     \textcolor{comment}{// show picked color's channel values}}
+\DoxyCodeLine{00603     m\_histograms[0]-\/>\mbox{\hyperlink{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}{showCurrentChannelValue}}((\textcolor{keywordtype}{int})pix.r);}
+\DoxyCodeLine{00604     m\_histograms[1]-\/>\mbox{\hyperlink{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}{showCurrentChannelValue}}((\textcolor{keywordtype}{int})pix.g);}
+\DoxyCodeLine{00605     m\_histograms[2]-\/>\mbox{\hyperlink{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}{showCurrentChannelValue}}((\textcolor{keywordtype}{int})pix.b);}
+\DoxyCodeLine{00606     m\_rgbLabel-\/>setColorAndUpdate(QColor((\textcolor{keywordtype}{int})pix.r, (\textcolor{keywordtype}{int})pix.g, (\textcolor{keywordtype}{int})pix.b));}
+\DoxyCodeLine{00607     m\_xPosLabel-\/>setText(QString::number(tround(imagePos.x)));}
+\DoxyCodeLine{00608     m\_yPosLabel-\/>setText(QString::number(tround(imagePos.y)));}
+\DoxyCodeLine{00609   \}}
+\DoxyCodeLine{00610 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_combo_histogram_a6b7999f2acefc6054f93f773de8433e4}\label{class_combo_histogram_a6b7999f2acefc6054f93f773de8433e4}} 
+\index{ComboHistogram@{ComboHistogram}!updateInfo@{updateInfo}}
+\index{updateInfo@{updateInfo}!ComboHistogram@{ComboHistogram}}
+\doxysubsubsection{\texorpdfstring{updateInfo()}{updateInfo()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Combo\+Histogram\+::update\+Info (\begin{DoxyParamCaption}\item[{const TPixel64 \&}]{pix,  }\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{image\+Pos }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00614                                                                             \{}
+\DoxyCodeLine{00615   \textcolor{keywordflow}{if} (pix == TPixel64::Transparent) \{}
+\DoxyCodeLine{00616     m\_histograms[0]-\/>\mbox{\hyperlink{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}{showCurrentChannelValue}}(-\/1);}
+\DoxyCodeLine{00617     m\_histograms[1]-\/>\mbox{\hyperlink{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}{showCurrentChannelValue}}(-\/1);}
+\DoxyCodeLine{00618     m\_histograms[2]-\/>\mbox{\hyperlink{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}{showCurrentChannelValue}}(-\/1);}
+\DoxyCodeLine{00619     m\_rgbLabel-\/>setColorAndUpdate(Qt::transparent);}
+\DoxyCodeLine{00620     m\_xPosLabel-\/>setText(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00621     m\_yPosLabel-\/>setText(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00622   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00623     TPixel32 pix32 = toPixel32(pix);}
+\DoxyCodeLine{00624     \textcolor{comment}{// show picked color's channel values}}
+\DoxyCodeLine{00625     m\_histograms[0]-\/>\mbox{\hyperlink{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}{showCurrentChannelValue}}((\textcolor{keywordtype}{int})pix32.r);}
+\DoxyCodeLine{00626     m\_histograms[1]-\/>\mbox{\hyperlink{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}{showCurrentChannelValue}}((\textcolor{keywordtype}{int})pix32.g);}
+\DoxyCodeLine{00627     m\_histograms[2]-\/>\mbox{\hyperlink{class_channel_histo_abc28334d0b2d0da8c5c6243356703c59}{showCurrentChannelValue}}((\textcolor{keywordtype}{int})pix32.b);}
+\DoxyCodeLine{00628     m\_rgbLabel-\/>setColorAndUpdate(}
+\DoxyCodeLine{00629         QColor::fromRgba64((ushort)pix.r, (ushort)pix.g, (ushort)pix.b));}
+\DoxyCodeLine{00630     m\_xPosLabel-\/>setText(QString::number(tround(imagePos.x)));}
+\DoxyCodeLine{00631     m\_yPosLabel-\/>setText(QString::number(tround(imagePos.y)));}
+\DoxyCodeLine{00632   \}}
+\DoxyCodeLine{00633 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/combohistogram.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/combohistogram.\+cpp\end{DoxyCompactItemize}

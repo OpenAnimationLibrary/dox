@@ -1,0 +1,114 @@
+\hypertarget{class__3gp__io_1_1_l_r_load_info_parser}{}\doxysection{\+\_\+3gp\+\_\+io\+::LRLoad\+Info\+Parser Class Reference}
+\label{class__3gp__io_1_1_l_r_load_info_parser}\index{\_3gp\_io::LRLoadInfoParser@{\_3gp\_io::LRLoadInfoParser}}
+Inheritance diagram for \+\_\+3gp\+\_\+io\+::LRLoad\+Info\+Parser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class__3gp__io_1_1_l_r_load_info_parser}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{class__3gp__io_1_1_l_r_load_info_parser_a8da5d8e3818296d8e0b1228fa7f0ae29}{header}} () const override
+\item 
+void \mbox{\hyperlink{class__3gp__io_1_1_l_r_load_info_parser_a13180a922edbc174063294f209cc8e41}{operator()}} (\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&stream) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class__3gp__io_1_1_l_r_load_info_parser_a8da5d8e3818296d8e0b1228fa7f0ae29}\label{class__3gp__io_1_1_l_r_load_info_parser_a8da5d8e3818296d8e0b1228fa7f0ae29}} 
+\index{\_3gp\_io::LRLoadInfoParser@{\_3gp\_io::LRLoadInfoParser}!header@{header}}
+\index{header@{header}!\_3gp\_io::LRLoadInfoParser@{\_3gp\_io::LRLoadInfoParser}}
+\doxysubsubsection{\texorpdfstring{header()}{header()}}
+{\footnotesize\ttfamily QString \+\_\+3gp\+\_\+io\+::\+LRLoad\+Info\+Parser\+::header (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00104 \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$LR3gpLoadInfo"{}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class__3gp__io_1_1_l_r_load_info_parser_a13180a922edbc174063294f209cc8e41}\label{class__3gp__io_1_1_l_r_load_info_parser_a13180a922edbc174063294f209cc8e41}} 
+\index{\_3gp\_io::LRLoadInfoParser@{\_3gp\_io::LRLoadInfoParser}!operator()@{operator()}}
+\index{operator()@{operator()}!\_3gp\_io::LRLoadInfoParser@{\_3gp\_io::LRLoadInfoParser}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily void \+\_\+3gp\+\_\+io\+::\+LRLoad\+Info\+Parser\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtipc_1_1_message}{Message}} \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classtipc_1_1_message_parser}{tipc\+::\+Message\+Parser}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00216                                               \{}
+\DoxyCodeLine{00217   \textcolor{comment}{// Read command data}}
+\DoxyCodeLine{00218   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} id;}
+\DoxyCodeLine{00219   QString shMemId;}
+\DoxyCodeLine{00220   msg >> \textcolor{keywordtype}{id} >> shMemId >> clr;}
+\DoxyCodeLine{00221 }
+\DoxyCodeLine{00222   QHash<unsigned int, TLevelReaderP>::iterator it = readers.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00223   \textcolor{keywordflow}{if} (it == readers.end()) \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00224 }
+\DoxyCodeLine{00225   \textcolor{comment}{// Read level infos}}
+\DoxyCodeLine{00226   \{}
+\DoxyCodeLine{00227     \mbox{\hyperlink{class_t_level_p}{TLevelP}} level;}
+\DoxyCodeLine{00228     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00229       level = it.value()-\/>loadInfo();}
+\DoxyCodeLine{00230     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00231       \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00232     \}}
+\DoxyCodeLine{00233 }
+\DoxyCodeLine{00234     \textcolor{keywordtype}{int} frameCount = level-\/>getFrameCount();}
+\DoxyCodeLine{00235     \textcolor{keywordflow}{if} (!shMemId.isEmpty()) \{}
+\DoxyCodeLine{00236       \textcolor{comment}{// Create a shared memory segment to transfer the infos to}}
+\DoxyCodeLine{00237       \mbox{\hyperlink{classtipc_1_1_default_message_parser}{tipc::DefaultMessageParser<SHMEM\_REQUEST>}} msgParser;}
+\DoxyCodeLine{00238       \mbox{\hyperlink{classtipc_1_1_message}{Message}} shMsg;}
+\DoxyCodeLine{00239 }
+\DoxyCodeLine{00240       shMsg << shMemId << frameCount * (int)\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}) << reset;}
+\DoxyCodeLine{00241       msgParser(shMsg);}
+\DoxyCodeLine{00242 }
+\DoxyCodeLine{00243       QString str;}
+\DoxyCodeLine{00244       shMsg >> reset >> str;}
+\DoxyCodeLine{00245       \textcolor{keywordflow}{if} (str != QString(\textcolor{stringliteral}{"{}ok"{}})) \textcolor{keywordflow}{goto} err;}
+\DoxyCodeLine{00246 }
+\DoxyCodeLine{00247       \textcolor{comment}{// Copy level data to the shared memory segment}}
+\DoxyCodeLine{00248       \{}
+\DoxyCodeLine{00249         QSharedMemory shmem(shMemId);}
+\DoxyCodeLine{00250         shmem.attach();}
+\DoxyCodeLine{00251         shmem.lock();}
+\DoxyCodeLine{00252 }
+\DoxyCodeLine{00253         TLevel::Table *table = level-\/>getTable();}
+\DoxyCodeLine{00254 }
+\DoxyCodeLine{00255         TLevel::Table::const\_iterator jt;}
+\DoxyCodeLine{00256         \textcolor{keywordtype}{int} *f = (\textcolor{keywordtype}{int} *)shmem.data();}
+\DoxyCodeLine{00257         \textcolor{keywordflow}{for} (jt = table-\/>begin(); jt != table-\/>end(); ++jt, ++f)}
+\DoxyCodeLine{00258           *f = jt-\/>first.getNumber();}
+\DoxyCodeLine{00259 }
+\DoxyCodeLine{00260         shmem.unlock();}
+\DoxyCodeLine{00261         shmem.detach();}
+\DoxyCodeLine{00262       \}}
+\DoxyCodeLine{00263     \}}
+\DoxyCodeLine{00264 }
+\DoxyCodeLine{00265     msg << QString(\textcolor{stringliteral}{"{}ok"{}}) << frameCount;}
+\DoxyCodeLine{00266   \}}
+\DoxyCodeLine{00267 }
+\DoxyCodeLine{00268   \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00269 }
+\DoxyCodeLine{00270 err:}
+\DoxyCodeLine{00271 }
+\DoxyCodeLine{00272   msg << QString(\textcolor{stringliteral}{"{}err"{}});}
+\DoxyCodeLine{00273 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t323gpmsg.\+h\item 
+E\+:/opentoonz/toonz/sources/t32bitsrv/t323gpmsg.\+cpp\end{DoxyCompactItemize}

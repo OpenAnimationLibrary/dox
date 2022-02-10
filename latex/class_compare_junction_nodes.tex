@@ -1,0 +1,85 @@
+\hypertarget{class_compare_junction_nodes}{}\doxysection{Compare\+Junction\+Nodes Class Reference}
+\label{class_compare_junction_nodes}\index{CompareJunctionNodes@{CompareJunctionNodes}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_compare_junction_nodes_aff3d52475b9543e775ebebd1cacf7f4c}{Compare\+Junction\+Nodes}} (\mbox{\hyperlink{class_t_point_t}{TPointD}} center)
+\item 
+bool \mbox{\hyperlink{class_compare_junction_nodes_a7740645ff41c074830164fd843838ff6}{operator()}} (const \mbox{\hyperlink{class_node}{Node}} $\ast$n1, const \mbox{\hyperlink{class_node}{Node}} $\ast$n2)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_compare_junction_nodes_aff3d52475b9543e775ebebd1cacf7f4c}\label{class_compare_junction_nodes_aff3d52475b9543e775ebebd1cacf7f4c}} 
+\index{CompareJunctionNodes@{CompareJunctionNodes}!CompareJunctionNodes@{CompareJunctionNodes}}
+\index{CompareJunctionNodes@{CompareJunctionNodes}!CompareJunctionNodes@{CompareJunctionNodes}}
+\doxysubsubsection{\texorpdfstring{CompareJunctionNodes()}{CompareJunctionNodes()}}
+{\footnotesize\ttfamily Compare\+Junction\+Nodes\+::\+Compare\+Junction\+Nodes (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_point_t}{TPointD}}}]{center }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00332 : m\_center(center) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_compare_junction_nodes_a7740645ff41c074830164fd843838ff6}\label{class_compare_junction_nodes_a7740645ff41c074830164fd843838ff6}} 
+\index{CompareJunctionNodes@{CompareJunctionNodes}!operator()@{operator()}}
+\index{operator()@{operator()}!CompareJunctionNodes@{CompareJunctionNodes}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily bool Compare\+Junction\+Nodes\+::operator() (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_node}{Node}} $\ast$}]{n1,  }\item[{const \mbox{\hyperlink{class_node}{Node}} $\ast$}]{n2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00334                                                   \{}
+\DoxyCodeLine{00335     \mbox{\hyperlink{class_t_point_t}{TPointD}} p1 = convert(n1-\/>m\_pixel-\/>m\_pos) -\/ m\_center;}
+\DoxyCodeLine{00336     \mbox{\hyperlink{class_t_point_t}{TPointD}} p2 = convert(n2-\/>m\_pixel-\/>m\_pos) -\/ m\_center;}
+\DoxyCodeLine{00337 }
+\DoxyCodeLine{00338     \textcolor{keywordtype}{double} alpha1, alpha2;}
+\DoxyCodeLine{00339 }
+\DoxyCodeLine{00340     \textcolor{keywordflow}{if} (p1.x > 0)}
+\DoxyCodeLine{00341       alpha1 = -\/p1.y / sqrt(norm2(p1));}
+\DoxyCodeLine{00342     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (p1.x < 0)}
+\DoxyCodeLine{00343       alpha1 = 2 + p1.y / sqrt(norm2(p1));}
+\DoxyCodeLine{00344     \textcolor{keywordflow}{else}  \textcolor{comment}{//(p1.x = 0)}}
+\DoxyCodeLine{00345     \{}
+\DoxyCodeLine{00346       \textcolor{keywordflow}{if} (p1.y > 0)}
+\DoxyCodeLine{00347         alpha1 = -\/1;}
+\DoxyCodeLine{00348       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (p1.y < 0)}
+\DoxyCodeLine{00349         alpha1 = 1;}
+\DoxyCodeLine{00350       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00351         assert(\textcolor{keyword}{true});}
+\DoxyCodeLine{00352     \}}
+\DoxyCodeLine{00353 }
+\DoxyCodeLine{00354     \textcolor{keywordflow}{if} (p2.x > 0)}
+\DoxyCodeLine{00355       alpha2 = -\/p2.y / sqrt(norm2(p2));}
+\DoxyCodeLine{00356     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (p2.x < 0)}
+\DoxyCodeLine{00357       alpha2 = 2 + p2.y / sqrt(norm2(p2));}
+\DoxyCodeLine{00358     \textcolor{keywordflow}{else}  \textcolor{comment}{//(p2.x = 0)}}
+\DoxyCodeLine{00359     \{}
+\DoxyCodeLine{00360       \textcolor{keywordflow}{if} (p2.y > 0)}
+\DoxyCodeLine{00361         alpha2 = -\/1;}
+\DoxyCodeLine{00362       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (p2.y < 0)}
+\DoxyCodeLine{00363         alpha2 = 1;}
+\DoxyCodeLine{00364       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00365         assert(\textcolor{keyword}{true});}
+\DoxyCodeLine{00366     \}}
+\DoxyCodeLine{00367 }
+\DoxyCodeLine{00368     \textcolor{keywordflow}{if} (alpha2 -\/ alpha1 > 0)}
+\DoxyCodeLine{00369       \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00370     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (alpha2 -\/ alpha1 < 0)}
+\DoxyCodeLine{00371       \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00372     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00373       \textcolor{keywordflow}{return} \textcolor{keyword}{false};  \textcolor{comment}{// n1-\/>m\_pixel-\/>m\_pos == n2-\/>m\_pixel-\/>m\_pos!!}}
+\DoxyCodeLine{00374   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tcenterlinevectorizer\+Old.\+cpp\end{DoxyCompactItemize}

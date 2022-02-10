@@ -1,0 +1,273 @@
+\hypertarget{class_t_fx_cache_manager}{}\doxysection{TFx\+Cache\+Manager Class Reference}
+\label{class_t_fx_cache_manager}\index{TFxCacheManager@{TFxCacheManager}}
+
+
+{\ttfamily \#include $<$tfxcachemanager.\+h$>$}
+
+Inheritance diagram for TFx\+Cache\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_t_fx_cache_manager}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_t_fx_cache_manager_1_1_imp}{Imp}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_fx_cache_manager_a7780c7d19f93b7bbeeb60b71db0b5a0e}{add}} (const std\+::string \&cache\+Id, \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} img)
+\item 
+void \mbox{\hyperlink{class_t_fx_cache_manager_a53f975fa38ea23a1943d5e631de65309}{remove}} (const std\+::string \&cache\+Id)
+\item 
+void \mbox{\hyperlink{class_t_fx_cache_manager_a910e6276ca8ec11c330406e687a277f6}{on\+Render\+Status\+Start}} (int render\+Status) override
+\item 
+void \mbox{\hyperlink{class_t_fx_cache_manager_aa4c1ca95fa7cc174dca0820fad042db0}{on\+Render\+Status\+End}} (int render\+Status) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_fx_cache_manager}{TFx\+Cache\+Manager}} $\ast$ \mbox{\hyperlink{class_t_fx_cache_manager_a49f759dce50b6b7f791d5271f0b4496f}{instance}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_t_fx_cache_manager_a564517dc204d69d4a5dae314c324d836}{Resource\+Builder}}
+\item 
+class \mbox{\hyperlink{class_t_fx_cache_manager_a376a495947174f544668dc7c1ef9bd64}{TFx\+Cache\+Manager\+Delegate}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_t_fx_cache_manager}{TFx\+Cache\+Manager}} is the main resource manager that deals with fx nodes caching inside Toonz rendering processes. During a render process, a considerable amount of time can be saved if any intermediate rendered result used more than once is saved in cache and reused multiple times rather than rebuilding it every time. In some cases, the user may even know that some specific intermediate result is useful for rendering purposes, and could explicitly require that it needs to be cached. ~\newline
+ ~\newline
+In Toonz\textquotesingle{}s rendering workflow, these operations are managed by the \mbox{\hyperlink{class_t_fx_cache_manager}{TFx\+Cache\+Manager}} class, which delegates specific caching procedures to a group of \mbox{\hyperlink{class_t_fx_cache_manager_delegate}{TFx\+Cache\+Manager\+Delegate}} instances. ~\newline
+ ~\newline
+Access to a cache resource is performed through the get\+Resource() method, which requires a description of the resource (as specified in the \mbox{\hyperlink{class_t_cache_resource}{TCache\+Resource}} class) and some information -\/ namely, the fx, render settings and frame -\/ about the circumstances of the request. If the resource is managed by some manager delegate, it will be returned. ~\newline
+ ~\newline
+Resource uploads and downloads must be notified through the apposite methods to inform the manager delegates appropriately. These notifications can be invoked without need that the associated method is actually invoked for the resource -\/ this is especially required when the \mbox{\hyperlink{class_t_renderer}{TRenderer}} instance is simulating the actual render process for predictive purposes.
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_t_cache_resource}{TCache\+Resource}}, \mbox{\hyperlink{class_t_passive_cache_manager}{TPassive\+Cache\+Manager}}, \mbox{\hyperlink{class_t_predictive_cache_manager}{TPredictive\+Cache\+Manager}} and \mbox{\hyperlink{class_t_renderer}{TRenderer}} classes 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_fx_cache_manager_a621d87e22fda8b227cc773138fdd72a7}\label{class_t_fx_cache_manager_a621d87e22fda8b227cc773138fdd72a7}} 
+\index{TFxCacheManager@{TFxCacheManager}!TFxCacheManager@{TFxCacheManager}}
+\index{TFxCacheManager@{TFxCacheManager}!TFxCacheManager@{TFxCacheManager}}
+\doxysubsubsection{\texorpdfstring{TFxCacheManager()}{TFxCacheManager()}}
+{\footnotesize\ttfamily TFx\+Cache\+Manager\+::\+TFx\+Cache\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00161 : m\_imp(\textcolor{keyword}{new} Imp) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_fx_cache_manager_a0443b7364b47d31463178e9f28ba1130}\label{class_t_fx_cache_manager_a0443b7364b47d31463178e9f28ba1130}} 
+\index{TFxCacheManager@{TFxCacheManager}!````~TFxCacheManager@{$\sim$TFxCacheManager}}
+\index{````~TFxCacheManager@{$\sim$TFxCacheManager}!TFxCacheManager@{TFxCacheManager}}
+\doxysubsubsection{\texorpdfstring{$\sim$TFxCacheManager()}{~TFxCacheManager()}}
+{\footnotesize\ttfamily TFx\+Cache\+Manager\+::$\sim$\+TFx\+Cache\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00165                                   \{}
+\DoxyCodeLine{00166   \textcolor{comment}{// Release all the static-\/cached images}}
+\DoxyCodeLine{00167   std::set<std::string>::iterator it;}
+\DoxyCodeLine{00168   \textcolor{keywordflow}{for} (it = m\_staticCacheIds.begin(); it != m\_staticCacheIds.end(); ++it)}
+\DoxyCodeLine{00169     TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a57d63227dfe2532b0aed22c47113be66}{remove}}(*it);}
+\DoxyCodeLine{00170 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_fx_cache_manager_a7780c7d19f93b7bbeeb60b71db0b5a0e}\label{class_t_fx_cache_manager_a7780c7d19f93b7bbeeb60b71db0b5a0e}} 
+\index{TFxCacheManager@{TFxCacheManager}!add@{add}}
+\index{add@{add}!TFxCacheManager@{TFxCacheManager}}
+\doxysubsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily void TFx\+Cache\+Manager\+::add (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{cache\+Id,  }\item[{\mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}}}]{img }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00181                                                                \{}
+\DoxyCodeLine{00182   TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a124eae4cf370288f42c22b3477cb5163}{add}}(cacheId, img);}
+\DoxyCodeLine{00183 }
+\DoxyCodeLine{00184   QMutexLocker locker(\&m\_imp-\/>m\_mutex);}
+\DoxyCodeLine{00185   m\_staticCacheIds.insert(cacheId);}
+\DoxyCodeLine{00186 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_fx_cache_manager_a49f759dce50b6b7f791d5271f0b4496f}\label{class_t_fx_cache_manager_a49f759dce50b6b7f791d5271f0b4496f}} 
+\index{TFxCacheManager@{TFxCacheManager}!instance@{instance}}
+\index{instance@{instance}!TFxCacheManager@{TFxCacheManager}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_fx_cache_manager}{TFx\+Cache\+Manager}} $\ast$ TFx\+Cache\+Manager\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00174                                            \{}
+\DoxyCodeLine{00175   \textcolor{keywordflow}{return} \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{class_t_fx_cache_manager}{TFxCacheManager}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{00176       TFxCacheManager::gen()-\/>getManager(\mbox{\hyperlink{class_t_renderer_ab120ad7931abf8858c10459d66f4c659}{TRenderer::renderId}}()));}
+\DoxyCodeLine{00177 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_fx_cache_manager_aa4c1ca95fa7cc174dca0820fad042db0}\label{class_t_fx_cache_manager_aa4c1ca95fa7cc174dca0820fad042db0}} 
+\index{TFxCacheManager@{TFxCacheManager}!onRenderStatusEnd@{onRenderStatusEnd}}
+\index{onRenderStatusEnd@{onRenderStatusEnd}!TFxCacheManager@{TFxCacheManager}}
+\doxysubsubsection{\texorpdfstring{onRenderStatusEnd()}{onRenderStatusEnd()}}
+{\footnotesize\ttfamily void TFx\+Cache\+Manager\+::on\+Render\+Status\+End (\begin{DoxyParamCaption}\item[{int}]{render\+Status }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_render_resource_manager}{TRender\+Resource\+Manager}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00326                                                         \{}
+\DoxyCodeLine{00327   \textcolor{keywordflow}{if} (renderStatus == TRenderer::FIRSTRUN) \{}
+\DoxyCodeLine{00328     Imp::ResourceInstanceDataMap \&resMap = m\_imp-\/>m\_resourcesData;}
+\DoxyCodeLine{00329 }
+\DoxyCodeLine{00330     Imp::ResourceInstanceDataMap::iterator it;}
+\DoxyCodeLine{00331     \textcolor{keywordflow}{for} (it = resMap.begin(); it != resMap.end();) \{}
+\DoxyCodeLine{00332       m\_imp-\/>prepareTilesToCalculate(it-\/>second);}
+\DoxyCodeLine{00333 }
+\DoxyCodeLine{00334       \textcolor{comment}{// Cannot be done. The resource could still be feasible to caching,}}
+\DoxyCodeLine{00335       \textcolor{comment}{// due to external requests.}}
+\DoxyCodeLine{00336 }
+\DoxyCodeLine{00337       \textcolor{comment}{// Erase all resource datas which have been declared and prepared only}}
+\DoxyCodeLine{00338       \textcolor{comment}{// once}}
+\DoxyCodeLine{00339       \textcolor{comment}{/*if(it-\/>second.m\_tiles.size() == 1 \&\&}}
+\DoxyCodeLine{00340 \textcolor{comment}{it-\/>second.m\_simData-\/>m\_tiles.size() == 1)}}
+\DoxyCodeLine{00341 \textcolor{comment}{\{}}
+\DoxyCodeLine{00342 \textcolor{comment}{it = resMap.erase(it);}}
+\DoxyCodeLine{00343 \textcolor{comment}{continue;}}
+\DoxyCodeLine{00344 \textcolor{comment}{\}*/}}
+\DoxyCodeLine{00345 }
+\DoxyCodeLine{00346       ++it;}
+\DoxyCodeLine{00347     \}}
+\DoxyCodeLine{00348   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (renderStatus == TRenderer::TESTRUN) \{}
+\DoxyCodeLine{00349     Imp::ResourceInstanceDataMap \&resMap = m\_imp-\/>m\_resourcesData;}
+\DoxyCodeLine{00350     Imp::ResourceInstanceDataMap::iterator it;}
+\DoxyCodeLine{00351     \textcolor{keywordflow}{for} (it = resMap.begin(); it != resMap.end();) \{}
+\DoxyCodeLine{00352       \textcolor{comment}{// Release all resource declarations which are declared to be used only}}
+\DoxyCodeLine{00353       \textcolor{comment}{// once.}}
+\DoxyCodeLine{00354       \textcolor{keywordflow}{if} (it-\/>second.m\_tiles.size() == 1 \&\&}
+\DoxyCodeLine{00355           it-\/>second.m\_tiles[0].m\_refCount == 1) \{}
+\DoxyCodeLine{00356         Imp::ResourceInstanceDataMap::iterator jt = it++;}
+\DoxyCodeLine{00357         resMap.erase(jt);}
+\DoxyCodeLine{00358         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00359       \}}
+\DoxyCodeLine{00360 }
+\DoxyCodeLine{00361       \textcolor{comment}{// In any case, release all simulation datas -\/ they are no longer useful.}}
+\DoxyCodeLine{00362       \textcolor{comment}{// An associated cache resource avoids deletion only in case some manager}}
+\DoxyCodeLine{00363       \textcolor{comment}{// retained it.}}
+\DoxyCodeLine{00364       it-\/>second.m\_rawData = 0;}
+\DoxyCodeLine{00365 }
+\DoxyCodeLine{00366       ++it;}
+\DoxyCodeLine{00367     \}}
+\DoxyCodeLine{00368 }
+\DoxyCodeLine{00369 \textcolor{preprocessor}{\#ifdef WRITEGENERAL}}
+\DoxyCodeLine{00370     DIAGNOSTICS\_SET(\textcolor{stringliteral}{"{}Declarations used more than once"{}}, resMap.size());}
+\DoxyCodeLine{00371 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00372 }
+\DoxyCodeLine{00373     m\_imp-\/>m\_rawData.clear();}
+\DoxyCodeLine{00374   \}}
+\DoxyCodeLine{00375 \textcolor{preprocessor}{\#ifdef WRITEGENERAL}}
+\DoxyCodeLine{00376   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00377     \textcolor{comment}{// Print the number of not depleted declarations}}
+\DoxyCodeLine{00378     Imp::ResourceInstanceDataMap \&resMap = m\_imp-\/>m\_resourcesData;}
+\DoxyCodeLine{00379     Imp::ResourceInstanceDataMap::iterator it;}
+\DoxyCodeLine{00380 }
+\DoxyCodeLine{00381     DIAGNOSTICS\_ADD(}
+\DoxyCodeLine{00382         prefixErr + \textcolor{stringliteral}{"{}Computing | Declarations survived after Test Run"{}},}
+\DoxyCodeLine{00383         resMap.size());}
+\DoxyCodeLine{00384     \textcolor{keywordflow}{if} (resMap.size() > 0) \{}
+\DoxyCodeLine{00385       \textcolor{keywordflow}{for} (it = resMap.begin(); it != resMap.end(); ++it) \{}
+\DoxyCodeLine{00386         DIAGNOSTICS\_STR(prefixErr + \textcolor{stringliteral}{"{}Survived Declarations | "{}} +}
+\DoxyCodeLine{00387                         QString::fromStdString(it-\/>first).left(40));}
+\DoxyCodeLine{00388       \}}
+\DoxyCodeLine{00389     \}}
+\DoxyCodeLine{00390   \}}
+\DoxyCodeLine{00391 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00392 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_fx_cache_manager_a910e6276ca8ec11c330406e687a277f6}\label{class_t_fx_cache_manager_a910e6276ca8ec11c330406e687a277f6}} 
+\index{TFxCacheManager@{TFxCacheManager}!onRenderStatusStart@{onRenderStatusStart}}
+\index{onRenderStatusStart@{onRenderStatusStart}!TFxCacheManager@{TFxCacheManager}}
+\doxysubsubsection{\texorpdfstring{onRenderStatusStart()}{onRenderStatusStart()}}
+{\footnotesize\ttfamily void TFx\+Cache\+Manager\+::on\+Render\+Status\+Start (\begin{DoxyParamCaption}\item[{int}]{render\+Status }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_render_resource_manager}{TRender\+Resource\+Manager}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00299                                                           \{}
+\DoxyCodeLine{00300   \textcolor{comment}{// Store current render status}}
+\DoxyCodeLine{00301   m\_imp-\/>m\_renderStatus = renderStatus;}
+\DoxyCodeLine{00302 }
+\DoxyCodeLine{00303 \textcolor{preprocessor}{\#ifdef WRITESTACK}}
+\DoxyCodeLine{00304   \textcolor{keywordflow}{if} (renderStatus == TRenderer::TESTRUN) \{}
+\DoxyCodeLine{00305     DIAGNOSTICS\_GLOSTRSET(\textcolor{stringliteral}{"{}status"{}}, \textcolor{stringliteral}{"{}test"{}});}
+\DoxyCodeLine{00306     DIAGNOSTICS\_GLOSET(\textcolor{stringliteral}{"{}testInst"{}}, DIAGNOSTICS\_GLOGET(\textcolor{stringliteral}{"{}compInst"{}}) + 1);}
+\DoxyCodeLine{00307     DIAGNOSTICS\_GLOSTRSET(\textcolor{stringliteral}{"{}instVar"{}},}
+\DoxyCodeLine{00308                           QString::number(DIAGNOSTICS\_GLOGET(\textcolor{stringliteral}{"{}testInst"{}})));}
+\DoxyCodeLine{00309     DIAGNOSTICS\_GLOSTRSET(}
+\DoxyCodeLine{00310         \textcolor{stringliteral}{"{}testRenderStr"{}},}
+\DoxyCodeLine{00311         \textcolor{stringliteral}{"{}Render \#"{}} + QString::number(DIAGNOSTICS\_GLOGET(\textcolor{stringliteral}{"{}testInst"{}})) + \textcolor{stringliteral}{"{} | "{}});}
+\DoxyCodeLine{00312   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (renderStatus == TRenderer::COMPUTING) \{}
+\DoxyCodeLine{00313     DIAGNOSTICS\_GLOSTRSET(\textcolor{stringliteral}{"{}status"{}}, \textcolor{stringliteral}{"{}comp"{}});}
+\DoxyCodeLine{00314     DIAGNOSTICS\_GLOSTRSET(\textcolor{stringliteral}{"{}instVar"{}},}
+\DoxyCodeLine{00315                           QString::number(DIAGNOSTICS\_GLOGET(\textcolor{stringliteral}{"{}compInst"{}})));}
+\DoxyCodeLine{00316     DIAGNOSTICS\_GLOSTRSET(}
+\DoxyCodeLine{00317         \textcolor{stringliteral}{"{}compRenderStr"{}},}
+\DoxyCodeLine{00318         \textcolor{stringliteral}{"{}Render \#"{}} + QString::number(DIAGNOSTICS\_GLOGET(\textcolor{stringliteral}{"{}compInst"{}})) + \textcolor{stringliteral}{"{} | "{}});}
+\DoxyCodeLine{00319     DIAGNOSTICS\_GLOSET(DIAGNOSTICS\_THRSTRGET(\textcolor{stringliteral}{"{}stackVar"{}}), 0);}
+\DoxyCodeLine{00320   \}}
+\DoxyCodeLine{00321 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00322 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_fx_cache_manager_a53f975fa38ea23a1943d5e631de65309}\label{class_t_fx_cache_manager_a53f975fa38ea23a1943d5e631de65309}} 
+\index{TFxCacheManager@{TFxCacheManager}!remove@{remove}}
+\index{remove@{remove}!TFxCacheManager@{TFxCacheManager}}
+\doxysubsubsection{\texorpdfstring{remove()}{remove()}}
+{\footnotesize\ttfamily void TFx\+Cache\+Manager\+::remove (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{cache\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00190                                                      \{}
+\DoxyCodeLine{00191   TImageCache::instance()-\/>\mbox{\hyperlink{class_t_image_cache_a57d63227dfe2532b0aed22c47113be66}{remove}}(cacheId);}
+\DoxyCodeLine{00192 }
+\DoxyCodeLine{00193   QMutexLocker locker(\&m\_imp-\/>m\_mutex);}
+\DoxyCodeLine{00194   m\_staticCacheIds.erase(cacheId);}
+\DoxyCodeLine{00195 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_t_fx_cache_manager_a564517dc204d69d4a5dae314c324d836}\label{class_t_fx_cache_manager_a564517dc204d69d4a5dae314c324d836}} 
+\index{TFxCacheManager@{TFxCacheManager}!ResourceBuilder@{ResourceBuilder}}
+\index{ResourceBuilder@{ResourceBuilder}!TFxCacheManager@{TFxCacheManager}}
+\doxysubsubsection{\texorpdfstring{ResourceBuilder}{ResourceBuilder}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{class_resource_builder}{Resource\+Builder}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+\mbox{\Hypertarget{class_t_fx_cache_manager_a376a495947174f544668dc7c1ef9bd64}\label{class_t_fx_cache_manager_a376a495947174f544668dc7c1ef9bd64}} 
+\index{TFxCacheManager@{TFxCacheManager}!TFxCacheManagerDelegate@{TFxCacheManagerDelegate}}
+\index{TFxCacheManagerDelegate@{TFxCacheManagerDelegate}!TFxCacheManager@{TFxCacheManager}}
+\doxysubsubsection{\texorpdfstring{TFxCacheManagerDelegate}{TFxCacheManagerDelegate}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{class_t_fx_cache_manager_delegate}{TFx\+Cache\+Manager\+Delegate}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tfxcachemanager.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tfx/tfxcachemanager.\+cpp\end{DoxyCompactItemize}

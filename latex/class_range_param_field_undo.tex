@@ -1,0 +1,109 @@
+\hypertarget{class_range_param_field_undo}{}\doxysection{Range\+Param\+Field\+Undo Class Reference}
+\label{class_range_param_field_undo}\index{RangeParamFieldUndo@{RangeParamFieldUndo}}
+Inheritance diagram for Range\+Param\+Field\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_range_param_field_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_range_param_field_undo_a5932c3327c7cd392a2cda87780447d1b}{Range\+Param\+Field\+Undo}} (const TRange\+ParamP param, QString name, int frame, \mbox{\hyperlink{class_t_fx_handle}{TFx\+Handle}} $\ast$fx\+Handle)
+\item 
+void \mbox{\hyperlink{class_range_param_field_undo_a127f7d273c3ae833fb50aa38ddb89710}{on\+Add}} () override
+\item 
+void \mbox{\hyperlink{class_range_param_field_undo_aaa834e9d7135eef7954865a2b3d054d8}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_range_param_field_undo_af3762949d9e647356776dd69ced1d918}{redo}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Range\+Param\+Field Undo 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_range_param_field_undo_a5932c3327c7cd392a2cda87780447d1b}\label{class_range_param_field_undo_a5932c3327c7cd392a2cda87780447d1b}} 
+\index{RangeParamFieldUndo@{RangeParamFieldUndo}!RangeParamFieldUndo@{RangeParamFieldUndo}}
+\index{RangeParamFieldUndo@{RangeParamFieldUndo}!RangeParamFieldUndo@{RangeParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{RangeParamFieldUndo()}{RangeParamFieldUndo()}}
+{\footnotesize\ttfamily Range\+Param\+Field\+Undo\+::\+Range\+Param\+Field\+Undo (\begin{DoxyParamCaption}\item[{const TRange\+ParamP}]{param,  }\item[{QString}]{name,  }\item[{int}]{frame,  }\item[{\mbox{\hyperlink{class_t_fx_handle}{TFx\+Handle}} $\ast$}]{fx\+Handle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00111       : \mbox{\hyperlink{class_animatable_fx_settings_undo}{AnimatableFxSettingsUndo}}(name, frame, fxHandle), m\_param(param) \{}
+\DoxyCodeLine{00112     m\_oldValue    = param-\/>getValue(frame);}
+\DoxyCodeLine{00113     m\_newValue    = m\_oldValue;}
+\DoxyCodeLine{00114     m\_wasKeyframe = m\_param-\/>isKeyframe(frame);}
+\DoxyCodeLine{00115   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_range_param_field_undo_a127f7d273c3ae833fb50aa38ddb89710}\label{class_range_param_field_undo_a127f7d273c3ae833fb50aa38ddb89710}} 
+\index{RangeParamFieldUndo@{RangeParamFieldUndo}!onAdd@{onAdd}}
+\index{onAdd@{onAdd}!RangeParamFieldUndo@{RangeParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{onAdd()}{onAdd()}}
+{\footnotesize\ttfamily void Range\+Param\+Field\+Undo\+::on\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00117 \{ m\_newValue = m\_param-\/>getValue(m\_frame); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_range_param_field_undo_af3762949d9e647356776dd69ced1d918}\label{class_range_param_field_undo_af3762949d9e647356776dd69ced1d918}} 
+\index{RangeParamFieldUndo@{RangeParamFieldUndo}!redo@{redo}}
+\index{redo@{redo}!RangeParamFieldUndo@{RangeParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Range\+Param\+Field\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00130                              \{}
+\DoxyCodeLine{00131     \textcolor{keywordflow}{if} (!m\_wasKeyframe)}
+\DoxyCodeLine{00132       m\_param-\/>setDefaultValue(m\_newValue);}
+\DoxyCodeLine{00133     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00134       m\_param-\/>setValue(m\_frame, m\_newValue);}
+\DoxyCodeLine{00135     \textcolor{keywordflow}{if} (m\_fxHandle) m\_fxHandle-\/>notifyFxChanged();}
+\DoxyCodeLine{00136   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_range_param_field_undo_aaa834e9d7135eef7954865a2b3d054d8}\label{class_range_param_field_undo_aaa834e9d7135eef7954865a2b3d054d8}} 
+\index{RangeParamFieldUndo@{RangeParamFieldUndo}!undo@{undo}}
+\index{undo@{undo}!RangeParamFieldUndo@{RangeParamFieldUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Range\+Param\+Field\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00119                              \{}
+\DoxyCodeLine{00120     \textcolor{keywordflow}{if} (!m\_wasKeyframe)}
+\DoxyCodeLine{00121       m\_param-\/>setDefaultValue(m\_oldValue);}
+\DoxyCodeLine{00122     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00123       m\_param-\/>setValue(m\_frame, m\_oldValue);}
+\DoxyCodeLine{00124 }
+\DoxyCodeLine{00125     \textcolor{keywordflow}{if} (m\_fxHandle) \{}
+\DoxyCodeLine{00126       m\_fxHandle-\/>notifyFxChanged();}
+\DoxyCodeLine{00127     \}}
+\DoxyCodeLine{00128   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/paramfield.\+cpp\end{DoxyCompactItemize}

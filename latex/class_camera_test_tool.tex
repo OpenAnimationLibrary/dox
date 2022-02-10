@@ -1,0 +1,406 @@
+\hypertarget{class_camera_test_tool}{}\doxysection{Camera\+Test\+Tool Class Reference}
+\label{class_camera_test_tool}\index{CameraTestTool@{CameraTestTool}}
+Inheritance diagram for Camera\+Test\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_camera_test_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_camera_test_tool_aa0fa1d7fa1d1854157b9a2a91ac32153}{draw}} () override
+\begin{DoxyCompactList}\small\item\em Draws the tool on the viewer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_camera_test_tool_a858aa6118887a5fedc713659fa606e03}{mouse\+Move}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_camera_test_tool_a00d303e15a5e2700c027f2b81e8c66aa}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_camera_test_tool_a84387622b3e358c0a305c3d1fd5cfcab}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_camera_test_tool_a31aa1fda7b812ba027814a30e223bae9}{left\+Button\+Up}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+\mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296c}{Tool\+Type}} \mbox{\hyperlink{class_camera_test_tool_a72a3de340b95f15567ac182f0b1f5809}{get\+Tool\+Type}} () const override
+\item 
+int \mbox{\hyperlink{class_camera_test_tool_a0bd480854dd0a813a265829bfcac6f28}{get\+Cursor\+Id}} () const override
+\begin{DoxyCompactList}\small\item\em Returns the type of cursor used by the tool. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_camera_test_tool_a0bbfcd98fbc9f32d8228acc089e5fae8}\label{class_camera_test_tool_a0bbfcd98fbc9f32d8228acc089e5fae8}} 
+\index{CameraTestTool@{CameraTestTool}!CameraTestTool@{CameraTestTool}}
+\index{CameraTestTool@{CameraTestTool}!CameraTestTool@{CameraTestTool}}
+\doxysubsubsection{\texorpdfstring{CameraTestTool()}{CameraTestTool()}}
+{\footnotesize\ttfamily Camera\+Test\+Tool\+::\+Camera\+Test\+Tool (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00532     : \mbox{\hyperlink{class_t_tool_a9c63ec35f606e755d0d036bf4fed62ab}{TTool}}(\textcolor{stringliteral}{"{}T\_CameraTest"{}})}
+\DoxyCodeLine{00533     , m\_lastPos(-\/1, -\/1)}
+\DoxyCodeLine{00534     , m\_dragged(\textcolor{keyword}{false})}
+\DoxyCodeLine{00535     , m\_scaling(eNoScale)}
+\DoxyCodeLine{00536     , m\_firstRes(0, 0)}
+\DoxyCodeLine{00537     , m\_firstSize(0, 0) \{}
+\DoxyCodeLine{00538   bind(TTool::AllTargets);  \textcolor{comment}{// Deals with tool deactivation internally}}
+\DoxyCodeLine{00539 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_camera_test_tool_aa0fa1d7fa1d1854157b9a2a91ac32153}\label{class_camera_test_tool_aa0fa1d7fa1d1854157b9a2a91ac32153}} 
+\index{CameraTestTool@{CameraTestTool}!draw@{draw}}
+\index{draw@{draw}!CameraTestTool@{CameraTestTool}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Camera\+Test\+Tool\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Draws the tool on the viewer. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_a058bf656d73bf3cd63b9826cbaaf48e0}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00618                           \{}
+\DoxyCodeLine{00619   \textcolor{keywordtype}{double} pixelSize = getPixelSize();}
+\DoxyCodeLine{00620   glPushMatrix();}
+\DoxyCodeLine{00621 }
+\DoxyCodeLine{00622   \mbox{\hyperlink{class_cleanup_parameters}{CleanupParameters}} *cp =}
+\DoxyCodeLine{00623       CleanupSettingsModel::instance()-\/>getCurrentParameters();}
+\DoxyCodeLine{00624 }
+\DoxyCodeLine{00625   glTranslated(-\/0.5 * cp-\/>m\_offx * \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}}, -\/0.5 * cp-\/>m\_offy * \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}},}
+\DoxyCodeLine{00626                0);}
+\DoxyCodeLine{00627   drawCleanupCamera(pixelSize);}
+\DoxyCodeLine{00628   \textcolor{comment}{// drawClosestFieldCamera(pixelSize);}}
+\DoxyCodeLine{00629 }
+\DoxyCodeLine{00630   \mbox{\hyperlink{class_t_rect_t}{TRectD}} r(cp-\/>m\_camera.\mbox{\hyperlink{class_t_camera_afbdcee0cf26df414d787c11beb675140}{getStageRect}}());}
+\DoxyCodeLine{00631   \mbox{\hyperlink{class_t_point_t}{TPointD}} size(10, 10);}
+\DoxyCodeLine{00632 }
+\DoxyCodeLine{00633   \textcolor{keywordtype}{double} pixelSize4 = 4.0 * pixelSize;}
+\DoxyCodeLine{00634 }
+\DoxyCodeLine{00635   tglColor(TPixel::Red);}
+\DoxyCodeLine{00636   ToolUtils::drawSquare(r.getP00(), pixelSize4, TPixel::Red);}
+\DoxyCodeLine{00637   ToolUtils::drawSquare(r.getP01(), pixelSize4, TPixel::Red);}
+\DoxyCodeLine{00638   ToolUtils::drawSquare(r.getP10(), pixelSize4, TPixel::Red);}
+\DoxyCodeLine{00639   ToolUtils::drawSquare(r.getP11(), pixelSize4, TPixel::Red);}
+\DoxyCodeLine{00640 }
+\DoxyCodeLine{00641   \mbox{\hyperlink{class_t_point_t}{TPointD}} center(0.5 * (r.getP00() + r.getP11()));}
+\DoxyCodeLine{00642 }
+\DoxyCodeLine{00643   ToolUtils::drawSquare(\mbox{\hyperlink{class_t_point_t}{TPointD}}(center.x, r.y0), pixelSize4,}
+\DoxyCodeLine{00644                         TPixel::Red);  \textcolor{comment}{// draw M0 handle}}
+\DoxyCodeLine{00645   ToolUtils::drawSquare(\mbox{\hyperlink{class_t_point_t}{TPointD}}(r.x1, center.y), pixelSize4,}
+\DoxyCodeLine{00646                         TPixel::Red);  \textcolor{comment}{// draw 1M handle}}
+\DoxyCodeLine{00647   ToolUtils::drawSquare(\mbox{\hyperlink{class_t_point_t}{TPointD}}(center.x, r.y1), pixelSize4,}
+\DoxyCodeLine{00648                         TPixel::Red);  \textcolor{comment}{// draw M1 handle}}
+\DoxyCodeLine{00649   ToolUtils::drawSquare(\mbox{\hyperlink{class_t_point_t}{TPointD}}(r.x0, center.y), pixelSize4,}
+\DoxyCodeLine{00650                         TPixel::Red);  \textcolor{comment}{// draw 0M handle}}
+\DoxyCodeLine{00651 }
+\DoxyCodeLine{00652   glPopMatrix();}
+\DoxyCodeLine{00653 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00100}{TCamera\+::get\+Stage\+Rect()}}, \mbox{\hyperlink{l00037}{Stage\+::inch}}, and \mbox{\hyperlink{l00557}{TRect\+T$<$ T $>$\+::x0}}.
+
+\mbox{\Hypertarget{class_camera_test_tool_a0bd480854dd0a813a265829bfcac6f28}\label{class_camera_test_tool_a0bd480854dd0a813a265829bfcac6f28}} 
+\index{CameraTestTool@{CameraTestTool}!getCursorId@{getCursorId}}
+\index{getCursorId@{getCursorId}!CameraTestTool@{CameraTestTool}}
+\doxysubsubsection{\texorpdfstring{getCursorId()}{getCursorId()}}
+{\footnotesize\ttfamily int Camera\+Test\+Tool\+::get\+Cursor\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns the type of cursor used by the tool. 
+
+\begin{DoxySeeAlso}{See also}
+For a list of cursor ids \mbox{\hyperlink{}{cursor.\+h}} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool_a1768a57b8b6d1480618fd923fad15f1d}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00834                                       \{}
+\DoxyCodeLine{00835   \textcolor{keywordflow}{switch} (m\_scaling) \{}
+\DoxyCodeLine{00836   \textcolor{keywordflow}{case} eNoScale: \{}
+\DoxyCodeLine{00837     \mbox{\hyperlink{class_cleanup_parameters}{CleanupParameters}} *cp =}
+\DoxyCodeLine{00838         CleanupSettingsModel::instance()-\/>getCurrentParameters();}
+\DoxyCodeLine{00839     \textcolor{keywordflow}{if} (cp-\/>m\_offx\_lock \&\& cp-\/>m\_offy\_lock)}
+\DoxyCodeLine{00840       \textcolor{keywordflow}{return} ToolCursor::DisableCursor;}
+\DoxyCodeLine{00841     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (cp-\/>m\_offx\_lock)}
+\DoxyCodeLine{00842       \textcolor{keywordflow}{return} ToolCursor::MoveNSCursor;}
+\DoxyCodeLine{00843     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (cp-\/>m\_offy\_lock)}
+\DoxyCodeLine{00844       \textcolor{keywordflow}{return} ToolCursor::MoveEWCursor;}
+\DoxyCodeLine{00845     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00846       \textcolor{keywordflow}{return} ToolCursor::MoveCursor;}
+\DoxyCodeLine{00847   \}}
+\DoxyCodeLine{00848   \textcolor{keywordflow}{case} e11:}
+\DoxyCodeLine{00849   \textcolor{keywordflow}{case} e00:}
+\DoxyCodeLine{00850     \textcolor{keywordflow}{return} ToolCursor::ScaleCursor;}
+\DoxyCodeLine{00851   \textcolor{keywordflow}{case} e10:}
+\DoxyCodeLine{00852   \textcolor{keywordflow}{case} e01:}
+\DoxyCodeLine{00853     \textcolor{keywordflow}{return} ToolCursor::ScaleInvCursor;}
+\DoxyCodeLine{00854   \textcolor{keywordflow}{case} e1M:}
+\DoxyCodeLine{00855   \textcolor{keywordflow}{case} e0M:}
+\DoxyCodeLine{00856     \textcolor{keywordflow}{return} ToolCursor::ScaleHCursor;}
+\DoxyCodeLine{00857   \textcolor{keywordflow}{case} eM1:}
+\DoxyCodeLine{00858   \textcolor{keywordflow}{case} eM0:}
+\DoxyCodeLine{00859     \textcolor{keywordflow}{return} ToolCursor::ScaleVCursor;}
+\DoxyCodeLine{00860   \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00861     assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{00862     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00863   \}}
+\DoxyCodeLine{00864 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_camera_test_tool_a72a3de340b95f15567ac182f0b1f5809}\label{class_camera_test_tool_a72a3de340b95f15567ac182f0b1f5809}} 
+\index{CameraTestTool@{CameraTestTool}!getToolType@{getToolType}}
+\index{getToolType@{getToolType}!CameraTestTool@{CameraTestTool}}
+\doxysubsubsection{\texorpdfstring{getToolType()}{getToolType()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296c}{Tool\+Type}} Camera\+Test\+Tool\+::get\+Tool\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00519 \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_tool_a391f099e6530ea54c71d81c9ee39296caa8f6293eab5817f82f74f031c0724f28}{TTool::GenericTool}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_camera_test_tool_a00d303e15a5e2700c027f2b81e8c66aa}\label{class_camera_test_tool_a00d303e15a5e2700c027f2b81e8c66aa}} 
+\index{CameraTestTool@{CameraTestTool}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!CameraTestTool@{CameraTestTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Camera\+Test\+Tool\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00694                                                                             \{}
+\DoxyCodeLine{00695   m\_firstPos = m\_lastPos = pos;}
+\DoxyCodeLine{00696   \textcolor{comment}{/*-\/-\/ カメラオフセットの初期値の取得 -\/-\/*/}}
+\DoxyCodeLine{00697   \mbox{\hyperlink{class_cleanup_parameters}{CleanupParameters}} *cp =}
+\DoxyCodeLine{00698       CleanupSettingsModel::instance()-\/>getCurrentParameters();}
+\DoxyCodeLine{00699 }
+\DoxyCodeLine{00700   \textcolor{keywordflow}{if} (m\_scaling == eNoScale)}
+\DoxyCodeLine{00701     m\_firstCameraOffset = \mbox{\hyperlink{class_t_point_t}{TPointD}}(cp-\/>m\_offx, cp-\/>m\_offy);}
+\DoxyCodeLine{00702   \textcolor{comment}{/*-\/-\/ サイズ変更のUndoのために値を格納 -\/-\/*/}}
+\DoxyCodeLine{00703   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00704     m\_firstRes  = cp-\/>m\_camera.\mbox{\hyperlink{class_t_camera_a9a7c573e7a2c397ffae4b747809ea2a5}{getRes}}();}
+\DoxyCodeLine{00705     m\_firstSize = cp-\/>m\_camera.\mbox{\hyperlink{class_t_camera_a6f561eca912177c2150b3e57816f02f6}{getSize}}();}
+\DoxyCodeLine{00706   \}}
+\DoxyCodeLine{00707 }
+\DoxyCodeLine{00708   \textcolor{comment}{// Limit commits to the sole interface updates. This is necessary since drags}}
+\DoxyCodeLine{00709   \textcolor{comment}{// would otherwise trigger full preview re-\/processings.}}
+\DoxyCodeLine{00710   CleanupSettingsModel::instance()-\/>\mbox{\hyperlink{class_cleanup_settings_model_a24546176ae0de7be360eaf619213d895}{setCommitMask}}(}
+\DoxyCodeLine{00711       CleanupSettingsModel::INTERFACE);}
+\DoxyCodeLine{00712 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_camera_test_tool_a84387622b3e358c0a305c3d1fd5cfcab}\label{class_camera_test_tool_a84387622b3e358c0a305c3d1fd5cfcab}} 
+\index{CameraTestTool@{CameraTestTool}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!CameraTestTool@{CameraTestTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Camera\+Test\+Tool\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00716                                                                             \{}
+\DoxyCodeLine{00717   m\_dragged = \textcolor{keyword}{true};}
+\DoxyCodeLine{00718   \mbox{\hyperlink{class_cleanup_parameters}{CleanupParameters}} *cp =}
+\DoxyCodeLine{00719       CleanupSettingsModel::instance()-\/>getCurrentParameters();}
+\DoxyCodeLine{00720 }
+\DoxyCodeLine{00721   \mbox{\hyperlink{class_t_point_t}{TPointD}} dp(pos -\/ m\_lastPos);}
+\DoxyCodeLine{00722   \textcolor{keywordflow}{if} (m\_scaling != eNoScale) \{}
+\DoxyCodeLine{00723     \mbox{\hyperlink{class_t_dimension_t}{TDimensionD}} dim(cp-\/>m\_camera.\mbox{\hyperlink{class_t_camera_a6f561eca912177c2150b3e57816f02f6}{getSize}}());}
+\DoxyCodeLine{00724     \mbox{\hyperlink{class_t_point_t}{TPointD}} delta;}
+\DoxyCodeLine{00725 }
+\DoxyCodeLine{00726     \textcolor{comment}{// Mid-\/edge cases}}
+\DoxyCodeLine{00727     \textcolor{keywordflow}{if} (m\_scaling == e1M)}
+\DoxyCodeLine{00728       delta = \mbox{\hyperlink{class_t_point_t}{TPointD}}(dp.x / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}}, 0);}
+\DoxyCodeLine{00729     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_scaling == e0M)}
+\DoxyCodeLine{00730       delta = \mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/dp.x / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}}, 0);}
+\DoxyCodeLine{00731     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_scaling == eM1)}
+\DoxyCodeLine{00732       delta = \mbox{\hyperlink{class_t_point_t}{TPointD}}(0, dp.y / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}});}
+\DoxyCodeLine{00733     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_scaling == eM0)}
+\DoxyCodeLine{00734       delta = \mbox{\hyperlink{class_t_point_t}{TPointD}}(0, -\/dp.y / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}});}
+\DoxyCodeLine{00735     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00736       \textcolor{comment}{// Corner cases}}
+\DoxyCodeLine{00737       \textcolor{keywordflow}{if} (e.isShiftPressed()) \{}
+\DoxyCodeLine{00738         \textcolor{comment}{// Free adjust}}
+\DoxyCodeLine{00739         \textcolor{keywordflow}{if} (m\_scaling == e11)}
+\DoxyCodeLine{00740           delta = \mbox{\hyperlink{class_t_point_t}{TPointD}}(dp.x / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}}, dp.y / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}});}
+\DoxyCodeLine{00741         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_scaling == e00)}
+\DoxyCodeLine{00742           delta = \mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/dp.x / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}}, -\/dp.y / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}});}
+\DoxyCodeLine{00743         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_scaling == e10)}
+\DoxyCodeLine{00744           delta = \mbox{\hyperlink{class_t_point_t}{TPointD}}(dp.x / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}}, -\/dp.y / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}});}
+\DoxyCodeLine{00745         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_scaling == e01)}
+\DoxyCodeLine{00746           delta = \mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/dp.x / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}}, dp.y / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}});}
+\DoxyCodeLine{00747       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00748         \textcolor{comment}{// A/R conservative}}
+\DoxyCodeLine{00749         \textcolor{keywordtype}{bool} xMaximalDp = (fabs(dp.x) > fabs(dp.y));}
+\DoxyCodeLine{00750 }
+\DoxyCodeLine{00751         \textcolor{keywordflow}{if} (m\_scaling == e11)}
+\DoxyCodeLine{00752           delta.x = (xMaximalDp ? dp.x : dp.y) / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}};}
+\DoxyCodeLine{00753         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_scaling == e00)}
+\DoxyCodeLine{00754           delta.x = (xMaximalDp ? -\/dp.x : -\/dp.y) / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}};}
+\DoxyCodeLine{00755         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_scaling == e10)}
+\DoxyCodeLine{00756           delta.x = (xMaximalDp ? dp.x : -\/dp.y) / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}};}
+\DoxyCodeLine{00757         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_scaling == e01)}
+\DoxyCodeLine{00758           delta.x = (xMaximalDp ? -\/dp.x : dp.y) / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}};}
+\DoxyCodeLine{00759 }
+\DoxyCodeLine{00760         \textcolor{comment}{// Keep A/R}}
+\DoxyCodeLine{00761         delta.y = delta.x * dim.ly / dim.lx;}
+\DoxyCodeLine{00762       \}}
+\DoxyCodeLine{00763     \}}
+\DoxyCodeLine{00764 }
+\DoxyCodeLine{00765     \mbox{\hyperlink{class_t_dimension_t}{TDimensionD}} newDim(dim.lx + 2.0 * delta.x, dim.ly + 2.0 * delta.y);}
+\DoxyCodeLine{00766     \textcolor{keywordflow}{if} (newDim.lx < 2.0 || newDim.ly < 2.0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00767 }
+\DoxyCodeLine{00768     cp-\/>m\_camera.\mbox{\hyperlink{class_t_camera_ac17ef8e563e599d7f1df4755e827de83}{setSize}}(newDim,}
+\DoxyCodeLine{00769                          \textcolor{keyword}{true},    \textcolor{comment}{// Preserve DPI}}
+\DoxyCodeLine{00770                          \textcolor{keyword}{false});  \textcolor{comment}{// A/R imposed above in corner cases}}
+\DoxyCodeLine{00771   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00772     \textcolor{keywordflow}{if} (e.isShiftPressed()) \{}
+\DoxyCodeLine{00773       \mbox{\hyperlink{class_t_point_t}{TPointD}} delta = pos -\/ m\_firstPos;}
+\DoxyCodeLine{00774       cp-\/>m\_offx    = m\_firstCameraOffset.x;}
+\DoxyCodeLine{00775       cp-\/>m\_offy    = m\_firstCameraOffset.y;}
+\DoxyCodeLine{00776       \textcolor{keywordflow}{if} (fabs(delta.x) > fabs(delta.y)) \{}
+\DoxyCodeLine{00777         \textcolor{keywordflow}{if} (!cp-\/>m\_offx\_lock) cp-\/>m\_offx += -\/delta.x * (2.0 / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}});}
+\DoxyCodeLine{00778       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00779         \textcolor{keywordflow}{if} (!cp-\/>m\_offy\_lock) cp-\/>m\_offy += -\/delta.y * (2.0 / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}});}
+\DoxyCodeLine{00780       \}}
+\DoxyCodeLine{00781     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00782       \textcolor{keywordflow}{if} (!cp-\/>m\_offx\_lock) cp-\/>m\_offx += -\/dp.x * (2.0 / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}});}
+\DoxyCodeLine{00783       \textcolor{keywordflow}{if} (!cp-\/>m\_offy\_lock) cp-\/>m\_offy += -\/dp.y * (2.0 / \mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}});}
+\DoxyCodeLine{00784     \}}
+\DoxyCodeLine{00785   \}}
+\DoxyCodeLine{00786 }
+\DoxyCodeLine{00787   m\_lastPos = pos;}
+\DoxyCodeLine{00788 }
+\DoxyCodeLine{00789   CleanupSettingsModel::instance()-\/>\mbox{\hyperlink{class_cleanup_settings_model_a7b1f1768b04906a781f54d03965d7016}{commitChanges}}();}
+\DoxyCodeLine{00790   \mbox{\hyperlink{class_t_tool_a3e791336c642542c5648aa8ea86e2348}{invalidate}}();}
+\DoxyCodeLine{00791 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_camera_test_tool_a31aa1fda7b812ba027814a30e223bae9}\label{class_camera_test_tool_a31aa1fda7b812ba027814a30e223bae9}} 
+\index{CameraTestTool@{CameraTestTool}!leftButtonUp@{leftButtonUp}}
+\index{leftButtonUp@{leftButtonUp}!CameraTestTool@{CameraTestTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonUp()}{leftButtonUp()}}
+{\footnotesize\ttfamily void Camera\+Test\+Tool\+::left\+Button\+Up (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00795                                                                          \{}
+\DoxyCodeLine{00796   \textcolor{comment}{// Reset full commit status -\/ invokes preview rebuild on its own.}}
+\DoxyCodeLine{00797   CleanupSettingsModel::instance()-\/>\mbox{\hyperlink{class_cleanup_settings_model_a24546176ae0de7be360eaf619213d895}{setCommitMask}}(}
+\DoxyCodeLine{00798       CleanupSettingsModel::FULLPROCESS);}
+\DoxyCodeLine{00799 }
+\DoxyCodeLine{00800   \mbox{\hyperlink{class_cleanup_parameters}{CleanupParameters}} *cp =}
+\DoxyCodeLine{00801       CleanupSettingsModel::instance()-\/>getCurrentParameters();}
+\DoxyCodeLine{00802   \textcolor{comment}{/*-\/-\/ カメラ位置移動のUndo -\/-\/*/}}
+\DoxyCodeLine{00803   \textcolor{keywordflow}{if} (m\_scaling == eNoScale) \{}
+\DoxyCodeLine{00804     \textcolor{comment}{/*-\/-\/ 値が変わったらUndoを登録 -\/-\/*/}}
+\DoxyCodeLine{00805     \textcolor{keywordflow}{if} (m\_firstCameraOffset.x != cp-\/>m\_offx ||}
+\DoxyCodeLine{00806         m\_firstCameraOffset.y != cp-\/>m\_offy) \{}
+\DoxyCodeLine{00807       \mbox{\hyperlink{class_undo_camera_test_move}{UndoCameraTestMove}} *undo = \textcolor{keyword}{new} \mbox{\hyperlink{class_undo_camera_test_move}{UndoCameraTestMove}}(}
+\DoxyCodeLine{00808           m\_firstCameraOffset, \mbox{\hyperlink{class_t_point_t}{TPointD}}(cp-\/>m\_offx, cp-\/>m\_offy), cp);}
+\DoxyCodeLine{00809       TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{00810     \}}
+\DoxyCodeLine{00811   \}}
+\DoxyCodeLine{00812   \textcolor{comment}{/*-\/-\/ サイズ変更のUndo -\/-\/*/}}
+\DoxyCodeLine{00813   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00814     \textcolor{keywordflow}{if} (m\_firstSize.lx != cp-\/>m\_camera.\mbox{\hyperlink{class_t_camera_a6f561eca912177c2150b3e57816f02f6}{getSize}}().lx ||}
+\DoxyCodeLine{00815         m\_firstSize.ly != cp-\/>m\_camera.\mbox{\hyperlink{class_t_camera_a6f561eca912177c2150b3e57816f02f6}{getSize}}().ly) \{}
+\DoxyCodeLine{00816       \mbox{\hyperlink{class_undo_camera_test_scale}{UndoCameraTestScale}} *undo = \textcolor{keyword}{new} \mbox{\hyperlink{class_undo_camera_test_scale}{UndoCameraTestScale}}(}
+\DoxyCodeLine{00817           m\_firstRes, m\_firstSize, cp-\/>m\_camera.\mbox{\hyperlink{class_t_camera_a9a7c573e7a2c397ffae4b747809ea2a5}{getRes}}(),}
+\DoxyCodeLine{00818           cp-\/>m\_camera.\mbox{\hyperlink{class_t_camera_a6f561eca912177c2150b3e57816f02f6}{getSize}}(), cp);}
+\DoxyCodeLine{00819       TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{00820     \}}
+\DoxyCodeLine{00821   \}}
+\DoxyCodeLine{00822 }
+\DoxyCodeLine{00823   m\_firstPos          = \mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/1, -\/1);}
+\DoxyCodeLine{00824   m\_firstCameraOffset = \mbox{\hyperlink{class_t_point_t}{TPointD}}(0, 0);}
+\DoxyCodeLine{00825   m\_firstRes          = \mbox{\hyperlink{class_t_dimension_t}{TDimension}}(0, 0);}
+\DoxyCodeLine{00826   m\_firstSize         = \mbox{\hyperlink{class_t_dimension_t}{TDimensionD}}(0, 0);}
+\DoxyCodeLine{00827 }
+\DoxyCodeLine{00828   m\_lastPos = \mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/1, -\/1);}
+\DoxyCodeLine{00829   m\_dragged = \textcolor{keyword}{false};}
+\DoxyCodeLine{00830 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_camera_test_tool_a858aa6118887a5fedc713659fa606e03}\label{class_camera_test_tool_a858aa6118887a5fedc713659fa606e03}} 
+\index{CameraTestTool@{CameraTestTool}!mouseMove@{mouseMove}}
+\index{mouseMove@{mouseMove}!CameraTestTool@{CameraTestTool}}
+\doxysubsubsection{\texorpdfstring{mouseMove()}{mouseMove()}}
+{\footnotesize\ttfamily void Camera\+Test\+Tool\+::mouse\+Move (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_tool}{TTool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00655                                                                      \{}
+\DoxyCodeLine{00656   \textcolor{keywordflow}{if} (m\_lastPos.x != -\/1)  \textcolor{comment}{// left mouse button is clicked}}
+\DoxyCodeLine{00657   \{}
+\DoxyCodeLine{00658     m\_scaling = eNoScale;}
+\DoxyCodeLine{00659     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00660   \}}
+\DoxyCodeLine{00661 }
+\DoxyCodeLine{00662   \mbox{\hyperlink{class_cleanup_parameters}{CleanupParameters}} *cp =}
+\DoxyCodeLine{00663       CleanupSettingsModel::instance()-\/>getCurrentParameters();}
+\DoxyCodeLine{00664   \textcolor{keywordtype}{double} pixelSize = getPixelSize();}
+\DoxyCodeLine{00665 }
+\DoxyCodeLine{00666   \mbox{\hyperlink{class_t_point_t}{TPointD}} size(10 * pixelSize, 10 * pixelSize);}
+\DoxyCodeLine{00667   \mbox{\hyperlink{class_t_rect_t}{TRectD}} r(cp-\/>m\_camera.\mbox{\hyperlink{class_t_camera_afbdcee0cf26df414d787c11beb675140}{getStageRect}}());}
+\DoxyCodeLine{00668   \mbox{\hyperlink{class_t_point_t}{TPointD}} aux(\mbox{\hyperlink{namespace_stage_ad3e22e31e2bb6fc1d95a572facce2d5b}{Stage::inch}} * \mbox{\hyperlink{class_t_point_t}{TPointD}}(0.5 * cp-\/>m\_offx, 0.5 * cp-\/>m\_offy));}
+\DoxyCodeLine{00669   r -\/= aux;}
+\DoxyCodeLine{00670   \textcolor{keywordtype}{double} maxDist = 5 * pixelSize;}
+\DoxyCodeLine{00671 }
+\DoxyCodeLine{00672   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_rect_t}{TRectD}}(r.getP00() -\/ size, r.getP00() + size).contains(p))}
+\DoxyCodeLine{00673     m\_scaling = e00;}
+\DoxyCodeLine{00674   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_rect_t}{TRectD}}(r.getP01() -\/ size, r.getP01() + size).contains(p))}
+\DoxyCodeLine{00675     m\_scaling = e01;}
+\DoxyCodeLine{00676   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_rect_t}{TRectD}}(r.getP11() -\/ size, r.getP11() + size).contains(p))}
+\DoxyCodeLine{00677     m\_scaling = e11;}
+\DoxyCodeLine{00678   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_rect_t}{TRectD}}(r.getP10() -\/ size, r.getP10() + size).contains(p))}
+\DoxyCodeLine{00679     m\_scaling = e10;}
+\DoxyCodeLine{00680   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isCloseToSegment(p, \mbox{\hyperlink{class_t_segment}{TSegment}}(r.getP00(), r.getP10()), maxDist))}
+\DoxyCodeLine{00681     m\_scaling = eM0;}
+\DoxyCodeLine{00682   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isCloseToSegment(p, \mbox{\hyperlink{class_t_segment}{TSegment}}(r.getP10(), r.getP11()), maxDist))}
+\DoxyCodeLine{00683     m\_scaling = e1M;}
+\DoxyCodeLine{00684   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isCloseToSegment(p, \mbox{\hyperlink{class_t_segment}{TSegment}}(r.getP11(), r.getP01()), maxDist))}
+\DoxyCodeLine{00685     m\_scaling = eM1;}
+\DoxyCodeLine{00686   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isCloseToSegment(p, \mbox{\hyperlink{class_t_segment}{TSegment}}(r.getP01(), r.getP00()), maxDist))}
+\DoxyCodeLine{00687     m\_scaling = e0M;}
+\DoxyCodeLine{00688   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00689     m\_scaling = eNoScale;}
+\DoxyCodeLine{00690 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanuppreview.\+cpp\end{DoxyCompactItemize}

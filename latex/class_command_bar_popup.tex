@@ -1,0 +1,136 @@
+\hypertarget{class_command_bar_popup}{}\doxysection{Command\+Bar\+Popup Class Reference}
+\label{class_command_bar_popup}\index{CommandBarPopup@{CommandBarPopup}}
+Inheritance diagram for Command\+Bar\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_command_bar_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_command_bar_popup_a7fcd2937abfcf6e853bda62462f4e02b}{Command\+Bar\+Popup}} (bool is\+Xsheet\+Toolbar=false)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_command_bar_popup_a408392b114def5262a211ae440362ee1}{on\+Ok\+Pressed}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_command_bar_popup_a7fcd2937abfcf6e853bda62462f4e02b}\label{class_command_bar_popup_a7fcd2937abfcf6e853bda62462f4e02b}} 
+\index{CommandBarPopup@{CommandBarPopup}!CommandBarPopup@{CommandBarPopup}}
+\index{CommandBarPopup@{CommandBarPopup}!CommandBarPopup@{CommandBarPopup}}
+\doxysubsubsection{\texorpdfstring{CommandBarPopup()}{CommandBarPopup()}}
+{\footnotesize\ttfamily Command\+Bar\+Popup\+::\+Command\+Bar\+Popup (\begin{DoxyParamCaption}\item[{bool}]{is\+Xsheet\+Toolbar = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00404     : Dialog(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false},}
+\DoxyCodeLine{00405              \textcolor{stringliteral}{"{}CustomizeCommandBar"{}}) \{}
+\DoxyCodeLine{00406   QLabel* commandBarLabel;}
+\DoxyCodeLine{00407   \textcolor{keywordflow}{if} (isXsheetToolbar) \{}
+\DoxyCodeLine{00408     m\_path = ToonzFolder::getMyModuleDir() + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(\textcolor{stringliteral}{"{}xsheettoolbar.xml"{}});}
+\DoxyCodeLine{00409     commandBarLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}XSheet Toolbar"{}}));}
+\DoxyCodeLine{00410     setWindowTitle(tr(\textcolor{stringliteral}{"{}Customize XSheet Toolbar"{}}));}
+\DoxyCodeLine{00411   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00412     m\_path = ToonzFolder::getMyModuleDir() + \mbox{\hyperlink{class_t_file_path}{TFilePath}}(\textcolor{stringliteral}{"{}commandbar.xml"{}});}
+\DoxyCodeLine{00413     commandBarLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Command Bar"{}}));}
+\DoxyCodeLine{00414     setWindowTitle(tr(\textcolor{stringliteral}{"{}Customize Command Bar"{}}));}
+\DoxyCodeLine{00415   \}}
+\DoxyCodeLine{00416 }
+\DoxyCodeLine{00417   m\_commandListTree = \textcolor{keyword}{new} \mbox{\hyperlink{class_command_bar_list_tree}{CommandBarListTree}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00418   m\_menuBarTree     = \textcolor{keyword}{new} \mbox{\hyperlink{class_command_bar_tree}{CommandBarTree}}(m\_path, \textcolor{keyword}{this});}
+\DoxyCodeLine{00419 }
+\DoxyCodeLine{00420   QPushButton* okBtn     = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}OK"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00421   QPushButton* cancelBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cancel"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00422 }
+\DoxyCodeLine{00423   okBtn-\/>setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{00424   cancelBtn-\/>setFocusPolicy(Qt::NoFocus);}
+\DoxyCodeLine{00425 }
+\DoxyCodeLine{00426   QLabel* commandItemListLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Toolbar Items"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00427 }
+\DoxyCodeLine{00428   QFont f(\textcolor{stringliteral}{"{}Arial"{}}, 15, QFont::Bold);}
+\DoxyCodeLine{00429   commandBarLabel-\/>setFont(f);}
+\DoxyCodeLine{00430   commandItemListLabel-\/>setFont(f);}
+\DoxyCodeLine{00431 }
+\DoxyCodeLine{00432   QLabel* noticeLabel =}
+\DoxyCodeLine{00433       \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Duplicated commands will be ignored. Only "{}}}
+\DoxyCodeLine{00434                     \textcolor{stringliteral}{"{}the last one will appear in the menu bar."{}}),}
+\DoxyCodeLine{00435                  \textcolor{keyword}{this});}
+\DoxyCodeLine{00436   QFont nf(\textcolor{stringliteral}{"{}Arial"{}}, 9, QFont::Normal);}
+\DoxyCodeLine{00437   nf.setItalic(\textcolor{keyword}{true});}
+\DoxyCodeLine{00438   noticeLabel-\/>setFont(nf);}
+\DoxyCodeLine{00439 }
+\DoxyCodeLine{00440   \textcolor{comment}{//-\/-\/-\/ layout}}
+\DoxyCodeLine{00441   QVBoxLayout* mainLay = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00442   m\_topLayout-\/>setMargin(0);}
+\DoxyCodeLine{00443   m\_topLayout-\/>setSpacing(0);}
+\DoxyCodeLine{00444   \{}
+\DoxyCodeLine{00445     QGridLayout* mainUILay = \textcolor{keyword}{new} QGridLayout();}
+\DoxyCodeLine{00446     mainUILay-\/>setMargin(5);}
+\DoxyCodeLine{00447     mainUILay-\/>setHorizontalSpacing(8);}
+\DoxyCodeLine{00448     mainUILay-\/>setVerticalSpacing(5);}
+\DoxyCodeLine{00449     \{}
+\DoxyCodeLine{00450       mainUILay-\/>addWidget(commandBarLabel, 0, 0);}
+\DoxyCodeLine{00451       mainUILay-\/>addWidget(commandItemListLabel, 0, 1);}
+\DoxyCodeLine{00452       mainUILay-\/>addWidget(m\_menuBarTree, 1, 0);}
+\DoxyCodeLine{00453       mainUILay-\/>addWidget(m\_commandListTree, 1, 1);}
+\DoxyCodeLine{00454 }
+\DoxyCodeLine{00455       mainUILay-\/>addWidget(noticeLabel, 2, 0, 1, 2);}
+\DoxyCodeLine{00456     \}}
+\DoxyCodeLine{00457     mainUILay-\/>setRowStretch(0, 0);}
+\DoxyCodeLine{00458     mainUILay-\/>setRowStretch(1, 1);}
+\DoxyCodeLine{00459     mainUILay-\/>setRowStretch(2, 0);}
+\DoxyCodeLine{00460     mainUILay-\/>setColumnStretch(0, 1);}
+\DoxyCodeLine{00461     mainUILay-\/>setColumnStretch(1, 1);}
+\DoxyCodeLine{00462 }
+\DoxyCodeLine{00463     m\_topLayout-\/>addLayout(mainUILay, 1);}
+\DoxyCodeLine{00464   \}}
+\DoxyCodeLine{00465 }
+\DoxyCodeLine{00466   m\_buttonLayout-\/>setMargin(0);}
+\DoxyCodeLine{00467   m\_buttonLayout-\/>setSpacing(30);}
+\DoxyCodeLine{00468   \{}
+\DoxyCodeLine{00469     m\_buttonLayout-\/>addStretch(1);}
+\DoxyCodeLine{00470     m\_buttonLayout-\/>addWidget(okBtn, 0);}
+\DoxyCodeLine{00471     m\_buttonLayout-\/>addWidget(cancelBtn, 0);}
+\DoxyCodeLine{00472     m\_buttonLayout-\/>addStretch(1);}
+\DoxyCodeLine{00473   \}}
+\DoxyCodeLine{00474 }
+\DoxyCodeLine{00475   \textcolor{comment}{//-\/-\/-\/ signal/slot connections}}
+\DoxyCodeLine{00476 }
+\DoxyCodeLine{00477   \textcolor{keywordtype}{bool} ret = connect(okBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onOkPressed()));}
+\DoxyCodeLine{00478   ret      = ret \&\& connect(cancelBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(reject()));}
+\DoxyCodeLine{00479   assert(ret);}
+\DoxyCodeLine{00480 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_command_bar_popup_a408392b114def5262a211ae440362ee1}\label{class_command_bar_popup_a408392b114def5262a211ae440362ee1}} 
+\index{CommandBarPopup@{CommandBarPopup}!onOkPressed@{onOkPressed}}
+\index{onOkPressed@{onOkPressed}!CommandBarPopup@{CommandBarPopup}}
+\doxysubsubsection{\texorpdfstring{onOkPressed}{onOkPressed}}
+{\footnotesize\ttfamily void Command\+Bar\+Popup\+::on\+Ok\+Pressed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00484                                   \{}
+\DoxyCodeLine{00485   m\_menuBarTree-\/>saveMenuTree(m\_path);}
+\DoxyCodeLine{00486 }
+\DoxyCodeLine{00487   accept();}
+\DoxyCodeLine{00488 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/commandbarpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/commandbarpopup.\+cpp\end{DoxyCompactItemize}

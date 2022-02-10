@@ -1,0 +1,126 @@
+\hypertarget{class_plugin_load_controller}{}\doxysection{Plugin\+Load\+Controller Class Reference}
+\label{class_plugin_load_controller}\index{PluginLoadController@{PluginLoadController}}
+Inheritance diagram for Plugin\+Load\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_plugin_load_controller}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_plugin_load_controller_a5e1de880da5fef39b892e63ffb8d5e8a}{result}} (\mbox{\hyperlink{class_plugin_information}{Plugin\+Information}} $\ast$pi)
+\item 
+void \mbox{\hyperlink{class_plugin_load_controller_a91e7ceebf504822e74f730e11d838464}{finished}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_plugin_load_controller_ad41d7ee2021f6baf3512993f6e1b48ea}\label{class_plugin_load_controller_ad41d7ee2021f6baf3512993f6e1b48ea}} 
+void {\bfseries start} (const QString \&filepath)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_plugin_load_controller_adc5679e1cd0365aa30f01a53f6314a55}{Plugin\+Load\+Controller}} (const std\+::string \&basedir, QObject $\ast$listener)
+\item 
+bool \mbox{\hyperlink{class_plugin_load_controller_a0c78c93b17e4d751787d4830a0759dbf}{wait}} (int timeout\+\_\+in\+\_\+ms)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_plugin_load_controller_adc5679e1cd0365aa30f01a53f6314a55}\label{class_plugin_load_controller_adc5679e1cd0365aa30f01a53f6314a55}} 
+\index{PluginLoadController@{PluginLoadController}!PluginLoadController@{PluginLoadController}}
+\index{PluginLoadController@{PluginLoadController}!PluginLoadController@{PluginLoadController}}
+\doxysubsubsection{\texorpdfstring{PluginLoadController()}{PluginLoadController()}}
+{\footnotesize\ttfamily Plugin\+Load\+Controller\+::\+Plugin\+Load\+Controller (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{basedir,  }\item[{QObject $\ast$}]{listener }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01556                                                               \{}
+\DoxyCodeLine{01557   \mbox{\hyperlink{class_loader}{Loader}} *ld = \textcolor{keyword}{new} \mbox{\hyperlink{class_loader}{Loader}};}
+\DoxyCodeLine{01558 }
+\DoxyCodeLine{01559   ld-\/>moveToThread(\&work\_entity);}
+\DoxyCodeLine{01560   connect(\&work\_entity, \&QThread::finished, ld, \&QObject::deleteLater);}
+\DoxyCodeLine{01561   \textcolor{comment}{/* AddFxContextMenu から呼ばれていたが、プラグインの検索が load\_entries()}}
+\DoxyCodeLine{01562 \textcolor{comment}{     を通じて起動時に呼ばれるようにした関係で,}}
+\DoxyCodeLine{01563 \textcolor{comment}{     (あまりよくはないが)listener の有無によって receiver を分けるようにしている.}}
+\DoxyCodeLine{01564 \textcolor{comment}{     listener がいる場合は従来通り context menu の構築のために}}
+\DoxyCodeLine{01565 \textcolor{comment}{     AddFxContextMenu::fixup() に接続するが}}
+\DoxyCodeLine{01566 \textcolor{comment}{     それ以外では plugin\_dict\_ への追加のため PluginLoadController::finished}}
+\DoxyCodeLine{01567 \textcolor{comment}{     に接続する.}}
+\DoxyCodeLine{01568 \textcolor{comment}{  */}}
+\DoxyCodeLine{01569   \textcolor{keywordflow}{if} (listener) \{}
+\DoxyCodeLine{01570     \mbox{\hyperlink{class_add_fx_context_menu}{AddFxContextMenu}} *a = qobject\_cast<AddFxContextMenu *>(listener);}
+\DoxyCodeLine{01571     connect(ld, \&Loader::fixup, a, \&AddFxContextMenu::fixup);}
+\DoxyCodeLine{01572     connect(\textcolor{keyword}{this}, \&PluginLoadController::start, ld, \&Loader::walkDictionary);}
+\DoxyCodeLine{01573   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01574     connect(\textcolor{keyword}{this}, \&PluginLoadController::start, ld, \&Loader::walkDirectory);}
+\DoxyCodeLine{01575     connect(ld, \&Loader::load\_finished, \textcolor{keyword}{this}, \&PluginLoadController::result);}
+\DoxyCodeLine{01576     \textcolor{keywordflow}{if} (!connect(ld, \&Loader::fixup, \textcolor{keyword}{this}, \&PluginLoadController::finished))}
+\DoxyCodeLine{01577       assert(\textcolor{keyword}{false});}
+\DoxyCodeLine{01578   \}}
+\DoxyCodeLine{01579   work\_entity.start();}
+\DoxyCodeLine{01580 }
+\DoxyCodeLine{01581   QString pluginbase = (TEnv::getStuffDir() + \textcolor{stringliteral}{"{}plugins"{}}).getQString();}
+\DoxyCodeLine{01582   printf(\textcolor{stringliteral}{"{}plugin search directory:\%s\(\backslash\)n"{}}, pluginbase.toLocal8Bit().data());}
+\DoxyCodeLine{01583   emit start(pluginbase);}
+\DoxyCodeLine{01584 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_plugin_load_controller_a91e7ceebf504822e74f730e11d838464}\label{class_plugin_load_controller_a91e7ceebf504822e74f730e11d838464}} 
+\index{PluginLoadController@{PluginLoadController}!finished@{finished}}
+\index{finished@{finished}!PluginLoadController@{PluginLoadController}}
+\doxysubsubsection{\texorpdfstring{finished}{finished}}
+{\footnotesize\ttfamily void Plugin\+Load\+Controller\+::finished (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01586                                     \{}
+\DoxyCodeLine{01587   printf(\textcolor{stringliteral}{"{}===== PluginLoadController::finished() =====\(\backslash\)n"{}});}
+\DoxyCodeLine{01588   work\_entity.exit();}
+\DoxyCodeLine{01589 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plugin_load_controller_a5e1de880da5fef39b892e63ffb8d5e8a}\label{class_plugin_load_controller_a5e1de880da5fef39b892e63ffb8d5e8a}} 
+\index{PluginLoadController@{PluginLoadController}!result@{result}}
+\index{result@{result}!PluginLoadController@{PluginLoadController}}
+\doxysubsubsection{\texorpdfstring{result}{result}}
+{\footnotesize\ttfamily void Plugin\+Load\+Controller\+::result (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_plugin_information}{Plugin\+Information}} $\ast$}]{pi }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01591                                                        \{}
+\DoxyCodeLine{01592   \textcolor{comment}{/* slot receives PluginInformation on the main thread たぶん */}}
+\DoxyCodeLine{01593   printf(\textcolor{stringliteral}{"{}PluginLoadController::result() pi:\%p\(\backslash\)n"{}}, pi);}
+\DoxyCodeLine{01594   \textcolor{keywordflow}{if} (pi) \{}
+\DoxyCodeLine{01595     \textcolor{comment}{/* addfxcontextmenu.cpp の dict に登録する */}}
+\DoxyCodeLine{01596     plugin\_dict\_.insert(}
+\DoxyCodeLine{01597         std::pair<std::string, PluginInformation *>(pi-\/>desc\_-\/>id\_, pi));}
+\DoxyCodeLine{01598   \}}
+\DoxyCodeLine{01599 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_plugin_load_controller_a0c78c93b17e4d751787d4830a0759dbf}\label{class_plugin_load_controller_a0c78c93b17e4d751787d4830a0759dbf}} 
+\index{PluginLoadController@{PluginLoadController}!wait@{wait}}
+\index{wait@{wait}!PluginLoadController@{PluginLoadController}}
+\doxysubsubsection{\texorpdfstring{wait()}{wait()}}
+{\footnotesize\ttfamily bool Plugin\+Load\+Controller\+::wait (\begin{DoxyParamCaption}\item[{int}]{timeout\+\_\+in\+\_\+ms }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00143 \{ \textcolor{keywordflow}{return} work\_entity.wait(timeout\_in\_ms); \};}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/pluginhost.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/pluginhost.\+cpp\end{DoxyCompactItemize}

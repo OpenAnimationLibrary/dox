@@ -1,0 +1,144 @@
+\hypertarget{class_rainbow_width_fx_gadget}{}\doxysection{Rainbow\+Width\+Fx\+Gadget Class Reference}
+\label{class_rainbow_width_fx_gadget}\index{RainbowWidthFxGadget@{RainbowWidthFxGadget}}
+Inheritance diagram for Rainbow\+Width\+Fx\+Gadget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_rainbow_width_fx_gadget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_rainbow_width_fx_gadget_a1bfb83e6531bcfa31da8faf14d925b51}{Rainbow\+Width\+Fx\+Gadget}} (\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$controller, const TDouble\+ParamP \&width\+Scale, const TDouble\+ParamP \&radius, const TPoint\+ParamP \&center)
+\item 
+void \mbox{\hyperlink{class_rainbow_width_fx_gadget_af4b11051bc08e2b1765966ee27092ba9}{draw}} (bool picking) override
+\item 
+void \mbox{\hyperlink{class_rainbow_width_fx_gadget_a24bda37414881d02e46c06f1c69b931b}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\item 
+void \mbox{\hyperlink{class_rainbow_width_fx_gadget_a64cefb2a7fc7ac1707cb822a4899f65b}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_rainbow_width_fx_gadget_a1bfb83e6531bcfa31da8faf14d925b51}\label{class_rainbow_width_fx_gadget_a1bfb83e6531bcfa31da8faf14d925b51}} 
+\index{RainbowWidthFxGadget@{RainbowWidthFxGadget}!RainbowWidthFxGadget@{RainbowWidthFxGadget}}
+\index{RainbowWidthFxGadget@{RainbowWidthFxGadget}!RainbowWidthFxGadget@{RainbowWidthFxGadget}}
+\doxysubsubsection{\texorpdfstring{RainbowWidthFxGadget()}{RainbowWidthFxGadget()}}
+{\footnotesize\ttfamily Rainbow\+Width\+Fx\+Gadget\+::\+Rainbow\+Width\+Fx\+Gadget (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fx_gadget_controller}{Fx\+Gadget\+Controller}} $\ast$}]{controller,  }\item[{const TDouble\+ParamP \&}]{width\+Scale,  }\item[{const TDouble\+ParamP \&}]{radius,  }\item[{const TPoint\+ParamP \&}]{center }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01695       : \mbox{\hyperlink{class_fx_gadget}{FxGadget}}(controller, 2)}
+\DoxyCodeLine{01696       , m\_widthScale(widthScale)}
+\DoxyCodeLine{01697       , m\_radius(radius)}
+\DoxyCodeLine{01698       , m\_center(center) \{}
+\DoxyCodeLine{01699     addParam(widthScale);}
+\DoxyCodeLine{01700   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_rainbow_width_fx_gadget_af4b11051bc08e2b1765966ee27092ba9}\label{class_rainbow_width_fx_gadget_af4b11051bc08e2b1765966ee27092ba9}} 
+\index{RainbowWidthFxGadget@{RainbowWidthFxGadget}!draw@{draw}}
+\index{draw@{draw}!RainbowWidthFxGadget@{RainbowWidthFxGadget}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Rainbow\+Width\+Fx\+Gadget\+::draw (\begin{DoxyParamCaption}\item[{bool}]{picking }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01710                                             \{}
+\DoxyCodeLine{01711   setPixelSize();}
+\DoxyCodeLine{01712   \textcolor{keywordflow}{if} (isSelected())}
+\DoxyCodeLine{01713     glColor3dv(m\_selectedColor);}
+\DoxyCodeLine{01714   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01715     glColor3d(0, 0, 1);}
+\DoxyCodeLine{01716   \textcolor{keywordtype}{double} radius     = getValue(m\_radius);}
+\DoxyCodeLine{01717   \mbox{\hyperlink{class_t_point_t}{TPointD}} center    = getValue(m\_center);}
+\DoxyCodeLine{01718   \textcolor{keywordtype}{double} widthScale = getValue(m\_widthScale);}
+\DoxyCodeLine{01719   \textcolor{keywordtype}{double} w          = widthScale * radius / 41.3;}
+\DoxyCodeLine{01720 }
+\DoxyCodeLine{01721   glPushName(getId() + Outside);}
+\DoxyCodeLine{01722   glLineStipple(1, 0x1C47);}
+\DoxyCodeLine{01723   glEnable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{01724   tglDrawCircle(center, radius + w);}
+\DoxyCodeLine{01725   glDisable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{01726   drawDot(center + \mbox{\hyperlink{class_t_point_t}{TPointD}}(0.707, 0.707) * (radius + w));}
+\DoxyCodeLine{01727   glPopName();}
+\DoxyCodeLine{01728 }
+\DoxyCodeLine{01729   \textcolor{keywordflow}{if} (isSelected(Outside)) \{}
+\DoxyCodeLine{01730     drawTooltip(center + \mbox{\hyperlink{class_t_point_t}{TPointD}}(0.707, 0.707) * (radius + w), getLabel());}
+\DoxyCodeLine{01731   \}}
+\DoxyCodeLine{01732 }
+\DoxyCodeLine{01733   glPushName(getId() + Inside);}
+\DoxyCodeLine{01734   glLineStipple(1, 0x1C47);}
+\DoxyCodeLine{01735   glEnable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{01736   tglDrawCircle(center, radius -\/ w);}
+\DoxyCodeLine{01737   glDisable(GL\_LINE\_STIPPLE);}
+\DoxyCodeLine{01738   drawDot(center + \mbox{\hyperlink{class_t_point_t}{TPointD}}(0.707, 0.707) * (radius -\/ w));}
+\DoxyCodeLine{01739   glPopName();}
+\DoxyCodeLine{01740 }
+\DoxyCodeLine{01741   \textcolor{keywordflow}{if} (isSelected(Inside)) \{}
+\DoxyCodeLine{01742     drawTooltip(center + \mbox{\hyperlink{class_t_point_t}{TPointD}}(0.707, 0.707) * (radius -\/ w), getLabel());}
+\DoxyCodeLine{01743   \}}
+\DoxyCodeLine{01744 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_rainbow_width_fx_gadget_a24bda37414881d02e46c06f1c69b931b}\label{class_rainbow_width_fx_gadget_a24bda37414881d02e46c06f1c69b931b}} 
+\index{RainbowWidthFxGadget@{RainbowWidthFxGadget}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!RainbowWidthFxGadget@{RainbowWidthFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Rainbow\+Width\+Fx\+Gadget\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01749                                                                \{}
+\DoxyCodeLine{01750   m\_handle = (HANDLE)m\_selected;}
+\DoxyCodeLine{01751 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_rainbow_width_fx_gadget_a64cefb2a7fc7ac1707cb822a4899f65b}\label{class_rainbow_width_fx_gadget_a64cefb2a7fc7ac1707cb822a4899f65b}} 
+\index{RainbowWidthFxGadget@{RainbowWidthFxGadget}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!RainbowWidthFxGadget@{RainbowWidthFxGadget}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Rainbow\+Width\+Fx\+Gadget\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_fx_gadget}{Fx\+Gadget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01756                                                                \{}
+\DoxyCodeLine{01757   \textcolor{keywordflow}{if} (m\_handle == None) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01758 }
+\DoxyCodeLine{01759   \textcolor{keywordtype}{double} radius = getValue(m\_radius);}
+\DoxyCodeLine{01760   \textcolor{keywordtype}{double} wpos   = norm(pos -\/ getValue(m\_center));}
+\DoxyCodeLine{01761   \textcolor{keywordtype}{double} width  = (m\_handle == Outside) ? wpos -\/ radius : radius -\/ wpos;}
+\DoxyCodeLine{01762 }
+\DoxyCodeLine{01763   \textcolor{keywordtype}{double} scale = (width * 41.3) / (radius * 1.0);}
+\DoxyCodeLine{01764 }
+\DoxyCodeLine{01765   \textcolor{keywordtype}{double} min, max, step;}
+\DoxyCodeLine{01766   m\_widthScale-\/>getValueRange(min, max, step);}
+\DoxyCodeLine{01767 }
+\DoxyCodeLine{01768   setValue(m\_widthScale, std::min(max, std::max(min, scale)));}
+\DoxyCodeLine{01769 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/edittoolgadgets.\+cpp\end{DoxyCompactItemize}

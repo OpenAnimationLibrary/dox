@@ -1,0 +1,566 @@
+\hypertarget{class_junction_area}{}\doxysection{Junction\+Area Class Reference}
+\label{class_junction_area}\index{JunctionArea@{JunctionArea}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_junction_area_aedbe43fafac38c429a9f791a2ab0752c}{expand\+Area}} (unsigned int initial)
+\item 
+bool \mbox{\hyperlink{class_junction_area_a569fd3969f5d6cdbc617f6f614424bbe}{check\+Shape}} ()
+\item 
+bool \mbox{\hyperlink{class_junction_area_a2c785e55a400cd7fc0568c722d44b8fd}{solve\+Junction\+Position}} ()
+\item 
+bool \mbox{\hyperlink{class_junction_area_acdfc1853619e50172bd2387dd2f1d941}{make\+Heights}} ()
+\item 
+bool \mbox{\hyperlink{class_junction_area_ab553dbae07dc4858b213df4891b8fce9}{calculate\+Reconstruction}} ()
+\item 
+bool \mbox{\hyperlink{class_junction_area_a78527861db5c74e9ef78fd31d8098c4c}{sequences\+Pull\+Back}} ()
+\item 
+void \mbox{\hyperlink{class_junction_area_ab5c035689a23a026fde856c952d62366}{apply}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_entering_sequence}{Entering\+Sequence}} $>$ \mbox{\hyperlink{class_junction_area_acd27f171593baa7ac33e1dde79b1fc1e}{m\+\_\+entering\+Sequences}}
+\item 
+std\+::vector$<$ unsigned int $>$ \mbox{\hyperlink{class_junction_area_a2e13501653143b2822f4356862a72048}{m\+\_\+joints\+Absorbed}}
+\item 
+\mbox{\hyperlink{class_t_point_t}{TPointD}} \mbox{\hyperlink{class_junction_area_a26981f954c2703efd6cb63b4e6009434}{m\+\_\+new\+Joint\+Position}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_junction_area_a3ceaa28114e113c45dc551e0b5e045e9}\label{class_junction_area_a3ceaa28114e113c45dc551e0b5e045e9}} 
+\index{JunctionArea@{JunctionArea}!JunctionArea@{JunctionArea}}
+\index{JunctionArea@{JunctionArea}!JunctionArea@{JunctionArea}}
+\doxysubsubsection{\texorpdfstring{JunctionArea()}{JunctionArea()}}
+{\footnotesize\ttfamily Junction\+Area\+::\+Junction\+Area (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00315 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_junction_area_ab5c035689a23a026fde856c952d62366}\label{class_junction_area_ab5c035689a23a026fde856c952d62366}} 
+\index{JunctionArea@{JunctionArea}!apply@{apply}}
+\index{apply@{apply}!JunctionArea@{JunctionArea}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Junction\+Area\+::apply (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00843                          \{}
+\DoxyCodeLine{00844   std::vector<EnteringSequence>::iterator a;}
+\DoxyCodeLine{00845   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} newJoint, newSkeletonNode;}
+\DoxyCodeLine{00846   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} head, headLink, tail, tailLink;}
+\DoxyCodeLine{00847   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outerJoint, outerLink;}
+\DoxyCodeLine{00848   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i, next, nextLink;}
+\DoxyCodeLine{00849 }
+\DoxyCodeLine{00850   \textcolor{comment}{// First, check if Entering Sequences pullback is possible}}
+\DoxyCodeLine{00851   \textcolor{keywordflow}{if} (!sequencesPullBack()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00852 }
+\DoxyCodeLine{00853   \textcolor{comment}{// Then, we can substitute the old configuration}}
+\DoxyCodeLine{00854   \textcolor{comment}{// First, sign as 'ELIMINATED' all absorbed joints}}
+\DoxyCodeLine{00855   \textcolor{keywordflow}{for} (i = 0; i < m\_jointsAbsorbed.size(); ++i)}
+\DoxyCodeLine{00856     currJSGraph-\/>node(m\_jointsAbsorbed[i])}
+\DoxyCodeLine{00857         .setAttribute(JointSequenceGraph::ELIMINATED);}
+\DoxyCodeLine{00858 }
+\DoxyCodeLine{00859   newJoint = currJSGraph-\/>newNode();}
+\DoxyCodeLine{00860 }
+\DoxyCodeLine{00861   \textcolor{keywordflow}{for} (a = m\_enteringSequences.begin(); a != m\_enteringSequences.end(); ++a) \{}
+\DoxyCodeLine{00862     \textcolor{comment}{// Initialize infos}}
+\DoxyCodeLine{00863     newSkeletonNode =}
+\DoxyCodeLine{00864         a-\/>m\_graphHolder-\/>newNode(\mbox{\hyperlink{class_t3_d_point_t}{T3DPointD}}(m\_newJointPosition, a-\/>m\_height));}
+\DoxyCodeLine{00865 }
+\DoxyCodeLine{00866     \textcolor{comment}{// Retrieve sequence infos to substitute}}
+\DoxyCodeLine{00867     \textcolor{comment}{// NOTE: We update *tail* infos in currJSGraph sequences after each "{}apply"{}}}
+\DoxyCodeLine{00868 }
+\DoxyCodeLine{00869     \textcolor{keyword}{const} \mbox{\hyperlink{class_graph_1_1_link}{JointSequenceGraph::Link}} \&tempLink =}
+\DoxyCodeLine{00870         currJSGraph-\/>getNode(a-\/>m\_initialJoint).getLink(a-\/>m\_outerLink);}
+\DoxyCodeLine{00871 }
+\DoxyCodeLine{00872     head     = tempLink-\/>m\_head;}
+\DoxyCodeLine{00873     headLink = tempLink-\/>m\_headLink;}
+\DoxyCodeLine{00874     tail     = tempLink-\/>m\_tail;}
+\DoxyCodeLine{00875     tailLink = tempLink-\/>m\_tailLink;}
+\DoxyCodeLine{00876 }
+\DoxyCodeLine{00877     outerJoint = tempLink.getNext();}
+\DoxyCodeLine{00878 }
+\DoxyCodeLine{00879     \textcolor{comment}{// Find outerLink -\/ from outerJoint to a-\/>m\_initialJoint}}
+\DoxyCodeLine{00880     \textcolor{keywordflow}{for} (i = 0;}
+\DoxyCodeLine{00881          (currJSGraph-\/>getNode(outerJoint).getLink(i)-\/>m\_tail != head) ||}
+\DoxyCodeLine{00882          (currJSGraph-\/>getNode(outerJoint).getLink(i)-\/>m\_tailLink != headLink);}
+\DoxyCodeLine{00883          ++i)}
+\DoxyCodeLine{00884       ;}
+\DoxyCodeLine{00885     outerLink = i;}
+\DoxyCodeLine{00886 }
+\DoxyCodeLine{00887     \textcolor{comment}{// Now, provide skeleton linkages}}
+\DoxyCodeLine{00888     \textcolor{comment}{// NOTE: Discriminate between the following cases}}
+\DoxyCodeLine{00889     \textcolor{comment}{// a) m\_head-\/>degree == 2}}
+\DoxyCodeLine{00890     \textcolor{comment}{// b) m\_head == m\_tail}}
+\DoxyCodeLine{00891     \textcolor{comment}{// c) m\_head == original m\_head -\/ or, (m\_head!=m\_tail \&\& m\_head-\/>deg>2)}}
+\DoxyCodeLine{00892 }
+\DoxyCodeLine{00893     \textcolor{keywordflow}{if} (a-\/>m\_graphHolder-\/>getNode(a-\/>m\_head).degree() == 2) \{}
+\DoxyCodeLine{00894       a-\/>m\_graphHolder-\/>newLink(newSkeletonNode, a-\/>m\_head);}
+\DoxyCodeLine{00895 }
+\DoxyCodeLine{00896       a-\/>m\_graphHolder-\/>node(a-\/>m\_head)}
+\DoxyCodeLine{00897           .link(!a-\/>m\_headLink)}
+\DoxyCodeLine{00898           .setNext(newSkeletonNode);}
+\DoxyCodeLine{00899       a-\/>m\_graphHolder-\/>node(a-\/>m\_head)}
+\DoxyCodeLine{00900           .link(!a-\/>m\_headLink)}
+\DoxyCodeLine{00901           -\/>setAttribute(SkeletonArc::ROAD);}
+\DoxyCodeLine{00902       \textcolor{comment}{// Better clear road attribute or set it?}}
+\DoxyCodeLine{00903     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (a-\/>m\_head == tail) \{}
+\DoxyCodeLine{00904       a-\/>m\_graphHolder-\/>newLink(newSkeletonNode, tail);}
+\DoxyCodeLine{00905 }
+\DoxyCodeLine{00906       a-\/>m\_graphHolder-\/>node(tail).link(tailLink).setNext(newSkeletonNode);}
+\DoxyCodeLine{00907       a-\/>m\_graphHolder-\/>node(tail).link(tailLink)-\/>setAttribute(}
+\DoxyCodeLine{00908           SkeletonArc::ROAD);}
+\DoxyCodeLine{00909     \} \textcolor{keywordflow}{else}  \textcolor{comment}{//(a-\/>m\_head == head)}}
+\DoxyCodeLine{00910     \{}
+\DoxyCodeLine{00911       \textcolor{comment}{// In this case, better introduce further a new substitute of head}}
+\DoxyCodeLine{00912       \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} newHead = a-\/>m\_graphHolder-\/>newNode(}
+\DoxyCodeLine{00913           \mbox{\hyperlink{class_t3_d_point_t}{T3DPointD}}(*a-\/>m\_graphHolder-\/>getNode(a-\/>m\_head)));}
+\DoxyCodeLine{00914 }
+\DoxyCodeLine{00915       a-\/>m\_graphHolder-\/>newLink(newSkeletonNode, newHead);}
+\DoxyCodeLine{00916       a-\/>m\_graphHolder-\/>newLink(newHead, newSkeletonNode);}
+\DoxyCodeLine{00917 }
+\DoxyCodeLine{00918       \textcolor{comment}{// Link newHead on the other side}}
+\DoxyCodeLine{00919       next     = a-\/>m\_graphHolder-\/>getNode(head).getLink(headLink).getNext();}
+\DoxyCodeLine{00920       nextLink = a-\/>m\_graphHolder-\/>getNode(next).linkOfNode(head);}
+\DoxyCodeLine{00921 }
+\DoxyCodeLine{00922       a-\/>m\_graphHolder-\/>newLink(newHead, next);}
+\DoxyCodeLine{00923       a-\/>m\_graphHolder-\/>node(next).link(nextLink).setNext(newHead);}
+\DoxyCodeLine{00924     \}}
+\DoxyCodeLine{00925 }
+\DoxyCodeLine{00926     \textcolor{comment}{// Finally, update joint linkings and sequence tails.}}
+\DoxyCodeLine{00927     \mbox{\hyperlink{class_sequence}{Sequence}} newSequence;}
+\DoxyCodeLine{00928 }
+\DoxyCodeLine{00929     newSequence.m\_graphHolder = a-\/>m\_graphHolder;}
+\DoxyCodeLine{00930     newSequence.m\_head        = newSkeletonNode;}
+\DoxyCodeLine{00931     newSequence.m\_headLink    = 0;}
+\DoxyCodeLine{00932     newSequence.m\_tail        = tail;}
+\DoxyCodeLine{00933     newSequence.m\_tailLink    = tailLink;}
+\DoxyCodeLine{00934 }
+\DoxyCodeLine{00935     currJSGraph-\/>node(outerJoint).link(outerLink).setNext(newJoint);}
+\DoxyCodeLine{00936     currJSGraph-\/>node(outerJoint).link(outerLink)-\/>m\_tail     = newSkeletonNode;}
+\DoxyCodeLine{00937     currJSGraph-\/>node(outerJoint).link(outerLink)-\/>m\_tailLink = 0;}
+\DoxyCodeLine{00938 }
+\DoxyCodeLine{00939     currJSGraph-\/>newLink(newJoint, outerJoint, newSequence);}
+\DoxyCodeLine{00940   \}}
+\DoxyCodeLine{00941 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_junction_area_ab553dbae07dc4858b213df4891b8fce9}\label{class_junction_area_ab553dbae07dc4858b213df4891b8fce9}} 
+\index{JunctionArea@{JunctionArea}!calculateReconstruction@{calculateReconstruction}}
+\index{calculateReconstruction@{calculateReconstruction}!JunctionArea@{JunctionArea}}
+\doxysubsubsection{\texorpdfstring{calculateReconstruction()}{calculateReconstruction()}}
+{\footnotesize\ttfamily bool Junction\+Area\+::calculate\+Reconstruction (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00746                                            \{}
+\DoxyCodeLine{00747   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00748 }
+\DoxyCodeLine{00749   \textcolor{keywordflow}{if} (m\_enteringSequences.size() == 0) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00750 }
+\DoxyCodeLine{00751   \textcolor{comment}{// Apply preliminary tests for this Junction Area}}
+\DoxyCodeLine{00752 }
+\DoxyCodeLine{00753   \textcolor{comment}{// a) Check if endpoints got absorbed by the expansion process}}
+\DoxyCodeLine{00754   \textcolor{keywordflow}{for} (i = 0; i < m\_jointsAbsorbed.size(); ++i)}
+\DoxyCodeLine{00755     \textcolor{keywordflow}{if} (currJSGraph-\/>getNode(m\_jointsAbsorbed[i]).degree() == 1) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00756 }
+\DoxyCodeLine{00757   \textcolor{comment}{// b) Check if the contours shape resembles that of a crossing}}
+\DoxyCodeLine{00758 }
+\DoxyCodeLine{00759   sort(m\_enteringSequences.begin(), m\_enteringSequences.end(),}
+\DoxyCodeLine{00760        \mbox{\hyperlink{class_ent_sequence_less}{EntSequenceLess}}());}
+\DoxyCodeLine{00761 }
+\DoxyCodeLine{00762   \textcolor{keywordflow}{if} (!checkShape()) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00763 }
+\DoxyCodeLine{00764   \textcolor{comment}{// c) Build the new junction Point plane position}}
+\DoxyCodeLine{00765   \textcolor{keywordflow}{if} (!solveJunctionPosition()) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00766 }
+\DoxyCodeLine{00767   \textcolor{comment}{// d) Build joint optimal heights (each for entering sequence...)}}
+\DoxyCodeLine{00768   \textcolor{keywordflow}{if} (!makeHeights()) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00769 }
+\DoxyCodeLine{00770   \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00771 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_junction_area_a569fd3969f5d6cdbc617f6f614424bbe}\label{class_junction_area_a569fd3969f5d6cdbc617f6f614424bbe}} 
+\index{JunctionArea@{JunctionArea}!checkShape@{checkShape}}
+\index{checkShape@{checkShape}!JunctionArea@{JunctionArea}}
+\doxysubsubsection{\texorpdfstring{checkShape()}{checkShape()}}
+{\footnotesize\ttfamily bool Junction\+Area\+::check\+Shape (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00410                                      \{}
+\DoxyCodeLine{00411   std::vector<EnteringSequence>::iterator a, b;}
+\DoxyCodeLine{00412   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} node, contour, first, last, n;}
+\DoxyCodeLine{00413   \mbox{\hyperlink{class_t_point_t}{TPointD}} A, A1, B, B1, P, P1;}
+\DoxyCodeLine{00414   \textcolor{keywordtype}{bool} result = 1;}
+\DoxyCodeLine{00415 }
+\DoxyCodeLine{00416   \textcolor{comment}{// First, sign all outgoing arcs' m\_leftGeneratingNode as end of}}
+\DoxyCodeLine{00417   \textcolor{comment}{// control procedure}}
+\DoxyCodeLine{00418   \textcolor{keywordflow}{for} (a = m\_enteringSequences.begin(); a != m\_enteringSequences.end(); ++a) \{}
+\DoxyCodeLine{00419     node = a-\/>m\_graphHolder-\/>getNode(a-\/>m\_head)}
+\DoxyCodeLine{00420                .getLink(a-\/>m\_headLink)}
+\DoxyCodeLine{00421                -\/>getLeftGenerator();}
+\DoxyCodeLine{00422     contour = a-\/>m\_graphHolder-\/>getNode(a-\/>m\_head)}
+\DoxyCodeLine{00423                   .getLink(a-\/>m\_headLink)}
+\DoxyCodeLine{00424                   -\/>getLeftContour();}
+\DoxyCodeLine{00425 }
+\DoxyCodeLine{00426     (*currContourFamily)[contour][node].setAttribute(\mbox{\hyperlink{class_contour_node_a7a113f0a25502174a87d6880481bd93ea8de7fd01c4a177059180266e06358cd1}{ContourNode::JR\_RESERVED}});}
+\DoxyCodeLine{00427   \}}
+\DoxyCodeLine{00428 }
+\DoxyCodeLine{00429   \textcolor{comment}{// Now, check shape}}
+\DoxyCodeLine{00430   \textcolor{keywordflow}{for} (a = m\_enteringSequences.begin(), b = m\_enteringSequences.end() -\/ 1;}
+\DoxyCodeLine{00431        a != m\_enteringSequences.end(); b = a, ++a) \{}
+\DoxyCodeLine{00432     \textcolor{comment}{// Initialize contour check}}
+\DoxyCodeLine{00433     first = a-\/>m\_graphHolder-\/>getNode(a-\/>m\_head)}
+\DoxyCodeLine{00434                 .getLink(a-\/>m\_headLink)}
+\DoxyCodeLine{00435                 -\/>getRightGenerator();}
+\DoxyCodeLine{00436     \textcolor{comment}{// last= b-\/>m\_graphHolder-\/>getNode(b-\/>m\_head).getLink(b-\/>m\_headLink)}}
+\DoxyCodeLine{00437     \textcolor{comment}{//  -\/>getLeftGenerator();}}
+\DoxyCodeLine{00438     contour = a-\/>m\_graphHolder-\/>getNode(a-\/>m\_head)}
+\DoxyCodeLine{00439                   .getLink(a-\/>m\_headLink)}
+\DoxyCodeLine{00440                   -\/>getRightContour();}
+\DoxyCodeLine{00441     n = (*currContourFamily)[contour].size();}
+\DoxyCodeLine{00442 }
+\DoxyCodeLine{00443     \textcolor{comment}{// Better this effective way to find the last}}
+\DoxyCodeLine{00444     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} numChecked = 0;}
+\DoxyCodeLine{00445     \textcolor{keywordflow}{for} (last = first; !(*currContourFamily)[contour][last].hasAttribute(}
+\DoxyCodeLine{00446                            \mbox{\hyperlink{class_contour_node_a7a113f0a25502174a87d6880481bd93ea8de7fd01c4a177059180266e06358cd1}{ContourNode::JR\_RESERVED}}) \&\&}
+\DoxyCodeLine{00447                        numChecked < n;}
+\DoxyCodeLine{00448          last = (last + 1) \% n, ++numChecked)}
+\DoxyCodeLine{00449       ;}
+\DoxyCodeLine{00450 }
+\DoxyCodeLine{00451     \textcolor{comment}{// Security check}}
+\DoxyCodeLine{00452     \textcolor{keywordflow}{if} (numChecked == n) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00453 }
+\DoxyCodeLine{00454     A  = planeProjection((*currContourFamily)[contour][first].m\_position);}
+\DoxyCodeLine{00455     A1 = planeProjection(}
+\DoxyCodeLine{00456         (*currContourFamily)[contour][(first + 1) \% n].m\_position);}
+\DoxyCodeLine{00457     B  = planeProjection((*currContourFamily)[contour][last].m\_position);}
+\DoxyCodeLine{00458     B1 = planeProjection(}
+\DoxyCodeLine{00459         (*currContourFamily)[contour][(last + 1) \% n].m\_position);}
+\DoxyCodeLine{00460 }
+\DoxyCodeLine{00461     \textcolor{keywordflow}{for} (node = first; !(*currContourFamily)[contour][node].hasAttribute(}
+\DoxyCodeLine{00462              \mbox{\hyperlink{class_contour_node_a7a113f0a25502174a87d6880481bd93ea8de7fd01c4a177059180266e06358cd1}{ContourNode::JR\_RESERVED}});}
+\DoxyCodeLine{00463          node = (node + 1) \% n) \{}
+\DoxyCodeLine{00464       P  = planeProjection((*currContourFamily)[contour][node].m\_position);}
+\DoxyCodeLine{00465       P1 = planeProjection(}
+\DoxyCodeLine{00466           (*currContourFamily)[contour][(node + 1) \% n].m\_position);}
+\DoxyCodeLine{00467 }
+\DoxyCodeLine{00468       \textcolor{comment}{// EXPLANATION:}}
+\DoxyCodeLine{00469       \textcolor{comment}{// Segment P-\/P1  must be included in fat lines passing for A-\/A1 or B-\/B1}}
+\DoxyCodeLine{00470       result \&=}
+\DoxyCodeLine{00471           (fabs(cross(P -\/ A, normalize(A1 -\/ A))) < a-\/>m\_height * shapeDistMul \&\&}
+\DoxyCodeLine{00472            fabs(cross(P1 -\/ A, normalize(A1 -\/ A))) < a-\/>m\_height * shapeDistMul)}
+\DoxyCodeLine{00473 }
+\DoxyCodeLine{00474           ||}
+\DoxyCodeLine{00475 }
+\DoxyCodeLine{00476           (fabs(cross(P -\/ B, normalize(B1 -\/ B))) < b-\/>m\_height * shapeDistMul \&\&}
+\DoxyCodeLine{00477            fabs(cross(P1 -\/ B, normalize(B1 -\/ B))) < b-\/>m\_height * shapeDistMul);}
+\DoxyCodeLine{00478     \}}
+\DoxyCodeLine{00479   \}}
+\DoxyCodeLine{00480 }
+\DoxyCodeLine{00481   \textcolor{comment}{// Finally, restore nodes attributes}}
+\DoxyCodeLine{00482   \textcolor{keywordflow}{for} (a = m\_enteringSequences.begin(); a != m\_enteringSequences.end(); ++a) \{}
+\DoxyCodeLine{00483     node = a-\/>m\_graphHolder-\/>getNode(a-\/>m\_head)}
+\DoxyCodeLine{00484                .getLink(a-\/>m\_headLink)}
+\DoxyCodeLine{00485                -\/>getLeftGenerator();}
+\DoxyCodeLine{00486     contour = a-\/>m\_graphHolder-\/>getNode(a-\/>m\_head)}
+\DoxyCodeLine{00487                   .getLink(a-\/>m\_headLink)}
+\DoxyCodeLine{00488                   -\/>getLeftContour();}
+\DoxyCodeLine{00489 }
+\DoxyCodeLine{00490     (*currContourFamily)[contour][node].clearAttribute(}
+\DoxyCodeLine{00491         \mbox{\hyperlink{class_contour_node_a7a113f0a25502174a87d6880481bd93ea8de7fd01c4a177059180266e06358cd1}{ContourNode::JR\_RESERVED}});}
+\DoxyCodeLine{00492   \}}
+\DoxyCodeLine{00493 }
+\DoxyCodeLine{00494   \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{00495 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_junction_area_aedbe43fafac38c429a9f791a2ab0752c}\label{class_junction_area_aedbe43fafac38c429a9f791a2ab0752c}} 
+\index{JunctionArea@{JunctionArea}!expandArea@{expandArea}}
+\index{expandArea@{expandArea}!JunctionArea@{JunctionArea}}
+\doxysubsubsection{\texorpdfstring{expandArea()}{expandArea()}}
+{\footnotesize\ttfamily void Junction\+Area\+::expand\+Area (\begin{DoxyParamCaption}\item[{unsigned int}]{initial }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00338                                                          \{}
+\DoxyCodeLine{00339   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} a;}
+\DoxyCodeLine{00340   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} curr, currLink;}
+\DoxyCodeLine{00341   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i, iLink, iNext;}
+\DoxyCodeLine{00342 }
+\DoxyCodeLine{00343   m\_jointsAbsorbed.push\_back(initial);}
+\DoxyCodeLine{00344   currJSGraph-\/>node(initial).setAttribute(}
+\DoxyCodeLine{00345       JointSequenceGraph::REACHED);  \textcolor{comment}{// Nodes absorbed gets signed}}
+\DoxyCodeLine{00346 }
+\DoxyCodeLine{00347   \textcolor{keywordflow}{for} (a = 0; a < m\_jointsAbsorbed.size(); ++a) \{}
+\DoxyCodeLine{00348     \textcolor{comment}{// Extract a joint from vector}}
+\DoxyCodeLine{00349     curr = m\_jointsAbsorbed[a];}
+\DoxyCodeLine{00350 }
+\DoxyCodeLine{00351     \textcolor{keywordflow}{for} (currLink = 0; currLink < currJSGraph-\/>getNode(curr).getLinksCount();}
+\DoxyCodeLine{00352          ++currLink) \{}
+\DoxyCodeLine{00353       \mbox{\hyperlink{class_sequence}{Sequence}} \&s = *currJSGraph-\/>node(curr).link(currLink);}
+\DoxyCodeLine{00354       \textcolor{keywordflow}{if} (s.m\_graphHolder-\/>getNode(s.m\_head)}
+\DoxyCodeLine{00355               .getLink(s.m\_headLink)}
+\DoxyCodeLine{00356               .getAccess()) \{}
+\DoxyCodeLine{00357         \textcolor{comment}{// Expand into all nearby sequences, until a ROAD is found}}
+\DoxyCodeLine{00358         i     = s.m\_head;}
+\DoxyCodeLine{00359         iLink = s.m\_headLink;}
+\DoxyCodeLine{00360         \textcolor{keywordflow}{for} (; i != s.m\_tail \&\&}
+\DoxyCodeLine{00361                !s.m\_graphHolder-\/>getNode(i).getLink(iLink)-\/>hasAttribute(}
+\DoxyCodeLine{00362                    SkeletonArc::ROAD);}
+\DoxyCodeLine{00363              s.next(i, iLink))}
+\DoxyCodeLine{00364           ;}
+\DoxyCodeLine{00365 }
+\DoxyCodeLine{00366         \textcolor{comment}{// If the sequence has been completely run, include next joint in the}}
+\DoxyCodeLine{00367         \textcolor{comment}{// expansion procedure AND sign it as 'REACHED'}}
+\DoxyCodeLine{00368         \textcolor{keywordflow}{if} (i == s.m\_tail) \{}
+\DoxyCodeLine{00369           iNext = currJSGraph-\/>getNode(curr).getLink(currLink).getNext();}
+\DoxyCodeLine{00370           \textcolor{keywordflow}{if} (!currJSGraph-\/>node(iNext).hasAttribute(}
+\DoxyCodeLine{00371                   JointSequenceGraph::REACHED)) \{}
+\DoxyCodeLine{00372             currJSGraph-\/>node(iNext).setAttribute(JointSequenceGraph::REACHED);}
+\DoxyCodeLine{00373             m\_jointsAbsorbed.push\_back(iNext);}
+\DoxyCodeLine{00374           \}}
+\DoxyCodeLine{00375           \textcolor{comment}{// Negate access to this sequence}}
+\DoxyCodeLine{00376           s.m\_graphHolder-\/>node(s.m\_tail).link(s.m\_tailLink).setAccess(0);}
+\DoxyCodeLine{00377           s.m\_graphHolder-\/>node(s.m\_head).link(s.m\_headLink).setAccess(0);}
+\DoxyCodeLine{00378         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00379           \textcolor{comment}{// Initialize and copy the entering sequence found}}
+\DoxyCodeLine{00380           m\_enteringSequences.push\_back(\mbox{\hyperlink{class_entering_sequence}{EnteringSequence}}(s));}
+\DoxyCodeLine{00381           m\_enteringSequences.back().m\_head     = i;}
+\DoxyCodeLine{00382           m\_enteringSequences.back().m\_headLink = iLink;}
+\DoxyCodeLine{00383 }
+\DoxyCodeLine{00384           \textcolor{comment}{// Initialize entering directions}}
+\DoxyCodeLine{00385           iNext = s.m\_graphHolder-\/>getNode(i).getLink(iLink).getNext();}
+\DoxyCodeLine{00386           m\_enteringSequences.back().m\_direction = planeProjection(}
+\DoxyCodeLine{00387               *s.m\_graphHolder-\/>getNode(i) -\/ *s.m\_graphHolder-\/>getNode(iNext));}
+\DoxyCodeLine{00388           m\_enteringSequences.back().m\_direction =}
+\DoxyCodeLine{00389               m\_enteringSequences.back().m\_direction *}
+\DoxyCodeLine{00390               (1 / norm(m\_enteringSequences.back().m\_direction));}
+\DoxyCodeLine{00391 }
+\DoxyCodeLine{00392           \textcolor{comment}{// Initialize entering height / slope}}
+\DoxyCodeLine{00393           m\_enteringSequences.back().m\_height = s.m\_graphHolder-\/>getNode(i)-\/>z;}
+\DoxyCodeLine{00394 }
+\DoxyCodeLine{00395           \textcolor{comment}{// Also store pointer to link toward the joint at the end of sequence}}
+\DoxyCodeLine{00396           m\_enteringSequences.back().m\_initialJoint = curr;}
+\DoxyCodeLine{00397           m\_enteringSequences.back().m\_outerLink    = currLink;}
+\DoxyCodeLine{00398         \}}
+\DoxyCodeLine{00399       \}}
+\DoxyCodeLine{00400     \}}
+\DoxyCodeLine{00401   \}}
+\DoxyCodeLine{00402 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_junction_area_acdfc1853619e50172bd2387dd2f1d941}\label{class_junction_area_acdfc1853619e50172bd2387dd2f1d941}} 
+\index{JunctionArea@{JunctionArea}!makeHeights@{makeHeights}}
+\index{makeHeights@{makeHeights}!JunctionArea@{JunctionArea}}
+\doxysubsubsection{\texorpdfstring{makeHeights()}{makeHeights()}}
+{\footnotesize\ttfamily bool Junction\+Area\+::make\+Heights (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00668                                       \{}
+\DoxyCodeLine{00669   std::vector<unsigned int> heightOrderedIndices;}
+\DoxyCodeLine{00670   std::vector<unsigned int> rightIntervalBounds;}
+\DoxyCodeLine{00671   std::vector<double> optimalHeights;}
+\DoxyCodeLine{00672 }
+\DoxyCodeLine{00673   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i, n, m;}
+\DoxyCodeLine{00674 }
+\DoxyCodeLine{00675   \textcolor{comment}{// Sort entering sequences' indices for increasing height/thickness}}
+\DoxyCodeLine{00676   heightOrderedIndices.resize(m\_enteringSequences.size());}
+\DoxyCodeLine{00677   \textcolor{keywordflow}{for} (i = 0; i < m\_enteringSequences.size(); ++i) heightOrderedIndices[i] = i;}
+\DoxyCodeLine{00678   sort(heightOrderedIndices.begin(), heightOrderedIndices.end(),}
+\DoxyCodeLine{00679        \mbox{\hyperlink{classh_less}{hLess}}(m\_enteringSequences));}
+\DoxyCodeLine{00680 }
+\DoxyCodeLine{00681   \textcolor{comment}{// Initialize globals/references}}
+\DoxyCodeLine{00682   currEnterings    = \&m\_enteringSequences;}
+\DoxyCodeLine{00683   heightIndicesPtr = \&heightOrderedIndices;}
+\DoxyCodeLine{00684 }
+\DoxyCodeLine{00685   optMeanError = 0;}
+\DoxyCodeLine{00686   optHeights   = \&optimalHeights;}
+\DoxyCodeLine{00687 }
+\DoxyCodeLine{00688   \textcolor{comment}{// Now build height-\/mean configurations and launch their tests}}
+\DoxyCodeLine{00689   n = m\_enteringSequences.size();}
+\DoxyCodeLine{00690 }
+\DoxyCodeLine{00691   \textcolor{comment}{// The m=0 case is done first, apart}}
+\DoxyCodeLine{00692   rightIntervalBounds.resize(0);}
+\DoxyCodeLine{00693   tryConfiguration(rightIntervalBounds);}
+\DoxyCodeLine{00694   \textcolor{keywordflow}{for} (m = 1; m < n \&\& optimalHeights.empty(); ++m) \{}
+\DoxyCodeLine{00695     \textcolor{comment}{// Initialize bounds}}
+\DoxyCodeLine{00696     rightIntervalBounds.resize(1);}
+\DoxyCodeLine{00697     rightIntervalBounds[0] = 0;}
+\DoxyCodeLine{00698 }
+\DoxyCodeLine{00699     \textcolor{keywordflow}{while} (!rightIntervalBounds.empty()) \{}
+\DoxyCodeLine{00700       \textcolor{comment}{// Fill bounds if necessary}}
+\DoxyCodeLine{00701       \textcolor{keywordflow}{while} (rightIntervalBounds.size() < m)}
+\DoxyCodeLine{00702         rightIntervalBounds.push\_back(rightIntervalBounds.back() + 1);}
+\DoxyCodeLine{00703 }
+\DoxyCodeLine{00704       tryConfiguration(rightIntervalBounds);}
+\DoxyCodeLine{00705 }
+\DoxyCodeLine{00706       \textcolor{comment}{//'Advance' configuration: increment last index and pop those}}
+\DoxyCodeLine{00707       \textcolor{comment}{// exceeding valid size. If bounds gets empty, done all configs}}
+\DoxyCodeLine{00708       \textcolor{comment}{// with m+1 intervals.}}
+\DoxyCodeLine{00709       \textcolor{keywordflow}{while} ((}
+\DoxyCodeLine{00710           ++rightIntervalBounds.back(),}
+\DoxyCodeLine{00711           rightIntervalBounds.back() < n -\/ 1 -\/ (m -\/ rightIntervalBounds.size())}
+\DoxyCodeLine{00712               ? 0}
+\DoxyCodeLine{00713               : (rightIntervalBounds.pop\_back(), !rightIntervalBounds.empty())))}
+\DoxyCodeLine{00714         ;}
+\DoxyCodeLine{00715     \}}
+\DoxyCodeLine{00716   \}}
+\DoxyCodeLine{00717 }
+\DoxyCodeLine{00718   \textcolor{keywordflow}{if} (!optimalHeights.empty()) \{}
+\DoxyCodeLine{00719     \textcolor{keywordflow}{for} (i = 0; i < n; ++i) m\_enteringSequences[i].m\_height = optimalHeights[i];}
+\DoxyCodeLine{00720     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00721   \}}
+\DoxyCodeLine{00722 }
+\DoxyCodeLine{00723   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00724 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_junction_area_a78527861db5c74e9ef78fd31d8098c4c}\label{class_junction_area_a78527861db5c74e9ef78fd31d8098c4c}} 
+\index{JunctionArea@{JunctionArea}!sequencesPullBack@{sequencesPullBack}}
+\index{sequencesPullBack@{sequencesPullBack}!JunctionArea@{JunctionArea}}
+\doxysubsubsection{\texorpdfstring{sequencesPullBack()}{sequencesPullBack()}}
+{\footnotesize\ttfamily bool Junction\+Area\+::sequences\+Pull\+Back (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00787                                             \{}
+\DoxyCodeLine{00788   std::vector<EnteringSequence>::iterator a;}
+\DoxyCodeLine{00789   \textcolor{keywordtype}{double} alongLinePosition, distanceFromLine;}
+\DoxyCodeLine{00790   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i, iLink, tail;}
+\DoxyCodeLine{00791   \mbox{\hyperlink{class_t_point_t}{TPointD}} P;}
+\DoxyCodeLine{00792 }
+\DoxyCodeLine{00793   \textcolor{keywordflow}{for} (a = m\_enteringSequences.begin(); a != m\_enteringSequences.end(); ++a) \{}
+\DoxyCodeLine{00794     i     = a-\/>m\_head;}
+\DoxyCodeLine{00795     iLink = a-\/>m\_headLink;}
+\DoxyCodeLine{00796     \textcolor{comment}{// NOTE: updated tails are stored this way, *DONT* look in a-\/>m\_tail}}
+\DoxyCodeLine{00797     \textcolor{comment}{// because these typically store old infos}}
+\DoxyCodeLine{00798     tail =}
+\DoxyCodeLine{00799         currJSGraph-\/>getNode(a-\/>m\_initialJoint).getLink(a-\/>m\_outerLink)-\/>m\_tail;}
+\DoxyCodeLine{00800     P = planeProjection(*a-\/>m\_graphHolder-\/>getNode(a-\/>m\_head));}
+\DoxyCodeLine{00801 }
+\DoxyCodeLine{00802     \textcolor{keywordflow}{while} (i != tail) \{}
+\DoxyCodeLine{00803       alongLinePosition = a-\/>m\_direction * (m\_newJointPosition -\/ P);}
+\DoxyCodeLine{00804       distanceFromLine  = tdistance(m\_newJointPosition, a-\/>m\_direction, P);}
+\DoxyCodeLine{00805 }
+\DoxyCodeLine{00806       \textcolor{keywordflow}{if} (alongLinePosition >= 0 \&\&}
+\DoxyCodeLine{00807           (distanceFromLine / alongLinePosition) <= 0.5)}
+\DoxyCodeLine{00808         \textcolor{keywordflow}{goto} found\_pull\_back;}
+\DoxyCodeLine{00809 }
+\DoxyCodeLine{00810       \textcolor{comment}{// We then take the next arc and check it}}
+\DoxyCodeLine{00811 }
+\DoxyCodeLine{00812       \textcolor{keywordflow}{if} (!a-\/>m\_graphHolder-\/>getNode(i).getLink(iLink)-\/>hasAttribute(}
+\DoxyCodeLine{00813               SkeletonArc::ROAD))}
+\DoxyCodeLine{00814         \textcolor{keywordflow}{return} 0;  \textcolor{comment}{// Pull back failed}}
+\DoxyCodeLine{00815 }
+\DoxyCodeLine{00816       a-\/>next(i, iLink);}
+\DoxyCodeLine{00817 }
+\DoxyCodeLine{00818       P = planeProjection(*a-\/>m\_graphHolder-\/>getNode(i));}
+\DoxyCodeLine{00819       \textcolor{keywordflow}{if} (tdistance(P, a-\/>m\_direction, m\_newJointPosition) >}
+\DoxyCodeLine{00820           std::max(pullBackMul * a-\/>m\_height, 1.0))}
+\DoxyCodeLine{00821         \textcolor{keywordflow}{return} 0;  \textcolor{comment}{// Pull back failed}}
+\DoxyCodeLine{00822     \}}
+\DoxyCodeLine{00823 }
+\DoxyCodeLine{00824     \textcolor{comment}{// Now checking opposite sequence extremity}}
+\DoxyCodeLine{00825     \textcolor{keywordflow}{if} (alongLinePosition < 0 || (distanceFromLine / alongLinePosition) > 0.5)}
+\DoxyCodeLine{00826       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00827 }
+\DoxyCodeLine{00828   found\_pull\_back:}
+\DoxyCodeLine{00829 }
+\DoxyCodeLine{00830     a-\/>m\_head     = i;}
+\DoxyCodeLine{00831     a-\/>m\_headLink = iLink;}
+\DoxyCodeLine{00832   \}}
+\DoxyCodeLine{00833 }
+\DoxyCodeLine{00834   \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00835 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_junction_area_a2c785e55a400cd7fc0568c722d44b8fd}\label{class_junction_area_a2c785e55a400cd7fc0568c722d44b8fd}} 
+\index{JunctionArea@{JunctionArea}!solveJunctionPosition@{solveJunctionPosition}}
+\index{solveJunctionPosition@{solveJunctionPosition}!JunctionArea@{JunctionArea}}
+\doxysubsubsection{\texorpdfstring{solveJunctionPosition()}{solveJunctionPosition()}}
+{\footnotesize\ttfamily bool Junction\+Area\+::solve\+Junction\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00503                                                 \{}
+\DoxyCodeLine{00504   std::vector<EnteringSequence>::iterator a;}
+\DoxyCodeLine{00505   \textcolor{keywordtype}{double} Sx2 = 0, Sy2 = 0, Sxy = 0;}
+\DoxyCodeLine{00506   \mbox{\hyperlink{class_t_point_t}{TPointD}} P, v, b;}
+\DoxyCodeLine{00507   \textcolor{keywordtype}{double} h;}
+\DoxyCodeLine{00508 }
+\DoxyCodeLine{00509   \textcolor{comment}{// Build preliminary sums for the linear system}}
+\DoxyCodeLine{00510   \textcolor{keywordflow}{for} (a = m\_enteringSequences.begin(); a != m\_enteringSequences.end(); ++a) \{}
+\DoxyCodeLine{00511     h = a-\/>m\_height;}
+\DoxyCodeLine{00512     v = a-\/>m\_direction;}
+\DoxyCodeLine{00513     P = planeProjection(*a-\/>m\_graphHolder-\/>getNode(a-\/>m\_head));}
+\DoxyCodeLine{00514 }
+\DoxyCodeLine{00515     \textcolor{comment}{// Height-\/weighted problem}}
+\DoxyCodeLine{00516     Sx2 += sq(v.x) * h;}
+\DoxyCodeLine{00517     Sy2 += sq(v.y) * h;}
+\DoxyCodeLine{00518     Sxy += v.x * v.y * h;}
+\DoxyCodeLine{00519     b.x += h * (sq(v.y) * P.x -\/ (v.x * v.y * P.y));}
+\DoxyCodeLine{00520     b.y += h * (sq(v.x) * P.y -\/ (v.x * v.y * P.x));}
+\DoxyCodeLine{00521   \}}
+\DoxyCodeLine{00522 }
+\DoxyCodeLine{00523   \textcolor{comment}{// First check problem determinant}}
+\DoxyCodeLine{00524   \textcolor{keywordtype}{double} det = Sx2 * Sy2 -\/ sq(Sxy);}
+\DoxyCodeLine{00525   \textcolor{keywordflow}{if} (fabs(det) < 0.1) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00526 }
+\DoxyCodeLine{00527   \textcolor{comment}{// Now construct linear system}}
+\DoxyCodeLine{00528   \mbox{\hyperlink{class_t_affine}{TAffine}} M(Sx2 / det, Sxy / det, 0, Sxy / det, Sy2 / det, 0);}
+\DoxyCodeLine{00529 }
+\DoxyCodeLine{00530   m\_newJointPosition = M * b;}
+\DoxyCodeLine{00531 }
+\DoxyCodeLine{00532   \textcolor{comment}{// Finally, check if J is too far from the line extensions of the entering}}
+\DoxyCodeLine{00533   \textcolor{comment}{// sequences}}
+\DoxyCodeLine{00534   \textcolor{keywordflow}{for} (a = m\_enteringSequences.begin(); a != m\_enteringSequences.end(); ++a) \{}
+\DoxyCodeLine{00535     P = planeProjection(*a-\/>m\_graphHolder-\/>getNode(a-\/>m\_head));}
+\DoxyCodeLine{00536     \textcolor{keywordflow}{if} (tdistance(m\_newJointPosition, a-\/>m\_direction, P) >}
+\DoxyCodeLine{00537         a-\/>m\_height * lineDistMul)}
+\DoxyCodeLine{00538       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00539   \}}
+\DoxyCodeLine{00540 }
+\DoxyCodeLine{00541   \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00542 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_junction_area_acd27f171593baa7ac33e1dde79b1fc1e}\label{class_junction_area_acd27f171593baa7ac33e1dde79b1fc1e}} 
+\index{JunctionArea@{JunctionArea}!m\_enteringSequences@{m\_enteringSequences}}
+\index{m\_enteringSequences@{m\_enteringSequences}!JunctionArea@{JunctionArea}}
+\doxysubsubsection{\texorpdfstring{m\_enteringSequences}{m\_enteringSequences}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{class_entering_sequence}{Entering\+Sequence}}$>$ Junction\+Area\+::m\+\_\+entering\+Sequences}
+
+\mbox{\Hypertarget{class_junction_area_a2e13501653143b2822f4356862a72048}\label{class_junction_area_a2e13501653143b2822f4356862a72048}} 
+\index{JunctionArea@{JunctionArea}!m\_jointsAbsorbed@{m\_jointsAbsorbed}}
+\index{m\_jointsAbsorbed@{m\_jointsAbsorbed}!JunctionArea@{JunctionArea}}
+\doxysubsubsection{\texorpdfstring{m\_jointsAbsorbed}{m\_jointsAbsorbed}}
+{\footnotesize\ttfamily std\+::vector$<$unsigned int$>$ Junction\+Area\+::m\+\_\+joints\+Absorbed}
+
+\mbox{\Hypertarget{class_junction_area_a26981f954c2703efd6cb63b4e6009434}\label{class_junction_area_a26981f954c2703efd6cb63b4e6009434}} 
+\index{JunctionArea@{JunctionArea}!m\_newJointPosition@{m\_newJointPosition}}
+\index{m\_newJointPosition@{m\_newJointPosition}!JunctionArea@{JunctionArea}}
+\doxysubsubsection{\texorpdfstring{m\_newJointPosition}{m\_newJointPosition}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_point_t}{TPointD}} Junction\+Area\+::m\+\_\+new\+Joint\+Position}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzlib/tcenterlineadjustments.\+cpp\end{DoxyCompactItemize}

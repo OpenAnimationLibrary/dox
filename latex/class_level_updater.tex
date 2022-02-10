@@ -1,0 +1,542 @@
+\hypertarget{class_level_updater}{}\doxysection{Level\+Updater Class Reference}
+\label{class_level_updater}\index{LevelUpdater@{LevelUpdater}}
+
+
+{\ttfamily \#include $<$levelupdater.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_level_updater_a3e6600955c86b053265de95e87962487}{Level\+Updater}} (\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$sl)
+\item 
+\mbox{\hyperlink{class_level_updater_a7afc45ef620e00acf73018ebdea49a88}{Level\+Updater}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, \mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$lw\+Properties=0)
+\item 
+\mbox{\hyperlink{class_t_level_writer_p}{TLevel\+WriterP}} \mbox{\hyperlink{class_level_updater_ac693a2fd15e4e1c90c58dc43f2d98f34}{get\+Level\+Writer}} ()
+\item 
+\mbox{\hyperlink{class_t_level_reader_p}{TLevel\+ReaderP}} \mbox{\hyperlink{class_level_updater_a6de4b9714e2a634b56662942b5491e89}{get\+Level\+Reader}} ()
+\item 
+\mbox{\hyperlink{class_t_level_p}{TLevelP}} \mbox{\hyperlink{class_level_updater_aa4e37712c438721567ec67c7c6531336}{get\+Input\+Level}} ()
+\item 
+const \mbox{\hyperlink{class_t_image_info}{TImage\+Info}} $\ast$ \mbox{\hyperlink{class_level_updater_a3764faba4483754996136841c54c0871}{get\+Image\+Info}} ()
+\begin{DoxyCompactList}\small\item\em Returns the image properties of the updated level, if one already exists. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_level_updater_af42de29721580f485bc92e15d399af36}{open}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&src, \mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$lw\+Properties)
+\item 
+void \mbox{\hyperlink{class_level_updater_a655c62c9e4d039c2a0fdb0206645fbd8}{open}} (\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$sl)
+\item 
+bool \mbox{\hyperlink{class_level_updater_a4f7c67d1d6bec9272081144a4869897a}{opened}} () const
+\item 
+void \mbox{\hyperlink{class_level_updater_abef1c4aa3413af02ccc0f5dcee5d2895}{update}} (const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&fid, const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&img)
+\item 
+void \mbox{\hyperlink{class_level_updater_a4f8172c2669826013b052331b24bba1d}{close}} ()
+\item 
+void \mbox{\hyperlink{class_level_updater_a5f6d3f1058cbdd40eb77ebbcecbe1b43}{flush}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_level_updater}{Level\+Updater}} is the preferential interface for dealing with {\itshape conservative} levels I/O in Toonz.
+
+\begin{DoxyVerb}The Toonz Image library already provides the basic TLevelWriter interface
+\end{DoxyVerb}
+ that can be used to save image levels on hard disk. This is usually sufficient to satisfy most needs, with a simple enough usage\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \mbox{\hyperlink{class_t_level_writer_p}{TLevelWriterP}} lw(}
+\DoxyCodeLine{      levelPath,                                          \textcolor{comment}{// Attach to the}}
+\DoxyCodeLine{required level path (creates level \textcolor{keywordflow}{if} none).}
+\DoxyCodeLine{      Tiio::makeWriterProperties(levelPath.getType()));   \textcolor{comment}{// NOTE: Level}}
+\DoxyCodeLine{Properties are not read from an existing level.}
+\DoxyCodeLine{}
+\DoxyCodeLine{    \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}}* props(lw-\/>getProperties());}
+\DoxyCodeLine{    assert(props);                                        \textcolor{comment}{// Currently}}
+\DoxyCodeLine{guaranteed ONLY \textcolor{keywordflow}{if} specified at lw\textcolor{stringliteral}{'s construction.}}
+\DoxyCodeLine{\textcolor{stringliteral}{}}
+\DoxyCodeLine{\textcolor{stringliteral}{    props-\/>getProperty("{}Bits Per Pixel"{})-\/>setValue(L"{}64(RGBM)"{});}}
+\DoxyCodeLine{\textcolor{stringliteral}{}}
+\DoxyCodeLine{\textcolor{stringliteral}{    lw-\/>getFrameWriter(fid1)-\/>save(img1);                 // Save image img1 at}}
+\DoxyCodeLine{\textcolor{stringliteral}{frame fid1}}
+\DoxyCodeLine{\textcolor{stringliteral}{    lw-\/>getFrameWriter(fid2)-\/>save(img2);                 // ...}}
+
+\end{DoxyCode}
+
+
+Some output types, however, may not support image insertions in the middle of an already existing level, but just {\itshape  at the end \texorpdfstring{$<$}{<}\textbackslash{}I\texorpdfstring{$>$}{>} (as is the case for movie formats like {\itshape avi}). In these cases, a newly created temporary file must be used to have both old and new images {\itshape appended} at the right time. Once the appending procedure ends, the temporary gets renamed to the original file. Additional files related to the level must be renamed too, such as the level\textquotesingle{}s palette and content history. ~\newline
+ Plus, as noted in the example, the format properties of any existing level at specified path must be manually retrieved. ~\newline
+~\newline
+ The \mbox{\hyperlink{class_level_updater}{Level\+Updater}} is a wrapper class to both \mbox{\hyperlink{class_t_level_reader}{TLevel\+Reader}} and \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}} employable to deal with these subtelties with a simple, equivalent syntax to the one above\+:}
+
+{\itshape  
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \mbox{\hyperlink{class_level_updater}{LevelUpdater}} lu(levelPath);                             \textcolor{comment}{// Attach to the}}
+\DoxyCodeLine{required level path (creates level \textcolor{keywordflow}{if} none).}
+\DoxyCodeLine{                                                            \textcolor{comment}{// Reads any}}
+\DoxyCodeLine{existing level format properties.}
+\DoxyCodeLine{}
+\DoxyCodeLine{    \mbox{\hyperlink{class_t_property_group}{TPropertyGroup}}* props(lu.getLevelWriter()-\/>getProperties());      \textcolor{comment}{//}}
+\DoxyCodeLine{Properties (eventually \textcolor{keywordflow}{default} ones) are ensured}
+\DoxyCodeLine{    assert(props);                                                    \textcolor{comment}{// to}}
+\DoxyCodeLine{exist.}
+\DoxyCodeLine{}
+\DoxyCodeLine{    props-\/>getProperty(\textcolor{stringliteral}{"{}Bits Per Pixel"{}})-\/>setValue(L\textcolor{stringliteral}{"{}64(RGBM)"{}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{    lu.update(fid1, img1);                                  \textcolor{comment}{// Save image img1}}
+\DoxyCodeLine{at frame fid1}
+\DoxyCodeLine{    lu.update(fid2, img2);                                  \textcolor{comment}{// ...}}
+
+\end{DoxyCode}
+}
+
+{\itshape \begin{DoxyWarning}{Warning}
+The \mbox{\hyperlink{class_level_updater}{Level\+Updater}} requires that {\bfseries{ saved images must be ordered by insertion frame \texorpdfstring{$<$}{<}\textbackslash{}B\texorpdfstring{$>$}{>}. If necessary, users must have them sorted before supplying them tp the updater. }}
+\end{DoxyWarning}
+}
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_level_updater_a169e92d6d2a763600034cc59f8a8113d}\label{class_level_updater_a169e92d6d2a763600034cc59f8a8113d}} 
+\index{LevelUpdater@{LevelUpdater}!LevelUpdater@{LevelUpdater}}
+\index{LevelUpdater@{LevelUpdater}!LevelUpdater@{LevelUpdater}}
+\doxysubsubsection{\texorpdfstring{LevelUpdater()}{LevelUpdater()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Level\+Updater\+::\+Level\+Updater (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080     : m\_pg(0)}
+\DoxyCodeLine{00081     , m\_inputLevel(0)}
+\DoxyCodeLine{00082     , m\_currIdx(0)}
+\DoxyCodeLine{00083     , m\_imageInfo(0)}
+\DoxyCodeLine{00084     , m\_usingTemporaryFile(\textcolor{keyword}{false})}
+\DoxyCodeLine{00085     , m\_opened(\textcolor{keyword}{false}) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_updater_a3e6600955c86b053265de95e87962487}\label{class_level_updater_a3e6600955c86b053265de95e87962487}} 
+\index{LevelUpdater@{LevelUpdater}!LevelUpdater@{LevelUpdater}}
+\index{LevelUpdater@{LevelUpdater}!LevelUpdater@{LevelUpdater}}
+\doxysubsubsection{\texorpdfstring{LevelUpdater()}{LevelUpdater()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Level\+Updater\+::\+Level\+Updater (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{sl }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00090     : m\_pg(0)}
+\DoxyCodeLine{00091     , m\_inputLevel(0)}
+\DoxyCodeLine{00092     , m\_imageInfo(0)}
+\DoxyCodeLine{00093     , m\_currIdx(0)}
+\DoxyCodeLine{00094     , m\_opened(\textcolor{keyword}{false})}
+\DoxyCodeLine{00095     , m\_usingTemporaryFile(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00096   \mbox{\hyperlink{class_level_updater_af42de29721580f485bc92e15d399af36}{open}}(sl);}
+\DoxyCodeLine{00097 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_updater_a7afc45ef620e00acf73018ebdea49a88}\label{class_level_updater_a7afc45ef620e00acf73018ebdea49a88}} 
+\index{LevelUpdater@{LevelUpdater}!LevelUpdater@{LevelUpdater}}
+\index{LevelUpdater@{LevelUpdater}!LevelUpdater@{LevelUpdater}}
+\doxysubsubsection{\texorpdfstring{LevelUpdater()}{LevelUpdater()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Level\+Updater\+::\+Level\+Updater (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$}]{lw\+Properties = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00102     : m\_pg(0)}
+\DoxyCodeLine{00103     , m\_inputLevel(0)}
+\DoxyCodeLine{00104     , m\_imageInfo(0)}
+\DoxyCodeLine{00105     , m\_currIdx(0)}
+\DoxyCodeLine{00106     , m\_opened(\textcolor{keyword}{false})}
+\DoxyCodeLine{00107     , m\_usingTemporaryFile(\textcolor{keyword}{false}) \{}
+\DoxyCodeLine{00108   \mbox{\hyperlink{class_level_updater_af42de29721580f485bc92e15d399af36}{open}}(fp, lwProperties);}
+\DoxyCodeLine{00109 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_updater_af50f66a089f8c612569553296b4fbb86}\label{class_level_updater_af50f66a089f8c612569553296b4fbb86}} 
+\index{LevelUpdater@{LevelUpdater}!````~LevelUpdater@{$\sim$LevelUpdater}}
+\index{````~LevelUpdater@{$\sim$LevelUpdater}!LevelUpdater@{LevelUpdater}}
+\doxysubsubsection{\texorpdfstring{$\sim$LevelUpdater()}{~LevelUpdater()}}
+{\footnotesize\ttfamily Level\+Updater\+::$\sim$\+Level\+Updater (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00113                             \{}
+\DoxyCodeLine{00114   \textcolor{comment}{// Please, observe that the try-\/catch below here is NOT OPTIONAL.}}
+\DoxyCodeLine{00115   \textcolor{comment}{// IT IS AN ERROR TO THROW INSIDE A DESTRUCTOR. EVER.}}
+\DoxyCodeLine{00116   \textcolor{comment}{// Doing so damages the stack unwinding process -\/ namely, it interferes}}
+\DoxyCodeLine{00117   \textcolor{comment}{// with the destruction of OTHER objects going out of scope.}}
+\DoxyCodeLine{00118   \textcolor{comment}{// C++ does NOT react well to that (ie could terminate() the process).}}
+\DoxyCodeLine{00119 }
+\DoxyCodeLine{00120   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00121     \mbox{\hyperlink{class_level_updater_a4f8172c2669826013b052331b24bba1d}{close}}();}
+\DoxyCodeLine{00122   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00123   \}}
+\DoxyCodeLine{00124 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_level_updater_a4f8172c2669826013b052331b24bba1d}\label{class_level_updater_a4f8172c2669826013b052331b24bba1d}} 
+\index{LevelUpdater@{LevelUpdater}!close@{close}}
+\index{close@{close}!LevelUpdater@{LevelUpdater}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily void Level\+Updater\+::close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Closes and flushes the level. In case temporary files were used for the level, they replace the originals now. In case the replace procedure failed, the temporaries are (silently, in current implementation) retained on disk. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00413                          \{}
+\DoxyCodeLine{00414   \textcolor{keywordflow}{if} (!m\_opened) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00415 }
+\DoxyCodeLine{00416   \textcolor{comment}{// Resume open for write}}
+\DoxyCodeLine{00417   resume();}
+\DoxyCodeLine{00418 }
+\DoxyCodeLine{00419   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00420     \textcolor{keywordflow}{if} (m\_usingTemporaryFile) \{}
+\DoxyCodeLine{00421       \textcolor{comment}{// Add all remaining frames still in m\_fids}}
+\DoxyCodeLine{00422       addFramesTo((\textcolor{keywordtype}{int})m\_fids.size());}
+\DoxyCodeLine{00423 }
+\DoxyCodeLine{00424       \textcolor{comment}{// Currently written level is temporary. It must be renamed to its}}
+\DoxyCodeLine{00425       \textcolor{comment}{// originally intended path,}}
+\DoxyCodeLine{00426       \textcolor{comment}{// if it's possible to write there. Now, if it's writable, in particular}}
+\DoxyCodeLine{00427       \textcolor{comment}{// it should be readable,}}
+\DoxyCodeLine{00428       \textcolor{comment}{// so m\_lr should exist.}}
+\DoxyCodeLine{00429 }
+\DoxyCodeLine{00430       \textcolor{comment}{// If not... well, the file was corrupt or something. Instead than}}
+\DoxyCodeLine{00431       \textcolor{comment}{// attempting to delete it,}}
+\DoxyCodeLine{00432       \textcolor{comment}{// we're begin conservative -\/ this means that no data is lost, but}}
+\DoxyCodeLine{00433       \textcolor{comment}{// unfortunately temporaries}}
+\DoxyCodeLine{00434       \textcolor{comment}{// might pile up...}}
+\DoxyCodeLine{00435       \textcolor{keywordflow}{if} (m\_lr) \{}
+\DoxyCodeLine{00436         \mbox{\hyperlink{class_t_file_path}{TFilePath}} finalPath(m\_lr-\/>getFilePath()), tempPath(m\_lw-\/>getFilePath());}
+\DoxyCodeLine{00437 }
+\DoxyCodeLine{00438         \textcolor{comment}{// Release m\_lr and m\_lw -\/ to be sure that no file is kept open while}}
+\DoxyCodeLine{00439         \textcolor{comment}{// renaming.}}
+\DoxyCodeLine{00440         \textcolor{comment}{// NOTE: releasing m\_lr and m\_lw should not throw anything. As stated}}
+\DoxyCodeLine{00441         \textcolor{comment}{// before, throwing}}
+\DoxyCodeLine{00442         \textcolor{comment}{//       in destructors is bad. I'm not sure this is actually guaranteed}}
+\DoxyCodeLine{00443         \textcolor{comment}{//       in Toonz, however :(}}
+\DoxyCodeLine{00444         m\_lr = \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}}(), m\_lw = \mbox{\hyperlink{class_t_level_writer_p}{TLevelWriterP}}();}
+\DoxyCodeLine{00445 }
+\DoxyCodeLine{00446         \textcolor{comment}{// A temp file didn't get created. What happened?  Force failure!}}
+\DoxyCodeLine{00447         \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(tempPath).doesExist())}
+\DoxyCodeLine{00448           \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_system_exception}{TSystemException}}(tempPath, \textcolor{stringliteral}{"{}cant find!"{}});}
+\DoxyCodeLine{00449 }
+\DoxyCodeLine{00450         \textcolor{comment}{// Rename the level}}
+\DoxyCodeLine{00451         TSystem::removeFileOrLevel\_throw(finalPath);}
+\DoxyCodeLine{00452         TSystem::renameFileOrLevel\_throw(finalPath,}
+\DoxyCodeLine{00453                                          tempPath);  \textcolor{comment}{// finalPath <-\/ tempPath}}
+\DoxyCodeLine{00454 }
+\DoxyCodeLine{00455         \textcolor{comment}{// If present, add known trailing files}}
+\DoxyCodeLine{00456         \textcolor{keywordflow}{if} (finalPath.getType() == \textcolor{stringliteral}{"{}tlv"{}}) \{}
+\DoxyCodeLine{00457           \textcolor{comment}{// Palette file}}
+\DoxyCodeLine{00458           \mbox{\hyperlink{class_t_file_path}{TFilePath}} finalPalette = finalPath.\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(\textcolor{stringliteral}{"{}tpl"{}});}
+\DoxyCodeLine{00459           \mbox{\hyperlink{class_t_file_path}{TFilePath}} tempPalette  = tempPath.\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(\textcolor{stringliteral}{"{}tpl"{}});}
+\DoxyCodeLine{00460 }
+\DoxyCodeLine{00461           \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(finalPalette).doesExist()) \{}
+\DoxyCodeLine{00462             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(tempPalette).doesExist())}
+\DoxyCodeLine{00463               TSystem::deleteFile(finalPalette);}
+\DoxyCodeLine{00464             TSystem::renameFile(finalPalette, tempPalette);}
+\DoxyCodeLine{00465           \}}
+\DoxyCodeLine{00466 }
+\DoxyCodeLine{00467           \textcolor{comment}{// History file}}
+\DoxyCodeLine{00468           \mbox{\hyperlink{class_t_file_path}{TFilePath}} finalHistory = finalPath.\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(\textcolor{stringliteral}{"{}hst"{}});}
+\DoxyCodeLine{00469           \mbox{\hyperlink{class_t_file_path}{TFilePath}} tempHistory  = tempPath.\mbox{\hyperlink{class_t_file_path_a1437b0e0720e9258b622f68b6858e95d}{withType}}(\textcolor{stringliteral}{"{}hst"{}});}
+\DoxyCodeLine{00470 }
+\DoxyCodeLine{00471           \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(tempHistory).doesExist()) \{}
+\DoxyCodeLine{00472             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(finalHistory).doesExist())}
+\DoxyCodeLine{00473               TSystem::deleteFile(finalHistory);}
+\DoxyCodeLine{00474             TSystem::renameFile(finalHistory, tempHistory);}
+\DoxyCodeLine{00475           \}}
+\DoxyCodeLine{00476         \}}
+\DoxyCodeLine{00477       \}}
+\DoxyCodeLine{00478 }
+\DoxyCodeLine{00479       \textcolor{comment}{// NOTE: If for some reason m\_lr was not present and we were using a}}
+\DoxyCodeLine{00480       \textcolor{comment}{// temporary file, no}}
+\DoxyCodeLine{00481       \textcolor{comment}{// renaming takes place. Users could see the \_\_x temporaries and,}}
+\DoxyCodeLine{00482       \textcolor{comment}{// eventually, rename them manually}}
+\DoxyCodeLine{00483       \textcolor{comment}{// or see what's wrong with the unwritable file.}}
+\DoxyCodeLine{00484     \}}
+\DoxyCodeLine{00485 }
+\DoxyCodeLine{00486     \textcolor{comment}{// Reset the updater's status}}
+\DoxyCodeLine{00487     reset();}
+\DoxyCodeLine{00488   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00489     \textcolor{comment}{// Some temporary object could not be renamed. Or some remaining frame could}}
+\DoxyCodeLine{00490     \textcolor{comment}{// not be added.}}
+\DoxyCodeLine{00491     \textcolor{comment}{// Hopefully, it was not about closing m\_lr or m\_lw.}}
+\DoxyCodeLine{00492 }
+\DoxyCodeLine{00493     \textcolor{comment}{// However, we still intend to reset the updater's status before rethrowing.}}
+\DoxyCodeLine{00494     reset();}
+\DoxyCodeLine{00495     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00496   \}}
+\DoxyCodeLine{00497 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00774}{TFile\+Path\+::with\+Type()}}.
+
+\mbox{\Hypertarget{class_level_updater_a5f6d3f1058cbdd40eb77ebbcecbe1b43}\label{class_level_updater_a5f6d3f1058cbdd40eb77ebbcecbe1b43}} 
+\index{LevelUpdater@{LevelUpdater}!flush@{flush}}
+\index{flush@{flush}!LevelUpdater@{LevelUpdater}}
+\doxysubsubsection{\texorpdfstring{flush()}{flush()}}
+{\footnotesize\ttfamily void Level\+Updater\+::flush (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Flushes the level currently opened for write, {\itshape suspending} the update procedure. Since a level cannot be both opened for read and write at the same time, users could require to flush all updates and suspend (without closing) an update procedure to read some of the data that has just been written. The update procedure will be resumed automatically at the next \mbox{\hyperlink{class_level_updater_abef1c4aa3413af02ccc0f5dcee5d2895}{update()}} or \mbox{\hyperlink{class_level_updater_a4f8172c2669826013b052331b24bba1d}{close()}} invocation. \begin{DoxyWarning}{Warning}
+Not all file formats currently support this. A brief list of currently supporting formats include TLV, MOV and multi-\/file levels, whereas formats {\bfseries{not}} supporting it include PLI and AVI (due to \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}} not supporting {\itshape appends} to an already existing level). 
+\end{DoxyWarning}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00501                          \{}
+\DoxyCodeLine{00502   assert(m\_opened);}
+\DoxyCodeLine{00503   \textcolor{keywordflow}{if} (!m\_lw) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00504 }
+\DoxyCodeLine{00505   \textcolor{comment}{// In case the level writer could not be destroyed (bad, should really not}}
+\DoxyCodeLine{00506   \textcolor{comment}{// throw btw),}}
+\DoxyCodeLine{00507   \textcolor{comment}{// reset and rethrow}}
+\DoxyCodeLine{00508   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00509     m\_lw = \mbox{\hyperlink{class_t_level_writer_p}{TLevelWriterP}}();}
+\DoxyCodeLine{00510   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00511     reset();}
+\DoxyCodeLine{00512     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00513   \}}
+\DoxyCodeLine{00514 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_updater_a3764faba4483754996136841c54c0871}\label{class_level_updater_a3764faba4483754996136841c54c0871}} 
+\index{LevelUpdater@{LevelUpdater}!getImageInfo@{getImageInfo}}
+\index{getImageInfo@{getImageInfo}!LevelUpdater@{LevelUpdater}}
+\doxysubsubsection{\texorpdfstring{getImageInfo()}{getImageInfo()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_t_image_info}{TImage\+Info}} $\ast$ Level\+Updater\+::get\+Image\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the image properties of the updated level, if one already exists. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00138 \{ \textcolor{keywordflow}{return} m\_imageInfo; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_updater_aa4e37712c438721567ec67c7c6531336}\label{class_level_updater_aa4e37712c438721567ec67c7c6531336}} 
+\index{LevelUpdater@{LevelUpdater}!getInputLevel@{getInputLevel}}
+\index{getInputLevel@{getInputLevel}!LevelUpdater@{LevelUpdater}}
+\doxysubsubsection{\texorpdfstring{getInputLevel()}{getInputLevel()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_level_p}{TLevelP}} Level\+Updater\+::get\+Input\+Level (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Returns a description of any already existing level on the attached path (in terms of frames content and palette). 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00135 \{ \textcolor{keywordflow}{return} m\_inputLevel; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_updater_a6de4b9714e2a634b56662942b5491e89}\label{class_level_updater_a6de4b9714e2a634b56662942b5491e89}} 
+\index{LevelUpdater@{LevelUpdater}!getLevelReader@{getLevelReader}}
+\index{getLevelReader@{getLevelReader}!LevelUpdater@{LevelUpdater}}
+\doxysubsubsection{\texorpdfstring{getLevelReader()}{getLevelReader()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_level_reader_p}{TLevel\+ReaderP}} Level\+Updater\+::get\+Level\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00131 \{ \textcolor{keywordflow}{return} m\_lr; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_updater_ac693a2fd15e4e1c90c58dc43f2d98f34}\label{class_level_updater_ac693a2fd15e4e1c90c58dc43f2d98f34}} 
+\index{LevelUpdater@{LevelUpdater}!getLevelWriter@{getLevelWriter}}
+\index{getLevelWriter@{getLevelWriter}!LevelUpdater@{LevelUpdater}}
+\doxysubsubsection{\texorpdfstring{getLevelWriter()}{getLevelWriter()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_level_writer_p}{TLevel\+WriterP}} Level\+Updater\+::get\+Level\+Writer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00130 \{ \textcolor{keywordflow}{return} m\_lw; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_updater_af42de29721580f485bc92e15d399af36}\label{class_level_updater_af42de29721580f485bc92e15d399af36}} 
+\index{LevelUpdater@{LevelUpdater}!open@{open}}
+\index{open@{open}!LevelUpdater@{LevelUpdater}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Level\+Updater\+::open (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{src,  }\item[{\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$}]{lw\+Properties }\end{DoxyParamCaption})}
+
+Attaches the updater to the specified path, using and {\itshape  taking ownership \texorpdfstring{$<$}{<}\textbackslash{}I\texorpdfstring{$>$}{>} of the supplied write properties. This function may throw in case the specified path has an unrecognized extension, or the file could not be opened for write. }
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00210                                                                \{}
+\DoxyCodeLine{00211   assert(!m\_lw);}
+\DoxyCodeLine{00212 }
+\DoxyCodeLine{00213   \textcolor{comment}{// Find out if a corresponding level already exists on disk -\/ in that case,}}
+\DoxyCodeLine{00214   \textcolor{comment}{// load it}}
+\DoxyCodeLine{00215   \textcolor{keywordtype}{bool} existsLevel = TSystem::doesExistFileOrLevel(fp);}
+\DoxyCodeLine{00216   \textcolor{keywordflow}{if} (existsLevel)}
+\DoxyCodeLine{00217     buildSourceInfo(fp);  \textcolor{comment}{// Could be !m\_lr if level could not be read}}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219   \textcolor{comment}{// Build Output Properties if needed}}
+\DoxyCodeLine{00220   \textcolor{keywordflow}{if} (pg)}
+\DoxyCodeLine{00221     m\_pg = pg-\/>clone();}
+\DoxyCodeLine{00222   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00223     buildProperties(fp);  \textcolor{comment}{// Throws only if not even the default properties}}
+\DoxyCodeLine{00224                           \textcolor{comment}{// could be found -\/ ie, bad file type}}
+\DoxyCodeLine{00225   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00226     \textcolor{comment}{// Decide whether the update procedure requires a temporary file for}}
+\DoxyCodeLine{00227     \textcolor{comment}{// appending}}
+\DoxyCodeLine{00228     m\_usingTemporaryFile = existsLevel \&\& !supportsRandomAccess(fp);}
+\DoxyCodeLine{00229     \textcolor{keywordflow}{if} (m\_usingTemporaryFile) \{}
+\DoxyCodeLine{00230       \textcolor{comment}{// The level requires a temporary to write frames to. Upon closing, the}}
+\DoxyCodeLine{00231       \textcolor{comment}{// original level}}
+\DoxyCodeLine{00232       \textcolor{comment}{// is deleted and the temporary takes its place. Note that m\_lw takes}}
+\DoxyCodeLine{00233       \textcolor{comment}{// ownership of the properties group.}}
+\DoxyCodeLine{00234       m\_lwPath = getNewTemporaryFilePath(fp);}
+\DoxyCodeLine{00235       m\_lw     = \mbox{\hyperlink{class_t_level_writer_p}{TLevelWriterP}}(m\_lwPath, m\_pg-\/>clone());}
+\DoxyCodeLine{00236 }
+\DoxyCodeLine{00237       \textcolor{keywordflow}{if} (m\_inputLevel)}
+\DoxyCodeLine{00238         \textcolor{keywordflow}{for} (TLevel::Iterator it = m\_inputLevel-\/>begin();}
+\DoxyCodeLine{00239              it != m\_inputLevel-\/>end(); ++it)}
+\DoxyCodeLine{00240           m\_fids.push\_back(it-\/>first);}
+\DoxyCodeLine{00241     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00242       m\_lr =}
+\DoxyCodeLine{00243           \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}}();  \textcolor{comment}{// Release the reader. This is necessary since the}}
+\DoxyCodeLine{00244       m\_lw = \mbox{\hyperlink{class_t_level_writer_p}{TLevelWriterP}}(}
+\DoxyCodeLine{00245           fp, m\_pg-\/>clone());  \textcolor{comment}{// original file itself will be MODIFIED.}}
+\DoxyCodeLine{00246       m\_lwPath = fp;}
+\DoxyCodeLine{00247     \}}
+\DoxyCodeLine{00248   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00249     \textcolor{comment}{// In this case, TLevelWriterP(..) failed, that object was never}}
+\DoxyCodeLine{00250     \textcolor{comment}{// constructed,}}
+\DoxyCodeLine{00251     \textcolor{comment}{// the assignment m\_lw never took place. And m\_lw == 0.}}
+\DoxyCodeLine{00252 }
+\DoxyCodeLine{00253     \textcolor{comment}{// Reset state and rethrow}}
+\DoxyCodeLine{00254     reset();}
+\DoxyCodeLine{00255     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00256   \}}
+\DoxyCodeLine{00257 }
+\DoxyCodeLine{00258   \textcolor{comment}{// In case the writer saves icons inside the output level (TLV case), set the}}
+\DoxyCodeLine{00259   \textcolor{comment}{// associated icon size now}}
+\DoxyCodeLine{00260   \mbox{\hyperlink{class_t_dimension_t}{TDimension}} iconSize = Preferences::instance()-\/>getIconSize();}
+\DoxyCodeLine{00261   assert(iconSize.lx > 0 \&\& iconSize.ly > 0);}
+\DoxyCodeLine{00262   m\_lw-\/>setIconSize(iconSize);}
+\DoxyCodeLine{00263 }
+\DoxyCodeLine{00264   m\_opened = \textcolor{keyword}{true};}
+\DoxyCodeLine{00265 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_updater_a655c62c9e4d039c2a0fdb0206645fbd8}\label{class_level_updater_a655c62c9e4d039c2a0fdb0206645fbd8}} 
+\index{LevelUpdater@{LevelUpdater}!open@{open}}
+\index{open@{open}!LevelUpdater@{LevelUpdater}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Level\+Updater\+::open (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsh_simple_level}{TXsh\+Simple\+Level}} $\ast$}]{sl }\end{DoxyParamCaption})}
+
+Attaches the updater to the specified simple level instance. Format properties are the default in case the level is saved anew. If the level requires the alpha channel, evenutal bpp and alpha properties are upgraded accordingly. This function may throw just like its path-\/based counterpart. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00269                                            \{}
+\DoxyCodeLine{00270   assert(!m\_lw);}
+\DoxyCodeLine{00271 }
+\DoxyCodeLine{00272   assert(sl \&\& sl-\/>\mbox{\hyperlink{class_t_xsh_level_a06176566e80858dbb206112db08a92b9}{getScene}}());}
+\DoxyCodeLine{00273   m\_sl = sl;}
+\DoxyCodeLine{00274 }
+\DoxyCodeLine{00275   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_file_path}{TFilePath}} \&fp = sl-\/>\mbox{\hyperlink{class_t_xsh_level_a06176566e80858dbb206112db08a92b9}{getScene}}()-\/>\mbox{\hyperlink{class_toonz_scene_aa2ed57dfbae7f8cf02a4abe47ed533c6}{decodeFilePath}}(sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a668293d53a70cca8811db28d87011c55}{getPath}}());}
+\DoxyCodeLine{00276 }
+\DoxyCodeLine{00277   \textcolor{comment}{// Find out if a corresponding level already exists on disk -\/ in that case,}}
+\DoxyCodeLine{00278   \textcolor{comment}{// load it}}
+\DoxyCodeLine{00279   \textcolor{keywordtype}{bool} existsLevel = TSystem::doesExistFileOrLevel(fp);}
+\DoxyCodeLine{00280   \textcolor{keywordflow}{if} (existsLevel)}
+\DoxyCodeLine{00281     buildSourceInfo(fp);  \textcolor{comment}{// Could be !m\_lr if level could not be read}}
+\DoxyCodeLine{00282 }
+\DoxyCodeLine{00283   \textcolor{comment}{// Build Output Properties}}
+\DoxyCodeLine{00284   buildProperties(fp);  \textcolor{comment}{// May throw if not even the default properties could be}}
+\DoxyCodeLine{00285                         \textcolor{comment}{// retrieved}}
+\DoxyCodeLine{00286 }
+\DoxyCodeLine{00287   \textcolor{comment}{// If there was no level on disk, or the level properties require the alpha}}
+\DoxyCodeLine{00288   \textcolor{comment}{// channel, enforce the}}
+\DoxyCodeLine{00289   \textcolor{comment}{// bpp accordingly on m\_pg.}}
+\DoxyCodeLine{00290   \mbox{\hyperlink{class_level_properties}{LevelProperties}} *levelProperties = sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_ad412dd5c3a6ae3ff20a480dc728b26d2}{getProperties}}();}
+\DoxyCodeLine{00291   assert(levelProperties);}
+\DoxyCodeLine{00292 }
+\DoxyCodeLine{00293   \textcolor{keywordflow}{if} (levelProperties-\/>\mbox{\hyperlink{class_level_properties_a7d13e24f7deb31c4b9f4b05c430dbab2}{hasAlpha}}() || !existsLevel) \{}
+\DoxyCodeLine{00294     \textcolor{keywordtype}{int} bpp = levelProperties-\/>\mbox{\hyperlink{class_level_properties_a7d13e24f7deb31c4b9f4b05c430dbab2}{hasAlpha}}()}
+\DoxyCodeLine{00295                   ? std::min(32, levelProperties-\/>\mbox{\hyperlink{class_level_properties_a88741317c54640d3b509f32a7c0fdf84}{getBpp}}())}
+\DoxyCodeLine{00296                   : levelProperties-\/>getBpp();}
+\DoxyCodeLine{00297     enforceBpp(m\_pg, bpp, existsLevel);}
+\DoxyCodeLine{00298   \}}
+\DoxyCodeLine{00299 }
+\DoxyCodeLine{00300   \textcolor{comment}{// Should sl-\/>getPalette() be enforced on m\_lw too? It was not present in the}}
+\DoxyCodeLine{00301   \textcolor{comment}{// old code...}}
+\DoxyCodeLine{00302 }
+\DoxyCodeLine{00303   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00304     \textcolor{comment}{// Decide whether the update procedure requires a temporary file for}}
+\DoxyCodeLine{00305     \textcolor{comment}{// appending}}
+\DoxyCodeLine{00306     m\_usingTemporaryFile = existsLevel \&\& !supportsRandomAccess(fp);}
+\DoxyCodeLine{00307     \textcolor{keywordflow}{if} (m\_usingTemporaryFile) \{}
+\DoxyCodeLine{00308       \textcolor{comment}{// The level requires a temporary to write frames to. Upon closing, the}}
+\DoxyCodeLine{00309       \textcolor{comment}{// original level}}
+\DoxyCodeLine{00310       \textcolor{comment}{// is deleted and the temporary takes its place.}}
+\DoxyCodeLine{00311       m\_lwPath = getNewTemporaryFilePath(fp);}
+\DoxyCodeLine{00312       m\_lw     = \mbox{\hyperlink{class_t_level_writer_p}{TLevelWriterP}}(m\_lwPath, m\_pg-\/>clone());}
+\DoxyCodeLine{00313     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00314       m\_lr = \mbox{\hyperlink{class_t_level_reader_p}{TLevelReaderP}}();                   \textcolor{comment}{// Release the reader}}
+\DoxyCodeLine{00315       m\_lw = \mbox{\hyperlink{class_t_level_writer_p}{TLevelWriterP}}(fp, m\_pg-\/>clone());  \textcolor{comment}{// Open for write the usual way}}
+\DoxyCodeLine{00316       m\_lwPath = fp;}
+\DoxyCodeLine{00317     \}}
+\DoxyCodeLine{00318   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00319     \textcolor{comment}{// Reset state and rethrow}}
+\DoxyCodeLine{00320     reset();}
+\DoxyCodeLine{00321     \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00322   \}}
+\DoxyCodeLine{00323 }
+\DoxyCodeLine{00324   \textcolor{comment}{// Load the frames directly from sl}}
+\DoxyCodeLine{00325   sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a567daee4ca12a0e92445bcf98a6541f1}{getFids}}(m\_fids);}
+\DoxyCodeLine{00326 }
+\DoxyCodeLine{00327   \textcolor{comment}{// In case the writer saves icons inside the output level (TLV case), set the}}
+\DoxyCodeLine{00328   \textcolor{comment}{// associated icon size now}}
+\DoxyCodeLine{00329   \mbox{\hyperlink{class_t_dimension_t}{TDimension}} iconSize = Preferences::instance()-\/>getIconSize();}
+\DoxyCodeLine{00330   assert(iconSize.lx > 0 \&\& iconSize.ly > 0);}
+\DoxyCodeLine{00331   m\_lw-\/>setIconSize(iconSize);}
+\DoxyCodeLine{00332 }
+\DoxyCodeLine{00333   \textcolor{keywordflow}{if} (sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a2fe15ee3d60e1f5f5c38d6ba75d36812}{getContentHistory}}())}
+\DoxyCodeLine{00334     m\_lw-\/>setContentHistory(m\_sl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a2fe15ee3d60e1f5f5c38d6ba75d36812}{getContentHistory}}()-\/>clone());}
+\DoxyCodeLine{00335 }
+\DoxyCodeLine{00336   m\_opened = \textcolor{keyword}{true};}
+\DoxyCodeLine{00337 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01231}{Toonz\+Scene\+::decode\+File\+Path()}}, \mbox{\hyperlink{l00114}{Level\+Properties\+::get\+Bpp()}}, \mbox{\hyperlink{l00291}{TXsh\+Simple\+Level\+::get\+Content\+History()}}, \mbox{\hyperlink{l00448}{TXsh\+Simple\+Level\+::get\+Fids()}}, \mbox{\hyperlink{l00120}{TXsh\+Simple\+Level\+::get\+Path()}}, \mbox{\hyperlink{l00109}{TXsh\+Simple\+Level\+::get\+Properties()}}, \mbox{\hyperlink{l00087}{TXsh\+Level\+::get\+Scene()}}, and \mbox{\hyperlink{l00144}{Level\+Properties\+::has\+Alpha()}}.
+
+\mbox{\Hypertarget{class_level_updater_a4f7c67d1d6bec9272081144a4869897a}\label{class_level_updater_a4f7c67d1d6bec9272081144a4869897a}} 
+\index{LevelUpdater@{LevelUpdater}!opened@{opened}}
+\index{opened@{opened}!LevelUpdater@{LevelUpdater}}
+\doxysubsubsection{\texorpdfstring{opened()}{opened()}}
+{\footnotesize\ttfamily bool Level\+Updater\+::opened (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00154 \{ \textcolor{keywordflow}{return} m\_opened; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_level_updater_abef1c4aa3413af02ccc0f5dcee5d2895}\label{class_level_updater_abef1c4aa3413af02ccc0f5dcee5d2895}} 
+\index{LevelUpdater@{LevelUpdater}!update@{update}}
+\index{update@{update}!LevelUpdater@{LevelUpdater}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Level\+Updater\+::update (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&}]{fid,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TImageP}} \&}]{img }\end{DoxyParamCaption})}
+
+Stores the supplied image in the level, at the specified frame. Remember that frames {\bfseries{must}} be added with increasing fid ordering. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00390                                                                  \{}
+\DoxyCodeLine{00391   \textcolor{comment}{// Resume open for write}}
+\DoxyCodeLine{00392   resume();}
+\DoxyCodeLine{00393 }
+\DoxyCodeLine{00394   \textcolor{keywordflow}{if} (!m\_usingTemporaryFile) \{}
+\DoxyCodeLine{00395     \textcolor{comment}{// Plain random access write if supported}}
+\DoxyCodeLine{00396     m\_lw-\/>getFrameWriter(fid)-\/>save(img);}
+\DoxyCodeLine{00397     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00398   \}}
+\DoxyCodeLine{00399 }
+\DoxyCodeLine{00400   \textcolor{comment}{// Otherwise, we must add every frame preceding fid, and *then* add img.}}
+\DoxyCodeLine{00401   \textcolor{comment}{// NOTE: This requires that the image sequence is already sorted by fid.}}
+\DoxyCodeLine{00402   addFramesTo(std::lower\_bound(m\_fids.begin() + m\_currIdx, m\_fids.end(), fid) -\/}
+\DoxyCodeLine{00403               m\_fids.begin());}
+\DoxyCodeLine{00404 }
+\DoxyCodeLine{00405   \textcolor{comment}{// Save the passed image. In case it overwrites a frame, erase that from the}}
+\DoxyCodeLine{00406   \textcolor{comment}{// list too.}}
+\DoxyCodeLine{00407   m\_lw-\/>getFrameWriter(fid)-\/>save(img);}
+\DoxyCodeLine{00408   \textcolor{keywordflow}{if} (m\_currIdx < \textcolor{keywordtype}{int}(m\_fids.size()) \&\& m\_fids[m\_currIdx] == fid) ++m\_currIdx;}
+\DoxyCodeLine{00409 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/levelupdater.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/levelupdater.\+cpp\end{DoxyCompactItemize}

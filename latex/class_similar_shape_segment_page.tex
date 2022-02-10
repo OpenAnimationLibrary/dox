@@ -1,0 +1,186 @@
+\hypertarget{class_similar_shape_segment_page}{}\doxysection{Similar\+Shape\+Segment\+Page Class Reference}
+\label{class_similar_shape_segment_page}\index{SimilarShapeSegmentPage@{SimilarShapeSegmentPage}}
+Inheritance diagram for Similar\+Shape\+Segment\+Page\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_similar_shape_segment_page}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_similar_shape_segment_page_a8a3a198439c8c7663a4e58ac7fb4b9f6}{Similar\+Shape\+Segment\+Page}} (\mbox{\hyperlink{class_function_segment_viewer}{Function\+Segment\+Viewer}} $\ast$parent=0)
+\item 
+void \mbox{\hyperlink{class_similar_shape_segment_page_aef1eb985913ccdc8172cd13f0f97a1cb}{refresh}} () override
+\item 
+void \mbox{\hyperlink{class_similar_shape_segment_page_ae93b7644460fb0cf728b62d7633dc29f}{apply}} () override
+\item 
+void \mbox{\hyperlink{class_similar_shape_segment_page_af4e48b04a2c692b50b2832df984102f0}{init}} (int segment\+Length) override
+\item 
+void \mbox{\hyperlink{class_similar_shape_segment_page_a6cc245bb32f6d6a894b8d5b65b2db69e}{get\+Gui\+Values}} (std\+::string \&expression\+Text, double \&similar\+Shape\+Offset)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_similar_shape_segment_page_a8a3a198439c8c7663a4e58ac7fb4b9f6}\label{class_similar_shape_segment_page_a8a3a198439c8c7663a4e58ac7fb4b9f6}} 
+\index{SimilarShapeSegmentPage@{SimilarShapeSegmentPage}!SimilarShapeSegmentPage@{SimilarShapeSegmentPage}}
+\index{SimilarShapeSegmentPage@{SimilarShapeSegmentPage}!SimilarShapeSegmentPage@{SimilarShapeSegmentPage}}
+\doxysubsubsection{\texorpdfstring{SimilarShapeSegmentPage()}{SimilarShapeSegmentPage()}}
+{\footnotesize\ttfamily Similar\+Shape\+Segment\+Page\+::\+Similar\+Shape\+Segment\+Page (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_function_segment_viewer}{Function\+Segment\+Viewer}} $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00781     : \mbox{\hyperlink{class_function_segment_page}{FunctionSegmentPage}}(parent) \{}
+\DoxyCodeLine{00782   m\_expressionFld = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_expression_field}{DVGui::ExpressionField}}();}
+\DoxyCodeLine{00783   m\_offsetFld     = createField();}
+\DoxyCodeLine{00784 }
+\DoxyCodeLine{00785   \textcolor{comment}{//-\/-\/-\/-\/layout}}
+\DoxyCodeLine{00786   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout();}
+\DoxyCodeLine{00787   mainLayout-\/>setSpacing(2);}
+\DoxyCodeLine{00788   mainLayout-\/>setMargin(2);}
+\DoxyCodeLine{00789   \{}
+\DoxyCodeLine{00790     mainLayout-\/>addSpacing(3);}
+\DoxyCodeLine{00791     mainLayout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Reference Curve:"{}})));}
+\DoxyCodeLine{00792     mainLayout-\/>addWidget(m\_expressionFld);}
+\DoxyCodeLine{00793 }
+\DoxyCodeLine{00794     mainLayout-\/>addSpacing(3);}
+\DoxyCodeLine{00795     QHBoxLayout *offLay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00796     \{}
+\DoxyCodeLine{00797       offLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Frame Offset:"{}})));}
+\DoxyCodeLine{00798       offLay-\/>addWidget(m\_offsetFld);}
+\DoxyCodeLine{00799       offLay-\/>addStretch();}
+\DoxyCodeLine{00800     \}}
+\DoxyCodeLine{00801     mainLayout-\/>addLayout(offLay);}
+\DoxyCodeLine{00802   \}}
+\DoxyCodeLine{00803   setLayout(mainLayout);}
+\DoxyCodeLine{00804 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_similar_shape_segment_page_ae93b7644460fb0cf728b62d7633dc29f}\label{class_similar_shape_segment_page_ae93b7644460fb0cf728b62d7633dc29f}} 
+\index{SimilarShapeSegmentPage@{SimilarShapeSegmentPage}!apply@{apply}}
+\index{apply@{apply}!SimilarShapeSegmentPage@{SimilarShapeSegmentPage}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Similar\+Shape\+Segment\+Page\+::apply (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_function_segment_page}{Function\+Segment\+Page}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00842                                     \{}
+\DoxyCodeLine{00843   \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve = getCurve();}
+\DoxyCodeLine{00844   \textcolor{keywordflow}{if} (!curve) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00845   \textcolor{keywordtype}{int} kIndex = getViewer()-\/>getSegmentIndex();}
+\DoxyCodeLine{00846   \textcolor{keywordflow}{if} (kIndex < 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00847 }
+\DoxyCodeLine{00848   std::string expressionText = m\_expressionFld-\/>getExpression();}
+\DoxyCodeLine{00849   \mbox{\hyperlink{class_t_expression}{TExpression}} expr;}
+\DoxyCodeLine{00850   expr.\mbox{\hyperlink{class_t_expression_a0ffb229c1e08a4a894bf03cf56464da9}{setGrammar}}(curve-\/>getGrammar());}
+\DoxyCodeLine{00851   expr.\mbox{\hyperlink{class_t_expression_af9aa579c14ed806cb7829137b4e699bc}{setText}}(expressionText);}
+\DoxyCodeLine{00852   \textcolor{keywordflow}{if} (!expr.\mbox{\hyperlink{class_t_expression_a6fd7a9c936957b0d9648718628f87ef2}{isValid}}()) \{}
+\DoxyCodeLine{00853     DVGui::warning(}
+\DoxyCodeLine{00854         tr(\textcolor{stringliteral}{"{}There is a syntax error in the definition of the interpolation."{}}));}
+\DoxyCodeLine{00855     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00856   \}}
+\DoxyCodeLine{00857   \textcolor{keywordflow}{if} (dependsOn(expr, curve)) \{}
+\DoxyCodeLine{00858     DVGui::warning(}
+\DoxyCodeLine{00859         tr(\textcolor{stringliteral}{"{}There is a circular reference in the definition of the "{}}}
+\DoxyCodeLine{00860            \textcolor{stringliteral}{"{}interpolation."{}}));}
+\DoxyCodeLine{00861     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00862   \}}
+\DoxyCodeLine{00863   \mbox{\hyperlink{class_keyframe_setter}{KeyframeSetter}} setter(curve, kIndex);}
+\DoxyCodeLine{00864   setter.setSimilarShape(m\_expressionFld-\/>getExpression(),}
+\DoxyCodeLine{00865                          m\_offsetFld-\/>text().toDouble());}
+\DoxyCodeLine{00866 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_similar_shape_segment_page_a6cc245bb32f6d6a894b8d5b65b2db69e}\label{class_similar_shape_segment_page_a6cc245bb32f6d6a894b8d5b65b2db69e}} 
+\index{SimilarShapeSegmentPage@{SimilarShapeSegmentPage}!getGuiValues@{getGuiValues}}
+\index{getGuiValues@{getGuiValues}!SimilarShapeSegmentPage@{SimilarShapeSegmentPage}}
+\doxysubsubsection{\texorpdfstring{getGuiValues()}{getGuiValues()}}
+{\footnotesize\ttfamily void Similar\+Shape\+Segment\+Page\+::get\+Gui\+Values (\begin{DoxyParamCaption}\item[{std\+::string \&}]{expression\+Text,  }\item[{double \&}]{similar\+Shape\+Offset }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00869                                                                        \{}
+\DoxyCodeLine{00870   expressionText     = m\_expressionFld-\/>getExpression();}
+\DoxyCodeLine{00871   similarShapeOffset = m\_offsetFld-\/>text().toDouble();}
+\DoxyCodeLine{00872 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_similar_shape_segment_page_af4e48b04a2c692b50b2832df984102f0}\label{class_similar_shape_segment_page_af4e48b04a2c692b50b2832df984102f0}} 
+\index{SimilarShapeSegmentPage@{SimilarShapeSegmentPage}!init@{init}}
+\index{init@{init}!SimilarShapeSegmentPage@{SimilarShapeSegmentPage}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void Similar\+Shape\+Segment\+Page\+::init (\begin{DoxyParamCaption}\item[{int}]{segment\+Length }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_function_segment_page}{Function\+Segment\+Page}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00823                                                     \{}
+\DoxyCodeLine{00824   \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve = getCurve();}
+\DoxyCodeLine{00825   \textcolor{keywordflow}{if} (!curve) \{}
+\DoxyCodeLine{00826     m\_expressionFld-\/>setGrammar(0);}
+\DoxyCodeLine{00827     m\_expressionFld-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00828     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00829   \}}
+\DoxyCodeLine{00830 }
+\DoxyCodeLine{00831   m\_expressionFld-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00832   \mbox{\hyperlink{class_t_double_keyframe}{TDoubleKeyframe}} kf0        = curve-\/>getKeyframeAt(getR0());}
+\DoxyCodeLine{00833   std::string expression     = kf0.m\_expressionText;}
+\DoxyCodeLine{00834   \textcolor{keywordtype}{bool} oldBlockSignalsStatus = m\_expressionFld-\/>blockSignals(\textcolor{keyword}{true});}
+\DoxyCodeLine{00835   m\_expressionFld-\/>setGrammar(curve-\/>getGrammar());}
+\DoxyCodeLine{00836   m\_expressionFld-\/>setExpression(expression);}
+\DoxyCodeLine{00837   m\_expressionFld-\/>blockSignals(oldBlockSignalsStatus);}
+\DoxyCodeLine{00838 }
+\DoxyCodeLine{00839   m\_offsetFld-\/>setText(QString::number(kf0.m\_similarShapeOffset, \textcolor{charliteral}{'f'}, 0));}
+\DoxyCodeLine{00840 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_similar_shape_segment_page_aef1eb985913ccdc8172cd13f0f97a1cb}\label{class_similar_shape_segment_page_aef1eb985913ccdc8172cd13f0f97a1cb}} 
+\index{SimilarShapeSegmentPage@{SimilarShapeSegmentPage}!refresh@{refresh}}
+\index{refresh@{refresh}!SimilarShapeSegmentPage@{SimilarShapeSegmentPage}}
+\doxysubsubsection{\texorpdfstring{refresh()}{refresh()}}
+{\footnotesize\ttfamily void Similar\+Shape\+Segment\+Page\+::refresh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_function_segment_page}{Function\+Segment\+Page}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00806                                       \{}
+\DoxyCodeLine{00807   \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve = getCurve();}
+\DoxyCodeLine{00808   \textcolor{keywordflow}{if} (!curve) \{}
+\DoxyCodeLine{00809     m\_expressionFld-\/>setGrammar(0);}
+\DoxyCodeLine{00810     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00811   \}}
+\DoxyCodeLine{00812 }
+\DoxyCodeLine{00813   \mbox{\hyperlink{class_t_double_keyframe}{TDoubleKeyframe}} kf0        = curve-\/>getKeyframeAt(getR0());}
+\DoxyCodeLine{00814   std::string expression     = kf0.m\_expressionText;}
+\DoxyCodeLine{00815   \textcolor{keywordtype}{bool} oldBlockSignalsStatus = m\_expressionFld-\/>blockSignals(\textcolor{keyword}{true});}
+\DoxyCodeLine{00816   m\_expressionFld-\/>setGrammar(curve-\/>getGrammar());}
+\DoxyCodeLine{00817   m\_expressionFld-\/>setExpression(expression);}
+\DoxyCodeLine{00818   m\_expressionFld-\/>blockSignals(oldBlockSignalsStatus);}
+\DoxyCodeLine{00819 }
+\DoxyCodeLine{00820   m\_offsetFld-\/>setText(QString::number(kf0.m\_similarShapeOffset, \textcolor{charliteral}{'f'}, 0));}
+\DoxyCodeLine{00821 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/functionsegmentviewer.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/functionsegmentviewer.\+cpp\end{DoxyCompactItemize}

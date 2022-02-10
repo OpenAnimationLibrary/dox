@@ -1,0 +1,205 @@
+\hypertarget{class_t_base_server}{}\doxysection{TBase\+Server Class Reference}
+\label{class_t_base_server}\index{TBaseServer@{TBaseServer}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_base_server_a02b3f2bab1144cd688e96156d531b54d}{TBase\+Server}} (int port)
+\item 
+void \mbox{\hyperlink{class_t_base_server_addc5a30e3b40ee22c8eb51adbd3d39fb}{start}} ()
+\item 
+void \mbox{\hyperlink{class_t_base_server_abe10d3e8f0b2644fc6e91a8093145e97}{stop}} ()
+\item 
+\mbox{\Hypertarget{class_t_base_server_ade16ac52e8f4609b43737fc242a6edf2}\label{class_t_base_server_ade16ac52e8f4609b43737fc242a6edf2}} 
+virtual std\+::string {\bfseries exec} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})=0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_base_server_a02b3f2bab1144cd688e96156d531b54d}\label{class_t_base_server_a02b3f2bab1144cd688e96156d531b54d}} 
+\index{TBaseServer@{TBaseServer}!TBaseServer@{TBaseServer}}
+\index{TBaseServer@{TBaseServer}!TBaseServer@{TBaseServer}}
+\doxysubsubsection{\texorpdfstring{TBaseServer()}{TBaseServer()}}
+{\footnotesize\ttfamily TBase\+Server\+::\+TBase\+Server (\begin{DoxyParamCaption}\item[{int}]{port }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023     : m\_port(port), m\_socketId(-\/1), m\_stopped(\textcolor{keyword}{false}) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_base_server_adfe89a8dd125634a8b3aed0937f667b4}\label{class_t_base_server_adfe89a8dd125634a8b3aed0937f667b4}} 
+\index{TBaseServer@{TBaseServer}!````~TBaseServer@{$\sim$TBaseServer}}
+\index{````~TBaseServer@{$\sim$TBaseServer}!TBaseServer@{TBaseServer}}
+\doxysubsubsection{\texorpdfstring{$\sim$TBaseServer()}{~TBaseServer()}}
+{\footnotesize\ttfamily TBase\+Server\+::$\sim$\+TBase\+Server (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027                           \{}
+\DoxyCodeLine{00028   \textcolor{keywordflow}{if} (m\_socketId != -\/1) stop();}
+\DoxyCodeLine{00029 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_base_server_addc5a30e3b40ee22c8eb51adbd3d39fb}\label{class_t_base_server_addc5a30e3b40ee22c8eb51adbd3d39fb}} 
+\index{TBaseServer@{TBaseServer}!start@{start}}
+\index{start@{start}!TBaseServer@{TBaseServer}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void TBase\+Server\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033                         \{}
+\DoxyCodeLine{00034 \textcolor{preprocessor}{\#ifdef WIN32}}
+\DoxyCodeLine{00035   \textcolor{comment}{// Windows Socket startup}}
+\DoxyCodeLine{00036   WSADATA wsaData;}
+\DoxyCodeLine{00037   WORD wVersionRequested = MAKEWORD(1, 1);}
+\DoxyCodeLine{00038   \textcolor{keywordtype}{int} irc                = WSAStartup(wVersionRequested, \&wsaData);}
+\DoxyCodeLine{00039   \textcolor{keywordflow}{if} (irc != 0) \textcolor{keywordflow}{throw}(\textcolor{stringliteral}{"{}Windows Socket Startup failed"{}});}
+\DoxyCodeLine{00040 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00041   \textcolor{keywordtype}{int} c;}
+\DoxyCodeLine{00042   FILE *fp;}
+\DoxyCodeLine{00043   \textcolor{keyword}{register} \textcolor{keywordtype}{int} ns;}
+\DoxyCodeLine{00044 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046   \textcolor{keywordflow}{if} ((m\_socketId = socket(AF\_INET, SOCK\_STREAM, 0)) < 0) \{}
+\DoxyCodeLine{00047 \textcolor{preprocessor}{\#ifdef WIN32}}
+\DoxyCodeLine{00048     \textcolor{keywordtype}{char} szError[1024];}
+\DoxyCodeLine{00049     wsprintf(szError, TEXT(\textcolor{stringliteral}{"{}Allocating socket failed. Error: \%d"{}}),}
+\DoxyCodeLine{00050              WSAGetLastError());}
+\DoxyCodeLine{00051     \textcolor{keywordflow}{throw}(szError);}
+\DoxyCodeLine{00052 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00053     \textcolor{keywordflow}{throw}(\textcolor{stringliteral}{"{}Allocating socket failed."{}});}
+\DoxyCodeLine{00054 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00055   \}}
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00057   \textcolor{keyword}{struct }sockaddr\_in myname;}
+\DoxyCodeLine{00058   myname.sin\_family      = AF\_INET;}
+\DoxyCodeLine{00059   myname.sin\_port        = htons(m\_port);}
+\DoxyCodeLine{00060   myname.sin\_addr.s\_addr = INADDR\_ANY;}
+\DoxyCodeLine{00061 }
+\DoxyCodeLine{00062   \textcolor{keywordflow}{if} (bind(m\_socketId, (sockaddr *)\&myname, \textcolor{keyword}{sizeof} myname) < 0) \{}
+\DoxyCodeLine{00063     \textcolor{keywordflow}{throw}(\textcolor{stringliteral}{"{}Unable to bind to connection"{}});}
+\DoxyCodeLine{00064   \}}
+\DoxyCodeLine{00065 }
+\DoxyCodeLine{00066 \textcolor{preprocessor}{\#ifdef TRACE}}
+\DoxyCodeLine{00067   cout << \textcolor{stringliteral}{"{}Listening ..."{}} << endl;}
+\DoxyCodeLine{00068 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00069 }
+\DoxyCodeLine{00070   \textcolor{comment}{// length of the queue of pending connections}}
+\DoxyCodeLine{00071   \textcolor{keywordtype}{int} maxPendingConnections = 5;}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073   \textcolor{keywordflow}{if} (listen(m\_socketId, maxPendingConnections) < 0) \{}
+\DoxyCodeLine{00074     \textcolor{keywordflow}{throw}(\textcolor{stringliteral}{"{}Unable to start listening"{}});}
+\DoxyCodeLine{00075   \}}
+\DoxyCodeLine{00076 }
+\DoxyCodeLine{00077   \textcolor{keywordflow}{while} (\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{00078     \textcolor{keyword}{register} \textcolor{keywordtype}{int} clientSocket;}
+\DoxyCodeLine{00079     \textcolor{keywordflow}{if} ((clientSocket = accept(m\_socketId, 0, 0)) < 0) \{}
+\DoxyCodeLine{00080       \textcolor{keywordflow}{if} (m\_stopped)}
+\DoxyCodeLine{00081         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00082       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00083         \textcolor{keywordflow}{throw}(\textcolor{stringliteral}{"{}Error accepting from client"{}});}
+\DoxyCodeLine{00084     \}}
+\DoxyCodeLine{00085 }
+\DoxyCodeLine{00086     printf(\textcolor{stringliteral}{"{}ho accettato\(\backslash\)n"{}});}
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088     \textcolor{keywordtype}{char} msgFromClient[1024];}
+\DoxyCodeLine{00089     memset(msgFromClient, 0, \textcolor{keyword}{sizeof}(msgFromClient));}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091 \textcolor{preprocessor}{\#ifdef WIN32}}
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{00093     \textcolor{comment}{// Receive data from the client.}}
+\DoxyCodeLine{00094     \textcolor{keywordtype}{int} iReturn = recv(clientSocket, msgFromClient, \textcolor{keyword}{sizeof}(msgFromClient), 0);}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096     \textcolor{comment}{// Verify that data was received. If yes, use it.}}
+\DoxyCodeLine{00097     \textcolor{keywordflow}{if} (iReturn == SOCKET\_ERROR) \{}
+\DoxyCodeLine{00098       \textcolor{keywordtype}{char} szError[1024];}
+\DoxyCodeLine{00099       wsprintf(szError,}
+\DoxyCodeLine{00100                TEXT(\textcolor{stringliteral}{"{}No data is received, receive failed."{}}) TEXT(\textcolor{stringliteral}{"{} Error: \%d"{}}),}
+\DoxyCodeLine{00101                WSAGetLastError());}
+\DoxyCodeLine{00102 }
+\DoxyCodeLine{00103       \textcolor{keywordflow}{throw}(szError);}
+\DoxyCodeLine{00104     \}}
+\DoxyCodeLine{00105 }
+\DoxyCodeLine{00106 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00107     fp = fdopen(clientSocket, \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00109     printf(\textcolor{stringliteral}{"{}Partito!\(\backslash\)n"{}});}
+\DoxyCodeLine{00110 }
+\DoxyCodeLine{00111     \textcolor{keywordtype}{int} i = 0;}
+\DoxyCodeLine{00112     \textcolor{keywordflow}{while} ((\textcolor{keywordtype}{int})(c = fgetc(fp)) != EOF) \{}
+\DoxyCodeLine{00113       putchar(c);}
+\DoxyCodeLine{00114       msgFromClient[i] = c;}
+\DoxyCodeLine{00115     \}}
+\DoxyCodeLine{00116 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00117 }
+\DoxyCodeLine{00118     printf(\textcolor{stringliteral}{"{}msg finito\(\backslash\)n"{}});}
+\DoxyCodeLine{00119 }
+\DoxyCodeLine{00120     \textcolor{keywordtype}{char} *argv[128];}
+\DoxyCodeLine{00121     \textcolor{keywordtype}{int} argc = extractArgs(msgFromClient, argv);}
+\DoxyCodeLine{00122 }
+\DoxyCodeLine{00123     \textcolor{keywordtype}{string} reply = exec(argc, argv);}
+\DoxyCodeLine{00124     reply += \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < argc; ++i) \textcolor{keyword}{delete}[] argv[i];}
+\DoxyCodeLine{00127 }
+\DoxyCodeLine{00128     \textcolor{comment}{// Send the reply string from the server to the client.}}
+\DoxyCodeLine{00129     \textcolor{keywordflow}{if} (send(clientSocket, reply.c\_str(), reply.length() + 1, 0) < 0) \{}
+\DoxyCodeLine{00130       \textcolor{keywordtype}{char} szError[1024];}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132 \textcolor{preprocessor}{\#ifdef WIN32}}
+\DoxyCodeLine{00133       wsprintf(szError, TEXT(\textcolor{stringliteral}{"{}Sending data to the client failed. Error: \%d"{}}),}
+\DoxyCodeLine{00134                WSAGetLastError());}
+\DoxyCodeLine{00135 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137       \textcolor{keywordflow}{throw}(szError);}
+\DoxyCodeLine{00138     \}}
+\DoxyCodeLine{00139 }
+\DoxyCodeLine{00140 \textcolor{preprocessor}{\#ifndef WIN32}}
+\DoxyCodeLine{00141     close(clientSocket);}
+\DoxyCodeLine{00142 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00143   \}}
+\DoxyCodeLine{00144 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_base_server_abe10d3e8f0b2644fc6e91a8093145e97}\label{class_t_base_server_abe10d3e8f0b2644fc6e91a8093145e97}} 
+\index{TBaseServer@{TBaseServer}!stop@{stop}}
+\index{stop@{stop}!TBaseServer@{TBaseServer}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void TBase\+Server\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00148                        \{}
+\DoxyCodeLine{00149   \textcolor{comment}{//  TThread::ScopedLock sl(m\_mutex);}}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   \textcolor{keywordflow}{if} (!m\_stopped) \{}
+\DoxyCodeLine{00152     m\_stopped = \textcolor{keyword}{true};}
+\DoxyCodeLine{00153 }
+\DoxyCodeLine{00154 \textcolor{preprocessor}{\#ifdef WIN32}}
+\DoxyCodeLine{00155     \textcolor{keywordflow}{if} (closesocket(m\_socketId) != 0) \{}
+\DoxyCodeLine{00156       \textcolor{keywordtype}{char} szError[1024];}
+\DoxyCodeLine{00157       wsprintf(szError, TEXT(\textcolor{stringliteral}{"{} Error: \%d"{}}), WSAGetLastError());}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159       \textcolor{keywordflow}{throw}(szError);}
+\DoxyCodeLine{00160     \}}
+\DoxyCodeLine{00161 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00162     close(m\_socketId);}
+\DoxyCodeLine{00163 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00164 }
+\DoxyCodeLine{00165     m\_socketId = -\/1;}
+\DoxyCodeLine{00166   \}}
+\DoxyCodeLine{00167 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/include/tbaseserver.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tfarm/tbaseserver.\+cpp\end{DoxyCompactItemize}

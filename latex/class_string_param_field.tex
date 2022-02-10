@@ -1,0 +1,180 @@
+\hypertarget{class_string_param_field}{}\doxysection{String\+Param\+Field Class Reference}
+\label{class_string_param_field}\index{StringParamField@{StringParamField}}
+Inheritance diagram for String\+Param\+Field\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_string_param_field}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_string_param_field_acf393b5586d7b8919838720dc9292b08}{String\+Param\+Field}} (QWidget $\ast$parent, QString name, const TString\+ParamP \&param)
+\item 
+void \mbox{\hyperlink{class_string_param_field_aa3fbdb4189c9a16ac8b4bbccd9521c77}{set\+Param}} (const \mbox{\hyperlink{class_t_smart_pointer_t}{TParamP}} \&current, const \mbox{\hyperlink{class_t_smart_pointer_t}{TParamP}} \&actual, int frame) override
+\item 
+void \mbox{\hyperlink{class_string_param_field_a85443f83dfc299de176532fe4d4466a5}{update}} (int frame) override
+\item 
+QSize \mbox{\hyperlink{class_string_param_field_adb4c30b55777ca4cbc056b0d1607f164}{get\+Preferred\+Size}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_string_param_field_ac8aff310561c3ba8b0b8a218d5626b84}{on\+Change}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_string_param_field_acf393b5586d7b8919838720dc9292b08}\label{class_string_param_field_acf393b5586d7b8919838720dc9292b08}} 
+\index{StringParamField@{StringParamField}!StringParamField@{StringParamField}}
+\index{StringParamField@{StringParamField}!StringParamField@{StringParamField}}
+\doxysubsubsection{\texorpdfstring{StringParamField()}{StringParamField()}}
+{\footnotesize\ttfamily String\+Param\+Field\+::\+String\+Param\+Field (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{QString}]{name,  }\item[{const TString\+ParamP \&}]{param }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01576     : \mbox{\hyperlink{class_param_field}{ParamField}}(parent, name, param) \{}
+\DoxyCodeLine{01577   QString str;}
+\DoxyCodeLine{01578   m\_paramName = str.fromStdString(param-\/>getName());}
+\DoxyCodeLine{01579 }
+\DoxyCodeLine{01580   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{01581   \textcolor{keywordflow}{if} (param-\/>isMultiLineEnabled()) \{}
+\DoxyCodeLine{01582     m\_multiTextFld = \textcolor{keyword}{new} \mbox{\hyperlink{classcomponent_1_1_my_text_edit}{component::MyTextEdit}}(name, \textcolor{keyword}{this});}
+\DoxyCodeLine{01583     m\_multiTextFld-\/>setFixedHeight(80);}
+\DoxyCodeLine{01584     m\_multiTextFld-\/>setAcceptRichText(\textcolor{keyword}{false});}
+\DoxyCodeLine{01585     m\_multiTextFld-\/>setStyleSheet(}
+\DoxyCodeLine{01586         \textcolor{stringliteral}{"{}background:white;\(\backslash\)ncolor:black;\(\backslash\)nborder:1 solid black;"{}});}
+\DoxyCodeLine{01587     ret = ret \&\&}
+\DoxyCodeLine{01588           connect(m\_multiTextFld, SIGNAL(edited()), \textcolor{keyword}{this}, SLOT(onChange()));}
+\DoxyCodeLine{01589     m\_layout-\/>addWidget(m\_multiTextFld);}
+\DoxyCodeLine{01590   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01591     m\_textFld = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_line_edit}{LineEdit}}(name, \textcolor{keyword}{this});}
+\DoxyCodeLine{01592     m\_textFld-\/>setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);}
+\DoxyCodeLine{01593     ret = ret \&\&}
+\DoxyCodeLine{01594           connect(m\_textFld, SIGNAL(editingFinished()), \textcolor{keyword}{this}, SLOT(onChange()));}
+\DoxyCodeLine{01595     m\_layout-\/>addWidget(m\_textFld);}
+\DoxyCodeLine{01596   \}}
+\DoxyCodeLine{01597   setLayout(m\_layout);}
+\DoxyCodeLine{01598   assert(ret);}
+\DoxyCodeLine{01599 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_string_param_field_adb4c30b55777ca4cbc056b0d1607f164}\label{class_string_param_field_adb4c30b55777ca4cbc056b0d1607f164}} 
+\index{StringParamField@{StringParamField}!getPreferredSize@{getPreferredSize}}
+\index{getPreferredSize@{getPreferredSize}!StringParamField@{StringParamField}}
+\doxysubsubsection{\texorpdfstring{getPreferredSize()}{getPreferredSize()}}
+{\footnotesize\ttfamily QSize String\+Param\+Field\+::get\+Preferred\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_param_field}{Param\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00639                                     \{}
+\DoxyCodeLine{00640     \textcolor{keywordflow}{if} (m\_textFld)}
+\DoxyCodeLine{00641       \textcolor{keywordflow}{return} QSize(100, 20);}
+\DoxyCodeLine{00642     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00643       \textcolor{keywordflow}{return} QSize(100, 80);}
+\DoxyCodeLine{00644   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_string_param_field_ac8aff310561c3ba8b0b8a218d5626b84}\label{class_string_param_field_ac8aff310561c3ba8b0b8a218d5626b84}} 
+\index{StringParamField@{StringParamField}!onChange@{onChange}}
+\index{onChange@{onChange}!StringParamField@{StringParamField}}
+\doxysubsubsection{\texorpdfstring{onChange}{onChange}}
+{\footnotesize\ttfamily void String\+Param\+Field\+::on\+Change (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01603                                 \{}
+\DoxyCodeLine{01604   std::wstring value;}
+\DoxyCodeLine{01605   \textcolor{keywordflow}{if} (m\_multiTextFld)}
+\DoxyCodeLine{01606     value = m\_multiTextFld-\/>toPlainText().toStdWString();}
+\DoxyCodeLine{01607   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01608     value = m\_textFld-\/>text().toStdWString();}
+\DoxyCodeLine{01609   \mbox{\hyperlink{class_t_undo}{TUndo}} *undo = 0;}
+\DoxyCodeLine{01610 }
+\DoxyCodeLine{01611   \textcolor{keywordflow}{if} (!m\_actualParam || m\_actualParam-\/>getValue() == value) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01612 }
+\DoxyCodeLine{01613   \textcolor{keywordflow}{if} (m\_actualParam-\/>getValue() != value)}
+\DoxyCodeLine{01614     undo = \textcolor{keyword}{new} \mbox{\hyperlink{class_string_param_field_undo}{StringParamFieldUndo}}(m\_actualParam, m\_interfaceName,}
+\DoxyCodeLine{01615                                     ParamField::m\_fxHandleStat);}
+\DoxyCodeLine{01616 }
+\DoxyCodeLine{01617   m\_actualParam-\/>setValue(value);}
+\DoxyCodeLine{01618   m\_currentParam-\/>setValue(value);}
+\DoxyCodeLine{01619 }
+\DoxyCodeLine{01620   emit currentParamChanged();}
+\DoxyCodeLine{01621   emit actualParamChanged();}
+\DoxyCodeLine{01622 }
+\DoxyCodeLine{01623   \textcolor{keywordflow}{if} (undo) TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{01624 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_string_param_field_aa3fbdb4189c9a16ac8b4bbccd9521c77}\label{class_string_param_field_aa3fbdb4189c9a16ac8b4bbccd9521c77}} 
+\index{StringParamField@{StringParamField}!setParam@{setParam}}
+\index{setParam@{setParam}!StringParamField@{StringParamField}}
+\doxysubsubsection{\texorpdfstring{setParam()}{setParam()}}
+{\footnotesize\ttfamily void String\+Param\+Field\+::set\+Param (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TParamP}} \&}]{current,  }\item[{const \mbox{\hyperlink{class_t_smart_pointer_t}{TParamP}} \&}]{actual,  }\item[{int}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_param_field}{Param\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01629                                            \{}
+\DoxyCodeLine{01630   m\_currentParam = current;}
+\DoxyCodeLine{01631   m\_actualParam  = actual;}
+\DoxyCodeLine{01632   assert(m\_currentParam);}
+\DoxyCodeLine{01633   assert(m\_actualParam);}
+\DoxyCodeLine{01634   update(frame);}
+\DoxyCodeLine{01635 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_string_param_field_a85443f83dfc299de176532fe4d4466a5}\label{class_string_param_field_a85443f83dfc299de176532fe4d4466a5}} 
+\index{StringParamField@{StringParamField}!update@{update}}
+\index{update@{update}!StringParamField@{StringParamField}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void String\+Param\+Field\+::update (\begin{DoxyParamCaption}\item[{int}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_param_field}{Param\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01639                                        \{}
+\DoxyCodeLine{01640   \textcolor{keywordflow}{if} (!m\_actualParam || !m\_currentParam) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01641   QString str;}
+\DoxyCodeLine{01642   QString strValue = str.fromStdWString(m\_actualParam-\/>getValue());}
+\DoxyCodeLine{01643 }
+\DoxyCodeLine{01644   \textcolor{keywordflow}{if} (m\_textFld) \{}
+\DoxyCodeLine{01645     \textcolor{keywordflow}{if} (m\_textFld-\/>text() == strValue) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01646     m\_textFld-\/>setText(strValue);}
+\DoxyCodeLine{01647 }
+\DoxyCodeLine{01648     \textcolor{comment}{// Faccio in modo che il cursore sia sulla prima cifra, cosi' se la stringa}}
+\DoxyCodeLine{01649     \textcolor{comment}{// da visualizzare e' piu' lunga del campo le cifre che vengono troncate}}
+\DoxyCodeLine{01650     \textcolor{comment}{// sono}}
+\DoxyCodeLine{01651     \textcolor{comment}{// le ultime e non le prime (dovrebbero essere quelle dopo la virgola).}}
+\DoxyCodeLine{01652     m\_textFld-\/>setCursorPosition(0);}
+\DoxyCodeLine{01653   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01654     \textcolor{keywordflow}{if} (m\_multiTextFld-\/>toPlainText() == strValue) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01655     m\_multiTextFld-\/>setPlainText(strValue);}
+\DoxyCodeLine{01656   \}}
+\DoxyCodeLine{01657 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/paramfield.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/paramfield.\+cpp\end{DoxyCompactItemize}

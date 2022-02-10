@@ -1,0 +1,204 @@
+\hypertarget{class_xsh_cmd_1_1_drawing_subtitution_group_undo}{}\doxysection{Xsh\+Cmd\+::Drawing\+Subtitution\+Group\+Undo Class Reference}
+\label{class_xsh_cmd_1_1_drawing_subtitution_group_undo}\index{XshCmd::DrawingSubtitutionGroupUndo@{XshCmd::DrawingSubtitutionGroupUndo}}
+Inheritance diagram for Xsh\+Cmd\+::Drawing\+Subtitution\+Group\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_xsh_cmd_1_1_drawing_subtitution_group_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_xsh_cmd_1_1_drawing_subtitution_group_undo_a8fa784c98bb80e15c568871a2715a9a3}{Drawing\+Subtitution\+Group\+Undo}} (int dir, int row, int col, bool selected, \mbox{\hyperlink{class_t_cell_selection_1_1_range}{TCell\+Selection\+::\+Range}} range)
+\item 
+void \mbox{\hyperlink{class_xsh_cmd_1_1_drawing_subtitution_group_undo_ab6bcf82df94015c5553278e3345fab5d}{undo}} () const override
+\item 
+void \mbox{\hyperlink{class_xsh_cmd_1_1_drawing_subtitution_group_undo_af75690c2c0198b6df32d518df964e905}{redo}} () const override
+\item 
+int \mbox{\hyperlink{class_xsh_cmd_1_1_drawing_subtitution_group_undo_a63d0b67f1e6b2d5451d224e17f78e0e8}{get\+Size}} () const override
+\item 
+QString \mbox{\hyperlink{class_xsh_cmd_1_1_drawing_subtitution_group_undo_a1fe707bb140261756ce59cfbbd795305}{get\+History\+String}} () override
+\item 
+int \mbox{\hyperlink{class_xsh_cmd_1_1_drawing_subtitution_group_undo_a6ff8091c9e31c1366214d97753b24740}{get\+History\+Type}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_drawing_subtitution_group_undo_a8fa784c98bb80e15c568871a2715a9a3}\label{class_xsh_cmd_1_1_drawing_subtitution_group_undo_a8fa784c98bb80e15c568871a2715a9a3}} 
+\index{XshCmd::DrawingSubtitutionGroupUndo@{XshCmd::DrawingSubtitutionGroupUndo}!DrawingSubtitutionGroupUndo@{DrawingSubtitutionGroupUndo}}
+\index{DrawingSubtitutionGroupUndo@{DrawingSubtitutionGroupUndo}!XshCmd::DrawingSubtitutionGroupUndo@{XshCmd::DrawingSubtitutionGroupUndo}}
+\doxysubsubsection{\texorpdfstring{DrawingSubtitutionGroupUndo()}{DrawingSubtitutionGroupUndo()}}
+{\footnotesize\ttfamily Xsh\+Cmd\+::\+Drawing\+Subtitution\+Group\+Undo\+::\+Drawing\+Subtitution\+Group\+Undo (\begin{DoxyParamCaption}\item[{int}]{dir,  }\item[{int}]{row,  }\item[{int}]{col,  }\item[{bool}]{selected,  }\item[{\mbox{\hyperlink{class_t_cell_selection_1_1_range}{TCell\+Selection\+::\+Range}}}]{range }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00695       : m\_direction(dir)}
+\DoxyCodeLine{00696       , m\_col(col)}
+\DoxyCodeLine{00697       , m\_row(row)}
+\DoxyCodeLine{00698       , m\_selected(selected)}
+\DoxyCodeLine{00699       , m\_range(range) \{}
+\DoxyCodeLine{00700     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh =}
+\DoxyCodeLine{00701         TTool::getApplication()-\/>getCurrentScene()-\/>getScene()-\/>\mbox{\hyperlink{class_toonz_scene_ae3c828e3223fd809fd59189233d0576a}{getXsheet}}();}
+\DoxyCodeLine{00702 }
+\DoxyCodeLine{00703     \textcolor{keywordflow}{if} (!selected) \{}
+\DoxyCodeLine{00704       m\_range.m\_c0 = col;}
+\DoxyCodeLine{00705       m\_range.m\_r0 = row;}
+\DoxyCodeLine{00706       m\_range.m\_c1 = col;}
+\DoxyCodeLine{00707       m\_range.m\_r1 = row;}
+\DoxyCodeLine{00708     \}}
+\DoxyCodeLine{00709 }
+\DoxyCodeLine{00710     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = m\_range.m\_c0; c <= m\_range.m\_c1; c++) \{}
+\DoxyCodeLine{00711       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} r = m\_range.m\_r0; r <= m\_range.m\_r1; r++) \{}
+\DoxyCodeLine{00712         \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} baseCell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r, c);}
+\DoxyCodeLine{00713 }
+\DoxyCodeLine{00714         \textcolor{comment}{// Find the 1st populated cell in the column}}
+\DoxyCodeLine{00715         \textcolor{keywordflow}{if} (baseCell.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}()) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00716 }
+\DoxyCodeLine{00717         FramesMap::key\_type frameBaseKey(r, c);}
+\DoxyCodeLine{00718         \textcolor{keywordtype}{int} frameCount    = 1;}
+\DoxyCodeLine{00719         \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} nextCell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}((r + frameCount), c);}
+\DoxyCodeLine{00720         \textcolor{keywordflow}{while} (nextCell == baseCell ||}
+\DoxyCodeLine{00721                (nextCell.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}() \&\& (r + frameCount) <= m\_range.m\_r1)) \{}
+\DoxyCodeLine{00722           \textcolor{keywordflow}{if} (nextCell.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}())}
+\DoxyCodeLine{00723             emptyCells.push\_back(std::make\_pair((r + frameCount), c));}
+\DoxyCodeLine{00724 }
+\DoxyCodeLine{00725           frameCount++;}
+\DoxyCodeLine{00726           nextCell = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}((r + frameCount), c);}
+\DoxyCodeLine{00727         \}}
+\DoxyCodeLine{00728         m\_frameRanges.insert(std::make\_pair(frameBaseKey, 0));}
+\DoxyCodeLine{00729         m\_frameRanges[frameBaseKey] = frameCount;}
+\DoxyCodeLine{00730         r = r + (frameCount -\/ 1);  \textcolor{comment}{// Skip frames in range we've processed}}
+\DoxyCodeLine{00731       \}}
+\DoxyCodeLine{00732     \}}
+\DoxyCodeLine{00733   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_drawing_subtitution_group_undo_a1fe707bb140261756ce59cfbbd795305}\label{class_xsh_cmd_1_1_drawing_subtitution_group_undo_a1fe707bb140261756ce59cfbbd795305}} 
+\index{XshCmd::DrawingSubtitutionGroupUndo@{XshCmd::DrawingSubtitutionGroupUndo}!getHistoryString@{getHistoryString}}
+\index{getHistoryString@{getHistoryString}!XshCmd::DrawingSubtitutionGroupUndo@{XshCmd::DrawingSubtitutionGroupUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryString()}{getHistoryString()}}
+{\footnotesize\ttfamily QString Xsh\+Cmd\+::\+Drawing\+Subtitution\+Group\+Undo\+::get\+History\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00780                                       \{}
+\DoxyCodeLine{00781     \textcolor{keywordflow}{return} QObject::tr(\textcolor{stringliteral}{"{}Change current drawing \%1"{}})}
+\DoxyCodeLine{00782         .arg(QString::number(m\_direction));}
+\DoxyCodeLine{00783   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_drawing_subtitution_group_undo_a6ff8091c9e31c1366214d97753b24740}\label{class_xsh_cmd_1_1_drawing_subtitution_group_undo_a6ff8091c9e31c1366214d97753b24740}} 
+\index{XshCmd::DrawingSubtitutionGroupUndo@{XshCmd::DrawingSubtitutionGroupUndo}!getHistoryType@{getHistoryType}}
+\index{getHistoryType@{getHistoryType}!XshCmd::DrawingSubtitutionGroupUndo@{XshCmd::DrawingSubtitutionGroupUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryType()}{getHistoryType()}}
+{\footnotesize\ttfamily int Xsh\+Cmd\+::\+Drawing\+Subtitution\+Group\+Undo\+::get\+History\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00785 \{ \textcolor{keywordflow}{return} HistoryType::Xsheet; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_drawing_subtitution_group_undo_a63d0b67f1e6b2d5451d224e17f78e0e8}\label{class_xsh_cmd_1_1_drawing_subtitution_group_undo_a63d0b67f1e6b2d5451d224e17f78e0e8}} 
+\index{XshCmd::DrawingSubtitutionGroupUndo@{XshCmd::DrawingSubtitutionGroupUndo}!getSize@{getSize}}
+\index{getSize@{getSize}!XshCmd::DrawingSubtitutionGroupUndo@{XshCmd::DrawingSubtitutionGroupUndo}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Xsh\+Cmd\+::\+Drawing\+Subtitution\+Group\+Undo\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00778 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(*this); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_drawing_subtitution_group_undo_af75690c2c0198b6df32d518df964e905}\label{class_xsh_cmd_1_1_drawing_subtitution_group_undo_af75690c2c0198b6df32d518df964e905}} 
+\index{XshCmd::DrawingSubtitutionGroupUndo@{XshCmd::DrawingSubtitutionGroupUndo}!redo@{redo}}
+\index{redo@{redo}!XshCmd::DrawingSubtitutionGroupUndo@{XshCmd::DrawingSubtitutionGroupUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Xsh\+Cmd\+::\+Drawing\+Subtitution\+Group\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00763                              \{}
+\DoxyCodeLine{00764     FramesMap::const\_iterator ct;}
+\DoxyCodeLine{00765     \textcolor{keywordflow}{for} (ct = m\_frameRanges.begin(); ct != m\_frameRanges.end(); ++ct) \{}
+\DoxyCodeLine{00766       \textcolor{keywordtype}{int} n = 0;}
+\DoxyCodeLine{00767       \textcolor{keywordflow}{while} (n < ct-\/>second) \{}
+\DoxyCodeLine{00768         \textcolor{keywordtype}{int} row = ct-\/>first.first + n;}
+\DoxyCodeLine{00769         \textcolor{keywordtype}{int} col = ct-\/>first.second;}
+\DoxyCodeLine{00770         DrawingSubtitutionUndo::changeDrawing(m\_direction, row, col);}
+\DoxyCodeLine{00771         n++;}
+\DoxyCodeLine{00772       \}}
+\DoxyCodeLine{00773     \}}
+\DoxyCodeLine{00774     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00775     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{00776   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsh_cmd_1_1_drawing_subtitution_group_undo_ab6bcf82df94015c5553278e3345fab5d}\label{class_xsh_cmd_1_1_drawing_subtitution_group_undo_ab6bcf82df94015c5553278e3345fab5d}} 
+\index{XshCmd::DrawingSubtitutionGroupUndo@{XshCmd::DrawingSubtitutionGroupUndo}!undo@{undo}}
+\index{undo@{undo}!XshCmd::DrawingSubtitutionGroupUndo@{XshCmd::DrawingSubtitutionGroupUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Xsh\+Cmd\+::\+Drawing\+Subtitution\+Group\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00735                              \{}
+\DoxyCodeLine{00736     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh =}
+\DoxyCodeLine{00737         TTool::getApplication()-\/>getCurrentScene()-\/>getScene()-\/>\mbox{\hyperlink{class_toonz_scene_ae3c828e3223fd809fd59189233d0576a}{getXsheet}}();}
+\DoxyCodeLine{00738     FramesMap::const\_iterator ct;}
+\DoxyCodeLine{00739     \textcolor{keywordflow}{for} (ct = m\_frameRanges.begin(); ct != m\_frameRanges.end(); ++ct) \{}
+\DoxyCodeLine{00740       \textcolor{keywordtype}{int} n = 0;}
+\DoxyCodeLine{00741       \textcolor{keywordflow}{while} (n < ct-\/>second) \{}
+\DoxyCodeLine{00742         \textcolor{keywordtype}{int} row = ct-\/>first.first + n;}
+\DoxyCodeLine{00743         \textcolor{keywordtype}{int} col = ct-\/>first.second;}
+\DoxyCodeLine{00744         std::vector<std::pair<int, int>>::const\_iterator it;}
+\DoxyCodeLine{00745         \textcolor{keywordtype}{bool} found = \textcolor{keyword}{false};}
+\DoxyCodeLine{00746         \textcolor{keywordflow}{for} (it = emptyCells.begin(); it != emptyCells.end(); ++it) \{}
+\DoxyCodeLine{00747           \textcolor{keywordflow}{if} (it-\/>first == row \&\& it-\/>second == col) \{}
+\DoxyCodeLine{00748             xsh-\/>\mbox{\hyperlink{class_t_xsheet_a28381fbf27f33822b68cf66f689266da}{clearCells}}(row, col);}
+\DoxyCodeLine{00749             found = \textcolor{keyword}{true};}
+\DoxyCodeLine{00750           \}}
+\DoxyCodeLine{00751         \}}
+\DoxyCodeLine{00752 }
+\DoxyCodeLine{00753         \textcolor{keywordflow}{if} (!found)}
+\DoxyCodeLine{00754           DrawingSubtitutionUndo::changeDrawing(-\/m\_direction, row, col);}
+\DoxyCodeLine{00755         n++;}
+\DoxyCodeLine{00756       \}}
+\DoxyCodeLine{00757     \}}
+\DoxyCodeLine{00758 }
+\DoxyCodeLine{00759     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00760     \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{00761   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xsheetcmd.\+cpp\end{DoxyCompactItemize}

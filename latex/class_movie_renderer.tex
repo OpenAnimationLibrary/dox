@@ -1,0 +1,230 @@
+\hypertarget{class_movie_renderer}{}\doxysection{Movie\+Renderer Class Reference}
+\label{class_movie_renderer}\index{MovieRenderer@{MovieRenderer}}
+
+
+{\ttfamily \#include $<$movierenderer.\+h$>$}
+
+Inheritance diagram for Movie\+Renderer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_movie_renderer}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_movie_renderer_1_1_imp}{Imp}}
+\item 
+class \mbox{\hyperlink{class_movie_renderer_1_1_listener}{Listener}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_movie_renderer_a47a22ee1986430d80867a34169c6d1ae}{on\+Canceled}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_movie_renderer_a639124dfc0d22e357f7c646417bc5305}{Movie\+Renderer}} (\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$scene, const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&movie\+Path, int thread\+Count=1, bool cache\+Results=true)
+\item 
+void \mbox{\hyperlink{class_movie_renderer_ac454f925fb6562ff069974a0d3369709}{set\+Render\+Settings}} (const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&render\+Data)
+\item 
+void \mbox{\hyperlink{class_movie_renderer_a4692db6586ac8876331a61b660a2ac21}{set\+Dpi}} (double x\+Dpi, double y\+Dpi)
+\item 
+void \mbox{\hyperlink{class_movie_renderer_a41b7e2c104a5a24abc69af5d005db986}{add\+Listener}} (\mbox{\hyperlink{class_movie_renderer_1_1_listener}{Listener}} $\ast$listener)
+\item 
+void \mbox{\hyperlink{class_movie_renderer_a7317b775fff70559ad85ee4accac019e}{enable\+Precomputing}} (bool on)
+\item 
+bool \mbox{\hyperlink{class_movie_renderer_a8ed7c062dd2173998fcf8603c2c07cdd}{is\+Precomputing\+Enabled}} () const
+\item 
+\mbox{\hyperlink{class_t_renderer}{TRenderer}} $\ast$ \mbox{\hyperlink{class_movie_renderer_af06635976907162257263d6a5f94e3e2}{get\+TRenderer}} ()
+\item 
+void \mbox{\hyperlink{class_movie_renderer_a5244fb6dd7d46170a7908958c8282dc2}{add\+Frame}} (double frame, const \mbox{\hyperlink{class_t_fx_pair}{TFx\+Pair}} \&fx)
+\item 
+void \mbox{\hyperlink{class_movie_renderer_aabcb044ada92704d85ca7b44981430ed}{start}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_movie_renderer}{Movie\+Renderer}} is the high-\/level API class responsible for rendering Toonz scenes into movies. In a more generic view, the term \textquotesingle{}movie\textquotesingle{} represents here a generic sequence of images, which may even be kept in memory rather than written to file. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_movie_renderer_a639124dfc0d22e357f7c646417bc5305}\label{class_movie_renderer_a639124dfc0d22e357f7c646417bc5305}} 
+\index{MovieRenderer@{MovieRenderer}!MovieRenderer@{MovieRenderer}}
+\index{MovieRenderer@{MovieRenderer}!MovieRenderer@{MovieRenderer}}
+\doxysubsubsection{\texorpdfstring{MovieRenderer()}{MovieRenderer()}}
+{\footnotesize\ttfamily Movie\+Renderer\+::\+Movie\+Renderer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$}]{scene,  }\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{movie\+Path,  }\item[{int}]{thread\+Count = {\ttfamily 1},  }\item[{bool}]{cache\+Results = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00818     : m\_imp(\textcolor{keyword}{new} Imp(scene, moviePath, threadCount, cacheResults)) \{}
+\DoxyCodeLine{00819   m\_imp-\/>addRef();  \textcolor{comment}{// See MovieRenderer::start(). Can't just delete it in the}}
+\DoxyCodeLine{00820                     \textcolor{comment}{// dtor.}}
+\DoxyCodeLine{00821 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_movie_renderer_adbb99ec60b3a6fcf3c5e68b4bbf9d919}\label{class_movie_renderer_adbb99ec60b3a6fcf3c5e68b4bbf9d919}} 
+\index{MovieRenderer@{MovieRenderer}!````~MovieRenderer@{$\sim$MovieRenderer}}
+\index{````~MovieRenderer@{$\sim$MovieRenderer}!MovieRenderer@{MovieRenderer}}
+\doxysubsubsection{\texorpdfstring{$\sim$MovieRenderer()}{~MovieRenderer()}}
+{\footnotesize\ttfamily Movie\+Renderer\+::$\sim$\+Movie\+Renderer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00825 \{ m\_imp-\/>release(); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_movie_renderer_a5244fb6dd7d46170a7908958c8282dc2}\label{class_movie_renderer_a5244fb6dd7d46170a7908958c8282dc2}} 
+\index{MovieRenderer@{MovieRenderer}!addFrame@{addFrame}}
+\index{addFrame@{addFrame}!MovieRenderer@{MovieRenderer}}
+\doxysubsubsection{\texorpdfstring{addFrame()}{addFrame()}}
+{\footnotesize\ttfamily void Movie\+Renderer\+::add\+Frame (\begin{DoxyParamCaption}\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_fx_pair}{TFx\+Pair}} \&}]{fx }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00848                                                                 \{}
+\DoxyCodeLine{00849   m\_imp-\/>m\_framesToBeRendered.push\_back(std::make\_pair(frame, fxPair));}
+\DoxyCodeLine{00850 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_movie_renderer_a41b7e2c104a5a24abc69af5d005db986}\label{class_movie_renderer_a41b7e2c104a5a24abc69af5d005db986}} 
+\index{MovieRenderer@{MovieRenderer}!addListener@{addListener}}
+\index{addListener@{addListener}!MovieRenderer@{MovieRenderer}}
+\doxysubsubsection{\texorpdfstring{addListener()}{addListener()}}
+{\footnotesize\ttfamily void Movie\+Renderer\+::add\+Listener (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_movie_renderer_1_1_listener}{Listener}} $\ast$}]{listener }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00842                                                   \{}
+\DoxyCodeLine{00843   m\_imp-\/>m\_listeners.insert(listener);}
+\DoxyCodeLine{00844 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_movie_renderer_a7317b775fff70559ad85ee4accac019e}\label{class_movie_renderer_a7317b775fff70559ad85ee4accac019e}} 
+\index{MovieRenderer@{MovieRenderer}!enablePrecomputing@{enablePrecomputing}}
+\index{enablePrecomputing@{enablePrecomputing}!MovieRenderer@{MovieRenderer}}
+\doxysubsubsection{\texorpdfstring{enablePrecomputing()}{enablePrecomputing()}}
+{\footnotesize\ttfamily void Movie\+Renderer\+::enable\+Precomputing (\begin{DoxyParamCaption}\item[{bool}]{on }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00854                                               \{}
+\DoxyCodeLine{00855   m\_imp-\/>m\_renderer.enablePrecomputing(on);}
+\DoxyCodeLine{00856 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_movie_renderer_af06635976907162257263d6a5f94e3e2}\label{class_movie_renderer_af06635976907162257263d6a5f94e3e2}} 
+\index{MovieRenderer@{MovieRenderer}!getTRenderer@{getTRenderer}}
+\index{getTRenderer@{getTRenderer}!MovieRenderer@{MovieRenderer}}
+\doxysubsubsection{\texorpdfstring{getTRenderer()}{getTRenderer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_renderer}{TRenderer}} $\ast$ Movie\+Renderer\+::get\+TRenderer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00894                                        \{}
+\DoxyCodeLine{00895   \textcolor{comment}{// Again, this is somewhat BAD. The pointed-\/to object dies together with the}}
+\DoxyCodeLine{00896   \textcolor{comment}{// MovieRenderer instance.}}
+\DoxyCodeLine{00897   \textcolor{comment}{// Since a TRenderer is already smart-\/pointer-\/like, we could just return a}}
+\DoxyCodeLine{00898   \textcolor{comment}{// copy -\/ however, it really}}
+\DoxyCodeLine{00899   \textcolor{comment}{// shouldn't be that way. Maybe one day we'll revert that and actually use a}}
+\DoxyCodeLine{00900   \textcolor{comment}{// smart pointer class.}}
+\DoxyCodeLine{00901 }
+\DoxyCodeLine{00902   \textcolor{comment}{// For now, no use of this function seems to access the returned pointer}}
+\DoxyCodeLine{00903   \textcolor{comment}{// beyond the lifespan of the}}
+\DoxyCodeLine{00904   \textcolor{comment}{// associated MovieRenderer instance -\/ so I'm not gonna touch the class}}
+\DoxyCodeLine{00905   \textcolor{comment}{// interface.}}
+\DoxyCodeLine{00906   \textcolor{keywordflow}{return} \&m\_imp-\/>m\_renderer;}
+\DoxyCodeLine{00907 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_movie_renderer_a8ed7c062dd2173998fcf8603c2c07cdd}\label{class_movie_renderer_a8ed7c062dd2173998fcf8603c2c07cdd}} 
+\index{MovieRenderer@{MovieRenderer}!isPrecomputingEnabled@{isPrecomputingEnabled}}
+\index{isPrecomputingEnabled@{isPrecomputingEnabled}!MovieRenderer@{MovieRenderer}}
+\doxysubsubsection{\texorpdfstring{isPrecomputingEnabled()}{isPrecomputingEnabled()}}
+{\footnotesize\ttfamily bool Movie\+Renderer\+::is\+Precomputing\+Enabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00860                                                 \{}
+\DoxyCodeLine{00861   \textcolor{keywordflow}{return} m\_imp-\/>m\_renderer.isPrecomputingEnabled();}
+\DoxyCodeLine{00862 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_movie_renderer_a47a22ee1986430d80867a34169c6d1ae}\label{class_movie_renderer_a47a22ee1986430d80867a34169c6d1ae}} 
+\index{MovieRenderer@{MovieRenderer}!onCanceled@{onCanceled}}
+\index{onCanceled@{onCanceled}!MovieRenderer@{MovieRenderer}}
+\doxysubsubsection{\texorpdfstring{onCanceled}{onCanceled}}
+{\footnotesize\ttfamily void Movie\+Renderer\+::on\+Canceled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00890 \{ m\_imp-\/>m\_renderer.stopRendering(\textcolor{keyword}{true}); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_movie_renderer_a4692db6586ac8876331a61b660a2ac21}\label{class_movie_renderer_a4692db6586ac8876331a61b660a2ac21}} 
+\index{MovieRenderer@{MovieRenderer}!setDpi@{setDpi}}
+\index{setDpi@{setDpi}!MovieRenderer@{MovieRenderer}}
+\doxysubsubsection{\texorpdfstring{setDpi()}{setDpi()}}
+{\footnotesize\ttfamily void Movie\+Renderer\+::set\+Dpi (\begin{DoxyParamCaption}\item[{double}]{x\+Dpi,  }\item[{double}]{y\+Dpi }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00835                                                    \{}
+\DoxyCodeLine{00836   m\_imp-\/>m\_xDpi = xDpi;}
+\DoxyCodeLine{00837   m\_imp-\/>m\_yDpi = yDpi;}
+\DoxyCodeLine{00838 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_movie_renderer_ac454f925fb6562ff069974a0d3369709}\label{class_movie_renderer_ac454f925fb6562ff069974a0d3369709}} 
+\index{MovieRenderer@{MovieRenderer}!setRenderSettings@{setRenderSettings}}
+\index{setRenderSettings@{setRenderSettings}!MovieRenderer@{MovieRenderer}}
+\doxysubsubsection{\texorpdfstring{setRenderSettings()}{setRenderSettings()}}
+{\footnotesize\ttfamily void Movie\+Renderer\+::set\+Render\+Settings (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{render\+Data }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00829                                                                            \{}
+\DoxyCodeLine{00830   m\_imp-\/>m\_renderSettings = renderSettings;}
+\DoxyCodeLine{00831 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_movie_renderer_aabcb044ada92704d85ca7b44981430ed}\label{class_movie_renderer_aabcb044ada92704d85ca7b44981430ed}} 
+\index{MovieRenderer@{MovieRenderer}!start@{start}}
+\index{start@{start}!MovieRenderer@{MovieRenderer}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void Movie\+Renderer\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00866                           \{}
+\DoxyCodeLine{00867   m\_imp-\/>prepareForStart();}
+\DoxyCodeLine{00868 }
+\DoxyCodeLine{00869   \textcolor{comment}{// Add a reference to MovieRenderer's Imp. The reference is 'owned' by}}
+\DoxyCodeLine{00870   \textcolor{comment}{// TRenderer's render process -\/ when it}}
+\DoxyCodeLine{00871   \textcolor{comment}{// ends (that is, when notifies onRenderFinished), the reference is released.}}
+\DoxyCodeLine{00872   \textcolor{comment}{// As to TRenderer's specifics,}}
+\DoxyCodeLine{00873   \textcolor{comment}{// this is ensured to happen only after all the other port notifications for}}
+\DoxyCodeLine{00874   \textcolor{comment}{// each frame have been invoked.}}
+\DoxyCodeLine{00875   m\_imp-\/>addRef();}
+\DoxyCodeLine{00876 }
+\DoxyCodeLine{00877   \textcolor{comment}{// Prepare the TRenderer::RenderDatas to render}}
+\DoxyCodeLine{00878   RenderDataVector *datasToBeRendered = \textcolor{keyword}{new} RenderDataVector;}
+\DoxyCodeLine{00879   \textcolor{keywordtype}{size\_t} i, size = m\_imp-\/>m\_framesToBeRendered.size();}
+\DoxyCodeLine{00880   \textcolor{keywordflow}{for} (i = 0; i < size; ++i)}
+\DoxyCodeLine{00881     datasToBeRendered-\/>push\_back(\mbox{\hyperlink{struct_t_renderer_1_1_render_data}{TRenderer::RenderData}}(}
+\DoxyCodeLine{00882         m\_imp-\/>m\_framesToBeRendered[i].first, m\_imp-\/>m\_renderSettings,}
+\DoxyCodeLine{00883         m\_imp-\/>m\_framesToBeRendered[i].second));}
+\DoxyCodeLine{00884 }
+\DoxyCodeLine{00885   m\_imp-\/>m\_renderer.\mbox{\hyperlink{class_t_renderer_a478735dc2935569993603911e116e0f5}{startRendering}}(datasToBeRendered);}
+\DoxyCodeLine{00886 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonz/movierenderer.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzlib/movierenderer.\+cpp\end{DoxyCompactItemize}

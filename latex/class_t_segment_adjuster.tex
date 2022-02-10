@@ -1,0 +1,153 @@
+\hypertarget{class_t_segment_adjuster}{}\doxysection{TSegment\+Adjuster Class Reference}
+\label{class_t_segment_adjuster}\index{TSegmentAdjuster@{TSegmentAdjuster}}
+
+
+{\ttfamily \#include $<$tsegmentadjuster.\+h$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_t_segment_adjuster_1_1_end}{End}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_t_segment_adjuster_ad31dba69e874eef030e4d10ec1483c48}{enable\+Trace}} (bool enabled)
+\item 
+void \mbox{\hyperlink{class_t_segment_adjuster_a0ebc708cf0df88896004829e35c5d661}{draw}} ()
+\item 
+void \mbox{\hyperlink{class_t_segment_adjuster_a5b4665fd9100f8d1fb22c000932fc57a}{clear}} ()
+\item 
+void \mbox{\hyperlink{class_t_segment_adjuster_a640190be096f18db69ca7ef86d9d4fc3}{compute}} (\mbox{\hyperlink{class_t_segment_adjuster_1_1_end}{End}} \&a, \mbox{\hyperlink{class_t_segment_adjuster_1_1_end}{End}} \&b)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_t_segment_adjuster}{TSegment\+Adjuster}} minimizes the distance between
+
+stroke0-\/\texorpdfstring{$>$}{>}get\+Point(w0) and stroke1-\/\texorpdfstring{$>$}{>}get\+Point(w1)
+
+changing the values of w0 and w1 (in a defined range).
+
+Usage\+:
+
+\mbox{\hyperlink{class_t_segment_adjuster_1_1_end}{TSegment\+Adjuster\+::\+End}} p0(stroke0, w0, 0, 1); \mbox{\hyperlink{class_t_segment_adjuster_1_1_end}{TSegment\+Adjuster\+::\+End}} p1(stroke1, w1, 0, 1); \mbox{\hyperlink{class_t_segment_adjuster}{TSegment\+Adjuster}} adjuster; adjuster.\+compute(p0,p1);
+
+the adjusted segment is p0.\+get\+Point(), p1.\+get\+Point()
+
+if you want to adjust the segment only in the w-\/growing-\/direction\+:
+
+\mbox{\hyperlink{class_t_segment_adjuster_1_1_end}{TSegment\+Adjuster\+::\+End}} p0(stroke0, w0, w0, 1); \mbox{\hyperlink{class_t_segment_adjuster_1_1_end}{TSegment\+Adjuster\+::\+End}} p1(stroke1, w1, w1, 1); \mbox{\hyperlink{class_t_segment_adjuster}{TSegment\+Adjuster}} adjuster; adjuster.\+compute(p0,p1); 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_segment_adjuster_aa3420815503e4e02fd4e2d93893f02da}\label{class_t_segment_adjuster_aa3420815503e4e02fd4e2d93893f02da}} 
+\index{TSegmentAdjuster@{TSegmentAdjuster}!TSegmentAdjuster@{TSegmentAdjuster}}
+\index{TSegmentAdjuster@{TSegmentAdjuster}!TSegmentAdjuster@{TSegmentAdjuster}}
+\doxysubsubsection{\texorpdfstring{TSegmentAdjuster()}{TSegmentAdjuster()}}
+{\footnotesize\ttfamily TSegment\+Adjuster\+::\+TSegment\+Adjuster (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00008 : m\_traceEnabled(\textcolor{keyword}{false}) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_segment_adjuster_a5b4665fd9100f8d1fb22c000932fc57a}\label{class_t_segment_adjuster_a5b4665fd9100f8d1fb22c000932fc57a}} 
+\index{TSegmentAdjuster@{TSegmentAdjuster}!clear@{clear}}
+\index{clear@{clear}!TSegmentAdjuster@{TSegmentAdjuster}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void TSegment\+Adjuster\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00070 \{ m\_links.clear(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_segment_adjuster_a640190be096f18db69ca7ef86d9d4fc3}\label{class_t_segment_adjuster_a640190be096f18db69ca7ef86d9d4fc3}} 
+\index{TSegmentAdjuster@{TSegmentAdjuster}!compute@{compute}}
+\index{compute@{compute}!TSegmentAdjuster@{TSegmentAdjuster}}
+\doxysubsubsection{\texorpdfstring{compute()}{compute()}}
+{\footnotesize\ttfamily void TSegment\+Adjuster\+::compute (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_segment_adjuster_1_1_end}{End}} \&}]{a,  }\item[{\mbox{\hyperlink{class_t_segment_adjuster_1_1_end}{End}} \&}]{b }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00010                                                \{}
+\DoxyCodeLine{00011   m\_a = m\_c = pa;}
+\DoxyCodeLine{00012   m\_b = m\_d = pb;}
+\DoxyCodeLine{00013   m\_links.clear();}
+\DoxyCodeLine{00014   \textcolor{keywordflow}{if} (m\_traceEnabled)}
+\DoxyCodeLine{00015     m\_links.push\_back(std::make\_pair(m\_a.getPoint(), m\_b.getPoint()));}
+\DoxyCodeLine{00016 }
+\DoxyCodeLine{00017   \textcolor{keywordtype}{double} u = m\_a.m\_w, v = m\_b.m\_w;}
+\DoxyCodeLine{00018   \textcolor{comment}{// double ua=w0, va=w1;}}
+\DoxyCodeLine{00019   \textcolor{comment}{// TPointD c = (stroke0-\/>getPoint(ua)+stroke1-\/>getPoint(va))*0.5;}}
+\DoxyCodeLine{00020   \textcolor{keywordtype}{int} count = 0;}
+\DoxyCodeLine{00021   \textcolor{keywordflow}{for} (;;) \{}
+\DoxyCodeLine{00022     \textcolor{keywordflow}{if} (++count > 1000) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00023     \textcolor{keywordtype}{double} du, dv;}
+\DoxyCodeLine{00024     gradient(du, dv, u, v);}
+\DoxyCodeLine{00025     \textcolor{keywordtype}{double} dd = sqrt(du * du + dv * dv);}
+\DoxyCodeLine{00026     \textcolor{keywordflow}{if} (dd < 0.01) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00027     du *= 1.0 / dd;}
+\DoxyCodeLine{00028     dv *= 1.0 / dd;}
+\DoxyCodeLine{00029 }
+\DoxyCodeLine{00030     \textcolor{keywordtype}{double} a\_dsda = dsda(m\_a.m\_stroke, u, du);}
+\DoxyCodeLine{00031     \textcolor{keywordtype}{double} b\_dsda = dsda(m\_b.m\_stroke, v, dv);}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033     \textcolor{keyword}{const} \textcolor{keywordtype}{double} ds  = 0.5;}
+\DoxyCodeLine{00034     \textcolor{keyword}{const} \textcolor{keywordtype}{double} eps = 0.0001;}
+\DoxyCodeLine{00035     \textcolor{keywordtype}{double} a         = 0.01;}
+\DoxyCodeLine{00036     \textcolor{keywordtype}{double} aa;}
+\DoxyCodeLine{00037     \textcolor{keywordflow}{if} (a\_dsda > eps \&\& (aa = ds / a\_dsda, aa < a)) a = aa;}
+\DoxyCodeLine{00038     \textcolor{keywordflow}{if} (b\_dsda > eps \&\& (aa = ds / b\_dsda, aa < a)) a = aa;}
+\DoxyCodeLine{00039 }
+\DoxyCodeLine{00040     u -\/= a * du;}
+\DoxyCodeLine{00041     v -\/= a * dv;}
+\DoxyCodeLine{00042     u = tcrop(u, m\_a.m\_wmin, m\_a.m\_wmax);}
+\DoxyCodeLine{00043     v = tcrop(v, m\_b.m\_wmin, m\_b.m\_wmax);}
+\DoxyCodeLine{00044     \textcolor{keywordflow}{if} (m\_traceEnabled)}
+\DoxyCodeLine{00045       m\_links.push\_back(}
+\DoxyCodeLine{00046           std::make\_pair(m\_a.m\_stroke-\/>\mbox{\hyperlink{class_t_stroke_ace861e064b925c5d41a6d7381ae6ada5}{getPoint}}(u), m\_b.m\_stroke-\/>\mbox{\hyperlink{class_t_stroke_ace861e064b925c5d41a6d7381ae6ada5}{getPoint}}(v)));}
+\DoxyCodeLine{00047   \}}
+\DoxyCodeLine{00048   m\_c.m\_w = u;}
+\DoxyCodeLine{00049   m\_d.m\_w = v;}
+\DoxyCodeLine{00050   pa.m\_w  = u;}
+\DoxyCodeLine{00051   pb.m\_w  = v;}
+\DoxyCodeLine{00052 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_segment_adjuster_a0ebc708cf0df88896004829e35c5d661}\label{class_t_segment_adjuster_a0ebc708cf0df88896004829e35c5d661}} 
+\index{TSegmentAdjuster@{TSegmentAdjuster}!draw@{draw}}
+\index{draw@{draw}!TSegmentAdjuster@{TSegmentAdjuster}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void TSegment\+Adjuster\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054                             \{}
+\DoxyCodeLine{00055   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_links.size(); i++) \{}
+\DoxyCodeLine{00056     glColor3d(0.9, 0.8, 0.7);}
+\DoxyCodeLine{00057     tglDrawSegment(m\_links[i].first, m\_links[i].second);}
+\DoxyCodeLine{00058   \}}
+\DoxyCodeLine{00059 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_segment_adjuster_ad31dba69e874eef030e4d10ec1483c48}\label{class_t_segment_adjuster_ad31dba69e874eef030e4d10ec1483c48}} 
+\index{TSegmentAdjuster@{TSegmentAdjuster}!enableTrace@{enableTrace}}
+\index{enableTrace@{enableTrace}!TSegmentAdjuster@{TSegmentAdjuster}}
+\doxysubsubsection{\texorpdfstring{enableTrace()}{enableTrace()}}
+{\footnotesize\ttfamily void TSegment\+Adjuster\+::enable\+Trace (\begin{DoxyParamCaption}\item[{bool}]{enabled }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068 \{ m\_traceEnabled = enabled; \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/common/tvectorimage/tsegmentadjuster.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tvectorimage/tsegmentadjuster.\+cpp\end{DoxyCompactItemize}

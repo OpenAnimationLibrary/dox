@@ -1,0 +1,243 @@
+\hypertarget{class_file_icon_renderer}{}\doxysection{File\+Icon\+Renderer Class Reference}
+\label{class_file_icon_renderer}\index{FileIconRenderer@{FileIconRenderer}}
+Inheritance diagram for File\+Icon\+Renderer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_file_icon_renderer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_file_icon_renderer_a25cda971f3b6ee23ab3c2a97d6d6e84b}{File\+Icon\+Renderer}} (const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&icon\+Size, const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&fid)
+\item 
+void \mbox{\hyperlink{class_file_icon_renderer_acb43d3b6991244c29c9aef674abc46a7}{run}} () override
+\begin{DoxyCompactList}\small\item\em The central code of the task that is executed by a worker thread. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::string \mbox{\hyperlink{class_file_icon_renderer_a42ae0779ba834889c832277bdff7de2f}{get\+Id}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&fid)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_file_icon_renderer_a25cda971f3b6ee23ab3c2a97d6d6e84b}\label{class_file_icon_renderer_a25cda971f3b6ee23ab3c2a97d6d6e84b}} 
+\index{FileIconRenderer@{FileIconRenderer}!FileIconRenderer@{FileIconRenderer}}
+\index{FileIconRenderer@{FileIconRenderer}!FileIconRenderer@{FileIconRenderer}}
+\doxysubsubsection{\texorpdfstring{FileIconRenderer()}{FileIconRenderer()}}
+{\footnotesize\ttfamily File\+Icon\+Renderer\+::\+File\+Icon\+Renderer (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&}]{icon\+Size,  }\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&}]{fid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00923       : \mbox{\hyperlink{class_icon_renderer}{IconRenderer}}(getId(path, fid), iconSize), m\_path(path), m\_fid(fid) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_file_icon_renderer_a42ae0779ba834889c832277bdff7de2f}\label{class_file_icon_renderer_a42ae0779ba834889c832277bdff7de2f}} 
+\index{FileIconRenderer@{FileIconRenderer}!getId@{getId}}
+\index{getId@{getId}!FileIconRenderer@{FileIconRenderer}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily std\+::string File\+Icon\+Renderer\+::get\+Id (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{const \mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} \&}]{fid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00933                                                          \{}
+\DoxyCodeLine{00934   std::string type(path.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}());}
+\DoxyCodeLine{00935 }
+\DoxyCodeLine{00936   \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}tab"{}} || type == \textcolor{stringliteral}{"{}tnz"{}} ||}
+\DoxyCodeLine{00937       type == \textcolor{stringliteral}{"{}mesh"{}} ||  \textcolor{comment}{// meshes are not currently viewable}}
+\DoxyCodeLine{00938       TFileType::isViewable(TFileType::getInfo(path))) \{}
+\DoxyCodeLine{00939     std::string fidNumber;}
+\DoxyCodeLine{00940     \textcolor{keywordflow}{if} (fid != TFrameId::NO\_FRAME)}
+\DoxyCodeLine{00941       fidNumber = \textcolor{stringliteral}{"{}frame:"{}} + fid.expand(TFrameId::NO\_PAD);}
+\DoxyCodeLine{00942     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$:"{}} + ::to\_string(path) + fidNumber;}
+\DoxyCodeLine{00943   \}}
+\DoxyCodeLine{00944 }
+\DoxyCodeLine{00945   \textcolor{comment}{// All the other types whose icon is the same for file type, get the same id}}
+\DoxyCodeLine{00946   \textcolor{comment}{// per type.}}
+\DoxyCodeLine{00947   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}tpl"{}})}
+\DoxyCodeLine{00948     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$:tpl"{}};}
+\DoxyCodeLine{00949   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}tzp"{}})}
+\DoxyCodeLine{00950     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$:tzp"{}};}
+\DoxyCodeLine{00951   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}svg"{}})}
+\DoxyCodeLine{00952     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$:svg"{}};}
+\DoxyCodeLine{00953   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}tzu"{}})}
+\DoxyCodeLine{00954     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$:tzu"{}};}
+\DoxyCodeLine{00955   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (TFileType::getInfo(path) == TFileType::AUDIO\_LEVEL)}
+\DoxyCodeLine{00956     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$:audio"{}};}
+\DoxyCodeLine{00957   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}scr"{}})}
+\DoxyCodeLine{00958     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$:scr"{}};}
+\DoxyCodeLine{00959   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}mpath"{}})}
+\DoxyCodeLine{00960     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$:mpath"{}};}
+\DoxyCodeLine{00961   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}curve"{}})}
+\DoxyCodeLine{00962     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$:curve"{}};}
+\DoxyCodeLine{00963   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}cln"{}})}
+\DoxyCodeLine{00964     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$:cln"{}};}
+\DoxyCodeLine{00965   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}tnzbat"{}})}
+\DoxyCodeLine{00966     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$:tnzbat"{}};}
+\DoxyCodeLine{00967   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00968     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\$:unknown"{}};}
+\DoxyCodeLine{00969 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_file_icon_renderer_acb43d3b6991244c29c9aef674abc46a7}\label{class_file_icon_renderer_acb43d3b6991244c29c9aef674abc46a7}} 
+\index{FileIconRenderer@{FileIconRenderer}!run@{run}}
+\index{run@{run}!FileIconRenderer@{FileIconRenderer}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void File\+Icon\+Renderer\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+The central code of the task that is executed by a worker thread. 
+
+
+
+Implements \mbox{\hyperlink{class_icon_renderer_a0861b8f15a0a79a11c5675807537c230}{Icon\+Renderer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01151                            \{}
+\DoxyCodeLine{01152   \mbox{\hyperlink{class_t_dimension_t}{TDimension}} iconSize(getIconSize());}
+\DoxyCodeLine{01153   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{01154     \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} iconRaster;}
+\DoxyCodeLine{01155     std::string type(m\_path.\mbox{\hyperlink{class_t_file_path_aefca624df1a5468a4c78ec6d5dbfae26}{getType}}());}
+\DoxyCodeLine{01156 }
+\DoxyCodeLine{01157     \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}tnz"{}} || type == \textcolor{stringliteral}{"{}tab"{}})}
+\DoxyCodeLine{01158       iconRaster = IconGenerator::generateSceneFileIcon(m\_path, iconSize,}
+\DoxyCodeLine{01159                                                         m\_fid.getNumber() -\/ 1);}
+\DoxyCodeLine{01160     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}pli"{}})}
+\DoxyCodeLine{01161       iconRaster =}
+\DoxyCodeLine{01162           IconGenerator::generateVectorFileIcon(m\_path, iconSize, m\_fid);}
+\DoxyCodeLine{01163     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}tpl"{}}) \{}
+\DoxyCodeLine{01164       QImage palette(\textcolor{stringliteral}{"{}:Resources/paletteicon.svg"{}});}
+\DoxyCodeLine{01165       setIcon(rasterFromQImage(palette));}
+\DoxyCodeLine{01166       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01167     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}tzp"{}}) \{}
+\DoxyCodeLine{01168       QImage palette(\textcolor{stringliteral}{"{}:Resources/tzpicon.png"{}});}
+\DoxyCodeLine{01169       setIcon(rasterFromQImage(palette));}
+\DoxyCodeLine{01170       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01171     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}svg"{}}) \{}
+\DoxyCodeLine{01172       QPixmap svg(svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}mimetypes/60/svg\_icon.svg"{}}),}
+\DoxyCodeLine{01173                               QSize(iconSize.lx, iconSize.ly),}
+\DoxyCodeLine{01174                               Qt::KeepAspectRatio));}
+\DoxyCodeLine{01175       setIcon(rasterFromQPixmap(svg));}
+\DoxyCodeLine{01176       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01177     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}tzu"{}}) \{}
+\DoxyCodeLine{01178       QImage palette(\textcolor{stringliteral}{"{}:Resources/tzuicon.png"{}});}
+\DoxyCodeLine{01179       setIcon(rasterFromQImage(palette));}
+\DoxyCodeLine{01180       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01181     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (TFileType::getInfo(m\_path) == TFileType::AUDIO\_LEVEL) \{}
+\DoxyCodeLine{01182       QPixmap loudspeaker(}
+\DoxyCodeLine{01183           svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}mimetypes/60/audio\_icon.svg"{}}),}
+\DoxyCodeLine{01184                       QSize(iconSize.lx, iconSize.ly), Qt::KeepAspectRatio));}
+\DoxyCodeLine{01185       setIcon(rasterFromQPixmap(loudspeaker));}
+\DoxyCodeLine{01186       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01187     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}scr"{}}) \{}
+\DoxyCodeLine{01188       QImage screensaver(\textcolor{stringliteral}{"{}:Resources/savescreen.png"{}});}
+\DoxyCodeLine{01189       setIcon(rasterFromQImage(screensaver));}
+\DoxyCodeLine{01190       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01191     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}psd"{}}) \{}
+\DoxyCodeLine{01192       QPixmap psdPath(svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}mimetypes/60/psd\_icon.svg"{}}),}
+\DoxyCodeLine{01193                                   QSize(iconSize.lx, iconSize.ly),}
+\DoxyCodeLine{01194                                   Qt::KeepAspectRatio));}
+\DoxyCodeLine{01195       setIcon(rasterFromQPixmap(psdPath));}
+\DoxyCodeLine{01196       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01197     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}mesh"{}})}
+\DoxyCodeLine{01198       iconRaster = IconGenerator::generateMeshFileIcon(m\_path, iconSize, m\_fid);}
+\DoxyCodeLine{01199     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (TFileType::isViewable(TFileType::getInfo(m\_path)) || type == \textcolor{stringliteral}{"{}tlv"{}})}
+\DoxyCodeLine{01200       iconRaster =}
+\DoxyCodeLine{01201           IconGenerator::generateRasterFileIcon(m\_path, iconSize, m\_fid);}
+\DoxyCodeLine{01202     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}mpath"{}}) \{}
+\DoxyCodeLine{01203       QPixmap motionPath(}
+\DoxyCodeLine{01204           svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}mimetypes/60/motionpath\_icon.svg"{}}),}
+\DoxyCodeLine{01205                       QSize(iconSize.lx, iconSize.ly), Qt::KeepAspectRatio));}
+\DoxyCodeLine{01206       setIcon(rasterFromQPixmap(motionPath));}
+\DoxyCodeLine{01207       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01208     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}curve"{}}) \{}
+\DoxyCodeLine{01209       QPixmap curve(svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}mimetypes/60/curve\_icon.svg"{}}),}
+\DoxyCodeLine{01210                                 QSize(iconSize.lx, iconSize.ly),}
+\DoxyCodeLine{01211                                 Qt::KeepAspectRatio));}
+\DoxyCodeLine{01212       setIcon(rasterFromQPixmap(curve));}
+\DoxyCodeLine{01213       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01214     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}cln"{}}) \{}
+\DoxyCodeLine{01215       QPixmap cln(svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}mimetypes/60/cleanup\_icon.svg"{}}),}
+\DoxyCodeLine{01216                               QSize(iconSize.lx, iconSize.ly),}
+\DoxyCodeLine{01217                               Qt::KeepAspectRatio));}
+\DoxyCodeLine{01218       setIcon(rasterFromQPixmap(cln));}
+\DoxyCodeLine{01219       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01220     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}tnzbat"{}}) \{}
+\DoxyCodeLine{01221       QPixmap tnzBat(}
+\DoxyCodeLine{01222           svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}mimetypes/60/tasklist\_icon.svg"{}}),}
+\DoxyCodeLine{01223                       QSize(iconSize.lx, iconSize.ly), Qt::KeepAspectRatio));}
+\DoxyCodeLine{01224       setIcon(rasterFromQPixmap(tnzBat));}
+\DoxyCodeLine{01225       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01226     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}tls"{}}) \{}
+\DoxyCodeLine{01227       QPixmap tls(svgToPixmap(\textcolor{stringliteral}{"{}:Resources/magpie.svg"{}},}
+\DoxyCodeLine{01228                               QSize(iconSize.lx, iconSize.ly),}
+\DoxyCodeLine{01229                               Qt::KeepAspectRatio));}
+\DoxyCodeLine{01230       setIcon(rasterFromQPixmap(tls));}
+\DoxyCodeLine{01231       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01232     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}xdts"{}}) \{}
+\DoxyCodeLine{01233       QPixmap xdts(svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}mimetypes/60/xdts\_icon.svg"{}}),}
+\DoxyCodeLine{01234                                QSize(iconSize.lx, iconSize.ly),}
+\DoxyCodeLine{01235                                Qt::KeepAspectRatio));}
+\DoxyCodeLine{01236       setIcon(rasterFromQPixmap(xdts));}
+\DoxyCodeLine{01237       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01238     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}js"{}}) \{}
+\DoxyCodeLine{01239       QPixmap script(}
+\DoxyCodeLine{01240           svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}mimetypes/60/script\_icon.svg"{}}),}
+\DoxyCodeLine{01241                       QSize(iconSize.lx, iconSize.ly), Qt::KeepAspectRatio));}
+\DoxyCodeLine{01242       setIcon(rasterFromQPixmap(script));}
+\DoxyCodeLine{01243       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01244     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == \textcolor{stringliteral}{"{}json"{}}) \{}
+\DoxyCodeLine{01245       QPixmap json(svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}mimetypes/60/json\_icon.svg"{}}),}
+\DoxyCodeLine{01246                                QSize(iconSize.lx, iconSize.ly),}
+\DoxyCodeLine{01247                                Qt::KeepAspectRatio));}
+\DoxyCodeLine{01248       setIcon(rasterFromQPixmap(json));}
+\DoxyCodeLine{01249       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01250     \}}
+\DoxyCodeLine{01251 }
+\DoxyCodeLine{01252     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01253       QPixmap unknown(}
+\DoxyCodeLine{01254           svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}mimetypes/60/unknown\_icon.svg"{}}),}
+\DoxyCodeLine{01255                       QSize(iconSize.lx, iconSize.ly), Qt::KeepAspectRatio));}
+\DoxyCodeLine{01256       setIcon(rasterFromQPixmap(unknown));}
+\DoxyCodeLine{01257       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01258     \}}
+\DoxyCodeLine{01259     \textcolor{keywordflow}{if} (!iconRaster) \{}
+\DoxyCodeLine{01260       QPixmap broken(}
+\DoxyCodeLine{01261           svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}mimetypes/60/broken\_icon.svg"{}}),}
+\DoxyCodeLine{01262                       QSize(iconSize.lx, iconSize.ly), Qt::KeepAspectRatio));}
+\DoxyCodeLine{01263       setIcon(rasterFromQPixmap(broken));}
+\DoxyCodeLine{01264       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01265     \}}
+\DoxyCodeLine{01266     setIcon(iconRaster);}
+\DoxyCodeLine{01267   \} \textcolor{keywordflow}{catch} (\textcolor{keyword}{const} \mbox{\hyperlink{class_t_image_version_exception}{TImageVersionException}} \&) \{}
+\DoxyCodeLine{01268     QPixmap unknown(}
+\DoxyCodeLine{01269         svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}mimetypes/60/unknown\_icon.svg"{}}),}
+\DoxyCodeLine{01270                     QSize(iconSize.lx, iconSize.ly), Qt::KeepAspectRatio));}
+\DoxyCodeLine{01271     setIcon(rasterFromQPixmap(unknown));}
+\DoxyCodeLine{01272   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{01273     QPixmap broken(svgToPixmap(getIconThemePath(\textcolor{stringliteral}{"{}mimetypes/60/broken\_icon.svg"{}}),}
+\DoxyCodeLine{01274                                QSize(iconSize.lx, iconSize.ly),}
+\DoxyCodeLine{01275                                Qt::KeepAspectRatio));}
+\DoxyCodeLine{01276     setIcon(rasterFromQPixmap(broken));}
+\DoxyCodeLine{01277   \}}
+\DoxyCodeLine{01278 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00225}{TFile\+Path\+::get\+Type()}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzqt/icongenerator.\+cpp\end{DoxyCompactItemize}

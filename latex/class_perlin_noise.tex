@@ -1,0 +1,176 @@
+\hypertarget{class_perlin_noise}{}\doxysection{Perlin\+Noise Class Reference}
+\label{class_perlin_noise}\index{PerlinNoise@{PerlinNoise}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{class_perlin_noise_a16c620232848577fb7d24ef92dc65a1f}{Turbolence}} (double u, double v, double k, double grain)
+\item 
+double \mbox{\hyperlink{class_perlin_noise_ac1fcb69133c727744285145cc91964f0}{Turbolence}} (double u, double v, double k, double grain, double min, double max)
+\item 
+double \mbox{\hyperlink{class_perlin_noise_a96f467ad179f90b8d98bf1f75bf0aae2}{Marble}} (double u, double v, double k, double grain)
+\item 
+double \mbox{\hyperlink{class_perlin_noise_a879b25d6d6e3c9f18288d42fe4183b4c}{Marble}} (double u, double v, double k, double grain, double min, double max)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_perlin_noise_a1219657e8f3731aed347ba67d7b3cdcd}\label{class_perlin_noise_a1219657e8f3731aed347ba67d7b3cdcd}} 
+\index{PerlinNoise@{PerlinNoise}!PerlinNoise@{PerlinNoise}}
+\index{PerlinNoise@{PerlinNoise}!PerlinNoise@{PerlinNoise}}
+\doxysubsubsection{\texorpdfstring{PerlinNoise()}{PerlinNoise()}}
+{\footnotesize\ttfamily Perlin\+Noise\+::\+Perlin\+Noise (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00140                          : Noise(\textcolor{keyword}{new} \textcolor{keywordtype}{float}[Size * Size * TimeSize]) \{}
+\DoxyCodeLine{00141   \mbox{\hyperlink{class_t_random}{TRandom}} random(1);}
+\DoxyCodeLine{00142   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < Size; i++) \{}
+\DoxyCodeLine{00143     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < Size; j++) \{}
+\DoxyCodeLine{00144       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} k = 0; k < TimeSize; k++) \{}
+\DoxyCodeLine{00145         \textcolor{keywordtype}{float} tmp = random.getFloat();}
+\DoxyCodeLine{00146         \textcolor{comment}{// cout << "{}tmp = "{} << tmp << "{}HM = "{}<< HowMany<< endl;}}
+\DoxyCodeLine{00147         Noise[k + TimeSize * j + TimeSize * Size * i] = tmp;}
+\DoxyCodeLine{00148       \}}
+\DoxyCodeLine{00149     \}}
+\DoxyCodeLine{00150   \}}
+\DoxyCodeLine{00151 }
+\DoxyCodeLine{00152   \textcolor{comment}{// cout << "{}HowMany = "{} << HowMany <<endl;}}
+\DoxyCodeLine{00153 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_perlin_noise_a96f467ad179f90b8d98bf1f75bf0aae2}\label{class_perlin_noise_a96f467ad179f90b8d98bf1f75bf0aae2}} 
+\index{PerlinNoise@{PerlinNoise}!Marble@{Marble}}
+\index{Marble@{Marble}!PerlinNoise@{PerlinNoise}}
+\doxysubsubsection{\texorpdfstring{Marble()}{Marble()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily double Perlin\+Noise\+::\+Marble (\begin{DoxyParamCaption}\item[{double}]{u,  }\item[{double}]{v,  }\item[{double}]{k,  }\item[{double}]{grain }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00094                                                                      \{}
+\DoxyCodeLine{00095   u += Offset;}
+\DoxyCodeLine{00096   v += Offset;}
+\DoxyCodeLine{00097   Pixel\_size = 0.05;}
+\DoxyCodeLine{00098   \textcolor{keywordtype}{double} t = 0.0, scale = 1.0, tscale = 0;}
+\DoxyCodeLine{00099 }
+\DoxyCodeLine{00100   u /= grain;}
+\DoxyCodeLine{00101   v /= grain;}
+\DoxyCodeLine{00102   k /= 10;}
+\DoxyCodeLine{00103   \textcolor{keywordflow}{while} (scale > Pixel\_size) \{}
+\DoxyCodeLine{00104     tscale += scale;}
+\DoxyCodeLine{00105     t += LinearNoise(u / scale, v / scale, k / scale) * scale;}
+\DoxyCodeLine{00106     scale /= 2.0;}
+\DoxyCodeLine{00107   \}}
+\DoxyCodeLine{00108   t = 10 * t;}
+\DoxyCodeLine{00109   \textcolor{keywordflow}{return} (t -\/ (\textcolor{keywordtype}{int})t);}
+\DoxyCodeLine{00110 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_perlin_noise_a879b25d6d6e3c9f18288d42fe4183b4c}\label{class_perlin_noise_a879b25d6d6e3c9f18288d42fe4183b4c}} 
+\index{PerlinNoise@{PerlinNoise}!Marble@{Marble}}
+\index{Marble@{Marble}!PerlinNoise@{PerlinNoise}}
+\doxysubsubsection{\texorpdfstring{Marble()}{Marble()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily double Perlin\+Noise\+::\+Marble (\begin{DoxyParamCaption}\item[{double}]{u,  }\item[{double}]{v,  }\item[{double}]{k,  }\item[{double}]{grain,  }\item[{double}]{min,  }\item[{double}]{max }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00113                                                    \{}
+\DoxyCodeLine{00114   u += Offset;}
+\DoxyCodeLine{00115   v += Offset;}
+\DoxyCodeLine{00116   Pixel\_size = 0.05;}
+\DoxyCodeLine{00117   \textcolor{keywordtype}{double} t = 0.0, scale = 1.0, tscale = 0;}
+\DoxyCodeLine{00118 }
+\DoxyCodeLine{00119   u /= grain;}
+\DoxyCodeLine{00120   v /= grain;}
+\DoxyCodeLine{00121   k /= 10;}
+\DoxyCodeLine{00122   \textcolor{keywordflow}{while} (scale > Pixel\_size) \{}
+\DoxyCodeLine{00123     tscale += scale;}
+\DoxyCodeLine{00124     t += LinearNoise(u / scale, v / scale, k / scale) * scale;}
+\DoxyCodeLine{00125     scale /= 2.0;}
+\DoxyCodeLine{00126   \}}
+\DoxyCodeLine{00127   t = 10 * t;}
+\DoxyCodeLine{00128   t = (t -\/ (int)t);}
+\DoxyCodeLine{00129   \textcolor{keywordflow}{if} (t < min)}
+\DoxyCodeLine{00130     t = 0;}
+\DoxyCodeLine{00131   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00132     \textcolor{keywordflow}{if} (t > max)}
+\DoxyCodeLine{00133       t = 1;}
+\DoxyCodeLine{00134     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00135       t = (t -\/ min) / ((max -\/ min));}
+\DoxyCodeLine{00136   \}}
+\DoxyCodeLine{00137   \textcolor{keywordflow}{return} t;}
+\DoxyCodeLine{00138 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_perlin_noise_a16c620232848577fb7d24ef92dc65a1f}\label{class_perlin_noise_a16c620232848577fb7d24ef92dc65a1f}} 
+\index{PerlinNoise@{PerlinNoise}!Turbolence@{Turbolence}}
+\index{Turbolence@{Turbolence}!PerlinNoise@{PerlinNoise}}
+\doxysubsubsection{\texorpdfstring{Turbolence()}{Turbolence()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily double Perlin\+Noise\+::\+Turbolence (\begin{DoxyParamCaption}\item[{double}]{u,  }\item[{double}]{v,  }\item[{double}]{k,  }\item[{double}]{grain }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00050                                                                          \{}
+\DoxyCodeLine{00051   u += Offset;}
+\DoxyCodeLine{00052   v += Offset;}
+\DoxyCodeLine{00053   Pixel\_size = 0.05;}
+\DoxyCodeLine{00054   \textcolor{keywordtype}{double} t = 0.0, scale = 1.0, tscale = 0;}
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056   u /= grain;}
+\DoxyCodeLine{00057   v /= grain;}
+\DoxyCodeLine{00058   k /= 10;}
+\DoxyCodeLine{00059   \textcolor{keywordflow}{while} (scale > Pixel\_size) \{}
+\DoxyCodeLine{00060     tscale += scale;}
+\DoxyCodeLine{00061     t += LinearNoise(u / scale, v / scale, k / scale) * scale;}
+\DoxyCodeLine{00062     scale /= 2.0;}
+\DoxyCodeLine{00063   \}}
+\DoxyCodeLine{00064   \textcolor{keywordflow}{return} t / tscale;}
+\DoxyCodeLine{00065 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_perlin_noise_ac1fcb69133c727744285145cc91964f0}\label{class_perlin_noise_ac1fcb69133c727744285145cc91964f0}} 
+\index{PerlinNoise@{PerlinNoise}!Turbolence@{Turbolence}}
+\index{Turbolence@{Turbolence}!PerlinNoise@{PerlinNoise}}
+\doxysubsubsection{\texorpdfstring{Turbolence()}{Turbolence()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily double Perlin\+Noise\+::\+Turbolence (\begin{DoxyParamCaption}\item[{double}]{u,  }\item[{double}]{v,  }\item[{double}]{k,  }\item[{double}]{grain,  }\item[{double}]{min,  }\item[{double}]{max }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068                                                        \{}
+\DoxyCodeLine{00069   u += Offset;}
+\DoxyCodeLine{00070   v += Offset;}
+\DoxyCodeLine{00071   Pixel\_size = 0.05;}
+\DoxyCodeLine{00072   \textcolor{keywordtype}{double} t = 0.0, scale = 1.0, tscale = 0;}
+\DoxyCodeLine{00073 }
+\DoxyCodeLine{00074   u /= grain;}
+\DoxyCodeLine{00075   v /= grain;}
+\DoxyCodeLine{00076   k /= 10;}
+\DoxyCodeLine{00077   \textcolor{keywordflow}{while} (scale > Pixel\_size) \{}
+\DoxyCodeLine{00078     tscale += scale;}
+\DoxyCodeLine{00079     t += LinearNoise(u / scale, v / scale, k / scale) * scale;}
+\DoxyCodeLine{00080     scale /= 2.0;}
+\DoxyCodeLine{00081   \}}
+\DoxyCodeLine{00082   t = t / tscale;}
+\DoxyCodeLine{00083   \textcolor{keywordflow}{if} (t < min)}
+\DoxyCodeLine{00084     t = 0;}
+\DoxyCodeLine{00085   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00086     \textcolor{keywordflow}{if} (t > max)}
+\DoxyCodeLine{00087       t = 1;}
+\DoxyCodeLine{00088     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00089       t = (t -\/ min) / ((max -\/ min));}
+\DoxyCodeLine{00090   \}}
+\DoxyCodeLine{00091   \textcolor{keywordflow}{return} t;}
+\DoxyCodeLine{00092 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/perlinnoise.\+h\item 
+E\+:/opentoonz/toonz/sources/stdfx/perlinnoise.\+cpp\end{DoxyCompactItemize}

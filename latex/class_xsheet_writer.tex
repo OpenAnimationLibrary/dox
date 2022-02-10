@@ -1,0 +1,315 @@
+\hypertarget{class_xsheet_writer}{}\doxysection{Xsheet\+Writer Class Reference}
+\label{class_xsheet_writer}\index{XsheetWriter@{XsheetWriter}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_xsheet_writer_aa8aee401653d323f6420dc39fd2adf30}{Xsheet\+Writer}} (\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$scene)
+\item 
+void \mbox{\hyperlink{class_xsheet_writer_ad20e1089333f28c3495d3d816272e741}{set\+Xsheet}} (\mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$xsh)
+\item 
+void \mbox{\hyperlink{class_xsheet_writer_a131ebb38248514b7e9cb2633fcbb6a60}{get\+Sub\+Xsheets}} (std\+::vector$<$ \mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$ $>$ \&xsheets)
+\item 
+int \mbox{\hyperlink{class_xsheet_writer_a86d71c826d26a397ab8782c6a5a2521a}{get\+Child\+Level\+Index}} (\mbox{\hyperlink{class_t_xsh_child_level}{TXsh\+Child\+Level}} $\ast$)
+\item 
+void \mbox{\hyperlink{class_xsheet_writer_a9002cefd256a850205e39816ced5b021}{build\+Numeric\+Columns}} ()
+\item 
+void \mbox{\hyperlink{class_xsheet_writer_a5b5ba115a1756afb067dbb481702292a}{build\+Child\+Table}} (\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$scene)
+\item 
+void \mbox{\hyperlink{class_xsheet_writer_a2d7afeff2f80ef58bf6a56e927ab5dba}{table\+Caption}} (ostream \&os)
+\item 
+void \mbox{\hyperlink{class_xsheet_writer_a54c574ac47b13c6a10297eb7b1a34791}{column\+Header}} (ostream \&os, int c)
+\item 
+void \mbox{\hyperlink{class_xsheet_writer_a13df2fefd0d9e4ea403159b7b1761cad}{numeric\+Column\+Header}} (ostream \&os, int c)
+\item 
+void \mbox{\hyperlink{class_xsheet_writer_ab0cf0a844a8465b3de8b8a5b14f6200c}{cell}} (ostream \&os, int r, int c)
+\item 
+void \mbox{\hyperlink{class_xsheet_writer_ac3823c47a485fcc60b2dff98b0863bb2}{numeric\+Cell}} (ostream \&os, int r, int c)
+\item 
+void \mbox{\hyperlink{class_xsheet_writer_a3f55ca564cc3770388195389c6d69696}{write}} (ostream \&os)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_xsheet_writer_aa8aee401653d323f6420dc39fd2adf30}\label{class_xsheet_writer_aa8aee401653d323f6420dc39fd2adf30}} 
+\index{XsheetWriter@{XsheetWriter}!XsheetWriter@{XsheetWriter}}
+\index{XsheetWriter@{XsheetWriter}!XsheetWriter@{XsheetWriter}}
+\doxysubsubsection{\texorpdfstring{XsheetWriter()}{XsheetWriter()}}
+{\footnotesize\ttfamily Xsheet\+Writer\+::\+Xsheet\+Writer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$}]{scene }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01879                                             : m\_xsh(0) \{}
+\DoxyCodeLine{01880   buildChildTable(scene);}
+\DoxyCodeLine{01881   setXsheet(scene-\/>\mbox{\hyperlink{class_toonz_scene_ae3c828e3223fd809fd59189233d0576a}{getXsheet}}());}
+\DoxyCodeLine{01882 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_xsheet_writer_a5b5ba115a1756afb067dbb481702292a}\label{class_xsheet_writer_a5b5ba115a1756afb067dbb481702292a}} 
+\index{XsheetWriter@{XsheetWriter}!buildChildTable@{buildChildTable}}
+\index{buildChildTable@{buildChildTable}!XsheetWriter@{XsheetWriter}}
+\doxysubsubsection{\texorpdfstring{buildChildTable()}{buildChildTable()}}
+{\footnotesize\ttfamily void Xsheet\+Writer\+::build\+Child\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_toonz_scene}{Toonz\+Scene}} $\ast$}]{scene }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01915                                                     \{}
+\DoxyCodeLine{01916   std::vector<TXshChildLevel *> levels;}
+\DoxyCodeLine{01917   getAllChildLevels(levels, scene);}
+\DoxyCodeLine{01918   \textcolor{keywordtype}{int} i, k = 0;}
+\DoxyCodeLine{01919   \textcolor{keywordflow}{for} (i = 0; i < (int)levels.size(); i++) m\_childTable[levels[i]] = k++;}
+\DoxyCodeLine{01920 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_writer_a9002cefd256a850205e39816ced5b021}\label{class_xsheet_writer_a9002cefd256a850205e39816ced5b021}} 
+\index{XsheetWriter@{XsheetWriter}!buildNumericColumns@{buildNumericColumns}}
+\index{buildNumericColumns@{buildNumericColumns}!XsheetWriter@{XsheetWriter}}
+\doxysubsubsection{\texorpdfstring{buildNumericColumns()}{buildNumericColumns()}}
+{\footnotesize\ttfamily void Xsheet\+Writer\+::build\+Numeric\+Columns (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01901                                        \{}
+\DoxyCodeLine{01902   m\_numericColumns.clear();}
+\DoxyCodeLine{01903   \mbox{\hyperlink{class_t_stage_object_tree}{TStageObjectTree}} *pegbarTree = m\_xsh-\/>\mbox{\hyperlink{class_t_xsheet_a5dc925584e35e1678f5678b79c470959}{getStageObjectTree}}();}
+\DoxyCodeLine{01904   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < pegbarTree-\/>\mbox{\hyperlink{class_t_stage_object_tree_ad0f2bb7d9ffc580ba20305d40566d2a8}{getStageObjectCount}}(); i++) \{}
+\DoxyCodeLine{01905     \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *pegbar = pegbarTree-\/>\mbox{\hyperlink{class_t_stage_object_tree_a688e5b4f2f5730afb0cb10264f13a113}{getStageObject}}(i);}
+\DoxyCodeLine{01906     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < TStageObject::T\_ChannelCount; j++) \{}
+\DoxyCodeLine{01907       TDoubleParamP curve = pegbar-\/>\mbox{\hyperlink{class_t_stage_object_ae4cf64f5085310a14074ceb54d2b5177}{getParam}}((\mbox{\hyperlink{class_t_stage_object_ac7a60ddc803173dc7591f784577cb439}{TStageObject::Channel}})j);}
+\DoxyCodeLine{01908       \textcolor{keywordflow}{if} (curve-\/>hasKeyframes()) \{}
+\DoxyCodeLine{01909         m\_numericColumns.push\_back(\mbox{\hyperlink{struct_numeric_column}{NumericColumn}}(pegbar, curve));}
+\DoxyCodeLine{01910       \}}
+\DoxyCodeLine{01911     \}}
+\DoxyCodeLine{01912   \}}
+\DoxyCodeLine{01913 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_writer_ab0cf0a844a8465b3de8b8a5b14f6200c}\label{class_xsheet_writer_ab0cf0a844a8465b3de8b8a5b14f6200c}} 
+\index{XsheetWriter@{XsheetWriter}!cell@{cell}}
+\index{cell@{cell}!XsheetWriter@{XsheetWriter}}
+\doxysubsubsection{\texorpdfstring{cell()}{cell()}}
+{\footnotesize\ttfamily void Xsheet\+Writer\+::cell (\begin{DoxyParamCaption}\item[{ostream \&}]{os,  }\item[{int}]{r,  }\item[{int}]{c }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01939                                                  \{}
+\DoxyCodeLine{01940   \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} prevCell;}
+\DoxyCodeLine{01941   \textcolor{keywordflow}{if} (r > 0) prevCell = m\_xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r -\/ 1, c);}
+\DoxyCodeLine{01942   \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell = m\_xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(r, c);}
+\DoxyCodeLine{01943   \textcolor{keywordflow}{if} (cell.\mbox{\hyperlink{class_t_xsh_cell_a5d20229e7bcd19957b123959e58a833e}{isEmpty}}())}
+\DoxyCodeLine{01944     os << \textcolor{stringliteral}{"{}<td class='emptycell'>\&nbsp;</td>"{}};}
+\DoxyCodeLine{01945   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01946     \mbox{\hyperlink{class_t_xsh_level}{TXshLevel}} *level = cell.m\_level.getPointer();}
+\DoxyCodeLine{01947     std::string type = \textcolor{stringliteral}{"{}levelcell"{}};}
+\DoxyCodeLine{01948     \textcolor{keywordflow}{if} (level-\/>\mbox{\hyperlink{class_t_xsh_level_a6ef7d48e41f4f214b414e959512e6377}{getChildLevel}}())}
+\DoxyCodeLine{01949       type = \textcolor{stringliteral}{"{}subxsheetcell"{}};}
+\DoxyCodeLine{01950     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (level-\/>\mbox{\hyperlink{class_t_xsh_level_a903cb5c2c50f8f34fdda2b89ecdece7f}{getZeraryFxLevel}}())}
+\DoxyCodeLine{01951       type = \textcolor{stringliteral}{"{}fxcell"{}};}
+\DoxyCodeLine{01952 }
+\DoxyCodeLine{01953     os << \textcolor{stringliteral}{"{}<td class='"{}} << type << \textcolor{stringliteral}{"{}'>"{}};}
+\DoxyCodeLine{01954     \textcolor{keywordtype}{bool} newPage = r \% rowsPerPage == 0;}
+\DoxyCodeLine{01955     \textcolor{keywordflow}{if} (cell.m\_level.getPointer() == prevCell.m\_level.getPointer() \&\&}
+\DoxyCodeLine{01956         !newPage) \{}
+\DoxyCodeLine{01957       \textcolor{comment}{// stesso livello}}
+\DoxyCodeLine{01958       \textcolor{keywordflow}{if} (cell.m\_frameId == prevCell.m\_frameId) \{}
+\DoxyCodeLine{01959         \textcolor{comment}{// stesso frame}}
+\DoxyCodeLine{01960         os << \textcolor{stringliteral}{"{}|"{}};}
+\DoxyCodeLine{01961       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01962         \textcolor{comment}{// frame diverso}}
+\DoxyCodeLine{01963         os << cell.m\_frameId.getNumber();}
+\DoxyCodeLine{01964       \}}
+\DoxyCodeLine{01965     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01966       \textcolor{comment}{// livello diverso}}
+\DoxyCodeLine{01967 }
+\DoxyCodeLine{01968       std::string levelName;}
+\DoxyCodeLine{01969       \textcolor{keywordflow}{if} (level-\/>\mbox{\hyperlink{class_t_xsh_level_a6ef7d48e41f4f214b414e959512e6377}{getChildLevel}}()) \{}
+\DoxyCodeLine{01970         \textcolor{keywordtype}{int} index = getChildLevelIndex(level-\/>\mbox{\hyperlink{class_t_xsh_level_a6ef7d48e41f4f214b414e959512e6377}{getChildLevel}}());}
+\DoxyCodeLine{01971         levelName = index >= 0 ? \textcolor{stringliteral}{"{}Sub"{}} + std::to\_string(index + 1) : \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{01972       \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01973         levelName = ::to\_string(level-\/>\mbox{\hyperlink{class_t_xsh_level_a3a59fb1bd3261baee4e889a9edbf0ae8}{getName}}());}
+\DoxyCodeLine{01974       os << levelName << \textcolor{stringliteral}{"{} "{}} << cell.m\_frameId.getNumber();}
+\DoxyCodeLine{01975     \}}
+\DoxyCodeLine{01976     os << \textcolor{stringliteral}{"{}</td>"{}} << endl;}
+\DoxyCodeLine{01977   \}}
+\DoxyCodeLine{01978 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_writer_a54c574ac47b13c6a10297eb7b1a34791}\label{class_xsheet_writer_a54c574ac47b13c6a10297eb7b1a34791}} 
+\index{XsheetWriter@{XsheetWriter}!columnHeader@{columnHeader}}
+\index{columnHeader@{columnHeader}!XsheetWriter@{XsheetWriter}}
+\doxysubsubsection{\texorpdfstring{columnHeader()}{columnHeader()}}
+{\footnotesize\ttfamily void Xsheet\+Writer\+::column\+Header (\begin{DoxyParamCaption}\item[{ostream \&}]{os,  }\item[{int}]{c }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01924                                                   \{}
+\DoxyCodeLine{01925   os << \textcolor{stringliteral}{"{}  <th>"{}} << (c + 1) << \textcolor{stringliteral}{"{}</th>"{}} << endl;}
+\DoxyCodeLine{01926 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_writer_a86d71c826d26a397ab8782c6a5a2521a}\label{class_xsheet_writer_a86d71c826d26a397ab8782c6a5a2521a}} 
+\index{XsheetWriter@{XsheetWriter}!getChildLevelIndex@{getChildLevelIndex}}
+\index{getChildLevelIndex@{getChildLevelIndex}!XsheetWriter@{XsheetWriter}}
+\doxysubsubsection{\texorpdfstring{getChildLevelIndex()}{getChildLevelIndex()}}
+{\footnotesize\ttfamily int Xsheet\+Writer\+::get\+Child\+Level\+Index (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsh_child_level}{TXsh\+Child\+Level}} $\ast$}]{cl }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01895                                                        \{}
+\DoxyCodeLine{01896   std::map<TXshChildLevel *, int>::iterator it;}
+\DoxyCodeLine{01897   it = m\_childTable.find(cl);}
+\DoxyCodeLine{01898   \textcolor{keywordflow}{return} it == m\_childTable.end() ? -\/1 : it-\/>second;}
+\DoxyCodeLine{01899 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_writer_a131ebb38248514b7e9cb2633fcbb6a60}\label{class_xsheet_writer_a131ebb38248514b7e9cb2633fcbb6a60}} 
+\index{XsheetWriter@{XsheetWriter}!getSubXsheets@{getSubXsheets}}
+\index{getSubXsheets@{getSubXsheets}!XsheetWriter@{XsheetWriter}}
+\doxysubsubsection{\texorpdfstring{getSubXsheets()}{getSubXsheets()}}
+{\footnotesize\ttfamily void Xsheet\+Writer\+::get\+Sub\+Xsheets (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$ $>$ \&}]{xsheets }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01889                                                               \{}
+\DoxyCodeLine{01890   std::map<TXshChildLevel *, int>::iterator it;}
+\DoxyCodeLine{01891   \textcolor{keywordflow}{for} (it = m\_childTable.begin(); it != m\_childTable.end(); ++it)}
+\DoxyCodeLine{01892     xsheets.push\_back(it-\/>first-\/>getXsheet());}
+\DoxyCodeLine{01893 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_writer_ac3823c47a485fcc60b2dff98b0863bb2}\label{class_xsheet_writer_ac3823c47a485fcc60b2dff98b0863bb2}} 
+\index{XsheetWriter@{XsheetWriter}!numericCell@{numericCell}}
+\index{numericCell@{numericCell}!XsheetWriter@{XsheetWriter}}
+\doxysubsubsection{\texorpdfstring{numericCell()}{numericCell()}}
+{\footnotesize\ttfamily void Xsheet\+Writer\+::numeric\+Cell (\begin{DoxyParamCaption}\item[{ostream \&}]{os,  }\item[{int}]{r,  }\item[{int}]{c }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01980                                                         \{}
+\DoxyCodeLine{01981   TDoubleParamP curve = m\_numericColumns[c].m\_curve;}
+\DoxyCodeLine{01982 }
+\DoxyCodeLine{01983   \textcolor{keywordtype}{double} v          = curve-\/>getValue(r);}
+\DoxyCodeLine{01984   \mbox{\hyperlink{class_t_measure}{TMeasure}} *measure = curve-\/>getMeasure();}
+\DoxyCodeLine{01985   \textcolor{keywordflow}{if} (measure) \{}
+\DoxyCodeLine{01986     \textcolor{keyword}{const} \mbox{\hyperlink{class_t_unit}{TUnit}} *unit = measure-\/>getCurrentUnit();}
+\DoxyCodeLine{01987     \textcolor{keywordflow}{if} (unit) v = unit-\/>convertTo(v);}
+\DoxyCodeLine{01988   \}}
+\DoxyCodeLine{01989 }
+\DoxyCodeLine{01990   os << \textcolor{stringliteral}{"{}<td class='"{}} << (c > 0 ? \textcolor{stringliteral}{"{}numeric"{}} : \textcolor{stringliteral}{"{}first\_numeric"{}}) << \textcolor{stringliteral}{"{}'>"{}};}
+\DoxyCodeLine{01991   os << v << \textcolor{stringliteral}{"{}</td>"{}} << endl;}
+\DoxyCodeLine{01992 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_writer_a13df2fefd0d9e4ea403159b7b1761cad}\label{class_xsheet_writer_a13df2fefd0d9e4ea403159b7b1761cad}} 
+\index{XsheetWriter@{XsheetWriter}!numericColumnHeader@{numericColumnHeader}}
+\index{numericColumnHeader@{numericColumnHeader}!XsheetWriter@{XsheetWriter}}
+\doxysubsubsection{\texorpdfstring{numericColumnHeader()}{numericColumnHeader()}}
+{\footnotesize\ttfamily void Xsheet\+Writer\+::numeric\+Column\+Header (\begin{DoxyParamCaption}\item[{ostream \&}]{os,  }\item[{int}]{c }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01928                                                          \{}
+\DoxyCodeLine{01929   std::string pegbarName = m\_numericColumns[c].m\_pegbar-\/>getName();}
+\DoxyCodeLine{01930   std::string curveName =}
+\DoxyCodeLine{01931       m\_numericColumns[c]}
+\DoxyCodeLine{01932           .m\_curve}
+\DoxyCodeLine{01933           -\/>getName();  \textcolor{comment}{// toString(TStringTable::translate(m\_numericColumns[c].m\_curve-\/>getName()));}}
+\DoxyCodeLine{01934   os << \textcolor{stringliteral}{"{}  <th class='"{}} << (c > 0 ? \textcolor{stringliteral}{"{}numeric"{}} : \textcolor{stringliteral}{"{}first\_numeric"{}}) << \textcolor{stringliteral}{"{}'>"{}};}
+\DoxyCodeLine{01935   os << pegbarName << \textcolor{stringliteral}{"{}<br>"{}} << curveName;}
+\DoxyCodeLine{01936   os << \textcolor{stringliteral}{"{}</th>"{}} << endl;}
+\DoxyCodeLine{01937 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_writer_ad20e1089333f28c3495d3d816272e741}\label{class_xsheet_writer_ad20e1089333f28c3495d3d816272e741}} 
+\index{XsheetWriter@{XsheetWriter}!setXsheet@{setXsheet}}
+\index{setXsheet@{setXsheet}!XsheetWriter@{XsheetWriter}}
+\doxysubsubsection{\texorpdfstring{setXsheet()}{setXsheet()}}
+{\footnotesize\ttfamily void Xsheet\+Writer\+::set\+Xsheet (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_xsheet}{TXsheet}} $\ast$}]{xsh }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01884                                          \{}
+\DoxyCodeLine{01885   m\_xsh = xsh;}
+\DoxyCodeLine{01886   buildNumericColumns();}
+\DoxyCodeLine{01887 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_writer_a2d7afeff2f80ef58bf6a56e927ab5dba}\label{class_xsheet_writer_a2d7afeff2f80ef58bf6a56e927ab5dba}} 
+\index{XsheetWriter@{XsheetWriter}!tableCaption@{tableCaption}}
+\index{tableCaption@{tableCaption}!XsheetWriter@{XsheetWriter}}
+\doxysubsubsection{\texorpdfstring{tableCaption()}{tableCaption()}}
+{\footnotesize\ttfamily void Xsheet\+Writer\+::table\+Caption (\begin{DoxyParamCaption}\item[{ostream \&}]{os }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01922 \{ os << \textcolor{stringliteral}{"{}<p>\&nbsp;</p>\(\backslash\)n"{}}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_xsheet_writer_a3f55ca564cc3770388195389c6d69696}\label{class_xsheet_writer_a3f55ca564cc3770388195389c6d69696}} 
+\index{XsheetWriter@{XsheetWriter}!write@{write}}
+\index{write@{write}!XsheetWriter@{XsheetWriter}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void Xsheet\+Writer\+::write (\begin{DoxyParamCaption}\item[{ostream \&}]{os }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01994                                     \{}
+\DoxyCodeLine{01995   \textcolor{keywordtype}{int} rowCount    = m\_xsh-\/>\mbox{\hyperlink{class_t_xsheet_a12a62da7dc04395088112e492d73374f}{getFrameCount}}();}
+\DoxyCodeLine{01996   \textcolor{keywordtype}{int} colCount    = m\_xsh-\/>\mbox{\hyperlink{class_t_xsheet_a17464dc5617cf87a46f03e1a52d36cc1}{getColumnCount}}();}
+\DoxyCodeLine{01997   \textcolor{keywordtype}{int} totColCount = colCount + (int)m\_numericColumns.size();}
+\DoxyCodeLine{01998   \textcolor{keywordtype}{int} c0, c1;}
+\DoxyCodeLine{01999   c0 = 0;}
+\DoxyCodeLine{02000   \textcolor{keywordflow}{for} (;;) \{}
+\DoxyCodeLine{02001     c1      = std::min(totColCount, c0 + columnsPerPage) -\/ 1;}
+\DoxyCodeLine{02002     \textcolor{keywordtype}{int} ca0 = 0, ca1 = -\/1, cb0 = 0, cb1 = -\/1;}
+\DoxyCodeLine{02003     \textcolor{keywordflow}{if} (c0 < colCount) \{}
+\DoxyCodeLine{02004       ca0 = c0;}
+\DoxyCodeLine{02005       ca1 = std::min(colCount -\/ 1, c1);}
+\DoxyCodeLine{02006     \}}
+\DoxyCodeLine{02007     \textcolor{keywordflow}{if} (c1 >= colCount) \{}
+\DoxyCodeLine{02008       cb0 = std::max(c0, colCount);}
+\DoxyCodeLine{02009       cb1 = c1;}
+\DoxyCodeLine{02010     \}}
+\DoxyCodeLine{02011 }
+\DoxyCodeLine{02012     \textcolor{keywordtype}{int} r0, r1, r, c;}
+\DoxyCodeLine{02013     r0 = 0;}
+\DoxyCodeLine{02014     \textcolor{keywordflow}{for} (;;) \{}
+\DoxyCodeLine{02015       r1 = std::min(rowCount, r0 + rowsPerPage) -\/ 1;}
+\DoxyCodeLine{02016       tableCaption(os);}
+\DoxyCodeLine{02017       os << \textcolor{stringliteral}{"{}<table>"{}} << endl << \textcolor{stringliteral}{"{}<tr>"{}} << endl;}
+\DoxyCodeLine{02018       \textcolor{keywordflow}{if} (c0 == 0) os << \textcolor{stringliteral}{"{}  <th>\&nbsp;</th>"{}} << endl;}
+\DoxyCodeLine{02019       \textcolor{keywordflow}{for} (c = c0; c <= c1; c++) \{}
+\DoxyCodeLine{02020         \textcolor{keywordflow}{if} (c < colCount)}
+\DoxyCodeLine{02021           columnHeader(os, c);}
+\DoxyCodeLine{02022         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{02023           numericColumnHeader(os, c -\/ colCount);}
+\DoxyCodeLine{02024       \}}
+\DoxyCodeLine{02025       os << \textcolor{stringliteral}{"{}</tr>"{}} << endl;}
+\DoxyCodeLine{02026       \textcolor{keywordflow}{for} (r = r0; r <= r1; r++) \{}
+\DoxyCodeLine{02027         os << \textcolor{stringliteral}{"{}<tr>"{}} << endl;}
+\DoxyCodeLine{02028         os << \textcolor{stringliteral}{"{}  <th class='frame'>"{}} << r + 1 << \textcolor{stringliteral}{"{}</th>"{}} << endl;}
+\DoxyCodeLine{02029 }
+\DoxyCodeLine{02030         \textcolor{keywordflow}{for} (c = ca0; c <= ca1; c++) cell(os, r, c);}
+\DoxyCodeLine{02031         \textcolor{keywordflow}{for} (c = cb0; c <= cb1; c++) numericCell(os, r, c -\/ colCount);}
+\DoxyCodeLine{02032         os << \textcolor{stringliteral}{"{}</tr>"{}} << endl;}
+\DoxyCodeLine{02033       \}}
+\DoxyCodeLine{02034       os << \textcolor{stringliteral}{"{}</table>"{}} << endl;}
+\DoxyCodeLine{02035       r0 = r1 + 1;}
+\DoxyCodeLine{02036       \textcolor{keywordflow}{if} (r0 >= rowCount) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{02037     \}}
+\DoxyCodeLine{02038     c0 = c1 + 1;}
+\DoxyCodeLine{02039     \textcolor{keywordflow}{if} (c0 >= totColCount) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{02040   \}}
+\DoxyCodeLine{02041 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xsheetcmd.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,208 @@
+\hypertarget{class_point_param_field}{}\doxysection{Point\+Param\+Field Class Reference}
+\label{class_point_param_field}\index{PointParamField@{PointParamField}}
+Inheritance diagram for Point\+Param\+Field\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_point_param_field}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_point_param_field_af5a660745976c8d1ea4737b4974a882a}{Point\+Param\+Field}} (QWidget $\ast$parent, QString name, const TPoint\+ParamP \&param)
+\item 
+void \mbox{\hyperlink{class_point_param_field_a921b48b6f888f1a60bd30ae159f1cc0f}{set\+Point\+Value}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p) override
+\item 
+void \mbox{\hyperlink{class_point_param_field_a671aca330a51ac9a2cd467f9c1119429}{update\+Field}} (\mbox{\hyperlink{class_t_point_t}{TPointD}} value) override
+\item 
+QSize \mbox{\hyperlink{class_point_param_field_ae1c3f91d44c0d0c81f0cb6c826bd52f9}{get\+Preferred\+Size}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_point_param_field_ac02aa219e52b38ea600af9d5456c6a19}{on\+Change}} (bool)
+\item 
+void \mbox{\hyperlink{class_point_param_field_ad457b4e81f6c67d094675ca696466b44}{on\+Key\+Toggled}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_point_param_field_af5a660745976c8d1ea4737b4974a882a}\label{class_point_param_field_af5a660745976c8d1ea4737b4974a882a}} 
+\index{PointParamField@{PointParamField}!PointParamField@{PointParamField}}
+\index{PointParamField@{PointParamField}!PointParamField@{PointParamField}}
+\doxysubsubsection{\texorpdfstring{PointParamField()}{PointParamField()}}
+{\footnotesize\ttfamily Point\+Param\+Field\+::\+Point\+Param\+Field (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{QString}]{name,  }\item[{const TPoint\+ParamP \&}]{param }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00940     : \mbox{\hyperlink{class_animated_param_field}{AnimatedParamField<TPointD, TPointParamP>}}(parent, name, param) \{}
+\DoxyCodeLine{00941   QString str;}
+\DoxyCodeLine{00942   m\_paramName = str.fromStdString(param-\/>getName());}
+\DoxyCodeLine{00943 }
+\DoxyCodeLine{00944   QLabel *xLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}X:"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00945   m\_xFld         = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_measured_double_field}{MeasuredDoubleField}}(\textcolor{keyword}{this}, \textcolor{keyword}{false});}
+\DoxyCodeLine{00946   QLabel *yLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Y:"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00947   m\_yFld         = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_measured_double_field}{MeasuredDoubleField}}(\textcolor{keyword}{this}, \textcolor{keyword}{false});}
+\DoxyCodeLine{00948 }
+\DoxyCodeLine{00949   \textcolor{keywordtype}{double} xmin = -\/(std::numeric\_limits<double>::max)(),}
+\DoxyCodeLine{00950          xmax = (std::numeric\_limits<double>::max)();}
+\DoxyCodeLine{00951   \textcolor{keywordtype}{double} ymin = -\/(std::numeric\_limits<double>::max)(),}
+\DoxyCodeLine{00952          ymax = (std::numeric\_limits<double>::max)();}
+\DoxyCodeLine{00953 }
+\DoxyCodeLine{00954 \textcolor{preprocessor}{\#if 1}}
+\DoxyCodeLine{00955   \textcolor{comment}{/* これを有効にすれば PointParamField に範囲が設定できることが UI}}
+\DoxyCodeLine{00956 \textcolor{comment}{     の見た目が変わってしまう.}}
+\DoxyCodeLine{00957 \textcolor{comment}{     これまで誰も TPointParam に対して range}}
+\DoxyCodeLine{00958 \textcolor{comment}{     を設定していないなら(どうせ効いてなかったのだから)無条件に設定してもよさそうだが}}
+\DoxyCodeLine{00959 \textcolor{comment}{     実際は Pinned Texture などの FX}}
+\DoxyCodeLine{00960 \textcolor{comment}{     が設定しており(効いてないなかったが、この修正により)動作が変わってしまうので}}
+\DoxyCodeLine{00961 \textcolor{comment}{     plugin から要求された場合でのみ range を有効にする. */}}
+\DoxyCodeLine{00962   \textcolor{keywordflow}{if} (param-\/>isFromPlugin()) \{}
+\DoxyCodeLine{00963     \textcolor{keywordtype}{double} xstep, ystep;}
+\DoxyCodeLine{00964     param-\/>getX()-\/>getValueRange(xmin, xmax, xstep);}
+\DoxyCodeLine{00965     param-\/>getY()-\/>getValueRange(ymin, ymax, ystep);}
+\DoxyCodeLine{00966   \}}
+\DoxyCodeLine{00967 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00968 }
+\DoxyCodeLine{00969   m\_xFld-\/>setMaximumWidth(100);}
+\DoxyCodeLine{00970   m\_xFld-\/>setRange(xmin, xmax);}
+\DoxyCodeLine{00971   m\_xFld-\/>\mbox{\hyperlink{class_d_v_gui_1_1_measured_double_field_a2f4923ee3f27502372fd5fb816a9014d}{setMeasure}}(param-\/>getX()-\/>getMeasureName());}
+\DoxyCodeLine{00972   m\_xFld-\/>setValue(param-\/>getX()-\/>getValue(m\_frame));}
+\DoxyCodeLine{00973 }
+\DoxyCodeLine{00974   m\_yFld-\/>setMaximumWidth(100);}
+\DoxyCodeLine{00975   m\_yFld-\/>setRange(ymin, ymax);}
+\DoxyCodeLine{00976   m\_yFld-\/>\mbox{\hyperlink{class_d_v_gui_1_1_measured_double_field_a2f4923ee3f27502372fd5fb816a9014d}{setMeasure}}(param-\/>getY()-\/>getMeasureName());}
+\DoxyCodeLine{00977   m\_yFld-\/>setValue(param-\/>getY()-\/>getValue(m\_frame));}
+\DoxyCodeLine{00978 }
+\DoxyCodeLine{00979   \textcolor{comment}{//-\/-\/-\/-\/layout}}
+\DoxyCodeLine{00980   m\_layout-\/>addWidget(m\_keyToggle);}
+\DoxyCodeLine{00981   m\_layout-\/>addWidget(xLabel);}
+\DoxyCodeLine{00982   m\_layout-\/>addWidget(m\_xFld);}
+\DoxyCodeLine{00983 }
+\DoxyCodeLine{00984   m\_layout-\/>addSpacing(5);}
+\DoxyCodeLine{00985 }
+\DoxyCodeLine{00986   m\_layout-\/>addWidget(yLabel);}
+\DoxyCodeLine{00987   m\_layout-\/>addWidget(m\_yFld);}
+\DoxyCodeLine{00988 }
+\DoxyCodeLine{00989   m\_layout-\/>addStretch(1);}
+\DoxyCodeLine{00990 }
+\DoxyCodeLine{00991   setLayout(m\_layout);}
+\DoxyCodeLine{00992 }
+\DoxyCodeLine{00993   \textcolor{comment}{//-\/-\/-\/-\/signal-\/slot connections}}
+\DoxyCodeLine{00994   \textcolor{keywordtype}{bool} ret =}
+\DoxyCodeLine{00995       connect(m\_xFld, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this}, SLOT(onChange(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00996   ret = ret \&\&}
+\DoxyCodeLine{00997         connect(m\_yFld, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this}, SLOT(onChange(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00998   ret = ret \&\& connect(m\_keyToggle, SIGNAL(keyToggled()), SLOT(onKeyToggled()));}
+\DoxyCodeLine{00999   assert(ret);}
+\DoxyCodeLine{01000 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_point_param_field_ae1c3f91d44c0d0c81f0cb6c826bd52f9}\label{class_point_param_field_ae1c3f91d44c0d0c81f0cb6c826bd52f9}} 
+\index{PointParamField@{PointParamField}!getPreferredSize@{getPreferredSize}}
+\index{getPreferredSize@{getPreferredSize}!PointParamField@{PointParamField}}
+\doxysubsubsection{\texorpdfstring{getPreferredSize()}{getPreferredSize()}}
+{\footnotesize\ttfamily QSize Point\+Param\+Field\+::get\+Preferred\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_param_field}{Param\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00421 \{ \textcolor{keywordflow}{return} QSize(270, 28); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_point_param_field_ac02aa219e52b38ea600af9d5456c6a19}\label{class_point_param_field_ac02aa219e52b38ea600af9d5456c6a19}} 
+\index{PointParamField@{PointParamField}!onChange@{onChange}}
+\index{onChange@{onChange}!PointParamField@{PointParamField}}
+\doxysubsubsection{\texorpdfstring{onChange}{onChange}}
+{\footnotesize\ttfamily void Point\+Param\+Field\+::on\+Change (\begin{DoxyParamCaption}\item[{bool}]{dragging }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01019                                             \{}
+\DoxyCodeLine{01020   \textcolor{keywordflow}{if} (dragging) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01021 }
+\DoxyCodeLine{01022   TPointParamP pointParam = m\_actualParam;}
+\DoxyCodeLine{01023   \mbox{\hyperlink{class_t_point_t}{TPointD}} pos(m\_xFld-\/>getValue(), m\_yFld-\/>getValue());}
+\DoxyCodeLine{01024 }
+\DoxyCodeLine{01025   \mbox{\hyperlink{class_t_undo}{TUndo}} *undo = 0;}
+\DoxyCodeLine{01026   \textcolor{comment}{/*-\/-\/ Undoを登録する条件：}}
+\DoxyCodeLine{01027 \textcolor{comment}{          値が変更されていて}}
+\DoxyCodeLine{01028 \textcolor{comment}{          キーフレーム上か、または、まだキーフレームが無い}}
+\DoxyCodeLine{01029 \textcolor{comment}{          （すなわち、実際にシーンの情報を変えることになる）場合}}
+\DoxyCodeLine{01030 \textcolor{comment}{  -\/-\/*/}}
+\DoxyCodeLine{01031   \textcolor{keywordflow}{if} (pointParam \&\& pointParam-\/>getValue(m\_frame) != pos \&\&}
+\DoxyCodeLine{01032       (m\_actualParam-\/>isKeyframe(m\_frame) ||}
+\DoxyCodeLine{01033        !m\_actualParam.getPointer()-\/>hasKeyframes()))}
+\DoxyCodeLine{01034     undo = \textcolor{keyword}{new} \mbox{\hyperlink{class_point_param_field_undo}{PointParamFieldUndo}}(pointParam, m\_interfaceName, m\_frame,}
+\DoxyCodeLine{01035                                    ParamField::m\_fxHandleStat);}
+\DoxyCodeLine{01036 }
+\DoxyCodeLine{01037   setValue(pos);}
+\DoxyCodeLine{01038 }
+\DoxyCodeLine{01039   \textcolor{keywordflow}{if} (undo) TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{01040 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_point_param_field_ad457b4e81f6c67d094675ca696466b44}\label{class_point_param_field_ad457b4e81f6c67d094675ca696466b44}} 
+\index{PointParamField@{PointParamField}!onKeyToggled@{onKeyToggled}}
+\index{onKeyToggled@{onKeyToggled}!PointParamField@{PointParamField}}
+\doxysubsubsection{\texorpdfstring{onKeyToggled}{onKeyToggled}}
+{\footnotesize\ttfamily void Point\+Param\+Field\+::on\+Key\+Toggled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01044 \{ onKeyToggle(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_point_param_field_a921b48b6f888f1a60bd30ae159f1cc0f}\label{class_point_param_field_a921b48b6f888f1a60bd30ae159f1cc0f}} 
+\index{PointParamField@{PointParamField}!setPointValue@{setPointValue}}
+\index{setPointValue@{setPointValue}!PointParamField@{PointParamField}}
+\doxysubsubsection{\texorpdfstring{setPointValue()}{setPointValue()}}
+{\footnotesize\ttfamily void Point\+Param\+Field\+::set\+Point\+Value (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_param_field}{Param\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01004                                                     \{}
+\DoxyCodeLine{01005   m\_xFld-\/>setValue(p.x);}
+\DoxyCodeLine{01006   m\_yFld-\/>setValue(p.y);}
+\DoxyCodeLine{01007   setValue(p);}
+\DoxyCodeLine{01008 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_point_param_field_a671aca330a51ac9a2cd467f9c1119429}\label{class_point_param_field_a671aca330a51ac9a2cd467f9c1119429}} 
+\index{PointParamField@{PointParamField}!updateField@{updateField}}
+\index{updateField@{updateField}!PointParamField@{PointParamField}}
+\doxysubsubsection{\texorpdfstring{updateField()}{updateField()}}
+{\footnotesize\ttfamily void Point\+Param\+Field\+::update\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_point_t}{TPointD}}}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_animated_param_field}{Animated\+Param\+Field$<$ TPoint\+D, TPoint\+Param\+P $>$}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01012                                                \{}
+\DoxyCodeLine{01013   m\_xFld-\/>setValue(value.x);}
+\DoxyCodeLine{01014   m\_yFld-\/>setValue(value.y);}
+\DoxyCodeLine{01015 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/paramfield.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/paramfield.\+cpp\end{DoxyCompactItemize}

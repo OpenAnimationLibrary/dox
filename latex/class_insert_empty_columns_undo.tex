@@ -1,0 +1,180 @@
+\hypertarget{class_insert_empty_columns_undo}{}\doxysection{Insert\+Empty\+Columns\+Undo Class Reference}
+\label{class_insert_empty_columns_undo}\index{InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}}
+Inheritance diagram for Insert\+Empty\+Columns\+Undo\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_insert_empty_columns_undo}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_insert_empty_columns_undo_a436a402ab65f25f96542bd43e479fcf1}{Insert\+Empty\+Columns\+Undo}} (const std\+::vector$<$ int $>$ \&indices, bool insert\+After)
+\item 
+bool \mbox{\hyperlink{class_insert_empty_columns_undo_aed8ce3829fc39e1aa3fa7d571660ad44}{is\+Consistent}} () const override
+\item 
+void \mbox{\hyperlink{class_insert_empty_columns_undo_af77d4a853d0c1ce1cb1c617972dc7c46}{redo}} () const override
+\item 
+void \mbox{\hyperlink{class_insert_empty_columns_undo_aac5fa490053c8cac864398d48fa7efed}{undo}} () const override
+\item 
+int \mbox{\hyperlink{class_insert_empty_columns_undo_a69e10f9d665ac1c5779d182bffd55983}{get\+Size}} () const override
+\item 
+QString \mbox{\hyperlink{class_insert_empty_columns_undo_a60e51bb599ed79c4a351f99a22d3688f}{get\+History\+String}} () override
+\item 
+int \mbox{\hyperlink{class_insert_empty_columns_undo_a13a3c1ae5a859a6578fbb20e1bbbf728}{get\+History\+Type}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_insert_empty_columns_undo_a436a402ab65f25f96542bd43e479fcf1}\label{class_insert_empty_columns_undo_a436a402ab65f25f96542bd43e479fcf1}} 
+\index{InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}!InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}}
+\index{InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}!InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}}
+\doxysubsubsection{\texorpdfstring{InsertEmptyColumnsUndo()}{InsertEmptyColumnsUndo()}}
+{\footnotesize\ttfamily Insert\+Empty\+Columns\+Undo\+::\+Insert\+Empty\+Columns\+Undo (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ int $>$ \&}]{indices,  }\item[{bool}]{insert\+After }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00683                                                                           \{}
+\DoxyCodeLine{00684     initialize(indices, insertAfter);}
+\DoxyCodeLine{00685   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_insert_empty_columns_undo_a60e51bb599ed79c4a351f99a22d3688f}\label{class_insert_empty_columns_undo_a60e51bb599ed79c4a351f99a22d3688f}} 
+\index{InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}!getHistoryString@{getHistoryString}}
+\index{getHistoryString@{getHistoryString}!InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryString()}{getHistoryString()}}
+{\footnotesize\ttfamily QString Insert\+Empty\+Columns\+Undo\+::get\+History\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00694                                       \{}
+\DoxyCodeLine{00695     QString str = QObject::tr(\textcolor{stringliteral}{"{}Insert Column :  "{}});}
+\DoxyCodeLine{00696 }
+\DoxyCodeLine{00697     std::vector<std::pair<int, int>>::iterator it;}
+\DoxyCodeLine{00698     \textcolor{keywordflow}{for} (it = m\_columnBlocks.begin(); it != m\_columnBlocks.end(); it++) \{}
+\DoxyCodeLine{00699       \textcolor{keywordflow}{if} (it != m\_columnBlocks.begin()) str += QString(\textcolor{stringliteral}{"{}, "{}});}
+\DoxyCodeLine{00700       str += QString(\textcolor{stringliteral}{"{}Col\%1"{}}).arg(QString::number((*it).first + 1));}
+\DoxyCodeLine{00701     \}}
+\DoxyCodeLine{00702     \textcolor{keywordflow}{return} str;}
+\DoxyCodeLine{00703   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_empty_columns_undo_a13a3c1ae5a859a6578fbb20e1bbbf728}\label{class_insert_empty_columns_undo_a13a3c1ae5a859a6578fbb20e1bbbf728}} 
+\index{InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}!getHistoryType@{getHistoryType}}
+\index{getHistoryType@{getHistoryType}!InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}}
+\doxysubsubsection{\texorpdfstring{getHistoryType()}{getHistoryType()}}
+{\footnotesize\ttfamily int Insert\+Empty\+Columns\+Undo\+::get\+History\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00705 \{ \textcolor{keywordflow}{return} HistoryType::Xsheet; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_empty_columns_undo_a69e10f9d665ac1c5779d182bffd55983}\label{class_insert_empty_columns_undo_a69e10f9d665ac1c5779d182bffd55983}} 
+\index{InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}!getSize@{getSize}}
+\index{getSize@{getSize}!InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Insert\+Empty\+Columns\+Undo\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00692 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(*this); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_empty_columns_undo_aed8ce3829fc39e1aa3fa7d571660ad44}\label{class_insert_empty_columns_undo_aed8ce3829fc39e1aa3fa7d571660ad44}} 
+\index{InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}!isConsistent@{isConsistent}}
+\index{isConsistent@{isConsistent}!InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}}
+\doxysubsubsection{\texorpdfstring{isConsistent()}{isConsistent()}}
+{\footnotesize\ttfamily bool Insert\+Empty\+Columns\+Undo\+::is\+Consistent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_column_command_undo}{Column\+Command\+Undo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00687 \{ \textcolor{keywordflow}{return} \textcolor{keyword}{true}; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_empty_columns_undo_af77d4a853d0c1ce1cb1c617972dc7c46}\label{class_insert_empty_columns_undo_af77d4a853d0c1ce1cb1c617972dc7c46}} 
+\index{InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}!redo@{redo}}
+\index{redo@{redo}!InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}}
+\doxysubsubsection{\texorpdfstring{redo()}{redo()}}
+{\footnotesize\ttfamily void Insert\+Empty\+Columns\+Undo\+::redo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00736                                         \{}
+\DoxyCodeLine{00737   \mbox{\hyperlink{class_t_app}{TApp}} *app    = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00738   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00739 }
+\DoxyCodeLine{00740   \textcolor{comment}{// If this is the very first column, add one now since there is always}}
+\DoxyCodeLine{00741   \textcolor{comment}{// 1 visible on the screen but its not actually there yet.}}
+\DoxyCodeLine{00742   \textcolor{keywordflow}{if} (!xsh-\/>\mbox{\hyperlink{class_t_xsheet_a17464dc5617cf87a46f03e1a52d36cc1}{getColumnCount}}()) xsh-\/>\mbox{\hyperlink{class_t_xsheet_a5ea42662e27e52ef36ce77b4a5d8e06c}{insertColumn}}(0);}
+\DoxyCodeLine{00743 }
+\DoxyCodeLine{00744   std::vector<std::pair<int, int>>::const\_reverse\_iterator bt,}
+\DoxyCodeLine{00745       bEnd = m\_columnBlocks.rend();}
+\DoxyCodeLine{00746   \textcolor{keywordflow}{for} (bt = m\_columnBlocks.rbegin(); bt != bEnd; ++bt)}
+\DoxyCodeLine{00747     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} n = 0; n != bt-\/>second; ++n) xsh-\/>\mbox{\hyperlink{class_t_xsheet_a5ea42662e27e52ef36ce77b4a5d8e06c}{insertColumn}}(bt-\/>first);}
+\DoxyCodeLine{00748 }
+\DoxyCodeLine{00749   app-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{00750   app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00751   app-\/>\mbox{\hyperlink{class_t_app_a0d91c122eec2b756b7c4780014e49f9e}{getCurrentObject}}()-\/>notifyObjectIdSwitched();}
+\DoxyCodeLine{00752 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_empty_columns_undo_aac5fa490053c8cac864398d48fa7efed}\label{class_insert_empty_columns_undo_aac5fa490053c8cac864398d48fa7efed}} 
+\index{InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}!undo@{undo}}
+\index{undo@{undo}!InsertEmptyColumnsUndo@{InsertEmptyColumnsUndo}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Insert\+Empty\+Columns\+Undo\+::undo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_undo}{TUndo}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00756                                         \{}
+\DoxyCodeLine{00757   \mbox{\hyperlink{class_t_app}{TApp}} *app    = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00758   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00759 }
+\DoxyCodeLine{00760   std::vector<std::pair<int, int>>::const\_iterator bt,}
+\DoxyCodeLine{00761       bEnd = m\_columnBlocks.end();}
+\DoxyCodeLine{00762   \textcolor{keywordflow}{for} (bt = m\_columnBlocks.begin(); bt != bEnd; ++bt)}
+\DoxyCodeLine{00763     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} n = 0; n != bt-\/>second; ++n) xsh-\/>\mbox{\hyperlink{class_t_xsheet_ace0d4e8b8eb7646b60caf69747b66c0e}{removeColumn}}(bt-\/>first);}
+\DoxyCodeLine{00764 }
+\DoxyCodeLine{00765   app-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{00766   app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00767   app-\/>\mbox{\hyperlink{class_t_app_a0d91c122eec2b756b7c4780014e49f9e}{getCurrentObject}}()-\/>notifyObjectIdSwitched();}
+\DoxyCodeLine{00768 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/columncommand.\+cpp\end{DoxyCompactItemize}

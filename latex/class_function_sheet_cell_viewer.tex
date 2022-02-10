@@ -1,0 +1,618 @@
+\hypertarget{class_function_sheet_cell_viewer}{}\doxysection{Function\+Sheet\+Cell\+Viewer Class Reference}
+\label{class_function_sheet_cell_viewer}\index{FunctionSheetCellViewer@{FunctionSheetCellViewer}}
+Inheritance diagram for Function\+Sheet\+Cell\+Viewer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_function_sheet_cell_viewer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_function_sheet_cell_viewer_a9ffc38eaa780fbf76c1a14c34571a2d1}{Function\+Sheet\+Cell\+Viewer}} (\mbox{\hyperlink{class_function_sheet}{Function\+Sheet}} $\ast$parent)
+\item 
+\mbox{\hyperlink{class_spreadsheet_1_1_drag_tool}{Spreadsheet\+::\+Drag\+Tool}} $\ast$ \mbox{\hyperlink{class_function_sheet_cell_viewer_a99986e46aba6564ed67af6fa2212dfa8}{create\+Drag\+Tool}} (QMouse\+Event $\ast$) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_function_sheet_cell_viewer_a44bbb44fa03595bfc7dadba7fb796f96}{draw\+Cells}} (QPainter \&p, int r0, int c0, int r1, int c1) override
+\item 
+void \mbox{\hyperlink{class_function_sheet_cell_viewer_aa1266331825138770f6f4c278831d9b4}{mouse\+Double\+Click\+Event}} (QMouse\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_function_sheet_cell_viewer_ad5eda46faa815f4d375f813a2831d083}{mouse\+Press\+Event}} (QMouse\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_function_sheet_cell_viewer_a5527bc34d1761eb7f35b835b9a23b04b}{mouse\+Release\+Event}} (QMouse\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_function_sheet_cell_viewer_adcba5dd7a681894b9eb7d7115b3df9b1}{mouse\+Move\+Event}} (QMouse\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_function_sheet_cell_viewer_a9f3a0a3afe85347683c6cd1101e6cf87}{open\+Context\+Menu}} (QMouse\+Event $\ast$)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_function_sheet_cell_viewer_a9ffc38eaa780fbf76c1a14c34571a2d1}\label{class_function_sheet_cell_viewer_a9ffc38eaa780fbf76c1a14c34571a2d1}} 
+\index{FunctionSheetCellViewer@{FunctionSheetCellViewer}!FunctionSheetCellViewer@{FunctionSheetCellViewer}}
+\index{FunctionSheetCellViewer@{FunctionSheetCellViewer}!FunctionSheetCellViewer@{FunctionSheetCellViewer}}
+\doxysubsubsection{\texorpdfstring{FunctionSheetCellViewer()}{FunctionSheetCellViewer()}}
+{\footnotesize\ttfamily Function\+Sheet\+Cell\+Viewer\+::\+Function\+Sheet\+Cell\+Viewer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_function_sheet}{Function\+Sheet}} $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00629     : \mbox{\hyperlink{class_spreadsheet_1_1_cell_panel}{Spreadsheet::CellPanel}}(parent)}
+\DoxyCodeLine{00630     , m\_sheet(parent)}
+\DoxyCodeLine{00631     , m\_editRow(0)}
+\DoxyCodeLine{00632     , m\_editCol(0) \{}
+\DoxyCodeLine{00633   m\_lineEdit = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_line_edit}{DVGui::LineEdit}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00634   \textcolor{comment}{// lineEdit-\/>setGeometry(10,10,100,30);}}
+\DoxyCodeLine{00635   m\_lineEdit-\/>hide();}
+\DoxyCodeLine{00636   \textcolor{keywordtype}{bool} ret = connect(m\_lineEdit, SIGNAL(editingFinished()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00637                      SLOT(onCellEditorEditingFinished()));}
+\DoxyCodeLine{00638   ret      = ret \&\& connect(m\_lineEdit, SIGNAL(mouseMoved(QMouseEvent *)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00639                        SLOT(onMouseMovedInLineEdit(QMouseEvent *)));}
+\DoxyCodeLine{00640   assert(ret);}
+\DoxyCodeLine{00641   setMouseTracking(\textcolor{keyword}{true});}
+\DoxyCodeLine{00642 }
+\DoxyCodeLine{00643   setFocusProxy(m\_lineEdit);}
+\DoxyCodeLine{00644 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_function_sheet_cell_viewer_a99986e46aba6564ed67af6fa2212dfa8}\label{class_function_sheet_cell_viewer_a99986e46aba6564ed67af6fa2212dfa8}} 
+\index{FunctionSheetCellViewer@{FunctionSheetCellViewer}!createDragTool@{createDragTool}}
+\index{createDragTool@{createDragTool}!FunctionSheetCellViewer@{FunctionSheetCellViewer}}
+\doxysubsubsection{\texorpdfstring{createDragTool()}{createDragTool()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_spreadsheet_1_1_drag_tool}{Spreadsheet\+::\+Drag\+Tool}} $\ast$ Function\+Sheet\+Cell\+Viewer\+::create\+Drag\+Tool (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called when the cell panel is left/right-\/clicked 
+
+Reimplemented from \mbox{\hyperlink{class_spreadsheet_1_1_generic_panel}{Spreadsheet\+::\+Generic\+Panel}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00649                                                                            \{}
+\DoxyCodeLine{00650   \mbox{\hyperlink{class_cell_position}{CellPosition}} cellPosition = getViewer()-\/>\mbox{\hyperlink{class_spreadsheet_viewer_abdf7d777f22954ef57404d3edde69a16}{xyToPosition}}(e-\/>pos());}
+\DoxyCodeLine{00651   \textcolor{keywordtype}{int} row                   = cellPosition.frame();}
+\DoxyCodeLine{00652   \textcolor{keywordtype}{int} col                   = cellPosition.layer();}
+\DoxyCodeLine{00653   \textcolor{keywordtype}{bool} isEmpty              = \textcolor{keyword}{true};}
+\DoxyCodeLine{00654   \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve       = m\_sheet-\/>getCurve(col);}
+\DoxyCodeLine{00655   \textcolor{keywordflow}{if} (curve) \{}
+\DoxyCodeLine{00656     \textcolor{keywordtype}{int} kCount = curve-\/>getKeyframeCount();}
+\DoxyCodeLine{00657     \textcolor{keywordflow}{if} (kCount > 0) \{}
+\DoxyCodeLine{00658       \textcolor{keywordtype}{int} row0 = (int)curve-\/>\mbox{\hyperlink{class_t_double_param_af08442b9fd968fddada028a6f07983d5}{keyframeIndexToFrame}}(0);}
+\DoxyCodeLine{00659       \textcolor{keywordtype}{int} row1 = (int)curve-\/>\mbox{\hyperlink{class_t_double_param_af08442b9fd968fddada028a6f07983d5}{keyframeIndexToFrame}}(kCount -\/ 1);}
+\DoxyCodeLine{00660       isEmpty  = row < row0 || row > row1;}
+\DoxyCodeLine{00661     \}}
+\DoxyCodeLine{00662   \}}
+\DoxyCodeLine{00663 }
+\DoxyCodeLine{00664   \textcolor{keywordflow}{if} (!isEmpty) \{}
+\DoxyCodeLine{00665     \textcolor{keywordtype}{int} x = e-\/>pos().x() -\/ getViewer()-\/>columnToX(col);}
+\DoxyCodeLine{00666     \textcolor{keywordflow}{if} (0 <= x \&\& x < cColumnDragHandleWidth + 9)}
+\DoxyCodeLine{00667       \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_move_channels_drag_tool}{MoveChannelsDragTool}}(m\_sheet);}
+\DoxyCodeLine{00668   \}}
+\DoxyCodeLine{00669   \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_function_sheet_selection_tool}{FunctionSheetSelectionTool}}(m\_sheet);}
+\DoxyCodeLine{00670 }
+\DoxyCodeLine{00671   \textcolor{comment}{// return Spreadsheet::CellPanel::createDragTool(e);}}
+\DoxyCodeLine{00672 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l01000}{TDouble\+Param\+::keyframe\+Index\+To\+Frame()}}, and \mbox{\hyperlink{l00783}{Spreadsheet\+Viewer\+::xy\+To\+Position()}}.
+
+\mbox{\Hypertarget{class_function_sheet_cell_viewer_a44bbb44fa03595bfc7dadba7fb796f96}\label{class_function_sheet_cell_viewer_a44bbb44fa03595bfc7dadba7fb796f96}} 
+\index{FunctionSheetCellViewer@{FunctionSheetCellViewer}!drawCells@{drawCells}}
+\index{drawCells@{drawCells}!FunctionSheetCellViewer@{FunctionSheetCellViewer}}
+\doxysubsubsection{\texorpdfstring{drawCells()}{drawCells()}}
+{\footnotesize\ttfamily void Function\+Sheet\+Cell\+Viewer\+::draw\+Cells (\begin{DoxyParamCaption}\item[{QPainter \&}]{p,  }\item[{int}]{r0,  }\item[{int}]{c0,  }\item[{int}]{r1,  }\item[{int}]{c1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_spreadsheet_1_1_cell_panel}{Spreadsheet\+::\+Cell\+Panel}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00677                                                         \{}
+\DoxyCodeLine{00678   \textcolor{comment}{// key frames}}
+\DoxyCodeLine{00679   QColor KeyFrameColor         = getViewer()-\/>getKeyFrameColor();}
+\DoxyCodeLine{00680   QColor KeyFrameBorderColor   = getViewer()-\/>getKeyFrameBorderColor();}
+\DoxyCodeLine{00681   QColor SelectedKeyFrameColor = getViewer()-\/>getSelectedKeyFrameColor();}
+\DoxyCodeLine{00682   QColor IgnoredKeyFrameColor  = getViewer()-\/>getIgnoredKeyFrameColor();}
+\DoxyCodeLine{00683   QColor SelectedIgnoredKeyFrameColor =}
+\DoxyCodeLine{00684       getViewer()-\/>getSelectedIgnoredKeyFrameColor();}
+\DoxyCodeLine{00685   \textcolor{comment}{// inbetween}}
+\DoxyCodeLine{00686   QColor InBetweenColor         = getViewer()-\/>getInBetweenColor();}
+\DoxyCodeLine{00687   QColor InBetweenBorderColor   = getViewer()-\/>getInBetweenBorderColor();}
+\DoxyCodeLine{00688   QColor SelectedInBetweenColor = getViewer()-\/>getSelectedInBetweenColor();}
+\DoxyCodeLine{00689   QColor IgnoredInBetweenColor  = getViewer()-\/>getIgnoredInBetweenColor();}
+\DoxyCodeLine{00690   QColor SelectedIgnoredInBetweenColor =}
+\DoxyCodeLine{00691       getViewer()-\/>getSelectedIgnoredInBetweenColor();}
+\DoxyCodeLine{00692 }
+\DoxyCodeLine{00693   \textcolor{comment}{// empty cells}}
+\DoxyCodeLine{00694   QColor SelectedEmptyColor = getViewer()-\/>getSelectedEmptyColor();}
+\DoxyCodeLine{00695   \textcolor{comment}{// empty cells in scene frame range}}
+\DoxyCodeLine{00696   QColor SelectedSceneRangeEmptyColor =}
+\DoxyCodeLine{00697       getViewer()-\/>getSelectedSceneRangeEmptyColor();}
+\DoxyCodeLine{00698 }
+\DoxyCodeLine{00699   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = m\_sheet-\/>getViewer()-\/>getXsheetHandle()-\/>getXsheet();}
+\DoxyCodeLine{00700 }
+\DoxyCodeLine{00701   \textcolor{keywordtype}{bool} simpleView = getViewer()-\/>getFrameZoomFactor() <=}
+\DoxyCodeLine{00702                     Orientations::topToBottom()-\/>dimension(}
+\DoxyCodeLine{00703                         PredefinedDimension::SCALE\_THRESHOLD);}
+\DoxyCodeLine{00704   \textcolor{keywordtype}{bool} showIbtwn = !simpleView \&\& m\_sheet-\/>isIbtwnValueVisible();}
+\DoxyCodeLine{00705 }
+\DoxyCodeLine{00706   \textcolor{comment}{// top and bottom pos}}
+\DoxyCodeLine{00707   \textcolor{keywordtype}{int} y0 = getViewer()-\/>rowToY(r0);}
+\DoxyCodeLine{00708   \textcolor{keywordtype}{int} y1 = getViewer()-\/>rowToY(r1 + 1) -\/ 1;}
+\DoxyCodeLine{00709   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = c0; c <= c1; c++) \{}
+\DoxyCodeLine{00710     \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve = m\_sheet-\/>getCurve(c);}
+\DoxyCodeLine{00711     \textcolor{comment}{/*-\/-\/-\/ もしカラムcにパラメータが無ければcurveには０が返る -\/-\/-\/*/}}
+\DoxyCodeLine{00712     \textcolor{keywordflow}{if} (!curve) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00713     \textcolor{comment}{// left and right pos}}
+\DoxyCodeLine{00714     \textcolor{keywordtype}{int} x0 = getViewer()-\/>columnToX(c);}
+\DoxyCodeLine{00715     \textcolor{keywordtype}{int} x1 = getViewer()-\/>columnToX(c + 1) -\/ 1;}
+\DoxyCodeLine{00716 }
+\DoxyCodeLine{00717     \textcolor{comment}{// find the curve keyframe range}}
+\DoxyCodeLine{00718     \textcolor{keywordtype}{int} kr0 = 0, kr1 = -\/1;}
+\DoxyCodeLine{00719     \textcolor{keywordtype}{int} kCount = curve-\/>getKeyframeCount();}
+\DoxyCodeLine{00720     \textcolor{keywordflow}{if} (kCount > 0) \{}
+\DoxyCodeLine{00721       kr0 = curve-\/>\mbox{\hyperlink{class_t_double_param_af08442b9fd968fddada028a6f07983d5}{keyframeIndexToFrame}}(0);}
+\DoxyCodeLine{00722       kr1 = curve-\/>\mbox{\hyperlink{class_t_double_param_af08442b9fd968fddada028a6f07983d5}{keyframeIndexToFrame}}(kCount -\/ 1);}
+\DoxyCodeLine{00723     \}}
+\DoxyCodeLine{00724 }
+\DoxyCodeLine{00725     \textcolor{comment}{// get the unit}}
+\DoxyCodeLine{00726     \mbox{\hyperlink{class_t_measure}{TMeasure}} *measure = curve-\/>getMeasure();}
+\DoxyCodeLine{00727     \textcolor{keyword}{const} \mbox{\hyperlink{class_t_unit}{TUnit}} *unit = measure ? measure-\/>getCurrentUnit() : 0;}
+\DoxyCodeLine{00728 }
+\DoxyCodeLine{00729     \textcolor{keywordtype}{bool} isStageObjectCycled = \textcolor{keyword}{false};}
+\DoxyCodeLine{00730     \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *obj        = m\_sheet-\/>\mbox{\hyperlink{class_function_sheet_a31eda6227f0362b47ea81060345125eb}{getStageObject}}(c);}
+\DoxyCodeLine{00731     \textcolor{keywordflow}{if} (obj \&\& obj-\/>\mbox{\hyperlink{class_t_stage_object_a2c2094a00f2a5f616a12662d7a23ea3a}{isCycleEnabled}}()) isStageObjectCycled = \textcolor{keyword}{true};}
+\DoxyCodeLine{00732 }
+\DoxyCodeLine{00733     \textcolor{keywordtype}{bool} isParamCycled = curve-\/>isCycleEnabled();}
+\DoxyCodeLine{00734     \textcolor{keywordtype}{int} rowCount       = getViewer()-\/>getRowCount();}
+\DoxyCodeLine{00735 }
+\DoxyCodeLine{00736     \textcolor{keywordtype}{bool} isRefMngIgnored = xsh-\/>isReferenceManagementIgnored(curve);}
+\DoxyCodeLine{00737 }
+\DoxyCodeLine{00738     \textcolor{comment}{// draw each cell}}
+\DoxyCodeLine{00739     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} row = r0; row <= r1; row++) \{}
+\DoxyCodeLine{00740       \textcolor{keywordtype}{int} ya = m\_sheet-\/>rowToY(row);}
+\DoxyCodeLine{00741       \textcolor{keywordtype}{int} yb = m\_sheet-\/>rowToY(row + 1) -\/ 1;}
+\DoxyCodeLine{00742 }
+\DoxyCodeLine{00743       \textcolor{keywordtype}{bool} isSelected = getViewer()-\/>isSelectedCell(row, c);}
+\DoxyCodeLine{00744 }
+\DoxyCodeLine{00745       \textcolor{keywordtype}{double} value = (isStageObjectCycled)}
+\DoxyCodeLine{00746                          ? curve-\/>getValue(obj-\/>\mbox{\hyperlink{class_t_stage_object_a6a0a6495e61fdb598ed2a1b371f4362f}{paramsTime}}((\textcolor{keywordtype}{double})row))}
+\DoxyCodeLine{00747                          : curve-\/>getValue(row);}
+\DoxyCodeLine{00748       \textcolor{keywordflow}{if} (unit) value = unit-\/>convertTo(value);}
+\DoxyCodeLine{00749       \textcolor{keyword}{enum} \{ None, Key, Inbetween, CycleRange \} drawValue = None;}
+\DoxyCodeLine{00750 }
+\DoxyCodeLine{00751       QRect cellRect(x0, ya, x1 -\/ x0 + 1, yb -\/ ya + 1);}
+\DoxyCodeLine{00752       QRect borderRect(x0, ya, 7, yb -\/ ya + 1);}
+\DoxyCodeLine{00753       QColor cellColor, borderColor;}
+\DoxyCodeLine{00754 }
+\DoxyCodeLine{00755       \textcolor{comment}{/*-\/-\/-\/ キーフレーム間の範囲だけ色をつける -\/-\/-\/*/}}
+\DoxyCodeLine{00756       \textcolor{keywordflow}{if} (kr0 <= row \&\& row <= kr1) \{}
+\DoxyCodeLine{00757         \textcolor{keywordflow}{if} (curve-\/>\mbox{\hyperlink{class_t_double_param_a2be2db8a6849e4619940ff37a0948574}{isKeyframe}}(row)) \{}
+\DoxyCodeLine{00758           cellColor =}
+\DoxyCodeLine{00759               (isRefMngIgnored)}
+\DoxyCodeLine{00760                   ? ((isSelected) ? SelectedIgnoredKeyFrameColor}
+\DoxyCodeLine{00761                                   : IgnoredKeyFrameColor)}
+\DoxyCodeLine{00762                   : ((isSelected) ? SelectedKeyFrameColor : KeyFrameColor);}
+\DoxyCodeLine{00763           borderColor = KeyFrameBorderColor;}
+\DoxyCodeLine{00764         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00765           cellColor =}
+\DoxyCodeLine{00766               (isRefMngIgnored)}
+\DoxyCodeLine{00767                   ? ((isSelected) ? SelectedIgnoredInBetweenColor}
+\DoxyCodeLine{00768                                   : IgnoredInBetweenColor)}
+\DoxyCodeLine{00769                   : ((isSelected) ? SelectedInBetweenColor : InBetweenColor);}
+\DoxyCodeLine{00770           borderColor = InBetweenBorderColor;}
+\DoxyCodeLine{00771 }
+\DoxyCodeLine{00772           \textcolor{comment}{// when the inbetween values are hidden, change the cell colors to}}
+\DoxyCodeLine{00773           \textcolor{comment}{// semi-\/transparent if the frame is in middle of the value step}}
+\DoxyCodeLine{00774           \textcolor{keywordflow}{if} (!showIbtwn) \{}
+\DoxyCodeLine{00775             \mbox{\hyperlink{class_t_double_keyframe}{TDoubleKeyframe}} kf =}
+\DoxyCodeLine{00776                 curve-\/>getKeyframe(curve-\/>\mbox{\hyperlink{class_t_double_param_a765abd97386a7e4e3a413255ba494e19}{getPrevKeyframe}}(row));}
+\DoxyCodeLine{00777             \textcolor{keywordtype}{int} step = kf.m\_step;}
+\DoxyCodeLine{00778             \textcolor{keywordflow}{if} (step > 1 \&\& (row -\/ (\textcolor{keywordtype}{int})std::floor(kf.m\_frame)) \% step != 0)}
+\DoxyCodeLine{00779               cellColor.setAlpha(128);}
+\DoxyCodeLine{00780           \}}
+\DoxyCodeLine{00781         \}}
+\DoxyCodeLine{00782         painter.setPen(Qt::NoPen);}
+\DoxyCodeLine{00783         painter.fillRect(cellRect, cellColor);}
+\DoxyCodeLine{00784         painter.fillRect(borderRect, borderColor);}
+\DoxyCodeLine{00785 }
+\DoxyCodeLine{00786         \textcolor{comment}{// display whether segment are Linked}}
+\DoxyCodeLine{00787         \textcolor{keywordflow}{if} (curve-\/>\mbox{\hyperlink{class_t_double_param_a2be2db8a6849e4619940ff37a0948574}{isKeyframe}}(row)) \{}
+\DoxyCodeLine{00788           \mbox{\hyperlink{class_t_double_keyframe}{TDoubleKeyframe}} kf = curve-\/>getKeyframeAt(row);}
+\DoxyCodeLine{00789           \textcolor{comment}{// if the segments are NOT linked, then cut off the side bar}}
+\DoxyCodeLine{00790           \textcolor{keywordflow}{if} (!kf.m\_linkedHandles) \{}
+\DoxyCodeLine{00791             \textcolor{keywordtype}{int} rowCenterPos = (ya + yb) / 2;}
+\DoxyCodeLine{00792             QPoint points[4] = \{}
+\DoxyCodeLine{00793                 QPoint(x0, rowCenterPos), QPoint(x0 + 7, rowCenterPos + 3),}
+\DoxyCodeLine{00794                 QPoint(x0 + 7, rowCenterPos -\/ 3), QPoint(x0, rowCenterPos)\};}
+\DoxyCodeLine{00795             QBrush oldBrush = painter.brush();}
+\DoxyCodeLine{00796             painter.setBrush(QBrush(cellColor));}
+\DoxyCodeLine{00797             painter.drawPolygon(points, 4);}
+\DoxyCodeLine{00798             painter.setBrush(oldBrush);}
+\DoxyCodeLine{00799           \}}
+\DoxyCodeLine{00800         \}}
+\DoxyCodeLine{00801 }
+\DoxyCodeLine{00802         drawValue =}
+\DoxyCodeLine{00803             (curve-\/>\mbox{\hyperlink{class_t_double_param_a2be2db8a6849e4619940ff37a0948574}{isKeyframe}}(row)) ? Key : (showIbtwn) ? Inbetween : None;}
+\DoxyCodeLine{00804 }
+\DoxyCodeLine{00805       \}}
+\DoxyCodeLine{00806       \textcolor{comment}{// empty cells}}
+\DoxyCodeLine{00807       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00808         \textcolor{comment}{// show values for cycled parameter.}}
+\DoxyCodeLine{00809         \textcolor{comment}{// cycle option can be set in two ways; one is as TStageObject,}}
+\DoxyCodeLine{00810         \textcolor{comment}{// the other is as TDoubleParam.}}
+\DoxyCodeLine{00811         \textcolor{comment}{// -\/ TStageObject cycle literally cycles values with no offset.}}
+\DoxyCodeLine{00812         \textcolor{comment}{//   Applied to all transformation parameters of the cycled object.}}
+\DoxyCodeLine{00813         \textcolor{comment}{// -\/ TDoubleParam cycle includes value offset so that the curve}}
+\DoxyCodeLine{00814         \textcolor{comment}{//   connects smoothly.}}
+\DoxyCodeLine{00815         \textcolor{comment}{// -\/ TStageObject cycle option has a priority to TDoubleParam one.}}
+\DoxyCodeLine{00816         \textcolor{comment}{// (see TStageObject::paramsTime() in tstageobject.cpp)}}
+\DoxyCodeLine{00817         \textcolor{keywordflow}{if} (kCount > 0 \&\& row > kr1 \&\& (isStageObjectCycled || isParamCycled) \&\&}
+\DoxyCodeLine{00818             (row < rowCount)) \{}
+\DoxyCodeLine{00819           drawValue = CycleRange;}
+\DoxyCodeLine{00820         \}}
+\DoxyCodeLine{00821         \textcolor{comment}{// empty and selected cell}}
+\DoxyCodeLine{00822         \textcolor{keywordflow}{if} (isSelected) \{}
+\DoxyCodeLine{00823           cellColor = (row >= rowCount) ? SelectedEmptyColor}
+\DoxyCodeLine{00824                                         : SelectedSceneRangeEmptyColor;}
+\DoxyCodeLine{00825           painter.setPen(Qt::NoPen);}
+\DoxyCodeLine{00826           painter.fillRect(cellRect, cellColor);}
+\DoxyCodeLine{00827         \}}
+\DoxyCodeLine{00828       \}}
+\DoxyCodeLine{00829 }
+\DoxyCodeLine{00830       \textcolor{keywordflow}{if} (drawValue != None) \{}
+\DoxyCodeLine{00831         \textcolor{comment}{// draw cell value}}
+\DoxyCodeLine{00832         \textcolor{keywordflow}{if} (drawValue == Key || drawValue == Inbetween)}
+\DoxyCodeLine{00833           painter.setPen(getViewer()-\/>getTextColor());}
+\DoxyCodeLine{00834         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00835           QColor semiTranspTextColor = getViewer()-\/>getTextColor();}
+\DoxyCodeLine{00836           semiTranspTextColor.setAlpha(128);}
+\DoxyCodeLine{00837           painter.setPen(semiTranspTextColor);}
+\DoxyCodeLine{00838         \}}
+\DoxyCodeLine{00839 }
+\DoxyCodeLine{00840         \textcolor{comment}{/*-\/-\/-\/ 整数から小数点以下3桁以内の場合はそれ以降の0000を描かない -\/-\/-\/*/}}
+\DoxyCodeLine{00841         QString text;}
+\DoxyCodeLine{00842 }
+\DoxyCodeLine{00843         \textcolor{keywordtype}{double} thousandValue = value * 1000.0;}
+\DoxyCodeLine{00844         \textcolor{keywordflow}{if} (areAlmostEqual(thousandValue, (\textcolor{keywordtype}{double})tround(thousandValue),}
+\DoxyCodeLine{00845                            0.0001)) \{}
+\DoxyCodeLine{00846           text = QString::number(value, \textcolor{charliteral}{'f'}, 3);}
+\DoxyCodeLine{00847           \textcolor{keywordflow}{while} (text.endsWith(\textcolor{stringliteral}{"{}0"{}})) \{}
+\DoxyCodeLine{00848             text.chop(1);}
+\DoxyCodeLine{00849             \textcolor{keywordflow}{if} (text.endsWith(\textcolor{stringliteral}{"{}."{}})) \{}
+\DoxyCodeLine{00850               text.chop(1);}
+\DoxyCodeLine{00851               \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00852             \}}
+\DoxyCodeLine{00853           \}}
+\DoxyCodeLine{00854         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00855           text = QString::number(value, \textcolor{charliteral}{'f'}, 4);}
+\DoxyCodeLine{00856           text.truncate(5);}
+\DoxyCodeLine{00857           text.append(\textcolor{stringliteral}{"{}\string~"{}});}
+\DoxyCodeLine{00858         \}}
+\DoxyCodeLine{00859 }
+\DoxyCodeLine{00860         QString fontName = Preferences::instance()-\/>getInterfaceFont();}
+\DoxyCodeLine{00861         \textcolor{keywordflow}{if} (fontName == \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{00862 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00863           fontName = \textcolor{stringliteral}{"{}Arial"{}};}
+\DoxyCodeLine{00864 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00865           fontName = \textcolor{stringliteral}{"{}Helvetica"{}};}
+\DoxyCodeLine{00866 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00867         \}}
+\DoxyCodeLine{00868         \textcolor{keyword}{static} QFont font(fontName, -\/1);}
+\DoxyCodeLine{00869         font.setBold(drawValue == Key);}
+\DoxyCodeLine{00870         font.setPixelSize(12);}
+\DoxyCodeLine{00871         painter.setFont(font);}
+\DoxyCodeLine{00872         painter.drawText(cellRect.adjusted(10, 0, 0, 0),}
+\DoxyCodeLine{00873                          Qt::AlignVCenter | Qt::AlignLeft, text);}
+\DoxyCodeLine{00874       \}}
+\DoxyCodeLine{00875     \}}
+\DoxyCodeLine{00876 }
+\DoxyCodeLine{00877     \textcolor{keywordflow}{if} (kCount > 0 \&\& (isStageObjectCycled || isParamCycled)) \{}
+\DoxyCodeLine{00878       \textcolor{comment}{// draw the row zigzag}}
+\DoxyCodeLine{00879       \textcolor{keywordtype}{int} ymax           = m\_sheet-\/>rowToY(r1 + 1);}
+\DoxyCodeLine{00880       \textcolor{keywordtype}{int} qx             = x0 + 4;}
+\DoxyCodeLine{00881       \textcolor{keywordtype}{int} qy             = m\_sheet-\/>rowToY(kr1 + 1);}
+\DoxyCodeLine{00882       \textcolor{keywordtype}{int} zig            = 2;}
+\DoxyCodeLine{00883       QColor zigzagColor = (isStageObjectCycled) ? getViewer()-\/>getTextColor()}
+\DoxyCodeLine{00884                                                  : KeyFrameBorderColor;}
+\DoxyCodeLine{00885       painter.setPen(zigzagColor);}
+\DoxyCodeLine{00886       painter.drawLine(QPoint(qx, qy), QPoint(qx -\/ zig, qy + zig));}
+\DoxyCodeLine{00887       qy += zig;}
+\DoxyCodeLine{00888       \textcolor{keywordflow}{while} (qy < ymax) \{}
+\DoxyCodeLine{00889         painter.drawLine(QPoint(qx -\/ zig, qy), QPoint(qx + zig, qy + 2 * zig));}
+\DoxyCodeLine{00890         painter.drawLine(QPoint(qx + zig, qy + 2 * zig),}
+\DoxyCodeLine{00891                          QPoint(qx -\/ zig, qy + 4 * zig));}
+\DoxyCodeLine{00892         qy += 4 * zig;}
+\DoxyCodeLine{00893       \}}
+\DoxyCodeLine{00894     \}}
+\DoxyCodeLine{00895   \}}
+\DoxyCodeLine{00896 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_function_sheet_cell_viewer_aa1266331825138770f6f4c278831d9b4}\label{class_function_sheet_cell_viewer_aa1266331825138770f6f4c278831d9b4}} 
+\index{FunctionSheetCellViewer@{FunctionSheetCellViewer}!mouseDoubleClickEvent@{mouseDoubleClickEvent}}
+\index{mouseDoubleClickEvent@{mouseDoubleClickEvent}!FunctionSheetCellViewer@{FunctionSheetCellViewer}}
+\doxysubsubsection{\texorpdfstring{mouseDoubleClickEvent()}{mouseDoubleClickEvent()}}
+{\footnotesize\ttfamily void Function\+Sheet\+Cell\+Viewer\+::mouse\+Double\+Click\+Event (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00900                                                                   \{}
+\DoxyCodeLine{00901   \mbox{\hyperlink{class_cell_position}{CellPosition}} cellPosition = getViewer()-\/>\mbox{\hyperlink{class_spreadsheet_viewer_abdf7d777f22954ef57404d3edde69a16}{xyToPosition}}(e-\/>pos());}
+\DoxyCodeLine{00902   \textcolor{keywordtype}{int} row                   = cellPosition.frame();}
+\DoxyCodeLine{00903   \textcolor{keywordtype}{int} col                   = cellPosition.layer();}
+\DoxyCodeLine{00904   \textcolor{keywordtype}{int} x0, y0, x1, y1;}
+\DoxyCodeLine{00905   x0 = getViewer()-\/>columnToX(col);}
+\DoxyCodeLine{00906   x1 = getViewer()-\/>columnToX(col + 1) -\/ 1;}
+\DoxyCodeLine{00907   y0 = getViewer()-\/>rowToY(row);}
+\DoxyCodeLine{00908   y1 = getViewer()-\/>rowToY(row + 1) -\/ 1;}
+\DoxyCodeLine{00909 }
+\DoxyCodeLine{00910   m\_editRow = row;}
+\DoxyCodeLine{00911   m\_editCol = col;}
+\DoxyCodeLine{00912 }
+\DoxyCodeLine{00913   \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve = m\_sheet-\/>getCurve(col);}
+\DoxyCodeLine{00914   \textcolor{keywordflow}{if} (curve) \{}
+\DoxyCodeLine{00915     \textcolor{keywordtype}{double} v          = curve-\/>getValue(row);}
+\DoxyCodeLine{00916     \mbox{\hyperlink{class_t_measure}{TMeasure}} *measure = curve-\/>getMeasure();}
+\DoxyCodeLine{00917     \textcolor{keyword}{const} \mbox{\hyperlink{class_t_unit}{TUnit}} *unit = measure ? measure-\/>getCurrentUnit() : 0;}
+\DoxyCodeLine{00918     \textcolor{keywordflow}{if} (unit) v = unit-\/>convertTo(v);}
+\DoxyCodeLine{00919     m\_currentValue = v;}
+\DoxyCodeLine{00920     m\_lineEdit-\/>setText(QString::number(v, \textcolor{charliteral}{'f'}, 4));}
+\DoxyCodeLine{00921     \textcolor{comment}{// in order to put the cursor to the left end}}
+\DoxyCodeLine{00922     m\_lineEdit-\/>setSelection(m\_lineEdit-\/>text().length(),}
+\DoxyCodeLine{00923                              -\/m\_lineEdit-\/>text().length());}
+\DoxyCodeLine{00924   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00925     m\_lineEdit-\/>setText(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00926 }
+\DoxyCodeLine{00927   QString fontName = Preferences::instance()-\/>getInterfaceFont();}
+\DoxyCodeLine{00928   \textcolor{keywordflow}{if} (fontName == \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{00929 \textcolor{preprocessor}{\#ifdef \_WIN32}}
+\DoxyCodeLine{00930     fontName = \textcolor{stringliteral}{"{}Arial"{}};}
+\DoxyCodeLine{00931 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00932     fontName = \textcolor{stringliteral}{"{}Helvetica"{}};}
+\DoxyCodeLine{00933 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00934   \}}
+\DoxyCodeLine{00935   \textcolor{keyword}{static} QFont font(fontName, 9, QFont::Normal);}
+\DoxyCodeLine{00936   m\_lineEdit-\/>setFont(font);}
+\DoxyCodeLine{00937 }
+\DoxyCodeLine{00938   m\_lineEdit-\/>setGeometry(x0 -\/ 2, y0 -\/ 2, x1 -\/ x0 + 1 + 4,}
+\DoxyCodeLine{00939                           y1 -\/ y0 + 1 + 4);  \textcolor{comment}{// x0,y0,x1-\/x0+1,y0-\/y1+1);}}
+\DoxyCodeLine{00940   m\_lineEdit-\/>show();}
+\DoxyCodeLine{00941   m\_lineEdit-\/>raise();}
+\DoxyCodeLine{00942   m\_lineEdit-\/>setFocus();}
+\DoxyCodeLine{00943 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_function_sheet_cell_viewer_adcba5dd7a681894b9eb7d7115b3df9b1}\label{class_function_sheet_cell_viewer_adcba5dd7a681894b9eb7d7115b3df9b1}} 
+\index{FunctionSheetCellViewer@{FunctionSheetCellViewer}!mouseMoveEvent@{mouseMoveEvent}}
+\index{mouseMoveEvent@{mouseMoveEvent}!FunctionSheetCellViewer@{FunctionSheetCellViewer}}
+\doxysubsubsection{\texorpdfstring{mouseMoveEvent()}{mouseMoveEvent()}}
+{\footnotesize\ttfamily void Function\+Sheet\+Cell\+Viewer\+::mouse\+Move\+Event (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01019                                                            \{}
+\DoxyCodeLine{01020   \textcolor{keywordflow}{if} (m\_lineEdit-\/>getMouseDragEditing()) \{}
+\DoxyCodeLine{01021     \textcolor{keywordtype}{double} newValue = m\_currentValue + ((e-\/>x() -\/ m\_mouseXPosition) / 2);}
+\DoxyCodeLine{01022     m\_lineEdit-\/>setText(QString::number(newValue, \textcolor{charliteral}{'f'}, 4));}
+\DoxyCodeLine{01023     m\_updatedValue = newValue;}
+\DoxyCodeLine{01024   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01025     Spreadsheet::CellPanel::mouseMoveEvent(e);}
+\DoxyCodeLine{01026 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_function_sheet_cell_viewer_ad5eda46faa815f4d375f813a2831d083}\label{class_function_sheet_cell_viewer_ad5eda46faa815f4d375f813a2831d083}} 
+\index{FunctionSheetCellViewer@{FunctionSheetCellViewer}!mousePressEvent@{mousePressEvent}}
+\index{mousePressEvent@{mousePressEvent}!FunctionSheetCellViewer@{FunctionSheetCellViewer}}
+\doxysubsubsection{\texorpdfstring{mousePressEvent()}{mousePressEvent()}}
+{\footnotesize\ttfamily void Function\+Sheet\+Cell\+Viewer\+::mouse\+Press\+Event (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00968                                                             \{}
+\DoxyCodeLine{00969   \textcolor{comment}{// escape from the line edit by clicking outside}}
+\DoxyCodeLine{00970   \textcolor{keywordflow}{if} (m\_lineEdit-\/>isVisible()) \{}
+\DoxyCodeLine{00971     m\_lineEdit-\/>hide();}
+\DoxyCodeLine{00972     m\_lineEdit-\/>clearFocus();}
+\DoxyCodeLine{00973     m\_sheet-\/>setFocus();}
+\DoxyCodeLine{00974   \}}
+\DoxyCodeLine{00975   \textcolor{keywordflow}{if} (e-\/>button() == Qt::LeftButton \&\& e-\/>modifiers() == Qt::ControlModifier) \{}
+\DoxyCodeLine{00976     mouseDoubleClickEvent(e);}
+\DoxyCodeLine{00977     \textcolor{keywordflow}{if} (m\_lineEdit-\/>text() != \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{00978       m\_lineEdit-\/>setMouseDragEditing(\textcolor{keyword}{true});}
+\DoxyCodeLine{00979       m\_mouseXPosition = e-\/>x();}
+\DoxyCodeLine{00980     \}}
+\DoxyCodeLine{00981   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (e-\/>button() == Qt::LeftButton \&\&}
+\DoxyCodeLine{00982              e-\/>modifiers() == Qt::AltModifier) \{}
+\DoxyCodeLine{00983     \mbox{\hyperlink{class_cell_position}{CellPosition}} cellPosition = getViewer()-\/>\mbox{\hyperlink{class_spreadsheet_viewer_abdf7d777f22954ef57404d3edde69a16}{xyToPosition}}(e-\/>pos());}
+\DoxyCodeLine{00984     \textcolor{keywordtype}{int} row                   = cellPosition.frame();}
+\DoxyCodeLine{00985     \textcolor{keywordtype}{int} col                   = cellPosition.layer();}
+\DoxyCodeLine{00986     \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve       = m\_sheet-\/>getCurve(col);}
+\DoxyCodeLine{00987     \textcolor{keywordflow}{if} (curve) \{}
+\DoxyCodeLine{00988       KeyframeSetter::removeKeyframeAt(curve, row);}
+\DoxyCodeLine{00989     \}}
+\DoxyCodeLine{00990   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (e-\/>button() == Qt::LeftButton || e-\/>button() == Qt::MidButton)}
+\DoxyCodeLine{00991     Spreadsheet::CellPanel::mousePressEvent(e);}
+\DoxyCodeLine{00992   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (e-\/>button() == Qt::RightButton) \{}
+\DoxyCodeLine{00993     update();}
+\DoxyCodeLine{00994     openContextMenu(e);}
+\DoxyCodeLine{00995   \}}
+\DoxyCodeLine{00996 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_function_sheet_cell_viewer_a5527bc34d1761eb7f35b835b9a23b04b}\label{class_function_sheet_cell_viewer_a5527bc34d1761eb7f35b835b9a23b04b}} 
+\index{FunctionSheetCellViewer@{FunctionSheetCellViewer}!mouseReleaseEvent@{mouseReleaseEvent}}
+\index{mouseReleaseEvent@{mouseReleaseEvent}!FunctionSheetCellViewer@{FunctionSheetCellViewer}}
+\doxysubsubsection{\texorpdfstring{mouseReleaseEvent()}{mouseReleaseEvent()}}
+{\footnotesize\ttfamily void Function\+Sheet\+Cell\+Viewer\+::mouse\+Release\+Event (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01000                                                               \{}
+\DoxyCodeLine{01001   \textcolor{keywordflow}{if} (m\_lineEdit-\/>getMouseDragEditing()) \{}
+\DoxyCodeLine{01002     std::string textValue = m\_lineEdit-\/>text().toStdString();}
+\DoxyCodeLine{01003     onCellEditorEditingFinished();}
+\DoxyCodeLine{01004     m\_lineEdit-\/>setMouseDragEditing(\textcolor{keyword}{false});}
+\DoxyCodeLine{01005   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01006     Spreadsheet::CellPanel::mouseReleaseEvent(e);}
+\DoxyCodeLine{01007   \textcolor{comment}{/*}}
+\DoxyCodeLine{01008 \textcolor{comment}{  CellPosition cellPosition = getViewer ()-\/>xyToPosition (e-\/>pos ());}}
+\DoxyCodeLine{01009 \textcolor{comment}{int row = cellPosition.frame ();}}
+\DoxyCodeLine{01010 \textcolor{comment}{int col = cellPosition.layer ();}}
+\DoxyCodeLine{01011 \textcolor{comment}{FunctionSheet::DragTool *dragTool = m\_sheet-\/>getDragTool();}}
+\DoxyCodeLine{01012 \textcolor{comment}{if(dragTool) dragTool-\/>release(row,col);}}
+\DoxyCodeLine{01013 \textcolor{comment}{m\_sheet-\/>setDragTool(0);}}
+\DoxyCodeLine{01014 \textcolor{comment}{*/}}
+\DoxyCodeLine{01015 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_function_sheet_cell_viewer_a9f3a0a3afe85347683c6cd1101e6cf87}\label{class_function_sheet_cell_viewer_a9f3a0a3afe85347683c6cd1101e6cf87}} 
+\index{FunctionSheetCellViewer@{FunctionSheetCellViewer}!openContextMenu@{openContextMenu}}
+\index{openContextMenu@{openContextMenu}!FunctionSheetCellViewer@{FunctionSheetCellViewer}}
+\doxysubsubsection{\texorpdfstring{openContextMenu()}{openContextMenu()}}
+{\footnotesize\ttfamily void Function\+Sheet\+Cell\+Viewer\+::open\+Context\+Menu (\begin{DoxyParamCaption}\item[{QMouse\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01037                                                             \{}
+\DoxyCodeLine{01038   QAction deleteKeyframeAction(tr(\textcolor{stringliteral}{"{}Delete Key"{}}), 0);}
+\DoxyCodeLine{01039   QAction insertKeyframeAction(tr(\textcolor{stringliteral}{"{}Set Key"{}}), 0);}
+\DoxyCodeLine{01040 }
+\DoxyCodeLine{01041   QStringList interpNames;}
+\DoxyCodeLine{01042   interpNames << tr(\textcolor{stringliteral}{"{}Constant Interpolation"{}}) << tr(\textcolor{stringliteral}{"{}Linear Interpolation"{}})}
+\DoxyCodeLine{01043               << tr(\textcolor{stringliteral}{"{}Speed In / Speed Out Interpolation"{}})}
+\DoxyCodeLine{01044               << tr(\textcolor{stringliteral}{"{}Ease In / Ease Out Interpolation"{}})}
+\DoxyCodeLine{01045               << tr(\textcolor{stringliteral}{"{}Ease In / Ease Out (\%) Interpolation"{}})}
+\DoxyCodeLine{01046               << tr(\textcolor{stringliteral}{"{}Exponential Interpolation"{}})}
+\DoxyCodeLine{01047               << tr(\textcolor{stringliteral}{"{}Expression Interpolation"{}}) << tr(\textcolor{stringliteral}{"{}File Interpolation"{}})}
+\DoxyCodeLine{01048               << tr(\textcolor{stringliteral}{"{}Similar Shape Interpolation"{}});}
+\DoxyCodeLine{01049   QAction activateCycleAction(tr(\textcolor{stringliteral}{"{}Activate Cycle"{}}), 0);}
+\DoxyCodeLine{01050   QAction deactivateCycleAction(tr(\textcolor{stringliteral}{"{}Deactivate Cycle"{}}), 0);}
+\DoxyCodeLine{01051   QAction showIbtwnAction(tr(\textcolor{stringliteral}{"{}Show Inbetween Values"{}}), 0);}
+\DoxyCodeLine{01052   QAction hideIbtwnAction(tr(\textcolor{stringliteral}{"{}Hide Inbetween Values"{}}), 0);}
+\DoxyCodeLine{01053 }
+\DoxyCodeLine{01054   \mbox{\hyperlink{class_cell_position}{CellPosition}} cellPosition = getViewer()-\/>\mbox{\hyperlink{class_spreadsheet_viewer_abdf7d777f22954ef57404d3edde69a16}{xyToPosition}}(e-\/>pos());}
+\DoxyCodeLine{01055   \textcolor{keywordtype}{int} row                   = cellPosition.frame();}
+\DoxyCodeLine{01056   \textcolor{keywordtype}{int} col                   = cellPosition.layer();}
+\DoxyCodeLine{01057   \mbox{\hyperlink{class_t_double_param}{TDoubleParam}} *curve       = m\_sheet-\/>getCurve(col);}
+\DoxyCodeLine{01058   \textcolor{keywordflow}{if} (!curve) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01059 }
+\DoxyCodeLine{01060   \textcolor{keywordtype}{bool} isEmpty    = \textcolor{keyword}{true};}
+\DoxyCodeLine{01061   \textcolor{keywordtype}{bool} isKeyframe = \textcolor{keyword}{false};}
+\DoxyCodeLine{01062 }
+\DoxyCodeLine{01063   \textcolor{comment}{// find the curve keyframe range}}
+\DoxyCodeLine{01064   \textcolor{keywordtype}{int} kCount = curve-\/>getKeyframeCount();}
+\DoxyCodeLine{01065   \textcolor{keywordflow}{if} (kCount > 0) \{}
+\DoxyCodeLine{01066     \textcolor{keywordflow}{if} (curve-\/>\mbox{\hyperlink{class_t_double_param_af08442b9fd968fddada028a6f07983d5}{keyframeIndexToFrame}}(0) <= row \&\&}
+\DoxyCodeLine{01067         row <= curve-\/>keyframeIndexToFrame(kCount -\/ 1)) \{}
+\DoxyCodeLine{01068       isEmpty    = \textcolor{keyword}{false};}
+\DoxyCodeLine{01069       isKeyframe = curve-\/>\mbox{\hyperlink{class_t_double_param_a2be2db8a6849e4619940ff37a0948574}{isKeyframe}}(row);}
+\DoxyCodeLine{01070     \}}
+\DoxyCodeLine{01071   \}}
+\DoxyCodeLine{01072   \textcolor{keywordtype}{int} kIndex = curve-\/>\mbox{\hyperlink{class_t_double_param_a765abd97386a7e4e3a413255ba494e19}{getPrevKeyframe}}(row);}
+\DoxyCodeLine{01073 }
+\DoxyCodeLine{01074   \textcolor{comment}{// if the FunctionSelection is not current or when clicking outside of the}}
+\DoxyCodeLine{01075   \textcolor{comment}{// selection, then select the clicked cell.}}
+\DoxyCodeLine{01076   \mbox{\hyperlink{class_function_selection}{FunctionSelection}} *selection = m\_sheet-\/>getSelection();}
+\DoxyCodeLine{01077   \textcolor{keywordflow}{if} (!selection-\/>getSelectedCells().contains(col, row)) \{}
+\DoxyCodeLine{01078     selection-\/>makeCurrent();}
+\DoxyCodeLine{01079     selection-\/>selectCells(QRect(col, row, 1, 1));}
+\DoxyCodeLine{01080   \}}
+\DoxyCodeLine{01081   \mbox{\hyperlink{class_command_manager}{CommandManager}} *cmdManager = CommandManager::instance();}
+\DoxyCodeLine{01082 }
+\DoxyCodeLine{01083   \textcolor{comment}{// build menu}}
+\DoxyCodeLine{01084   QMenu menu(0);}
+\DoxyCodeLine{01085 }
+\DoxyCodeLine{01086   \textcolor{comment}{// on clicking after last keyframe}}
+\DoxyCodeLine{01087   \textcolor{keywordflow}{if} (kCount > 0 \&\& isEmpty \&\& kIndex == kCount -\/ 1) \{}
+\DoxyCodeLine{01088     \textcolor{keywordflow}{if} (curve-\/>isCycleEnabled())}
+\DoxyCodeLine{01089       menu.addAction(\&deactivateCycleAction);}
+\DoxyCodeLine{01090     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01091       menu.addAction(\&activateCycleAction);}
+\DoxyCodeLine{01092   \}}
+\DoxyCodeLine{01093 }
+\DoxyCodeLine{01094   \textcolor{keywordflow}{if} (!isKeyframe)  \textcolor{comment}{// menu.addAction(\&deleteKeyframeAction); else}}
+\DoxyCodeLine{01095     menu.addAction(\&insertKeyframeAction);}
+\DoxyCodeLine{01096 }
+\DoxyCodeLine{01097   \textcolor{comment}{// change interpolation commands}}
+\DoxyCodeLine{01098   QList<QAction *> interpActions;}
+\DoxyCodeLine{01099   \textcolor{keywordtype}{int} interp = selection-\/>getCommonSegmentType();}
+\DoxyCodeLine{01100   \textcolor{keywordflow}{if} (interp != -\/1) \{}
+\DoxyCodeLine{01101     menu.addSeparator();}
+\DoxyCodeLine{01102     QMenu *interpMenu = menu.addMenu(tr(\textcolor{stringliteral}{"{}Change Interpolation"{}}));}
+\DoxyCodeLine{01103     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = (\textcolor{keywordtype}{int})TDoubleKeyframe::Constant;}
+\DoxyCodeLine{01104          i <= (int)TDoubleKeyframe::SimilarShape; i++) \{}
+\DoxyCodeLine{01105       \textcolor{keywordflow}{if} (interp != i) \{}
+\DoxyCodeLine{01106         QAction *interpAction = \textcolor{keyword}{new} QAction(interpNames[i -\/ 1], 0);}
+\DoxyCodeLine{01107         interpAction-\/>setData(i);}
+\DoxyCodeLine{01108         interpActions.append(interpAction);}
+\DoxyCodeLine{01109         interpMenu-\/>addAction(interpAction);}
+\DoxyCodeLine{01110       \}}
+\DoxyCodeLine{01111     \}}
+\DoxyCodeLine{01112   \}}
+\DoxyCodeLine{01113 }
+\DoxyCodeLine{01114   \textcolor{comment}{// change step commands}}
+\DoxyCodeLine{01115   \textcolor{keywordtype}{int} step = selection-\/>getCommonStep();}
+\DoxyCodeLine{01116   \textcolor{keywordflow}{if} (step != -\/1) \{}
+\DoxyCodeLine{01117     QMenu *stepMenu = menu.addMenu(tr(\textcolor{stringliteral}{"{}Change Step"{}}));}
+\DoxyCodeLine{01118     \textcolor{keywordflow}{if} (step != 1) stepMenu-\/>addAction(cmdManager-\/>getAction(\textcolor{stringliteral}{"{}MI\_ResetStep"{}}));}
+\DoxyCodeLine{01119     \textcolor{keywordflow}{if} (step != 2) stepMenu-\/>addAction(cmdManager-\/>getAction(\textcolor{stringliteral}{"{}MI\_Step2"{}}));}
+\DoxyCodeLine{01120     \textcolor{keywordflow}{if} (step != 3) stepMenu-\/>addAction(cmdManager-\/>getAction(\textcolor{stringliteral}{"{}MI\_Step3"{}}));}
+\DoxyCodeLine{01121     \textcolor{keywordflow}{if} (step != 4) stepMenu-\/>addAction(cmdManager-\/>getAction(\textcolor{stringliteral}{"{}MI\_Step4"{}}));}
+\DoxyCodeLine{01122   \}}
+\DoxyCodeLine{01123 }
+\DoxyCodeLine{01124   menu.addSeparator();}
+\DoxyCodeLine{01125 }
+\DoxyCodeLine{01126   menu.addAction(cmdManager-\/>getAction(\textcolor{stringliteral}{"{}MI\_Cut"{}}));}
+\DoxyCodeLine{01127   menu.addAction(cmdManager-\/>getAction(\textcolor{stringliteral}{"{}MI\_Copy"{}}));}
+\DoxyCodeLine{01128   menu.addAction(cmdManager-\/>getAction(\textcolor{stringliteral}{"{}MI\_Paste"{}}));}
+\DoxyCodeLine{01129   menu.addAction(cmdManager-\/>getAction(\textcolor{stringliteral}{"{}MI\_Clear"{}}));}
+\DoxyCodeLine{01130 }
+\DoxyCodeLine{01131   menu.addAction(cmdManager-\/>getAction(\textcolor{stringliteral}{"{}MI\_Insert"{}}));}
+\DoxyCodeLine{01132 }
+\DoxyCodeLine{01133   \textcolor{keywordflow}{if} (!isEmpty \&\& kIndex >= 0) \{}
+\DoxyCodeLine{01134     menu.addSeparator();}
+\DoxyCodeLine{01135     \textcolor{keywordflow}{if} (m\_sheet-\/>isIbtwnValueVisible())}
+\DoxyCodeLine{01136       menu.addAction(\&hideIbtwnAction);}
+\DoxyCodeLine{01137     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01138       menu.addAction(\&showIbtwnAction);}
+\DoxyCodeLine{01139   \}}
+\DoxyCodeLine{01140 }
+\DoxyCodeLine{01141   \mbox{\hyperlink{class_t_scene_handle}{TSceneHandle}} *sceneHandle = m\_sheet-\/>getViewer()-\/>getSceneHandle();}
+\DoxyCodeLine{01142   \textcolor{comment}{// execute menu}}
+\DoxyCodeLine{01143   QAction *action = menu.exec(e-\/>globalPos());  \textcolor{comment}{// QCursor::pos());}}
+\DoxyCodeLine{01144   \textcolor{keywordflow}{if} (action == \&deleteKeyframeAction) \{}
+\DoxyCodeLine{01145     KeyframeSetter::removeKeyframeAt(curve, row);}
+\DoxyCodeLine{01146   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (action == \&insertKeyframeAction) \{}
+\DoxyCodeLine{01147     \mbox{\hyperlink{class_keyframe_setter}{KeyframeSetter}}(curve).createKeyframe(row);}
+\DoxyCodeLine{01148   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (interpActions.contains(action)) \{}
+\DoxyCodeLine{01149     selection-\/>setSegmentType((TDoubleKeyframe::Type)action-\/>data().toInt());}
+\DoxyCodeLine{01150   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (action == \&activateCycleAction)}
+\DoxyCodeLine{01151     KeyframeSetter::enableCycle(curve, \textcolor{keyword}{true}, sceneHandle);}
+\DoxyCodeLine{01152   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (action == \&deactivateCycleAction)}
+\DoxyCodeLine{01153     KeyframeSetter::enableCycle(curve, \textcolor{keyword}{false}, sceneHandle);}
+\DoxyCodeLine{01154   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (action == \&hideIbtwnAction)}
+\DoxyCodeLine{01155     m\_sheet-\/>setIbtwnValueVisible(\textcolor{keyword}{false});}
+\DoxyCodeLine{01156   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (action == \&showIbtwnAction)}
+\DoxyCodeLine{01157     m\_sheet-\/>setIbtwnValueVisible(\textcolor{keyword}{true});}
+\DoxyCodeLine{01158 }
+\DoxyCodeLine{01159   update();}
+\DoxyCodeLine{01160 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/functionsheet.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/functionsheet.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,127 @@
+\hypertarget{class_t_level_writer_pli}{}\doxysection{TLevel\+Writer\+Pli Class Reference}
+\label{class_t_level_writer_pli}\index{TLevelWriterPli@{TLevelWriterPli}}
+
+
+{\ttfamily \#include $<$tiio\+\_\+pli.\+h$>$}
+
+Inheritance diagram for TLevel\+Writer\+Pli\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_t_level_writer_pli}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_level_writer_pli_a9050c25fe6a140a273e417c1b01cf99c}{TLevel\+Writer\+Pli}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&path, \mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$winfo)
+\item 
+\mbox{\hyperlink{class_t_image_writer_p}{TImage\+WriterP}} \mbox{\hyperlink{class_t_level_writer_pli_a30a63e47036d8afbd33adf593856a933}{get\+Frame\+Writer}} (\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}} fid) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}} $\ast$ \mbox{\hyperlink{class_t_level_writer_pli_ad5d607a81f28436d79f018fce390fea6}{create}} (const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&f, \mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$winfo)
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_t_level_writer_pli_a4097ca6b648d7bc8f3e3c7fca3a0f3b2}{TImage\+Writer\+Pli}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_t_level_writer_pli}{TLevel\+Writer\+Pli}}\+: 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_level_writer_pli_a9050c25fe6a140a273e417c1b01cf99c}\label{class_t_level_writer_pli_a9050c25fe6a140a273e417c1b01cf99c}} 
+\index{TLevelWriterPli@{TLevelWriterPli}!TLevelWriterPli@{TLevelWriterPli}}
+\index{TLevelWriterPli@{TLevelWriterPli}!TLevelWriterPli@{TLevelWriterPli}}
+\doxysubsubsection{\texorpdfstring{TLevelWriterPli()}{TLevelWriterPli()}}
+{\footnotesize\ttfamily TLevel\+Writer\+Pli\+::\+TLevel\+Writer\+Pli (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{path,  }\item[{\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$}]{winfo }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00614     : \mbox{\hyperlink{class_t_level_writer}{TLevelWriter}}(path, winfo), m\_frameNumber(0) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_pli_a9b3d74203a65801c2fe1ee4fb98abc0a}\label{class_t_level_writer_pli_a9b3d74203a65801c2fe1ee4fb98abc0a}} 
+\index{TLevelWriterPli@{TLevelWriterPli}!````~TLevelWriterPli@{$\sim$TLevelWriterPli}}
+\index{````~TLevelWriterPli@{$\sim$TLevelWriterPli}!TLevelWriterPli@{TLevelWriterPli}}
+\doxysubsubsection{\texorpdfstring{$\sim$TLevelWriterPli()}{~TLevelWriterPli()}}
+{\footnotesize\ttfamily TLevel\+Writer\+Pli\+::$\sim$\+TLevel\+Writer\+Pli (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00618                                   \{}
+\DoxyCodeLine{00619   \textcolor{keywordflow}{if} (!m\_pli) \{}
+\DoxyCodeLine{00620     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00621   \}}
+\DoxyCodeLine{00622   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00623     \textcolor{comment}{// aggiungo il tag della palette}}
+\DoxyCodeLine{00624     CurrStyle = NULL;}
+\DoxyCodeLine{00625     assert(!m\_pli-\/>m\_palette\_tags.empty());}
+\DoxyCodeLine{00626     std::unique\_ptr<GroupTag> groupTag(}
+\DoxyCodeLine{00627         \textcolor{keyword}{new} \mbox{\hyperlink{class_group_tag}{GroupTag}}(GroupTag::PALETTE, m\_pli-\/>m\_palette\_tags.size(),}
+\DoxyCodeLine{00628                      m\_pli-\/>m\_palette\_tags.data()));}
+\DoxyCodeLine{00629     m\_pli-\/>addTag(groupTag.release(), \textcolor{keyword}{true});}
+\DoxyCodeLine{00630     \textcolor{keywordflow}{if} (m\_contentHistory) \{}
+\DoxyCodeLine{00631       QString his = m\_contentHistory-\/>\mbox{\hyperlink{class_t_content_history_aac53dd08c6fc7fa07ba1c8c5beb51131}{serialize}}();}
+\DoxyCodeLine{00632       std::unique\_ptr<TextTag> textTag(\textcolor{keyword}{new} \mbox{\hyperlink{class_text_tag}{TextTag}}(his.toStdString()));}
+\DoxyCodeLine{00633       m\_pli-\/>addTag(textTag.release(), \textcolor{keyword}{true});}
+\DoxyCodeLine{00634     \}}
+\DoxyCodeLine{00635     m\_pli-\/>writePli(m\_path);}
+\DoxyCodeLine{00636   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00637   \}}
+\DoxyCodeLine{00638 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_level_writer_pli_ad5d607a81f28436d79f018fce390fea6}\label{class_t_level_writer_pli_ad5d607a81f28436d79f018fce390fea6}} 
+\index{TLevelWriterPli@{TLevelWriterPli}!create@{create}}
+\index{create@{create}!TLevelWriterPli@{TLevelWriterPli}}
+\doxysubsubsection{\texorpdfstring{create()}{create()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}} $\ast$ TLevel\+Writer\+Pli\+::create (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_file_path}{TFile\+Path}} \&}]{f,  }\item[{\mbox{\hyperlink{class_t_property_group}{TProperty\+Group}} $\ast$}]{winfo }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055                                                                          \{}
+\DoxyCodeLine{00056     \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_t_level_writer_pli}{TLevelWriterPli}}(f, winfo);}
+\DoxyCodeLine{00057   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_level_writer_pli_a30a63e47036d8afbd33adf593856a933}\label{class_t_level_writer_pli_a30a63e47036d8afbd33adf593856a933}} 
+\index{TLevelWriterPli@{TLevelWriterPli}!getFrameWriter@{getFrameWriter}}
+\index{getFrameWriter@{getFrameWriter}!TLevelWriterPli@{TLevelWriterPli}}
+\doxysubsubsection{\texorpdfstring{getFrameWriter()}{getFrameWriter()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_image_writer_p}{TImage\+WriterP}} TLevel\+Writer\+Pli\+::get\+Frame\+Writer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_frame_id}{TFrame\+Id}}}]{fid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_level_writer}{TLevel\+Writer}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00642                                                           \{}
+\DoxyCodeLine{00643   \mbox{\hyperlink{class_t_image_writer_pli}{TImageWriterPli}} *iwm = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_image_writer_pli}{TImageWriterPli}}(m\_path, fid, \textcolor{keyword}{this});}
+\DoxyCodeLine{00644   \textcolor{keywordflow}{return} \mbox{\hyperlink{class_t_image_writer_p}{TImageWriterP}}(iwm);}
+\DoxyCodeLine{00645 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_t_level_writer_pli_a4097ca6b648d7bc8f3e3c7fca3a0f3b2}\label{class_t_level_writer_pli_a4097ca6b648d7bc8f3e3c7fca3a0f3b2}} 
+\index{TLevelWriterPli@{TLevelWriterPli}!TImageWriterPli@{TImageWriterPli}}
+\index{TImageWriterPli@{TImageWriterPli}!TLevelWriterPli@{TLevelWriterPli}}
+\doxysubsubsection{\texorpdfstring{TImageWriterPli}{TImageWriterPli}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{class_t_image_writer_pli}{TImage\+Writer\+Pli}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/pli/tiio\+\_\+pli.\+h\item 
+E\+:/opentoonz/toonz/sources/image/pli/tiio\+\_\+pli.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,81 @@
+\hypertarget{class_invert_keyframe_selection_command}{}\doxysection{Invert\+Keyframe\+Selection\+Command Class Reference}
+\label{class_invert_keyframe_selection_command}\index{InvertKeyframeSelectionCommand@{InvertKeyframeSelectionCommand}}
+Inheritance diagram for Invert\+Keyframe\+Selection\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_invert_keyframe_selection_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_invert_keyframe_selection_command_a0e375901c41ee5458add3258fb4d1e2e}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_invert_keyframe_selection_command_aff4bf08e0c583ad4d52e5c266bc54dd8}\label{class_invert_keyframe_selection_command_aff4bf08e0c583ad4d52e5c266bc54dd8}} 
+\index{InvertKeyframeSelectionCommand@{InvertKeyframeSelectionCommand}!InvertKeyframeSelectionCommand@{InvertKeyframeSelectionCommand}}
+\index{InvertKeyframeSelectionCommand@{InvertKeyframeSelectionCommand}!InvertKeyframeSelectionCommand@{InvertKeyframeSelectionCommand}}
+\doxysubsubsection{\texorpdfstring{InvertKeyframeSelectionCommand()}{InvertKeyframeSelectionCommand()}}
+{\footnotesize\ttfamily Invert\+Keyframe\+Selection\+Command\+::\+Invert\+Keyframe\+Selection\+Command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01418       : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(MI\_InvertKeyframeSelection) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_invert_keyframe_selection_command_a0e375901c41ee5458add3258fb4d1e2e}\label{class_invert_keyframe_selection_command_a0e375901c41ee5458add3258fb4d1e2e}} 
+\index{InvertKeyframeSelectionCommand@{InvertKeyframeSelectionCommand}!execute@{execute}}
+\index{execute@{execute}!InvertKeyframeSelectionCommand@{InvertKeyframeSelectionCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Invert\+Keyframe\+Selection\+Command\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01420                           \{}
+\DoxyCodeLine{01421     \mbox{\hyperlink{class_t_app}{TApp}} *app                     = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{01422     \mbox{\hyperlink{class_t_keyframe_selection}{TKeyframeSelection}} *selection = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_keyframe_selection}{TKeyframeSelection}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{01423         app-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}()-\/>getSelection());}
+\DoxyCodeLine{01424     \textcolor{keywordflow}{if} (!selection) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01425 }
+\DoxyCodeLine{01426     \mbox{\hyperlink{class_toonz_scene}{ToonzScene}} *scene = app-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>getScene();}
+\DoxyCodeLine{01427     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh      = scene-\/>\mbox{\hyperlink{class_toonz_scene_ae3c828e3223fd809fd59189233d0576a}{getXsheet}}();}
+\DoxyCodeLine{01428     \textcolor{keywordtype}{int} col;}
+\DoxyCodeLine{01429     \textcolor{keywordflow}{for} (col = -\/1; col < xsh-\/>\mbox{\hyperlink{class_t_xsheet_a17464dc5617cf87a46f03e1a52d36cc1}{getColumnCount}}(); col++) \{}
+\DoxyCodeLine{01430       \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} objectId;}
+\DoxyCodeLine{01431       \textcolor{keywordflow}{if} (col == -\/1 \&\& Preferences::instance()-\/>isXsheetCameraColumnVisible())}
+\DoxyCodeLine{01432         objectId = TStageObjectId::CameraId(xsh-\/>getCameraColumnIndex());}
+\DoxyCodeLine{01433       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01434         objectId = TStageObjectId::ColumnId(col);}
+\DoxyCodeLine{01435       \mbox{\hyperlink{class_t_stage_object}{TStageObject}} *pegbar = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a13d9b9c08ca8dde39769f5644e046ee5}{getStageObject}}(objectId);}
+\DoxyCodeLine{01436       \mbox{\hyperlink{class_t_stage_object_aeb7ffeab4e2feefb1248eab636199872}{TStageObject::KeyframeMap}} keyframes;}
+\DoxyCodeLine{01437       pegbar-\/>\mbox{\hyperlink{class_t_stage_object_abd07edf36366eeefd6f6f68e58b147bc}{getKeyframes}}(keyframes);}
+\DoxyCodeLine{01438       \textcolor{keywordflow}{for} (TStageObject::KeyframeMap::iterator it = keyframes.begin();}
+\DoxyCodeLine{01439            it != keyframes.end(); ++it) \{}
+\DoxyCodeLine{01440         assert(pegbar-\/>\mbox{\hyperlink{class_t_stage_object_af2c8c37f71b2b2e2c2a15c6eb73b8b38}{isKeyframe}}(it-\/>first));}
+\DoxyCodeLine{01441         \textcolor{keywordflow}{if} (selection-\/>isSelected(it-\/>first, col))}
+\DoxyCodeLine{01442           selection-\/>unselect(it-\/>first, col);}
+\DoxyCodeLine{01443         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01444           selection-\/>select(it-\/>first, col);}
+\DoxyCodeLine{01445       \}}
+\DoxyCodeLine{01446     \}}
+\DoxyCodeLine{01447     app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{01448   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xsheetcmd.\+cpp\end{DoxyCompactItemize}

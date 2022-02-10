@@ -1,0 +1,117 @@
+\hypertarget{class_s_v_n_cleanup_dialog}{}\doxysection{SVNCleanup\+Dialog Class Reference}
+\label{class_s_v_n_cleanup_dialog}\index{SVNCleanupDialog@{SVNCleanupDialog}}
+Inheritance diagram for SVNCleanup\+Dialog\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_s_v_n_cleanup_dialog}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_v_n_cleanup_dialog_a8bd5f0296c26da195e107c6aee77255f}{SVNCleanup\+Dialog}} (QWidget $\ast$parent, const QString \&working\+Dir)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_v_n_cleanup_dialog_a69e6f74bbc51e8b3e7b4fa7d02ba62da}{on\+Cleanup\+Done}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_cleanup_dialog_a7c8ff5b68c96f89a0b931f80d1de705a}{on\+Error}} (const QString \&)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_v_n_cleanup_dialog_a8bd5f0296c26da195e107c6aee77255f}\label{class_s_v_n_cleanup_dialog_a8bd5f0296c26da195e107c6aee77255f}} 
+\index{SVNCleanupDialog@{SVNCleanupDialog}!SVNCleanupDialog@{SVNCleanupDialog}}
+\index{SVNCleanupDialog@{SVNCleanupDialog}!SVNCleanupDialog@{SVNCleanupDialog}}
+\doxysubsubsection{\texorpdfstring{SVNCleanupDialog()}{SVNCleanupDialog()}}
+{\footnotesize\ttfamily SVNCleanup\+Dialog\+::\+SVNCleanup\+Dialog (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{const QString \&}]{working\+Dir }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019     : Dialog(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false}, \textcolor{stringliteral}{"{}SvnCleanup"{}}) \{}
+\DoxyCodeLine{00020   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00021   setAttribute(Qt::WA\_DeleteOnClose, \textcolor{keyword}{true});}
+\DoxyCodeLine{00022   setWindowTitle(tr(\textcolor{stringliteral}{"{}Version Control: Cleanup"{}}));}
+\DoxyCodeLine{00023 }
+\DoxyCodeLine{00024   setMinimumSize(300, 150);}
+\DoxyCodeLine{00025 }
+\DoxyCodeLine{00026   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ae7de609b3b23233656bc68852a2d10cb}{beginVLayout}}();}
+\DoxyCodeLine{00027 }
+\DoxyCodeLine{00028   m\_waitingLabel      = \textcolor{keyword}{new} QLabel;}
+\DoxyCodeLine{00029   QMovie *waitingMove = \textcolor{keyword}{new} QMovie(\textcolor{stringliteral}{"{}:Resources/waiting.gif"{}});}
+\DoxyCodeLine{00030   waitingMove-\/>setParent(\textcolor{keyword}{this});}
+\DoxyCodeLine{00031 }
+\DoxyCodeLine{00032   m\_waitingLabel-\/>setMovie(waitingMove);}
+\DoxyCodeLine{00033   waitingMove-\/>setCacheMode(QMovie::CacheAll);}
+\DoxyCodeLine{00034   waitingMove-\/>start();}
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{00036   m\_textLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Cleaning up \%1..."{}}).arg(workingDir));}
+\DoxyCodeLine{00037 }
+\DoxyCodeLine{00038   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a578c4c2c44fee6d954896d93eb693aae}{addWidgets}}(m\_waitingLabel, m\_textLabel);}
+\DoxyCodeLine{00039 }
+\DoxyCodeLine{00040   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ab88d88334402845e544da6ca1f207c79}{endVLayout}}();}
+\DoxyCodeLine{00041 }
+\DoxyCodeLine{00042   m\_closeButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Close"{}}));}
+\DoxyCodeLine{00043   connect(m\_closeButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(close()));}
+\DoxyCodeLine{00044   m\_closeButton-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(m\_closeButton);}
+\DoxyCodeLine{00047 }
+\DoxyCodeLine{00048   \textcolor{comment}{// 0. Connect for svn errors (that may occur every time)}}
+\DoxyCodeLine{00049   connect(\&m\_thread, SIGNAL(error(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00050           SLOT(onError(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{00052   \textcolor{comment}{// 1. Cleanup}}
+\DoxyCodeLine{00053   connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00054           SLOT(onCleanupDone()));}
+\DoxyCodeLine{00055   QStringList args;}
+\DoxyCodeLine{00056   args << \textcolor{stringliteral}{"{}cleanup"{}};}
+\DoxyCodeLine{00057   m\_thread.executeCommand(workingDir, \textcolor{stringliteral}{"{}svn"{}}, args);}
+\DoxyCodeLine{00058 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_v_n_cleanup_dialog_a69e6f74bbc51e8b3e7b4fa7d02ba62da}\label{class_s_v_n_cleanup_dialog_a69e6f74bbc51e8b3e7b4fa7d02ba62da}} 
+\index{SVNCleanupDialog@{SVNCleanupDialog}!onCleanupDone@{onCleanupDone}}
+\index{onCleanupDone@{onCleanupDone}!SVNCleanupDialog@{SVNCleanupDialog}}
+\doxysubsubsection{\texorpdfstring{onCleanupDone}{onCleanupDone}}
+{\footnotesize\ttfamily void SVNCleanup\+Dialog\+::on\+Cleanup\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00062                                      \{}
+\DoxyCodeLine{00063   m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Cleanup done."{}}));}
+\DoxyCodeLine{00064   m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{00065   m\_closeButton-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00066 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_cleanup_dialog_a7c8ff5b68c96f89a0b931f80d1de705a}\label{class_s_v_n_cleanup_dialog_a7c8ff5b68c96f89a0b931f80d1de705a}} 
+\index{SVNCleanupDialog@{SVNCleanupDialog}!onError@{onError}}
+\index{onError@{onError}!SVNCleanupDialog@{SVNCleanupDialog}}
+\doxysubsubsection{\texorpdfstring{onError}{onError}}
+{\footnotesize\ttfamily void SVNCleanup\+Dialog\+::on\+Error (\begin{DoxyParamCaption}\item[{const QString \&}]{text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00070                                                   \{}
+\DoxyCodeLine{00071   m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073   m\_textLabel-\/>setText(text);}
+\DoxyCodeLine{00074   m\_closeButton-\/>setEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{00075 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/svncleanupdialog.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/svncleanupdialog.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,293 @@
+\hypertarget{class_tzp_reader}{}\doxysection{Tzp\+Reader Class Reference}
+\label{class_tzp_reader}\index{TzpReader@{TzpReader}}
+Inheritance diagram for Tzp\+Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_tzp_reader}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_tzp_reader_afe0725b36b48024ce947d6753ee64b3c}{open}} (FILE $\ast$file) override
+\item 
+Tiio\+::\+Row\+Order \mbox{\hyperlink{class_tzp_reader_a2c3a347c0698d906277faa92ffd19e96}{get\+Row\+Order}} () const override
+\item 
+int \mbox{\hyperlink{class_tzp_reader_a3ef371b204150e07c20d241ac3ac04f1}{skip\+Lines}} (int line\+Count) override
+\item 
+void \mbox{\hyperlink{class_tzp_reader_a57be67a26c9a85e756c9d2a3702ec1ae}{read\+Line}} (char $\ast$buffer, int x0, int x1, int shrink) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_tzp_reader_a86b531daf7aadf3c5686ae6198e0a857}\label{class_tzp_reader_a86b531daf7aadf3c5686ae6198e0a857}} 
+\index{TzpReader@{TzpReader}!TzpReader@{TzpReader}}
+\index{TzpReader@{TzpReader}!TzpReader@{TzpReader}}
+\doxysubsubsection{\texorpdfstring{TzpReader()}{TzpReader()}}
+{\footnotesize\ttfamily Tzp\+Reader\+::\+Tzp\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055     : m\_tiff(0)}
+\DoxyCodeLine{00056     , m\_row(0)}
+\DoxyCodeLine{00057     , m\_rowsPerStrip(0)}
+\DoxyCodeLine{00058     , m\_stripIndex(-\/1)}
+\DoxyCodeLine{00059     , m\_stripBuffer(0)}
+\DoxyCodeLine{00060     , m\_rowLength(0)}
+\DoxyCodeLine{00061     , m\_x(0)}
+\DoxyCodeLine{00062     , m\_y(0)}
+\DoxyCodeLine{00063     , m\_lx(0)}
+\DoxyCodeLine{00064     , m\_ly(0)}
+\DoxyCodeLine{00065     , m\_isCmap24(\textcolor{keyword}{false})}
+\DoxyCodeLine{00066     , m\_nColor(0)}
+\DoxyCodeLine{00067     , m\_nPencil(0)}
+\DoxyCodeLine{00068     , m\_isBigEndian(\textcolor{keyword}{false})}
+\DoxyCodeLine{00069     , m\_isFirstLineRead(\textcolor{keyword}{true}) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tzp_reader_ad1b3035d5803c2c2fd2690065fbf91b6}\label{class_tzp_reader_ad1b3035d5803c2c2fd2690065fbf91b6}} 
+\index{TzpReader@{TzpReader}!````~TzpReader@{$\sim$TzpReader}}
+\index{````~TzpReader@{$\sim$TzpReader}!TzpReader@{TzpReader}}
+\doxysubsubsection{\texorpdfstring{$\sim$TzpReader()}{~TzpReader()}}
+{\footnotesize\ttfamily Tzp\+Reader\+::$\sim$\+Tzp\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073 \{ \textcolor{keyword}{delete} m\_stripBuffer; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tzp_reader_a2c3a347c0698d906277faa92ffd19e96}\label{class_tzp_reader_a2c3a347c0698d906277faa92ffd19e96}} 
+\index{TzpReader@{TzpReader}!getRowOrder@{getRowOrder}}
+\index{getRowOrder@{getRowOrder}!TzpReader@{TzpReader}}
+\doxysubsubsection{\texorpdfstring{getRowOrder()}{getRowOrder()}}
+{\footnotesize\ttfamily Tiio\+::\+Row\+Order Tzp\+Reader\+::get\+Row\+Order (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046 \{ \textcolor{keywordflow}{return} Tiio::BOTTOM2TOP; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tzp_reader_afe0725b36b48024ce947d6753ee64b3c}\label{class_tzp_reader_afe0725b36b48024ce947d6753ee64b3c}} 
+\index{TzpReader@{TzpReader}!open@{open}}
+\index{open@{open}!TzpReader@{TzpReader}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily void Tzp\+Reader\+::open (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00077                                \{}
+\DoxyCodeLine{00078   \textcolor{keywordtype}{int} fd = fileno(file);}
+\DoxyCodeLine{00079   TIFFErrorHandler oldhandler;}
+\DoxyCodeLine{00080   oldhandler = TIFFSetWarningHandler(NULL);}
+\DoxyCodeLine{00081   m\_tiff     = TIFFFdOpen(fd, \textcolor{stringliteral}{"{}"{}}, \textcolor{stringliteral}{"{}rb"{}});}
+\DoxyCodeLine{00082   TIFFSetWarningHandler(oldhandler);}
+\DoxyCodeLine{00083   \textcolor{keywordflow}{if} (!m\_tiff) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00084 }
+\DoxyCodeLine{00085   uint32 w = 0, h = 0, bps = 0, spp = 0, rps = 0;}
+\DoxyCodeLine{00086   uint32 tileWidth = 0, tileLength = 0;}
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088   TIFFGetField(m\_tiff, TIFFTAG\_IMAGEWIDTH, \&w);}
+\DoxyCodeLine{00089   TIFFGetField(m\_tiff, TIFFTAG\_IMAGELENGTH, \&h);}
+\DoxyCodeLine{00090   TIFFGetField(m\_tiff, TIFFTAG\_BITSPERSAMPLE, \&bps);}
+\DoxyCodeLine{00091   TIFFGetField(m\_tiff, TIFFTAG\_SAMPLESPERPIXEL, \&spp);}
+\DoxyCodeLine{00092   TIFFGetField(m\_tiff, TIFFTAG\_ROWSPERSTRIP, \&rps);}
+\DoxyCodeLine{00093 }
+\DoxyCodeLine{00094   \textcolor{keywordtype}{float} xdpi, ydpi;}
+\DoxyCodeLine{00095   TIFFGetField(m\_tiff, TIFFTAG\_XRESOLUTION, \&xdpi);}
+\DoxyCodeLine{00096   TIFFGetField(m\_tiff, TIFFTAG\_YRESOLUTION, \&ydpi);}
+\DoxyCodeLine{00097   m\_info.\mbox{\hyperlink{class_t_image_info_ad66e78a66158fddceaa192d0063f68e8}{m\_dpix}} = xdpi;}
+\DoxyCodeLine{00098   m\_info.\mbox{\hyperlink{class_t_image_info_ad8d3ccb14666297e487e04aa10ab7831}{m\_dpiy}} = ydpi;}
+\DoxyCodeLine{00099 }
+\DoxyCodeLine{00100   TIFFGetField(m\_tiff, TIFFTAG\_TILEWIDTH, \&tileWidth);}
+\DoxyCodeLine{00101   TIFFGetField(m\_tiff, TIFFTAG\_TILELENGTH, \&tileLength);}
+\DoxyCodeLine{00102 }
+\DoxyCodeLine{00103   uint32 risCount  = 0;}
+\DoxyCodeLine{00104   USHORT *risArray = 0;}
+\DoxyCodeLine{00105 }
+\DoxyCodeLine{00106   m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}} = w;}
+\DoxyCodeLine{00107   m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}} = h;}
+\DoxyCodeLine{00108   m\_x         = 0;}
+\DoxyCodeLine{00109   m\_y         = 0;}
+\DoxyCodeLine{00110   m\_lx        = w;}
+\DoxyCodeLine{00111   m\_ly        = h;}
+\DoxyCodeLine{00112 }
+\DoxyCodeLine{00113   \textcolor{keywordflow}{if} (TIFFGetField(m\_tiff, TIFFTAG\_TOONZWINDOW, \&risCount, \&risArray)) \{}
+\DoxyCodeLine{00114     m\_info.\mbox{\hyperlink{class_t_image_info_ab1f8c1ed2310caaea8c32653b6546c4b}{m\_x0}} = m\_x = risArray[0];}
+\DoxyCodeLine{00115     m\_info.\mbox{\hyperlink{class_t_image_info_afede9d73a456673dcb25765c110ed9be}{m\_y0}} = m\_y = risArray[1];}
+\DoxyCodeLine{00116     m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}       = risArray[2];}
+\DoxyCodeLine{00117     m\_info.\mbox{\hyperlink{class_t_image_info_affef879628cc3843968c932e706541b6}{m\_ly}}       = risArray[3];}
+\DoxyCodeLine{00118   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00119     m\_info.\mbox{\hyperlink{class_t_image_info_ab1f8c1ed2310caaea8c32653b6546c4b}{m\_x0}} = 0;}
+\DoxyCodeLine{00120     m\_info.\mbox{\hyperlink{class_t_image_info_afede9d73a456673dcb25765c110ed9be}{m\_y0}} = 0;}
+\DoxyCodeLine{00121   \}}
+\DoxyCodeLine{00122 }
+\DoxyCodeLine{00123   m\_info.\mbox{\hyperlink{class_t_image_info_a611bbda29415ee055e9663217e9cbdac}{m\_x1}} = m\_info.\mbox{\hyperlink{class_t_image_info_ab1f8c1ed2310caaea8c32653b6546c4b}{m\_x0}} + w;}
+\DoxyCodeLine{00124   m\_info.\mbox{\hyperlink{class_t_image_info_a60c5eb6cc30ed1309bbc564330836e67}{m\_y1}} = m\_info.\mbox{\hyperlink{class_t_image_info_afede9d73a456673dcb25765c110ed9be}{m\_y0}} + h;}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126   \textcolor{keywordflow}{if} (TIFFIsTiled(m\_tiff)) \{}
+\DoxyCodeLine{00127     m\_rowsPerStrip  = tileLength;}
+\DoxyCodeLine{00128     \textcolor{keywordtype}{int} tilesPerRow = (w + tileWidth -\/ 1) / tileWidth;}
+\DoxyCodeLine{00129     m\_rowLength     = tileWidth * tilesPerRow;}
+\DoxyCodeLine{00130     \textcolor{keywordtype}{int} stripSize   = m\_rowsPerStrip * m\_rowLength * 4;}
+\DoxyCodeLine{00131     m\_stripBuffer   = \textcolor{keyword}{new} UCHAR[stripSize];}
+\DoxyCodeLine{00132   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00133     m\_rowsPerStrip = rps;}
+\DoxyCodeLine{00134     \textcolor{keywordtype}{int} stripSize  = rps * w * 4 + 4096;  \textcolor{comment}{// TIFFStripSize(m\_tiff);}}
+\DoxyCodeLine{00135 }
+\DoxyCodeLine{00136     m\_stripBuffer = \textcolor{keyword}{new} UCHAR[stripSize];}
+\DoxyCodeLine{00137     m\_rowLength   = w;}
+\DoxyCodeLine{00138   \}}
+\DoxyCodeLine{00139 }
+\DoxyCodeLine{00140   uint32 paletteCount;}
+\DoxyCodeLine{00141   USHORT *palette;}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143   TIFFGetField(m\_tiff, TIFFTAG\_TOONZPALETTE, \&paletteCount, \&palette);}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145   m\_nColor  = palette[10];}
+\DoxyCodeLine{00146   m\_nPencil = palette[11];}
+\DoxyCodeLine{00147 }
+\DoxyCodeLine{00148   \textcolor{keywordflow}{if} (m\_nColor == 128 \&\& m\_nPencil == 32) \{}
+\DoxyCodeLine{00149     \textcolor{keywordflow}{throw} \mbox{\hyperlink{class_t_exception}{TException}}(\textcolor{stringliteral}{"{}Old 4.1 Palette"{}});}
+\DoxyCodeLine{00150   \}}
+\DoxyCodeLine{00151 }
+\DoxyCodeLine{00152   \textcolor{keywordflow}{if} (bps == 32)}
+\DoxyCodeLine{00153     m\_isCmap24 = \textcolor{keyword}{true};}
+\DoxyCodeLine{00154   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00155     m\_isCmap24 = \textcolor{keyword}{false};}
+\DoxyCodeLine{00156 }
+\DoxyCodeLine{00157   \textcolor{keywordtype}{char} *data;}
+\DoxyCodeLine{00158   uint32 count;}
+\DoxyCodeLine{00159   TIFFGetField(m\_tiff, TIFFTAG\_TOONZHISTORY, \&count, \&data);}
+\DoxyCodeLine{00160   std::string history(data);}
+\DoxyCodeLine{00161 }
+\DoxyCodeLine{00162   uint16 planarconfig;}
+\DoxyCodeLine{00163   TIFFGetField(m\_tiff, TIFFTAG\_PLANARCONFIG, \&planarconfig);}
+\DoxyCodeLine{00164   \textcolor{keywordflow}{if} (planarconfig == PLANARCONFIG\_SEPARATE) \{}
+\DoxyCodeLine{00165     \textcolor{comment}{// tmsg\_error("{}separate buffer image not supported yet in .tz(up) files"{});}}
+\DoxyCodeLine{00166   \}}
+\DoxyCodeLine{00167 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_tzp_reader_a57be67a26c9a85e756c9d2a3702ec1ae}\label{class_tzp_reader_a57be67a26c9a85e756c9d2a3702ec1ae}} 
+\index{TzpReader@{TzpReader}!readLine@{readLine}}
+\index{readLine@{readLine}!TzpReader@{TzpReader}}
+\doxysubsubsection{\texorpdfstring{readLine()}{readLine()}}
+{\footnotesize\ttfamily void Tzp\+Reader\+::read\+Line (\begin{DoxyParamCaption}\item[{char $\ast$}]{buffer,  }\item[{int}]{x0,  }\item[{int}]{x1,  }\item[{int}]{shrink }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+per le tzp che vengono da Irix
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00180                                                                  \{}
+\DoxyCodeLine{00181   \mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}} *pix = (\mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}} *)buffer;}
+\DoxyCodeLine{00182   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_info.\mbox{\hyperlink{class_t_image_info_afe82a2118ba303797b2c8a12b47b771d}{m\_lx}}; i++) pix[i] = \mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}}();}
+\DoxyCodeLine{00183   \textcolor{keywordtype}{int} y                                        = m\_row++;}
+\DoxyCodeLine{00184 }
+\DoxyCodeLine{00185   \textcolor{keyword}{const} \textcolor{keywordtype}{int} paintOffset = 0;                 \textcolor{comment}{// paint\#1 -\/-\/> 1}}
+\DoxyCodeLine{00186   \textcolor{keyword}{const} \textcolor{keywordtype}{int} inkOffset   = 1 + m\_nColor -\/ 1;  \textcolor{comment}{// ink\#0 -\/-\/> nColor-\/1}}
+\DoxyCodeLine{00187   \textcolor{comment}{// (n.b. c'e' un colore in meno visto che il primo colore e' il BG)}}
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189   \textcolor{keywordflow}{if} (m\_isCmap24) \{}
+\DoxyCodeLine{00190     \textcolor{keywordflow}{if} (m\_y <= y \&\& y < m\_y + m\_ly) \{}
+\DoxyCodeLine{00191       std::vector<TUINT32> line(m\_lx);}
+\DoxyCodeLine{00192       TIFFReadScanline(m\_tiff, (\textcolor{keywordtype}{char} *)\&line[0], y -\/ m\_y, 0);}
+\DoxyCodeLine{00193       \textcolor{keywordflow}{if} (m\_isFirstLineRead) \{}
+\DoxyCodeLine{00194         m\_isFirstLineRead = \textcolor{keyword}{false};}
+\DoxyCodeLine{00195         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_lx; i++)}
+\DoxyCodeLine{00196           \textcolor{keywordflow}{if} ((line[i] >> 24) != 0) \{}
+\DoxyCodeLine{00197             m\_isBigEndian = \textcolor{keyword}{true};}
+\DoxyCodeLine{00198             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00199           \}}
+\DoxyCodeLine{00200       \}}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202       pix += m\_x;}
+\DoxyCodeLine{00203       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_lx; i++) \{}
+\DoxyCodeLine{00204         TUINT32 inPix = m\_isBigEndian ? swapTINT32(line[i]) : line[i];}
+\DoxyCodeLine{00205         \textcolor{keywordtype}{int} tone      = inPix \& 0xFF;}
+\DoxyCodeLine{00206         \textcolor{keywordtype}{int} paint     = ((inPix >> 8) \& 0xFF);}
+\DoxyCodeLine{00207         \textcolor{keywordtype}{int} ink       = ((inPix >> 16) \& 0xFF);}
+\DoxyCodeLine{00208         \textcolor{keywordflow}{if} (paint > 0) paint += paintOffset;}
+\DoxyCodeLine{00209         \textcolor{keywordflow}{if} (ComboInkIndex[ink] != -\/1)}
+\DoxyCodeLine{00210           ink = ComboInkIndex[ink];}
+\DoxyCodeLine{00211         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00212           ink += inkOffset;}
+\DoxyCodeLine{00213         pix[i] = \mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}}(ink, paint, tone);}
+\DoxyCodeLine{00214       \}}
+\DoxyCodeLine{00215     \}}
+\DoxyCodeLine{00216   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00217     \textcolor{keywordflow}{if} (m\_y <= y \&\& y < m\_y + m\_ly) \{}
+\DoxyCodeLine{00218       std::vector<unsigned short> line(m\_lx);}
+\DoxyCodeLine{00219       TIFFReadScanline(m\_tiff, (\textcolor{keywordtype}{char} *)\&line[0], y -\/ m\_y, 0);}
+\DoxyCodeLine{00220       pix += m\_x;}
+\DoxyCodeLine{00221       \textcolor{keyword}{static} std::set<int> table;}
+\DoxyCodeLine{00222 }
+\DoxyCodeLine{00224       \textcolor{keywordtype}{bool} bigEndian =}
+\DoxyCodeLine{00225           (m\_tiff-\/>tif\_header.classic.tiff\_magic == TIFF\_BIGENDIAN);}
+\DoxyCodeLine{00226 }
+\DoxyCodeLine{00227       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < m\_lx; i++) \{}
+\DoxyCodeLine{00228         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} inPix = line[i];}
+\DoxyCodeLine{00229         \textcolor{keywordflow}{if} (bigEndian) inPix = swapUshort(inPix);}
+\DoxyCodeLine{00230 }
+\DoxyCodeLine{00231         \textcolor{keywordtype}{int} tone  = inPix \& 0xF;}
+\DoxyCodeLine{00232         \textcolor{keywordtype}{int} paint = ((inPix >> 4) \& 0x7F);}
+\DoxyCodeLine{00233         \textcolor{keywordtype}{int} ink   = ((inPix >> 11) \& 0x1F);}
+\DoxyCodeLine{00234         tone |= tone << 4;}
+\DoxyCodeLine{00235         \textcolor{keywordflow}{if} (paint > 0) paint += paintOffset;}
+\DoxyCodeLine{00236         ink += inkOffset;}
+\DoxyCodeLine{00237         pix[i] = \mbox{\hyperlink{class_t_pixel_c_m32}{TPixelCM32}}(ink, paint, tone);}
+\DoxyCodeLine{00238         \textcolor{keywordflow}{if} (tone < 255) \{}
+\DoxyCodeLine{00239           \textcolor{comment}{//           int w = ink;}}
+\DoxyCodeLine{00240         \}}
+\DoxyCodeLine{00241         \textcolor{keywordflow}{if} (table.find(ink) == table.end()) \{}
+\DoxyCodeLine{00242           table.insert(ink);}
+\DoxyCodeLine{00243         \}}
+\DoxyCodeLine{00244       \}}
+\DoxyCodeLine{00245     \}}
+\DoxyCodeLine{00246   \}}
+\DoxyCodeLine{00247 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00046}{TImage\+Info\+::m\+\_\+lx}}.
+
+\mbox{\Hypertarget{class_tzp_reader_a3ef371b204150e07c20d241ac3ac04f1}\label{class_tzp_reader_a3ef371b204150e07c20d241ac3ac04f1}} 
+\index{TzpReader@{TzpReader}!skipLines@{skipLines}}
+\index{skipLines@{skipLines}!TzpReader@{TzpReader}}
+\doxysubsubsection{\texorpdfstring{skipLines()}{skipLines()}}
+{\footnotesize\ttfamily int Tzp\+Reader\+::skip\+Lines (\begin{DoxyParamCaption}\item[{int}]{line\+Count }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_tiio_1_1_reader}{Tiio\+::\+Reader}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00171                                       \{}
+\DoxyCodeLine{00172   \textcolor{comment}{// m\_row += lineCount;}}
+\DoxyCodeLine{00173   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00174 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/image/tzp/tiio\+\_\+tzp.\+cpp\end{DoxyCompactItemize}

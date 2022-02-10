@@ -1,0 +1,195 @@
+\hypertarget{class_cleanup_tab}{}\doxysection{Cleanup\+Tab Class Reference}
+\label{class_cleanup_tab}\index{CleanupTab@{CleanupTab}}
+Inheritance diagram for Cleanup\+Tab\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_cleanup_tab}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_cleanup_tab_a9719e39570f9550ee044270ddd27fa7c}{update\+Gui}} (\mbox{\hyperlink{class_cleanup_parameters}{Cleanup\+Parameters}} $\ast$params, \mbox{\hyperlink{class_cleanup_parameters}{Cleanup\+Parameters}} $\ast$old\+Params)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_cleanup_tab_a16115704de391ad5d8c3b4a6421920c9}\label{class_cleanup_tab_a16115704de391ad5d8c3b4a6421920c9}} 
+\index{CleanupTab@{CleanupTab}!CleanupTab@{CleanupTab}}
+\index{CleanupTab@{CleanupTab}!CleanupTab@{CleanupTab}}
+\doxysubsubsection{\texorpdfstring{CleanupTab()}{CleanupTab()}}
+{\footnotesize\ttfamily Cleanup\+Tab\+::\+Cleanup\+Tab (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00048                        \{}
+\DoxyCodeLine{00049   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout(\textcolor{keyword}{this});}
+\DoxyCodeLine{00050   setLayout(mainLayout);}
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{00052   mainLayout-\/>setSizeConstraint(QLayout::SetMinimumSize);}
+\DoxyCodeLine{00053   mainLayout-\/>setSpacing(0);}
+\DoxyCodeLine{00054   mainLayout-\/>setMargin(0);}
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056   QWidget *settingsBox = \textcolor{keyword}{new} QWidget(\textcolor{keyword}{this});}
+\DoxyCodeLine{00057   mainLayout-\/>addWidget(settingsBox);}
+\DoxyCodeLine{00058   mainLayout-\/>addStretch();  \textcolor{comment}{// This is the reason we need mainLayout}}
+\DoxyCodeLine{00059 }
+\DoxyCodeLine{00060   QGridLayout *settingsLayout = \textcolor{keyword}{new} QGridLayout(settingsBox);}
+\DoxyCodeLine{00061   settingsBox-\/>setLayout(settingsLayout);}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063   settingsLayout-\/>setSizeConstraint(QLayout::SetMaximumSize);}
+\DoxyCodeLine{00064   settingsLayout-\/>setSpacing(9);}
+\DoxyCodeLine{00065   settingsLayout-\/>setMargin(12);}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067   \textcolor{keywordtype}{int} row = 0;}
+\DoxyCodeLine{00068 }
+\DoxyCodeLine{00069   \textcolor{comment}{//  AutoCenter}}
+\DoxyCodeLine{00070   m\_autoCenter = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_check_box}{DVGui::CheckBox}}(tr(\textcolor{stringliteral}{"{}Autocenter"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00071   settingsLayout-\/>addWidget(m\_autoCenter, row++, 1, Qt::AlignLeft);}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073   m\_autoCenter-\/>setFixedSize(150, DVGui::WidgetHeight);}
+\DoxyCodeLine{00074 }
+\DoxyCodeLine{00075   \textcolor{comment}{//  Pegbar Holes}}
+\DoxyCodeLine{00076   settingsLayout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Pegbar Holes:"{}})), row, 0,}
+\DoxyCodeLine{00077                             Qt::AlignRight);}
+\DoxyCodeLine{00078 }
+\DoxyCodeLine{00079   m\_pegHolesOm = \textcolor{keyword}{new} QComboBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00080   settingsLayout-\/>addWidget(m\_pegHolesOm, row++, 1, Qt::AlignLeft);}
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00082   m\_pegHolesOm-\/>setFixedHeight(DVGui::WidgetHeight);}
+\DoxyCodeLine{00083   m\_pegHolesOm-\/>setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Maximum);}
+\DoxyCodeLine{00084 }
+\DoxyCodeLine{00085   QStringList pegbarHoles;}
+\DoxyCodeLine{00086   pegbarHoles << \textcolor{stringliteral}{"{}Bottom"{}}}
+\DoxyCodeLine{00087               << \textcolor{stringliteral}{"{}Top"{}}}
+\DoxyCodeLine{00088               << \textcolor{stringliteral}{"{}Left"{}}}
+\DoxyCodeLine{00089               << \textcolor{stringliteral}{"{}Right"{}};}
+\DoxyCodeLine{00090   m\_pegHolesOm-\/>addItems(pegbarHoles);}
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00092   \textcolor{comment}{//  Field Guide}}
+\DoxyCodeLine{00093   settingsLayout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Field Guide:"{}})), row, 0,}
+\DoxyCodeLine{00094                             Qt::AlignRight);}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096   m\_fieldGuideOm = \textcolor{keyword}{new} QComboBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00097   settingsLayout-\/>addWidget(m\_fieldGuideOm, row++, 1, Qt::AlignLeft);}
+\DoxyCodeLine{00098 }
+\DoxyCodeLine{00099   m\_fieldGuideOm-\/>setFixedHeight(DVGui::WidgetHeight);}
+\DoxyCodeLine{00100   m\_fieldGuideOm-\/>setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Maximum);}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102   std::vector<std::string> fdgNames;}
+\DoxyCodeLine{00103   CleanupParameters::getFdgNames(fdgNames);}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)fdgNames.size(); i++)}
+\DoxyCodeLine{00106     m\_fieldGuideOm-\/>addItem(QString(fdgNames[i].c\_str()));}
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108   settingsLayout-\/>addWidget(\textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_separator}{DVGui::Separator}}(), row++, 0, 1, 2);}
+\DoxyCodeLine{00109 }
+\DoxyCodeLine{00110   \textcolor{comment}{//  Rotate}}
+\DoxyCodeLine{00111   settingsLayout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Rotate:"{}})), row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00112 }
+\DoxyCodeLine{00113   m\_rotateOm = \textcolor{keyword}{new} QComboBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00114   settingsLayout-\/>addWidget(m\_rotateOm, row++, 1, Qt::AlignLeft);}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116   m\_rotateOm-\/>setFixedHeight(DVGui::WidgetHeight);}
+\DoxyCodeLine{00117   m\_rotateOm-\/>setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Maximum);}
+\DoxyCodeLine{00118 }
+\DoxyCodeLine{00119   QStringList rotate;}
+\DoxyCodeLine{00120   rotate << \textcolor{stringliteral}{"{}0"{}}}
+\DoxyCodeLine{00121          << \textcolor{stringliteral}{"{}90"{}}}
+\DoxyCodeLine{00122          << \textcolor{stringliteral}{"{}180"{}}}
+\DoxyCodeLine{00123          << \textcolor{stringliteral}{"{}270"{}};}
+\DoxyCodeLine{00124   m\_rotateOm-\/>addItems(rotate);}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126   \textcolor{comment}{//  Flip}}
+\DoxyCodeLine{00127   settingsLayout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Flip:"{}})), row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00128 }
+\DoxyCodeLine{00129   QWidget *flipWidget = \textcolor{keyword}{new} QWidget();}
+\DoxyCodeLine{00130   settingsLayout-\/>addWidget(flipWidget, row++, 1, Qt::AlignLeft);}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132   QHBoxLayout *flipLayout = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00133   flipWidget-\/>setLayout(flipLayout);}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135   flipLayout-\/>setSizeConstraint(QLayout::SetFixedSize);}
+\DoxyCodeLine{00136   flipLayout-\/>setMargin(0);}
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00138   m\_flipX = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_check_box}{DVGui::CheckBox}}(tr(\textcolor{stringliteral}{"{}Horizontal"{}}), flipWidget);}
+\DoxyCodeLine{00139   flipLayout-\/>addWidget(m\_flipX, 0, Qt::AlignLeft);}
+\DoxyCodeLine{00140 }
+\DoxyCodeLine{00141   m\_flipX-\/>setFixedHeight(DVGui::WidgetHeight);}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143   m\_flipY = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_check_box}{DVGui::CheckBox}}(tr(\textcolor{stringliteral}{"{}Vertical"{}}), flipWidget);}
+\DoxyCodeLine{00144   flipLayout-\/>addWidget(m\_flipY, 0, Qt::AlignLeft);}
+\DoxyCodeLine{00145 }
+\DoxyCodeLine{00146   m\_flipY-\/>setFixedHeight(DVGui::WidgetHeight);}
+\DoxyCodeLine{00147 }
+\DoxyCodeLine{00148   flipLayout-\/>addStretch(1);}
+\DoxyCodeLine{00149 }
+\DoxyCodeLine{00150   \textcolor{comment}{//  Save In}}
+\DoxyCodeLine{00151   settingsLayout-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Save in:"{}})), row, 0, Qt::AlignRight);}
+\DoxyCodeLine{00152 }
+\DoxyCodeLine{00153   m\_pathField = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_file_field}{DVGui::FileField}}(\textcolor{keyword}{this}, QString(\textcolor{stringliteral}{"{}"{}}));}
+\DoxyCodeLine{00154   settingsLayout-\/>addWidget(m\_pathField, row++, 1);}
+\DoxyCodeLine{00155 }
+\DoxyCodeLine{00156   m\_pathField-\/>setFixedHeight(DVGui::WidgetHeight);}
+\DoxyCodeLine{00157 }
+\DoxyCodeLine{00158   \textcolor{comment}{//  Connections}}
+\DoxyCodeLine{00159   \textcolor{keywordtype}{bool} ret = \textcolor{keyword}{true};}
+\DoxyCodeLine{00160   ret      = ret \&\& connect(m\_autoCenter, SIGNAL(stateChanged(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00161                        SLOT(onGenericSettingsChange()));}
+\DoxyCodeLine{00162   ret = ret \&\& connect(m\_pegHolesOm, SIGNAL(activated(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00163                        SLOT(onGenericSettingsChange()));}
+\DoxyCodeLine{00164   ret = ret \&\& connect(m\_fieldGuideOm, SIGNAL(activated(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00165                        SLOT(onGenericSettingsChange()));}
+\DoxyCodeLine{00166   ret = ret \&\& connect(m\_rotateOm, SIGNAL(activated(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00167                        SLOT(onGenericSettingsChange()));}
+\DoxyCodeLine{00168   ret = ret \&\& connect(m\_flipX, SIGNAL(stateChanged(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00169                        SLOT(onGenericSettingsChange()));}
+\DoxyCodeLine{00170   ret = ret \&\& connect(m\_flipY, SIGNAL(stateChanged(\textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00171                        SLOT(onGenericSettingsChange()));}
+\DoxyCodeLine{00172   ret =}
+\DoxyCodeLine{00173       ret \&\& connect(m\_pathField, SIGNAL(pathChanged()), SLOT(onPathChange()));}
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00175   assert(ret);}
+\DoxyCodeLine{00176 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_cleanup_tab_a9719e39570f9550ee044270ddd27fa7c}\label{class_cleanup_tab_a9719e39570f9550ee044270ddd27fa7c}} 
+\index{CleanupTab@{CleanupTab}!updateGui@{updateGui}}
+\index{updateGui@{updateGui}!CleanupTab@{CleanupTab}}
+\doxysubsubsection{\texorpdfstring{updateGui()}{updateGui()}}
+{\footnotesize\ttfamily void Cleanup\+Tab\+::update\+Gui (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_cleanup_parameters}{Cleanup\+Parameters}} $\ast$}]{params,  }\item[{\mbox{\hyperlink{class_cleanup_parameters}{Cleanup\+Parameters}} $\ast$}]{old\+Params }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00188                                                          \{}
+\DoxyCodeLine{00189   m\_autoCenter-\/>setChecked(params-\/>m\_autocenterType ==}
+\DoxyCodeLine{00190                            CleanupTypes::AUTOCENTER\_FDG);}
+\DoxyCodeLine{00191   m\_pegHolesOm-\/>setCurrentIndex(params-\/>m\_pegSide -\/ 1);}
+\DoxyCodeLine{00192 }
+\DoxyCodeLine{00193   QString fieldName = QString::fromStdString(params-\/>getFdgName());}
+\DoxyCodeLine{00194   \textcolor{keywordtype}{int} index = (fieldName.isEmpty()) ? 0 : m\_fieldGuideOm-\/>findText(fieldName);}
+\DoxyCodeLine{00195   assert(index != -\/1);}
+\DoxyCodeLine{00196   m\_fieldGuideOm-\/>setCurrentIndex(index);}
+\DoxyCodeLine{00197 }
+\DoxyCodeLine{00198   m\_rotateOm-\/>setCurrentIndex(params-\/>m\_rotate / 90);}
+\DoxyCodeLine{00199   m\_flipX-\/>setChecked(params-\/>m\_flipx);}
+\DoxyCodeLine{00200   m\_flipY-\/>setChecked(params-\/>m\_flipy);}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202   m\_path = params-\/>m\_path;}
+\DoxyCodeLine{00203   m\_pathField-\/>setPath(}
+\DoxyCodeLine{00204       pathString(m\_path, params-\/>m\_lineProcessingMode == lpNone));}
+\DoxyCodeLine{00205 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanupsettingspopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/cleanupsettingspopup.\+cpp\end{DoxyCompactItemize}

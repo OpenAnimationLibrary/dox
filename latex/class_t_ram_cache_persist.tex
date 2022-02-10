@@ -1,0 +1,167 @@
+\hypertarget{class_t_ram_cache_persist}{}\doxysection{TRam\+Cache\+Persist Class Reference}
+\label{class_t_ram_cache_persist}\index{TRamCachePersist@{TRamCachePersist}}
+Inheritance diagram for TRam\+Cache\+Persist\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_t_ram_cache_persist}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_t_ram_cache_persist_1_1_imp}{Imp}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_ram_cache_persist_adce6b4158483a6fe5cb24ae4b28e3ec0}{TRam\+Cache\+Persist}} (\mbox{\hyperlink{class_t_raster_codec}{TRaster\+Codec}} $\ast$codec)
+\item 
+void \mbox{\hyperlink{class_t_ram_cache_persist_a233f41b91fb1187bc39a416f4d773c1e}{set\+Frame\+Size}} (int lx, int ly, int bpp) override
+\item 
+void \mbox{\hyperlink{class_t_ram_cache_persist_ad6b3d6b9af0e9ed733b5cbae06d5ea8c}{on\+Invalidate}} () override
+\item 
+void \mbox{\hyperlink{class_t_ram_cache_persist_a65703d90fad850d04beaf10be259facd}{on\+Invalidate}} (int start\+Frame, int end\+Frame) override
+\item 
+UCHAR $\ast$ \mbox{\hyperlink{class_t_ram_cache_persist_a926bd97ccdd01926aa0bb780b48f8bd8}{get\+Raw\+Data}} (int frame, TINT32 \&size, int \&lx, int \&ly) override
+\item 
+TUINT64 \mbox{\hyperlink{class_t_ram_cache_persist_a638e1609673978d441789be0aa733fdd}{get\+Used\+Space}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_ram_cache_persist_adce6b4158483a6fe5cb24ae4b28e3ec0}\label{class_t_ram_cache_persist_adce6b4158483a6fe5cb24ae4b28e3ec0}} 
+\index{TRamCachePersist@{TRamCachePersist}!TRamCachePersist@{TRamCachePersist}}
+\index{TRamCachePersist@{TRamCachePersist}!TRamCachePersist@{TRamCachePersist}}
+\doxysubsubsection{\texorpdfstring{TRamCachePersist()}{TRamCachePersist()}}
+{\footnotesize\ttfamily TRam\+Cache\+Persist\+::\+TRam\+Cache\+Persist (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_raster_codec}{TRaster\+Codec}} $\ast$}]{codec }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00788     : \mbox{\hyperlink{class_t_cache_persist}{TCachePersist}}(codec), m\_imp(\textcolor{keyword}{new} Imp) \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_ram_cache_persist_a7210631ae35731f24042da8e61ea6d3d}\label{class_t_ram_cache_persist_a7210631ae35731f24042da8e61ea6d3d}} 
+\index{TRamCachePersist@{TRamCachePersist}!````~TRamCachePersist@{$\sim$TRamCachePersist}}
+\index{````~TRamCachePersist@{$\sim$TRamCachePersist}!TRamCachePersist@{TRamCachePersist}}
+\doxysubsubsection{\texorpdfstring{$\sim$TRamCachePersist()}{~TRamCachePersist()}}
+{\footnotesize\ttfamily TRam\+Cache\+Persist\+::$\sim$\+TRam\+Cache\+Persist (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00792 \{ \textcolor{keyword}{delete} m\_imp; \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_ram_cache_persist_a926bd97ccdd01926aa0bb780b48f8bd8}\label{class_t_ram_cache_persist_a926bd97ccdd01926aa0bb780b48f8bd8}} 
+\index{TRamCachePersist@{TRamCachePersist}!getRawData@{getRawData}}
+\index{getRawData@{getRawData}!TRamCachePersist@{TRamCachePersist}}
+\doxysubsubsection{\texorpdfstring{getRawData()}{getRawData()}}
+{\footnotesize\ttfamily UCHAR $\ast$ TRam\+Cache\+Persist\+::get\+Raw\+Data (\begin{DoxyParamCaption}\item[{int}]{frame,  }\item[{TINT32 \&}]{size,  }\item[{int \&}]{lx,  }\item[{int \&}]{ly }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_cache_persist}{TCache\+Persist}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00870                                                                              \{}
+\DoxyCodeLine{00871   Imp::CompressedChunks::const\_iterator it = m\_imp-\/>m\_chunks.find(frame);}
+\DoxyCodeLine{00872   \textcolor{keywordflow}{if} (it == m\_imp-\/>m\_chunks.end()) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00873   Imp::CompressedChunk *cc = it-\/>second;}
+\DoxyCodeLine{00874   assert(cc);}
+\DoxyCodeLine{00875   \textcolor{keywordflow}{return} m\_codec-\/>removeHeader(cc-\/>m\_buffer, cc-\/>m\_size, size, lx, ly);}
+\DoxyCodeLine{00876 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_ram_cache_persist_a638e1609673978d441789be0aa733fdd}\label{class_t_ram_cache_persist_a638e1609673978d441789be0aa733fdd}} 
+\index{TRamCachePersist@{TRamCachePersist}!getUsedSpace@{getUsedSpace}}
+\index{getUsedSpace@{getUsedSpace}!TRamCachePersist@{TRamCachePersist}}
+\doxysubsubsection{\texorpdfstring{getUsedSpace()}{getUsedSpace()}}
+{\footnotesize\ttfamily TUINT64 TRam\+Cache\+Persist\+::get\+Used\+Space (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_cache_persist}{TCache\+Persist}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00880 \{ \textcolor{keywordflow}{return} m\_imp-\/>m\_cacheSize; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_ram_cache_persist_ad6b3d6b9af0e9ed733b5cbae06d5ea8c}\label{class_t_ram_cache_persist_ad6b3d6b9af0e9ed733b5cbae06d5ea8c}} 
+\index{TRamCachePersist@{TRamCachePersist}!onInvalidate@{onInvalidate}}
+\index{onInvalidate@{onInvalidate}!TRamCachePersist@{TRamCachePersist}}
+\doxysubsubsection{\texorpdfstring{onInvalidate()}{onInvalidate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void TRam\+Cache\+Persist\+::on\+Invalidate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_cache_persist}{TCache\+Persist}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00841                                     \{}
+\DoxyCodeLine{00842   \textcolor{keywordflow}{for} (Imp::CompressedChunks::iterator it = m\_imp-\/>m\_chunks.begin();}
+\DoxyCodeLine{00843        it != m\_imp-\/>m\_chunks.end(); ++it) \{}
+\DoxyCodeLine{00844     Imp::CompressedChunk *cc = it-\/>second;}
+\DoxyCodeLine{00845     m\_imp-\/>m\_cacheSize -\/= cc-\/>m\_size;}
+\DoxyCodeLine{00846     \textcolor{keyword}{delete} cc;}
+\DoxyCodeLine{00847   \}}
+\DoxyCodeLine{00848 }
+\DoxyCodeLine{00849   m\_imp-\/>m\_chunks.clear();}
+\DoxyCodeLine{00850 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_ram_cache_persist_a65703d90fad850d04beaf10be259facd}\label{class_t_ram_cache_persist_a65703d90fad850d04beaf10be259facd}} 
+\index{TRamCachePersist@{TRamCachePersist}!onInvalidate@{onInvalidate}}
+\index{onInvalidate@{onInvalidate}!TRamCachePersist@{TRamCachePersist}}
+\doxysubsubsection{\texorpdfstring{onInvalidate()}{onInvalidate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void TRam\+Cache\+Persist\+::on\+Invalidate (\begin{DoxyParamCaption}\item[{int}]{start\+Frame,  }\item[{int}]{end\+Frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_cache_persist}{TCache\+Persist}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00855                                                   \{  \textcolor{comment}{// ottimizzabile}}
+\DoxyCodeLine{00856   assert(startFrame <= endFrame);}
+\DoxyCodeLine{00857 }
+\DoxyCodeLine{00858   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} frame = startFrame; frame <= endFrame; ++frame) \{}
+\DoxyCodeLine{00859     Imp::CompressedChunks::iterator it = m\_imp-\/>m\_chunks.find(frame);}
+\DoxyCodeLine{00860     \textcolor{keywordflow}{if} (it != m\_imp-\/>m\_chunks.end()) \{}
+\DoxyCodeLine{00861       m\_imp-\/>m\_cacheSize -\/= it-\/>second-\/>m\_size;}
+\DoxyCodeLine{00862       \textcolor{keyword}{delete} it-\/>second;}
+\DoxyCodeLine{00863       m\_imp-\/>m\_chunks.erase(it);}
+\DoxyCodeLine{00864     \}}
+\DoxyCodeLine{00865   \}}
+\DoxyCodeLine{00866 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_ram_cache_persist_a233f41b91fb1187bc39a416f4d773c1e}\label{class_t_ram_cache_persist_a233f41b91fb1187bc39a416f4d773c1e}} 
+\index{TRamCachePersist@{TRamCachePersist}!setFrameSize@{setFrameSize}}
+\index{setFrameSize@{setFrameSize}!TRamCachePersist@{TRamCachePersist}}
+\doxysubsubsection{\texorpdfstring{setFrameSize()}{setFrameSize()}}
+{\footnotesize\ttfamily void TRam\+Cache\+Persist\+::set\+Frame\+Size (\begin{DoxyParamCaption}\item[{int}]{lx,  }\item[{int}]{ly,  }\item[{int}]{bpp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_t_cache_persist}{TCache\+Persist}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00194 \{\}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tcachedlevel.\+h\item 
+E\+:/opentoonz/toonz/sources/common/trasterimage/tcachedlevel.\+cpp\end{DoxyCompactItemize}

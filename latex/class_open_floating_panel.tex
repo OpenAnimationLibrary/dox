@@ -1,0 +1,176 @@
+\hypertarget{class_open_floating_panel}{}\doxysection{Open\+Floating\+Panel Class Reference}
+\label{class_open_floating_panel}\index{OpenFloatingPanel@{OpenFloatingPanel}}
+Inheritance diagram for Open\+Floating\+Panel\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_open_floating_panel}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_open_floating_panel_ac58e70c4b0cae01494b091c01cd85b66}{Open\+Floating\+Panel}} (Command\+Id id, const std\+::string \&panel\+Type, QString title)
+\item 
+void \mbox{\hyperlink{class_open_floating_panel_a881281f1976f589c4000168a4f85c103}{execute}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_t_panel}{TPanel}} $\ast$ \mbox{\hyperlink{class_open_floating_panel_acaa8d9001b20492a1b8053f6de7ee707}{get\+Or\+Open\+Floating\+Panel}} (const std\+::string \&panel\+Type)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_open_floating_panel_ac58e70c4b0cae01494b091c01cd85b66}\label{class_open_floating_panel_ac58e70c4b0cae01494b091c01cd85b66}} 
+\index{OpenFloatingPanel@{OpenFloatingPanel}!OpenFloatingPanel@{OpenFloatingPanel}}
+\index{OpenFloatingPanel@{OpenFloatingPanel}!OpenFloatingPanel@{OpenFloatingPanel}}
+\doxysubsubsection{\texorpdfstring{OpenFloatingPanel()}{OpenFloatingPanel()}}
+{\footnotesize\ttfamily Open\+Floating\+Panel\+::\+Open\+Floating\+Panel (\begin{DoxyParamCaption}\item[{Command\+Id}]{id,  }\item[{const std\+::string \&}]{panel\+Type,  }\item[{QString}]{title }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00037     : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(\textcolor{keywordtype}{id}), m\_title(title), m\_panelType(panelType) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_open_floating_panel_a881281f1976f589c4000168a4f85c103}\label{class_open_floating_panel_a881281f1976f589c4000168a4f85c103}} 
+\index{OpenFloatingPanel@{OpenFloatingPanel}!execute@{execute}}
+\index{execute@{execute}!OpenFloatingPanel@{OpenFloatingPanel}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Open\+Floating\+Panel\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041                                 \{}
+\DoxyCodeLine{00042   \textcolor{comment}{// Let flipbooks handle the problem on their own}}
+\DoxyCodeLine{00043   \textcolor{keywordflow}{if} (m\_panelType == \textcolor{stringliteral}{"{}FlipBook"{}}) \{}
+\DoxyCodeLine{00044     FlipBookPool::instance()-\/>\mbox{\hyperlink{class_flip_book_pool_aa110af5e7e2650be4540744f53de314b}{pop}}();}
+\DoxyCodeLine{00045     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00046   \}}
+\DoxyCodeLine{00047 }
+\DoxyCodeLine{00048   getOrOpenFloatingPanel(m\_panelType);}
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00050   \textcolor{comment}{/*}}
+\DoxyCodeLine{00051 \textcolor{comment}{}}
+\DoxyCodeLine{00052 \textcolor{comment}{// Search for pane that are floating and have the same panelName}}
+\DoxyCodeLine{00053 \textcolor{comment}{TMainWindow *currentRoom = TApp::instance()-\/>getCurrentRoom();}}
+\DoxyCodeLine{00054 \textcolor{comment}{QList<TPanel *> list = currentRoom-\/>findChildren<TPanel *>();}}
+\DoxyCodeLine{00055 \textcolor{comment}{  QPoint lastFloatingPos = QPoint(0,0);}}
+\DoxyCodeLine{00056 \textcolor{comment}{for(int i=0;i<list.size();i++)}}
+\DoxyCodeLine{00057 \textcolor{comment}{\{}}
+\DoxyCodeLine{00058 \textcolor{comment}{TPanel *panel = list.at(i);}}
+\DoxyCodeLine{00059 \textcolor{comment}{}}
+\DoxyCodeLine{00060 \textcolor{comment}{// we want floating panel (possibly hidden) with the correct name}}
+\DoxyCodeLine{00061 \textcolor{comment}{if(panel-\/>getPanelType() == m\_panelType \&\& panel-\/>isFloating())}}
+\DoxyCodeLine{00062 \textcolor{comment}{\{}}
+\DoxyCodeLine{00063 \textcolor{comment}{}}
+\DoxyCodeLine{00064 \textcolor{comment}{// if there is already a floating panel and MultipleInstances are}}
+\DoxyCodeLine{00065 \textcolor{comment}{// not allowed we must use it}}
+\DoxyCodeLine{00066 \textcolor{comment}{if(!panel-\/>areMultipleInstancesAllowed() \&\& !panel-\/>isHidden())}}
+\DoxyCodeLine{00067 \textcolor{comment}{\{}}
+\DoxyCodeLine{00068 \textcolor{comment}{  activateWidget(panel);}}
+\DoxyCodeLine{00069 \textcolor{comment}{  return;}}
+\DoxyCodeLine{00070 \textcolor{comment}{\}}}
+\DoxyCodeLine{00071 \textcolor{comment}{}}
+\DoxyCodeLine{00072 \textcolor{comment}{// If there is a hidden panel we can show and use it}}
+\DoxyCodeLine{00073 \textcolor{comment}{if(panel-\/>isHidden())}}
+\DoxyCodeLine{00074 \textcolor{comment}{\{}}
+\DoxyCodeLine{00075 \textcolor{comment}{                          //Alcuni pannelli devono essere resettati (Es.: il}}
+\DoxyCodeLine{00076 \textcolor{comment}{paletteViewerPanel)}}
+\DoxyCodeLine{00077 \textcolor{comment}{  panel-\/>reset();}}
+\DoxyCodeLine{00078 \textcolor{comment}{  //Devo porre il pannello sotto il controllo del layout della stanza}}
+\DoxyCodeLine{00079 \textcolor{comment}{  currentRoom-\/>addDockWidget(panel);}}
+\DoxyCodeLine{00080 \textcolor{comment}{  panel-\/>show();}}
+\DoxyCodeLine{00081 \textcolor{comment}{  panel-\/>raise();}}
+\DoxyCodeLine{00082 \textcolor{comment}{  return;}}
+\DoxyCodeLine{00083 \textcolor{comment}{\}}}
+\DoxyCodeLine{00084 \textcolor{comment}{                  else}}
+\DoxyCodeLine{00085 \textcolor{comment}{                          lastFloatingPos = panel-\/>pos();}}
+\DoxyCodeLine{00086 \textcolor{comment}{\}}}
+\DoxyCodeLine{00087 \textcolor{comment}{\}}}
+\DoxyCodeLine{00088 \textcolor{comment}{}}
+\DoxyCodeLine{00089 \textcolor{comment}{// No panel found. We must create a new pane}}
+\DoxyCodeLine{00090 \textcolor{comment}{}}
+\DoxyCodeLine{00091 \textcolor{comment}{TPanel *panel = TPanelFactory::createPanel(}}
+\DoxyCodeLine{00092 \textcolor{comment}{currentRoom,}}
+\DoxyCodeLine{00093 \textcolor{comment}{QString::fromStdString(m\_panelType));}}
+\DoxyCodeLine{00094 \textcolor{comment}{if(!panel) return; // it should never happen}}
+\DoxyCodeLine{00095 \textcolor{comment}{panel-\/>setWindowTitle(QObject::tr(m\_title.toStdString().c\_str()));}}
+\DoxyCodeLine{00096 \textcolor{comment}{panel-\/>setFloating(true);}}
+\DoxyCodeLine{00097 \textcolor{comment}{panel-\/>show();}}
+\DoxyCodeLine{00098 \textcolor{comment}{panel-\/>raise();}}
+\DoxyCodeLine{00099 \textcolor{comment}{  if(!lastFloatingPos.isNull())}}
+\DoxyCodeLine{00100 \textcolor{comment}{          panel-\/>move(QPoint(lastFloatingPos.x()+30,lastFloatingPos.y()+30));}}
+\DoxyCodeLine{00101 \textcolor{comment}{*/}}
+\DoxyCodeLine{00102 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_open_floating_panel_acaa8d9001b20492a1b8053f6de7ee707}\label{class_open_floating_panel_acaa8d9001b20492a1b8053f6de7ee707}} 
+\index{OpenFloatingPanel@{OpenFloatingPanel}!getOrOpenFloatingPanel@{getOrOpenFloatingPanel}}
+\index{getOrOpenFloatingPanel@{getOrOpenFloatingPanel}!OpenFloatingPanel@{OpenFloatingPanel}}
+\doxysubsubsection{\texorpdfstring{getOrOpenFloatingPanel()}{getOrOpenFloatingPanel()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_panel}{TPanel}} $\ast$ Open\+Floating\+Panel\+::get\+Or\+Open\+Floating\+Panel (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{panel\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00105                                 \{}
+\DoxyCodeLine{00106   \mbox{\hyperlink{class_t_main_window}{TMainWindow}} *currentRoom = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a2e2e36211e0221b0f58694b169fc7904}{getCurrentRoom}}();}
+\DoxyCodeLine{00107   QList<TPanel *> list     = currentRoom-\/>findChildren<\mbox{\hyperlink{class_t_panel}{TPanel}} *>();}
+\DoxyCodeLine{00108   QPoint lastFloatingPos   = QPoint(0, 0);}
+\DoxyCodeLine{00109   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < list.size(); i++) \{}
+\DoxyCodeLine{00110     \mbox{\hyperlink{class_t_panel}{TPanel}} *panel = list.at(i);}
+\DoxyCodeLine{00111 }
+\DoxyCodeLine{00112     \textcolor{comment}{// we want floating panel (possibly hidden) with the correct name}}
+\DoxyCodeLine{00113     \textcolor{keywordflow}{if} (panel-\/>getPanelType() == panelType \&\& panel-\/>isFloating()) \{}
+\DoxyCodeLine{00114       \textcolor{comment}{// if there is already a floating panel and MultipleInstances are}}
+\DoxyCodeLine{00115       \textcolor{comment}{// not allowed we must use it}}
+\DoxyCodeLine{00116       \textcolor{keywordflow}{if} (!panel-\/>areMultipleInstancesAllowed() \&\& !panel-\/>isHidden()) \{}
+\DoxyCodeLine{00117         activateWidget(panel);}
+\DoxyCodeLine{00118         \textcolor{keywordflow}{return} panel;}
+\DoxyCodeLine{00119       \}}
+\DoxyCodeLine{00120 }
+\DoxyCodeLine{00121       \textcolor{comment}{// If there is a hidden panel we can show and use it}}
+\DoxyCodeLine{00122       \textcolor{keywordflow}{if} (panel-\/>isHidden()) \{}
+\DoxyCodeLine{00123         \textcolor{comment}{// Alcuni pannelli devono essere resettati (Es.: il paletteViewerPanel)}}
+\DoxyCodeLine{00124         panel-\/>reset();}
+\DoxyCodeLine{00125         \textcolor{comment}{// Devo porre il pannello sotto il controllo del layout della stanza}}
+\DoxyCodeLine{00126         currentRoom-\/>\mbox{\hyperlink{class_t_main_window_a5bd7a251e7bca80111d0d9bd90943015}{addDockWidget}}(panel);}
+\DoxyCodeLine{00127         panel-\/>show();}
+\DoxyCodeLine{00128         panel-\/>raise();}
+\DoxyCodeLine{00129         \textcolor{keywordflow}{return} panel;}
+\DoxyCodeLine{00130       \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00131         lastFloatingPos = panel-\/>pos();}
+\DoxyCodeLine{00132     \}}
+\DoxyCodeLine{00133   \}}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135   \textcolor{comment}{// No panel found. We must create a new pane}}
+\DoxyCodeLine{00136   \mbox{\hyperlink{class_t_panel}{TPanel}} *panel = TPanelFactory::createPanel(currentRoom,}
+\DoxyCodeLine{00137                                              QString::fromStdString(panelType));}
+\DoxyCodeLine{00138   \textcolor{keywordflow}{if} (!panel) \textcolor{keywordflow}{return} 0;  \textcolor{comment}{// it should never happen}}
+\DoxyCodeLine{00139   \textcolor{comment}{// panel-\/>setWindowTitle(QObject::tr(m\_title.toStdString().c\_str()));}}
+\DoxyCodeLine{00140   panel-\/>\mbox{\hyperlink{class_t_panel_a6c399a15d9c788f549e8df0267f2d7f8}{restoreFloatingPanelState}}();}
+\DoxyCodeLine{00141   panel-\/>\mbox{\hyperlink{class_t_dock_widget_a82cb9128c0aafa45faa75ac25cfd062b}{setFloating}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00142   panel-\/>show();}
+\DoxyCodeLine{00143   panel-\/>raise();}
+\DoxyCodeLine{00144   \textcolor{keywordflow}{if} (!lastFloatingPos.isNull())}
+\DoxyCodeLine{00145     panel-\/>move(QPoint(lastFloatingPos.x() + 30, lastFloatingPos.y() + 30));}
+\DoxyCodeLine{00146 }
+\DoxyCodeLine{00147   \textcolor{keywordflow}{return} panel;}
+\DoxyCodeLine{00148 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/floatingpanelcommand.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/floatingpanelcommand.\+cpp\end{DoxyCompactItemize}

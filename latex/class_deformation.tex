@@ -1,0 +1,230 @@
+\hypertarget{class_deformation}{}\doxysection{Deformation Class Reference}
+\label{class_deformation}\index{Deformation@{Deformation}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_deformation_a1df2b273145a4ed4593a4c2a14915212}{get\+Closest}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p) const
+\item 
+void \mbox{\hyperlink{class_deformation_a03993976bb6d4580c6d4e3c72ada69d7}{update}} ()
+\item 
+\mbox{\hyperlink{class_t_point_t}{TPointD}} \mbox{\hyperlink{class_deformation_a92314570b5d8b24a84d0a70d872e90b6}{apply}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p, double t=1.\+0)
+\item 
+void \mbox{\hyperlink{class_deformation_a9f9967cb99481c686bc6911e4dd6ce2f}{deform}} (\mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$dst\+Stroke, const \mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$src\+Stroke, double t=1.\+0)
+\item 
+void \mbox{\hyperlink{class_deformation_a6db563b805eb7f1593e5cf1a74592d00}{deform}} (\mbox{\hyperlink{class_t_vector_image}{TVector\+Image}} $\ast$dst\+Image, const \mbox{\hyperlink{class_t_vector_image}{TVector\+Image}} $\ast$src\+Image, double t=1.\+0)
+\item 
+void \mbox{\hyperlink{class_deformation_a8783b868396365788bdcd02bdd6cd892}{update\+Level}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_t_point_t}{TPointD}} $>$ \mbox{\hyperlink{class_deformation_a78f536d10549515e7cc3bf749be99e8d}{m\+\_\+control\+Points}}
+\item 
+int \mbox{\hyperlink{class_deformation_a242715ad568b488adfcfdd2b8947da7f}{m\+\_\+selected}}
+\item 
+\mbox{\hyperlink{class_t_affine}{TAffine}} \mbox{\hyperlink{class_deformation_aac114e7d9ac9ee4c82e2b2ea76875ece}{m\+\_\+aff}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_t_point_t}{TPointD}} $>$ \mbox{\hyperlink{class_deformation_a6707feaa0c28a69583821648a845d31a}{m\+\_\+delta}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_deformation_a57cda75530b2fc74e7ad202a63417cf9}\label{class_deformation_a57cda75530b2fc74e7ad202a63417cf9}} 
+\index{Deformation@{Deformation}!Deformation@{Deformation}}
+\index{Deformation@{Deformation}!Deformation@{Deformation}}
+\doxysubsubsection{\texorpdfstring{Deformation()}{Deformation()}}
+{\footnotesize\ttfamily Deformation\+::\+Deformation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107                          : m\_selected(-\/1) \{}
+\DoxyCodeLine{00108   m\_controlPoints.resize(6);}
+\DoxyCodeLine{00109   m\_controlPoints[0] = \mbox{\hyperlink{class_t_point_t}{TPointD}}(-\/250, 100);}
+\DoxyCodeLine{00110   m\_controlPoints[2] = \mbox{\hyperlink{class_t_point_t}{TPointD}}(0, -\/300);}
+\DoxyCodeLine{00111   m\_controlPoints[4] = \mbox{\hyperlink{class_t_point_t}{TPointD}}(250, 100);}
+\DoxyCodeLine{00112   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 6; i += 2) m\_controlPoints[i + 1] = m\_controlPoints[i];}
+\DoxyCodeLine{00113 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_deformation_a92314570b5d8b24a84d0a70d872e90b6}\label{class_deformation_a92314570b5d8b24a84d0a70d872e90b6}} 
+\index{Deformation@{Deformation}!apply@{apply}}
+\index{apply@{apply}!Deformation@{Deformation}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_point_t}{TPointD}} Deformation\+::apply (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p,  }\item[{double}]{t = {\ttfamily 1.0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00047                                                   \{}
+\DoxyCodeLine{00048     \mbox{\hyperlink{class_t_point_t}{TPointD}} d = m\_aff * p;}
+\DoxyCodeLine{00049     \textcolor{keywordtype}{double} c0 = d.x, c1 = d.y, c2 = 1 -\/ c0 -\/ c1;}
+\DoxyCodeLine{00050     \mbox{\hyperlink{class_t_point_t}{TPointD}} delta = c0 * m\_delta[0] + c1 * m\_delta[1] + c2 * m\_delta[2];}
+\DoxyCodeLine{00051     \textcolor{keywordflow}{return} p + delta * t;}
+\DoxyCodeLine{00052   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_deformation_a9f9967cb99481c686bc6911e4dd6ce2f}\label{class_deformation_a9f9967cb99481c686bc6911e4dd6ce2f}} 
+\index{Deformation@{Deformation}!deform@{deform}}
+\index{deform@{deform}!Deformation@{Deformation}}
+\doxysubsubsection{\texorpdfstring{deform()}{deform()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Deformation\+::deform (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$}]{dst\+Stroke,  }\item[{const \mbox{\hyperlink{class_t_stroke}{TStroke}} $\ast$}]{src\+Stroke,  }\item[{double}]{t = {\ttfamily 1.0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054                                                                             \{}
+\DoxyCodeLine{00055     \textcolor{keywordtype}{int} n = srcStroke-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}();}
+\DoxyCodeLine{00056     \textcolor{keywordflow}{if} (dstStroke-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}() < n)}
+\DoxyCodeLine{00057       n = dstStroke-\/>\mbox{\hyperlink{class_t_stroke_a45101afd31e40d08100fdf23c89fb49e}{getControlPointCount}}();}
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++) \{}
+\DoxyCodeLine{00060       \mbox{\hyperlink{class_t_thick_point}{TThickPoint}} srcPoint = srcStroke-\/>\mbox{\hyperlink{class_t_stroke_a9b60f87075b703360efe4b38097d923f}{getControlPoint}}(i);}
+\DoxyCodeLine{00061       dstStroke-\/>\mbox{\hyperlink{class_t_stroke_abc4f174af1e2712c400ae63e005aac18}{setControlPoint}}(i, apply(srcPoint, t));}
+\DoxyCodeLine{00062     \}}
+\DoxyCodeLine{00063   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_deformation_a6db563b805eb7f1593e5cf1a74592d00}\label{class_deformation_a6db563b805eb7f1593e5cf1a74592d00}} 
+\index{Deformation@{Deformation}!deform@{deform}}
+\index{deform@{deform}!Deformation@{Deformation}}
+\doxysubsubsection{\texorpdfstring{deform()}{deform()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Deformation\+::deform (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_vector_image}{TVector\+Image}} $\ast$}]{dst\+Image,  }\item[{const \mbox{\hyperlink{class_t_vector_image}{TVector\+Image}} $\ast$}]{src\+Image,  }\item[{double}]{t = {\ttfamily 1.0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00066                               \{}
+\DoxyCodeLine{00067     update();}
+\DoxyCodeLine{00068     \textcolor{keywordtype}{int} n                                      = srcImage-\/>\mbox{\hyperlink{class_t_vector_image_add44e109ce62ba075799c0602724a841}{getStrokeCount}}();}
+\DoxyCodeLine{00069     \textcolor{keywordflow}{if} ((\textcolor{keywordtype}{int})dstImage-\/>\mbox{\hyperlink{class_t_vector_image_add44e109ce62ba075799c0602724a841}{getStrokeCount}}() < n) n = dstImage-\/>\mbox{\hyperlink{class_t_vector_image_add44e109ce62ba075799c0602724a841}{getStrokeCount}}();}
+\DoxyCodeLine{00070     std::vector<int> ii(n);}
+\DoxyCodeLine{00071     std::vector<TStroke *> oldStrokes(n);}
+\DoxyCodeLine{00072     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++) \{}
+\DoxyCodeLine{00073       ii[i]         = i;}
+\DoxyCodeLine{00074       oldStrokes[i] = srcImage-\/>\mbox{\hyperlink{class_t_vector_image_a1aa2f3ab6c30a6f8a64b2cb35072ffeb}{getStroke}}(i);}
+\DoxyCodeLine{00075       deform(dstImage-\/>\mbox{\hyperlink{class_t_vector_image_a1aa2f3ab6c30a6f8a64b2cb35072ffeb}{getStroke}}(i), oldStrokes[i], t);}
+\DoxyCodeLine{00076     \}}
+\DoxyCodeLine{00077     dstImage-\/>\mbox{\hyperlink{class_t_vector_image_a033795f887a81bb5c43873901bcaf8d7}{notifyChangedStrokes}}(ii, oldStrokes);}
+\DoxyCodeLine{00078   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_deformation_a1df2b273145a4ed4593a4c2a14915212}\label{class_deformation_a1df2b273145a4ed4593a4c2a14915212}} 
+\index{Deformation@{Deformation}!getClosest@{getClosest}}
+\index{getClosest@{getClosest}!Deformation@{Deformation}}
+\doxysubsubsection{\texorpdfstring{getClosest()}{getClosest()}}
+{\footnotesize\ttfamily int Deformation\+::get\+Closest (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{p }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00115                                                   \{}
+\DoxyCodeLine{00116   \textcolor{keywordtype}{int} k            = -\/1;}
+\DoxyCodeLine{00117   \textcolor{keywordtype}{double} closestD2 = 0;}
+\DoxyCodeLine{00118   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)m\_controlPoints.size(); i++) \{}
+\DoxyCodeLine{00119     \mbox{\hyperlink{class_t_point_t}{TPointD}} cp = m\_controlPoints[i];}
+\DoxyCodeLine{00120     \textcolor{keywordtype}{double} d2  = norm2(p -\/ cp);}
+\DoxyCodeLine{00121     \textcolor{keywordflow}{if} (k < 0 || d2 <= closestD2) \{}
+\DoxyCodeLine{00122       closestD2 = d2;}
+\DoxyCodeLine{00123       k         = i;}
+\DoxyCodeLine{00124     \}}
+\DoxyCodeLine{00125   \}}
+\DoxyCodeLine{00126   \textcolor{keywordflow}{return} closestD2 < 100 ? k : -\/1;}
+\DoxyCodeLine{00127 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_deformation_a03993976bb6d4580c6d4e3c72ada69d7}\label{class_deformation_a03993976bb6d4580c6d4e3c72ada69d7}} 
+\index{Deformation@{Deformation}!update@{update}}
+\index{update@{update}!Deformation@{Deformation}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Deformation\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00029                 \{}
+\DoxyCodeLine{00030     \mbox{\hyperlink{class_t_point_t}{TPointD}} p0 = m\_controlPoints[0];}
+\DoxyCodeLine{00031     \mbox{\hyperlink{class_t_point_t}{TPointD}} p1 = m\_controlPoints[2];}
+\DoxyCodeLine{00032     \mbox{\hyperlink{class_t_point_t}{TPointD}} p2 = m\_controlPoints[4];}
+\DoxyCodeLine{00033     \textcolor{keywordtype}{double} a00 = p0.x -\/ p2.x, a01 = p1.x -\/ p2.x, a10 = p0.y -\/ p2.y,}
+\DoxyCodeLine{00034            a11 = p1.y -\/ p2.y;}
+\DoxyCodeLine{00035     \mbox{\hyperlink{class_t_affine}{TAffine}} aff(a00, a01, 0, a10, a11, 0);}
+\DoxyCodeLine{00036     aff       = aff.inv();}
+\DoxyCodeLine{00037     \mbox{\hyperlink{class_t_point_t}{TPointD}} d = -\/(aff * p2);}
+\DoxyCodeLine{00038     aff.a13   = d.x;}
+\DoxyCodeLine{00039     aff.a23   = d.y;}
+\DoxyCodeLine{00040     m\_aff     = aff;}
+\DoxyCodeLine{00041     m\_delta.resize(3);}
+\DoxyCodeLine{00042     m\_delta[0] = m\_controlPoints[1] -\/ p0;}
+\DoxyCodeLine{00043     m\_delta[1] = m\_controlPoints[3] -\/ p1;}
+\DoxyCodeLine{00044     m\_delta[2] = m\_controlPoints[5] -\/ p2;}
+\DoxyCodeLine{00045   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_deformation_a8783b868396365788bdcd02bdd6cd892}\label{class_deformation_a8783b868396365788bdcd02bdd6cd892}} 
+\index{Deformation@{Deformation}!updateLevel@{updateLevel}}
+\index{updateLevel@{updateLevel}!Deformation@{Deformation}}
+\doxysubsubsection{\texorpdfstring{updateLevel()}{updateLevel()}}
+{\footnotesize\ttfamily void Deformation\+::update\+Level (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080                      \{}
+\DoxyCodeLine{00081     \mbox{\hyperlink{class_t_application}{TTool::Application}} *app = TTool::getApplication();}
+\DoxyCodeLine{00082     \textcolor{keywordflow}{if} (!app-\/>getCurrentLevel()-\/>getLevel()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00083     \mbox{\hyperlink{class_t_smart_pointer_t}{TXshSimpleLevelP}} xl = app-\/>getCurrentLevel()-\/>getLevel()-\/>\mbox{\hyperlink{class_t_xsh_level_a023065559cff76164ecb6344c586ba27}{getSimpleLevel}}();}
+\DoxyCodeLine{00084     \textcolor{keywordflow}{if} (app-\/>getCurrentFrame()-\/>getFrameType() != TFrameHandle::LevelFrame)}
+\DoxyCodeLine{00085       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087     \mbox{\hyperlink{class_t_frame_id}{TFrameId}} fid      = app-\/>getCurrentFrame()-\/>getFid();}
+\DoxyCodeLine{00088     \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} src = xl-\/>getFrame(fid, \textcolor{keyword}{true});}
+\DoxyCodeLine{00089     \textcolor{keywordtype}{int} count         = src-\/>getStrokeCount();}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < 10; i++) \{}
+\DoxyCodeLine{00092       ++fid;}
+\DoxyCodeLine{00093       \textcolor{keywordflow}{if} (!xl-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a14de45c4b17032346cfcffbca8ef9751}{isFid}}(fid)) \{}
+\DoxyCodeLine{00094         \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_vector_image}{TVectorImage}}();}
+\DoxyCodeLine{00095         xl-\/>setFrame(fid, vi);}
+\DoxyCodeLine{00096       \}}
+\DoxyCodeLine{00097       \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi  = xl-\/>getFrame(fid, \textcolor{keyword}{true});}
+\DoxyCodeLine{00098       \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} dst = src-\/>clone();}
+\DoxyCodeLine{00099       deform(dst.getPointer(), src.getPointer(), (\textcolor{keywordtype}{double})i / (\textcolor{keywordtype}{double})9);}
+\DoxyCodeLine{00100       count = dst-\/>getStrokeCount();}
+\DoxyCodeLine{00101       vi-\/>mergeImage(dst, \mbox{\hyperlink{class_t_affine}{TAffine}}());}
+\DoxyCodeLine{00102       app-\/>getCurrentTool()-\/>getTool()-\/>\mbox{\hyperlink{class_t_tool_abd1824e9b49705c534e0a773305294c4}{notifyImageChanged}}(fid);}
+\DoxyCodeLine{00103     \}}
+\DoxyCodeLine{00104   \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_deformation_aac114e7d9ac9ee4c82e2b2ea76875ece}\label{class_deformation_aac114e7d9ac9ee4c82e2b2ea76875ece}} 
+\index{Deformation@{Deformation}!m\_aff@{m\_aff}}
+\index{m\_aff@{m\_aff}!Deformation@{Deformation}}
+\doxysubsubsection{\texorpdfstring{m\_aff}{m\_aff}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_affine}{TAffine}} Deformation\+::m\+\_\+aff}
+
+\mbox{\Hypertarget{class_deformation_a78f536d10549515e7cc3bf749be99e8d}\label{class_deformation_a78f536d10549515e7cc3bf749be99e8d}} 
+\index{Deformation@{Deformation}!m\_controlPoints@{m\_controlPoints}}
+\index{m\_controlPoints@{m\_controlPoints}!Deformation@{Deformation}}
+\doxysubsubsection{\texorpdfstring{m\_controlPoints}{m\_controlPoints}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{class_t_point_t}{TPointD}}$>$ Deformation\+::m\+\_\+control\+Points}
+
+\mbox{\Hypertarget{class_deformation_a6707feaa0c28a69583821648a845d31a}\label{class_deformation_a6707feaa0c28a69583821648a845d31a}} 
+\index{Deformation@{Deformation}!m\_delta@{m\_delta}}
+\index{m\_delta@{m\_delta}!Deformation@{Deformation}}
+\doxysubsubsection{\texorpdfstring{m\_delta}{m\_delta}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{class_t_point_t}{TPointD}}$>$ Deformation\+::m\+\_\+delta}
+
+\mbox{\Hypertarget{class_deformation_a242715ad568b488adfcfdd2b8947da7f}\label{class_deformation_a242715ad568b488adfcfdd2b8947da7f}} 
+\index{Deformation@{Deformation}!m\_selected@{m\_selected}}
+\index{m\_selected@{m\_selected}!Deformation@{Deformation}}
+\doxysubsubsection{\texorpdfstring{m\_selected}{m\_selected}}
+{\footnotesize\ttfamily int Deformation\+::m\+\_\+selected}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/morphtool.\+cpp\end{DoxyCompactItemize}

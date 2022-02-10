@@ -1,0 +1,156 @@
+Stylesheets are written with \href{http://lesscss.org/}{\texttt{ LESS}}, which is a dynamic preprocessor stylesheet language that can be compiled into Qt stylesheets.
+
+ℹ️ \href{http://lesscss.org/functions/}{\texttt{ LESS Functions}}\hypertarget{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md104}{}\doxysection{Recommended Setup}\label{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md104}
+\hypertarget{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md105}{}\doxysubsection{Windows}\label{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md105}
+Although any LESS compiler will work fine, here is a recommended setup.
+
+
+\begin{DoxyItemize}
+\item Install \href{https://code.visualstudio.com/}{\texttt{ Visual Studio Code}} by Microsoft.
+\item Add the \href{https://marketplace.visualstudio.com/items?itemName=mrcrowl.easy-less}{\texttt{ Easy LESS}} extension from the marketplace which will be used as the compiler.
+\item In VSCode, navigate to your Open\+Toonz stuff folder and open {\ttfamily config/qss/\+Default/less}.
+\end{DoxyItemize}
+
+A {\ttfamily settings.\+json} file is already included to ensure developers work to the same standards located in {\ttfamily .vscode}. If the file must be created manually then the following should apply.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  "{}editor.tabSize"{}: 2,}
+\DoxyCodeLine{  "{}less.compile"{}: \{}
+\DoxyCodeLine{  "{}compress"{}:  true,}
+\DoxyCodeLine{  "{}sourceMap"{}: false,}
+\DoxyCodeLine{  "{}out"{}:       false}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+ℹ️ \href{https://code.visualstudio.com/docs/getstarted/settings}{\texttt{ How to Change Settings in Visual Studio Code}}.\hypertarget{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md106}{}\doxysubsection{Linux}\label{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md106}
+On Linux you will need a command-\/line compiler {\ttfamily lessc}.
+
+Ubuntu\+: \begin{DoxyVerb}$ apt install node-less
+\end{DoxyVerb}
+ Fedora\+: \begin{DoxyVerb}$ dnf install nodejs-less
+\end{DoxyVerb}
+\hypertarget{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md107}{}\doxysection{How To Compile}\label{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md107}
+\hypertarget{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md108}{}\doxysubsection{Windows}\label{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md108}
+Easy LESS uses a compile on save feature, so the theme files must be saved to generate an output.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Default.less}
+\DoxyCodeLine{themes/Blue.less}
+\DoxyCodeLine{themes/Dark.less}
+\DoxyCodeLine{themes/Light.less}
+
+\end{DoxyCode}
+\hypertarget{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md109}{}\doxysubsection{Linux}\label{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md109}
+From opentoonz source directory root execute the following commands\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ lessc -\/x stuff/config/qss/Default/less/Default.less stuff/config/qss/Default/Default.qss}
+\DoxyCodeLine{\$ lessc -\/x stuff/config/qss/Default/less/themes/Blue.less stuff/config/qss/Blue/Blue.qss}
+\DoxyCodeLine{\$ lessc -\/x stuff/config/qss/Default/less/themes/Dark.less stuff/config/qss/Dark/Dark.qss}
+\DoxyCodeLine{\$ lessc -\/x stuff/config/qss/Default/less/themes/Light.less stuff/config/qss/Light/Light.qss}
+
+\end{DoxyCode}
+\hypertarget{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md110}{}\doxysection{How They Work}\label{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md110}
+The stylesheets are designed into a component, wire-\/frame and palette structure similar to web design that exploits the cascade of the LESS language to generate multiple theme colors from a single layout. This method was used to prevent duplication.\hypertarget{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md111}{}\doxysubsection{Cascade Hierarchy}\label{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md111}
+The include pathway is important as {\ttfamily components} need to be included before {\ttfamily layouts}. The cascade order is defined in the {\ttfamily main.\+less} file.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{// Base}
+\DoxyCodeLine{@import 'base/colors';}
+\DoxyCodeLine{@import 'base/mixins';}
+\DoxyCodeLine{}
+\DoxyCodeLine{// Components}
+\DoxyCodeLine{@import 'components/all';}
+\DoxyCodeLine{}
+\DoxyCodeLine{// Layouts}
+\DoxyCodeLine{@import 'layouts/all';}
+
+\end{DoxyCode}
+
+
+Then import the {\ttfamily main.\+less} file into the theme file which will add values to every variable in {\ttfamily Default.\+less}.\hypertarget{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md112}{}\doxysection{Variable List}\label{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md112}
+There are many variables, for a full list look at {\ttfamily Default.\+less}, below is a list of the core variables.
+
+{\ttfamily @bg} is the main background color for the interface, almost all other color variables use it as their base color and instead use color functions to either lighten or darken the value.
+
+{\ttfamily @text-\/color} is the main text color for the interface.
+
+{\ttfamily @accent} is used for accenting, such as borders, separators, boxes, wrappers, think of it as secondary.
+
+{\ttfamily @hl-\/bg-\/color} changes the color for highlighted items and focused text fields, think of it as tertiary.\hypertarget{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md113}{}\doxysection{Adding New Features}\label{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md113}
+This is an example of how to add new features into the layout files.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#NewWindow \{}
+\DoxyCodeLine{  background-\/color: @bg;}
+\DoxyCodeLine{  border: 1 solid @accent;}
+\DoxyCodeLine{  }
+\DoxyCodeLine{  \& QPushButton\#OK \{}
+\DoxyCodeLine{    background-\/color: @button-\/bg-\/color;}
+\DoxyCodeLine{    border-\/color: @button-\/border-\/color;}
+\DoxyCodeLine{    color: @button-\/text-\/color;}
+\DoxyCodeLine{    padding: 3;}
+\DoxyCodeLine{    \&:hover \{}
+\DoxyCodeLine{      border-\/color: @hl-\/bg-\/color;}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{  \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+To call components, use the LESS extend function.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#NewWindow \{}
+\DoxyCodeLine{  \&:extend(\#ComponentName all);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+ℹ️ \href{http://lesscss.org/features/\#extend-feature}{\texttt{ LESS Extend Docs}}\hypertarget{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md114}{}\doxysection{Creating New Themes}\label{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md114}
+It\textquotesingle{}s possible to create custom themes.\hypertarget{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md115}{}\doxysubsection{How To}\label{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md115}
+
+\begin{DoxyItemize}
+\item Navigate to your Open\+Toonz stuff directory, and create a new folder in {\ttfamily config/qss}.
+\item Create a new text file in the new folder, give it the same name as the folder and save it with the {\ttfamily .less} extension.
+\item Open the LESS file and add the following line at the top.
+\item {\ttfamily // out\+: filename.\+qss}
+\item Which will control where Easy LESS outputs the compiled file on save.
+\item Next, choose which theme you want to base from, in this example the base will be Default.
+\item Add this line under the Easy LESS line but above everything else.
+\item `@import '../\+Default/less/\+Default.less\textquotesingle{}\`{}
+\item Now the theme file is a clone of Default, so variables can be overridden.
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{//out: filename.qss}
+\DoxyCodeLine{}
+\DoxyCodeLine{@import '../Default/less/Default.less';}
+\DoxyCodeLine{}
+\DoxyCodeLine{@bg: red;}
+\DoxyCodeLine{@text-\/color: white;}
+\DoxyCodeLine{@hl-\/bg-\/color: yellow;}
+\DoxyCodeLine{}
+\DoxyCodeLine{// etc}
+
+\end{DoxyCode}
+\hypertarget{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md116}{}\doxysection{Notes}\label{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md116}
+⚠️ When developing, always develop with the Default theme, then decide later if any changes need porting to alternate themes, in most cases it won\textquotesingle{}t be necessary.
+
+⚠️ Layout files must never have hard-\/coded color values, color values {\bfseries{must always}} be variable. Each function area of Open\+Toonz is split into a separate file.\hypertarget{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md117}{}\doxysubsubsection{Directory Information}\label{md__e__opentoonz_doc_how_to_stylesheet_autotoc_md117}
+{\bfseries{Base\+:}} Contains generic color palettes, legacy code, mixins and functions. It\textquotesingle{}s fine to place junk code here.
+
+{\bfseries{Components\+:}} Anything re-\/usable is here, such as multiple tab structures, button styles, icon layouts, frames, wrappers and folder trees.
+
+{\bfseries{Layouts\+:}} The core wire-\/frame, every window, widget and control is designed here.
+
+{\bfseries{Themes\+:}} Alternate theme colors that inherit the Default theme, it is only necessary to override variable values unique to the theme. 

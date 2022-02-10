@@ -1,0 +1,226 @@
+\hypertarget{class_depended_list}{}\doxysection{Depended\+List Class Reference}
+\label{class_depended_list}\index{DependedList@{DependedList}}
+Inheritance diagram for Depended\+List\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_depended_list}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_depended_list_adcf44f4fc14a5f6174a6cc4971988045}{Depended\+List}} (\mbox{\hyperlink{class_t_widget}{TWidget}} $\ast$parent)
+\item 
+void \mbox{\hyperlink{class_depended_list_a4332ed840518e8e6e1bcbd8ce050c970}{configure\+Notify}} (const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&size)
+\item 
+void \mbox{\hyperlink{class_depended_list_ae1c08f5d1400839be14f218b03804360}{on\+Add}} ()
+\item 
+void \mbox{\hyperlink{class_depended_list_a88268ea51701cc9b0d0a6700d2774d66}{on\+Remove}} ()
+\item 
+void \mbox{\hyperlink{class_depended_list_a1ad13398059f31dc3741d4704346fde3}{clear\+All}} ()
+\item 
+void \mbox{\hyperlink{class_depended_list_afcdf6f1c3a78a450dd9d928472e6b5e0}{set\+List}} (const map$<$ string, string $>$ \&tasks)
+\item 
+void \mbox{\hyperlink{class_depended_list_ac615589709075fdd592ef01a06f19c2c}{Add\+Items}} (const \mbox{\hyperlink{classvector}{vector}}$<$ string $>$ \&tasks\+Id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_depended_list_adcf44f4fc14a5f6174a6cc4971988045}\label{class_depended_list_adcf44f4fc14a5f6174a6cc4971988045}} 
+\index{DependedList@{DependedList}!DependedList@{DependedList}}
+\index{DependedList@{DependedList}!DependedList@{DependedList}}
+\doxysubsubsection{\texorpdfstring{DependedList()}{DependedList()}}
+{\footnotesize\ttfamily Depended\+List\+::\+Depended\+List (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_widget}{TWidget}} $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00014                                           : \mbox{\hyperlink{class_t_widget}{TWidget}}(parent) \{}
+\DoxyCodeLine{00015   m\_depList = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_text_list}{TTextList}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00016 }
+\DoxyCodeLine{00017   m\_add = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_button}{TButton}}(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}Add"{}});}
+\DoxyCodeLine{00018   tconnect<DependedList>(*(m\_add), \textcolor{keyword}{this}, onAdd);}
+\DoxyCodeLine{00019 }
+\DoxyCodeLine{00020   m\_remove = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_button}{TButton}}(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}Remove"{}});}
+\DoxyCodeLine{00021   tconnect<DependedList>(*(m\_remove), \textcolor{keyword}{this}, onRemove);}
+\DoxyCodeLine{00022 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_depended_list_ac615589709075fdd592ef01a06f19c2c}\label{class_depended_list_ac615589709075fdd592ef01a06f19c2c}} 
+\index{DependedList@{DependedList}!AddItems@{AddItems}}
+\index{AddItems@{AddItems}!DependedList@{DependedList}}
+\doxysubsubsection{\texorpdfstring{AddItems()}{AddItems()}}
+{\footnotesize\ttfamily void Depended\+List\+::\+Add\+Items (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classvector}{vector}}$<$ string $>$ \&}]{tasks\+Id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00108                                                          \{}
+\DoxyCodeLine{00109   \mbox{\hyperlink{class_t_farm_controller}{TFarmController}} *controller       = Application::instance()-\/>getController();}
+\DoxyCodeLine{00110   vector<string>::const\_iterator it = tasksId.begin();}
+\DoxyCodeLine{00111   \textcolor{keywordflow}{for} (; it != tasksId.end(); ++it)}
+\DoxyCodeLine{00112     \textcolor{keywordflow}{if} (m\_tasks.end() == m\_tasks.find(*it)) \{}
+\DoxyCodeLine{00113       \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00114         \textcolor{keywordtype}{string} parentId, name;}
+\DoxyCodeLine{00115         TaskState status;}
+\DoxyCodeLine{00116         controller-\/>queryTaskShortInfo(*it, parentId, name, status);}
+\DoxyCodeLine{00117         \textcolor{keywordtype}{string} label = \textcolor{stringliteral}{"{}<"{}} + *it + \textcolor{stringliteral}{"{}> "{}} + name;}
+\DoxyCodeLine{00118         m\_depList-\/>addItem(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_text_list_item}{TTextListItem}}(*it, label));}
+\DoxyCodeLine{00119         m\_tasks.insert(make\_pair(*it, label));}
+\DoxyCodeLine{00120       \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{00121         TMessage::error(toString(e.getMessage()));}
+\DoxyCodeLine{00122       \}}
+\DoxyCodeLine{00123     \}}
+\DoxyCodeLine{00124   m\_depList-\/>invalidate();}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126   \mbox{\hyperlink{class_submit_page}{SubmitPage}} *submitPage = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_submit_page}{SubmitPage}} *\textcolor{keyword}{>}(getParent());}
+\DoxyCodeLine{00127   \textcolor{keywordflow}{if} (submitPage) \{}
+\DoxyCodeLine{00128     \mbox{\hyperlink{class_submit_page_task}{SubmitPageTask}} *task = submitPage-\/>getTask();}
+\DoxyCodeLine{00129     \textcolor{keywordflow}{if} (task) task-\/>setDependencies(m\_tasks);}
+\DoxyCodeLine{00130   \}}
+\DoxyCodeLine{00131 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_depended_list_a1ad13398059f31dc3741d4704346fde3}\label{class_depended_list_a1ad13398059f31dc3741d4704346fde3}} 
+\index{DependedList@{DependedList}!clearAll@{clearAll}}
+\index{clearAll@{clearAll}!DependedList@{DependedList}}
+\doxysubsubsection{\texorpdfstring{clearAll()}{clearAll()}}
+{\footnotesize\ttfamily void Depended\+List\+::clear\+All (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00063                             \{}
+\DoxyCodeLine{00064   m\_depList-\/>clearAll();}
+\DoxyCodeLine{00065   m\_tasks.erase(m\_tasks.begin(), m\_tasks.end());}
+\DoxyCodeLine{00066 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_depended_list_a4332ed840518e8e6e1bcbd8ce050c970}\label{class_depended_list_a4332ed840518e8e6e1bcbd8ce050c970}} 
+\index{DependedList@{DependedList}!configureNotify@{configureNotify}}
+\index{configureNotify@{configureNotify}!DependedList@{DependedList}}
+\doxysubsubsection{\texorpdfstring{configureNotify()}{configureNotify()}}
+{\footnotesize\ttfamily void Depended\+List\+::configure\+Notify (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_dimension_t}{TDimension}} \&}]{size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_widget}{TWidget}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026                                                          \{}
+\DoxyCodeLine{00027   \textcolor{keyword}{const} \textcolor{keywordtype}{int} leftSize = size.lx / 3;}
+\DoxyCodeLine{00028   m\_depList-\/>setGeometry(0, 0, leftSize, size.ly -\/ 1);}
+\DoxyCodeLine{00029 }
+\DoxyCodeLine{00030   \mbox{\hyperlink{class_t_dimension_t}{TDimension}} buttonSize(60, 15);}
+\DoxyCodeLine{00031   \textcolor{keywordtype}{int} x  = leftSize + 30;}
+\DoxyCodeLine{00032   \textcolor{keywordtype}{int} y0 = size.ly -\/ 10;}
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034   m\_add-\/>setGeometry(x, y0 -\/ buttonSize.ly, x + buttonSize.lx, y0);}
+\DoxyCodeLine{00035   y0 -\/= (buttonSize.ly + 10);}
+\DoxyCodeLine{00036   m\_remove-\/>setGeometry(x, y0 -\/ buttonSize.ly, x + buttonSize.lx, y0);}
+\DoxyCodeLine{00037 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_depended_list_ae1c08f5d1400839be14f218b03804360}\label{class_depended_list_ae1c08f5d1400839be14f218b03804360}} 
+\index{DependedList@{DependedList}!onAdd@{onAdd}}
+\index{onAdd@{onAdd}!DependedList@{DependedList}}
+\doxysubsubsection{\texorpdfstring{onAdd()}{onAdd()}}
+{\footnotesize\ttfamily void Depended\+List\+::on\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00070                          \{}
+\DoxyCodeLine{00071   \textcolor{keyword}{static} \mbox{\hyperlink{class_depended_popup}{DependedPopup}} *popup = 0;}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073   \textcolor{keywordflow}{if} (!popup) \{}
+\DoxyCodeLine{00074     popup = \textcolor{keyword}{new} \mbox{\hyperlink{class_depended_popup}{DependedPopup}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00075 }
+\DoxyCodeLine{00076     popup-\/>setOkAction(}
+\DoxyCodeLine{00077         \textcolor{keyword}{new} \mbox{\hyperlink{class_t_depended_popup_action}{TDependedPopupAction<DependedList>}}(\textcolor{keyword}{this}, \&DependedList::AddItems));}
+\DoxyCodeLine{00078   \}}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080   \textcolor{keywordflow}{if} (!popup) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00082   \mbox{\hyperlink{class_t_farm_controller}{TFarmController}} *controller = Application::instance()-\/>getController();}
+\DoxyCodeLine{00083   vector<TaskShortInfo> tasks;}
+\DoxyCodeLine{00084   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00085     controller-\/>getTasks(\textcolor{stringliteral}{"{}"{}}, tasks);}
+\DoxyCodeLine{00086   \} \textcolor{keywordflow}{catch} (\mbox{\hyperlink{class_t_exception}{TException}} \&e) \{}
+\DoxyCodeLine{00087     TMessage::error(toString(e.getMessage()));}
+\DoxyCodeLine{00088     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00089   \}}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091   popup-\/>setList(tasks);}
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{00093   \mbox{\hyperlink{class_t_dimension_t}{TDimension}} d = TMainshell::getMainshell()-\/>getSize();}
+\DoxyCodeLine{00094 \textcolor{preprocessor}{\#ifdef WIN32}}
+\DoxyCodeLine{00095   HDC hdc = GetDC(0);}
+\DoxyCodeLine{00096   d.lx    = GetDeviceCaps(hdc, HORZRES);}
+\DoxyCodeLine{00097   d.ly    = GetDeviceCaps(hdc, VERTRES);}
+\DoxyCodeLine{00098   ReleaseDC(0, hdc);}
+\DoxyCodeLine{00099 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00100 }
+\DoxyCodeLine{00101   d -\/= popup-\/>getSize();}
+\DoxyCodeLine{00102   popup-\/>popup(\mbox{\hyperlink{class_t_point_t}{TPoint}}(d.lx / 2, d.ly / 2));}
+\DoxyCodeLine{00103   popup-\/>setCaption(\textcolor{stringliteral}{"{}Tasks Submitted"{}});}
+\DoxyCodeLine{00104 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_depended_list_a88268ea51701cc9b0d0a6700d2774d66}\label{class_depended_list_a88268ea51701cc9b0d0a6700d2774d66}} 
+\index{DependedList@{DependedList}!onRemove@{onRemove}}
+\index{onRemove@{onRemove}!DependedList@{DependedList}}
+\doxysubsubsection{\texorpdfstring{onRemove()}{onRemove()}}
+{\footnotesize\ttfamily void Depended\+List\+::on\+Remove (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041                             \{}
+\DoxyCodeLine{00042   \textcolor{keywordflow}{if} (!m\_depList-\/>getSelectedItem(0)) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00044   \textcolor{keywordtype}{int} count = m\_depList-\/>getSelectedItemCount();}
+\DoxyCodeLine{00045   \textcolor{keywordtype}{int} i     = 0;}
+\DoxyCodeLine{00046   \textcolor{keywordflow}{for} (; i < count; ++i) \{}
+\DoxyCodeLine{00047     \textcolor{keywordtype}{string} \textcolor{keywordtype}{id} = m\_depList-\/>getSelectedItemId(i);}
+\DoxyCodeLine{00048     m\_tasks.erase(m\_tasks.find(\textcolor{keywordtype}{id}));}
+\DoxyCodeLine{00049     m\_depList-\/>removeItem(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00050   \}}
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{00052   m\_depList-\/>invalidate();}
+\DoxyCodeLine{00053 }
+\DoxyCodeLine{00054   \mbox{\hyperlink{class_submit_page}{SubmitPage}} *submitPage = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_submit_page}{SubmitPage}} *\textcolor{keyword}{>}(getParent());}
+\DoxyCodeLine{00055   \textcolor{keywordflow}{if} (submitPage) \{}
+\DoxyCodeLine{00056     \mbox{\hyperlink{class_submit_page_task}{SubmitPageTask}} *task = submitPage-\/>getTask();}
+\DoxyCodeLine{00057     \textcolor{keywordflow}{if} (task) task-\/>setDependencies(m\_tasks);}
+\DoxyCodeLine{00058   \}}
+\DoxyCodeLine{00059 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_depended_list_afcdf6f1c3a78a450dd9d928472e6b5e0}\label{class_depended_list_afcdf6f1c3a78a450dd9d928472e6b5e0}} 
+\index{DependedList@{DependedList}!setList@{setList}}
+\index{setList@{setList}!DependedList@{DependedList}}
+\doxysubsubsection{\texorpdfstring{setList()}{setList()}}
+{\footnotesize\ttfamily void Depended\+List\+::set\+List (\begin{DoxyParamCaption}\item[{const map$<$ string, string $>$ \&}]{tasks }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00135                                                               \{}
+\DoxyCodeLine{00136   m\_depList-\/>clearAll();}
+\DoxyCodeLine{00137   std::map<string, string>::const\_iterator it = tasks.begin();}
+\DoxyCodeLine{00138   \textcolor{keywordflow}{for} (; it != tasks.end(); ++it)}
+\DoxyCodeLine{00139     m\_depList-\/>addItem(\textcolor{keyword}{new} \mbox{\hyperlink{class_t_text_list_item}{TTextListItem}}((*it).first, (*it).second));}
+\DoxyCodeLine{00140   m\_tasks = tasks;}
+\DoxyCodeLine{00141   invalidate();}
+\DoxyCodeLine{00142 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tfarmclient/dependedlist.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzfarm/tfarmclient/dependedlist.\+cpp\end{DoxyCompactItemize}

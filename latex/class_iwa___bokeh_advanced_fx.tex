@@ -1,0 +1,425 @@
+\hypertarget{class_iwa___bokeh_advanced_fx}{}\doxysection{Iwa\+\_\+\+Bokeh\+Advanced\+Fx Class Reference}
+\label{class_iwa___bokeh_advanced_fx}\index{Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}}
+Inheritance diagram for Iwa\+\_\+\+Bokeh\+Advanced\+Fx\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{class_iwa___bokeh_advanced_fx}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_iwa___bokeh_advanced_fx_1_1_l_a_y_e_r_p_a_r_a_m}{LAYERPARAM}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_iwa___bokeh_advanced_fx_a956ae1032a5591c3123dd2fe3c85f1fb}{do\+Compute}} (\mbox{\hyperlink{class_t_tile}{TTile}} \&tile, double frame, const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&settings) override
+\item 
+int \mbox{\hyperlink{class_iwa___bokeh_advanced_fx_a2188a50e1431929e902c50cd175652e2}{dynamic\+Port\+Groups\+Count}} () const override
+\item 
+const \mbox{\hyperlink{class_t_fx_port_dynamic_group}{TFx\+Port\+DG}} $\ast$ \mbox{\hyperlink{class_iwa___bokeh_advanced_fx_af097965870a223231683e117c32c6a67}{dynamic\+Port\+Group}} (int g) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QList$<$ int $>$ \mbox{\hyperlink{class_iwa___bokeh_advanced_fx_ae8a2cbe6121e024fd8c58d42f8fe9bfd}{get\+Sorted\+Source\+Indices}} (double frame)
+\item 
+QMap$<$ int, double $>$ \mbox{\hyperlink{class_iwa___bokeh_advanced_fx_a0f8e1d04c49c43a9c8aa359b4fe61f4a}{get\+Iris\+Sizes}} (const double frame, const QList$<$ int $>$ source\+Indices, const double bokeh\+Pixel\+Amount, double \&max\+Iris\+Size)
+\item 
+bool \mbox{\hyperlink{class_iwa___bokeh_advanced_fx_a6341aa17976184b2341c934d61642c94}{port\+Is\+Used}} (int port\+Index)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_fx_port_dynamic_group}{TFx\+Port\+DG}} \mbox{\hyperlink{class_iwa___bokeh_advanced_fx_a122075174fd4fdc203853250b4cb051b}{m\+\_\+control}}
+\item 
+TBool\+ParamP \mbox{\hyperlink{class_iwa___bokeh_advanced_fx_a1fe3a9c305a8ac2c95d101441a19e83c}{m\+\_\+hardness\+Per\+Source}}
+\item 
+std\+::array$<$ \mbox{\hyperlink{struct_iwa___bokeh_advanced_fx_1_1_l_a_y_e_r_p_a_r_a_m}{LAYERPARAM}}, LAYER\+\_\+\+NUM $>$ \mbox{\hyperlink{class_iwa___bokeh_advanced_fx_a6119f18d5586fc57c9d8e0fc8ab7286e}{m\+\_\+layer\+Params}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_iwa___bokeh_advanced_fx_a199ca1c405d4b26f9a49b886b29352c7}\label{class_iwa___bokeh_advanced_fx_a199ca1c405d4b26f9a49b886b29352c7}} 
+\index{Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}!Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}}
+\index{Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}!Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}}
+\doxysubsubsection{\texorpdfstring{Iwa\_BokehAdvancedFx()}{Iwa\_BokehAdvancedFx()}}
+{\footnotesize\ttfamily Iwa\+\_\+\+Bokeh\+Advanced\+Fx\+::\+Iwa\+\_\+\+Bokeh\+Advanced\+Fx (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00132     : m\_hardnessPerSource(\textcolor{keyword}{false}), m\_control(\textcolor{stringliteral}{"{}Depth"{}}) \{}
+\DoxyCodeLine{00133   \textcolor{comment}{// Bind common parameters}}
+\DoxyCodeLine{00134   bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}on\_focus\_distance"{}}, m\_onFocusDistance, \textcolor{keyword}{false});}
+\DoxyCodeLine{00135   bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}bokeh\_amount"{}}, m\_bokehAmount, \textcolor{keyword}{false});}
+\DoxyCodeLine{00136   bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}masterHardness"{}}, m\_hardness, \textcolor{keyword}{false});}
+\DoxyCodeLine{00137   bindParam(\textcolor{keyword}{this}, \textcolor{stringliteral}{"{}hardnessPerSource"{}}, m\_hardnessPerSource, \textcolor{keyword}{false});}
+\DoxyCodeLine{00138 }
+\DoxyCodeLine{00139   \textcolor{comment}{// Bind layer parameters}}
+\DoxyCodeLine{00140   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} layer = 0; layer < LAYER\_NUM; layer++) \{}
+\DoxyCodeLine{00141     m\_layerParams[layer].m\_distance        = TDoubleParamP(0.5);}
+\DoxyCodeLine{00142     m\_layerParams[layer].m\_bokehAdjustment = TDoubleParamP(1);}
+\DoxyCodeLine{00143 }
+\DoxyCodeLine{00144     m\_layerParams[layer].m\_hardness   = TDoubleParamP(0.3);}
+\DoxyCodeLine{00145     m\_layerParams[layer].m\_depth\_ref  = TIntParamP(0);}
+\DoxyCodeLine{00146     m\_layerParams[layer].m\_depthRange = TDoubleParamP(1.0);}
+\DoxyCodeLine{00147 }
+\DoxyCodeLine{00148     std::string str = QString(\textcolor{stringliteral}{"{}Source\%1"{}}).arg(layer + 1).toStdString();}
+\DoxyCodeLine{00149     \mbox{\hyperlink{class_t_fx_af0ccf8d65934ed9f7a62d3b45ee5f2b6}{addInputPort}}(str, m\_layerParams[layer].m\_source);}
+\DoxyCodeLine{00150     bindParam(\textcolor{keyword}{this}, QString(\textcolor{stringliteral}{"{}distance\%1"{}}).arg(layer + 1).toStdString(),}
+\DoxyCodeLine{00151               m\_layerParams[layer].m\_distance);}
+\DoxyCodeLine{00152     bindParam(\textcolor{keyword}{this}, QString(\textcolor{stringliteral}{"{}bokeh\_adjustment\%1"{}}).arg(layer + 1).toStdString(),}
+\DoxyCodeLine{00153               m\_layerParams[layer].m\_bokehAdjustment);}
+\DoxyCodeLine{00154 }
+\DoxyCodeLine{00155     bindParam(\textcolor{keyword}{this}, QString(\textcolor{stringliteral}{"{}hardness\%1"{}}).arg(layer + 1).toStdString(),}
+\DoxyCodeLine{00156               m\_layerParams[layer].m\_hardness);}
+\DoxyCodeLine{00157     bindParam(\textcolor{keyword}{this}, QString(\textcolor{stringliteral}{"{}depth\_ref\%1"{}}).arg(layer + 1).toStdString(),}
+\DoxyCodeLine{00158               m\_layerParams[layer].m\_depth\_ref);}
+\DoxyCodeLine{00159     bindParam(\textcolor{keyword}{this}, QString(\textcolor{stringliteral}{"{}depthRange\%1"{}}).arg(layer + 1).toStdString(),}
+\DoxyCodeLine{00160               m\_layerParams[layer].m\_depthRange);}
+\DoxyCodeLine{00161 }
+\DoxyCodeLine{00162     m\_layerParams[layer].m\_distance-\/>setValueRange(0.0, 1.0);}
+\DoxyCodeLine{00163     m\_layerParams[layer].m\_bokehAdjustment-\/>setValueRange(0.0, 2.0);}
+\DoxyCodeLine{00164 }
+\DoxyCodeLine{00165     m\_layerParams[layer].m\_hardness-\/>setValueRange(0.05, 3.0);}
+\DoxyCodeLine{00166     m\_layerParams[layer].m\_depthRange-\/>setValueRange(0.0, 1.0);}
+\DoxyCodeLine{00167   \}}
+\DoxyCodeLine{00168 }
+\DoxyCodeLine{00169   \mbox{\hyperlink{class_t_fx_af0ccf8d65934ed9f7a62d3b45ee5f2b6}{addInputPort}}(\textcolor{stringliteral}{"{}Depth1"{}}, \textcolor{keyword}{new} \mbox{\hyperlink{class_t_raster_fx_port}{TRasterFxPort}}, 0);}
+\DoxyCodeLine{00170 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_iwa___bokeh_advanced_fx_a956ae1032a5591c3123dd2fe3c85f1fb}\label{class_iwa___bokeh_advanced_fx_a956ae1032a5591c3123dd2fe3c85f1fb}} 
+\index{Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}!doCompute@{doCompute}}
+\index{doCompute@{doCompute}!Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}}
+\doxysubsubsection{\texorpdfstring{doCompute()}{doCompute()}}
+{\footnotesize\ttfamily void Iwa\+\_\+\+Bokeh\+Advanced\+Fx\+::do\+Compute (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_t_tile}{TTile}} \&}]{tile,  }\item[{double}]{frame,  }\item[{const \mbox{\hyperlink{class_t_render_settings}{TRender\+Settings}} \&}]{settings }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_iwa___bokeh_common_fx}{Iwa\+\_\+\+Bokeh\+Common\+Fx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00174                                                                      \{}
+\DoxyCodeLine{00175   \textcolor{comment}{// If the iris is not connected, then do nothing}}
+\DoxyCodeLine{00176   \textcolor{keywordflow}{if} (!m\_iris.isConnected()) \{}
+\DoxyCodeLine{00177     tile.getRaster()-\/>clear();}
+\DoxyCodeLine{00178     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00179   \}}
+\DoxyCodeLine{00180   \textcolor{comment}{// If none of the source ports is connected, then do nothing}}
+\DoxyCodeLine{00181   \textcolor{keywordtype}{bool} sourceIsConnected = \textcolor{keyword}{false};}
+\DoxyCodeLine{00182   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < LAYER\_NUM; i++) \{}
+\DoxyCodeLine{00183     \textcolor{keywordflow}{if} (m\_layerParams[i].m\_source.isConnected()) \{}
+\DoxyCodeLine{00184       sourceIsConnected = \textcolor{keyword}{true};}
+\DoxyCodeLine{00185       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00186     \}}
+\DoxyCodeLine{00187   \}}
+\DoxyCodeLine{00188   \textcolor{keywordflow}{if} (!sourceIsConnected) \{}
+\DoxyCodeLine{00189     tile.getRaster()-\/>clear();}
+\DoxyCodeLine{00190     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00191   \}}
+\DoxyCodeLine{00192 }
+\DoxyCodeLine{00193   \textcolor{comment}{// Sort source layers by distance}}
+\DoxyCodeLine{00194   QList<int> sourceIndices = getSortedSourceIndices(frame);}
+\DoxyCodeLine{00195 }
+\DoxyCodeLine{00196   \textcolor{comment}{// Get the pixel size of bokehAmount ( referenced ino\_blur.cpp )}}
+\DoxyCodeLine{00197   \textcolor{keywordtype}{double} bokehPixelAmount = BokehUtils::getBokehPixelAmount(}
+\DoxyCodeLine{00198       m\_bokehAmount-\/>getValue(frame), settings.\mbox{\hyperlink{class_t_render_settings_a1250181bf3fe8e05db005d5faa76b3ea}{m\_affine}});}
+\DoxyCodeLine{00199 }
+\DoxyCodeLine{00200   \textcolor{comment}{// Compute the bokeh size for each layer. The source tile will be enlarged by}}
+\DoxyCodeLine{00201   \textcolor{comment}{// the largest size of them.}}
+\DoxyCodeLine{00202   \textcolor{keywordtype}{double} maxIrisSize;}
+\DoxyCodeLine{00203   QMap<int, double> irisSizes =}
+\DoxyCodeLine{00204       getIrisSizes(frame, sourceIndices, bokehPixelAmount, maxIrisSize);}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206   \textcolor{keywordtype}{int} margin = (int)std::ceil(maxIrisSize * 0.5);}
+\DoxyCodeLine{00207 }
+\DoxyCodeLine{00208   \mbox{\hyperlink{class_t_rect_t}{TRectD}} \_rectOut(tile.m\_pos, \mbox{\hyperlink{class_t_dimension_t}{TDimensionD}}(tile.getRaster()-\/>getLx(),}
+\DoxyCodeLine{00209                                           tile.getRaster()-\/>getLy()));}
+\DoxyCodeLine{00210   \_rectOut = \_rectOut.enlarge(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(margin));}
+\DoxyCodeLine{00211 }
+\DoxyCodeLine{00212   \mbox{\hyperlink{class_t_dimension_t}{TDimensionI}} dimOut(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(\_rectOut.getLx() + 0.5),}
+\DoxyCodeLine{00213                      \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(\_rectOut.getLy() + 0.5));}
+\DoxyCodeLine{00214 }
+\DoxyCodeLine{00215   \textcolor{comment}{// Enlarge the size to the "{}fast size"{} for kissfft which has no factors other}}
+\DoxyCodeLine{00216   \textcolor{comment}{// than 2,3, or 5.}}
+\DoxyCodeLine{00217   \textcolor{keywordflow}{if} (dimOut.lx < 10000 \&\& dimOut.ly < 10000) \{}
+\DoxyCodeLine{00218     \textcolor{keywordtype}{int} new\_x = kiss\_fft\_next\_fast\_size(dimOut.lx);}
+\DoxyCodeLine{00219     \textcolor{keywordtype}{int} new\_y = kiss\_fft\_next\_fast\_size(dimOut.ly);}
+\DoxyCodeLine{00220     \textcolor{comment}{// margin should be integer}}
+\DoxyCodeLine{00221     \textcolor{keywordflow}{while} ((new\_x -\/ dimOut.lx) \% 2 != 0)}
+\DoxyCodeLine{00222       new\_x = kiss\_fft\_next\_fast\_size(new\_x + 1);}
+\DoxyCodeLine{00223     \textcolor{keywordflow}{while} ((new\_y -\/ dimOut.ly) \% 2 != 0)}
+\DoxyCodeLine{00224       new\_y = kiss\_fft\_next\_fast\_size(new\_y + 1);}
+\DoxyCodeLine{00225 }
+\DoxyCodeLine{00226     \_rectOut = \_rectOut.enlarge(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(new\_x -\/ dimOut.lx) / 2.0,}
+\DoxyCodeLine{00227                                 \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(new\_y -\/ dimOut.ly) / 2.0);}
+\DoxyCodeLine{00228 }
+\DoxyCodeLine{00229     dimOut.lx = new\_x;}
+\DoxyCodeLine{00230     dimOut.ly = new\_y;}
+\DoxyCodeLine{00231   \}}
+\DoxyCodeLine{00232 }
+\DoxyCodeLine{00233   \textcolor{comment}{// compute the input tiles}}
+\DoxyCodeLine{00234   QMap<int, TTile*> sourceTiles;}
+\DoxyCodeLine{00235   \mbox{\hyperlink{class_t_render_settings}{TRenderSettings}} infoOnInput(settings);}
+\DoxyCodeLine{00236   infoOnInput.m\_bpp = 64;}
+\DoxyCodeLine{00237   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} index : sourceIndices) \{}
+\DoxyCodeLine{00238     \mbox{\hyperlink{class_t_tile}{TTile}}* layerTile = \textcolor{keyword}{new} \mbox{\hyperlink{class_t_tile}{TTile}}();}
+\DoxyCodeLine{00239     m\_layerParams[index].m\_source-\/>allocateAndCompute(}
+\DoxyCodeLine{00240         *layerTile, \_rectOut.getP00(), dimOut, 0, frame, infoOnInput);}
+\DoxyCodeLine{00241     sourceTiles[index] = layerTile;}
+\DoxyCodeLine{00242   \}}
+\DoxyCodeLine{00243 }
+\DoxyCodeLine{00244   \textcolor{comment}{// obtain pixel size of original iris image}}
+\DoxyCodeLine{00245   \mbox{\hyperlink{class_t_rect_t}{TRectD}} irisBBox;}
+\DoxyCodeLine{00246   m\_iris-\/>getBBox(frame, irisBBox, settings);}
+\DoxyCodeLine{00247   \textcolor{comment}{// compute the iris tile}}
+\DoxyCodeLine{00248   \mbox{\hyperlink{class_t_tile}{TTile}} irisTile;}
+\DoxyCodeLine{00249   m\_iris-\/>allocateAndCompute(}
+\DoxyCodeLine{00250       irisTile, irisBBox.getP00(),}
+\DoxyCodeLine{00251       \mbox{\hyperlink{class_t_dimension_t}{TDimension}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(irisBBox.getLx() + 0.5),}
+\DoxyCodeLine{00252                  \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(irisBBox.getLy() + 0.5)),}
+\DoxyCodeLine{00253       tile.getRaster(), frame, settings);}
+\DoxyCodeLine{00254 }
+\DoxyCodeLine{00255   \textcolor{comment}{// compute the reference image}}
+\DoxyCodeLine{00256   std::vector<TRasterGR8P> ctrl\_rasters;  \textcolor{comment}{// to be stored in uchar}}
+\DoxyCodeLine{00257   QMap<int, unsigned char*>}
+\DoxyCodeLine{00258       ctrls;  \textcolor{comment}{// container of [port number, reference image buffer in uchar]}}
+\DoxyCodeLine{00259   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < getInputPortCount(); ++i) \{}
+\DoxyCodeLine{00260     QString portName = QString::fromStdString(getInputPortName(i));}
+\DoxyCodeLine{00261     \textcolor{keywordflow}{if} (portName.startsWith(\textcolor{stringliteral}{"{}Depth"{}}) \&\& getInputPort(i)-\/>isConnected()) \{}
+\DoxyCodeLine{00262       \textcolor{keywordtype}{int} portIndex = portName.remove(0, 5).toInt();}
+\DoxyCodeLine{00263       \textcolor{keywordflow}{if} (portIsUsed(portIndex)) \{}
+\DoxyCodeLine{00264         \mbox{\hyperlink{class_t_tile}{TTile}} tmpTile;}
+\DoxyCodeLine{00265         \mbox{\hyperlink{class_t_raster_fx_port}{TRasterFxPort}}* tmpCtrl = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_t_raster_fx_port}{TRasterFxPort}}*\textcolor{keyword}{>}(getInputPort(i));}
+\DoxyCodeLine{00266         (*tmpCtrl)-\/>allocateAndCompute(tmpTile, \_rectOut.getP00(), dimOut,}
+\DoxyCodeLine{00267                                        tile.getRaster(), frame, settings);}
+\DoxyCodeLine{00268         \mbox{\hyperlink{class_t_raster_p_t}{TRasterGR8P}} ctrlRas(dimOut.lx, dimOut.ly);}
+\DoxyCodeLine{00269         ctrlRas-\/>lock();}
+\DoxyCodeLine{00270         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}* ctrl\_mem = (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}*)ctrlRas-\/>getRawData();}
+\DoxyCodeLine{00271         \mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}} ras32        = (\mbox{\hyperlink{class_t_raster_p_t}{TRaster32P}})tmpTile.getRaster();}
+\DoxyCodeLine{00272         \mbox{\hyperlink{class_t_raster_p_t}{TRaster64P}} ras64        = (\mbox{\hyperlink{class_t_raster_p_t}{TRaster64P}})tmpTile.getRaster();}
+\DoxyCodeLine{00273         lock.lockForRead();}
+\DoxyCodeLine{00274         \textcolor{keywordflow}{if} (ras32)}
+\DoxyCodeLine{00275           BokehUtils::setDepthRaster<TRaster32P, TPixel32>(ras32, ctrl\_mem,}
+\DoxyCodeLine{00276                                                            dimOut);}
+\DoxyCodeLine{00277         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ras64)}
+\DoxyCodeLine{00278           BokehUtils::setDepthRaster<TRaster64P, TPixel64>(ras64, ctrl\_mem,}
+\DoxyCodeLine{00279                                                            dimOut);}
+\DoxyCodeLine{00280         lock.unlock();}
+\DoxyCodeLine{00281         ctrl\_rasters.push\_back(ctrlRas);}
+\DoxyCodeLine{00282         ctrls[portIndex] = ctrl\_mem;}
+\DoxyCodeLine{00283       \}}
+\DoxyCodeLine{00284     \}}
+\DoxyCodeLine{00285   \}}
+\DoxyCodeLine{00286 }
+\DoxyCodeLine{00287   \textcolor{keywordtype}{double} masterHardness = m\_hardness-\/>getValue(frame);}
+\DoxyCodeLine{00288 }
+\DoxyCodeLine{00289   QList<LayerValue> layerValues;}
+\DoxyCodeLine{00290   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} index : sourceIndices) \{}
+\DoxyCodeLine{00291     LayerValue layerValue;}
+\DoxyCodeLine{00292     layerValue.sourceTile = sourceTiles[index];}
+\DoxyCodeLine{00293     layerValue.premultiply =}
+\DoxyCodeLine{00294         \textcolor{keyword}{false};  \textcolor{comment}{// assuming input images are always premultiplied}}
+\DoxyCodeLine{00295     layerValue.layerHardness =}
+\DoxyCodeLine{00296         (m\_hardnessPerSource-\/>getValue())}
+\DoxyCodeLine{00297             ? m\_layerParams[index].m\_hardness-\/>getValue(frame)}
+\DoxyCodeLine{00298             : masterHardness;}
+\DoxyCodeLine{00299     layerValue.depth\_ref = m\_layerParams[index].m\_depth\_ref-\/>getValue();}
+\DoxyCodeLine{00300     layerValue.irisSize  = irisSizes.value(index);}
+\DoxyCodeLine{00301     layerValue.distance  = m\_layerParams[index].m\_distance-\/>getValue(frame);}
+\DoxyCodeLine{00302     layerValue.bokehAdjustment =}
+\DoxyCodeLine{00303         m\_layerParams[index].m\_bokehAdjustment-\/>getValue(frame);}
+\DoxyCodeLine{00304     layerValue.depthRange = m\_layerParams[index].m\_depthRange-\/>getValue(frame);}
+\DoxyCodeLine{00305     layerValue.distancePrecision = 10;}
+\DoxyCodeLine{00306     layerValue.fillGap           = \textcolor{keyword}{true};}
+\DoxyCodeLine{00307     layerValue.doMedian          = \textcolor{keyword}{false};}
+\DoxyCodeLine{00308 }
+\DoxyCodeLine{00309     layerValues.append(layerValue);}
+\DoxyCodeLine{00310   \}}
+\DoxyCodeLine{00311 }
+\DoxyCodeLine{00312   Iwa\_BokehCommonFx::doFx(tile, frame, settings, bokehPixelAmount, margin,}
+\DoxyCodeLine{00313                           dimOut, irisBBox, irisTile, layerValues, ctrls);}
+\DoxyCodeLine{00314 }
+\DoxyCodeLine{00315   \textcolor{comment}{// release control image buffers}}
+\DoxyCodeLine{00316   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} r = 0; r < ctrl\_rasters.size(); r++) ctrl\_rasters[r]-\/>unlock();}
+\DoxyCodeLine{00317 }
+\DoxyCodeLine{00318   qDeleteAll(sourceTiles);}
+\DoxyCodeLine{00319 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_iwa___bokeh_advanced_fx_af097965870a223231683e117c32c6a67}\label{class_iwa___bokeh_advanced_fx_af097965870a223231683e117c32c6a67}} 
+\index{Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}!dynamicPortGroup@{dynamicPortGroup}}
+\index{dynamicPortGroup@{dynamicPortGroup}!Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}}
+\doxysubsubsection{\texorpdfstring{dynamicPortGroup()}{dynamicPortGroup()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{class_t_fx_port_dynamic_group}{TFx\+Port\+DG}} $\ast$ Iwa\+\_\+\+Bokeh\+Advanced\+Fx\+::dynamic\+Port\+Group (\begin{DoxyParamCaption}\item[{int}]{g }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_fx}{TFx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00065                                                           \{}
+\DoxyCodeLine{00066     \textcolor{keywordflow}{return} (g == 0) ? \&m\_control : 0;}
+\DoxyCodeLine{00067   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_iwa___bokeh_advanced_fx_a2188a50e1431929e902c50cd175652e2}\label{class_iwa___bokeh_advanced_fx_a2188a50e1431929e902c50cd175652e2}} 
+\index{Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}!dynamicPortGroupsCount@{dynamicPortGroupsCount}}
+\index{dynamicPortGroupsCount@{dynamicPortGroupsCount}!Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}}
+\doxysubsubsection{\texorpdfstring{dynamicPortGroupsCount()}{dynamicPortGroupsCount()}}
+{\footnotesize\ttfamily int Iwa\+\_\+\+Bokeh\+Advanced\+Fx\+::dynamic\+Port\+Groups\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_t_fx}{TFx}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00064 \{ \textcolor{keywordflow}{return} 1; \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_iwa___bokeh_advanced_fx_a0f8e1d04c49c43a9c8aa359b4fe61f4a}\label{class_iwa___bokeh_advanced_fx_a0f8e1d04c49c43a9c8aa359b4fe61f4a}} 
+\index{Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}!getIrisSizes@{getIrisSizes}}
+\index{getIrisSizes@{getIrisSizes}!Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}}
+\doxysubsubsection{\texorpdfstring{getIrisSizes()}{getIrisSizes()}}
+{\footnotesize\ttfamily QMap$<$ int, double $>$ Iwa\+\_\+\+Bokeh\+Advanced\+Fx\+::get\+Iris\+Sizes (\begin{DoxyParamCaption}\item[{const double}]{frame,  }\item[{const QList$<$ int $>$}]{source\+Indices,  }\item[{const double}]{bokeh\+Pixel\+Amount,  }\item[{double \&}]{max\+Iris\+Size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00071                                                         \{}
+\DoxyCodeLine{00072   \textcolor{comment}{// create a list of available reference image ports}}
+\DoxyCodeLine{00073   QList<int> availableCtrPorts;}
+\DoxyCodeLine{00074   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < getInputPortCount(); ++i) \{}
+\DoxyCodeLine{00075     QString portName = QString::fromStdString(getInputPortName(i));}
+\DoxyCodeLine{00076     \textcolor{keywordflow}{if} (portName.startsWith(\textcolor{stringliteral}{"{}Depth"{}}) \&\& getInputPort(i)-\/>isConnected())}
+\DoxyCodeLine{00077       availableCtrPorts.push\_back(portName.remove(0, 5).toInt());}
+\DoxyCodeLine{00078   \}}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080   \textcolor{keywordtype}{double} focus = m\_onFocusDistance-\/>getValue(frame);}
+\DoxyCodeLine{00081   \textcolor{keywordtype}{double} max   = 0.0;}
+\DoxyCodeLine{00082   QMap<int, double> irisSizes;}
+\DoxyCodeLine{00083   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} s = 0; s < sourceIndices.size(); s++) \{}
+\DoxyCodeLine{00084     \textcolor{keywordtype}{int} index = sourceIndices.at(s);}
+\DoxyCodeLine{00085 }
+\DoxyCodeLine{00086     \textcolor{keywordtype}{double} layer  = m\_layerParams[index].m\_distance-\/>getValue(frame);}
+\DoxyCodeLine{00087     \textcolor{keywordtype}{double} adjust = m\_layerParams[index].m\_bokehAdjustment-\/>getValue(frame);}
+\DoxyCodeLine{00088 }
+\DoxyCodeLine{00089     \textcolor{keywordtype}{double} irisSize;}
+\DoxyCodeLine{00090     \textcolor{comment}{// In case there is no available reference image}}
+\DoxyCodeLine{00091     \textcolor{keywordflow}{if} (m\_layerParams[index].m\_depth\_ref-\/>getValue() == 0 ||}
+\DoxyCodeLine{00092         !availableCtrPorts.contains(}
+\DoxyCodeLine{00093             m\_layerParams[index].m\_depth\_ref-\/>getValue())) \{}
+\DoxyCodeLine{00094       irisSize = (focus -\/ layer) * bokehPixelAmount * adjust;}
+\DoxyCodeLine{00095     \}}
+\DoxyCodeLine{00096     \textcolor{comment}{// in case using the reference image}}
+\DoxyCodeLine{00097     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00098       \textcolor{keywordtype}{double} refRangeHalf =}
+\DoxyCodeLine{00099           m\_layerParams[index].m\_depthRange-\/>getValue(frame) * 0.5;}
+\DoxyCodeLine{00100       \textcolor{keywordtype}{double} nearToFocus = focus -\/ layer + refRangeHalf;}
+\DoxyCodeLine{00101       \textcolor{keywordtype}{double} farToFocus  = focus -\/ layer -\/ refRangeHalf;}
+\DoxyCodeLine{00102       \textcolor{comment}{// take further point from the focus distance}}
+\DoxyCodeLine{00103       \textcolor{keywordflow}{if} (std::abs(nearToFocus) > std::abs(farToFocus))}
+\DoxyCodeLine{00104         irisSize = nearToFocus * bokehPixelAmount * adjust;}
+\DoxyCodeLine{00105       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00106         irisSize = farToFocus * bokehPixelAmount * adjust;}
+\DoxyCodeLine{00107     \}}
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00109     irisSizes[index] = irisSize;}
+\DoxyCodeLine{00110 }
+\DoxyCodeLine{00111     \textcolor{comment}{// update the maximum}}
+\DoxyCodeLine{00112     \textcolor{keywordflow}{if} (max < std::abs(irisSize)) max = std::abs(irisSize);}
+\DoxyCodeLine{00113   \}}
+\DoxyCodeLine{00114   maxIrisSize = max;}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116   \textcolor{keywordflow}{return} irisSizes;}
+\DoxyCodeLine{00117 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_iwa___bokeh_advanced_fx_ae8a2cbe6121e024fd8c58d42f8fe9bfd}\label{class_iwa___bokeh_advanced_fx_ae8a2cbe6121e024fd8c58d42f8fe9bfd}} 
+\index{Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}!getSortedSourceIndices@{getSortedSourceIndices}}
+\index{getSortedSourceIndices@{getSortedSourceIndices}!Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}}
+\doxysubsubsection{\texorpdfstring{getSortedSourceIndices()}{getSortedSourceIndices()}}
+{\footnotesize\ttfamily QList$<$ int $>$ Iwa\+\_\+\+Bokeh\+Advanced\+Fx\+::get\+Sorted\+Source\+Indices (\begin{DoxyParamCaption}\item[{double}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00043                                                                    \{}
+\DoxyCodeLine{00044   QList<QPair<int, double>> usedSourceList;}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046   \textcolor{comment}{// gather connected sources}}
+\DoxyCodeLine{00047   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < LAYER\_NUM; i++) \{}
+\DoxyCodeLine{00048     \textcolor{keywordflow}{if} (m\_layerParams[i].m\_source.isConnected())}
+\DoxyCodeLine{00049       usedSourceList.push\_back(}
+\DoxyCodeLine{00050           QPair<int, double>(i, m\_layerParams[i].m\_distance-\/>getValue(frame)));}
+\DoxyCodeLine{00051   \}}
+\DoxyCodeLine{00052 }
+\DoxyCodeLine{00053   \textcolor{keywordflow}{if} (usedSourceList.empty()) \textcolor{keywordflow}{return} QList<int>();}
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055   \textcolor{comment}{// sort by distance}}
+\DoxyCodeLine{00056   std::sort(usedSourceList.begin(), usedSourceList.end(), isFurtherLayer);}
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00058   QList<int> indicesList;}
+\DoxyCodeLine{00059   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < usedSourceList.size(); i++) \{}
+\DoxyCodeLine{00060     indicesList.push\_back(usedSourceList.at(i).first);}
+\DoxyCodeLine{00061   \}}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063   \textcolor{keywordflow}{return} indicesList;}
+\DoxyCodeLine{00064 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_iwa___bokeh_advanced_fx_a6341aa17976184b2341c934d61642c94}\label{class_iwa___bokeh_advanced_fx_a6341aa17976184b2341c934d61642c94}} 
+\index{Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}!portIsUsed@{portIsUsed}}
+\index{portIsUsed@{portIsUsed}!Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}}
+\doxysubsubsection{\texorpdfstring{portIsUsed()}{portIsUsed()}}
+{\footnotesize\ttfamily bool Iwa\+\_\+\+Bokeh\+Advanced\+Fx\+::port\+Is\+Used (\begin{DoxyParamCaption}\item[{int}]{port\+Index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00121                                                   \{}
+\DoxyCodeLine{00122   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} layer = 0; layer < LAYER\_NUM; layer++) \{}
+\DoxyCodeLine{00123     \textcolor{keywordflow}{if} (m\_layerParams[layer].m\_source.isConnected() \&\&}
+\DoxyCodeLine{00124         m\_layerParams[layer].m\_depth\_ref-\/>getValue() == portIndex)}
+\DoxyCodeLine{00125       \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00126   \}}
+\DoxyCodeLine{00127   \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00128 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_iwa___bokeh_advanced_fx_a122075174fd4fdc203853250b4cb051b}\label{class_iwa___bokeh_advanced_fx_a122075174fd4fdc203853250b4cb051b}} 
+\index{Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}!m\_control@{m\_control}}
+\index{m\_control@{m\_control}!Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}}
+\doxysubsubsection{\texorpdfstring{m\_control}{m\_control}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_t_fx_port_dynamic_group}{TFx\+Port\+DG}} Iwa\+\_\+\+Bokeh\+Advanced\+Fx\+::m\+\_\+control\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_iwa___bokeh_advanced_fx_a1fe3a9c305a8ac2c95d101441a19e83c}\label{class_iwa___bokeh_advanced_fx_a1fe3a9c305a8ac2c95d101441a19e83c}} 
+\index{Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}!m\_hardnessPerSource@{m\_hardnessPerSource}}
+\index{m\_hardnessPerSource@{m\_hardnessPerSource}!Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}}
+\doxysubsubsection{\texorpdfstring{m\_hardnessPerSource}{m\_hardnessPerSource}}
+{\footnotesize\ttfamily TBool\+ParamP Iwa\+\_\+\+Bokeh\+Advanced\+Fx\+::m\+\_\+hardness\+Per\+Source\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_iwa___bokeh_advanced_fx_a6119f18d5586fc57c9d8e0fc8ab7286e}\label{class_iwa___bokeh_advanced_fx_a6119f18d5586fc57c9d8e0fc8ab7286e}} 
+\index{Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}!m\_layerParams@{m\_layerParams}}
+\index{m\_layerParams@{m\_layerParams}!Iwa\_BokehAdvancedFx@{Iwa\_BokehAdvancedFx}}
+\doxysubsubsection{\texorpdfstring{m\_layerParams}{m\_layerParams}}
+{\footnotesize\ttfamily std\+::array$<$\mbox{\hyperlink{struct_iwa___bokeh_advanced_fx_1_1_l_a_y_e_r_p_a_r_a_m}{LAYERPARAM}}, LAYER\+\_\+\+NUM$>$ Iwa\+\_\+\+Bokeh\+Advanced\+Fx\+::m\+\_\+layer\+Params\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/stdfx/iwa\+\_\+bokeh\+\_\+advancedfx.\+h\item 
+E\+:/opentoonz/toonz/sources/stdfx/iwa\+\_\+bokeh\+\_\+advancedfx.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,401 @@
+\hypertarget{class_insert_fx_popup}{}\doxysection{Insert\+Fx\+Popup Class Reference}
+\label{class_insert_fx_popup}\index{InsertFxPopup@{InsertFxPopup}}
+
+
+The \mbox{\hyperlink{class_insert_fx_popup}{Insert\+Fx\+Popup}} class provides a dialog to browse fx and add it to current scene.  
+
+
+Inheritance diagram for Insert\+Fx\+Popup\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_insert_fx_popup}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_insert_fx_popup_a9f2aa6ecda5ef79e510a571822f931ae}{on\+Item\+Double\+Clicked}} (QTree\+Widget\+Item $\ast$w, int c)
+\item 
+void \mbox{\hyperlink{class_insert_fx_popup_a1b6270f857cc12c1d5519b85764b8685}{on\+Insert}} ()
+\item 
+void \mbox{\hyperlink{class_insert_fx_popup_a6423c0b4847c5682a20a33e68c85b5b4}{on\+Replace}} ()
+\item 
+void \mbox{\hyperlink{class_insert_fx_popup_a3817d6528a6300134906bbee102dac04}{on\+Add}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_insert_fx_popup_aafd7e5417f25e1a6d7664cd645edafb9}{update\+Presets}} ()
+\item 
+void \mbox{\hyperlink{class_insert_fx_popup_a0662480a976bc01e0c8344a2aa63a3e0}{remove\+Preset}} ()
+\item 
+void \mbox{\hyperlink{class_insert_fx_popup_ad21d508da04557eee2afce8ff7004a8a}{on\+Search\+Text\+Changed}} (const QString \&text)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_insert_fx_popup_a304044cce5e4544d8baf0a0e33d20e86}{show\+Event}} (QShow\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_insert_fx_popup_adb90391c12bf8431182801ceddfd6aa0}{hide\+Event}} (QHide\+Event $\ast$) override
+\item 
+void \mbox{\hyperlink{class_insert_fx_popup_aea1a2568d1d9ddd01a2dc25bffb81b29}{context\+Menu\+Event}} (QContext\+Menu\+Event $\ast$) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_insert_fx_popup}{Insert\+Fx\+Popup}} class provides a dialog to browse fx and add it to current scene. 
+
+Inherits {\bfseries{Dialog}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_insert_fx_popup_af4ae8bdd9c6233ff7bc4c72ca900d6e7}\label{class_insert_fx_popup_af4ae8bdd9c6233ff7bc4c72ca900d6e7}} 
+\index{InsertFxPopup@{InsertFxPopup}!InsertFxPopup@{InsertFxPopup}}
+\index{InsertFxPopup@{InsertFxPopup}!InsertFxPopup@{InsertFxPopup}}
+\doxysubsubsection{\texorpdfstring{InsertFxPopup()}{InsertFxPopup()}}
+{\footnotesize\ttfamily Insert\+Fx\+Popup\+::\+Insert\+Fx\+Popup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00212     : \mbox{\hyperlink{class_d_v_gui_1_1_dialog}{Dialog}}(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false}, \textcolor{stringliteral}{"{}InsertFx"{}})}
+\DoxyCodeLine{00213     , m\_folderIcon(QIcon())}
+\DoxyCodeLine{00214     , m\_presetIcon(QIcon())}
+\DoxyCodeLine{00215     , m\_fxIcon(QIcon()) \{}
+\DoxyCodeLine{00216   setWindowTitle(tr(\textcolor{stringliteral}{"{}FX Browser"{}}));}
+\DoxyCodeLine{00217 }
+\DoxyCodeLine{00218   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00219 }
+\DoxyCodeLine{00220   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a7aa8ccf399f483fe1f36c30a1318987a}{setTopMargin}}(0);}
+\DoxyCodeLine{00221   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_af1334e3123db7e7c9a9b90ee7c73e226}{setTopSpacing}}(0);}
+\DoxyCodeLine{00222 }
+\DoxyCodeLine{00223   QHBoxLayout *searchLay = \textcolor{keyword}{new} QHBoxLayout();}
+\DoxyCodeLine{00224   QLineEdit *searchEdit  = \textcolor{keyword}{new} QLineEdit(\textcolor{keyword}{this});}
+\DoxyCodeLine{00225 }
+\DoxyCodeLine{00226   searchLay-\/>setMargin(0);}
+\DoxyCodeLine{00227   searchLay-\/>setSpacing(5);}
+\DoxyCodeLine{00228   searchLay-\/>addWidget(\textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Search:"{}}), \textcolor{keyword}{this}), 0);}
+\DoxyCodeLine{00229   searchLay-\/>addWidget(searchEdit);}
+\DoxyCodeLine{00230   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_adecc035c55394875b6354480911feab2}{addLayout}}(searchLay);}
+\DoxyCodeLine{00231   connect(searchEdit, SIGNAL(textChanged(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00232           SLOT(onSearchTextChanged(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00233 }
+\DoxyCodeLine{00234   m\_fxTree = \textcolor{keyword}{new} \mbox{\hyperlink{class_fx_tree}{FxTree}}();}
+\DoxyCodeLine{00235   m\_fxTree-\/>setIconSize(QSize(21, 18));}
+\DoxyCodeLine{00236   m\_fxTree-\/>setColumnCount(1);}
+\DoxyCodeLine{00237   m\_fxTree-\/>header()-\/>close();}
+\DoxyCodeLine{00238 }
+\DoxyCodeLine{00239   m\_fxTree-\/>setObjectName(\textcolor{stringliteral}{"{}FxTreeView"{}});}
+\DoxyCodeLine{00240   m\_fxTree-\/>setAlternatingRowColors(\textcolor{keyword}{true});}
+\DoxyCodeLine{00241 }
+\DoxyCodeLine{00242   m\_presetIcon = createQIcon(\textcolor{stringliteral}{"{}folder\_preset"{}}, \textcolor{keyword}{true});}
+\DoxyCodeLine{00243   m\_fxIcon     = createQIcon(\textcolor{stringliteral}{"{}fx"{}});}
+\DoxyCodeLine{00244 }
+\DoxyCodeLine{00245   QList<QTreeWidgetItem *> fxItems;}
+\DoxyCodeLine{00246 }
+\DoxyCodeLine{00247   \mbox{\hyperlink{class_t_file_path}{TFilePath}} path = \mbox{\hyperlink{class_t_file_path}{TFilePath}}(ToonzFolder::getProfileFolder() + \textcolor{stringliteral}{"{}layouts"{}} +}
+\DoxyCodeLine{00248                              \textcolor{stringliteral}{"{}fxs"{}} + \textcolor{stringliteral}{"{}fxs.lst"{}});}
+\DoxyCodeLine{00249   m\_presetFolder = \mbox{\hyperlink{class_t_file_path}{TFilePath}}(ToonzFolder::getFxPresetFolder() + \textcolor{stringliteral}{"{}presets"{}});}
+\DoxyCodeLine{00250   loadFx(path);}
+\DoxyCodeLine{00251   loadMacro();}
+\DoxyCodeLine{00252 }
+\DoxyCodeLine{00253   \textcolor{comment}{// add 'Plugins' directory}}
+\DoxyCodeLine{00254   \textcolor{keyword}{auto} plugins =}
+\DoxyCodeLine{00255       \textcolor{keyword}{new} QTreeWidgetItem((QTreeWidget *)NULL, QStringList(\textcolor{stringliteral}{"{}Plugins"{}}));}
+\DoxyCodeLine{00256   plugins-\/>setIcon(0, createQIcon(\textcolor{stringliteral}{"{}folder"{}}, \textcolor{keyword}{true}));}
+\DoxyCodeLine{00257   m\_fxTree-\/>addTopLevelItem(plugins);}
+\DoxyCodeLine{00258 }
+\DoxyCodeLine{00259   \textcolor{comment}{// create vendor / Fx}}
+\DoxyCodeLine{00260 }
+\DoxyCodeLine{00261   \textcolor{comment}{// send a special setup for the menu item}}
+\DoxyCodeLine{00262   std::map<std::string, QTreeWidgetItem *> vendors =}
+\DoxyCodeLine{00263       PluginLoader::create\_menu\_items(}
+\DoxyCodeLine{00264           [\&](QTreeWidgetItem *firstlevel\_item) \{}
+\DoxyCodeLine{00265             plugins-\/>addChild(firstlevel\_item);}
+\DoxyCodeLine{00266             firstlevel\_item-\/>setIcon(0, createQIcon(\textcolor{stringliteral}{"{}folder"{}}));}
+\DoxyCodeLine{00267           \},}
+\DoxyCodeLine{00268           [\&](QTreeWidgetItem *secondlevel\_item) \{}
+\DoxyCodeLine{00269             secondlevel\_item-\/>setIcon(0, m\_fxIcon);}
+\DoxyCodeLine{00270           \});}
+\DoxyCodeLine{00271 }
+\DoxyCodeLine{00272   m\_fxTree-\/>insertTopLevelItems(0, fxItems);}
+\DoxyCodeLine{00273   connect(m\_fxTree, SIGNAL(itemDoubleClicked(QTreeWidgetItem *, \textcolor{keywordtype}{int})),}
+\DoxyCodeLine{00274           SLOT(onItemDoubleClicked(QTreeWidgetItem *, \textcolor{keywordtype}{int})));}
+\DoxyCodeLine{00275 }
+\DoxyCodeLine{00276   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(m\_fxTree);}
+\DoxyCodeLine{00277 }
+\DoxyCodeLine{00278   QPushButton *insertBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Insert"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00279   insertBtn-\/>setFixedSize(65, 25);}
+\DoxyCodeLine{00280   insertBtn-\/>setObjectName(\textcolor{stringliteral}{"{}PushButton\_NoPadding"{}});}
+\DoxyCodeLine{00281   connect(insertBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onInsert()));}
+\DoxyCodeLine{00282   insertBtn-\/>setDefault(\textcolor{keyword}{true});}
+\DoxyCodeLine{00283   m\_buttonLayout-\/>addWidget(insertBtn);}
+\DoxyCodeLine{00284 }
+\DoxyCodeLine{00285   QPushButton *addBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Add"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00286   addBtn-\/>setFixedSize(65, 25);}
+\DoxyCodeLine{00287   addBtn-\/>setObjectName(\textcolor{stringliteral}{"{}PushButton\_NoPadding"{}});}
+\DoxyCodeLine{00288   connect(addBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onAdd()));}
+\DoxyCodeLine{00289   m\_buttonLayout-\/>addWidget(addBtn);}
+\DoxyCodeLine{00290 }
+\DoxyCodeLine{00291   QPushButton *replaceBtn = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Replace"{}}), \textcolor{keyword}{this});}
+\DoxyCodeLine{00292   replaceBtn-\/>setFixedHeight(25);}
+\DoxyCodeLine{00293   replaceBtn-\/>setObjectName(\textcolor{stringliteral}{"{}PushButton\_NoPadding"{}});}
+\DoxyCodeLine{00294   connect(replaceBtn, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(onReplace()));}
+\DoxyCodeLine{00295   m\_buttonLayout-\/>addWidget(replaceBtn);}
+\DoxyCodeLine{00296 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_insert_fx_popup_aea1a2568d1d9ddd01a2dc25bffb81b29}\label{class_insert_fx_popup_aea1a2568d1d9ddd01a2dc25bffb81b29}} 
+\index{InsertFxPopup@{InsertFxPopup}!contextMenuEvent@{contextMenuEvent}}
+\index{contextMenuEvent@{contextMenuEvent}!InsertFxPopup@{InsertFxPopup}}
+\doxysubsubsection{\texorpdfstring{contextMenuEvent()}{contextMenuEvent()}}
+{\footnotesize\ttfamily void Insert\+Fx\+Popup\+::context\+Menu\+Event (\begin{DoxyParamCaption}\item[{QContext\+Menu\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00550                                                              \{}
+\DoxyCodeLine{00551   QTreeWidgetItem *item = m\_fxTree-\/>currentItem();}
+\DoxyCodeLine{00552   QString itemRole      = item-\/>data(0, Qt::UserRole).toString();}
+\DoxyCodeLine{00553 }
+\DoxyCodeLine{00554   \mbox{\hyperlink{class_t_file_path}{TFilePath}} path = \mbox{\hyperlink{class_t_file_path}{TFilePath}}(itemRole.toStdWString());}
+\DoxyCodeLine{00555   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_t_file_status}{TFileStatus}}(path).doesExist() \&\&}
+\DoxyCodeLine{00556       \mbox{\hyperlink{class_t_file_status}{TFileStatus}}(path.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}()).isDirectory()) \{}
+\DoxyCodeLine{00557     QMenu *menu        = \textcolor{keyword}{new} QMenu(\textcolor{keyword}{this});}
+\DoxyCodeLine{00558     std::string folder = path.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}().\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}();}
+\DoxyCodeLine{00559     \textcolor{keywordflow}{if} (folder == \textcolor{stringliteral}{"{}macroFx"{}})  \textcolor{comment}{// Menu' macro}}
+\DoxyCodeLine{00560     \{}
+\DoxyCodeLine{00561       QAction *\mbox{\hyperlink{namespace_t_sop_a12e3eb96f32b4d2ebddf0b2c99a43eb4}{remove}} = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}Remove Macro FX"{}}), menu);}
+\DoxyCodeLine{00562       connect(remove, SIGNAL(triggered()), \textcolor{keyword}{this}, SLOT(removePreset()));}
+\DoxyCodeLine{00563       menu-\/>addAction(remove);}
+\DoxyCodeLine{00564     \} \textcolor{keywordflow}{else}  \textcolor{comment}{// Verifico se devo caricare un preset}}
+\DoxyCodeLine{00565     \{}
+\DoxyCodeLine{00566       folder = path.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}().\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}().\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}();}
+\DoxyCodeLine{00567       \textcolor{keywordflow}{if} (folder == \textcolor{stringliteral}{"{}presets"{}})  \textcolor{comment}{// Menu' preset}}
+\DoxyCodeLine{00568       \{}
+\DoxyCodeLine{00569         QAction *\mbox{\hyperlink{namespace_t_sop_a12e3eb96f32b4d2ebddf0b2c99a43eb4}{remove}} = \textcolor{keyword}{new} QAction(tr(\textcolor{stringliteral}{"{}Remove Preset"{}}), menu);}
+\DoxyCodeLine{00570         connect(remove, SIGNAL(triggered()), \textcolor{keyword}{this}, SLOT(removePreset()));}
+\DoxyCodeLine{00571         menu-\/>addAction(remove);}
+\DoxyCodeLine{00572       \}}
+\DoxyCodeLine{00573     \}}
+\DoxyCodeLine{00574     menu-\/>exec(event-\/>globalPos());}
+\DoxyCodeLine{00575   \}}
+\DoxyCodeLine{00576 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_fx_popup_adb90391c12bf8431182801ceddfd6aa0}\label{class_insert_fx_popup_adb90391c12bf8431182801ceddfd6aa0}} 
+\index{InsertFxPopup@{InsertFxPopup}!hideEvent@{hideEvent}}
+\index{hideEvent@{hideEvent}!InsertFxPopup@{InsertFxPopup}}
+\doxysubsubsection{\texorpdfstring{hideEvent()}{hideEvent()}}
+{\footnotesize\ttfamily void Insert\+Fx\+Popup\+::hide\+Event (\begin{DoxyParamCaption}\item[{QHide\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00542                                            \{}
+\DoxyCodeLine{00543   disconnect(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentFx(), SIGNAL(fxPresetSaved()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00544              SLOT(updatePresets()));}
+\DoxyCodeLine{00545   Dialog::hideEvent(e);}
+\DoxyCodeLine{00546 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_fx_popup_a3817d6528a6300134906bbee102dac04}\label{class_insert_fx_popup_a3817d6528a6300134906bbee102dac04}} 
+\index{InsertFxPopup@{InsertFxPopup}!onAdd@{onAdd}}
+\index{onAdd@{onAdd}!InsertFxPopup@{InsertFxPopup}}
+\doxysubsubsection{\texorpdfstring{onAdd}{onAdd}}
+{\footnotesize\ttfamily void Insert\+Fx\+Popup\+::on\+Add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00463                           \{}
+\DoxyCodeLine{00464   \mbox{\hyperlink{class_t_fx}{TFx}} *fx = createFx();}
+\DoxyCodeLine{00465   \textcolor{keywordflow}{if} (fx) \{}
+\DoxyCodeLine{00466     \mbox{\hyperlink{class_t_app}{TApp}} *app                = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00467     \mbox{\hyperlink{class_t_xsheet_handle}{TXsheetHandle}} *xshHandle = app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}();}
+\DoxyCodeLine{00468     QList<TFxP> fxs;}
+\DoxyCodeLine{00469     \mbox{\hyperlink{class_fx_selection}{FxSelection}} *selection =}
+\DoxyCodeLine{00470         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_selection}{FxSelection}} *\textcolor{keyword}{>}(app-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}()-\/>getSelection());}
+\DoxyCodeLine{00471     \textcolor{keywordflow}{if} (selection) fxs = selection-\/>getFxs();}
+\DoxyCodeLine{00472     TFxCommand::addFx(fx, fxs, app, app-\/>\mbox{\hyperlink{class_t_app_a1e294e7cff300851d12a8c3d196943f6}{getCurrentColumn}}()-\/>getColumnIndex(),}
+\DoxyCodeLine{00473                       app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>getFrameIndex());}
+\DoxyCodeLine{00474     xshHandle-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00475   \}}
+\DoxyCodeLine{00476 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_fx_popup_a1b6270f857cc12c1d5519b85764b8685}\label{class_insert_fx_popup_a1b6270f857cc12c1d5519b85764b8685}} 
+\index{InsertFxPopup@{InsertFxPopup}!onInsert@{onInsert}}
+\index{onInsert@{onInsert}!InsertFxPopup@{InsertFxPopup}}
+\doxysubsubsection{\texorpdfstring{onInsert}{onInsert}}
+{\footnotesize\ttfamily void Insert\+Fx\+Popup\+::on\+Insert (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00441                              \{}
+\DoxyCodeLine{00442   \mbox{\hyperlink{class_t_fx}{TFx}} *fx = createFx();}
+\DoxyCodeLine{00443   \textcolor{keywordflow}{if} (fx) \{}
+\DoxyCodeLine{00444     \mbox{\hyperlink{class_t_app}{TApp}} *app                = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00445     \mbox{\hyperlink{class_t_xsheet_handle}{TXsheetHandle}} *xshHandle = app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}();}
+\DoxyCodeLine{00446     QList<TFxP> fxs;}
+\DoxyCodeLine{00447     QList<TFxCommand::Link> links;}
+\DoxyCodeLine{00448     \mbox{\hyperlink{class_fx_selection}{FxSelection}} *selection =}
+\DoxyCodeLine{00449         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_selection}{FxSelection}} *\textcolor{keyword}{>}(app-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}()-\/>getSelection());}
+\DoxyCodeLine{00450     \textcolor{keywordflow}{if} (selection) \{}
+\DoxyCodeLine{00451       fxs   = selection-\/>getFxs();}
+\DoxyCodeLine{00452       links = selection-\/>getLinks();}
+\DoxyCodeLine{00453     \}}
+\DoxyCodeLine{00454     TFxCommand::insertFx(fx, fxs, links, app,}
+\DoxyCodeLine{00455                          app-\/>\mbox{\hyperlink{class_t_app_a1e294e7cff300851d12a8c3d196943f6}{getCurrentColumn}}()-\/>getColumnIndex(),}
+\DoxyCodeLine{00456                          app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>getFrameIndex());}
+\DoxyCodeLine{00457     xshHandle-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00458   \}}
+\DoxyCodeLine{00459 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_fx_popup_a9f2aa6ecda5ef79e510a571822f931ae}\label{class_insert_fx_popup_a9f2aa6ecda5ef79e510a571822f931ae}} 
+\index{InsertFxPopup@{InsertFxPopup}!onItemDoubleClicked@{onItemDoubleClicked}}
+\index{onItemDoubleClicked@{onItemDoubleClicked}!InsertFxPopup@{InsertFxPopup}}
+\doxysubsubsection{\texorpdfstring{onItemDoubleClicked}{onItemDoubleClicked}}
+{\footnotesize\ttfamily void Insert\+Fx\+Popup\+::on\+Item\+Double\+Clicked (\begin{DoxyParamCaption}\item[{QTree\+Widget\+Item $\ast$}]{w,  }\item[{int}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00434                                                                  \{}
+\DoxyCodeLine{00435   \textcolor{keywordflow}{if} (w-\/>childCount() == 0)  \textcolor{comment}{// E' una foglia}}
+\DoxyCodeLine{00436     onInsert();}
+\DoxyCodeLine{00437 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_fx_popup_a6423c0b4847c5682a20a33e68c85b5b4}\label{class_insert_fx_popup_a6423c0b4847c5682a20a33e68c85b5b4}} 
+\index{InsertFxPopup@{InsertFxPopup}!onReplace@{onReplace}}
+\index{onReplace@{onReplace}!InsertFxPopup@{InsertFxPopup}}
+\doxysubsubsection{\texorpdfstring{onReplace}{onReplace}}
+{\footnotesize\ttfamily void Insert\+Fx\+Popup\+::on\+Replace (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00480                               \{}
+\DoxyCodeLine{00481   \mbox{\hyperlink{class_t_fx}{TFx}} *fx = createFx();}
+\DoxyCodeLine{00482   \textcolor{keywordflow}{if} (fx) \{}
+\DoxyCodeLine{00483     \mbox{\hyperlink{class_t_app}{TApp}} *app                = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00484     \mbox{\hyperlink{class_t_xsheet_handle}{TXsheetHandle}} *xshHandle = app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}();}
+\DoxyCodeLine{00485     QList<TFxP> fxs;}
+\DoxyCodeLine{00486     \mbox{\hyperlink{class_fx_selection}{FxSelection}} *selection =}
+\DoxyCodeLine{00487         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_fx_selection}{FxSelection}} *\textcolor{keyword}{>}(app-\/>\mbox{\hyperlink{class_t_app_a6e0ee1978807a89009571ed5ce44323b}{getCurrentSelection}}()-\/>getSelection());}
+\DoxyCodeLine{00488     \textcolor{keywordflow}{if} (selection) fxs = selection-\/>getFxs();}
+\DoxyCodeLine{00489     TFxCommand::replaceFx(fx, fxs, app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}(),}
+\DoxyCodeLine{00490                           app-\/>\mbox{\hyperlink{class_t_app_a1d1d4b484617e7a938040554beca6282}{getCurrentFx}}());}
+\DoxyCodeLine{00491     xshHandle-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00492   \}}
+\DoxyCodeLine{00493 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_fx_popup_ad21d508da04557eee2afce8ff7004a8a}\label{class_insert_fx_popup_ad21d508da04557eee2afce8ff7004a8a}} 
+\index{InsertFxPopup@{InsertFxPopup}!onSearchTextChanged@{onSearchTextChanged}}
+\index{onSearchTextChanged@{onSearchTextChanged}!InsertFxPopup@{InsertFxPopup}}
+\doxysubsubsection{\texorpdfstring{onSearchTextChanged}{onSearchTextChanged}}
+{\footnotesize\ttfamily void Insert\+Fx\+Popup\+::on\+Search\+Text\+Changed (\begin{DoxyParamCaption}\item[{const QString \&}]{text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00300                                                            \{}
+\DoxyCodeLine{00301   \textcolor{keyword}{static} \textcolor{keywordtype}{bool} busy = \textcolor{keyword}{false};}
+\DoxyCodeLine{00302   \textcolor{keywordflow}{if} (busy) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00303   busy = \textcolor{keyword}{true};}
+\DoxyCodeLine{00304   m\_fxTree-\/>searchItems(text);}
+\DoxyCodeLine{00305   busy = \textcolor{keyword}{false};}
+\DoxyCodeLine{00306 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_fx_popup_a0662480a976bc01e0c8344a2aa63a3e0}\label{class_insert_fx_popup_a0662480a976bc01e0c8344a2aa63a3e0}} 
+\index{InsertFxPopup@{InsertFxPopup}!removePreset@{removePreset}}
+\index{removePreset@{removePreset}!InsertFxPopup@{InsertFxPopup}}
+\doxysubsubsection{\texorpdfstring{removePreset}{removePreset}}
+{\footnotesize\ttfamily void Insert\+Fx\+Popup\+::remove\+Preset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00613                                  \{}
+\DoxyCodeLine{00614   QTreeWidgetItem *item = m\_fxTree-\/>currentItem();}
+\DoxyCodeLine{00615   QString itemRole      = item-\/>data(0, Qt::UserRole).toString();}
+\DoxyCodeLine{00616 }
+\DoxyCodeLine{00617   \mbox{\hyperlink{class_t_file_path}{TFilePath}} path = \mbox{\hyperlink{class_t_file_path}{TFilePath}}(itemRole.toStdWString());}
+\DoxyCodeLine{00618 }
+\DoxyCodeLine{00619   QString question = QString(}
+\DoxyCodeLine{00620       tr(\textcolor{stringliteral}{"{}Are you sure you want to delete \%1?"{}}).arg(path.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}().c\_str()));}
+\DoxyCodeLine{00621   \textcolor{keywordtype}{int} ret = DVGui::MsgBox(question, tr(\textcolor{stringliteral}{"{}Yes"{}}), tr(\textcolor{stringliteral}{"{}No"{}}), 1);}
+\DoxyCodeLine{00622   \textcolor{keywordflow}{if} (ret == 2 || ret == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00623 }
+\DoxyCodeLine{00624   \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{00625     TSystem::deleteFile(path);}
+\DoxyCodeLine{00626   \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{00627     error(QString(tr(\textcolor{stringliteral}{"{}It is not possible to delete \%1."{}}).arg(toQString(path))));}
+\DoxyCodeLine{00628     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00629   \}}
+\DoxyCodeLine{00630   m\_fxTree-\/>removeItemWidget(item, 0);}
+\DoxyCodeLine{00631   \textcolor{keyword}{delete} item;}
+\DoxyCodeLine{00632   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a1d1d4b484617e7a938040554beca6282}{getCurrentFx}}()-\/>notifyFxPresetRemoved();}
+\DoxyCodeLine{00633 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_fx_popup_a304044cce5e4544d8baf0a0e33d20e86}\label{class_insert_fx_popup_a304044cce5e4544d8baf0a0e33d20e86}} 
+\index{InsertFxPopup@{InsertFxPopup}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!InsertFxPopup@{InsertFxPopup}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void Insert\+Fx\+Popup\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00534                                           \{}
+\DoxyCodeLine{00535   updatePresets();}
+\DoxyCodeLine{00536   connect(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getCurrentFx(), SIGNAL(fxPresetSaved()),}
+\DoxyCodeLine{00537           SLOT(updatePresets()));}
+\DoxyCodeLine{00538 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_insert_fx_popup_aafd7e5417f25e1a6d7664cd645edafb9}\label{class_insert_fx_popup_aafd7e5417f25e1a6d7664cd645edafb9}} 
+\index{InsertFxPopup@{InsertFxPopup}!updatePresets@{updatePresets}}
+\index{updatePresets@{updatePresets}!InsertFxPopup@{InsertFxPopup}}
+\doxysubsubsection{\texorpdfstring{updatePresets}{updatePresets}}
+{\footnotesize\ttfamily void Insert\+Fx\+Popup\+::update\+Presets (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00580                                   \{}
+\DoxyCodeLine{00581   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00582   \textcolor{keywordflow}{for} (i = 0; i < m\_fxTree-\/>topLevelItemCount(); i++) \{}
+\DoxyCodeLine{00583     QTreeWidgetItem *folder = m\_fxTree-\/>topLevelItem(i);}
+\DoxyCodeLine{00584     \mbox{\hyperlink{class_t_file_path}{TFilePath}} path =}
+\DoxyCodeLine{00585         \mbox{\hyperlink{class_t_file_path}{TFilePath}}(folder-\/>data(0, Qt::UserRole).toString().toStdWString());}
+\DoxyCodeLine{00586     \textcolor{keywordflow}{if} (folder-\/>text(0).toStdString() == \textcolor{stringliteral}{"{}Plugins"{}}) \{}
+\DoxyCodeLine{00587       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00588     \}}
+\DoxyCodeLine{00589     \textcolor{keywordflow}{if} (path.\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}() == \textcolor{stringliteral}{"{}macroFx"{}}) \{}
+\DoxyCodeLine{00590       \textcolor{keywordtype}{int} j;}
+\DoxyCodeLine{00591       \textcolor{keywordflow}{for} (j = folder-\/>childCount() -\/ 1; j >= 0; j-\/-\/)}
+\DoxyCodeLine{00592         folder-\/>removeChild(folder-\/>child(j));}
+\DoxyCodeLine{00593       m\_fxTree-\/>removeItemWidget(folder, 0);}
+\DoxyCodeLine{00594       \textcolor{keyword}{delete} folder;}
+\DoxyCodeLine{00595     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (path.\mbox{\hyperlink{class_t_file_path_a1f5014e9c396bc2268820c19bc15657d}{getParentDir}}().\mbox{\hyperlink{class_t_file_path_af94f9b0aeceb6cdb980fa1789473503a}{getName}}() == \textcolor{stringliteral}{"{}macroFx"{}})}
+\DoxyCodeLine{00596       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00597     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00598       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < folder-\/>childCount(); i++) \{}
+\DoxyCodeLine{00599         \textcolor{keywordtype}{bool} isPresetLoaded = loadPreset(folder-\/>child(i));}
+\DoxyCodeLine{00600         \textcolor{keywordflow}{if} (isPresetLoaded)}
+\DoxyCodeLine{00601           folder-\/>child(i)-\/>setIcon(0, m\_presetIcon);}
+\DoxyCodeLine{00602         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00603           folder-\/>child(i)-\/>setIcon(0, m\_fxIcon);}
+\DoxyCodeLine{00604       \}}
+\DoxyCodeLine{00605   \}}
+\DoxyCodeLine{00606   loadMacro();}
+\DoxyCodeLine{00607 }
+\DoxyCodeLine{00608   update();}
+\DoxyCodeLine{00609 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/insertfxpopup.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/insertfxpopup.\+cpp\end{DoxyCompactItemize}

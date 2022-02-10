@@ -1,0 +1,177 @@
+\hypertarget{class_measured_double_param_field}{}\doxysection{Measured\+Double\+Param\+Field Class Reference}
+\label{class_measured_double_param_field}\index{MeasuredDoubleParamField@{MeasuredDoubleParamField}}
+Inheritance diagram for Measured\+Double\+Param\+Field\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_measured_double_param_field}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_measured_double_param_field_a38b35b80f58ddf8aa8e81cbff33dc6d4}{Measured\+Double\+Param\+Field}} (QWidget $\ast$parent, QString name, const TDouble\+ParamP \&param)
+\item 
+void \mbox{\hyperlink{class_measured_double_param_field_a11ffb051147ad108fbe99fb20cc0381d}{update\+Field}} (double value) override
+\item 
+QSize \mbox{\hyperlink{class_measured_double_param_field_a049aa77f0bb06072a392cf9d15e4cc43}{get\+Preferred\+Size}} () override
+\item 
+void \mbox{\hyperlink{class_measured_double_param_field_acb2ea3f799bbf04f4f15e46c4e8750ff}{set\+Precision}} (int precision) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_measured_double_param_field_a7ad59ec24a3969c66bcadb7917d4b412}{on\+Change}} (bool)
+\item 
+void \mbox{\hyperlink{class_measured_double_param_field_aad6ad6094ddf27961538a04b23fce954}{on\+Key\+Toggled}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_measured_double_param_field_a38b35b80f58ddf8aa8e81cbff33dc6d4}\label{class_measured_double_param_field_a38b35b80f58ddf8aa8e81cbff33dc6d4}} 
+\index{MeasuredDoubleParamField@{MeasuredDoubleParamField}!MeasuredDoubleParamField@{MeasuredDoubleParamField}}
+\index{MeasuredDoubleParamField@{MeasuredDoubleParamField}!MeasuredDoubleParamField@{MeasuredDoubleParamField}}
+\doxysubsubsection{\texorpdfstring{MeasuredDoubleParamField()}{MeasuredDoubleParamField()}}
+{\footnotesize\ttfamily Measured\+Double\+Param\+Field\+::\+Measured\+Double\+Param\+Field (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{QString}]{name,  }\item[{const TDouble\+ParamP \&}]{param }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00784     : \mbox{\hyperlink{class_animated_param_field}{AnimatedParamField<double, TDoubleParamP>}}(parent, name, param) \{}
+\DoxyCodeLine{00785   QString str;}
+\DoxyCodeLine{00786   m\_paramName = str.fromStdString(param-\/>getName());}
+\DoxyCodeLine{00787 }
+\DoxyCodeLine{00788   m\_measuredDoubleField = \textcolor{keyword}{new} \mbox{\hyperlink{class_d_v_gui_1_1_measured_double_field}{MeasuredDoubleField}}(\textcolor{keyword}{this}, \textcolor{keyword}{false});}
+\DoxyCodeLine{00789 }
+\DoxyCodeLine{00790   m\_measuredDoubleField-\/>setSizePolicy(QSizePolicy::Expanding,}
+\DoxyCodeLine{00791                                        QSizePolicy::Minimum);}
+\DoxyCodeLine{00792   m\_measuredDoubleField-\/>\mbox{\hyperlink{class_d_v_gui_1_1_measured_double_field_a2f4923ee3f27502372fd5fb816a9014d}{setMeasure}}(param-\/>getMeasureName());}
+\DoxyCodeLine{00793   m\_measuredDoubleField-\/>setValue(param-\/>getValue(m\_frame));}
+\DoxyCodeLine{00794   m\_measuredDoubleField-\/>setDecimals(3);}
+\DoxyCodeLine{00795 }
+\DoxyCodeLine{00796   \textcolor{keywordtype}{double} min = 0, max = 100, step = 1;}
+\DoxyCodeLine{00797   param-\/>getValueRange(min, max, step);}
+\DoxyCodeLine{00798   assert(min < max);}
+\DoxyCodeLine{00799   m\_measuredDoubleField-\/>setRange(min, max);}
+\DoxyCodeLine{00800 }
+\DoxyCodeLine{00801   \textcolor{comment}{//-\/-\/-\/-\/layout}}
+\DoxyCodeLine{00802   m\_layout-\/>addWidget(m\_keyToggle);}
+\DoxyCodeLine{00803   m\_layout-\/>addWidget(m\_measuredDoubleField);}
+\DoxyCodeLine{00804   setLayout(m\_layout);}
+\DoxyCodeLine{00805 }
+\DoxyCodeLine{00806   \textcolor{comment}{//-\/-\/-\/-\/signal-\/slot connection}}
+\DoxyCodeLine{00807   \textcolor{keywordtype}{bool} ret = connect(m\_measuredDoubleField, SIGNAL(valueChanged(\textcolor{keywordtype}{bool})),}
+\DoxyCodeLine{00808                      SLOT(onChange(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00809   ret = ret \&\& connect(m\_keyToggle, SIGNAL(keyToggled()), SLOT(onKeyToggled()));}
+\DoxyCodeLine{00810 }
+\DoxyCodeLine{00811   assert(ret);}
+\DoxyCodeLine{00812 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_measured_double_param_field_a049aa77f0bb06072a392cf9d15e4cc43}\label{class_measured_double_param_field_a049aa77f0bb06072a392cf9d15e4cc43}} 
+\index{MeasuredDoubleParamField@{MeasuredDoubleParamField}!getPreferredSize@{getPreferredSize}}
+\index{getPreferredSize@{getPreferredSize}!MeasuredDoubleParamField@{MeasuredDoubleParamField}}
+\doxysubsubsection{\texorpdfstring{getPreferredSize()}{getPreferredSize()}}
+{\footnotesize\ttfamily QSize Measured\+Double\+Param\+Field\+::get\+Preferred\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_param_field}{Param\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00372 \{ \textcolor{keywordflow}{return} QSize(260, 26); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_measured_double_param_field_a7ad59ec24a3969c66bcadb7917d4b412}\label{class_measured_double_param_field_a7ad59ec24a3969c66bcadb7917d4b412}} 
+\index{MeasuredDoubleParamField@{MeasuredDoubleParamField}!onChange@{onChange}}
+\index{onChange@{onChange}!MeasuredDoubleParamField@{MeasuredDoubleParamField}}
+\doxysubsubsection{\texorpdfstring{onChange}{onChange}}
+{\footnotesize\ttfamily void Measured\+Double\+Param\+Field\+::on\+Change (\begin{DoxyParamCaption}\item[{bool}]{dragging }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00822                                                      \{}
+\DoxyCodeLine{00823   \textcolor{keywordflow}{if} (dragging) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00824 }
+\DoxyCodeLine{00825   TDoubleParamP doubleParam = m\_actualParam;}
+\DoxyCodeLine{00826 }
+\DoxyCodeLine{00827   \mbox{\hyperlink{class_t_undo}{TUndo}} *undo = 0;}
+\DoxyCodeLine{00828   \textcolor{comment}{/*-\/-\/ Undoを登録する条件：}}
+\DoxyCodeLine{00829 \textcolor{comment}{          値が変更されていて、かつ}}
+\DoxyCodeLine{00830 \textcolor{comment}{          キーフレーム上か、または、まだキーフレームが無い}}
+\DoxyCodeLine{00831 \textcolor{comment}{          （すなわち、実際にシーンの情報を変えることになる）場合}}
+\DoxyCodeLine{00832 \textcolor{comment}{  -\/-\/*/}}
+\DoxyCodeLine{00833   \textcolor{keywordflow}{if} (doubleParam \&\&}
+\DoxyCodeLine{00834       doubleParam-\/>getValue(m\_frame) != m\_measuredDoubleField-\/>getValue() \&\&}
+\DoxyCodeLine{00835       (m\_actualParam-\/>isKeyframe(m\_frame) ||}
+\DoxyCodeLine{00836        !m\_actualParam.getPointer()-\/>hasKeyframes()))}
+\DoxyCodeLine{00837     undo = \textcolor{keyword}{new} \mbox{\hyperlink{class_measured_double_param_field_undo}{MeasuredDoubleParamFieldUndo}}(}
+\DoxyCodeLine{00838         doubleParam, m\_interfaceName, m\_frame, ParamField::m\_fxHandleStat);}
+\DoxyCodeLine{00839 }
+\DoxyCodeLine{00840   setValue(m\_measuredDoubleField-\/>getValue());}
+\DoxyCodeLine{00841 }
+\DoxyCodeLine{00842   \textcolor{keywordflow}{if} (undo) TUndoManager::manager()-\/>add(undo);}
+\DoxyCodeLine{00843 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_measured_double_param_field_aad6ad6094ddf27961538a04b23fce954}\label{class_measured_double_param_field_aad6ad6094ddf27961538a04b23fce954}} 
+\index{MeasuredDoubleParamField@{MeasuredDoubleParamField}!onKeyToggled@{onKeyToggled}}
+\index{onKeyToggled@{onKeyToggled}!MeasuredDoubleParamField@{MeasuredDoubleParamField}}
+\doxysubsubsection{\texorpdfstring{onKeyToggled}{onKeyToggled}}
+{\footnotesize\ttfamily void Measured\+Double\+Param\+Field\+::on\+Key\+Toggled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00847 \{ onKeyToggle(); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_measured_double_param_field_acb2ea3f799bbf04f4f15e46c4e8750ff}\label{class_measured_double_param_field_acb2ea3f799bbf04f4f15e46c4e8750ff}} 
+\index{MeasuredDoubleParamField@{MeasuredDoubleParamField}!setPrecision@{setPrecision}}
+\index{setPrecision@{setPrecision}!MeasuredDoubleParamField@{MeasuredDoubleParamField}}
+\doxysubsubsection{\texorpdfstring{setPrecision()}{setPrecision()}}
+{\footnotesize\ttfamily void Measured\+Double\+Param\+Field\+::set\+Precision (\begin{DoxyParamCaption}\item[{int}]{precision }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_param_field}{Param\+Field}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00851                                                          \{}
+\DoxyCodeLine{00852   \textcolor{keywordtype}{double} min, max;}
+\DoxyCodeLine{00853   m\_measuredDoubleField-\/>getRange(min, max);}
+\DoxyCodeLine{00854   m\_measuredDoubleField-\/>setDecimals(precision);}
+\DoxyCodeLine{00855   \textcolor{comment}{// update slider}}
+\DoxyCodeLine{00856   m\_measuredDoubleField-\/>setRange(min, max);}
+\DoxyCodeLine{00857 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_measured_double_param_field_a11ffb051147ad108fbe99fb20cc0381d}\label{class_measured_double_param_field_a11ffb051147ad108fbe99fb20cc0381d}} 
+\index{MeasuredDoubleParamField@{MeasuredDoubleParamField}!updateField@{updateField}}
+\index{updateField@{updateField}!MeasuredDoubleParamField@{MeasuredDoubleParamField}}
+\doxysubsubsection{\texorpdfstring{updateField()}{updateField()}}
+{\footnotesize\ttfamily void Measured\+Double\+Param\+Field\+::update\+Field (\begin{DoxyParamCaption}\item[{double}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_animated_param_field}{Animated\+Param\+Field$<$ double, TDouble\+Param\+P $>$}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00816                                                        \{}
+\DoxyCodeLine{00817   m\_measuredDoubleField-\/>setValue(value);}
+\DoxyCodeLine{00818 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/toonzqt/paramfield.\+h\item 
+E\+:/opentoonz/toonz/sources/toonzqt/paramfield.\+cpp\end{DoxyCompactItemize}

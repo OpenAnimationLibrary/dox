@@ -1,0 +1,538 @@
+\hypertarget{class_scene_viewer_context_menu}{}\doxysection{Scene\+Viewer\+Context\+Menu Class Reference}
+\label{class_scene_viewer_context_menu}\index{SceneViewerContextMenu@{SceneViewerContextMenu}}
+Inheritance diagram for Scene\+Viewer\+Context\+Menu\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_scene_viewer_context_menu}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_scene_viewer_context_menu_a5c23fb5845061b3d058fefc33d203689}{save\+Previewed\+Frames}} ()
+\item 
+void \mbox{\hyperlink{class_scene_viewer_context_menu_a3889da34c8f40fd3432b8a5d545f41ad}{enter\+Vector\+Image\+Group}} ()
+\item 
+void \mbox{\hyperlink{class_scene_viewer_context_menu_af952c0cd1c7ad914cec2f68e0bb1632f}{exit\+Vector\+Image\+Group}} ()
+\item 
+void \mbox{\hyperlink{class_scene_viewer_context_menu_a1e4c0c15afff7597fdf7e7818fa57832}{set\+Guided\+Drawing\+Type}} (QAction $\ast$)
+\item 
+void \mbox{\hyperlink{class_scene_viewer_context_menu_a958937fd1cec6f99f481bf1c77b8ddd4}{set\+Guided\+Auto\+Inbetween}} ()
+\item 
+void \mbox{\hyperlink{class_scene_viewer_context_menu_a59c033032e65b6a572f41208bcb98709}{set\+Guided\+Interpolation\+State}} (QAction $\ast$)
+\item 
+void \mbox{\hyperlink{class_scene_viewer_context_menu_ab861a948e1ae5d9b53ea7fd8f9676782}{on\+Show\+Hide}} ()
+\item 
+void \mbox{\hyperlink{class_scene_viewer_context_menu_a6bcafa5676c6d515e69fe985791655b1}{on\+Set\+Current}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_scene_viewer_context_menu_a78e10d46aed02906bf2c305ad0b25d44}{Scene\+Viewer\+Context\+Menu}} (\mbox{\hyperlink{class_scene_viewer}{Scene\+Viewer}} $\ast$parent)
+\item 
+void \mbox{\hyperlink{class_scene_viewer_context_menu_ae1ec7cf3e67d92408c6915eade22cdad}{add\+Enter\+Group\+Commands}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&pos)
+\item 
+void \mbox{\hyperlink{class_scene_viewer_context_menu_aaed9b7c543d2c17a3a7a22b6824a9b0c}{add\+Level\+Commands}} (std\+::vector$<$ int $>$ \&indices)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_scene_viewer_context_menu_a78e10d46aed02906bf2c305ad0b25d44}\label{class_scene_viewer_context_menu_a78e10d46aed02906bf2c305ad0b25d44}} 
+\index{SceneViewerContextMenu@{SceneViewerContextMenu}!SceneViewerContextMenu@{SceneViewerContextMenu}}
+\index{SceneViewerContextMenu@{SceneViewerContextMenu}!SceneViewerContextMenu@{SceneViewerContextMenu}}
+\doxysubsubsection{\texorpdfstring{SceneViewerContextMenu()}{SceneViewerContextMenu()}}
+{\footnotesize\ttfamily Scene\+Viewer\+Context\+Menu\+::\+Scene\+Viewer\+Context\+Menu (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_scene_viewer}{Scene\+Viewer}} $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00043     : QMenu(parent), m\_viewer(parent), m\_groupIndexToBeEntered(-\/1) \{}
+\DoxyCodeLine{00044   \mbox{\hyperlink{class_t_app}{TApp}} *app                      = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00045   \textcolor{keywordtype}{bool} isEditingLevel            = app-\/>\mbox{\hyperlink{class_t_app_a35516f8175dab3ccdf3d6d3c3e5f59ae}{getCurrentFrame}}()-\/>isEditingLevel();}
+\DoxyCodeLine{00046   \textcolor{keywordtype}{bool} ret                       = \textcolor{keyword}{true};}
+\DoxyCodeLine{00047   QAction *action                = 0;}
+\DoxyCodeLine{00048   \mbox{\hyperlink{class_command_manager}{CommandManager}} *commandManager = CommandManager::instance();}
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00050   \textcolor{comment}{/*-\/ サブカメラの消去 -\/*/}}
+\DoxyCodeLine{00051   \textcolor{keywordflow}{if} (parent-\/>isEditPreviewSubcamera()) \{}
+\DoxyCodeLine{00052     action = addAction(tr(\textcolor{stringliteral}{"{}Reset Subcamera"{}}));}
+\DoxyCodeLine{00053     ret    = ret \&\& parent-\/>connect(action, SIGNAL(triggered()),}
+\DoxyCodeLine{00054                                  SLOT(doDeleteSubCamera()));}
+\DoxyCodeLine{00055     addSeparator();}
+\DoxyCodeLine{00056   \}}
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00058   \textcolor{comment}{// tool}}
+\DoxyCodeLine{00059   \mbox{\hyperlink{class_t_tool}{TTool}} *tool = app-\/>\mbox{\hyperlink{class_t_app_ad70b447aff489792cfc3dbac7150a540}{getCurrentTool}}()-\/>getTool();}
+\DoxyCodeLine{00060   \textcolor{keywordflow}{if} (tool \&\& tool-\/>isEnabled()) tool-\/>\mbox{\hyperlink{class_t_tool_ac8a81b368568245d16f7c3d4a17684a1}{addContextMenuItems}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00061 }
+\DoxyCodeLine{00062   \textcolor{comment}{// fullscreen}}
+\DoxyCodeLine{00063   \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_image_utils_1_1_full_screen_widget}{ImageUtils::FullScreenWidget}} *fsWidget =}
+\DoxyCodeLine{00064           \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_image_utils_1_1_full_screen_widget}{ImageUtils::FullScreenWidget}} *\textcolor{keyword}{>}(}
+\DoxyCodeLine{00065               m\_viewer-\/>parentWidget())) \{}
+\DoxyCodeLine{00066     \textcolor{keywordtype}{bool} isFullScreen = (fsWidget-\/>windowState() \& Qt::WindowFullScreen) != 0;}
+\DoxyCodeLine{00067 }
+\DoxyCodeLine{00068     action =}
+\DoxyCodeLine{00069         commandManager-\/>createAction(V\_ShowHideFullScreen, \textcolor{keyword}{this}, !isFullScreen);}
+\DoxyCodeLine{00070     addAction(action);}
+\DoxyCodeLine{00071     ret = ret \&\& parent-\/>connect(action, SIGNAL(triggered()), fsWidget,}
+\DoxyCodeLine{00072                                  SLOT(toggleFullScreen()));}
+\DoxyCodeLine{00073   \}}
+\DoxyCodeLine{00074 }
+\DoxyCodeLine{00075   \textcolor{comment}{// swap compared}}
+\DoxyCodeLine{00076   \textcolor{keywordflow}{if} (parent-\/>canSwapCompared()) \{}
+\DoxyCodeLine{00077     action = addAction(tr(\textcolor{stringliteral}{"{}Swap Compared Images"{}}));}
+\DoxyCodeLine{00078     ret    = ret \&\&}
+\DoxyCodeLine{00079           parent-\/>connect(action, SIGNAL(triggered()), SLOT(swapCompared()));}
+\DoxyCodeLine{00080   \}}
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00082   \textcolor{keywordflow}{if} (!isEditingLevel) \{}
+\DoxyCodeLine{00083     \textcolor{comment}{// fit camera}}
+\DoxyCodeLine{00084     action = commandManager-\/>createAction(V\_ZoomFit, \textcolor{keyword}{this});}
+\DoxyCodeLine{00085     addAction(action);}
+\DoxyCodeLine{00086     ret = ret \&\&}
+\DoxyCodeLine{00087           parent-\/>connect(action, SIGNAL(triggered()), SLOT(fitToCamera()));}
+\DoxyCodeLine{00088   \}}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090   QMenu *flipViewMenu = addMenu(tr(\textcolor{stringliteral}{"{}Flip View"{}}));}
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00092   \textcolor{comment}{// flip horizontally}}
+\DoxyCodeLine{00093   action = commandManager-\/>createAction(V\_FlipX, \textcolor{keyword}{this});}
+\DoxyCodeLine{00094   flipViewMenu-\/>addAction(action);}
+\DoxyCodeLine{00095   ret = ret \&\& parent-\/>connect(action, SIGNAL(triggered()), SLOT(flipX()));}
+\DoxyCodeLine{00096 }
+\DoxyCodeLine{00097   \textcolor{comment}{// flip vertically}}
+\DoxyCodeLine{00098   action = commandManager-\/>createAction(V\_FlipY, \textcolor{keyword}{this});}
+\DoxyCodeLine{00099   flipViewMenu-\/>addAction(action);}
+\DoxyCodeLine{00100   ret = ret \&\& parent-\/>connect(action, SIGNAL(triggered()), SLOT(flipY()));}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102   QMenu *resetViewMenu = addMenu(tr(\textcolor{stringliteral}{"{}Reset View"{}}));}
+\DoxyCodeLine{00103 }
+\DoxyCodeLine{00104   \textcolor{comment}{// reset}}
+\DoxyCodeLine{00105   action = commandManager-\/>createAction(V\_ViewReset, \textcolor{keyword}{this});}
+\DoxyCodeLine{00106   resetViewMenu-\/>addAction(action);}
+\DoxyCodeLine{00107   ret = ret \&\&}
+\DoxyCodeLine{00108         parent-\/>connect(action, SIGNAL(triggered()), SLOT(resetSceneViewer()));}
+\DoxyCodeLine{00109 }
+\DoxyCodeLine{00110   \textcolor{comment}{// reset zoom}}
+\DoxyCodeLine{00111   action = commandManager-\/>createAction(V\_ZoomReset, \textcolor{keyword}{this});}
+\DoxyCodeLine{00112   resetViewMenu-\/>addAction(action);}
+\DoxyCodeLine{00113   ret = ret \&\& parent-\/>connect(action, SIGNAL(triggered()), SLOT(resetZoom()));}
+\DoxyCodeLine{00114 }
+\DoxyCodeLine{00115   \textcolor{comment}{// reset rotation}}
+\DoxyCodeLine{00116   action = commandManager-\/>createAction(V\_RotateReset, \textcolor{keyword}{this});}
+\DoxyCodeLine{00117   resetViewMenu-\/>addAction(action);}
+\DoxyCodeLine{00118   ret = ret \&\&}
+\DoxyCodeLine{00119         parent-\/>connect(action, SIGNAL(triggered()), SLOT(resetRotation()));}
+\DoxyCodeLine{00120 }
+\DoxyCodeLine{00121   \textcolor{comment}{// reset position}}
+\DoxyCodeLine{00122   action = commandManager-\/>createAction(V\_PositionReset, \textcolor{keyword}{this});}
+\DoxyCodeLine{00123   resetViewMenu-\/>addAction(action);}
+\DoxyCodeLine{00124   ret = ret \&\&}
+\DoxyCodeLine{00125         parent-\/>connect(action, SIGNAL(triggered()), SLOT(resetPosition()));}
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127   \textcolor{comment}{// actual pixel size}}
+\DoxyCodeLine{00128   action = commandManager-\/>createAction(V\_ActualPixelSize, \textcolor{keyword}{this});}
+\DoxyCodeLine{00129   addAction(action);}
+\DoxyCodeLine{00130   ret = ret \&\& parent-\/>connect(action, SIGNAL(triggered()),}
+\DoxyCodeLine{00131                                SLOT(setActualPixelSize()));}
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00133   \textcolor{comment}{// onion skin}}
+\DoxyCodeLine{00134   \textcolor{keywordflow}{if} (Preferences::instance()-\/>isOnionSkinEnabled() \&\&}
+\DoxyCodeLine{00135       !parent-\/>isPreviewEnabled())}
+\DoxyCodeLine{00136     OnioniSkinMaskGUI::addOnionSkinCommand(\textcolor{keyword}{this});}
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00138   \textcolor{keywordflow}{if} (tool-\/>getTargetType() \& \mbox{\hyperlink{class_t_tool_adf0ea3a7f9d003f761fe57638dd6eff4a6528d353c20fcbe8932de09845117046}{TTool::VectorImage}}) \{}
+\DoxyCodeLine{00139     \textcolor{keyword}{auto} addOptionAction = [](\textcolor{keyword}{const} QString \&label, \textcolor{keyword}{const} \textcolor{keywordtype}{int} data,}
+\DoxyCodeLine{00140                               \textcolor{keyword}{const} \textcolor{keywordtype}{int} currentData, QMenu *menu,}
+\DoxyCodeLine{00141                               QActionGroup *group) \{}
+\DoxyCodeLine{00142       QAction *action = menu-\/>addAction(label);}
+\DoxyCodeLine{00143       action-\/>setData(data);}
+\DoxyCodeLine{00144       action-\/>setCheckable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00145       action-\/>setChecked(data == currentData);}
+\DoxyCodeLine{00146       group-\/>addAction(action);}
+\DoxyCodeLine{00147     \};}
+\DoxyCodeLine{00148     QMenu *guidedDrawingMenu = addMenu(tr(\textcolor{stringliteral}{"{}Vector Guided Drawing"{}}));}
+\DoxyCodeLine{00149     \textcolor{keywordtype}{int} guidedDrawingStatus  = Preferences::instance()-\/>getGuidedDrawingType();}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151     QActionGroup *guidedDrawingGroup = \textcolor{keyword}{new} QActionGroup(\textcolor{keyword}{this});}
+\DoxyCodeLine{00152     addOptionAction(tr(\textcolor{stringliteral}{"{}Off"{}}), 0, guidedDrawingStatus, guidedDrawingMenu,}
+\DoxyCodeLine{00153                     guidedDrawingGroup);}
+\DoxyCodeLine{00154     addOptionAction(tr(\textcolor{stringliteral}{"{}Closest Drawing"{}}), 1, guidedDrawingStatus,}
+\DoxyCodeLine{00155                     guidedDrawingMenu, guidedDrawingGroup);}
+\DoxyCodeLine{00156     addOptionAction(tr(\textcolor{stringliteral}{"{}Farthest Drawing"{}}), 2, guidedDrawingStatus,}
+\DoxyCodeLine{00157                     guidedDrawingMenu, guidedDrawingGroup);}
+\DoxyCodeLine{00158     addOptionAction(tr(\textcolor{stringliteral}{"{}All Drawings"{}}), 3, guidedDrawingStatus,}
+\DoxyCodeLine{00159                     guidedDrawingMenu, guidedDrawingGroup);}
+\DoxyCodeLine{00160     ret =}
+\DoxyCodeLine{00161         ret \&\& parent-\/>connect(guidedDrawingGroup, SIGNAL(triggered(QAction *)),}
+\DoxyCodeLine{00162                                \textcolor{keyword}{this}, SLOT(setGuidedDrawingType(QAction *)));}
+\DoxyCodeLine{00163 }
+\DoxyCodeLine{00164     guidedDrawingMenu-\/>addSeparator();}
+\DoxyCodeLine{00165     \textcolor{keywordtype}{bool} enableOption = guidedDrawingStatus == 1 || guidedDrawingStatus == 2;}
+\DoxyCodeLine{00166     action            = guidedDrawingMenu-\/>addAction(tr(\textcolor{stringliteral}{"{}Auto Inbetween"{}}));}
+\DoxyCodeLine{00167     action-\/>setCheckable(\textcolor{keyword}{true});}
+\DoxyCodeLine{00168     action-\/>setChecked(Preferences::instance()-\/>getGuidedAutoInbetween());}
+\DoxyCodeLine{00169     action-\/>setEnabled(enableOption);}
+\DoxyCodeLine{00170     ret = ret \&\& parent-\/>connect(action, SIGNAL(triggered()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00171                                  SLOT(setGuidedAutoInbetween()));}
+\DoxyCodeLine{00172     guidedDrawingMenu-\/>addSeparator();}
+\DoxyCodeLine{00173     \textcolor{keywordtype}{int} guidedInterpolation = Preferences::instance()-\/>getGuidedInterpolation();}
+\DoxyCodeLine{00174     QActionGroup *interpolationGroup = \textcolor{keyword}{new} QActionGroup(\textcolor{keyword}{this});}
+\DoxyCodeLine{00175     addOptionAction(tr(\textcolor{stringliteral}{"{}Linear Interpolation"{}}), 1, guidedInterpolation,}
+\DoxyCodeLine{00176                     guidedDrawingMenu, interpolationGroup);}
+\DoxyCodeLine{00177     addOptionAction(tr(\textcolor{stringliteral}{"{}Ease In Interpolation"{}}), 2, guidedInterpolation,}
+\DoxyCodeLine{00178                     guidedDrawingMenu, interpolationGroup);}
+\DoxyCodeLine{00179     addOptionAction(tr(\textcolor{stringliteral}{"{}Ease Out Interpolation"{}}), 3, guidedInterpolation,}
+\DoxyCodeLine{00180                     guidedDrawingMenu, interpolationGroup);}
+\DoxyCodeLine{00181     addOptionAction(tr(\textcolor{stringliteral}{"{}Ease In/Out Interpolation"{}}), 4, guidedInterpolation,}
+\DoxyCodeLine{00182                     guidedDrawingMenu, interpolationGroup);}
+\DoxyCodeLine{00183     ret = ret \&\&}
+\DoxyCodeLine{00184           parent-\/>connect(interpolationGroup, SIGNAL(triggered(QAction *)),}
+\DoxyCodeLine{00185                           \textcolor{keyword}{this}, SLOT(setGuidedInterpolationState(QAction *)));}
+\DoxyCodeLine{00186     interpolationGroup-\/>setEnabled(enableOption);}
+\DoxyCodeLine{00187     \textcolor{comment}{/*}}
+\DoxyCodeLine{00188 \textcolor{comment}{        guidedDrawingMenu-\/>addSeparator();}}
+\DoxyCodeLine{00189 \textcolor{comment}{        action =}}
+\DoxyCodeLine{00190 \textcolor{comment}{       CommandManager::instance()-\/>getAction(MI\_SelectPrevGuideStroke);}}
+\DoxyCodeLine{00191 \textcolor{comment}{        action-\/>setEnabled(enableOption);}}
+\DoxyCodeLine{00192 \textcolor{comment}{        guidedDrawingMenu-\/>addAction(action);}}
+\DoxyCodeLine{00193 \textcolor{comment}{        action =}}
+\DoxyCodeLine{00194 \textcolor{comment}{       CommandManager::instance()-\/>getAction(MI\_SelectNextGuideStroke);}}
+\DoxyCodeLine{00195 \textcolor{comment}{        action-\/>setEnabled(enableOption);}}
+\DoxyCodeLine{00196 \textcolor{comment}{        guidedDrawingMenu-\/>addAction(action);}}
+\DoxyCodeLine{00197 \textcolor{comment}{        action =}}
+\DoxyCodeLine{00198 \textcolor{comment}{       CommandManager::instance()-\/>getAction(MI\_SelectBothGuideStrokes);}}
+\DoxyCodeLine{00199 \textcolor{comment}{        action-\/>setEnabled(enableOption);}}
+\DoxyCodeLine{00200 \textcolor{comment}{        guidedDrawingMenu-\/>addAction(action);}}
+\DoxyCodeLine{00201 \textcolor{comment}{        action =}}
+\DoxyCodeLine{00202 \textcolor{comment}{       CommandManager::instance()-\/>getAction(MI\_SelectGuideStrokeReset);}}
+\DoxyCodeLine{00203 \textcolor{comment}{        action-\/>setEnabled(true);}}
+\DoxyCodeLine{00204 \textcolor{comment}{        guidedDrawingMenu-\/>addAction(action);}}
+\DoxyCodeLine{00205 \textcolor{comment}{        guidedDrawingMenu-\/>addSeparator();}}
+\DoxyCodeLine{00206 \textcolor{comment}{        action = CommandManager::instance()-\/>getAction(MI\_TweenGuideStrokes);}}
+\DoxyCodeLine{00207 \textcolor{comment}{        action-\/>setEnabled(enableOption);}}
+\DoxyCodeLine{00208 \textcolor{comment}{        guidedDrawingMenu-\/>addAction(action);}}
+\DoxyCodeLine{00209 \textcolor{comment}{        action =}}
+\DoxyCodeLine{00210 \textcolor{comment}{            CommandManager::instance()-\/>getAction(MI\_TweenGuideStrokeToSelected);}}
+\DoxyCodeLine{00211 \textcolor{comment}{        action-\/>setEnabled(enableOption);}}
+\DoxyCodeLine{00212 \textcolor{comment}{        guidedDrawingMenu-\/>addAction(action);}}
+\DoxyCodeLine{00213 \textcolor{comment}{        action =}}
+\DoxyCodeLine{00214 \textcolor{comment}{       CommandManager::instance()-\/>getAction(MI\_SelectGuidesAndTweenMode);}}
+\DoxyCodeLine{00215 \textcolor{comment}{        action-\/>setEnabled(enableOption);}}
+\DoxyCodeLine{00216 \textcolor{comment}{        guidedDrawingMenu-\/>addAction(action);}}
+\DoxyCodeLine{00217 \textcolor{comment}{    */}}
+\DoxyCodeLine{00218     \textcolor{comment}{// Zero Thick}}
+\DoxyCodeLine{00219     \textcolor{keywordflow}{if} (!parent-\/>isPreviewEnabled())}
+\DoxyCodeLine{00220       ZeroThickToggleGui::addZeroThickCommand(\textcolor{keyword}{this});}
+\DoxyCodeLine{00221   \}}
+\DoxyCodeLine{00222   \textcolor{comment}{// Brush size outline}}
+\DoxyCodeLine{00223   CursorOutlineToggleGui::addCursorOutlineCommand(\textcolor{keyword}{this});}
+\DoxyCodeLine{00224 }
+\DoxyCodeLine{00225   \textcolor{comment}{// preview}}
+\DoxyCodeLine{00226   \textcolor{keywordflow}{if} (parent-\/>isPreviewEnabled()) \{}
+\DoxyCodeLine{00227     addSeparator();}
+\DoxyCodeLine{00228 }
+\DoxyCodeLine{00229     \textcolor{comment}{// save previewed frames}}
+\DoxyCodeLine{00230     action = addAction(tr(\textcolor{stringliteral}{"{}Save Previewed Frames"{}}));}
+\DoxyCodeLine{00231     action-\/>setShortcut(QKeySequence(}
+\DoxyCodeLine{00232         CommandManager::instance()-\/>getKeyFromId(MI\_SavePreviewedFrames)));}
+\DoxyCodeLine{00233     ret = ret \&\& parent-\/>connect(action, SIGNAL(triggered()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00234                                  SLOT(savePreviewedFrames()));}
+\DoxyCodeLine{00235 }
+\DoxyCodeLine{00236     \textcolor{comment}{// regenerate preview}}
+\DoxyCodeLine{00237     action = addAction(tr(\textcolor{stringliteral}{"{}Regenerate Preview"{}}));}
+\DoxyCodeLine{00238     action-\/>setShortcut(QKeySequence(}
+\DoxyCodeLine{00239         CommandManager::instance()-\/>getKeyFromId(MI\_RegeneratePreview)));}
+\DoxyCodeLine{00240     ret = ret \&\& parent-\/>connect(action, SIGNAL(triggered()),}
+\DoxyCodeLine{00241                                  SLOT(regeneratePreview()));}
+\DoxyCodeLine{00242 }
+\DoxyCodeLine{00243     \textcolor{comment}{// regenerate frame preview}}
+\DoxyCodeLine{00244     action = addAction(tr(\textcolor{stringliteral}{"{}Regenerate Frame Preview"{}}));}
+\DoxyCodeLine{00245     action-\/>setShortcut(QKeySequence(}
+\DoxyCodeLine{00246         CommandManager::instance()-\/>getKeyFromId(MI\_RegenerateFramePr)));}
+\DoxyCodeLine{00247     ret = ret \&\& parent-\/>connect(action, SIGNAL(triggered()),}
+\DoxyCodeLine{00248                                  SLOT(regeneratePreviewFrame()));}
+\DoxyCodeLine{00249   \}}
+\DoxyCodeLine{00250 }
+\DoxyCodeLine{00251   assert(ret);}
+\DoxyCodeLine{00252 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_viewer_context_menu_a4767d32c12c7a329523559b534609b5e}\label{class_scene_viewer_context_menu_a4767d32c12c7a329523559b534609b5e}} 
+\index{SceneViewerContextMenu@{SceneViewerContextMenu}!````~SceneViewerContextMenu@{$\sim$SceneViewerContextMenu}}
+\index{````~SceneViewerContextMenu@{$\sim$SceneViewerContextMenu}!SceneViewerContextMenu@{SceneViewerContextMenu}}
+\doxysubsubsection{\texorpdfstring{$\sim$SceneViewerContextMenu()}{~SceneViewerContextMenu()}}
+{\footnotesize\ttfamily Scene\+Viewer\+Context\+Menu\+::$\sim$\+Scene\+Viewer\+Context\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00254 \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_scene_viewer_context_menu_ae1ec7cf3e67d92408c6915eade22cdad}\label{class_scene_viewer_context_menu_ae1ec7cf3e67d92408c6915eade22cdad}} 
+\index{SceneViewerContextMenu@{SceneViewerContextMenu}!addEnterGroupCommands@{addEnterGroupCommands}}
+\index{addEnterGroupCommands@{addEnterGroupCommands}!SceneViewerContextMenu@{SceneViewerContextMenu}}
+\doxysubsubsection{\texorpdfstring{addEnterGroupCommands()}{addEnterGroupCommands()}}
+{\footnotesize\ttfamily void Scene\+Viewer\+Context\+Menu\+::add\+Enter\+Group\+Commands (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{pos }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00256                                                                      \{}
+\DoxyCodeLine{00257   \textcolor{keywordtype}{bool} ret         = \textcolor{keyword}{true};}
+\DoxyCodeLine{00258   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi = (\mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}})\mbox{\hyperlink{class_t_tool_a947d2af39fd4df397577bbf8602abfd4}{TTool::getImage}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{00259   \textcolor{keywordflow}{if} (!vi) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00260 }
+\DoxyCodeLine{00261   \textcolor{keywordflow}{if} (vi-\/>isInsideGroup() > 0) \{}
+\DoxyCodeLine{00262     addAction(CommandManager::instance()-\/>getAction(MI\_ExitGroup));}
+\DoxyCodeLine{00263   \}}
+\DoxyCodeLine{00264 }
+\DoxyCodeLine{00265   \mbox{\hyperlink{class_stroke_selection}{StrokeSelection}} *ss =}
+\DoxyCodeLine{00266       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_stroke_selection}{StrokeSelection}} *\textcolor{keyword}{>}(TSelection::getCurrent());}
+\DoxyCodeLine{00267   \textcolor{keywordflow}{if} (!ss) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00268 }
+\DoxyCodeLine{00269   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < vi-\/>getStrokeCount(); i++)}
+\DoxyCodeLine{00270     \textcolor{keywordflow}{if} (ss-\/>isSelected(i) \&\& vi-\/>canEnterGroup(i)) \{}
+\DoxyCodeLine{00271       m\_groupIndexToBeEntered = i;}
+\DoxyCodeLine{00272       addAction(CommandManager::instance()-\/>getAction(MI\_EnterGroup));}
+\DoxyCodeLine{00273       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00274     \}}
+\DoxyCodeLine{00275 }
+\DoxyCodeLine{00276   assert(ret);}
+\DoxyCodeLine{00277 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_viewer_context_menu_aaed9b7c543d2c17a3a7a22b6824a9b0c}\label{class_scene_viewer_context_menu_aaed9b7c543d2c17a3a7a22b6824a9b0c}} 
+\index{SceneViewerContextMenu@{SceneViewerContextMenu}!addLevelCommands@{addLevelCommands}}
+\index{addLevelCommands@{addLevelCommands}!SceneViewerContextMenu@{SceneViewerContextMenu}}
+\doxysubsubsection{\texorpdfstring{addLevelCommands()}{addLevelCommands()}}
+{\footnotesize\ttfamily void Scene\+Viewer\+Context\+Menu\+::add\+Level\+Commands (\begin{DoxyParamCaption}\item[{std\+::vector$<$ int $>$ \&}]{indices }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00310                                                                      \{}
+\DoxyCodeLine{00311   addSeparator();}
+\DoxyCodeLine{00312   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{00313   \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} currentId =}
+\DoxyCodeLine{00314       \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a0d91c122eec2b756b7c4780014e49f9e}{getCurrentObject}}()-\/>getObjectId();}
+\DoxyCodeLine{00315 }
+\DoxyCodeLine{00316   \textcolor{comment}{/*-\/ Xsheet内の、空でないColumnを登録 -\/*/}}
+\DoxyCodeLine{00317   std::vector<TXshColumn *> columns;}
+\DoxyCodeLine{00318   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)indices.size(); i++) \{}
+\DoxyCodeLine{00319     \textcolor{keywordflow}{if} (xsh-\/>\mbox{\hyperlink{class_t_xsheet_a83aecebd1b7714017a64e2b786e91a4e}{isColumnEmpty}}(indices[i])) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00320     \mbox{\hyperlink{class_t_xsh_column}{TXshColumn}} *column = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a3e1a216c019a0ebdf73d95acac95d8d0}{getColumn}}(indices[i]);}
+\DoxyCodeLine{00321     \textcolor{keywordflow}{if} (column) \{}
+\DoxyCodeLine{00322       columns.push\_back(column);}
+\DoxyCodeLine{00323     \}}
+\DoxyCodeLine{00324   \}}
+\DoxyCodeLine{00325 }
+\DoxyCodeLine{00326   \textcolor{keywordflow}{if} (!columns.empty()) \{}
+\DoxyCodeLine{00327     \textcolor{comment}{// show/hide}}
+\DoxyCodeLine{00328     \textcolor{keywordflow}{if} (columns.size() > 1) \{}
+\DoxyCodeLine{00329       QMenu *subMenu = addMenu(tr(\textcolor{stringliteral}{"{}Show / Hide"{}}));}
+\DoxyCodeLine{00330       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (int)columns.size(); i++)}
+\DoxyCodeLine{00331         addShowHideCommand(subMenu, columns[i]);}
+\DoxyCodeLine{00332     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00333       addShowHideCommand(\textcolor{keyword}{this}, columns[0]);}
+\DoxyCodeLine{00334     addSeparator();}
+\DoxyCodeLine{00335   \}}
+\DoxyCodeLine{00336 }
+\DoxyCodeLine{00337   \textcolor{comment}{// selection}}
+\DoxyCodeLine{00338   \textcolor{comment}{/*}}
+\DoxyCodeLine{00339 \textcolor{comment}{    if(selectableColumns.size()==1)}}
+\DoxyCodeLine{00340 \textcolor{comment}{    \{}}
+\DoxyCodeLine{00341 \textcolor{comment}{      addSelectCommand(this,}}
+\DoxyCodeLine{00342 \textcolor{comment}{    TStageObjectId::ColumnId(selectableColumns[0]-\/>getIndex()));}}
+\DoxyCodeLine{00343 \textcolor{comment}{    \}}}
+\DoxyCodeLine{00344 \textcolor{comment}{    else}}
+\DoxyCodeLine{00345 \textcolor{comment}{    */}}
+\DoxyCodeLine{00346 }
+\DoxyCodeLine{00347   \textcolor{comment}{/*-\/-\/ Scene内の全Objectを選択可能にする -\/-\/*/}}
+\DoxyCodeLine{00348   \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} id;}
+\DoxyCodeLine{00349   QMenu *cameraMenu = addMenu(tr(\textcolor{stringliteral}{"{}Select Camera"{}}));}
+\DoxyCodeLine{00350   QMenu *pegbarMenu = addMenu(tr(\textcolor{stringliteral}{"{}Select Pegbar"{}}));}
+\DoxyCodeLine{00351   QMenu *columnMenu = addMenu(tr(\textcolor{stringliteral}{"{}Select Column"{}}));}
+\DoxyCodeLine{00352 }
+\DoxyCodeLine{00353   \textcolor{keywordtype}{bool} flag = \textcolor{keyword}{false};}
+\DoxyCodeLine{00354 }
+\DoxyCodeLine{00355   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < xsh-\/>\mbox{\hyperlink{class_t_xsheet_a5dc925584e35e1678f5678b79c470959}{getStageObjectTree}}()-\/>getStageObjectCount(); i++) \{}
+\DoxyCodeLine{00356     \textcolor{keywordtype}{id} = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a5dc925584e35e1678f5678b79c470959}{getStageObjectTree}}()-\/>\mbox{\hyperlink{class_t_stage_object_tree_a688e5b4f2f5730afb0cb10264f13a113}{getStageObject}}(i)-\/>\mbox{\hyperlink{class_t_stage_object_a7acac7f9d2b8aabae125a81cc4ac5b10}{getId}}();}
+\DoxyCodeLine{00357     \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id}.isColumn()) \{}
+\DoxyCodeLine{00358       \textcolor{keywordtype}{int} columnIndex = \textcolor{keywordtype}{id}.getIndex();}
+\DoxyCodeLine{00359       \textcolor{keywordflow}{if} (xsh-\/>\mbox{\hyperlink{class_t_xsheet_a83aecebd1b7714017a64e2b786e91a4e}{isColumnEmpty}}(columnIndex))}
+\DoxyCodeLine{00360         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00361       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00362         addSelectCommand(columnMenu, \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00363         flag = \textcolor{keyword}{true};}
+\DoxyCodeLine{00364       \}}
+\DoxyCodeLine{00365     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id}.isTable())}
+\DoxyCodeLine{00366       addSelectCommand(\textcolor{keyword}{this}, \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00367     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id}.isCamera())}
+\DoxyCodeLine{00368       addSelectCommand(cameraMenu, \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00369     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id}.isPegbar())}
+\DoxyCodeLine{00370       addSelectCommand(pegbarMenu, \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00371   \}}
+\DoxyCodeLine{00372 }
+\DoxyCodeLine{00373   \textcolor{comment}{/*-\/ カラムがひとつも無かったらDisable -\/*/}}
+\DoxyCodeLine{00374   \textcolor{keywordflow}{if} (!flag) columnMenu-\/>setEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{00375 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_viewer_context_menu_a3889da34c8f40fd3432b8a5d545f41ad}\label{class_scene_viewer_context_menu_a3889da34c8f40fd3432b8a5d545f41ad}} 
+\index{SceneViewerContextMenu@{SceneViewerContextMenu}!enterVectorImageGroup@{enterVectorImageGroup}}
+\index{enterVectorImageGroup@{enterVectorImageGroup}!SceneViewerContextMenu@{SceneViewerContextMenu}}
+\doxysubsubsection{\texorpdfstring{enterVectorImageGroup}{enterVectorImageGroup}}
+{\footnotesize\ttfamily void Scene\+Viewer\+Context\+Menu\+::enter\+Vector\+Image\+Group (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00379                                                    \{}
+\DoxyCodeLine{00380   \textcolor{keywordflow}{if} (m\_groupIndexToBeEntered == -\/1) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00381 }
+\DoxyCodeLine{00382   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi =}
+\DoxyCodeLine{00383       (\mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}})\mbox{\hyperlink{class_t_tool_a947d2af39fd4df397577bbf8602abfd4}{TTool::getImage}}(\textcolor{keyword}{false});  \textcolor{comment}{// getCurrentImage();}}
+\DoxyCodeLine{00384   \textcolor{keywordflow}{if} (!vi) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00385   vi-\/>enterGroup(m\_groupIndexToBeEntered);}
+\DoxyCodeLine{00386   \mbox{\hyperlink{class_t_selection}{TSelection}} *selection = TSelection::getCurrent();}
+\DoxyCodeLine{00387   \textcolor{keywordflow}{if} (selection) selection-\/>selectNone();}
+\DoxyCodeLine{00388   m\_viewer-\/>update();}
+\DoxyCodeLine{00389 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_viewer_context_menu_af952c0cd1c7ad914cec2f68e0bb1632f}\label{class_scene_viewer_context_menu_af952c0cd1c7ad914cec2f68e0bb1632f}} 
+\index{SceneViewerContextMenu@{SceneViewerContextMenu}!exitVectorImageGroup@{exitVectorImageGroup}}
+\index{exitVectorImageGroup@{exitVectorImageGroup}!SceneViewerContextMenu@{SceneViewerContextMenu}}
+\doxysubsubsection{\texorpdfstring{exitVectorImageGroup}{exitVectorImageGroup}}
+{\footnotesize\ttfamily void Scene\+Viewer\+Context\+Menu\+::exit\+Vector\+Image\+Group (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00393                                                   \{}
+\DoxyCodeLine{00394   \mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}} vi =}
+\DoxyCodeLine{00395       (\mbox{\hyperlink{class_t_vector_image_p}{TVectorImageP}})\mbox{\hyperlink{class_t_tool_a947d2af39fd4df397577bbf8602abfd4}{TTool::getImage}}(\textcolor{keyword}{false});  \textcolor{comment}{// getCurrentImage();}}
+\DoxyCodeLine{00396   \textcolor{keywordflow}{if} (!vi) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00397   vi-\/>exitGroup();}
+\DoxyCodeLine{00398   m\_viewer-\/>update();}
+\DoxyCodeLine{00399 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_viewer_context_menu_a6bcafa5676c6d515e69fe985791655b1}\label{class_scene_viewer_context_menu_a6bcafa5676c6d515e69fe985791655b1}} 
+\index{SceneViewerContextMenu@{SceneViewerContextMenu}!onSetCurrent@{onSetCurrent}}
+\index{onSetCurrent@{onSetCurrent}!SceneViewerContextMenu@{SceneViewerContextMenu}}
+\doxysubsubsection{\texorpdfstring{onSetCurrent}{onSetCurrent}}
+{\footnotesize\ttfamily void Scene\+Viewer\+Context\+Menu\+::on\+Set\+Current (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00414                                           \{}
+\DoxyCodeLine{00415   \mbox{\hyperlink{class_t_stage_object_id}{TStageObjectId}} id;}
+\DoxyCodeLine{00416   \textcolor{keywordtype}{id}.setCode(qobject\_cast<QAction *>(sender())-\/>data().toUInt());}
+\DoxyCodeLine{00417   \mbox{\hyperlink{class_t_app}{TApp}} *app = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{00418   \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id}.isColumn()) \{}
+\DoxyCodeLine{00419     app-\/>\mbox{\hyperlink{class_t_app_a1e294e7cff300851d12a8c3d196943f6}{getCurrentColumn}}()-\/>setColumnIndex(\textcolor{keywordtype}{id}.getIndex());}
+\DoxyCodeLine{00420     app-\/>\mbox{\hyperlink{class_t_app_a0d91c122eec2b756b7c4780014e49f9e}{getCurrentObject}}()-\/>setObjectId(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00421   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00422     app-\/>\mbox{\hyperlink{class_t_app_a0d91c122eec2b756b7c4780014e49f9e}{getCurrentObject}}()-\/>setObjectId(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00423     app-\/>\mbox{\hyperlink{class_t_app_ad70b447aff489792cfc3dbac7150a540}{getCurrentTool}}()-\/>setTool(T\_Edit);}
+\DoxyCodeLine{00424   \}}
+\DoxyCodeLine{00425 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_viewer_context_menu_ab861a948e1ae5d9b53ea7fd8f9676782}\label{class_scene_viewer_context_menu_ab861a948e1ae5d9b53ea7fd8f9676782}} 
+\index{SceneViewerContextMenu@{SceneViewerContextMenu}!onShowHide@{onShowHide}}
+\index{onShowHide@{onShowHide}!SceneViewerContextMenu@{SceneViewerContextMenu}}
+\doxysubsubsection{\texorpdfstring{onShowHide}{onShowHide}}
+{\footnotesize\ttfamily void Scene\+Viewer\+Context\+Menu\+::on\+Show\+Hide (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00403                                         \{}
+\DoxyCodeLine{00404   \textcolor{keywordtype}{int} columnIndex = qobject\_cast<QAction *>(sender())-\/>data().toInt();}
+\DoxyCodeLine{00405   \mbox{\hyperlink{class_t_xsheet_handle}{TXsheetHandle}} *xsheetHandle = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}();}
+\DoxyCodeLine{00406   \mbox{\hyperlink{class_t_xsh_column}{TXshColumn}} *column = xsheetHandle-\/>getXsheet()-\/>\mbox{\hyperlink{class_t_xsheet_a3e1a216c019a0ebdf73d95acac95d8d0}{getColumn}}(columnIndex);}
+\DoxyCodeLine{00407   \textcolor{keywordflow}{if} (column) \{}
+\DoxyCodeLine{00408     column-\/>setCamstandVisible(!column-\/>isCamstandVisible());}
+\DoxyCodeLine{00409     xsheetHandle-\/>notifyXsheetChanged();}
+\DoxyCodeLine{00410   \}}
+\DoxyCodeLine{00411 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_viewer_context_menu_a5c23fb5845061b3d058fefc33d203689}\label{class_scene_viewer_context_menu_a5c23fb5845061b3d058fefc33d203689}} 
+\index{SceneViewerContextMenu@{SceneViewerContextMenu}!savePreviewedFrames@{savePreviewedFrames}}
+\index{savePreviewedFrames@{savePreviewedFrames}!SceneViewerContextMenu@{SceneViewerContextMenu}}
+\doxysubsubsection{\texorpdfstring{savePreviewedFrames}{savePreviewedFrames}}
+{\footnotesize\ttfamily void Scene\+Viewer\+Context\+Menu\+::save\+Previewed\+Frames (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00459                                                  \{}
+\DoxyCodeLine{00460   \mbox{\hyperlink{class_previewer_a5eb765b66490a3d99d432f90864bfacd}{Previewer::instance}}(m\_viewer-\/>getPreviewMode() ==}
+\DoxyCodeLine{00461                       SceneViewer::SUBCAMERA\_PREVIEW)}
+\DoxyCodeLine{00462       -\/>saveRenderedFrames();}
+\DoxyCodeLine{00463 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_viewer_context_menu_a958937fd1cec6f99f481bf1c77b8ddd4}\label{class_scene_viewer_context_menu_a958937fd1cec6f99f481bf1c77b8ddd4}} 
+\index{SceneViewerContextMenu@{SceneViewerContextMenu}!setGuidedAutoInbetween@{setGuidedAutoInbetween}}
+\index{setGuidedAutoInbetween@{setGuidedAutoInbetween}!SceneViewerContextMenu@{SceneViewerContextMenu}}
+\doxysubsubsection{\texorpdfstring{setGuidedAutoInbetween}{setGuidedAutoInbetween}}
+{\footnotesize\ttfamily void Scene\+Viewer\+Context\+Menu\+::set\+Guided\+Auto\+Inbetween (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00442                                                     \{}
+\DoxyCodeLine{00443   Preferences::instance()-\/>setValue(}
+\DoxyCodeLine{00444       guidedAutoInbetween, !Preferences::instance()-\/>getGuidedAutoInbetween());}
+\DoxyCodeLine{00445   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>notifyPreferenceChanged(}
+\DoxyCodeLine{00446       \textcolor{stringliteral}{"{}GuidedDrawingAutoInbetween"{}});}
+\DoxyCodeLine{00447 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_viewer_context_menu_a1e4c0c15afff7597fdf7e7818fa57832}\label{class_scene_viewer_context_menu_a1e4c0c15afff7597fdf7e7818fa57832}} 
+\index{SceneViewerContextMenu@{SceneViewerContextMenu}!setGuidedDrawingType@{setGuidedDrawingType}}
+\index{setGuidedDrawingType@{setGuidedDrawingType}!SceneViewerContextMenu@{SceneViewerContextMenu}}
+\doxysubsubsection{\texorpdfstring{setGuidedDrawingType}{setGuidedDrawingType}}
+{\footnotesize\ttfamily void Scene\+Viewer\+Context\+Menu\+::set\+Guided\+Drawing\+Type (\begin{DoxyParamCaption}\item[{QAction $\ast$}]{action }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00428                                                                  \{}
+\DoxyCodeLine{00429   Preferences::instance()-\/>setValue(guidedDrawingType, action-\/>data().toInt());}
+\DoxyCodeLine{00430 }
+\DoxyCodeLine{00431   QAction *guidedDrawingAction =}
+\DoxyCodeLine{00432       CommandManager::instance()-\/>getAction(MI\_VectorGuidedDrawing);}
+\DoxyCodeLine{00433   \textcolor{keywordflow}{if} (guidedDrawingAction)}
+\DoxyCodeLine{00434     guidedDrawingAction-\/>setChecked(}
+\DoxyCodeLine{00435         Preferences::instance()-\/>isGuidedDrawingEnabled());}
+\DoxyCodeLine{00436 }
+\DoxyCodeLine{00437   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>notifyPreferenceChanged(}
+\DoxyCodeLine{00438       \textcolor{stringliteral}{"{}GuidedDrawingFrame"{}});}
+\DoxyCodeLine{00439 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_scene_viewer_context_menu_a59c033032e65b6a572f41208bcb98709}\label{class_scene_viewer_context_menu_a59c033032e65b6a572f41208bcb98709}} 
+\index{SceneViewerContextMenu@{SceneViewerContextMenu}!setGuidedInterpolationState@{setGuidedInterpolationState}}
+\index{setGuidedInterpolationState@{setGuidedInterpolationState}!SceneViewerContextMenu@{SceneViewerContextMenu}}
+\doxysubsubsection{\texorpdfstring{setGuidedInterpolationState}{setGuidedInterpolationState}}
+{\footnotesize\ttfamily void Scene\+Viewer\+Context\+Menu\+::set\+Guided\+Interpolation\+State (\begin{DoxyParamCaption}\item[{QAction $\ast$}]{action }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00450                                                                         \{}
+\DoxyCodeLine{00451   Preferences::instance()-\/>setValue(guidedInterpolationType,}
+\DoxyCodeLine{00452                                     action-\/>data().toInt());}
+\DoxyCodeLine{00453   \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>notifyPreferenceChanged(}
+\DoxyCodeLine{00454       \textcolor{stringliteral}{"{}GuidedDrawingInterpolation"{}});}
+\DoxyCodeLine{00455 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/sceneviewercontextmenu.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/sceneviewercontextmenu.\+cpp\end{DoxyCompactItemize}

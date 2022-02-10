@@ -1,0 +1,99 @@
+\hypertarget{class_run_script_command}{}\doxysection{Run\+Script\+Command Class Reference}
+\label{class_run_script_command}\index{RunScriptCommand@{RunScriptCommand}}
+Inheritance diagram for Run\+Script\+Command\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_run_script_command}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_run_script_command_a3f45ee5b086b2680de98b8e19a7a46c4}{execute}} () override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_run_script_command_aa52e67c5ffdc301cf467b7ee074ca778}\label{class_run_script_command_aa52e67c5ffdc301cf467b7ee074ca778}} 
+\index{RunScriptCommand@{RunScriptCommand}!RunScriptCommand@{RunScriptCommand}}
+\index{RunScriptCommand@{RunScriptCommand}!RunScriptCommand@{RunScriptCommand}}
+\doxysubsubsection{\texorpdfstring{RunScriptCommand()}{RunScriptCommand()}}
+{\footnotesize\ttfamily Run\+Script\+Command\+::\+Run\+Script\+Command (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00021 : \mbox{\hyperlink{class_menu_item_handler}{MenuItemHandler}}(\textcolor{stringliteral}{"{}MI\_RunScript"{}}) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_run_script_command_a3f45ee5b086b2680de98b8e19a7a46c4}\label{class_run_script_command_a3f45ee5b086b2680de98b8e19a7a46c4}} 
+\index{RunScriptCommand@{RunScriptCommand}!execute@{execute}}
+\index{execute@{execute}!RunScriptCommand@{RunScriptCommand}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily void Run\+Script\+Command\+::execute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_menu_item_handler}{Menu\+Item\+Handler}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00025                                \{}
+\DoxyCodeLine{00026   \textcolor{keyword}{static} \mbox{\hyperlink{class_generic_load_file_popup}{GenericLoadFilePopup}} *popup = 0;}
+\DoxyCodeLine{00027   \textcolor{keywordflow}{if} (popup == 0) \{}
+\DoxyCodeLine{00028     popup        = \textcolor{keyword}{new} \mbox{\hyperlink{class_generic_load_file_popup}{GenericLoadFilePopup}}(QObject::tr(\textcolor{stringliteral}{"{}Run script"{}}));}
+\DoxyCodeLine{00029     \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp = ToonzFolder::getLibraryFolder() + \textcolor{stringliteral}{"{}scripts"{}};}
+\DoxyCodeLine{00030     \mbox{\hyperlink{class_t_file_status}{TFileStatus}} fpStatus(fp);}
+\DoxyCodeLine{00031     \textcolor{keywordflow}{if} (!fpStatus.doesExist() || !fpStatus.isDirectory())}
+\DoxyCodeLine{00032       fp = ToonzFolder::getLibraryFolder();}
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034     QStringList types;}
+\DoxyCodeLine{00035     types << \textcolor{stringliteral}{"{}qs"{}}}
+\DoxyCodeLine{00036           << \textcolor{stringliteral}{"{}js"{}}}
+\DoxyCodeLine{00037           << \textcolor{stringliteral}{"{}txt"{}}}
+\DoxyCodeLine{00038           << \textcolor{stringliteral}{"{}toonzscript"{}};}
+\DoxyCodeLine{00039     popup-\/>setFilterTypes(types);}
+\DoxyCodeLine{00040 }
+\DoxyCodeLine{00041     popup-\/>setFolder(fp);}
+\DoxyCodeLine{00042   \}}
+\DoxyCodeLine{00043   \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp = popup-\/>\mbox{\hyperlink{class_generic_load_file_popup_ae0f03ea09d3bd4d14a8f166b0602f533}{getPath}}();}
+\DoxyCodeLine{00044   \textcolor{keywordflow}{if} (fp == \mbox{\hyperlink{class_t_file_path}{TFilePath}}()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046   \mbox{\hyperlink{class_t_panel}{TPanel}} *panel = OpenFloatingPanel::getOrOpenFloatingPanel(\textcolor{stringliteral}{"{}ScriptConsole"{}});}
+\DoxyCodeLine{00047   \textcolor{keywordflow}{if} (!panel) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00048 }
+\DoxyCodeLine{00049   \mbox{\hyperlink{class_script_console_panel}{ScriptConsolePanel}} *scriptConsolePanel =}
+\DoxyCodeLine{00050       \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_script_console_panel}{ScriptConsolePanel}} *\textcolor{keyword}{>}(panel);}
+\DoxyCodeLine{00051   \textcolor{keywordflow}{if} (!scriptConsolePanel) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00052 }
+\DoxyCodeLine{00053   QString s = QString::fromStdWString(fp.getWideString());}
+\DoxyCodeLine{00054   s         = s.replace(\textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}}, \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)\(\backslash\)\(\backslash\)"{}}).replace(\textcolor{stringliteral}{"{}\(\backslash\)"{}"{}}, \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)\(\backslash\)"{}"{}});}
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056   QString cmd = QString(\textcolor{stringliteral}{"{}run(\(\backslash\)"{}\%1\(\backslash\)"{})"{}}).arg(s);}
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00058   scriptConsolePanel-\/>executeCommand(cmd);}
+\DoxyCodeLine{00059 }
+\DoxyCodeLine{00060   \textcolor{comment}{/*}}
+\DoxyCodeLine{00061 \textcolor{comment}{TFilePath projectFolder =}}
+\DoxyCodeLine{00062 \textcolor{comment}{TApp::instance()-\/>getCurrentScene()-\/>getScene()-\/>getProject()-\/>getProjectFolder();}}
+\DoxyCodeLine{00063 \textcolor{comment}{QString fileNameStr = QFileDialog::getSaveFileName(0,"{}"{},"{}c:\(\backslash\)\(\backslash\)"{}); // ,}}
+\DoxyCodeLine{00064 \textcolor{comment}{//   QObject::tr("{}Save Motion Path"{}),}}
+\DoxyCodeLine{00065 \textcolor{comment}{QString::fromStdWString(projectFolder.getWideString()),}}
+\DoxyCodeLine{00066 \textcolor{comment}{//   QObject::tr("{}Motion Path files (*.mpath)"{}));}}
+\DoxyCodeLine{00067 \textcolor{comment}{if(fileNameStr == "{}"{}) return;}}
+\DoxyCodeLine{00068 \textcolor{comment}{TFilePath fp(fileNameStr.toStdWString());}}
+\DoxyCodeLine{00069 \textcolor{comment}{if(fp.getType()=="{}"{}) fp = fp.withType("{}mpath"{});}}
+\DoxyCodeLine{00070 \textcolor{comment}{*/}}
+\DoxyCodeLine{00071 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/runscriptcommand.\+cpp\end{DoxyCompactItemize}

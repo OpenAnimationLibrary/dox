@@ -1,0 +1,428 @@
+\hypertarget{class_s_v_n_delete_dialog}{}\doxysection{SVNDelete\+Dialog Class Reference}
+\label{class_s_v_n_delete_dialog}\index{SVNDeleteDialog@{SVNDeleteDialog}}
+Inheritance diagram for SVNDelete\+Dialog\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_s_v_n_delete_dialog}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_s_v_n_delete_dialog_ae667ab639bb7722c2899a699a2ddc764}\label{class_s_v_n_delete_dialog_ae667ab639bb7722c2899a699a2ddc764}} 
+void {\bfseries done} (const QString\+List \&)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_s_v_n_delete_dialog_afc77c9cdf89416991b491ebd3819d472}{SVNDelete\+Dialog}} (QWidget $\ast$parent, const QString \&working\+Dir, const QString\+List \&files\+To\+Delete, bool is\+Folder, int scene\+Icon\+Added)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_v_n_delete_dialog_a174301706adf31ef97ec5cdd9092d37e}{on\+Error}} (const QString \&)
+\item 
+void \mbox{\hyperlink{class_s_v_n_delete_dialog_ac9404cdca74c9e0ab1cb270bf625bae6}{on\+Delete\+Local\+Button\+Clicked}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_delete_dialog_a933202505003ba8e721d3ea2a126c979}{on\+Delete\+Server\+Button\+Clicked}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_delete_dialog_a9e6ccca083e378af7dcd7aeb98252471}{delete\+Files}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_delete_dialog_a7b02b76d78828ae04c8003fff4f40aca}{commit\+Deleted\+Files}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_delete_dialog_ab76d2724680042f3ade48208da6d00e8}{on\+Commit\+Done}} ()
+\item 
+void \mbox{\hyperlink{class_s_v_n_delete_dialog_a87586a27331783a5edd2fc8d3e6244dc}{on\+Delete\+Scene\+Contents\+Toggled}} (bool)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_s_v_n_delete_dialog_aece4e87dde0f98d1b1c57ca7e9824b7d}{show\+Event}} (QShow\+Event $\ast$) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_s_v_n_delete_dialog_afc77c9cdf89416991b491ebd3819d472}\label{class_s_v_n_delete_dialog_afc77c9cdf89416991b491ebd3819d472}} 
+\index{SVNDeleteDialog@{SVNDeleteDialog}!SVNDeleteDialog@{SVNDeleteDialog}}
+\index{SVNDeleteDialog@{SVNDeleteDialog}!SVNDeleteDialog@{SVNDeleteDialog}}
+\doxysubsubsection{\texorpdfstring{SVNDeleteDialog()}{SVNDeleteDialog()}}
+{\footnotesize\ttfamily SVNDelete\+Dialog\+::\+SVNDelete\+Dialog (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{const QString \&}]{working\+Dir,  }\item[{const QString\+List \&}]{files\+To\+Delete,  }\item[{bool}]{is\+Folder,  }\item[{int}]{scene\+Icon\+Added }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041     : Dialog(\mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>getMainWindow(), \textcolor{keyword}{true}, \textcolor{keyword}{false})}
+\DoxyCodeLine{00042     , m\_deleteSceneContentsCheckBox(0)}
+\DoxyCodeLine{00043     , m\_workingDir(workingDir)}
+\DoxyCodeLine{00044     , m\_files(files)}
+\DoxyCodeLine{00045     , m\_targetTempFile(0)}
+\DoxyCodeLine{00046     , m\_isFolder(isFolder)}
+\DoxyCodeLine{00047     , m\_sceneIconAdded(sceneIconAdded) \{}
+\DoxyCodeLine{00048   setModal(\textcolor{keyword}{false});}
+\DoxyCodeLine{00049   setAttribute(Qt::WA\_DeleteOnClose, \textcolor{keyword}{true});}
+\DoxyCodeLine{00050 }
+\DoxyCodeLine{00051   setWindowTitle(tr(\textcolor{stringliteral}{"{}Version Control: Delete"{}}));}
+\DoxyCodeLine{00052 }
+\DoxyCodeLine{00053   setMinimumSize(300, 180);}
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055   QWidget *container = \textcolor{keyword}{new} QWidget;}
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00057   QVBoxLayout *mainLayout = \textcolor{keyword}{new} QVBoxLayout;}
+\DoxyCodeLine{00058   mainLayout-\/>setAlignment(Qt::AlignHCenter);}
+\DoxyCodeLine{00059   mainLayout-\/>setMargin(0);}
+\DoxyCodeLine{00060 }
+\DoxyCodeLine{00061   QHBoxLayout *hLayout = \textcolor{keyword}{new} QHBoxLayout;}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063   m\_waitingLabel      = \textcolor{keyword}{new} QLabel;}
+\DoxyCodeLine{00064   QMovie *waitingMove = \textcolor{keyword}{new} QMovie(\textcolor{stringliteral}{"{}:Resources/waiting.gif"{}});}
+\DoxyCodeLine{00065   waitingMove-\/>setParent(\textcolor{keyword}{this});}
+\DoxyCodeLine{00066   m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{00067 }
+\DoxyCodeLine{00068   m\_waitingLabel-\/>setMovie(waitingMove);}
+\DoxyCodeLine{00069   waitingMove-\/>setCacheMode(QMovie::CacheAll);}
+\DoxyCodeLine{00070   waitingMove-\/>start();}
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00072   m\_textLabel = \textcolor{keyword}{new} QLabel;}
+\DoxyCodeLine{00073 }
+\DoxyCodeLine{00074   \textcolor{keywordflow}{if} (m\_isFolder) \{}
+\DoxyCodeLine{00075     QDir dir(m\_workingDir + \textcolor{stringliteral}{"{}/"{}} + m\_files.at(0));}
+\DoxyCodeLine{00076     \textcolor{keywordtype}{int} filesCount = dir.entryList(QDir::Files | QDir::Dirs).count();}
+\DoxyCodeLine{00077     \textcolor{keywordflow}{if} (filesCount > 0)}
+\DoxyCodeLine{00078       m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Delete folder that contains \%1 items."{}})}
+\DoxyCodeLine{00079                                .arg(filesCount -\/ m\_sceneIconAdded));}
+\DoxyCodeLine{00080     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00081       m\_textLabel-\/>setText(tr(\textcolor{stringliteral}{"{}Delete empty folder."{}}));}
+\DoxyCodeLine{00082   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00083     m\_textLabel-\/>setText(}
+\DoxyCodeLine{00084         tr(\textcolor{stringliteral}{"{}Delete \%1 items."{}}).arg(m\_files.size() -\/ m\_sceneIconAdded));}
+\DoxyCodeLine{00085 }
+\DoxyCodeLine{00086   hLayout-\/>addStretch();}
+\DoxyCodeLine{00087   hLayout-\/>addWidget(m\_waitingLabel);}
+\DoxyCodeLine{00088   hLayout-\/>addWidget(m\_textLabel);}
+\DoxyCodeLine{00089   hLayout-\/>addStretch();}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091   mainLayout-\/>addLayout(hLayout);}
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{00093   m\_treeWidget = \textcolor{keyword}{new} QTreeWidget;}
+\DoxyCodeLine{00094   m\_treeWidget-\/>setStyleSheet(\textcolor{stringliteral}{"{}QTreeWidget \{ border: 1px solid gray; \}"{}});}
+\DoxyCodeLine{00095   m\_treeWidget-\/>header()-\/>hide();}
+\DoxyCodeLine{00096   m\_treeWidget-\/>hide();}
+\DoxyCodeLine{00097   mainLayout-\/>addWidget(m\_treeWidget);}
+\DoxyCodeLine{00098 }
+\DoxyCodeLine{00099   QFormLayout *formLayout = \textcolor{keyword}{new} QFormLayout;}
+\DoxyCodeLine{00100   formLayout-\/>setLabelAlignment(Qt::AlignRight);}
+\DoxyCodeLine{00101   formLayout-\/>setFormAlignment(Qt::AlignHCenter | Qt::AlignTop);}
+\DoxyCodeLine{00102   formLayout-\/>setSpacing(10);}
+\DoxyCodeLine{00103   formLayout-\/>setMargin(0);}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105   m\_commentTextEdit = \textcolor{keyword}{new} QPlainTextEdit;}
+\DoxyCodeLine{00106   m\_commentTextEdit-\/>setMaximumHeight(50);}
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108   m\_commentLabel = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"{}Comment:"{}}));}
+\DoxyCodeLine{00109   m\_commentLabel-\/>setFixedWidth(55);}
+\DoxyCodeLine{00110 }
+\DoxyCodeLine{00111   m\_commentTextEdit-\/>hide();}
+\DoxyCodeLine{00112   m\_commentLabel-\/>hide();}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114   formLayout-\/>addRow(m\_commentLabel, m\_commentTextEdit);}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116   \textcolor{keywordflow}{if} (!m\_isFolder) \{}
+\DoxyCodeLine{00117     m\_deleteSceneContentsCheckBox = \textcolor{keyword}{new} QCheckBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{00118     connect(m\_deleteSceneContentsCheckBox, SIGNAL(toggled(\textcolor{keywordtype}{bool})), \textcolor{keyword}{this},}
+\DoxyCodeLine{00119             SLOT(onDeleteSceneContentsToggled(\textcolor{keywordtype}{bool})));}
+\DoxyCodeLine{00120     m\_deleteSceneContentsCheckBox-\/>setChecked(\textcolor{keyword}{false});}
+\DoxyCodeLine{00121     m\_deleteSceneContentsCheckBox-\/>hide();}
+\DoxyCodeLine{00122     m\_deleteSceneContentsCheckBox-\/>setText(tr(\textcolor{stringliteral}{"{}Delete Scene Contents"{}}));}
+\DoxyCodeLine{00123 }
+\DoxyCodeLine{00124     formLayout-\/>addRow(\textcolor{stringliteral}{"{}"{}}, m\_deleteSceneContentsCheckBox);}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126     \textcolor{keywordtype}{int} fileSize = m\_files.size();}
+\DoxyCodeLine{00127     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < fileSize; i++) \{}
+\DoxyCodeLine{00128       \textcolor{keywordflow}{if} (m\_files.at(i).endsWith(\textcolor{stringliteral}{"{}.tnz"{}})) \{}
+\DoxyCodeLine{00129         m\_deleteSceneContentsCheckBox-\/>show();}
+\DoxyCodeLine{00130         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00131       \}}
+\DoxyCodeLine{00132     \}}
+\DoxyCodeLine{00133   \}}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135   m\_keepLocalCopyCheckBox = \textcolor{keyword}{new} QCheckBox(tr(\textcolor{stringliteral}{"{} Keep Local Copy"{}}));}
+\DoxyCodeLine{00136   m\_keepLocalCopyCheckBox-\/>setChecked(\textcolor{keyword}{true});}
+\DoxyCodeLine{00137   m\_keepLocalCopyCheckBox-\/>hide();}
+\DoxyCodeLine{00138 }
+\DoxyCodeLine{00139   formLayout-\/>addRow(\textcolor{stringliteral}{"{}"{}}, m\_keepLocalCopyCheckBox);}
+\DoxyCodeLine{00140 }
+\DoxyCodeLine{00141   mainLayout-\/>addLayout(formLayout);}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143   container-\/>setLayout(mainLayout);}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_a21628a44d453352094b61b62b4407c6b}{beginHLayout}}();}
+\DoxyCodeLine{00146   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_ada55b78010dbe97d4f2692cc6f2e933f}{addWidget}}(container, \textcolor{keyword}{false});}
+\DoxyCodeLine{00147   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_abe29ee90829fe5e0351fbdee41089252}{endHLayout}}();}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149   m\_deleteLocalButton = \textcolor{keyword}{new} QPushButton();}
+\DoxyCodeLine{00150   m\_deleteLocalButton-\/>setText(tr(\textcolor{stringliteral}{"{}Delete Local Copy "{}}));}
+\DoxyCodeLine{00151   connect(m\_deleteLocalButton, SIGNAL(clicked()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00152           SLOT(onDeleteLocalButtonClicked()));}
+\DoxyCodeLine{00153 }
+\DoxyCodeLine{00154   m\_deleteServerButton = \textcolor{keyword}{new} QPushButton();}
+\DoxyCodeLine{00155   m\_deleteServerButton-\/>setText(tr(\textcolor{stringliteral}{"{}Delete on Server "{}}));}
+\DoxyCodeLine{00156   connect(m\_deleteServerButton, SIGNAL(clicked()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00157           SLOT(onDeleteServerButtonClicked()));}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159   m\_cancelButton = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"{}Cancel"{}}));}
+\DoxyCodeLine{00160   connect(m\_cancelButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(reject()));}
+\DoxyCodeLine{00161 }
+\DoxyCodeLine{00162   \mbox{\hyperlink{class_d_v_gui_1_1_dialog_aff324b24a1ad0c06fdc178024c1f0cf0}{addButtonBarWidget}}(m\_deleteLocalButton, m\_deleteServerButton, m\_cancelButton);}
+\DoxyCodeLine{00163 }
+\DoxyCodeLine{00164   \textcolor{comment}{// 0. Connect for svn errors (that may occur)}}
+\DoxyCodeLine{00165   connect(\&m\_thread, SIGNAL(error(\textcolor{keyword}{const} QString \&)), \textcolor{keyword}{this},}
+\DoxyCodeLine{00166           SLOT(onError(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00167 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_s_v_n_delete_dialog_a7b02b76d78828ae04c8003fff4f40aca}\label{class_s_v_n_delete_dialog_a7b02b76d78828ae04c8003fff4f40aca}} 
+\index{SVNDeleteDialog@{SVNDeleteDialog}!commitDeletedFiles@{commitDeletedFiles}}
+\index{commitDeletedFiles@{commitDeletedFiles}!SVNDeleteDialog@{SVNDeleteDialog}}
+\doxysubsubsection{\texorpdfstring{commitDeletedFiles}{commitDeletedFiles}}
+{\footnotesize\ttfamily void SVNDelete\+Dialog\+::commit\+Deleted\+Files (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00327                                          \{}
+\DoxyCodeLine{00328   updateFileBrowser();}
+\DoxyCodeLine{00329   QStringList args;}
+\DoxyCodeLine{00330   args << \textcolor{stringliteral}{"{}commit"{}};}
+\DoxyCodeLine{00331   args << \textcolor{stringliteral}{"{}-\/-\/targets"{}};}
+\DoxyCodeLine{00332   args << \textcolor{stringliteral}{"{}tempDeleteFile"{}};}
+\DoxyCodeLine{00333 }
+\DoxyCodeLine{00334   \textcolor{keywordflow}{if} (!m\_commentTextEdit-\/>toPlainText().isEmpty())}
+\DoxyCodeLine{00335     args << QString(\textcolor{stringliteral}{"{}-\/m"{}}).append(m\_commentTextEdit-\/>toPlainText());}
+\DoxyCodeLine{00336   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00337     args << QString(\textcolor{stringliteral}{"{}-\/m"{}}).append(VersionControl::instance()-\/>getUserName() +}
+\DoxyCodeLine{00338                                  \textcolor{stringliteral}{"{} delete files."{}});}
+\DoxyCodeLine{00339   m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00340   connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), SLOT(onCommitDone()));}
+\DoxyCodeLine{00341   m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args);}
+\DoxyCodeLine{00342 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_delete_dialog_a9e6ccca083e378af7dcd7aeb98252471}\label{class_s_v_n_delete_dialog_a9e6ccca083e378af7dcd7aeb98252471}} 
+\index{SVNDeleteDialog@{SVNDeleteDialog}!deleteFiles@{deleteFiles}}
+\index{deleteFiles@{deleteFiles}!SVNDeleteDialog@{SVNDeleteDialog}}
+\doxysubsubsection{\texorpdfstring{deleteFiles}{deleteFiles}}
+{\footnotesize\ttfamily void SVNDelete\+Dialog\+::delete\+Files (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00284                                   \{}
+\DoxyCodeLine{00285   m\_waitingLabel-\/>show();}
+\DoxyCodeLine{00286   m\_textLabel-\/>setText(}
+\DoxyCodeLine{00287       tr(\textcolor{stringliteral}{"{}Deleting \%1 items..."{}})}
+\DoxyCodeLine{00288           .arg(QString::number(m\_files.size() + m\_sceneResources.size() -\/}
+\DoxyCodeLine{00289                                m\_sceneIconAdded)));}
+\DoxyCodeLine{00290   m\_commentLabel-\/>hide();}
+\DoxyCodeLine{00291   m\_commentTextEdit-\/>hide();}
+\DoxyCodeLine{00292   m\_treeWidget-\/>hide();}
+\DoxyCodeLine{00293   m\_keepLocalCopyCheckBox-\/>hide();}
+\DoxyCodeLine{00294   \textcolor{keywordflow}{if} (m\_deleteSceneContentsCheckBox) m\_deleteSceneContentsCheckBox-\/>hide();}
+\DoxyCodeLine{00295   m\_deleteServerButton-\/>hide();}
+\DoxyCodeLine{00296   m\_cancelButton-\/>hide();}
+\DoxyCodeLine{00297 }
+\DoxyCodeLine{00298   QStringList args;}
+\DoxyCodeLine{00299   args << \textcolor{stringliteral}{"{}delete"{}};}
+\DoxyCodeLine{00300 }
+\DoxyCodeLine{00301   \textcolor{keywordflow}{if} (m\_keepLocalCopyCheckBox-\/>isChecked()) args << \textcolor{stringliteral}{"{}-\/-\/keep-\/local"{}};}
+\DoxyCodeLine{00302 }
+\DoxyCodeLine{00303   \textcolor{comment}{// Use a temporary file to store all the files list}}
+\DoxyCodeLine{00304   m\_targetTempFile = \textcolor{keyword}{new} QFile(m\_workingDir + \textcolor{stringliteral}{"{}/"{}} + \textcolor{stringliteral}{"{}tempDeleteFile"{}});}
+\DoxyCodeLine{00305   \textcolor{keywordflow}{if} (m\_targetTempFile-\/>open(QFile::WriteOnly | QFile::Truncate)) \{}
+\DoxyCodeLine{00306     QTextStream out(m\_targetTempFile);}
+\DoxyCodeLine{00307 }
+\DoxyCodeLine{00308     \textcolor{keywordtype}{int} filesCount = m\_files.count();}
+\DoxyCodeLine{00309     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < filesCount; i++) out << m\_files.at(i) + \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00310 }
+\DoxyCodeLine{00311     \textcolor{keywordtype}{int} sceneResourcesCount = m\_sceneResources.size();}
+\DoxyCodeLine{00312     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < sceneResourcesCount; i++)}
+\DoxyCodeLine{00313       out << m\_sceneResources.at(i) + \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00314   \}}
+\DoxyCodeLine{00315   m\_targetTempFile-\/>close();}
+\DoxyCodeLine{00316 }
+\DoxyCodeLine{00317   args << \textcolor{stringliteral}{"{}-\/-\/targets"{}};}
+\DoxyCodeLine{00318   args << \textcolor{stringliteral}{"{}tempDeleteFile"{}};}
+\DoxyCodeLine{00319 }
+\DoxyCodeLine{00320   m\_thread.disconnect(SIGNAL(done(\textcolor{keyword}{const} QString \&)));}
+\DoxyCodeLine{00321   connect(\&m\_thread, SIGNAL(done(\textcolor{keyword}{const} QString \&)), SLOT(commitDeletedFiles()));}
+\DoxyCodeLine{00322   m\_thread.executeCommand(m\_workingDir, \textcolor{stringliteral}{"{}svn"{}}, args, \textcolor{keyword}{false});}
+\DoxyCodeLine{00323 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_delete_dialog_ab76d2724680042f3ade48208da6d00e8}\label{class_s_v_n_delete_dialog_ab76d2724680042f3ade48208da6d00e8}} 
+\index{SVNDeleteDialog@{SVNDeleteDialog}!onCommitDone@{onCommitDone}}
+\index{onCommitDone@{onCommitDone}!SVNDeleteDialog@{SVNDeleteDialog}}
+\doxysubsubsection{\texorpdfstring{onCommitDone}{onCommitDone}}
+{\footnotesize\ttfamily void SVNDelete\+Dialog\+::on\+Commit\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00346                                    \{}
+\DoxyCodeLine{00347   \textcolor{keywordflow}{if} (m\_targetTempFile) \{}
+\DoxyCodeLine{00348     QFile::remove(m\_targetTempFile-\/>fileName());}
+\DoxyCodeLine{00349     \textcolor{keyword}{delete} m\_targetTempFile;}
+\DoxyCodeLine{00350     m\_targetTempFile = 0;}
+\DoxyCodeLine{00351   \}}
+\DoxyCodeLine{00352 }
+\DoxyCodeLine{00353   emit done(m\_files);}
+\DoxyCodeLine{00354   close();}
+\DoxyCodeLine{00355 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_delete_dialog_ac9404cdca74c9e0ab1cb270bf625bae6}\label{class_s_v_n_delete_dialog_ac9404cdca74c9e0ab1cb270bf625bae6}} 
+\index{SVNDeleteDialog@{SVNDeleteDialog}!onDeleteLocalButtonClicked@{onDeleteLocalButtonClicked}}
+\index{onDeleteLocalButtonClicked@{onDeleteLocalButtonClicked}!SVNDeleteDialog@{SVNDeleteDialog}}
+\doxysubsubsection{\texorpdfstring{onDeleteLocalButtonClicked}{onDeleteLocalButtonClicked}}
+{\footnotesize\ttfamily void SVNDelete\+Dialog\+::on\+Delete\+Local\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00216                                                  \{}
+\DoxyCodeLine{00217   \textcolor{comment}{// Delete files locally}}
+\DoxyCodeLine{00218   \textcolor{keywordtype}{int} fileCount = m\_files.size();}
+\DoxyCodeLine{00219   m\_waitingLabel-\/>show();}
+\DoxyCodeLine{00220   m\_textLabel-\/>setText(}
+\DoxyCodeLine{00221       tr(\textcolor{stringliteral}{"{}Deleting \%1 items..."{}})}
+\DoxyCodeLine{00222           .arg(fileCount + m\_sceneResources.size() -\/ m\_sceneIconAdded));}
+\DoxyCodeLine{00223   m\_textLabel-\/>show();}
+\DoxyCodeLine{00224 }
+\DoxyCodeLine{00225   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < fileCount; i++) \{}
+\DoxyCodeLine{00226     \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp((m\_workingDir + \textcolor{stringliteral}{"{}/"{}} + m\_files.at(i)).toStdWString());}
+\DoxyCodeLine{00227     TSystem::moveFileOrLevelToRecycleBin(fp);}
+\DoxyCodeLine{00228   \}}
+\DoxyCodeLine{00229 }
+\DoxyCodeLine{00230   \textcolor{keywordtype}{int} sceneResourcesCount = m\_sceneResources.size();}
+\DoxyCodeLine{00231   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < sceneResourcesCount; i++) \{}
+\DoxyCodeLine{00232     \mbox{\hyperlink{class_t_file_path}{TFilePath}} fp(m\_sceneResources.at(i).toStdWString());}
+\DoxyCodeLine{00233     TSystem::moveFileOrLevelToRecycleBin(fp);}
+\DoxyCodeLine{00234   \}}
+\DoxyCodeLine{00235 }
+\DoxyCodeLine{00236   updateFileBrowser();}
+\DoxyCodeLine{00237 }
+\DoxyCodeLine{00238   emit done(m\_files);}
+\DoxyCodeLine{00239 }
+\DoxyCodeLine{00240   m\_waitingLabel-\/>hide();}
+\DoxyCodeLine{00241   m\_textLabel-\/>hide();}
+\DoxyCodeLine{00242 }
+\DoxyCodeLine{00243   close();}
+\DoxyCodeLine{00244 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_delete_dialog_a87586a27331783a5edd2fc8d3e6244dc}\label{class_s_v_n_delete_dialog_a87586a27331783a5edd2fc8d3e6244dc}} 
+\index{SVNDeleteDialog@{SVNDeleteDialog}!onDeleteSceneContentsToggled@{onDeleteSceneContentsToggled}}
+\index{onDeleteSceneContentsToggled@{onDeleteSceneContentsToggled}!SVNDeleteDialog@{SVNDeleteDialog}}
+\doxysubsubsection{\texorpdfstring{onDeleteSceneContentsToggled}{onDeleteSceneContentsToggled}}
+{\footnotesize\ttfamily void SVNDelete\+Dialog\+::on\+Delete\+Scene\+Contents\+Toggled (\begin{DoxyParamCaption}\item[{bool}]{checked }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00400                                                                \{}
+\DoxyCodeLine{00401   \textcolor{keywordflow}{if} (!checked)}
+\DoxyCodeLine{00402     m\_sceneResources.clear();}
+\DoxyCodeLine{00403   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00404     \mbox{\hyperlink{class_version_control}{VersionControl}} *vc = VersionControl::instance();}
+\DoxyCodeLine{00405 }
+\DoxyCodeLine{00406     \textcolor{keywordtype}{int} fileSize = m\_files.count();}
+\DoxyCodeLine{00407     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < fileSize; i++) \{}
+\DoxyCodeLine{00408       QString fileName = m\_files.at(i);}
+\DoxyCodeLine{00409       \textcolor{keywordflow}{if} (fileName.endsWith(\textcolor{stringliteral}{"{}.tnz"{}})) \{}
+\DoxyCodeLine{00410         \textcolor{keywordflow}{if} (m\_files.contains(fileName))}
+\DoxyCodeLine{00411           m\_sceneResources.append(vc-\/>getSceneContents(m\_workingDir, fileName));}
+\DoxyCodeLine{00412       \}}
+\DoxyCodeLine{00413     \}}
+\DoxyCodeLine{00414   \}}
+\DoxyCodeLine{00415   m\_textLabel-\/>setText(}
+\DoxyCodeLine{00416       tr(\textcolor{stringliteral}{"{}Delete \%1 items."{}})}
+\DoxyCodeLine{00417           .arg(m\_files.size() -\/ m\_sceneIconAdded + m\_sceneResources.size()));}
+\DoxyCodeLine{00418 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_delete_dialog_a933202505003ba8e721d3ea2a126c979}\label{class_s_v_n_delete_dialog_a933202505003ba8e721d3ea2a126c979}} 
+\index{SVNDeleteDialog@{SVNDeleteDialog}!onDeleteServerButtonClicked@{onDeleteServerButtonClicked}}
+\index{onDeleteServerButtonClicked@{onDeleteServerButtonClicked}!SVNDeleteDialog@{SVNDeleteDialog}}
+\doxysubsubsection{\texorpdfstring{onDeleteServerButtonClicked}{onDeleteServerButtonClicked}}
+{\footnotesize\ttfamily void SVNDelete\+Dialog\+::on\+Delete\+Server\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00263                                                   \{}
+\DoxyCodeLine{00264   m\_deleteLocalButton-\/>hide();}
+\DoxyCodeLine{00265 }
+\DoxyCodeLine{00266   disconnect(m\_deleteServerButton, SIGNAL(clicked()), \textcolor{keyword}{this},}
+\DoxyCodeLine{00267              SLOT(onDeleteServerButtonClicked()));}
+\DoxyCodeLine{00268   m\_deleteServerButton-\/>setText(tr(\textcolor{stringliteral}{"{}Delete"{}}));}
+\DoxyCodeLine{00269   connect(m\_deleteServerButton, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(deleteFiles()));}
+\DoxyCodeLine{00270 }
+\DoxyCodeLine{00271   \textcolor{keywordtype}{int} height = 175;}
+\DoxyCodeLine{00272   \textcolor{keywordflow}{if} (m\_treeWidget-\/>isVisible()) height += (m\_files.size() * 50);}
+\DoxyCodeLine{00273   setMinimumSize(300, std::min(height, 350));}
+\DoxyCodeLine{00274 }
+\DoxyCodeLine{00275   m\_textLabel-\/>setText(}
+\DoxyCodeLine{00276       tr(\textcolor{stringliteral}{"{}You are deleting items also on repository. Are you sure ?"{}}));}
+\DoxyCodeLine{00277   m\_commentLabel-\/>show();}
+\DoxyCodeLine{00278   m\_commentTextEdit-\/>show();}
+\DoxyCodeLine{00279   m\_keepLocalCopyCheckBox-\/>show();}
+\DoxyCodeLine{00280 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_delete_dialog_a174301706adf31ef97ec5cdd9092d37e}\label{class_s_v_n_delete_dialog_a174301706adf31ef97ec5cdd9092d37e}} 
+\index{SVNDeleteDialog@{SVNDeleteDialog}!onError@{onError}}
+\index{onError@{onError}!SVNDeleteDialog@{SVNDeleteDialog}}
+\doxysubsubsection{\texorpdfstring{onError}{onError}}
+{\footnotesize\ttfamily void SVNDelete\+Dialog\+::on\+Error (\begin{DoxyParamCaption}\item[{const QString \&}]{error\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00185                                                         \{}
+\DoxyCodeLine{00186   \textcolor{keywordflow}{if} (m\_targetTempFile) \{}
+\DoxyCodeLine{00187     QFile::remove(m\_targetTempFile-\/>fileName());}
+\DoxyCodeLine{00188     \textcolor{keyword}{delete} m\_targetTempFile;}
+\DoxyCodeLine{00189     m\_targetTempFile = 0;}
+\DoxyCodeLine{00190   \}}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192   m\_textLabel-\/>setText(errorString);}
+\DoxyCodeLine{00193   switchToCloseButton();}
+\DoxyCodeLine{00194   update();}
+\DoxyCodeLine{00195 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_s_v_n_delete_dialog_aece4e87dde0f98d1b1c57ca7e9824b7d}\label{class_s_v_n_delete_dialog_aece4e87dde0f98d1b1c57ca7e9824b7d}} 
+\index{SVNDeleteDialog@{SVNDeleteDialog}!showEvent@{showEvent}}
+\index{showEvent@{showEvent}!SVNDeleteDialog@{SVNDeleteDialog}}
+\doxysubsubsection{\texorpdfstring{showEvent()}{showEvent()}}
+{\footnotesize\ttfamily void SVNDelete\+Dialog\+::show\+Event (\begin{DoxyParamCaption}\item[{QShow\+Event $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00171                                              \{}
+\DoxyCodeLine{00172   \textcolor{keywordflow}{if} (!m\_isFolder) \{}
+\DoxyCodeLine{00173     initTreeWidget();}
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00175     \textcolor{keywordtype}{int} height = 50;}
+\DoxyCodeLine{00176     \textcolor{keywordflow}{if} (m\_treeWidget-\/>isVisible()) height += (m\_files.size() * 50);}
+\DoxyCodeLine{00177 }
+\DoxyCodeLine{00178     setMinimumSize(300, std::min(height, 350));}
+\DoxyCodeLine{00179   \}}
+\DoxyCodeLine{00180   QDialog::showEvent(e);}
+\DoxyCodeLine{00181 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/svndeletedialog.\+h\item 
+E\+:/opentoonz/toonz/sources/toonz/svndeletedialog.\+cpp\end{DoxyCompactItemize}

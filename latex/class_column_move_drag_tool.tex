@@ -1,0 +1,197 @@
+\hypertarget{class_column_move_drag_tool}{}\doxysection{Column\+Move\+Drag\+Tool Class Reference}
+\label{class_column_move_drag_tool}\index{ColumnMoveDragTool@{ColumnMoveDragTool}}
+Inheritance diagram for Column\+Move\+Drag\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_column_move_drag_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_column_move_drag_tool_a584c021255d342d5657f15dc9e6c88c5}{Column\+Move\+Drag\+Tool}} (\mbox{\hyperlink{class_xsheet_viewer}{Xsheet\+Viewer}} $\ast$viewer)
+\item 
+void \mbox{\hyperlink{class_column_move_drag_tool_a41ebb8e0f25ed4db662264f1c0710ce2}{on\+Click}} (const QMouse\+Event $\ast$event) override
+\item 
+void \mbox{\hyperlink{class_column_move_drag_tool_ac9d9abe9afa8130490d6d5ea1d177b9b}{on\+Drag}} (const \mbox{\hyperlink{class_cell_position}{Cell\+Position}} \&pos) override
+\item 
+void \mbox{\hyperlink{class_column_move_drag_tool_a5d7def6f8c5af3a06ca2fd5b0488741f}{on\+Release}} (const \mbox{\hyperlink{class_cell_position}{Cell\+Position}} \&pos) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_column_move_drag_tool_a584c021255d342d5657f15dc9e6c88c5}\label{class_column_move_drag_tool_a584c021255d342d5657f15dc9e6c88c5}} 
+\index{ColumnMoveDragTool@{ColumnMoveDragTool}!ColumnMoveDragTool@{ColumnMoveDragTool}}
+\index{ColumnMoveDragTool@{ColumnMoveDragTool}!ColumnMoveDragTool@{ColumnMoveDragTool}}
+\doxysubsubsection{\texorpdfstring{ColumnMoveDragTool()}{ColumnMoveDragTool()}}
+{\footnotesize\ttfamily Column\+Move\+Drag\+Tool\+::\+Column\+Move\+Drag\+Tool (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_xsheet_viewer}{Xsheet\+Viewer}} $\ast$}]{viewer }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01658       : \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{XsheetGUI::DragTool}}(viewer)}
+\DoxyCodeLine{01659       , m\_firstCol(-\/1)}
+\DoxyCodeLine{01660       , m\_lastCol(-\/1)}
+\DoxyCodeLine{01661       , m\_offset(0)}
+\DoxyCodeLine{01662       , m\_origOffset(0) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_column_move_drag_tool_a41ebb8e0f25ed4db662264f1c0710ce2}\label{class_column_move_drag_tool_a41ebb8e0f25ed4db662264f1c0710ce2}} 
+\index{ColumnMoveDragTool@{ColumnMoveDragTool}!onClick@{onClick}}
+\index{onClick@{onClick}!ColumnMoveDragTool@{ColumnMoveDragTool}}
+\doxysubsubsection{\texorpdfstring{onClick()}{onClick()}}
+{\footnotesize\ttfamily void Column\+Move\+Drag\+Tool\+::on\+Click (\begin{DoxyParamCaption}\item[{const QMouse\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{Xsheet\+GUI\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01664                                                   \{}
+\DoxyCodeLine{01665     QPoint xy                   = \textcolor{keyword}{event}-\/>pos();}
+\DoxyCodeLine{01666     \mbox{\hyperlink{class_cell_position}{CellPosition}} pos            = getViewer()-\/>xyToPosition(xy);}
+\DoxyCodeLine{01667     \textcolor{keywordtype}{int} col                     = pos.layer();}
+\DoxyCodeLine{01668     \mbox{\hyperlink{class_t_column_selection}{TColumnSelection}} *selection = getViewer()-\/>getColumnSelection();}
+\DoxyCodeLine{01669     \textcolor{keywordflow}{if} (!selection-\/>isColumnSelected(col)) \{}
+\DoxyCodeLine{01670       \textcolor{keywordflow}{if} (event-\/>modifiers() \& Qt::ControlModifier) \{}
+\DoxyCodeLine{01671         selection-\/>selectColumn(col, \textcolor{keyword}{true});}
+\DoxyCodeLine{01672       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (event-\/>modifiers() \& Qt::ShiftModifier) \{}
+\DoxyCodeLine{01673         \textcolor{keywordtype}{int} ia = col, ib = col;}
+\DoxyCodeLine{01674         \textcolor{keywordtype}{int} columnCount = getViewer()-\/>getXsheet()-\/>\mbox{\hyperlink{class_t_xsheet_a17464dc5617cf87a46f03e1a52d36cc1}{getColumnCount}}();}
+\DoxyCodeLine{01675         \textcolor{keywordflow}{while} (ia > 0 \&\& !selection-\/>isColumnSelected(ia -\/ 1)) -\/-\/ia;}
+\DoxyCodeLine{01676         \textcolor{keywordflow}{if} (ia == 0) ia = col;}
+\DoxyCodeLine{01677         \textcolor{keywordflow}{while} (ib < columnCount -\/ 1 \&\& !selection-\/>isColumnSelected(ib + 1))}
+\DoxyCodeLine{01678           ++ib;}
+\DoxyCodeLine{01679         \textcolor{keywordflow}{if} (ib == columnCount -\/ 1) ib = col;}
+\DoxyCodeLine{01680         \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{01681         \textcolor{keywordflow}{for} (i = ia; i <= ib; i++) selection-\/>selectColumn(i, \textcolor{keyword}{true});}
+\DoxyCodeLine{01682       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{01683         selection-\/>selectNone();}
+\DoxyCodeLine{01684         selection-\/>selectColumn(col);}
+\DoxyCodeLine{01685       \}}
+\DoxyCodeLine{01686       selection-\/>makeCurrent();}
+\DoxyCodeLine{01687     \}}
+\DoxyCodeLine{01688     std::set<int> indices = selection-\/>getIndices();}
+\DoxyCodeLine{01689     \textcolor{keywordflow}{if} (indices.empty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01690     m\_firstCol = m\_lastCol = *indices.begin();}
+\DoxyCodeLine{01691     assert(m\_firstCol >= 0);}
+\DoxyCodeLine{01692     m\_origOffset = m\_offset = m\_firstCol -\/ col;}
+\DoxyCodeLine{01693     assert(m\_lastCol == *indices.begin());}
+\DoxyCodeLine{01694     getViewer()-\/>update();}
+\DoxyCodeLine{01695 }
+\DoxyCodeLine{01696     \textcolor{keywordflow}{if} (!getViewer()-\/>orientation()-\/>isVerticalTimeline())}
+\DoxyCodeLine{01697       TUndoManager::manager()-\/>beginBlock();}
+\DoxyCodeLine{01698   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_column_move_drag_tool_ac9d9abe9afa8130490d6d5ea1d177b9b}\label{class_column_move_drag_tool_ac9d9abe9afa8130490d6d5ea1d177b9b}} 
+\index{ColumnMoveDragTool@{ColumnMoveDragTool}!onDrag@{onDrag}}
+\index{onDrag@{onDrag}!ColumnMoveDragTool@{ColumnMoveDragTool}}
+\doxysubsubsection{\texorpdfstring{onDrag()}{onDrag()}}
+{\footnotesize\ttfamily void Column\+Move\+Drag\+Tool\+::on\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_cell_position}{Cell\+Position}} \&}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{Xsheet\+GUI\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01699                                                 \{}
+\DoxyCodeLine{01700     \textcolor{keywordtype}{int} col                     = pos.layer();}
+\DoxyCodeLine{01701     \mbox{\hyperlink{class_t_column_selection}{TColumnSelection}} *selection = getViewer()-\/>getColumnSelection();}
+\DoxyCodeLine{01702     \mbox{\hyperlink{class_t_app}{TApp}} *app                   = \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}();}
+\DoxyCodeLine{01703     \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh                = app-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>getXsheet();}
+\DoxyCodeLine{01704 }
+\DoxyCodeLine{01705     std::set<int> indices = selection-\/>getIndices();}
+\DoxyCodeLine{01706     indices.erase(-\/1);  \textcolor{comment}{// Ignore camera column}}
+\DoxyCodeLine{01707     \textcolor{keywordflow}{if} (indices.empty()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01708 }
+\DoxyCodeLine{01709     assert(m\_lastCol == *indices.begin());}
+\DoxyCodeLine{01710 }
+\DoxyCodeLine{01711     \textcolor{keywordtype}{int} currEnd = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a17464dc5617cf87a46f03e1a52d36cc1}{getColumnCount}}() -\/ 1;}
+\DoxyCodeLine{01712     \textcolor{keywordtype}{int} origCol = col;}
+\DoxyCodeLine{01713     \textcolor{keywordflow}{if} (col < 0)}
+\DoxyCodeLine{01714       col = 0;}
+\DoxyCodeLine{01715     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!getViewer()-\/>orientation()-\/>isVerticalTimeline() \&\& col > currEnd)}
+\DoxyCodeLine{01716       col = currEnd;}
+\DoxyCodeLine{01717     \textcolor{keywordtype}{int} dCol = col -\/ (m\_lastCol -\/ m\_offset);}
+\DoxyCodeLine{01718 }
+\DoxyCodeLine{01719     \textcolor{comment}{// ignore if the cursor moves in the drag-\/starting column}}
+\DoxyCodeLine{01720     \textcolor{keywordflow}{if} (dCol == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01721 }
+\DoxyCodeLine{01722     \textcolor{keywordflow}{if} (dCol < 0 \&\&}
+\DoxyCodeLine{01723         !xsh-\/>\mbox{\hyperlink{class_t_xsheet_a3c7f0358ee5d555df82ae864af8584d0}{getColumnFan}}(getViewer()-\/>orientation())-\/>\mbox{\hyperlink{class_column_fan_abf77607d6d35905a31c9a4640dc0c0ef}{isActive}}(col)) \{}
+\DoxyCodeLine{01724       \textcolor{keywordflow}{while} (}
+\DoxyCodeLine{01725           col != 0 \&\&}
+\DoxyCodeLine{01726           !xsh-\/>\mbox{\hyperlink{class_t_xsheet_a3c7f0358ee5d555df82ae864af8584d0}{getColumnFan}}(getViewer()-\/>orientation())-\/>\mbox{\hyperlink{class_column_fan_abf77607d6d35905a31c9a4640dc0c0ef}{isActive}}(col -\/ 1)) \{}
+\DoxyCodeLine{01727         col-\/-\/;}
+\DoxyCodeLine{01728         dCol-\/-\/;}
+\DoxyCodeLine{01729       \}}
+\DoxyCodeLine{01730     \}}
+\DoxyCodeLine{01731 }
+\DoxyCodeLine{01732     \textcolor{keywordtype}{int} newBegin = *indices.begin() + dCol;}
+\DoxyCodeLine{01733     \textcolor{keywordtype}{int} newEnd   = *indices.rbegin() + dCol;}
+\DoxyCodeLine{01734 }
+\DoxyCodeLine{01735     \textcolor{keywordflow}{if} (newBegin < 0)}
+\DoxyCodeLine{01736       dCol -\/= newBegin;}
+\DoxyCodeLine{01737     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!getViewer()-\/>orientation()-\/>isVerticalTimeline() \&\&}
+\DoxyCodeLine{01738              newEnd > currEnd)}
+\DoxyCodeLine{01739       dCol -\/= (newEnd -\/ currEnd);}
+\DoxyCodeLine{01740 }
+\DoxyCodeLine{01741     \textcolor{comment}{// ignore if the dragged columns comes up against the end of column stack}}
+\DoxyCodeLine{01742     \textcolor{keywordflow}{if} (dCol == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01743 }
+\DoxyCodeLine{01744     m\_lastCol += dCol;}
+\DoxyCodeLine{01745 }
+\DoxyCodeLine{01746     assert(*indices.begin() + dCol >= 0);}
+\DoxyCodeLine{01747 }
+\DoxyCodeLine{01748     moveColumns(indices, dCol);}
+\DoxyCodeLine{01749 }
+\DoxyCodeLine{01750     selection-\/>selectNone();}
+\DoxyCodeLine{01751     \textcolor{keywordflow}{for} (std::set<int>::iterator it = indices.begin(); it != indices.end();}
+\DoxyCodeLine{01752          ++it)}
+\DoxyCodeLine{01753       selection-\/>selectColumn(*it + dCol, \textcolor{keyword}{true});}
+\DoxyCodeLine{01754   \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_column_move_drag_tool_a5d7def6f8c5af3a06ca2fd5b0488741f}\label{class_column_move_drag_tool_a5d7def6f8c5af3a06ca2fd5b0488741f}} 
+\index{ColumnMoveDragTool@{ColumnMoveDragTool}!onRelease@{onRelease}}
+\index{onRelease@{onRelease}!ColumnMoveDragTool@{ColumnMoveDragTool}}
+\doxysubsubsection{\texorpdfstring{onRelease()}{onRelease()}}
+{\footnotesize\ttfamily void Column\+Move\+Drag\+Tool\+::on\+Release (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_cell_position}{Cell\+Position}} \&}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_xsheet_g_u_i_1_1_drag_tool}{Xsheet\+GUI\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01755                                                    \{}
+\DoxyCodeLine{01756     \textcolor{keywordtype}{int} delta = m\_lastCol -\/ m\_firstCol;}
+\DoxyCodeLine{01757     \textcolor{keywordflow}{if} (delta != 0) \{}
+\DoxyCodeLine{01758       \mbox{\hyperlink{class_t_column_selection}{TColumnSelection}} *selection = getViewer()-\/>getColumnSelection();}
+\DoxyCodeLine{01759       std::set<int> indices       = selection-\/>getIndices();}
+\DoxyCodeLine{01760       \textcolor{keywordflow}{if} (!indices.empty()) \{}
+\DoxyCodeLine{01761         TUndoManager::manager()-\/>add(\textcolor{keyword}{new} \mbox{\hyperlink{class_column_move_undo}{ColumnMoveUndo}}(indices, delta));}
+\DoxyCodeLine{01762         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_abbbf1fae564e9e510826eda4f6637d20}{getCurrentScene}}()-\/>setDirtyFlag(\textcolor{keyword}{true});}
+\DoxyCodeLine{01763         \mbox{\hyperlink{class_t_app_a24088f8647d5d9447fcec6b9b9bbf9eb}{TApp::instance}}()-\/>\mbox{\hyperlink{class_t_app_a13f509e753824cb0500787f68bb51a09}{getCurrentXsheet}}()-\/>notifyXsheetChanged();}
+\DoxyCodeLine{01764       \}}
+\DoxyCodeLine{01765     \}}
+\DoxyCodeLine{01766 }
+\DoxyCodeLine{01767     \textcolor{keywordflow}{if} (!getViewer()-\/>orientation()-\/>isVerticalTimeline())}
+\DoxyCodeLine{01768       TUndoManager::manager()-\/>endBlock();}
+\DoxyCodeLine{01769   \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/toonz/xsheetdragtool.\+cpp\end{DoxyCompactItemize}

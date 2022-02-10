@@ -1,0 +1,151 @@
+\hypertarget{class_skeleton_subtools_1_1_change_drawing_tool}{}\doxysection{Skeleton\+Subtools\+::Change\+Drawing\+Tool Class Reference}
+\label{class_skeleton_subtools_1_1_change_drawing_tool}\index{SkeletonSubtools::ChangeDrawingTool@{SkeletonSubtools::ChangeDrawingTool}}
+Inheritance diagram for Skeleton\+Subtools\+::Change\+Drawing\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_skeleton_subtools_1_1_change_drawing_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_skeleton_subtools_1_1_change_drawing_tool_a5eb438af5f01cd0076498f03ae8a4880}{Change\+Drawing\+Tool}} (\mbox{\hyperlink{class_skeleton_tool}{Skeleton\+Tool}} $\ast$tool, int d)
+\item 
+void \mbox{\hyperlink{class_skeleton_subtools_1_1_change_drawing_tool_a86e21b5cab1516adb72d3fa62fd37b06}{left\+Button\+Down}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_skeleton_subtools_1_1_change_drawing_tool_aacf501f2a06eedfadd1821411f1843a4}{left\+Button\+Drag}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+void \mbox{\hyperlink{class_skeleton_subtools_1_1_change_drawing_tool_ae74e523812261a387f47777b2b8d39dd}{left\+Button\+Up}} (const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&, const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&e) override
+\item 
+bool \mbox{\hyperlink{class_skeleton_subtools_1_1_change_drawing_tool_ad99d1f836e1d6fb9ff590f9f44a60b19}{change\+Drawing}} (int delta)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_skeleton_subtools_1_1_change_drawing_tool_a5eb438af5f01cd0076498f03ae8a4880}\label{class_skeleton_subtools_1_1_change_drawing_tool_a5eb438af5f01cd0076498f03ae8a4880}} 
+\index{SkeletonSubtools::ChangeDrawingTool@{SkeletonSubtools::ChangeDrawingTool}!ChangeDrawingTool@{ChangeDrawingTool}}
+\index{ChangeDrawingTool@{ChangeDrawingTool}!SkeletonSubtools::ChangeDrawingTool@{SkeletonSubtools::ChangeDrawingTool}}
+\doxysubsubsection{\texorpdfstring{ChangeDrawingTool()}{ChangeDrawingTool()}}
+{\footnotesize\ttfamily Change\+Drawing\+Tool\+::\+Change\+Drawing\+Tool (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_skeleton_tool}{Skeleton\+Tool}} $\ast$}]{tool,  }\item[{int}]{d }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01154     : \mbox{\hyperlink{class_skeleton_subtools_1_1_drag_tool}{DragTool}}(tool), m\_oldY(0), m\_dir(dir), m\_undo(0) \{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_skeleton_subtools_1_1_change_drawing_tool_ad99d1f836e1d6fb9ff590f9f44a60b19}\label{class_skeleton_subtools_1_1_change_drawing_tool_ad99d1f836e1d6fb9ff590f9f44a60b19}} 
+\index{SkeletonSubtools::ChangeDrawingTool@{SkeletonSubtools::ChangeDrawingTool}!changeDrawing@{changeDrawing}}
+\index{changeDrawing@{changeDrawing}!SkeletonSubtools::ChangeDrawingTool@{SkeletonSubtools::ChangeDrawingTool}}
+\doxysubsubsection{\texorpdfstring{changeDrawing()}{changeDrawing()}}
+{\footnotesize\ttfamily bool Change\+Drawing\+Tool\+::change\+Drawing (\begin{DoxyParamCaption}\item[{int}]{delta }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01200                                                \{}
+\DoxyCodeLine{01201   \mbox{\hyperlink{class_t_application}{TTool::Application}} *app = TTool::getApplication();}
+\DoxyCodeLine{01202   \mbox{\hyperlink{class_t_xsheet}{TXsheet}} *xsh            = app-\/>getCurrentScene()-\/>getScene()-\/>\mbox{\hyperlink{class_toonz_scene_ae3c828e3223fd809fd59189233d0576a}{getXsheet}}();}
+\DoxyCodeLine{01203   \textcolor{keywordtype}{int} row                 = app-\/>getCurrentFrame()-\/>getFrame();}
+\DoxyCodeLine{01204   \textcolor{keywordtype}{int} col                 = app-\/>getCurrentColumn()-\/>getColumnIndex();}
+\DoxyCodeLine{01205   \mbox{\hyperlink{class_t_xsh_cell}{TXshCell}} cell           = xsh-\/>\mbox{\hyperlink{class_t_xsheet_a1ae81edf03bc7527176c84478c350f57}{getCell}}(row, col);}
+\DoxyCodeLine{01206   \textcolor{keywordflow}{if} (!cell.m\_level || !cell.m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a023065559cff76164ecb6344c586ba27}{getSimpleLevel}}()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01207   std::vector<TFrameId> fids;}
+\DoxyCodeLine{01208   cell.m\_level-\/>\mbox{\hyperlink{class_t_xsh_level_a023065559cff76164ecb6344c586ba27}{getSimpleLevel}}()-\/>\mbox{\hyperlink{class_t_xsh_simple_level_a567daee4ca12a0e92445bcf98a6541f1}{getFids}}(fids);}
+\DoxyCodeLine{01209   \textcolor{keywordtype}{int} n = fids.size();}
+\DoxyCodeLine{01210   \textcolor{keywordflow}{if} (n < 2) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01211   std::vector<TFrameId>::iterator it;}
+\DoxyCodeLine{01212   it = std::find(fids.begin(), fids.end(), cell.m\_frameId);}
+\DoxyCodeLine{01213   \textcolor{keywordflow}{if} (it == fids.end()) \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{01214   \textcolor{keywordtype}{int} index = std::distance(fids.begin(), it);}
+\DoxyCodeLine{01215   \textcolor{keywordflow}{while} (delta < 0) delta += n;}
+\DoxyCodeLine{01216   index = (index + delta) \% n;}
+\DoxyCodeLine{01217 }
+\DoxyCodeLine{01218   \mbox{\hyperlink{class_change_drawing_undo}{ChangeDrawingUndo}} *u = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_change_drawing_undo}{ChangeDrawingUndo}} *\textcolor{keyword}{>}(m\_undo);}
+\DoxyCodeLine{01219   \textcolor{keywordflow}{if} (u) u-\/>setDrawing(fids[index]);}
+\DoxyCodeLine{01220   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{01221 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_skeleton_subtools_1_1_change_drawing_tool_a86e21b5cab1516adb72d3fa62fd37b06}\label{class_skeleton_subtools_1_1_change_drawing_tool_a86e21b5cab1516adb72d3fa62fd37b06}} 
+\index{SkeletonSubtools::ChangeDrawingTool@{SkeletonSubtools::ChangeDrawingTool}!leftButtonDown@{leftButtonDown}}
+\index{leftButtonDown@{leftButtonDown}!SkeletonSubtools::ChangeDrawingTool@{SkeletonSubtools::ChangeDrawingTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDown()}{leftButtonDown()}}
+{\footnotesize\ttfamily void Change\+Drawing\+Tool\+::left\+Button\+Down (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_skeleton_subtools_1_1_drag_tool}{Skeleton\+Subtools\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01158                                                                             \{}
+\DoxyCodeLine{01159   m\_oldY                  = e.\mbox{\hyperlink{class_t_mouse_event_a05a3f2378eb2179d121e2e46766916de}{m\_pos}}.y;}
+\DoxyCodeLine{01160   \mbox{\hyperlink{class_t_application}{TTool::Application}} *app = TTool::getApplication();}
+\DoxyCodeLine{01161   \textcolor{keywordtype}{int} row                 = app-\/>getCurrentFrame()-\/>getFrame();}
+\DoxyCodeLine{01162   \textcolor{keywordtype}{int} col                 = app-\/>getCurrentColumn()-\/>getColumnIndex();}
+\DoxyCodeLine{01163   m\_undo                  = \textcolor{keyword}{new} \mbox{\hyperlink{class_change_drawing_undo}{ChangeDrawingUndo}}(row, col);}
+\DoxyCodeLine{01164   \textcolor{keywordflow}{if} (m\_dir > 0)}
+\DoxyCodeLine{01165     changeDrawing(1);}
+\DoxyCodeLine{01166   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (m\_dir < 0)}
+\DoxyCodeLine{01167     changeDrawing(-\/1);}
+\DoxyCodeLine{01168 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_skeleton_subtools_1_1_change_drawing_tool_aacf501f2a06eedfadd1821411f1843a4}\label{class_skeleton_subtools_1_1_change_drawing_tool_aacf501f2a06eedfadd1821411f1843a4}} 
+\index{SkeletonSubtools::ChangeDrawingTool@{SkeletonSubtools::ChangeDrawingTool}!leftButtonDrag@{leftButtonDrag}}
+\index{leftButtonDrag@{leftButtonDrag}!SkeletonSubtools::ChangeDrawingTool@{SkeletonSubtools::ChangeDrawingTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonDrag()}{leftButtonDrag()}}
+{\footnotesize\ttfamily void Change\+Drawing\+Tool\+::left\+Button\+Drag (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_skeleton_subtools_1_1_drag_tool}{Skeleton\+Subtools\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01172                                                                             \{}
+\DoxyCodeLine{01173   \textcolor{keywordflow}{if} (m\_dir != 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01174   \textcolor{keywordtype}{int} delta     = e.\mbox{\hyperlink{class_t_mouse_event_a05a3f2378eb2179d121e2e46766916de}{m\_pos}}.y -\/ m\_oldY;}
+\DoxyCodeLine{01175   \textcolor{keywordtype}{int} h         = 5;}
+\DoxyCodeLine{01176   \textcolor{keywordtype}{int} increment = delta > 0 ? delta / h : -\/(-\/delta) / h;}
+\DoxyCodeLine{01177   \textcolor{keywordflow}{if} (increment == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{01178   changeDrawing(-\/increment);}
+\DoxyCodeLine{01179   m\_oldY += h * increment;}
+\DoxyCodeLine{01180 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_skeleton_subtools_1_1_change_drawing_tool_ae74e523812261a387f47777b2b8d39dd}\label{class_skeleton_subtools_1_1_change_drawing_tool_ae74e523812261a387f47777b2b8d39dd}} 
+\index{SkeletonSubtools::ChangeDrawingTool@{SkeletonSubtools::ChangeDrawingTool}!leftButtonUp@{leftButtonUp}}
+\index{leftButtonUp@{leftButtonUp}!SkeletonSubtools::ChangeDrawingTool@{SkeletonSubtools::ChangeDrawingTool}}
+\doxysubsubsection{\texorpdfstring{leftButtonUp()}{leftButtonUp()}}
+{\footnotesize\ttfamily void Change\+Drawing\+Tool\+::left\+Button\+Up (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_point_t}{TPointD}} \&}]{,  }\item[{const \mbox{\hyperlink{class_t_mouse_event}{TMouse\+Event}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_skeleton_subtools_1_1_drag_tool}{Skeleton\+Subtools\+::\+Drag\+Tool}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01184                                                                           \{}
+\DoxyCodeLine{01185   \mbox{\hyperlink{class_change_drawing_undo}{ChangeDrawingUndo}} *u = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{class_change_drawing_undo}{ChangeDrawingUndo}} *\textcolor{keyword}{>}(m\_undo);}
+\DoxyCodeLine{01186   \textcolor{keywordflow}{if} (u) \{}
+\DoxyCodeLine{01187     \textcolor{keywordflow}{if} (u-\/>getOldDrawing() != u-\/>getDrawing())}
+\DoxyCodeLine{01188       TUndoManager::manager()-\/>add(u);}
+\DoxyCodeLine{01189     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01190       \textcolor{keyword}{delete} u;}
+\DoxyCodeLine{01191     m\_undo = 0;}
+\DoxyCodeLine{01192   \}}
+\DoxyCodeLine{01193 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/tnztools/skeletonsubtools.\+h\item 
+E\+:/opentoonz/toonz/sources/tnztools/skeletonsubtools.\+cpp\end{DoxyCompactItemize}

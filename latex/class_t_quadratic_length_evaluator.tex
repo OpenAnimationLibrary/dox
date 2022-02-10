@@ -1,0 +1,137 @@
+\hypertarget{class_t_quadratic_length_evaluator}{}\doxysection{TQuadratic\+Length\+Evaluator Class Reference}
+\label{class_t_quadratic_length_evaluator}\index{TQuadraticLengthEvaluator@{TQuadraticLengthEvaluator}}
+
+
+{\ttfamily \#include $<$tcurveutil.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_quadratic_length_evaluator_a147b0cc56b5c35fef89af313200389f0}{TQuadratic\+Length\+Evaluator}} (const \mbox{\hyperlink{class_t_quadratic}{TQuadratic}} \&quad)
+\item 
+void \mbox{\hyperlink{class_t_quadratic_length_evaluator_a8d1b9b7c5d9cd127c80fb584a5c78b3f}{set\+Quad}} (const \mbox{\hyperlink{class_t_quadratic}{TQuadratic}} \&quad)
+\item 
+double \mbox{\hyperlink{class_t_quadratic_length_evaluator_a162f87d94409df9f86506aed6f1ea6e5}{get\+Length\+At}} (double t) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+TQuadratic\+Length\+Evaulator is an explicit length builder that for a specified quadratic.
+
+The purpose of a dedicated evaluator for the length of a quadratic is that of minimizing its computational cost. Both assigning a quadratic to the evaluator and retrieving its length up to a given parameter cost 1 sqrt and 1 log. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_quadratic_length_evaluator_a18d28c1eb473ecfc543f0e6301657222}\label{class_t_quadratic_length_evaluator_a18d28c1eb473ecfc543f0e6301657222}} 
+\index{TQuadraticLengthEvaluator@{TQuadraticLengthEvaluator}!TQuadraticLengthEvaluator@{TQuadraticLengthEvaluator}}
+\index{TQuadraticLengthEvaluator@{TQuadraticLengthEvaluator}!TQuadraticLengthEvaluator@{TQuadraticLengthEvaluator}}
+\doxysubsubsection{\texorpdfstring{TQuadraticLengthEvaluator()}{TQuadraticLengthEvaluator()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily TQuadratic\+Length\+Evaluator\+::\+TQuadratic\+Length\+Evaluator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00152 \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_quadratic_length_evaluator_a147b0cc56b5c35fef89af313200389f0}\label{class_t_quadratic_length_evaluator_a147b0cc56b5c35fef89af313200389f0}} 
+\index{TQuadraticLengthEvaluator@{TQuadraticLengthEvaluator}!TQuadraticLengthEvaluator@{TQuadraticLengthEvaluator}}
+\index{TQuadraticLengthEvaluator@{TQuadraticLengthEvaluator}!TQuadraticLengthEvaluator@{TQuadraticLengthEvaluator}}
+\doxysubsubsection{\texorpdfstring{TQuadraticLengthEvaluator()}{TQuadraticLengthEvaluator()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily TQuadratic\+Length\+Evaluator\+::\+TQuadratic\+Length\+Evaluator (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_quadratic}{TQuadratic}} \&}]{quad }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00153 \{ setQuad(quad); \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_quadratic_length_evaluator_a162f87d94409df9f86506aed6f1ea6e5}\label{class_t_quadratic_length_evaluator_a162f87d94409df9f86506aed6f1ea6e5}} 
+\index{TQuadraticLengthEvaluator@{TQuadraticLengthEvaluator}!getLengthAt@{getLengthAt}}
+\index{getLengthAt@{getLengthAt}!TQuadraticLengthEvaluator@{TQuadraticLengthEvaluator}}
+\doxysubsubsection{\texorpdfstring{getLengthAt()}{getLengthAt()}}
+{\footnotesize\ttfamily double TQuadratic\+Length\+Evaluator\+::get\+Length\+At (\begin{DoxyParamCaption}\item[{double}]{t }\end{DoxyParamCaption}) const}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00587                                                             \{}
+\DoxyCodeLine{00588   \textcolor{keywordflow}{if} (m\_constantSpeed) \textcolor{keywordflow}{return} m\_c * t;}
+\DoxyCodeLine{00589 }
+\DoxyCodeLine{00590   \textcolor{keywordflow}{if} (m\_noSpeed0) \textcolor{keywordflow}{return} m\_sqrt\_a\_div\_2 * sq(t);}
+\DoxyCodeLine{00591 }
+\DoxyCodeLine{00592   \textcolor{keywordflow}{if} (m\_squareIntegrand) \{}
+\DoxyCodeLine{00593     \textcolor{keywordtype}{double} t\_plus\_tRef = t + m\_tRef;}
+\DoxyCodeLine{00594     \textcolor{keywordflow}{return} m\_sqrt\_a\_div\_2 *}
+\DoxyCodeLine{00595            (m\_f + ((t\_plus\_tRef > 0) ? sq(t\_plus\_tRef) : -\/sq(t\_plus\_tRef)));}
+\DoxyCodeLine{00596   \}}
+\DoxyCodeLine{00597 }
+\DoxyCodeLine{00598   \textcolor{keywordtype}{double} y         = t + m\_tRef;}
+\DoxyCodeLine{00599   \textcolor{keywordtype}{double} sqrt\_part = sqrt(sq(y) + m\_e);}
+\DoxyCodeLine{00600   \textcolor{keywordtype}{double} log\_arg =}
+\DoxyCodeLine{00601       y + sqrt\_part;  \textcolor{comment}{// NOTE: log\_arg >= log\_arg0 >= TConsts::epsilon}}
+\DoxyCodeLine{00602 }
+\DoxyCodeLine{00603   \textcolor{keywordflow}{return} m\_sqrt\_a\_div\_2 * (y * sqrt\_part + m\_e * log(log\_arg)) -\/ m\_primitive\_0;}
+\DoxyCodeLine{00604 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_t_quadratic_length_evaluator_a8d1b9b7c5d9cd127c80fb584a5c78b3f}\label{class_t_quadratic_length_evaluator_a8d1b9b7c5d9cd127c80fb584a5c78b3f}} 
+\index{TQuadraticLengthEvaluator@{TQuadraticLengthEvaluator}!setQuad@{setQuad}}
+\index{setQuad@{setQuad}!TQuadraticLengthEvaluator@{TQuadraticLengthEvaluator}}
+\doxysubsubsection{\texorpdfstring{setQuad()}{setQuad()}}
+{\footnotesize\ttfamily void TQuadratic\+Length\+Evaluator\+::set\+Quad (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_t_quadratic}{TQuadratic}} \&}]{quad }\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00539                                                               \{}
+\DoxyCodeLine{00540   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p0 = quad.\mbox{\hyperlink{class_t_quadratic_a1ee0984c7cd5c818840f6e688727ddcf}{getP0}}();}
+\DoxyCodeLine{00541   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p1 = quad.\mbox{\hyperlink{class_t_quadratic_a77b9801ed9670e93fe6a9d49720521f9}{getP1}}();}
+\DoxyCodeLine{00542   \textcolor{keyword}{const} \mbox{\hyperlink{class_t_point_t}{TPointD}} \&p2 = quad.\mbox{\hyperlink{class_t_quadratic_a460dfe351429492a9bf0ad22bc4538e2}{getP2}}();}
+\DoxyCodeLine{00543 }
+\DoxyCodeLine{00544   \mbox{\hyperlink{class_t_point_t}{TPointD}} speed0(2.0 * (p1 -\/ p0));}
+\DoxyCodeLine{00545   \mbox{\hyperlink{class_t_point_t}{TPointD}} accel(2.0 * (p2 -\/ p1) -\/ speed0);}
+\DoxyCodeLine{00546 }
+\DoxyCodeLine{00547   \textcolor{keywordtype}{double} a = accel * accel;}
+\DoxyCodeLine{00548   \textcolor{keywordtype}{double} b = 2.0 * accel * speed0;}
+\DoxyCodeLine{00549   m\_c      = speed0 * speed0;}
+\DoxyCodeLine{00550 }
+\DoxyCodeLine{00551   m\_constantSpeed = isAlmostZero(a);  \textcolor{comment}{// => b isAlmostZero, too}}
+\DoxyCodeLine{00552   \textcolor{keywordflow}{if} (m\_constantSpeed) \{}
+\DoxyCodeLine{00553     m\_c = sqrt(m\_c);}
+\DoxyCodeLine{00554     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00555   \}}
+\DoxyCodeLine{00556 }
+\DoxyCodeLine{00557   m\_sqrt\_a\_div\_2 = 0.5 * sqrt(a);}
+\DoxyCodeLine{00558 }
+\DoxyCodeLine{00559   m\_noSpeed0 = isAlmostZero(m\_c);  \textcolor{comment}{// => b isAlmostZero, too}}
+\DoxyCodeLine{00560   \textcolor{keywordflow}{if} (m\_noSpeed0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00561 }
+\DoxyCodeLine{00562   m\_tRef   = 0.5 * b / a;}
+\DoxyCodeLine{00563   \textcolor{keywordtype}{double} d = m\_c -\/ 0.5 * b * m\_tRef;}
+\DoxyCodeLine{00564 }
+\DoxyCodeLine{00565   m\_squareIntegrand = (d < TConsts::epsilon);}
+\DoxyCodeLine{00566   \textcolor{keywordflow}{if} (m\_squareIntegrand) \{}
+\DoxyCodeLine{00567     m\_f = (b > 0) ? -\/sq(m\_tRef) : sq(m\_tRef);}
+\DoxyCodeLine{00568     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00569   \}}
+\DoxyCodeLine{00570 }
+\DoxyCodeLine{00571   m\_e = d / a;}
+\DoxyCodeLine{00572 }
+\DoxyCodeLine{00573   \textcolor{keywordtype}{double} sqrt\_part = sqrt(sq(m\_tRef) + m\_e);}
+\DoxyCodeLine{00574   \textcolor{keywordtype}{double} log\_arg   = m\_tRef + sqrt\_part;}
+\DoxyCodeLine{00575 }
+\DoxyCodeLine{00576   m\_squareIntegrand = (log\_arg < TConsts::epsilon);}
+\DoxyCodeLine{00577   \textcolor{keywordflow}{if} (m\_squareIntegrand) \{}
+\DoxyCodeLine{00578     m\_f = (b > 0) ? -\/sq(m\_tRef) : sq(m\_tRef);}
+\DoxyCodeLine{00579     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00580   \}}
+\DoxyCodeLine{00581 }
+\DoxyCodeLine{00582   m\_primitive\_0 = m\_sqrt\_a\_div\_2 * (m\_tRef * sqrt\_part + m\_e * log(log\_arg));}
+\DoxyCodeLine{00583 \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+E\+:/opentoonz/toonz/sources/include/tcurveutil.\+h\item 
+E\+:/opentoonz/toonz/sources/common/tgeometry/tcurveutil.\+cpp\end{DoxyCompactItemize}
